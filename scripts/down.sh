@@ -9,7 +9,7 @@ LAB="$ROOT/fluent-engineering-lab"
 compose_question_brain=(docker compose --project-name fluent-question-brain --file "$QUESTION_BRAIN/deploy/compose/compose.yaml")
 compose_task_runtime=(docker compose --project-name fluent-task-runtime --file "$TASK_RUNTIME/deploy/compose/compose.yaml")
 
-echo 'Stopping Fluent Interview service stacks (volumes preserved)'
+echo 'Removing Fluent Interview service containers (volumes preserved)'
 
 if [[ -f "$ROOT/.workspace/fluent-lab.pid" ]]; then
   app_pid="$(cat "$ROOT/.workspace/fluent-lab.pid" 2>/dev/null || true)"
@@ -28,11 +28,13 @@ if [[ -f "$LAB/.fel/local-production/state.json" ]] && command -v pnpm >/dev/nul
   pnpm --dir "$LAB" package:local:stop || true
 fi
 
-"${compose_question_brain[@]}" stop
-"${compose_task_runtime[@]}" stop
+"${compose_question_brain[@]}" down --remove-orphans
+"${compose_task_runtime[@]}" down --remove-orphans
 
 docker compose --project-name fluent-engineering-lab \
   --file "$ROOT/fluent-engineering-lab/docker-compose.yml" \
-  stop postgres redis 2>/dev/null || true
+  --profile broker \
+  --profile observability \
+  down --remove-orphans 2>/dev/null || true
 
-echo 'Stopped. Durable volumes were not deleted.'
+echo 'Removed containers and networks. Durable volumes were not deleted.'

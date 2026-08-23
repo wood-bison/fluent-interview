@@ -32,7 +32,11 @@ echo
 echo 'Compose:'
 docker compose --project-name fluent-question-brain --file "$QUESTION_BRAIN/deploy/compose/compose.yaml" ps 2>/dev/null || true
 docker compose --project-name fluent-task-runtime --file "$TASK_RUNTIME/deploy/compose/compose.yaml" ps 2>/dev/null || true
-docker compose --project-name fluent-engineering-lab --file "$LAB/docker-compose.yml" ps 2>/dev/null || true
+docker compose --project-name fluent-engineering-lab \
+  --file "$LAB/docker-compose.yml" \
+  --profile broker \
+  --profile observability \
+  ps 2>/dev/null || true
 
 echo
 echo 'Readiness:'

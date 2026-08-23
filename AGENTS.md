@@ -31,6 +31,11 @@ service boundary.
   checks. A future contracts repository may contain schemas and generated
   clients, but not domain ownership.
 - The three Compose projects remain independently stoppable and observable.
+- `fluent-interview` is the orchestrator, not a fourth Compose project; stack
+  provenance must always point into this workspace checkout.
+- Normal shutdown removes required services and any enabled Lab profiles while
+  preserving named durable volumes. Do not leave an optional profile running
+  by accident when it is not part of the current check.
 
 ## Canonical commands
 

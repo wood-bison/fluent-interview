@@ -55,3 +55,10 @@ database tables or ORM models; cross-service communication uses versioned
 HTTP contracts and released projections. Host-facing binds are kept in the
 dedicated high-port registry in `workspace.yaml`; container-internal ports stay
 standard and are never exposed directly to the host.
+
+The parent is an orchestrator, not a fourth Compose project. `scripts/status.sh`
+shows the required services and any enabled Lab observability profile;
+`scripts/down.sh` removes all three named projects plus enabled Lab profile
+containers/networks without deleting their volumes. All local runtime, database and telemetry
+binds are loopback-only. See the [Docker stack and resource audit](docs/audits/docker-stack-resource-audit-2026-08-23.md)
+for provenance, cleanup and memory evidence.
