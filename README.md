@@ -1,0 +1,53 @@
+# Fluent Interview workspace
+
+This is the desktop-first workspace for the Fluent Interview platform. It
+coordinates three independent repositories without merging their source or
+ownership:
+
+| Repository | Responsibility |
+| --- | --- |
+| `fluent-engineering-lab` | learner UI, curriculum projection, progress, evidence |
+| `fluent-question-brain` | canonical questions, locales, graph, search, releases |
+| `fluent-task-runtime` | task revisions, sandboxes, hidden tests, execution traces |
+
+## One command
+
+Start the complete local development stack from this directory:
+
+```bash
+cd /Users/sergeyzhechko/developer/fluent-interview
+./scripts/up.sh
+```
+
+The launcher starts Question Brain and Task Runtime first, waits for their
+readiness contracts, then starts Fluent Lab. Open `http://localhost:47300/`.
+
+For the packaged local release:
+
+```bash
+./scripts/up.sh --production
+```
+
+The packaged learner surface opens at `http://localhost:4300/onboarding`.
+
+Useful variants:
+
+```bash
+./scripts/up.sh --no-build   # reuse existing images
+./scripts/status.sh           # Git, Compose, health, and observability report
+./scripts/down.sh             # stop services without deleting volumes
+```
+
+## Service surfaces
+
+| Service | API/readiness | Operator UI |
+| --- | --- | --- |
+| Question Brain | `127.0.0.1:48127` | Payload `localhost:48128/admin`; Jaeger `localhost:56686` |
+| Task Runtime | `127.0.0.1:48227` | Jaeger `localhost:56687` |
+| Fluent Lab dev | web `localhost:47300`, API `localhost:47000` | learner UI |
+| Fluent Lab package | web `localhost:4300`, API `localhost:3000` | learner UI |
+
+Each service keeps its own Compose project and durable volumes. Do not use
+`docker compose down -v` during normal operation. The workspace does not share
+database tables or ORM models; cross-service communication uses versioned
+HTTP contracts and released projections.

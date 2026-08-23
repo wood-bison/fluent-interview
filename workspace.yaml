@@ -1,0 +1,50 @@
+schemaVersion: 1
+workspace:
+  id: fluent-interview
+  purpose: desktop-first interview learning platform workspace
+  defaultMode: development
+  hostTargets:
+    - macbook-pro-16
+    - apple-studio-display
+
+repositories:
+  - id: fluent-engineering-lab
+    path: fluent-engineering-lab
+    role: learner-product
+    remote: git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
+    branch: main
+  - id: fluent-question-brain
+    path: fluent-question-brain
+    role: question-source-of-truth
+    remote: git@github-woodbison:wood-bison/fluent-question-brain.git
+    branch: main
+  - id: fluent-task-runtime
+    path: fluent-task-runtime
+    role: task-execution-authority
+    remote: git@github-woodbison:wood-bison/fluent-task-runtime.git
+    branch: main
+
+services:
+  - id: question-brain
+    repository: fluent-question-brain
+    composeProject: fluent-question-brain
+    composeFile: fluent-question-brain/deploy/compose/compose.yaml
+    readiness: http://127.0.0.1:48127/health/ready
+    ui: http://localhost:48128/admin
+  - id: task-runtime
+    repository: fluent-task-runtime
+    composeProject: fluent-task-runtime
+    composeFile: fluent-task-runtime/deploy/compose/compose.yaml
+    readiness: http://127.0.0.1:48227/v1/health/ready
+    ui: http://localhost:56687
+  - id: fluent-lab
+    repository: fluent-engineering-lab
+    devCommand: pnpm dev
+    devUrl: http://localhost:47300/
+    productionCommand: pnpm package:local
+    productionUrl: http://localhost:4300/onboarding
+
+contracts:
+  questionBrain: released HTTP projection only
+  taskRuntime: versioned HTTP runtime contract only
+  sharedCode: no cross-service ORM or database sharing
