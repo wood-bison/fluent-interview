@@ -58,6 +58,7 @@ wait_for() {
 require_command docker
 require_command curl
 require_command pnpm
+"$ROOT/scripts/ports.sh"
 
 if ! docker info >/dev/null 2>&1; then
   echo 'Docker Desktop is not running.' >&2

@@ -36,6 +36,7 @@ Useful variants:
 ./scripts/up.sh --no-build   # reuse existing images
 ./scripts/status.sh           # Git, Compose, health, and observability report
 ./scripts/down.sh             # stop services without deleting volumes
+./scripts/ports.sh            # verify the workspace port registry has no duplicates
 ```
 
 ## Service surfaces
