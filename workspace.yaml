@@ -42,7 +42,35 @@ services:
     devCommand: pnpm dev
     devUrl: http://localhost:47300/
     productionCommand: pnpm package:local
-    productionUrl: http://localhost:4300/onboarding
+    productionUrl: http://localhost:49300/onboarding
+
+ports:
+  policy: dedicated-high-host-ports
+  fluentLab:
+    devWeb: 47300
+    devApi: 47000
+    packageWeb: 49300
+    packageApi: 49301
+    postgres: 49302
+    redis: 49303
+    grafana: 49304
+    prometheus: 49305
+    loki: 49306
+    tempoQuery: 49307
+    tempoOtlpHttp: 49308
+    kafka: 49312
+  questionBrain:
+    api: 48127
+    cms: 48128
+    postgres: 55437
+    jaegerUi: 56686
+    otlpGrpc: 54317
+    otlpHttp: 54318
+  taskRuntime:
+    api: 48227
+    jaegerUi: 56687
+    otlpGrpc: 14317
+    otlpHttp: 14318
 
 contracts:
   questionBrain: released HTTP projection only

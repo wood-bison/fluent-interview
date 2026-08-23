@@ -28,7 +28,7 @@ For the packaged local release:
 ./scripts/up.sh --production
 ```
 
-The packaged learner surface opens at `http://localhost:4300/onboarding`.
+The packaged learner surface opens at `http://localhost:49300/onboarding`.
 
 Useful variants:
 
@@ -45,9 +45,12 @@ Useful variants:
 | Question Brain | `127.0.0.1:48127` | Payload `localhost:48128/admin`; Jaeger `localhost:56686` |
 | Task Runtime | `127.0.0.1:48227` | Jaeger `localhost:56687` |
 | Fluent Lab dev | web `localhost:47300`, API `localhost:47000` | learner UI |
-| Fluent Lab package | web `localhost:4300`, API `localhost:3000` | learner UI |
+| Fluent Lab package | web `localhost:49300`, API `localhost:49301` | learner UI |
+| Fluent Lab durable data | Postgres `localhost:49302`, Redis `localhost:49303` | package-owned volumes |
 
 Each service keeps its own Compose project and durable volumes. Do not use
 `docker compose down -v` during normal operation. The workspace does not share
 database tables or ORM models; cross-service communication uses versioned
-HTTP contracts and released projections.
+HTTP contracts and released projections. Host-facing binds are kept in the
+dedicated high-port registry in `workspace.yaml`; container-internal ports stay
+standard and are never exposed directly to the host.

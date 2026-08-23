@@ -39,10 +39,10 @@ echo 'Readiness:'
 printf '  Question Brain  %s  http://127.0.0.1:48127/health/ready\n' "$(http_status 'http://127.0.0.1:48127/health/ready')"
 printf '  Task Runtime    %s  http://127.0.0.1:48227/v1/health/ready\n' "$(http_status 'http://127.0.0.1:48227/v1/health/ready')"
 printf '  Fluent Lab web  %s  http://localhost:47300/\n' "$(http_status 'http://localhost:47300/')"
-printf '  Lab package     %s  http://localhost:4300/onboarding\n' "$(http_status 'http://localhost:4300/onboarding')"
+printf '  Lab package     %s  http://localhost:49300/onboarding\n' "$(http_status 'http://localhost:49300/onboarding')"
 
 echo
 echo 'Observability:'
 printf '  Question Brain Jaeger  %s  http://localhost:56686\n' "$(http_status 'http://localhost:56686')"
 printf '  Task Runtime Jaeger    %s  http://localhost:56687\n' "$(http_status 'http://localhost:56687')"
-printf '  Lab Grafana            %s  http://localhost:3300\n' "$(http_status 'http://localhost:3300')"
+printf '  Lab Grafana            %s  http://localhost:49304\n' "$(http_status 'http://localhost:49304')"

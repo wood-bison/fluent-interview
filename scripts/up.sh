@@ -84,7 +84,7 @@ mkdir -p "$ROOT/.workspace"
 app_pid_file="$ROOT/.workspace/fluent-lab.pid"
 
 if [[ "$mode" == 'production' ]]; then
-  echo 'Starting packaged Fluent Lab (http://localhost:4300/onboarding)'
+  echo 'Starting packaged Fluent Lab (http://localhost:49300/onboarding)'
   pnpm --dir "$LAB" package:local &
 else
   echo 'Starting Fluent Lab development (http://localhost:47300/)'
