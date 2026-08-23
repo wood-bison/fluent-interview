@@ -97,6 +97,14 @@ The optional Grafana/Loki/Prometheus/Tempo profile remains available for
 observability and measured roughly `0.3 GiB` combined after warm-up. The normal
 `scripts/up.sh` path does not start either optional profile.
 
+The daemon also contains five historical `fluent-engineering-lab_fel-*`
+volumes with zero links to running containers (about `112 MiB` total). They are
+legacy volume names from an earlier Compose file, not inputs to the current
+stack. They were intentionally left untouched in this audit because deleting a
+volume is irreversible; a separate, explicitly approved storage cleanup can
+remove them after a final data-retention decision. Current package data lives
+in the explicitly named `fluent-engineering-lab-*` volumes.
+
 ### Current warm service snapshot
 
 At the end of the audit, all required services were healthy/ready, and the
@@ -119,6 +127,8 @@ observability endpoints returned HTTP `200`:
 - The host contains unrelated stopped Compose projects and old images from
   other workspaces. They are not attached to any of the three Fluent project
   labels and were not deleted by this audit.
+- A small set of unlinked, project-labelled legacy Lab volumes is called out
+  above and deliberately preserved pending explicit retention approval.
 
 ## Reproducible commands
 
