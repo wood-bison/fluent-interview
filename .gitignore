@@ -4,4 +4,5 @@ fluent-engineering-lab/
 fluent-question-brain/
 fluent-task-runtime/
 .workspace/
+node_modules/
 .DS_Store
