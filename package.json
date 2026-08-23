@@ -1,0 +1,18 @@
+{
+  "name": "fluent-interview-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "dev": "bash scripts/up.sh",
+    "dev:quick": "bash scripts/up.sh --no-build",
+    "dev:production": "bash scripts/up.sh --production",
+    "dev:production:quick": "bash scripts/up.sh --production --no-build",
+    "status": "bash scripts/status.sh",
+    "down": "bash scripts/down.sh",
+    "ports": "bash scripts/ports.sh",
+    "lab:nx": "pnpm -C fluent-engineering-lab exec nx",
+    "lab:graph": "pnpm -C fluent-engineering-lab exec nx graph",
+    "lab:affected": "pnpm -C fluent-engineering-lab exec nx affected -t lint test build"
+  }
+}

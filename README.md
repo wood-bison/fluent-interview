@@ -16,16 +16,18 @@ Start the complete local development stack from this directory:
 
 ```bash
 cd /Users/sergeyzhechko/developer/fluent-interview
-./scripts/up.sh
+pnpm dev
 ```
 
-The launcher starts Question Brain and Task Runtime first, waits for their
-readiness contracts, then starts Fluent Lab. Open `http://localhost:47300/`.
+The root `pnpm` command is only a friendly entrypoint: it starts Question Brain
+and Task Runtime first, waits for their readiness contracts, then starts Fluent
+Lab. The three repositories and their Compose boundaries remain independent.
+Open `http://localhost:47300/`.
 
 For the packaged local release:
 
 ```bash
-./scripts/up.sh --production
+pnpm dev:production
 ```
 
 The packaged learner surface opens at `http://localhost:49300/onboarding`.
@@ -33,11 +35,33 @@ The packaged learner surface opens at `http://localhost:49300/onboarding`.
 Useful variants:
 
 ```bash
-./scripts/up.sh --no-build   # reuse existing images
-./scripts/status.sh           # Git, Compose, health, and observability report
-./scripts/down.sh             # stop services without deleting volumes
-./scripts/ports.sh            # verify the workspace port registry has no duplicates
+pnpm dev:quick                 # reuse existing images
+pnpm dev:production:quick      # packaged release, reuse existing images
+pnpm status                    # Git, Compose, health, and observability report
+pnpm down                      # stop services without deleting volumes
+pnpm ports                     # verify the workspace port registry has no duplicates
 ```
+
+The underlying `scripts/*.sh` commands remain available for automation and
+recovery. `pnpm dev` is the normal human-facing command.
+
+## Where Nx fits
+
+The architecture is intentionally hybrid, as described in the workspace
+decision report:
+
+- `pnpm` at this directory is the polyrepo launcher. It coordinates processes
+  and Compose projects; it does not duplicate service source code or database
+  ownership.
+- Nx is already the project/task graph for the TypeScript Fluent Lab
+  workspace. Use `pnpm lab:graph` or `pnpm lab:affected` there.
+- Question Brain and Task Runtime are Go repositories. They can be orchestrated
+  by a runner, but Nx does not automatically share Go dependency graphs,
+  compile-time types, or cross-repository changes. Their boundaries stay
+  versioned HTTP/schema contracts and their own Go toolchains.
+
+This gives one short command for development without pretending that different
+languages and independent release units are one source tree.
 
 ## Service surfaces
 

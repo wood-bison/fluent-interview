@@ -11,6 +11,7 @@ fluent-engineering-lab/   learner product, UI, curriculum projection, progress
 fluent-question-brain/    canonical questions, locales, graph, search, releases
 fluent-task-runtime/      task revisions, sandboxes, hidden tests, run traces
 workspace.yaml             repository pins, ports, readiness, launch contract
+package.json               short pnpm entrypoints for the workspace launcher
 scripts/up.sh              start dependencies and the Lab
 scripts/down.sh            stop the workspace without deleting volumes
 scripts/status.sh          health, Compose, Git, and port report
@@ -42,12 +43,17 @@ service boundary.
 From this directory:
 
 ```bash
-./scripts/up.sh                 # Question Brain + Task Runtime + Lab dev
-./scripts/up.sh --no-build      # same, reusing existing images
-./scripts/up.sh --production    # dependencies + packaged Lab release
-./scripts/status.sh             # health and ownership report
-./scripts/down.sh               # stop services, preserve volumes
+pnpm dev                     # Question Brain + Task Runtime + Lab dev
+pnpm dev:quick               # same, reusing existing images
+pnpm dev:production          # dependencies + packaged Lab release
+pnpm status                  # health and ownership report
+pnpm down                    # stop services, preserve volumes
 ```
+
+The shell scripts remain the automation/recovery primitives behind these
+aliases. Nx is scoped to the TypeScript Fluent Lab repository; the Go
+repositories are coordinated through their versioned service contracts rather
+than being flattened into a fake cross-language source graph.
 
 Never use `docker compose down -v` for normal recovery. It removes durable
 local data. The workspace targets the 16-inch MacBook Pro and Apple Studio
