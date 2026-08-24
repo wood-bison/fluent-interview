@@ -55,6 +55,17 @@ wait_for() {
   exit 1
 }
 
+stop_packaged_lab() {
+  # The packaged Lab owns a long-lived process and an operation lock. A user
+  # switching back to `pnpm dev` must not accidentally run two Lab releases
+  # against the same durable profile. Stop only the recorded package process;
+  # package:local:stop preserves learner data and Compose volumes.
+  if [[ -f "$LAB/.fel/local-production/state.json" ]]; then
+    echo 'Stopping existing packaged Fluent Lab'
+    pnpm --dir "$LAB" package:local:stop >/dev/null 2>&1 || true
+  fi
+}
+
 require_command docker
 require_command curl
 require_command pnpm
@@ -86,8 +97,11 @@ app_pid_file="$ROOT/.workspace/fluent-lab.pid"
 
 if [[ "$mode" == 'production' ]]; then
   echo 'Starting packaged Fluent Lab (http://localhost:49300/onboarding)'
-  pnpm --dir "$LAB" package:local &
+  # `restart` is intentionally idempotent: it converges an already-running
+  # package after a source revision changes instead of failing on operation.lock.
+  pnpm --dir "$LAB" package:local:restart &
 else
+  stop_packaged_lab
   echo 'Starting Fluent Lab development (http://localhost:47300/)'
   pnpm --dir "$LAB" dev &
 fi
