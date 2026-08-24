@@ -68,6 +68,37 @@ stop_packaged_lab() {
   fi
 }
 
+start_packaged_lab() {
+  # A package operation can legitimately outlive the shell that started it
+  # for a few seconds (for example while a previous restart is flushing its
+  # state).  Do not turn that transient, recoverable lock into a failed
+  # workspace start.  Retry only the explicit lock-held contract; every other
+  # failure is surfaced unchanged and never bypasses the package safety
+  # boundary.
+  local attempt=1
+  local max_attempts=20
+  local log_file
+  log_file="$(mktemp "${TMPDIR:-/tmp}/fluent-interview-package.XXXXXX")"
+  trap 'rm -f "$log_file"' RETURN
+  while (( attempt <= max_attempts )); do
+    if pnpm --dir "$LAB" package:local:restart >"$log_file" 2>&1; then
+      cat "$log_file"
+      return 0
+    fi
+    if grep -q '"code": "package.lock-held"' "$log_file"; then
+      printf 'Packaged Lab operation lock is active; waiting (%d/%d)\n' "$attempt" "$max_attempts"
+      sleep 2
+      attempt=$((attempt + 1))
+      continue
+    fi
+    cat "$log_file" >&2
+    return 1
+  done
+  cat "$log_file" >&2
+  echo 'Packaged Lab did not converge after waiting for the bounded operation lock.' >&2
+  return 1
+}
+
 require_command docker
 require_command curl
 require_command pnpm
@@ -120,9 +151,10 @@ app_pid_file="$ROOT/.workspace/fluent-lab.pid"
 
 if [[ "$mode" == 'production' ]]; then
   echo 'Starting packaged Fluent Lab (http://localhost:49300/onboarding)'
-  # `restart` is intentionally idempotent: it converges an already-running
-  # package after a source revision changes instead of failing on operation.lock.
-  pnpm --dir "$LAB" package:local:restart &
+  # `restart` is intentionally idempotent.  The wrapper absorbs only a live
+  # package.lock-held race, then lets the package contract report every other
+  # failure with its normal recovery details.
+  start_packaged_lab &
 else
   stop_packaged_lab
   echo 'Starting Fluent Lab development (http://localhost:47300/)'
