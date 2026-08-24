@@ -1,5 +1,12 @@
 # Fluent Interview: путь от полного Question Brain до полноценных путей Lab
 
+> **Execution notice:** разделы C0–C1 ниже остаются историческим baseline.
+> Незавершённые C2–C4 заменены полным gated-планом
+> [`QUESTION-CAPABILITY-TASK-PRODUCTION-PLAN-2026-08-24.md`](./QUESTION-CAPABILITY-TASK-PRODUCTION-PLAN-2026-08-24.md).
+> Не выполнять C2–C4 отдельно: новый план уточняет `Capability`, добавляет
+> `TaskFamily`, many-to-many domain bindings, semantic review, удаление legacy
+> и независимый production acceptance.
+
 Дата среза: **2026-08-24**. Документ описывает post-release content frontier. Он
 не переоткрывает закрытые продуктовые gates Fluent Lab и не меняет владельцев
 данных.
