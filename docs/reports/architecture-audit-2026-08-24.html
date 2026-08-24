@@ -138,7 +138,7 @@ footer{padding:26px 0 44px;font-size:.85rem;color:var(--faint);text-align:center
 </tr>
 <tr>
   <td><b>Хранить вопросы как граф, чтобы понимать последовательность</b></td>
-  <td>Богатая модель графа описана в <code>libs/lab-contracts</code> (26 типов рёбер!). В Question Brain создана таблица <code>question_edge</code> — <b>и она пуста, в неё не пишет ни одна строчка Go-кода</b></td>
+  <td>Богатая модель графа описана в <code>libs/lab-contracts</code> (28 типов рёбер!). В Question Brain создана таблица <code>question_edge</code> — <b>и она пуста, в неё не пишет ни одна строчка Go-кода</b></td>
   <td><span class="tag t-bad">НЕ РАБОТАЕТ</span></td>
 </tr>
 <tr>
@@ -187,7 +187,7 @@ Obsidian vault (1597 .md на диске)<br>
 
 <table>
 <tr><th>Что вы видите</th><th>Почему так</th></tr>
-<tr><td>«Markdown в отдельной папке — странно»</td><td>Vault был первым источником и остался главным; ADR понизил его до «read-only recovery snapshot», но импорт всё ещё идёт из него</td></tr>
+<tr><td>«Markdown в отдельной папке — странно»</td><td>Так и задумано: ADR-0009 прямо называет vault «каноническим», а ADR-0008 — «источником материала». Странно выглядит не это, а то, что контракт файлов нигде не зафиксирован (см. ниже)</td></tr>
 <tr><td>«Зачем CMS, если не пользуемся»</td><td>CMS — вторая дверь авторства, построенная до ADR-0029; через неё прошло 6 карточек, и она отстала от модели данных</td></tr>
 <tr><td>«Где мой граф?»</td><td>Граф спроектирован в Lab, ADR постановил перенести его в Question Brain, перенос не сделан — таблица создана и пуста</td></tr>
 <tr><td>«Что-то мы не доделали»</td><td>Совершенно верно. Именно не доделали — конкретно шаги переноса графа и дедупликации</td></tr>
@@ -203,7 +203,7 @@ Obsidian vault (1597 .md на диске)<br>
 
 <h3>Модель в Lab — именно то, что вы хотели</h3>
 
-<p>В <code>libs/lab-contracts/src/lib/knowledge-graph.ts</code> описан граф с 15 типами узлов и <b>26 типами рёбер</b>. Среди узлов — <code>question</code>, <code>question_variant</code>, <code>concept</code>, <code>capability</code>. Среди рёбер:</p>
+<p>В <code>libs/lab-contracts/src/lib/knowledge-graph.ts</code> описан граф с 14 типами узлов и <b>28 типами рёбер</b>. Среди узлов — <code>question</code>, <code>question_variant</code>, <code>concept</code>, <code>capability</code>. Среди рёбер:</p>
 
 <pre><code>prerequisiteOf   — вопрос A нужно понять до вопроса B
 relatedTo        — связанные
@@ -243,7 +243,7 @@ rationale?: string</code></pre>
 <ul>
 <li><b>В неё не пишет ни одна строка Go-кода.</b> Поиск по всему репозиторию: <code>grep -rn "question_edge" --include='*.go'</code> не находит ничего, кроме миграции.</li>
 <li>Команда <code>qb-graph-release</code>, которая по названию должна публиковать граф, материализует только <code>content.question_topic</code> — привязку вопроса к теме. Это классификация, а не последовательность.</li>
-<li>Модель беднее, чем в Lab: пять типов связей вместо двадцати шести, нет <code>status</code>, нет <code>confidence</code>, нет <code>actor</code>. То есть нет самого механизма «машина предложила — человек подтвердил».</li>
+<li>Модель беднее, чем в Lab: пять типов связей вместо двадцати восьми, нет <code>status</code>, нет <code>confidence</code>, нет <code>actor</code>. То есть нет самого механизма «машина предложила — человек подтвердил».</li>
 </ul>
 
 <div class="ba">
@@ -289,7 +289,7 @@ rationale?: string</code></pre>
 </tr>
 <tr>
   <td>Семантический дедуп на импорте</td>
-  <td colspan="2"><span class="tag t-bad">ОТСУТСТВУЕТ</span> — в <code>internal/ingest/</code> нет ни одного упоминания дедупликации</td>
+  <td colspan="2"><span class="tag t-bad">ОТСУТСТВУЕТ</span> — единственный писатель <code>duplicate_candidate</code> это <code>RecordDuplicateDecision</code>, и вызывается он ровно из одного места: <code>cmd/qb-audit/main.go</code>, вручную. Функций поиска похожих карточек в коде нет вообще</td>
 </tr>
 </table>
 
@@ -347,7 +347,7 @@ qb-promote  ← только принятое</code></pre>
 <ol class="steps">
 <li><b>Импорт в карантин, а не сразу в канон.</b> Новые карточки получают статус <code>proposed</code> и не попадают в релиз, пока не пройдут ревью. Схема это уже позволяет: у <code>question.status</code> есть CHECK-констрейнт.</li>
 <li><b>Автоматический поиск соседей.</b> Для каждой новой карточки — векторный поиск по существующим. Три порога: явный дубль, вероятный вариант, новый вопрос. Пороги подбираются на ваших же данных, не берутся из книжки.</li>
-<li><b>Очередь ревью с предложениями.</b> Не «вот 500 карточек, разбирайся», а «вот 100 пар, для каждой — кнопки: это дубль / это вариант / это новое». Заметьте: Review Workbench для этого уже описан в ADR-0008 и частично сделан в Angular на маршруте <code>/questions</code>.</li>
+<li><b>Очередь ревью с предложениями.</b> Не «вот 500 карточек, разбирайся», а «вот 100 пар, для каждой — кнопки: это дубль / это вариант / это новое». Review Workbench для этого описан в ADR-0008, но в Angular его пока нет — маршрут <code>practice/questions</code> это библиотека для ученика, а не очередь ревью. Строить придётся; опереться есть на что — раздел <code>studio/</code>.</li>
 <li><b>Предложение рёбер графа.</b> Соседи по вектору — естественные кандидаты в <code>relatedTo</code>. Карточки той же темы с меньшим уровнем — кандидаты в <code>prerequisiteOf</code>. Всё создаётся со статусом <code>proposed</code> и <code>actor: 'llm'</code>, человек подтверждает.</li>
 <li><b>Продвижение в канон одной транзакцией.</b> Принятое становится опубликованной ревизией, отклонённое остаётся в журнале с обоснованием — чтобы через год было видно, почему решили именно так.</li>
 </ol>
@@ -458,7 +458,7 @@ priority, group, level, question, sections
 <div class="card">
 <h3>Рекомендую: выключить Payload, а редактор построить как часть Lab</h3>
 <p>Обоснование. Вам всё равно нужен <b>Review Workbench</b> — интерфейс приёмки новых вопросов из раздела выше. Это не «CMS для правки текста», это очередь решений: дубль или нет, какие рёбра графа принять. Payload такого не умеет и не для этого сделан — вы будете с ним бороться.</p>
-<p>При этом в Lab уже есть Angular-приложение, есть маршрут <code>/questions</code>, есть описанный в ADR-0008 Review Workbench, есть дизайн-система. Достроить там очередь ревью дешевле и правильнее, чем чинить Payload и параллельно строить очередь ревью где-то ещё.</p>
+<p>При этом в Lab уже есть авторская поверхность: маршрут <code>studio/content</code> рендерит <code>QuestionBrainSurfaceComponent</code>, а <code>studio/graph</code> — <code>StudioGraphSurfaceComponent</code>. То есть каркас админского раздела над Question Brain построен, и очередь ревью встраивается в него. Достроить её там правильнее, чем чинить Payload и параллельно строить очередь где-то ещё.</p>
 <p>Плюс к этому уходит целый класс проблем: третья схема в базе (<code>cms.*</code>), хук <code>afterChange</code>, который не различает сохранение черновика и публикацию (известная неоднозначность Payload), и неработающий healthcheck.</p>
 </div>
 
@@ -522,7 +522,7 @@ priority, group, level, question, sections
 <b>Построить конвейер приёмки.</b> Импорт в staging → векторный поиск соседей → предложения дублей и рёбер → очередь решений → продвижение в канон. Это ядро всего аудита и прямой ответ на «+500 вопросов».
 </li>
 <li>
-<b>Сделать Review Workbench в Lab.</b> Очередь пар и предложенных рёбер с кнопками решения. Опереться на существующий маршрут <code>/questions</code> и ADR-0008.
+<b>Сделать Review Workbench в Lab.</b> Очередь пар и предложенных рёбер с кнопками решения. Встроить в существующий раздел <code>studio/</code> рядом с <code>studio/content</code> и <code>studio/graph</code>; поведение описано в ADR-0008.
 </li>
 <li>
 <b>Закрыть судьбу CMS.</b> По рекомендации — выключить Payload после того, как Workbench заработает, и убрать схему <code>cms.*</code>. Если решите оставить — достроить <code>promoteRequest</code> до полной модели.
@@ -550,15 +550,17 @@ priority, group, level, question, sections
 <tr><th>Утверждение</th><th>Проверка</th></tr>
 <tr><td>В <code>question_edge</code> не пишет ни одна строка Go</td><td><code>grep -rn "question_edge" --include='*.go' .</code> → пусто</td></tr>
 <tr><td><code>qb-graph-release</code> материализует только темы</td><td><code>cmd/qb-graph-release/main.go</code>, комментарий: «materialize accepted source placements into content.question_topic»</td></tr>
-<tr><td>Дедупликации нет в пути импорта</td><td><code>grep -rn "duplicate" --include='*.go' internal/ingest/</code> → пусто</td></tr>
+<tr><td>Дедупликации нет в пути импорта</td><td>Единственный писатель — <code>RecordDuplicateDecision</code> (<code>internal/store/postgres.go:2060</code>), единственный вызов — <code>cmd/qb-audit/main.go:36</code>. Функций вида <code>Similar*</code>/<code>Neighbour*</code> нет</td></tr>
 <tr><td>Промоушен не передаёт task/rubric/choices/company</td><td><code>internal/httpapi/server.go:320</code>, структура <code>promoteRequest</code></td></tr>
 <tr><td>Импортёр эти поля умеет</td><td><code>internal/normalize/card.go:70,81,83</code> — <code>Company</code>, <code>Task</code>, <code>Choices</code>, <code>Rubric</code></td></tr>
 <tr><td>Схема секций — таблица алиасов в Go</td><td><code>internal/normalize/card.go:282–300</code></td></tr>
 <tr><td>У vault нет remote</td><td><code>cd ~/developer/fluent-question-vault &amp;&amp; git remote -v</code> → пусто; 1597 .md; HEAD <code>f4d4622</code></td></tr>
 <tr><td>Метаданные не в YAML-frontmatter</td><td><code>Question Cards/Q039 — ....md</code>, строки 3–9</td></tr>
 <tr><td>Через CMS прошло 6 карточек</td><td><code>HANDOFF-BRIEF.md:679</code> — <code>source_system</code>: vault 1369, payload-cms 6</td></tr>
-<tr><td>Модель графа в Lab: 26 типов рёбер</td><td><code>libs/lab-contracts/src/lib/knowledge-graph.ts:34–68</code></td></tr>
+<tr><td>Модель графа в Lab: 14 типов узлов, 28 рёбер</td><td><code>libs/lab-contracts/src/lib/knowledge-graph.ts:12–68</code></td></tr>
 <tr><td>ADR-0029 в статусе миграции</td><td><code>docs/adr/0029-question-brain-canonical-content-release.md</code>, «Status: Accepted for migration»</td></tr>
+<tr><td>vault канонизирован, а не понижен</td><td><code>docs/adr/0009-*.md:17</code> «the canonical Obsidian vault»; <code>0008-*.md:103</code> «Obsidian remains strategy/source material»</td></tr>
+<tr><td>Studio-маршруты существуют</td><td><code>apps/web/src/app/app.routes.ts:42–84</code></td></tr>
 <tr><td>Lab ходит в QB по HTTP-контракту</td><td><code>apps/learning-api/src/app/question-brain/question-brain.client.ts:79,179</code></td></tr>
 <tr><td>task-runtime исполняет в Docker с лимитами</td><td><code>fluent-task-runtime/README.md</code>, <code>internal/engine/docker_executor.go</code></td></tr>
 <tr><td>p95 40.25 мс</td><td><code>docs/verification/g5-hardening-2026-08-22.md</code>, 60 запросов</td></tr>
