@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Fluent Interview · как устроить Question Brain, задачи и пути</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --field: #fcf6ec;
+        --plate: #fffdf8;
+        --plate-soft: #f6efe2;
+        --plate-raised: #fffaf2;
+        --plate-sunken: #eee5d5;
+        --ink: #2a211c;
+        --ink-body: #4f4039;
+        --ink-soft: #6b5450;
+        --ink-faint: #735b59;
+        --line: #e6dacb;
+        --line-soft: #eee6da;
+        --line-strong: #9d8567;
+        --accent: #4459a0;
+        --accent-strong: #2f427e;
+        --accent-soft: rgb(68 89 160 / 9%);
+        --accent-line: rgb(68 89 160 / 66%);
+        --warm: #805e00;
+        --warm-soft: #f7eed9;
+        --warm-line: #ddc598;
+        --sage: #5d6d22;
+        --sage-soft: #edf0df;
+        --sage-line: #c8d19b;
+        --rust: #a84a26;
+        --rust-soft: #f8e9df;
+        --rust-line: #dfb9a5;
+        --terminal: #16110f;
+        --terminal-line: #2e2523;
+        --terminal-ink: #f3ede7;
+        --terminal-muted: #b1a1a0;
+        --shadow: 42 33 28;
+        --glass: color-mix(in srgb, var(--plate) 86%, transparent);
+        --glass-strong: color-mix(in srgb, var(--plate) 94%, transparent);
+        --max: 1240px;
+        --rail: 230px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
+        --ease: cubic-bezier(.22, 1, .36, 1);
+        --duration: 220ms;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          color-scheme: dark;
+          --field: #1d1818;
+          --plate: #231d1d;
+          --plate-soft: #2a2221;
+          --plate-raised: #352b29;
+          --plate-sunken: #181313;
+          --ink: #f3ede7;
+          --ink-body: #cdbfb9;
+          --ink-soft: #cdbfb9;
+          --ink-faint: #b1a1a0;
+          --line: #3d3230;
+          --line-soft: #332a29;
+          --line-strong: #8b6665;
+          --accent: #9db3ea;
+          --accent-strong: #bdcfff;
+          --accent-soft: rgb(157 179 234 / 14%);
+          --accent-line: rgb(157 179 234 / 55%);
+          --warm: #c8a24a;
+          --warm-soft: #3a3020;
+          --warm-line: #6a5730;
+          --sage: #a8b870;
+          --sage-soft: #282d22;
+          --sage-line: #58653c;
+          --rust: #d47a59;
+          --rust-soft: #33221b;
+          --rust-line: #714532;
+          --terminal: #16110f;
+          --terminal-line: #2e2523;
+          --terminal-ink: #f3ede7;
+          --terminal-muted: #b1a1a0;
+          --shadow: 0 0 0;
+        }
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --field: #1d1818;
+        --plate: #231d1d;
+        --plate-soft: #2a2221;
+        --plate-raised: #352b29;
+        --plate-sunken: #181313;
+        --ink: #f3ede7;
+        --ink-body: #cdbfb9;
+        --ink-soft: #cdbfb9;
+        --ink-faint: #b1a1a0;
+        --line: #3d3230;
+        --line-soft: #332a29;
+        --line-strong: #8b6665;
+        --accent: #9db3ea;
+        --accent-strong: #bdcfff;
+        --accent-soft: rgb(157 179 234 / 14%);
+        --accent-line: rgb(157 179 234 / 55%);
+        --warm: #c8a24a;
+        --warm-soft: #3a3020;
+        --warm-line: #6a5730;
+        --sage: #a8b870;
+        --sage-soft: #282d22;
+        --sage-line: #58653c;
+        --rust: #d47a59;
+        --rust-soft: #33221b;
+        --rust-line: #714532;
+        --terminal: #16110f;
+        --terminal-line: #2e2523;
+        --terminal-ink: #f3ede7;
+        --terminal-muted: #b1a1a0;
+        --shadow: 0 0 0;
+      }
+
+      :root[data-theme="light"] { color-scheme: light; }
+
+      * { box-sizing: border-box; }
+      html { min-width: 320px; scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--field);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: var(--accent-strong); text-underline-offset: 3px; }
+      a:hover { color: var(--accent); }
+      button, select { font: inherit; }
+      button:focus-visible, a:focus-visible, summary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      ::selection { color: var(--plate); background: var(--accent); }
+      code, pre, .mono { font-family: "SFMono-Regular", "Cascadia Code", "Liberation Mono", monospace; }
+
+      .skip-link {
+        position: fixed; top: 10px; left: 10px; z-index: 100;
+        padding: 9px 14px; color: var(--plate); background: var(--accent);
+        border-radius: var(--radius-sm); transform: translateY(-180%); transition: transform var(--duration) var(--ease);
+      }
+      .skip-link:focus { transform: translateY(0); }
+
+      .shell { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); min-height: 100vh; }
+      .rail {
+        position: sticky; top: 0; height: 100vh; padding: 24px 18px 20px;
+        display: flex; flex-direction: column; gap: 30px;
+        background: var(--glass); border-right: 1px solid var(--line);
+        backdrop-filter: blur(18px) saturate(120%); -webkit-backdrop-filter: blur(18px) saturate(120%);
+        box-shadow: inset -1px 0 0 color-mix(in srgb, var(--plate) 70%, transparent);
+      }
+      .brand { display: flex; gap: 11px; align-items: center; text-decoration: none; color: var(--ink); }
+      .brand-mark { width: 38px; height: 38px; color: var(--accent); flex: none; }
+      .brand-mark path { fill: currentColor; }
+      .brand strong { display: block; font-size: 17px; letter-spacing: -.02em; }
+      .brand small { display: block; margin-top: 1px; color: var(--ink-soft); font-size: 11px; }
+      .rail-heading { margin: 0 0 9px; color: var(--ink-faint); font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+      .rail nav { display: grid; gap: 4px; }
+      .rail nav a { padding: 8px 10px; color: var(--ink-soft); border-radius: var(--radius-sm); font-size: 13px; text-decoration: none; }
+      .rail nav a:hover, .rail nav a[aria-current="true"] { color: var(--accent-strong); background: var(--accent-soft); }
+      .rail-note { margin-top: auto; padding: 12px 11px; color: var(--ink-soft); background: var(--plate-soft); border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 11px; }
+      .rail-note strong { display: block; margin-bottom: 4px; color: var(--ink); font-size: 12px; }
+
+      .main { min-width: 0; }
+      .topbar {
+        position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between;
+        gap: 18px; min-height: 68px; padding: 12px clamp(18px, 4vw, 56px);
+        background: var(--glass); border-bottom: 1px solid var(--line-soft);
+        backdrop-filter: blur(18px) saturate(120%); -webkit-backdrop-filter: blur(18px) saturate(120%);
+      }
+      .crumbs { color: var(--ink-faint); font-size: 12px; }
+      .crumbs strong { color: var(--ink); font-weight: 650; }
+      .theme-control { display: inline-flex; align-items: center; gap: 3px; padding: 3px; background: var(--plate); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+      .theme-control button { min-width: 42px; min-height: 32px; padding: 5px 8px; color: var(--ink-soft); background: transparent; border: 0; border-radius: 5px; cursor: pointer; font-size: 11px; font-weight: 700; }
+      .theme-control button[aria-pressed="true"] { color: var(--accent-strong); background: var(--accent-soft); }
+
+      .content { width: min(100%, var(--max)); margin: 0 auto; padding: 54px clamp(18px, 4vw, 56px) 80px; }
+      .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr); gap: 38px; align-items: end; padding: 28px 0 36px; border-bottom: 1px solid var(--line); }
+      .hero h1 { max-width: 820px; margin: 0; font-size: clamp(36px, 5.2vw, 68px); line-height: .98; letter-spacing: -.045em; font-weight: 720; }
+      .hero-lede { max-width: 720px; margin: 22px 0 0; color: var(--ink-body); font-size: clamp(17px, 2vw, 22px); line-height: 1.35; }
+      .hero-meta { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
+      .tag { display: inline-flex; align-items: center; min-height: 26px; padding: 4px 9px; color: var(--ink-soft); background: var(--plate-soft); border: 1px solid var(--line); border-radius: 999px; font-size: 11px; }
+      .tag--accent { color: var(--accent-strong); background: var(--accent-soft); border-color: var(--accent-line); }
+      .hero-answer { padding: 22px; background: var(--plate); border: 1px solid var(--accent-line); border-radius: var(--radius-xl); box-shadow: 0 24px 70px rgb(var(--shadow) / 12%); }
+      .eyebrow { margin: 0 0 8px; color: var(--accent-strong); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+      .hero-answer h2 { margin: 0; font-size: 24px; line-height: 1.14; letter-spacing: -.025em; }
+      .hero-answer p { margin: 13px 0 0; color: var(--ink-body); font-size: 14px; }
+      .answer-rule { display: grid; grid-template-columns: 22px 1fr; gap: 10px; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line); }
+      .answer-rule svg { width: 20px; height: 20px; color: var(--sage); }
+      .answer-rule strong { display: block; font-size: 13px; }
+      .answer-rule span { color: var(--ink-soft); font-size: 12px; }
+
+      .section { padding: 58px 0 0; scroll-margin-top: 86px; }
+      .section-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 22px; }
+      .section h2 { max-width: 760px; margin: 0; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.06; letter-spacing: -.035em; }
+      .section-intro { max-width: 690px; margin: 10px 0 0; color: var(--ink-body); }
+      .section-index { color: var(--ink-faint); font: 12px/1.4 "SFMono-Regular", monospace; white-space: nowrap; }
+
+      .metric-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--plate); }
+      .metric { min-height: 132px; padding: 17px 15px; border-right: 1px solid var(--line); }
+      .metric:last-child { border-right: 0; }
+      .metric b { display: block; color: var(--ink); font-size: clamp(24px, 3vw, 36px); line-height: 1; letter-spacing: -.04em; }
+      .metric span { display: block; margin-top: 10px; color: var(--ink-soft); font-size: 12px; }
+      .metric small { display: block; margin-top: 5px; color: var(--ink-faint); font-size: 10px; }
+      .metric--warning b { color: var(--rust); }
+      .metric--positive b { color: var(--sage); }
+
+      .callout { padding: 19px 21px; background: var(--warm-soft); border: 1px solid var(--warm-line); border-radius: var(--radius-lg); }
+      .callout strong { color: var(--warm); }
+      .callout p { margin: 5px 0 0; color: var(--ink-body); }
+
+      .model-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: stretch; gap: 0; margin-top: 28px; }
+      .model-node { position: relative; padding: 18px 17px 19px; background: var(--plate); border: 1px solid var(--line); min-height: 188px; }
+      .model-node:first-child { border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+      .model-node:last-child { border-radius: 0 var(--radius-lg) var(--radius-lg) 0; }
+      .model-node + .model-node { border-left: 0; }
+      .model-node::after { content: ""; position: absolute; right: -10px; top: 50%; width: 18px; height: 1px; z-index: 2; background: var(--line-strong); }
+      .model-node:last-child::after { display: none; }
+      .model-node svg { width: 21px; height: 21px; color: var(--accent); }
+      .model-node h3 { margin: 12px 0 5px; font-size: 17px; line-height: 1.1; }
+      .model-node p { margin: 0; color: var(--ink-body); font-size: 12px; }
+      .model-node small { display: block; margin-top: 15px; color: var(--ink-faint); font-size: 10px; }
+      .model-node--brief { background: var(--warm-soft); border-color: var(--warm-line); }
+      .model-node--revision { background: var(--accent-soft); border-color: var(--accent-line); }
+      .model-node--evidence { background: var(--sage-soft); border-color: var(--sage-line); }
+
+      .explain-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: 20px; margin-top: 24px; }
+      .explain-panel { padding: 22px; background: var(--plate); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+      .explain-panel h3 { margin: 0; font-size: 19px; }
+      .explain-panel > p { margin: 10px 0 0; color: var(--ink-body); font-size: 14px; }
+      .owner-list { display: grid; gap: 0; margin: 17px 0 0; }
+      .owner-row { display: grid; grid-template-columns: 126px 1fr; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line-soft); }
+      .owner-row strong { color: var(--accent-strong); font-size: 12px; }
+      .owner-row span { color: var(--ink-body); font-size: 12px; }
+
+      .example { margin-top: 24px; overflow: hidden; background: var(--terminal); border: 1px solid var(--terminal-line); border-radius: var(--radius-lg); color: var(--terminal-ink); box-shadow: 0 20px 50px rgb(0 0 0 / 17%); }
+      .example-head { display: flex; gap: 13px; align-items: center; justify-content: space-between; padding: 13px 16px; border-bottom: 1px solid var(--terminal-line); }
+      .example-head strong { font-size: 14px; }
+      .example-head span { color: var(--terminal-muted); font: 11px "SFMono-Regular", monospace; }
+      .example-tabs { display: flex; gap: 5px; padding: 10px 13px 0; }
+      .example-tabs button { min-height: 32px; padding: 5px 11px; color: var(--terminal-muted); background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer; font: 11px "SFMono-Regular", monospace; }
+      .example-tabs button[aria-pressed="true"] { color: var(--terminal-ink); border-color: color-mix(in srgb, var(--terminal-muted) 38%, transparent); background: color-mix(in srgb, var(--terminal-ink) 7%, transparent); }
+      .example-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: 22px; padding: 19px; }
+      .example-body pre { margin: 0; overflow: auto; color: var(--terminal-ink); font-size: 12px; line-height: 1.7; white-space: pre-wrap; }
+      .example-body code .key { color: #9db3ea; }
+      .example-body code .value { color: #d8bf7a; }
+      .example-body code .comment { color: #a99996; }
+      .example-side { padding-left: 20px; border-left: 1px solid var(--terminal-line); }
+      .example-side h4 { margin: 0 0 8px; color: #d8bf7a; font-size: 11px; letter-spacing: .09em; text-transform: uppercase; }
+      .example-side p { margin: 0; color: var(--terminal-muted); font-size: 12px; }
+      .example-side ul { margin: 12px 0 0; padding-left: 18px; color: var(--terminal-ink); font-size: 12px; }
+
+      .source-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch; margin-top: 25px; }
+      .source-step { position: relative; padding: 18px; background: var(--plate); border: 1px solid var(--line); border-radius: var(--radius-md); }
+      .source-step:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -17px; width: 22px; height: 1px; z-index: 2; background: var(--line-strong); }
+      .source-step h3 { margin: 0; font-size: 15px; }
+      .source-step p { margin: 8px 0 0; color: var(--ink-body); font-size: 12px; }
+      .source-step small { display: block; margin-top: 14px; color: var(--ink-faint); font-size: 10px; }
+      .source-step--staging { border-color: var(--warm-line); background: var(--warm-soft); }
+      .source-step--brain { border-color: var(--accent-line); background: var(--accent-soft); }
+      .source-step--runtime { border-color: var(--sage-line); background: var(--sage-soft); }
+      .source-step--lab { border-color: var(--line-strong); }
+
+      .route-board { position: relative; margin-top: 25px; padding: 23px; background: var(--plate); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+      .route-board::before { content: ""; position: absolute; top: 23px; bottom: 23px; left: 35px; width: 1px; background: var(--line); }
+      .route-row { position: relative; display: grid; grid-template-columns: 30px minmax(150px, .55fr) minmax(0, 1.45fr); gap: 15px; align-items: center; min-height: 61px; }
+      .route-dot { width: 12px; height: 12px; margin-left: 0; z-index: 1; border: 2px solid var(--plate); border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+      .route-row:nth-child(3) .route-dot { background: var(--warm); box-shadow: 0 0 0 1px var(--warm); }
+      .route-row:nth-child(4) .route-dot { background: var(--sage); box-shadow: 0 0 0 1px var(--sage); }
+      .route-row:nth-child(5) .route-dot { background: var(--rust); box-shadow: 0 0 0 1px var(--rust); }
+      .route-row strong { font-size: 14px; }
+      .route-row span { color: var(--ink-body); font-size: 12px; }
+      .mode-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 19px; padding-top: 17px; border-top: 1px solid var(--line-soft); }
+      .mode { padding: 7px 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 11px; }
+      .mode strong { color: var(--accent-strong); }
+
+      .decision { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 21px; margin-top: 24px; }
+      .decision-main { padding: 23px; background: var(--accent-soft); border: 1px solid var(--accent-line); border-radius: var(--radius-lg); }
+      .decision-main h3 { margin: 0; font-size: 23px; line-height: 1.12; }
+      .decision-main p { margin: 12px 0 0; color: var(--ink-body); font-size: 14px; }
+      .decision-list { margin: 17px 0 0; padding-left: 19px; color: var(--ink-body); font-size: 13px; }
+      .decision-list li + li { margin-top: 7px; }
+      .avoid { padding: 22px; background: var(--rust-soft); border: 1px solid var(--rust-line); border-radius: var(--radius-lg); }
+      .avoid h3 { margin: 0; color: var(--rust); font-size: 18px; }
+      .avoid ul { margin: 12px 0 0; padding-left: 19px; color: var(--ink-body); font-size: 13px; }
+
+      .roadmap { margin-top: 23px; border-top: 1px solid var(--line); }
+      .gate { display: grid; grid-template-columns: 90px minmax(0, .8fr) minmax(0, 1.2fr); gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+      .gate-id { color: var(--accent-strong); font: 700 12px "SFMono-Regular", monospace; }
+      .gate h3 { margin: 0; font-size: 16px; }
+      .gate p { margin: 3px 0 0; color: var(--ink-body); font-size: 12px; }
+      .gate-check { color: var(--ink-body); font-size: 12px; }
+      .gate-check strong { color: var(--sage); }
+
+      .research { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+      .reference { padding: 18px; background: var(--plate); border: 1px solid var(--line); border-radius: var(--radius-md); }
+      .reference h3 { margin: 0; font-size: 15px; }
+      .reference p { margin: 8px 0 0; color: var(--ink-body); font-size: 12px; }
+      .reference a { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 650; }
+      .source-note { margin-top: 17px; color: var(--ink-faint); font-size: 11px; }
+
+      .footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 11px; }
+      .footer span + span::before { content: " · "; margin: 0 6px; }
+
+      @keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+      .hero, .section { animation: reveal 520ms var(--ease) both; }
+      .section:nth-of-type(2) { animation-delay: 40ms; }
+      .section:nth-of-type(3) { animation-delay: 80ms; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      }
+      @media (max-width: 1040px) {
+        :root { --rail: 188px; }
+        .hero { grid-template-columns: 1fr; gap: 25px; }
+        .hero-answer { max-width: 650px; }
+        .metric-strip { grid-template-columns: repeat(3, 1fr); }
+        .metric:nth-child(3) { border-right: 0; }
+        .metric:nth-child(n + 4) { border-top: 1px solid var(--line); }
+        .metric:nth-child(4) { border-right: 1px solid var(--line); }
+        .model-flow { grid-template-columns: 1fr; }
+        .model-node, .model-node:first-child, .model-node:last-child { min-height: auto; border-radius: 0; border-left: 1px solid var(--line); }
+        .model-node:first-child { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+        .model-node:last-child { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+        .model-node + .model-node { border-top: 0; }
+        .model-node::after { top: auto; right: auto; bottom: -10px; left: 50%; width: 1px; height: 18px; }
+        .source-flow { grid-template-columns: repeat(2, 1fr); }
+        .source-step:not(:last-child)::after { display: none; }
+      }
+      @media (max-width: 760px) {
+        .shell { display: block; }
+        .rail { position: static; height: auto; padding: 12px 16px; display: block; border-right: 0; border-bottom: 1px solid var(--line); }
+        .brand { margin-bottom: 12px; }
+        .rail-heading, .rail-note { display: none; }
+        .rail nav { display: flex; gap: 3px; overflow-x: auto; padding-bottom: 2px; }
+        .rail nav a { flex: none; }
+        .topbar { position: static; padding: 11px 16px; }
+        .content { padding: 30px 16px 58px; }
+        .hero { padding-top: 12px; }
+        .hero h1 { font-size: clamp(34px, 11vw, 54px); }
+        .metric-strip { grid-template-columns: repeat(2, 1fr); }
+        .metric { border-right: 0; }
+        .metric:nth-child(odd) { border-right: 1px solid var(--line); }
+        .metric:nth-child(3) { border-top: 1px solid var(--line); }
+        .metric:nth-child(4) { border-right: 0; }
+        .metric:nth-child(5) { grid-column: 1 / -1; border-top: 1px solid var(--line); }
+        .explain-grid, .decision { grid-template-columns: 1fr; }
+        .example-body { grid-template-columns: 1fr; }
+        .example-side { padding: 16px 0 0; border-top: 1px solid var(--terminal-line); border-left: 0; }
+        .route-row { grid-template-columns: 25px 1fr; gap: 11px; }
+        .route-row span { grid-column: 2; margin-top: -10px; }
+        .gate { grid-template-columns: 55px 1fr; gap: 8px 14px; }
+        .gate-check { grid-column: 2; }
+        .research { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 420px) {
+        .theme-control button { min-width: 35px; padding-inline: 5px; }
+        .crumbs { font-size: 11px; }
+        .source-flow { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">К содержанию</a>
+    <div class="shell">
+      <aside class="rail" aria-label="Навигация по отчёту">
+        <a class="brand" href="#top" aria-label="В начало отчёта">
+          <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true"><path d="M7 6h26l-5 8H13v7h12l-5 8h-7v8H7V6Z"/><path d="m24 22 11-16v11l-6 9h6v10H24V22Z"/></svg>
+          <span><strong>Fluent Interview</strong><small>Question architecture dossier</small></span>
+        </a>
+        <div>
+          <p class="rail-heading">Внутри отчёта</p>
+          <nav>
+            <a href="#answer" aria-current="true">Ответ</a>
+            <a href="#model">Модель сущностей</a>
+            <a href="#example">Пример rate limiter</a>
+            <a href="#routes">Пути и режимы</a>
+            <a href="#plan">Лучший сценарий</a>
+            <a href="#research">Референсы</a>
+          </nav>
+        </div>
+        <div class="rail-note"><strong>Как читать</strong>Сначала решение, затем одна модель, затем пример. В конце — последовательность, которую можно превратить в gates.</div>
+      </aside>
+
+      <div class="main" id="top">
+        <header class="topbar">
+          <div class="crumbs">Architecture review <span aria-hidden="true">/</span> <strong>Question Brain × Fluent Lab</strong></div>
+          <div class="theme-control" aria-label="Тема отчёта">
+            <button type="button" data-theme="system" aria-pressed="true">Auto</button>
+            <button type="button" data-theme="light" aria-pressed="false">Light</button>
+            <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+          </div>
+        </header>
+
+        <main class="content" id="main" tabindex="-1">
+          <section class="hero" id="answer">
+            <div>
+              <h1>Как правильно связать вопросы, задачи и пути</h1>
+              <p class="hero-lede">Оптимальная модель для нас — не «вопрос превращается в задачу» и не одна огромная база. Это единый граф компетенций, поверх которого живут три независимых слоя: editorial content, executable runtime и learner projection.</p>
+              <div class="hero-meta" aria-label="Базовые показатели текущей системы">
+                <span class="tag tag--accent">1 368 карточек</span><span class="tag">127 тематических групп</span><span class="tag">16 задач</span><span class="tag">5 runtime-профилей</span><span class="tag">1 805 staging-файлов</span>
+              </div>
+            </div>
+            <aside class="hero-answer" aria-label="Итоговая рекомендация">
+              <h2>Оставить 3 репозитория. Добавить типизированный pipeline.</h2>
+              <p>Question Brain отвечает за смысл и связи. Task Runtime отвечает за безопасное исполнение. Fluent Lab отвечает за маршрут, прогресс и доказательства.</p>
+              <div class="answer-rule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Лучший сценарий</strong><span>Не публиковать контент, пока для него не существует явной связи, рубрики и проверяемого состояния release.</span></div></div>
+            </aside>
+          </section>
+
+          <section class="section" aria-labelledby="numbers-title">
+            <div class="section-head"><div><h2 id="numbers-title">Сначала убираем путаницу в цифрах</h2><p class="section-intro">Числа относятся к разным уровням. 1 368 вопросов не обязаны равняться 79 станциям, а 15 областей — это не 15 независимых программ.</p></div><span class="section-index">01 · CURRENT TRUTH</span></div>
+            <div class="metric-strip" aria-label="Слои текущей системы">
+              <div class="metric"><b>1 368</b><span>Question Cards</span><small>единицы содержания</small></div>
+              <div class="metric"><b>127</b><span>тематических групп</span><small>поиск и taxonomy</small></div>
+              <div class="metric"><b>15</b><span>областей программы</span><small>верхний уровень route graph</small></div>
+              <div class="metric"><b>79</b><span>учебных станций</span><small>checkpoint-ы curriculum</small></div>
+              <div class="metric metric--warning"><b>0</b><span>published station bindings</span><small>главная причина «всё закрыто»</small></div>
+            </div>
+            <div class="callout" style="margin-top:18px"><strong>Что это означает на практике.</strong><p>Карточки уже опубликованы и доступны в отдельной библиотеке, но projection в learner graph ещё не опубликован. Поэтому интерфейс видит контент, но не может честно сказать, в какой capability и на какой станции его проходить.</p></div>
+          </section>
+
+          <section class="section" id="model" aria-labelledby="model-title">
+            <div class="section-head"><div><h2 id="model-title">Одна модель, которую нужно держать в голове</h2><p class="section-intro">Это не пять разных копий одного вопроса. Это цепочка от смысла к проверяемому свидетельству.</p></div><span class="section-index">02 · DOMAIN MODEL</span></div>
+            <div class="model-flow" aria-label="Question Card передаёт смысл в Task Brief, затем в Task Revision, Run и Evidence">
+              <article class="model-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4.5h14v15H5zM8 8h8M8 12h6M8 16h4" stroke-linecap="round"/></svg><h3>Question Card</h3><p>Что могут спросить на интервью и какой короткий ответ считается хорошим.</p><small>Владелец: Question Brain</small></article>
+              <article class="model-node model-node--brief"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h3" stroke-linecap="round"/></svg><h3>Task Brief</h3><p>Какое умение нужно доказать: условие, вход, лимиты, рубрика, capability.</p><small>Editorial link, без hidden tests</small></article>
+              <article class="model-node model-node--revision"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 4h10v16H7zM10 7h4M10 11h4M10 15h4" stroke-linecap="round"/></svg><h3>Task Revision</h3><p>Конкретная реализация на Node.js, Go, Java, SQL или другом профиле.</p><small>Владелец: Task Runtime</small></article>
+              <article class="model-node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 5h8M6 9h12M8 13h8M6 17h12" stroke-linecap="round"/></svg><h3>Run</h3><p>Один запуск в sandbox: версия toolchain, stdin, тесты, таймаут и лимит памяти.</p><small>Immutable input + trace</small></article>
+              <article class="model-node model-node--evidence"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9"/></svg><h3>Evidence</h3><p>Что реально доказано: тесты, trace, query plan, объяснение и cold repeat.</p><small>Projection в Fluent Lab</small></article>
+            </div>
+            <div class="explain-grid">
+              <div class="explain-panel"><h3>Кто чем владеет</h3><p>Граница нужна не ради микросервисов. Она защищает смысл от запуска и запуска — от UX.</p><div class="owner-list"><div class="owner-row"><strong>Question Brain</strong><span>локали, taxonomy, capability edges, рубрика, editorial release.</span></div><div class="owner-row"><strong>Task Runtime</strong><span>starter files, hidden tests, harness, profiles, sandbox, run traces.</span></div><div class="owner-row"><strong>Fluent Lab</strong><span>route view, prerequisites, learner state, evidence timeline.</span></div></div></div>
+              <div class="explain-panel"><h3>Почему не сделать одну сущность «QuestionWithCode»</h3><p>Один и тот же вопрос может иметь несколько способов доказательства. Rate limiter можно реализовать на Node.js и Go; объяснение остаётся тем же, а компилятор, тесты и лимиты — разными.</p><div class="callout" style="margin-top:16px"><strong>Важная поправка к HANDOFF.</strong><p>В QBrain допустим видимый TaskBrief и ссылка <code>runtime_task_ref</code>. Reference solution, hidden tests и execution limits должны оставаться в Task Runtime.</p></div></div>
+            </div>
+          </section>
+
+          <section class="section" id="example" aria-labelledby="example-title">
+            <div class="section-head"><div><h2 id="example-title">Пример: rate limiter без копирования карточки</h2><p class="section-intro">Смысл один, а executable revision выбирается по языку. Переключите вариант — увидите, что меняется только runtime-слой.</p></div><span class="section-index">03 · CONCRETE EXAMPLE</span></div>
+            <div class="example" aria-label="Интерактивный пример Task Brief и runtime revisions">
+              <div class="example-head"><strong>Q-0421 · «Как ограничить частоту запросов?»</strong><span>QuestionCard → TaskBrief</span></div>
+              <div class="example-tabs" role="tablist" aria-label="Вариант исполнения"><button type="button" role="tab" aria-selected="true" aria-pressed="true" data-runtime="node">Node.js</button><button type="button" role="tab" aria-selected="false" aria-pressed="false" data-runtime="go">Go</button><button type="button" role="tab" aria-selected="false" aria-pressed="false" data-runtime="sql">SQL</button></div>
+              <div class="example-body"><pre aria-live="polite"><code id="example-code"><span class="comment">// видимое условие остаётся тем же</span>
+<span class="key">capability</span>: <span class="value">rate-limiting</span>
+<span class="key">goal</span>: <span class="value">«не больше 5 запросов за 10 секунд»</span>
+<span class="key">input</span>: <span class="value">request { clientId, timestamp }</span>
+<span class="key">rubric</span>: <span class="value">correctness · boundary · explanation</span>
+
+<span class="comment" id="example-runtime">// runtime: Node.js 24
+runtime_task_ref: task.rate-limiter.node.v1</span></code></pre><div class="example-side"><h4 id="example-title-live">Что проверяем в Node.js</h4><p id="example-copy">Версию toolchain, таймеры, конкурентный доступ к bucket, reset и bounded memory.</p><ul id="example-list"><li>public tests: базовый лимит</li><li>hidden tests: burst и граница окна</li><li>evidence: trace + score + объяснение</li></ul></div></div>
+            </div>
+            <p class="source-note">SQL здесь — отдельная вариация задачи (например, rate limiting на PostgreSQL), а не попытка запускать один и тот же исходник в трёх языках. Это и есть смысл `TaskBrief`: связать одну capability с несколькими валидными доказательствами.</p>
+          </section>
+
+          <section class="section" aria-labelledby="bank-title">
+            <div class="section-head"><div><h2 id="bank-title">Куда попадают задачи из «Банка вопросов»</h2><p class="section-intro">Папка — это staging-источник. В production не должны попадать ни случайные дубли, ни задачи без лицензии, ни карточки без понятного владельца.</p></div><span class="section-index">04 · CONTENT SUPPLY CHAIN</span></div>
+            <div class="source-flow" aria-label="Pipeline от файлов банка до learner evidence"><article class="source-step source-step--staging"><h3>1 · Intake</h3><p>Файл, источник, лицензия, язык, тип материала, provenance.</p><small>1 805 mixed files</small></article><article class="source-step source-step--brain"><h3>2 · Editorial</h3><p>Нормализация QuestionCard, Topic, capability, дубль, EN/RU.</p><small>Question Brain release</small></article><article class="source-step source-step--runtime"><h3>3 · Execution</h3><p>TaskBrief превращается в TaskRevision только после автора и тестов.</p><small>Task Runtime release</small></article><article class="source-step source-step--lab"><h3>4 · Learning</h3><p>Lab показывает route, запускает задачу и сохраняет evidence.</p><small>Fluent Lab projection</small></article></div>
+            <div class="callout" style="margin-top:18px"><strong>Классифицируем до импорта.</strong><p>Каждый материал получает один или несколько типов: oral/theory, code, SQL, debugging, system design, behavioral. Только `code` и `SQL` требуют runtime revision. System design и behavioral могут иметь полноценный TaskBrief и rubric без sandbox.</p></div>
+          </section>
+
+          <section class="section" id="routes" aria-labelledby="routes-title">
+            <div class="section-head"><div><h2 id="routes-title">Пути — это views над одним графом</h2><p class="section-intro">Не строим 15 независимых программ и не делаем 1 368 станций. Строим capability graph, а поверх него — ясные именованные маршруты.</p></div><span class="section-index">05 · ROUTE MODEL</span></div>
+            <div class="route-board" aria-label="Пример слоёв маршрута Backend Node">
+              <div class="route-row"><i class="route-dot" aria-hidden="true"></i><strong>Роль</strong><span>Backend Engineer · Node.js primary</span></div>
+              <div class="route-row"><i class="route-dot" aria-hidden="true"></i><strong>Core runtime</strong><span>JavaScript foundations, Node runtime, HTTP, streams, memory, concurrency</span></div>
+              <div class="route-row"><i class="route-dot" aria-hidden="true"></i><strong>Shared systems</strong><span>PostgreSQL, OS, distributed workflows, delivery, observability</span></div>
+              <div class="route-row"><i class="route-dot" aria-hidden="true"></i><strong>Proof modes</strong><span>QuestionCard, executable lab, debugging task, system-design exercise, cold repeat</span></div>
+              <div class="route-row"><i class="route-dot" aria-hidden="true"></i><strong>Release state</strong><span>Открыто только то, что имеет published binding и понятный prerequisite.</span></div>
+              <div class="mode-strip"><span class="mode"><strong>Recommended</strong> — порядок и prerequisites</span><span class="mode"><strong>Explorer</strong> — весь опубликованный граф</span><span class="mode"><strong>Freely</strong> — любой released узел без искусственного lock</span></div>
+            </div>
+            <p class="source-note">Примеры будущих route views: Backend Node, Backend Go, Backend Java, Backend .NET, Frontend Angular/React/Vue, System Design, Algorithms, Behavioral. Карточка может входить в несколько views, не создавая копию.</p>
+          </section>
+
+          <section class="section" id="plan" aria-labelledby="plan-title">
+            <div class="section-head"><div><h2 id="plan-title">Лучший сценарий: как сделать правильно с нуля</h2><p class="section-intro">Это не «быстрее дописать карточки». Сначала фиксируем контракты и release gates, затем наращиваем контент и языки.</p></div><span class="section-index">06 · RECOMMENDED EXECUTION</span></div>
+            <div class="decision"><div class="decision-main"><h3>Сначала качество связи, потом объём</h3><p>Каждая следующая итерация должна делать путь более честным: пользователь понимает, что изучает, зачем запускает задачу и какое доказательство получил.</p><ul class="decision-list"><li>Один capability имеет много карточек и много форм практики.</li><li>Одна карточка может ссылаться на несколько runtime revisions.</li><li>Draft, proposed и released — разные состояния, а не разные таблицы.</li><li>LLM может предложить enrichment, но не публикует граф и не оценивает deterministic run.</li></ul></div><div class="avoid"><h3>Чего не делать</h3><ul><li>Не хранить hidden tests в Question Brain.</li><li>Не импортировать 1 805 файлов напрямую в production.</li><li>Не открывать всё через fallback, если нет binding.</li><li>Не превращать каждую тему в отдельную программу.</li></ul></div></div>
+            <div class="roadmap">
+              <div class="gate"><div class="gate-id">G0</div><div><h3>Контракт сущностей</h3><p>QuestionCard, TaskBrief, TaskRevision, Run, Evidence; ownership и version rules.</p></div><div class="gate-check"><strong>Done when:</strong> нет дублирования hidden tests/reference solution между репозиториями.</div></div>
+              <div class="gate"><div class="gate-id">G1</div><div><h3>Graph projection</h3><p>Добавить capability/stage/route keys, типизированные edges и release binding.</p></div><div class="gate-check"><strong>Done when:</strong> quality API объясняет каждую unbound-карточку, а learner graph показывает реальную coverage.</div></div>
+              <div class="gate"><div class="gate-id">G2</div><div><h3>Bank intake</h3><p>Разобрать staging, provenance, дубли, локали, тип материала и приоритеты импорта.</p></div><div class="gate-check"><strong>Done when:</strong> каждый импортированный источник имеет владельца, статус review и trace происхождения.</div></div>
+              <div class="gate"><div class="gate-id">G3</div><div><h3>Task authoring</h3><p>Сначала закрыть Node.js, SQL, Go и Java; затем добавлять профили только с тестами и limits.</p></div><div class="gate-check"><strong>Done when:</strong> каждая runnable capability имеет хотя бы одну released revision и smoke-test.</div></div>
+              <div class="gate"><div class="gate-id">G4</div><div><h3>Route views</h3><p>Recommended, Explorer, Freely; роли и специализации поверх одного графа.</p></div><div class="gate-check"><strong>Done when:</strong> любой released вопрос можно найти, открыть и объяснить, почему он в этом route.</div></div>
+              <div class="gate"><div class="gate-id">G5</div><div><h3>Search & observability</h3><p>Hybrid FTS + embeddings, indexer/outbox, traces для поиска, импорта и run.</p></div><div class="gate-check"><strong>Done when:</strong> через неделю видно, где пользователь застревает и какой контент требует улучшения.</div></div>
+              <div class="gate"><div class="gate-id">G6</div><div><h3>Production release</h3><p>Release manifests, rollback, migrations, resource budgets, security review.</p></div><div class="gate-check"><strong>Done when:</strong> чистый запуск Compose/Nx, health/readiness и повторяемый release без fallback.</div></div>
+            </div>
+          </section>
+
+          <section class="section" id="research" aria-labelledby="research-title">
+            <div class="section-head"><div><h2 id="research-title">Что взято из зрелых систем</h2><p class="section-intro">Мы не копируем формат. Берём проверенные принципы: syllabus отдельно от упражнений, reusable content, canonical tests и hybrid search.</p></div><span class="section-index">07 · RESEARCH</span></div>
+            <div class="research">
+              <article class="reference"><h3>Exercism</h3><p>Разделяет concept syllabus и practice exercises; канонические test data синхронизируются между языковыми tracks. Это прямой референс для TaskBrief + language revisions.</p><a href="https://exercism.org/docs/building/tracks" target="_blank" rel="noreferrer">Building tracks ↗</a><br /><a href="https://github.com/exercism/problem-specifications" target="_blank" rel="noreferrer">Canonical specifications ↗</a></article>
+              <article class="reference"><h3>Open edX / Moodle</h3><p>Переиспользуемые библиотеки, problem banks, категории, теги и синхронизация публикаций. Это подтверждает staging → editorial release, а не прямую загрузку в курс.</p><a href="https://docs.openedx.org/en/latest/educators/how-tos/course_development/add_library_content_to_a_course.html" target="_blank" rel="noreferrer">Open edX libraries ↗</a><br /><a href="https://docs.moodle.org/400/en/Question_bank" target="_blank" rel="noreferrer">Moodle Question bank ↗</a></article>
+              <article class="reference"><h3>Judge0 / Piston</h3><p>Показывают, что execution engine должен иметь HTTP contract, language profiles, limits, sandbox и подробный result. Берём контракт, но сохраняем собственный Go Runtime.</p><a href="https://github.com/judge0/judge0" target="_blank" rel="noreferrer">Judge0 ↗</a><br /><a href="https://github.com/engineer-man/piston" target="_blank" rel="noreferrer">Piston ↗</a></article>
+              <article class="reference"><h3>Postgres + pgvector</h3><p>Exact search остаётся baseline; HNSW добавляется после измерений; full-text и vector search можно объединять для гибкого поиска по вопросам.</p><a href="https://github.com/pgvector/pgvector" target="_blank" rel="noreferrer">pgvector README ↗</a></article>
+              <article class="reference"><h3>Nx workspace</h3><p>Polyglot workspace не требует одного языка: Nx умеет строить project/task graph и управлять не-JavaScript репозиториями.</p><a href="https://nx.dev/docs/kb/install-non-javascript" target="_blank" rel="noreferrer">Nx non-JS repos ↗</a></article>
+              <article class="reference"><h3>Наше решение</h3><p>Собираем эти идеи в три независимых репозитория и один root workspace. Контракты — HTTP/release manifests, а не shared ORM или скрытая общая БД.</p><a href="../../../AGENTS.md">Workspace rules ↗</a></article>
+            </div>
+            <p class="source-note">Внешние ссылки просмотрены 23 августа 2026 года. Исследование использует официальные docs/repositories; числовой baseline — локальная read-only проверка 23 августа.</p>
+          </section>
+
+          <section class="section" aria-labelledby="final-title">
+            <div class="section-head"><div><h2 id="final-title">Итог в одном предложении</h2><p class="section-intro">Question Brain должен стать редактором и графом смысла, Task Runtime — доказательным execution engine, а Fluent Lab — красивой оболочкой маршрута и памяти.</p></div><span class="section-index">08 · FINAL VERDICT</span></div>
+            <div class="callout"><strong>Если начать сегодня.</strong><p>Сначала закрываем G0 и G1: типизируем связи и публикуем projection. Затем импортируем банк волнами, создаём TaskBrief и только после авторской проверки выпускаем языковые revisions. Когда это станет истинным, экран «всё закрыто» исчезнет не за счёт обхода, а потому что система действительно знает, что можно проходить и какое доказательство нужно получить.</p></div>
+          </section>
+
+          <footer class="footer"><span>Fluent Interview · Question Brain architecture</span><span>Аудит: 21 августа 2026</span><span>Live verification: 23 августа 2026</span><span>Read-only · код и данные не изменялись</span></footer>
+        </main>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const root = document.documentElement;
+        const buttons = [...document.querySelectorAll('[data-theme]')];
+        const stored = localStorage.getItem('fluent-report-theme');
+        const applyTheme = (value) => {
+          if (value === 'system') root.removeAttribute('data-theme');
+          else root.dataset.theme = value;
+          buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.theme === value)));
+          localStorage.setItem('fluent-report-theme', value);
+        };
+        applyTheme(stored || 'system');
+        buttons.forEach((button) => button.addEventListener('click', () => applyTheme(button.dataset.theme)));
+
+        const variants = {
+          node: {
+            title: 'Что проверяем в Node.js',
+            copy: 'Версию toolchain, таймеры, конкурентный доступ к bucket, reset и bounded memory.',
+            runtime: '// runtime: Node.js 24\nruntime_task_ref: task.rate-limiter.node.v1',
+            list: ['public tests: базовый лимит', 'hidden tests: burst и граница окна', 'evidence: trace + score + объяснение']
+          },
+          go: {
+            title: 'Что проверяем в Go',
+            copy: 'Горутины, mutex/atomic, отказоустойчивое состояние и корректное завершение процесса.',
+            runtime: '// runtime: Go 1.24\nruntime_task_ref: task.rate-limiter.go.v1',
+            list: ['public tests: окно и burst', 'hidden tests: race detector', 'evidence: trace + tests + explanation']
+          },
+          sql: {
+            title: 'Что проверяем в PostgreSQL',
+            copy: 'DDL, транзакцию, конкуренцию и запрос, который не ломает лимит под несколькими клиентами.',
+            runtime: '-- runtime: PostgreSQL 17\nruntime_task_ref: task.rate-limiter.pg.v1',
+            list: ['public tests: schema и базовый запрос', 'hidden tests: concurrent transactions', 'evidence: query plan + result + explanation']
+          }
+        };
+        const code = document.getElementById('example-code');
+        const title = document.getElementById('example-title-live');
+        const copy = document.getElementById('example-copy');
+        const list = document.getElementById('example-list');
+        document.querySelectorAll('[data-runtime]').forEach((tab) => tab.addEventListener('click', () => {
+          const variant = variants[tab.dataset.runtime];
+          document.querySelectorAll('[data-runtime]').forEach((other) => {
+            const active = other === tab;
+            other.setAttribute('aria-pressed', String(active));
+            other.setAttribute('aria-selected', String(active));
+          });
+          title.textContent = variant.title;
+          copy.textContent = variant.copy;
+          list.replaceChildren(...variant.list.map((item) => { const li = document.createElement('li'); li.textContent = item; return li; }));
+          const runtimeNode = document.getElementById('example-runtime');
+          runtimeNode.textContent = variant.runtime;
+        }));
+      })();
+    </script>
+  </body>
+</html>

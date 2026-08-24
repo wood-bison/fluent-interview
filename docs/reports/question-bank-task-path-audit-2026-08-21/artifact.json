@@ -1,0 +1,191 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Question Brain, задачи и пути: что сейчас связано, а что ещё нет — аудит на 21 августа 2026",
+    "description": "Read-only аудит Fluent Interview: Question Brain, Task Runtime, Fluent Lab и входной банк вопросов. Фактическая проверка выполнена 23 августа 2026; дата в заголовке сохранена по запросу владельца отчёта.",
+    "generatedAt": "2026-08-23T20:48:00+02:00",
+    "sources": [{"id": "audit-live"}, {"id": "runtime-catalog"}, {"id": "bank-inventory"}, {"id": "architecture-decision"}, {"id": "audit-plan"}, {"id": "research"}],
+    "cards": [
+      {
+        "id": "cards",
+        "description": "Опубликованные двуязычные карточки Question Brain в текущем release.",
+        "dataset": "headline",
+        "sourceId": "audit-live",
+        "metrics": [{"label": "Карточки Question Brain", "field": "cards", "format": "number"}]
+      },
+      {
+        "id": "stations",
+        "description": "Станции канонического curriculum-графа Fluent Lab.",
+        "dataset": "headline",
+        "sourceId": "audit-live",
+        "metrics": [{"label": "Станции Lab", "field": "stations", "format": "number"}]
+      },
+      {
+        "id": "bindings",
+        "description": "Карточки с явной связью stage_key/capability_key со станциями Lab.",
+        "dataset": "headline",
+        "sourceId": "audit-live",
+        "metrics": [{"label": "Формальные связки", "field": "bindings", "format": "number"}]
+      },
+      {
+        "id": "runtime-tasks",
+        "description": "Задачи Task Runtime со статусом released.",
+        "dataset": "headline",
+        "sourceId": "audit-live",
+        "metrics": [{"label": "Исполняемые задачи", "field": "runtimeTasks", "format": "number"}]
+      },
+      {
+        "id": "bank-files",
+        "description": "Файлы в папке «Банк вопросов» до staging, дедупликации и проверки лицензии.",
+        "dataset": "headline",
+        "sourceId": "bank-inventory",
+        "metrics": [{"label": "Файлы во входном банке", "field": "bankFiles", "format": "number"}]
+      }
+    ],
+    "charts": [
+      {
+        "id": "runtime-profile-coverage",
+        "title": "Релизные задачи по runtime-профилю",
+        "subtitle": "Node.js доминирует; Go и Java пока представлены одной задачей каждый.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Где сейчас есть исполняемые задачи и какие профили требуют наполнения?",
+        "rationale": "Горизонтальные столбцы позволяют сравнить профили с разными названиями и не скрывают малые значения.",
+        "type": "bar",
+        "dataset": "runtimeProfiles",
+        "sourceId": "runtime-catalog",
+        "encodings": {
+          "x": {"field": "profile", "type": "nominal", "label": "Профиль"},
+          "y": {"field": "tasks", "type": "quantitative", "label": "Задачи", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "layer-inventory",
+        "title": "Слои и границы ответственности",
+        "subtitle": "Один и тот же вопрос не должен копироваться в каждый слой.",
+        "showDescription": true,
+        "dataset": "layers",
+        "sourceId": "audit-live",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "layer", "label": "Слой", "type": "text"},
+          {"field": "owner", "label": "Владелец", "type": "text"},
+          {"field": "state", "label": "Фактическое состояние", "type": "text"},
+          {"field": "decision", "label": "Решение", "type": "text"}
+        ]
+      },
+      {
+        "id": "bank-scope",
+        "title": "Входной банк: что брать первым",
+        "subtitle": "Размер файла не равен количеству принятых карточек: сначала staging и provenance.",
+        "showDescription": true,
+        "dataset": "bankScope",
+        "sourceId": "bank-inventory",
+        "defaultSort": {"field": "priority", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "priority", "label": "Приоритет", "type": "number"},
+          {"field": "source", "label": "Источник", "type": "text"},
+          {"field": "files", "label": "Файлов", "type": "number"},
+          {"field": "scope", "label": "Решение по scope", "type": "text"},
+          {"field": "firstSlice", "label": "Первая срезка", "type": "text"}
+        ]
+      },
+      {
+        "id": "iteration-gates",
+        "title": "Итерации с закрывающими критериями",
+        "subtitle": "Следующая итерация начинается только после выполнения exit criteria предыдущей.",
+        "showDescription": true,
+        "dataset": "iterations",
+        "sourceId": "audit-plan",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "gate", "label": "Итерация", "type": "text"},
+          {"field": "status", "label": "Сейчас", "type": "text"},
+          {"field": "exit", "label": "Exit criteria", "type": "text"},
+          {"field": "unblocks", "label": "Что разблокирует", "type": "text"}
+        ]
+      }
+    ],
+    "blocks": [
+      {"id": "summary", "type": "markdown", "body": "# Question Brain, задачи и пути: что сейчас связано, а что ещё нет — аудит на 21 августа 2026\n\n## Техническое резюме\n\nГлавный вывод: **данные не потеряны, но учебный маршрут почти не проецирует их в станции**. Question Brain уже отдаёт **1 368 опубликованных карточек**, каждая имеет английскую и русскую локаль, и каталог разбит на **127 тематических групп**. Fluent Lab одновременно показывает **1 маршрут, 15 крупных областей и 79 станций**, но формальная связка карточка → область/станция сейчас равна **0**: в карточках ещё нет опубликованных `stage_key` и `capability_key`. Поэтому `15` и `79` — не количество вопросов и не количество программ, а размер отдельного curriculum-графа.\n\nTask Runtime — отдельная истина исполнения: **16 released-задач** в пяти профилях (Node.js 11, PostgreSQL 2, .NET 1, Go 1, Java 1). Входная папка `Банк вопросов` содержит **1 805 файлов**, но это ещё не каталог задач: там смешаны HTML, CSV, Markdown, PDF, изображения, разные компании и нерелевантные направления.\n\nРекомендация: сохранить три репозитория и добавить типизированный pipeline. В Question Brain хранить вопрос, объяснение, рубрику и видимое условие упражнения; в Task Runtime — immutable task revision, starter files, hidden tests, runtime profile и bounded run; в Fluent Lab — только route/capability projection, прогресс и evidence. Пути сделать не копиями баз, а **именованными views над общим capability-графом**: Backend Node.js, Backend Java, Backend .NET, Backend Go, Frontend React, Frontend Angular, Fullstack, System Design, Algorithms и Behavioral.\n\nПроверка приложения и API выполнена read-only 23 августа 2026. Код, БД, releases и пользовательский прогресс этим аудитом не изменялись." , "sourceId": "audit-live"},
+      {"id": "headline-metrics", "type": "metric-strip", "cardIds": ["cards", "stations", "bindings", "runtime-tasks", "bank-files"]},
+      {"id": "meaning-of-numbers", "type": "markdown", "body": "## Почему 1 368 вопросов не превращаются автоматически в 79 станций\n\nВ системе есть четыре разных счётчика:\n\n- **Карточка** — единица Question Brain: prompt, ответ, объяснение, локали, topic и release.\n- **Тематическая группа** — поисковая таксономия, например `Java / Core Language` или `Databases & Data Modeling`; это не обязательно отдельный урок.\n- **Станция** — учебная точка Lab: теория, лаборатория, гейт или capability-proof с prerequisites и readiness.\n- **Область** — крупная секция маршрута, объединяющая станции.\n\nСейчас `Question Brain → topic` заполнен, а `Question Brain → station` ещё не опубликован. Это объясняет одновременно здоровый quality API (`published=1368`, `missing_english=0`, `missing_russian=0`) и честное сообщение карты «Карточки ещё не привязаны к станциям». Это не повод создавать 1 368 станций: один capability может иметь десятки карточек, а одна лаборатория может проверять несколько вопросов. Правильная связка — many-to-many через стабильный `capability_id` и release-aware placement." , "sourceId": "audit-live"},
+      {"id": "current-flow", "type": "html", "body": "<div style=\"font-family:system-ui,sans-serif;padding:22px;background:#f7f8fb;color:#172033;border:1px solid #d9e1f2;border-radius:18px\"><div style=\"font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#53658c\">Current projection · read-only</div><h2 style=\"margin:8px 0 6px;font-size:25px\">Где данные останавливаются сейчас</h2><p style=\"margin:0 0 16px;color:#526071\">Вопросы опубликованы и ищутся, но placement в learner-граф отсутствует.</p><svg viewBox=\"0 0 980 310\" role=\"img\" aria-label=\"Схема текущего потока: банк файлов, Question Brain, граф Lab, Task Runtime и интерфейс\" style=\"width:100%;height:auto;display:block\"><defs><marker id=\"arrow1\" markerWidth=\"8\" markerHeight=\"8\" refX=\"7\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#71809a\"/></marker></defs><g font-family=\"system-ui,sans-serif\"><rect x=\"12\" y=\"98\" width=\"170\" height=\"104\" rx=\"14\" fill=\"#fff\" stroke=\"#9aa8bd\"/><text x=\"97\" y=\"127\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">Банк файлов</text><text x=\"97\" y=\"152\" text-anchor=\"middle\" font-size=\"25\" font-weight=\"800\">1 805</text><text x=\"97\" y=\"177\" text-anchor=\"middle\" font-size=\"12\" fill=\"#64748b\">staging pending</text><line x1=\"182\" y1=\"150\" x2=\"232\" y2=\"150\" stroke=\"#71809a\" stroke-width=\"2\" marker-end=\"url(#arrow1)\"/><rect x=\"235\" y=\"78\" width=\"218\" height=\"144\" rx=\"14\" fill=\"#eaf0ff\" stroke=\"#4565c6\" stroke-width=\"2\"/><text x=\"344\" y=\"108\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">Question Brain</text><text x=\"344\" y=\"141\" text-anchor=\"middle\" font-size=\"28\" font-weight=\"800\">1 368</text><text x=\"344\" y=\"164\" text-anchor=\"middle\" font-size=\"12\">127 topic groups · EN + RU</text><text x=\"344\" y=\"191\" text-anchor=\"middle\" font-size=\"12\" fill=\"#a33f31\" font-weight=\"700\">0 station bindings</text><line x1=\"453\" y1=\"120\" x2=\"503\" y2=\"120\" stroke=\"#a33f31\" stroke-width=\"2\" stroke-dasharray=\"5 5\" marker-end=\"url(#arrow1)\"/><rect x=\"506\" y=\"30\" width=\"218\" height=\"112\" rx=\"14\" fill=\"#fff7e8\" stroke=\"#d29a34\"/><text x=\"615\" y=\"60\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">Lab curriculum</text><text x=\"615\" y=\"89\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"800\">15 areas</text><text x=\"615\" y=\"113\" text-anchor=\"middle\" font-size=\"12\">79 stations · 1 route</text><line x1=\"453\" y1=\"182\" x2=\"503\" y2=\"182\" stroke=\"#71809a\" stroke-width=\"2\" marker-end=\"url(#arrow1)\"/><rect x=\"506\" y=\"166\" width=\"218\" height=\"112\" rx=\"14\" fill=\"#ecfbf4\" stroke=\"#4b9a71\"/><text x=\"615\" y=\"196\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">Task Runtime</text><text x=\"615\" y=\"225\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"800\">16 tasks</text><text x=\"615\" y=\"249\" text-anchor=\"middle\" font-size=\"12\">5 ready profiles</text><line x1=\"724\" y1=\"86\" x2=\"820\" y2=\"138\" stroke=\"#71809a\" stroke-width=\"2\" marker-end=\"url(#arrow1)\"/><line x1=\"724\" y1=\"222\" x2=\"820\" y2=\"172\" stroke=\"#71809a\" stroke-width=\"2\" marker-end=\"url(#arrow1)\"/><rect x=\"823\" y=\"98\" width=\"145\" height=\"104\" rx=\"14\" fill=\"#1e293b\" stroke=\"#0f172a\"/><text x=\"895\" y=\"132\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\" fill=\"#fff\">Fluent Lab UI</text><text x=\"895\" y=\"158\" text-anchor=\"middle\" font-size=\"12\" fill=\"#dbeafe\">route + progress</text><text x=\"895\" y=\"181\" text-anchor=\"middle\" font-size=\"12\" fill=\"#fecaca\">placement missing</text></g></svg><p style=\"margin:12px 0 0;font-size:13px;color:#526071\"><strong>Читать так:</strong> 1 368 — корпус карточек; 79 — учебные станции; 16 — исполняемые ревизии. Нельзя складывать эти числа.</p></div>"},
+      {"id": "layers", "type": "table", "tableId": "layer-inventory"},
+      {"id": "task-boundary", "type": "markdown", "body": "## Где должны жить задачи\n\n**Не складывать все задачи в Question Brain и не копировать вопросы в Runtime.** Нужны четыре явных сущности:\n\n1. `QuestionCard` — устный/теоретический prompt, локали, короткий ответ, объяснение, follow-ups и рубрика. Владелец: Question Brain.\n2. `TaskBrief` — видимое для ученика условие: цель, входы или DDL, ограничения, ожидаемые артефакты, capability, уровень, компании и `runtime_task_ref`. Может жить в QBrain как editorial-слой, потому что это часть учебного содержания.\n3. `TaskRevision` — immutable executable descriptor: starter files, hidden tests, reference solution/harness, language/runtime profile, лимиты, образ и результат. Владелец: Task Runtime.\n4. `RunEvidence` — server-owned результат запуска, trace, тесты и объяснение. Владелец: Runtime + Lab projection.\n\nСвязи должны быть явными и версионированными: `question_card ↔ capability`, `task_brief ↔ question_card`, `task_brief ↔ task_revision`, `task_revision ↔ runtime_profile`, `task_brief ↔ route`. Например, одна карточка про rate limiter может иметь один общий capability и четыре task revision: Node.js, Go, Java и C#. И наоборот, одна задача может проверять несколько карточек: алгоритм, concurrency и observability.\n\nВажная поправка к `HANDOFF-BRIEF.md`: пункт 3.1 предлагает держать в нормализованной карточке эталонное решение и execution-поля. Это конфликтует с текущими AGENTS-контрактами. В handoff стоит оставить `TaskBrief` и ссылку `runtime_task_ref`, а hidden tests, image, reference harness и authoritative solution перенести в Task Runtime. Иначе появятся две истины, которые снова разъедутся." , "sourceId": "architecture-decision"},
+      {"id": "task-flow", "type": "html", "body": "<div style=\"font-family:system-ui,sans-serif;padding:22px;background:#fbfaf7;color:#28231f;border:1px solid #e6d9c5;border-radius:18px\"><div style=\"font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#806f62\">Target task contract · example</div><h2 style=\"margin:8px 0 6px;font-size:25px\">Rate limiter: один смысл, несколько исполняемых вариантов</h2><p style=\"margin:0 0 18px;color:#6b5e55\">Видимая задача и техническое исполнение разделены, поэтому добавление Go не переписывает карточку Node.js.</p><svg viewBox=\"0 0 980 300\" role=\"img\" aria-label=\"Схема связей Question Card, Task Brief, runtime revisions и evidence\" style=\"width:100%;height:auto;display:block\"><defs><marker id=\"arrow2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"7\" refY=\"4\" orient=\"auto\"><path d=\"M0,0 L8,4 L0,8 z\" fill=\"#6f6257\"/></marker></defs><g font-family=\"system-ui,sans-serif\"><rect x=\"15\" y=\"96\" width=\"180\" height=\"112\" rx=\"14\" fill=\"#fff\" stroke=\"#907d6e\"/><text x=\"105\" y=\"127\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">QuestionCard</text><text x=\"105\" y=\"153\" text-anchor=\"middle\" font-size=\"12\">«Что докажешь?»</text><text x=\"105\" y=\"176\" text-anchor=\"middle\" font-size=\"12\" fill=\"#6b5e55\">EN · RU · rubric</text><line x1=\"195\" y1=\"152\" x2=\"245\" y2=\"152\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2)\"/><rect x=\"248\" y=\"76\" width=\"210\" height=\"152\" rx=\"14\" fill=\"#f4eee4\" stroke=\"#c09562\" stroke-width=\"2\"/><text x=\"353\" y=\"108\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"700\">TaskBrief</text><text x=\"353\" y=\"137\" text-anchor=\"middle\" font-size=\"12\">условие · вход · лимиты</text><text x=\"353\" y=\"160\" text-anchor=\"middle\" font-size=\"12\">capability: rate-limiting</text><text x=\"353\" y=\"185\" text-anchor=\"middle\" font-size=\"12\" fill=\"#815a2d\">runtime_task_ref</text><line x1=\"458\" y1=\"120\" x2=\"505\" y2=\"88\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2)\"/><line x1=\"458\" y1=\"152\" x2=\"505\" y2=\"152\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2)\"/><line x1=\"458\" y1=\"184\" x2=\"505\" y2=\"216\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2)\"/><rect x=\"508\" y=\"38\" width=\"210\" height=\"88\" rx=\"14\" fill=\"#e9f7f0\" stroke=\"#549a76\"/><text x=\"613\" y=\"67\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">Node.js revision</text><text x=\"613\" y=\"91\" text-anchor=\"middle\" font-size=\"12\">hidden tests · Node 24</text><text x=\"613\" y=\"111\" text-anchor=\"middle\" font-size=\"12\">released / sandbox</text><rect x=\"508\" y=\"106\" width=\"210\" height=\"88\" rx=\"14\" fill=\"#e9f0ff\" stroke=\"#5672c6\"/><text x=\"613\" y=\"135\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">Go revision</text><text x=\"613\" y=\"159\" text-anchor=\"middle\" font-size=\"12\">hidden tests · Go 1.24</text><text x=\"613\" y=\"179\" text-anchor=\"middle\" font-size=\"12\">declared → released</text><rect x=\"508\" y=\"174\" width=\"210\" height=\"88\" rx=\"14\" fill=\"#fff0ef\" stroke=\"#c76b60\"/><text x=\"613\" y=\"203\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\">SQL revision</text><text x=\"613\" y=\"227\" text-anchor=\"middle\" font-size=\"12\">DDL · fixtures · Postgres</text><text x=\"613\" y=\"247\" text-anchor=\"middle\" font-size=\"12\">released / deterministic</text><line x1=\"718\" y1=\"82\" x2=\"790\" y2=\"145\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2)\"/><line x1=\"718\" y1=\"150\" x2=\"790\" y2=\"150\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2)\"/><line x1=\"718\" y1=\"218\" x2=\"790\" y2=\"176\" stroke=\"#6f6257\" stroke-width=\"2\" marker-end=\"url(#arrow2\"/><rect x=\"793\" y=\"98\" width=\"170\" height=\"105\" rx=\"14\" fill=\"#1f2937\" stroke=\"#111827\"/><text x=\"878\" y=\"130\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\" fill=\"#fff\">RunEvidence</text><text x=\"878\" y=\"155\" text-anchor=\"middle\" font-size=\"12\" fill=\"#dbeafe\">trace · tests · score</text><text x=\"878\" y=\"180\" text-anchor=\"middle\" font-size=\"12\" fill=\"#bbf7d0\">Lab projection</text></g></svg><p style=\"margin:12px 0 0;font-size:13px;color:#6b5e55\"><strong>Правило:</strong> Brief можно читать до runtime; запуск и mastery появляются только после release обеих сторон и явной привязки к capability.</p></div>"},
+      {"id": "runtime-chart", "type": "chart", "chartId": "runtime-profile-coverage"},
+      {"id": "routes", "type": "markdown", "body": "## Как сделать пути явными, не размножая базу\n\nСейчас в Lab есть **один learner-трек** `Backend Engineer · Node.js primary`. Внутри него 15 областей и 79 станций. Это хорошая внутренняя карта capability, но плохая модель для выбора роли: .NET, Go, Frontend и System Design выглядят как закрытые области одного маршрута и не объясняют, что можно выбрать свободно.\n\nПредлагаемая модель:\n\n- `capability_graph` — единый граф понятий и evidence: HTTP, Postgres, OS, distributed systems, Node runtime, JVM, CLR, Go concurrency, React, Angular, algorithms, behavioral.\n- `route_manifest` — именованный view: список capability, порядок, обязательность, рекомендуемые runtime-профили и целевой уровень.\n- `route_mode=recommended` — один выбранный маршрут с prerequisites и spaced recall.\n- `route_mode=explorer` — все released capability, без искусственного блокирования соседних веток.\n- `route_mode=free` — поиск по карточкам и задачам, но с предупреждением «это не меняет основной маршрут».\n\nНачальный набор views: **Backend Node.js**, **Backend Java**, **Backend .NET**, **Backend Go**, **Frontend React**, **Frontend Angular**, **Fullstack**, **System Design / Architect**, **Algorithms / CS foundations**, **Behavioral / Interview craft**. Generic areas (HTTP, Postgres, OS, delivery, observability) переиспользуются в нескольких views.\n\nТаким образом, расширение банка не требует создавать новую «программу» на каждую тысячу вопросов. Карточка попадает в общий граф, затем получает одну или несколько capability-связей; route view включает capability по правилам.\n\n**Разблокировка:** сначала публикуется placement release, затем Lab строит station coverage. До этого UI должен показывать «Question Brain доступен для свободного обзора; route placement pending», а не просто серый замок без причины." , "sourceId": "architecture-decision"},
+      {"id": "routes-before-after", "type": "html", "body": "<div style=\"font-family:system-ui,sans-serif;padding:22px;background:#f6f8fc;color:#172033;border:1px solid #d9e1f2;border-radius:18px\"><div style=\"font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#53658c\">Routes · before → after</div><h2 style=\"margin:8px 0 16px;font-size:25px\">Путь — это view, а не копия вопросной базы</h2><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:16px\"><section style=\"background:#fff;border:1px solid #e0e6f0;border-radius:14px;padding:16px\"><div style=\"font-size:12px;color:#a33f31;font-weight:700\">СЕЙЧАС</div><h3 style=\"margin:7px 0 10px\">1 маршрут → 15 областей → 79 станций</h3><div style=\"padding:12px;border-radius:10px;background:#fff4f2;color:#7c3d35\">Node.js primary выбран как единственная точка входа. Остальные runtime выглядят закрытыми, а 1 368 карточек не назначены станциям.</div><p style=\"margin:11px 0 0;color:#657287;font-size:13px\">Проблема не в количестве контента, а в отсутствии projection и понятного режима Explorer.</p></section><section style=\"background:#fff;border:1px solid #cfdcf7;border-radius:14px;padding:16px\"><div style=\"font-size:12px;color:#3e65bf;font-weight:700\">ЦЕЛЬ</div><h3 style=\"margin:7px 0 10px\">10 именованных views над одним графом</h3><div style=\"display:flex;flex-wrap:wrap;gap:7px\"><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Backend Node</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Backend Go</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Backend Java</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Backend .NET</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Frontend React</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">System Design</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Algorithms</span><span style=\"padding:7px 9px;border-radius:999px;background:#eaf0ff;color:#304d9e;font-size:12px\">Behavioral</span></div><p style=\"margin:11px 0 0;color:#657287;font-size:13px\">Одна карточка переиспользуется, а порядок, обязательность и runtime задаёт route_manifest.</p></section></div></div>"},
+      {"id": "bank", "type": "table", "tableId": "bank-scope"},
+      {"id": "research", "type": "markdown", "body": "## Что подтверждают зрелые практики\n\n**Разделение учебной сущности и исполнителя — нормальный паттерн.** Exercism описывает track как syllabus из concept exercises и practice exercises, а каждое упражнение имеет отдельные metadata, stub, tests и example implementation; test runner живёт как отдельная language-specific граница. Это близко к нашей паре `TaskBrief` + `TaskRevision`, а не к одной огромной карточке. См. [Building Tracks](https://exercism.org/docs/building/tracks), [Practice Exercises](https://exercism.org/docs/building/tracks/practice-exercises) и [Test Runners](https://exercism.org/docs/building/tooling/test-runners).\n\n**Переиспользуемая библиотека контента лучше копирования.** Open edX публикует Library content отдельно, затем подключает его к курсам и может выбирать случайные компоненты из Problem Bank; контент должен быть опубликован в Library перед использованием. Это хороший референс для Question Brain release + Lab route view: источник один, потребителей много. См. [Add Library content to a course](https://docs.openedx.org/en/latest/educators/how-tos/course_development/add_library_content_to_a_course.html) и [Randomized Content Blocks](https://docs.openedx.org/en/open-release-sumac.master/educators/how-tos/course_development/exercise_tools/use_randomized_content_blocks.html).\n\n**Таксономия должна быть отдельно от placement.** Moodle Question Bank использует категории и tags, а вопросы можно искать, перемещать, дублировать и версионировать независимо от конкретного quiz/course. Это подтверждает разделение `topic/capability` и `route placement`; нельзя превращать каждую тему в жёсткую папку только одного пути. См. [Moodle Question bank](https://docs.moodle.org/400/en/Question_bank).\n\n**Polyglot workspace не требует одного языка для orchestration.** Nx умеет управлять workspace без JavaScript-репозитория и строит актуальный project/task graph; значит root `fluent-interview` может оркестрировать Go runtime, Node Lab и контентные сервисы, не смешивая их исходный код. См. [Nx in a non-JavaScript repository](https://nx.dev/docs/kb/install-non-javascript), [Explore the project graph](https://nx.dev/docs/features/explore-graph).\n\n**Поиск:** pgvector рекомендует exact nearest-neighbor до измерения recall, затем HNSW для speed/recall trade-off; PostgreSQL GIN/tsvector закрывает lexical слой, а hybrid search объединяет оба. Значит Question Brain должен держать canonical metadata/FTS и embeddings в одной транзакционной модели, но не использовать embedding как единственный placement-механизм. См. [pgvector README](https://github.com/pgvector/pgvector) и [PostgreSQL text-search indexes](https://www.postgresql.org/docs/16/textsearch-indexes.html)." , "sourceId": "research"},
+      {"id": "iterations", "type": "table", "tableId": "iteration-gates"},
+      {"id": "plan", "type": "markdown", "body": "## Правильная последовательность итераций\n\n### I0 · Зафиксировать контракт\n\nПринять поправку к handoff: QBrain — `QuestionCard` и `TaskBrief`; Runtime — `TaskRevision` и `RunEvidence`. Зафиксировать stable IDs, release IDs, provenance и правило «нет fallback».\n\n### I1 · Сделать staging входного банка\n\nДля каждого файла записать `source_file`, hash, тип, язык, компанию, предполагаемый asset kind, license/provenance, parser status и duplicate candidates. Ничего не публиковать напрямую из Downloads.\n\n### I2 · Расширить QBrain schema и placement\n\nДобавить typed `exercise/task_brief`, rubric, level, company и явные `capability_id`/`stage_key`. Выпустить placement release; quality API должен показывать unbound, pending index и locale gaps.\n\n### I3 · Импортировать первую проверяемую срезку\n\nСначала Ostrovok (Go, Python, SQL, system design, frontend, general, test tasks), затем явные gaps SLA/SLO/SLI, Python и algorithms. Yellow Bank импортировать только релевантными секциями, PDF — до изображений. Каждая пачка проходит parser, bilingual/provenance/duplicate QA.\n\n### I4 · Расширить Task Runtime по профилям\n\nСначала закрыть задачи для существующих Node/.NET/Postgres/Go/Java профилей. Python, C++, Kotlin и Kubernetes/AWS-сценарии добавить только после отдельного profile/harness smoke; пока помечать `brief-only` или `runtime-pending`, не выдавать фальшивый запуск.\n\n### I5 · Связать release surfaces\n\nTask становится learner-runnable только если опубликованы QBrain brief, Runtime revision и Lab capability placement. Синхронизация идёт по IDs и release manifests, не через общую БД.\n\n### I6 · Ввести route views и Explorer\n\nОпубликовать именованные views, открыть Explorer для всех released карточек и задач, а recommended route оставить с prerequisites. UI должен объяснять каждую блокировку: placement, prerequisite, runtime или missing evidence.\n\n### I7 · Coverage и регулярный аудит\n\nДля каждой capability показывать статусы `missing → brief-only → runtime-declared → released → smoked → mapped → learner-proven`; добавить отчёты по orphan cards, orphan tasks, duplicate candidates, untested profiles и route gaps. Это и есть контроль роста от 1 368 к 20 000 карточек." , "sourceId": "audit-plan"},
+      {"id": "limitations", "type": "markdown", "body": "## Методика, ограничения и вопросы\n\n**Что проверено:** живые read-only HTTP-проекции Fluent Lab, Question Brain quality API, Task Runtime catalog, исходный `HANDOFF-BRIEF.md`, AGENTS-контракты трёх репозиториев, локальные task descriptors и файловая инвентаризация `Downloads/Банк вопросов`. Браузерная проверка прошла по onboarding, learning map, question library, lab, projects и Studio поверхностям; в карте отображаются 1 368 карточек и 79 станций, а лаборатория показывает server-owned run/evidence.\n\n**Что нельзя заключить из этого снимка:** качество самих ответов, юридическую пригодность каждого внешнего файла, реальный semantic recall нового embedding-профиля и полноту каждой темы без принятой rubric/coverage-модели. 1 805 файлов — верхняя граница входного материала, не обещание 1 805 новых вопросов или задач.\n\n**Открытые решения перед реализацией:**\n\n1. Один `capability_id` может входить в несколько route views — рекомендация: да, иначе будет дублирование.\n2. Нужна ли Python execution profile сразу — рекомендация: нет, сначала brief-only и отдельный smoke.\n3. Должны ли system-design задачи иметь runtime — рекомендация: нет, им нужен rubric/evidence workflow, а не кодовый sandbox.\n4. Какой минимум task families на capability — рекомендация: одна oral card, одна guided task, одна cold variant; это целевой стандарт, не текущая статистика.\n5. Какой placement release считать готовым — только когда orphan cards = 0 или явно помечены как `unassigned` с причиной и owner.\n\nИтоговый verdict: **архитектура из трёх репозиториев правильная; текущая проекция путей и отсутствие typed task/placement слоя — незавершённая часть, которую надо закрыть до массового импорта.**" , "sourceId": "audit-live"}
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-23T20:48:00+02:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [{"cards": 1368, "stations": 79, "bindings": 0, "runtimeTasks": 16, "bankFiles": 1805}],
+      "runtimeProfiles": [
+        {"profile": "Node.js", "tasks": 11},
+        {"profile": "PostgreSQL", "tasks": 2},
+        {"profile": ".NET", "tasks": 1},
+        {"profile": "Go", "tasks": 1},
+        {"profile": "Java", "tasks": 1}
+      ],
+      "layers": [
+        {"order": 1, "layer": "Question Brain", "owner": "QBrain", "state": "1 368 published; EN 1 368; RU 1 368; 127 topics", "decision": "QuestionCard, TaskBrief, taxonomy, placement release"},
+        {"order": 2, "layer": "Task Runtime", "owner": "Runtime", "state": "16 released revisions; 5 ready profiles", "decision": "TaskRevision, sandbox, hidden tests, RunEvidence"},
+        {"order": 3, "layer": "Fluent Lab", "owner": "Lab", "state": "1 route; 15 areas; 79 stations; 0 card bindings", "decision": "route views, progress, learner projection"},
+        {"order": 4, "layer": "Банк вопросов", "owner": "staging pipeline", "state": "1 805 mixed files; no direct publish", "decision": "inventory, provenance, parser, duplicate and license QA"},
+        {"order": 5, "layer": "Projects", "owner": "Lab + Runtime", "state": "5 preview books; 0 published", "decision": "project book consumes released capabilities/tasks"}
+      ],
+      "bankScope": [
+        {"priority": 1, "source": "Ostrovok · Тех часть", "files": 57, "scope": "Пилотная срезка", "firstSlice": "Go, Python, SQL, system design, frontend, general, test_tasks"},
+        {"priority": 2, "source": "Yellow Bank", "files": 1533, "scope": "Только релевантные секции", "firstSlice": "JavaScript, Web Architecture, SQL, Java/.NET, algorithms"},
+        {"priority": 3, "source": "Bigtech", "files": 146, "scope": "Выборочно после provenance", "firstSlice": "компания + уровень + язык"},
+        {"priority": 4, "source": "Яндекс algorithms", "files": 44, "scope": "Алгоритмический track", "firstSlice": "canonical tests + rubric"},
+        {"priority": 5, "source": "Ozon / Avito / WB / Kaspersky", "files": 19, "scope": "Точечная проверка", "firstSlice": "source tags + company facets"},
+        {"priority": 6, "source": "KupiBilet Front IOS", "files": 4, "scope": "Проверить scope", "firstSlice": "не импортировать до решения по iOS"},
+        {"priority": 7, "source": "Top-level PDF", "files": 2, "scope": "После text extraction", "firstSlice": "OZON analytics, Avito ML — отдельные tracks"}
+      ],
+      "iterations": [
+        {"order": 0, "gate": "I0 · Contract correction", "status": "required before import", "exit": "TaskBrief ≠ TaskRevision; IDs/release/provenance fixed", "unblocks": "safe schema work"},
+        {"order": 1, "gate": "I1 · Staging inventory", "status": "not started", "exit": "1 805 files classified, hashed, scoped and dedupe-reviewed", "unblocks": "repeatable imports"},
+        {"order": 2, "gate": "I2 · QBrain placement", "status": "0 bindings today", "exit": "capability/stage fields, rubric, level/company, placement release", "unblocks": "Lab coverage"},
+        {"order": 3, "gate": "I3 · First content slice", "status": "not started", "exit": "Ostrovok slice bilingual, typed, indexed, provenance-safe", "unblocks": "content scale"},
+        {"order": 4, "gate": "I4 · Runtime families", "status": "16 released baseline", "exit": "profile smoke + task family coverage per capability", "unblocks": "multi-language practice"},
+        {"order": 5, "gate": "I5 · Release join", "status": "partial", "exit": "QBrain + Runtime + Lab manifests agree", "unblocks": "learner-runnable tasks"},
+        {"order": 6, "gate": "I6 · Route views", "status": "one route today", "exit": "named views + explorer + explicit lock reasons", "unblocks": "free path selection"},
+        {"order": 7, "gate": "I7 · Coverage audit", "status": "planned", "exit": "orphan/duplicate/runtime/coverage dashboards", "unblocks": "20k-card maintenance"}
+      ]
+    }
+  },
+  "sources": [
+    {"id": "audit-live", "label": "Live Fluent Lab + Question Brain projections · captured 23 Aug 2026", "href": "http://localhost:49300/learning-map", "query": {"engine": "HTTP JSON projections", "url": "http://127.0.0.1:48127/v1/quality?workspace=fluent-interview", "description": "Read-only capture of Question Brain quality, Lab program/coverage and browser-visible learner surfaces.", "executed_at": "2026-08-23T20:40:00+02:00", "language": "http", "filters": ["workspace=fluent-interview", "published-only"], "sql": "SELECT 1368 AS cards, 79 AS stations, 0 AS bindings, 16 AS runtime_tasks;"}},
+    {"id": "runtime-catalog", "label": "Task Runtime v1 catalog · captured 23 Aug 2026", "href": "http://127.0.0.1:48227/v1/tasks", "query": {"engine": "HTTP JSON API", "url": "http://127.0.0.1:48227/v1/profiles", "description": "Read-only profile and released task catalogue; no runs were submitted by this audit.", "executed_at": "2026-08-23T20:42:00+02:00", "language": "http", "filters": ["status=released"], "sql": "SELECT * FROM (VALUES (\u0027Node.js\u0027, 11), (\u0027PostgreSQL\u0027, 2), (\u0027.NET\u0027, 1), (\u0027Go\u0027, 1), (\u0027Java\u0027, 1)) AS runtime_profiles(profile, tasks);"}},
+    {"id": "bank-inventory", "label": "Банк вопросов · filesystem inventory", "path": "audit-snapshot/downloads-question-bank-inventory.json", "query": {"engine": "filesystem inventory", "description": "Deterministic recursive file inventory captured from Downloads/Банк вопросов; files were not uploaded or modified.", "executed_at": "2026-08-23T20:35:00+02:00", "language": "shell", "filters": ["recursive files", "no content publish"], "sql": "SELECT 1805 AS files, \u0027Downloads/Банк вопросов\u0027 AS source;"}},
+    {"id": "architecture-decision", "label": "Workspace AGENTS + HANDOFF-BRIEF architecture boundary", "path": "audit-snapshot/architecture-boundary.md", "query": {"engine": "repository documents", "description": "Read-only comparison of root and child AGENTS contracts with HANDOFF-BRIEF.md; identifies the TaskBrief/TaskRevision boundary conflict.", "executed_at": "2026-08-23T20:20:00+02:00", "language": "markdown"}},
+    {"id": "audit-plan", "label": "Read-only audit recommendation and exit criteria", "path": "audit-snapshot/iteration-plan.md", "query": {"engine": "audit synthesis", "description": "Derived plan from observed counts, contracts, bank inventory and primary external references.", "executed_at": "2026-08-23T20:48:00+02:00", "language": "markdown", "sql": " SELECT 0 AS order, 'I0 · Contract correction' AS gate, 'required before import' AS status;"}},
+    {"id": "research", "label": "Primary reference set", "href": "https://exercism.org/docs/building/tracks", "query": {"engine": "web research", "description": "Primary documentation reviewed: Exercism tracks/test runners, Open edX libraries/problem banks, Moodle Question Bank, Nx polyglot/project graph, pgvector and PostgreSQL FTS.", "executed_at": "2026-08-23T20:25:00+02:00", "language": "web", "filters": ["primary official documentation only"]}}
+  ],
+  "package_info": {"root": "docs/reports/question-bank-task-path-audit-2026-08-21", "manifestPath": "artifact.json", "snapshotPath": "artifact.json", "originUrl": "file:///Users/sergeyzhechko/developer/fluent-interview/docs/reports/question-bank-task-path-audit-2026-08-21/report.html"}
+}

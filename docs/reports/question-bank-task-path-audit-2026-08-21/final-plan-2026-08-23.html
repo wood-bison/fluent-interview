@@ -1,0 +1,2474 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Финальный план Fluent Interview: как связать Question Brain, задачи, языковые ревизии, запуск и доказательства."
+    />
+    <link rel="icon" href="data:," />
+    <title>Fluent Interview · финальный план Question → Task → Evidence</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --field: #fcf6ec;
+        --plate: #fffdf8;
+        --plate-soft: #f6efe2;
+        --plate-raised: #fffaf2;
+        --plate-sunken: #eee5d5;
+        --ink: #2a211c;
+        --ink-body: #4f4039;
+        --ink-soft: #6b5450;
+        --ink-faint: #735b59;
+        --line: #e6dacb;
+        --line-soft: #eee6da;
+        --line-strong: #9d8567;
+        --accent: #4459a0;
+        --accent-strong: #2f427e;
+        --accent-soft: rgb(68 89 160 / 9%);
+        --accent-line: rgb(68 89 160 / 66%);
+        --warm: #805e00;
+        --warm-soft: #f7eed9;
+        --warm-line: #ddc598;
+        --sage: #5d6d22;
+        --sage-soft: #edf0df;
+        --sage-line: #c8d19b;
+        --rust: #a84a26;
+        --rust-soft: #f8e9df;
+        --rust-line: #dfb9a5;
+        --terminal: #16110f;
+        --terminal-line: #2e2523;
+        --terminal-ink: #f3ede7;
+        --terminal-muted: #b1a1a0;
+        --shadow: 42 33 28;
+        --max: 1380px;
+        --rail: 248px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 18px;
+        --radius-xl: 26px;
+        --ease: cubic-bezier(.22, 1, .36, 1);
+        --duration: 220ms;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          color-scheme: dark;
+          --field: #1d1818;
+          --plate: #231d1d;
+          --plate-soft: #2a2221;
+          --plate-raised: #352b29;
+          --plate-sunken: #181313;
+          --ink: #f3ede7;
+          --ink-body: #cdbfb9;
+          --ink-soft: #cdbfb9;
+          --ink-faint: #b1a1a0;
+          --line: #3d3230;
+          --line-soft: #332a29;
+          --line-strong: #8b6665;
+          --accent: #9db3ea;
+          --accent-strong: #bdcfff;
+          --accent-soft: rgb(157 179 234 / 14%);
+          --accent-line: rgb(157 179 234 / 55%);
+          --warm: #c8a24a;
+          --warm-soft: #3a3020;
+          --warm-line: #6a5730;
+          --sage: #a8b870;
+          --sage-soft: #282d22;
+          --sage-line: #58653c;
+          --rust: #d47a59;
+          --rust-soft: #33221b;
+          --rust-line: #714532;
+          --shadow: 0 0 0;
+        }
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --field: #1d1818;
+        --plate: #231d1d;
+        --plate-soft: #2a2221;
+        --plate-raised: #352b29;
+        --plate-sunken: #181313;
+        --ink: #f3ede7;
+        --ink-body: #cdbfb9;
+        --ink-soft: #cdbfb9;
+        --ink-faint: #b1a1a0;
+        --line: #3d3230;
+        --line-soft: #332a29;
+        --line-strong: #8b6665;
+        --accent: #9db3ea;
+        --accent-strong: #bdcfff;
+        --accent-soft: rgb(157 179 234 / 14%);
+        --accent-line: rgb(157 179 234 / 55%);
+        --warm: #c8a24a;
+        --warm-soft: #3a3020;
+        --warm-line: #6a5730;
+        --sage: #a8b870;
+        --sage-soft: #282d22;
+        --sage-line: #58653c;
+        --rust: #d47a59;
+        --rust-soft: #33221b;
+        --rust-line: #714532;
+        --shadow: 0 0 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--field);
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(90deg, transparent 0 47px, color-mix(in srgb, var(--line) 38%, transparent) 48px, transparent 49px),
+          linear-gradient(var(--field), var(--field));
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.52;
+        letter-spacing: .005em;
+      }
+
+      a {
+        color: var(--accent-strong);
+        text-underline-offset: 3px;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button:focus-visible,
+      a:focus-visible,
+      [tabindex]:focus-visible {
+        outline: 3px solid var(--warm);
+        outline-offset: 4px;
+      }
+
+      .skip-link {
+        position: fixed;
+        z-index: 30;
+        top: 12px;
+        left: 12px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--field);
+        transform: translateY(-160%);
+        transition: transform var(--duration) var(--ease);
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: var(--rail) minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .rail {
+        position: sticky;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        max-height: 100vh;
+        padding: 26px 20px 22px;
+        border-right: 1px solid var(--line);
+        background: color-mix(in srgb, var(--field) 93%, transparent);
+      }
+
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 2px 6px 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mark {
+        position: relative;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border-radius: 9px 15px 9px 15px;
+        background: var(--accent);
+        box-shadow: 8px 8px 0 color-mix(in srgb, var(--accent) 21%, transparent);
+      }
+
+      .mark::after {
+        position: absolute;
+        right: 7px;
+        bottom: 7px;
+        width: 10px;
+        height: 16px;
+        border-right: 3px solid var(--field);
+        border-bottom: 3px solid var(--field);
+        transform: skewY(-34deg);
+        content: "";
+      }
+
+      .brand strong,
+      .brand span {
+        display: block;
+      }
+
+      .brand strong {
+        font-size: .9rem;
+        letter-spacing: .04em;
+      }
+
+      .brand span {
+        margin-top: 2px;
+        color: var(--ink-faint);
+        font-size: .74rem;
+      }
+
+      .rail-kicker {
+        margin: 28px 6px 10px;
+        color: var(--ink-faint);
+        font-size: .7rem;
+        font-weight: 800;
+        letter-spacing: .17em;
+        text-transform: uppercase;
+      }
+
+      .toc {
+        display: grid;
+        gap: 2px;
+      }
+
+      .toc a {
+        display: grid;
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        min-height: 38px;
+        padding: 8px 9px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        color: var(--ink-soft);
+        font-size: .84rem;
+        text-decoration: none;
+        transition: background var(--duration) var(--ease), border-color var(--duration) var(--ease), color var(--duration) var(--ease);
+      }
+
+      .toc a:hover,
+      .toc a[data-active="true"] {
+        border-color: var(--accent-line);
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+      }
+
+      .toc b {
+        color: var(--ink-faint);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .68rem;
+        font-weight: 700;
+      }
+
+      .rail-note {
+        margin-top: auto;
+        padding: 14px 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--plate-soft);
+        color: var(--ink-soft);
+        font-size: .76rem;
+      }
+
+      .rail-note strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--ink);
+        font-size: .78rem;
+      }
+
+      .content {
+        min-width: 0;
+      }
+
+      .topbar {
+        position: sticky;
+        z-index: 10;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        min-height: 68px;
+        padding: 14px clamp(20px, 4vw, 60px);
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--field) 90%, transparent);
+        backdrop-filter: blur(18px);
+      }
+
+      .crumbs {
+        color: var(--ink-faint);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .72rem;
+        letter-spacing: .04em;
+      }
+
+      .crumbs b {
+        color: var(--accent-strong);
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .toolbar-label {
+        margin-right: 3px;
+        color: var(--ink-faint);
+        font-size: .72rem;
+      }
+
+      .theme-switcher {
+        display: flex;
+        gap: 2px;
+        padding: 3px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--plate);
+      }
+
+      .theme-switcher button {
+        min-width: 39px;
+        padding: 5px 8px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--ink-soft);
+        font: inherit;
+        font-size: .7rem;
+        cursor: pointer;
+      }
+
+      .theme-switcher button[aria-pressed="true"] {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      main {
+        width: min(var(--max), calc(100% - 48px));
+        margin: 0 auto;
+        padding: 58px 0 100px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.42fr) minmax(280px, .58fr);
+        gap: clamp(28px, 5vw, 86px);
+        align-items: end;
+        padding: 24px 0 48px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow,
+      .section-kicker {
+        color: var(--accent-strong);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .72rem;
+        font-weight: 800;
+        letter-spacing: .15em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 920px;
+        margin-bottom: 22px;
+        font-size: clamp(2.8rem, 7vw, 6.9rem);
+        line-height: .94;
+        letter-spacing: -.07em;
+      }
+
+      .hero-lede {
+        max-width: 850px;
+        margin-bottom: 26px;
+        color: var(--ink-body);
+        font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill,
+      .status {
+        display: inline-flex;
+        gap: 7px;
+        align-items: center;
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--plate);
+        color: var(--ink-soft);
+        font-size: .73rem;
+        font-weight: 700;
+      }
+
+      .pill::before,
+      .status::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--line-strong);
+        content: "";
+      }
+
+      .pill.accent::before,
+      .status.live::before {
+        background: var(--accent);
+      }
+
+      .pill.sage::before,
+      .status.ready::before {
+        background: var(--sage);
+      }
+
+      .pill.warm::before,
+      .status.plan::before {
+        background: var(--warm);
+      }
+
+      .pill.rust::before,
+      .status.blocked::before {
+        background: var(--rust);
+      }
+
+      .hero-side {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--plate);
+        box-shadow: 0 20px 48px rgb(var(--shadow) / 8%);
+      }
+
+      .hero-side h2 {
+        margin-bottom: 10px;
+        font-size: 1.08rem;
+        letter-spacing: -.02em;
+      }
+
+      .hero-side p {
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: .86rem;
+      }
+
+      .read-order {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 22px 0 46px;
+      }
+
+      .read-order a {
+        padding: 7px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--plate);
+        color: var(--ink-soft);
+        font-size: .74rem;
+        text-decoration: none;
+      }
+
+      .read-order a:hover {
+        border-color: var(--accent-line);
+        color: var(--accent-strong);
+      }
+
+      section {
+        scroll-margin-top: 92px;
+        padding: 62px 0 0;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 28px;
+        align-items: end;
+        margin-bottom: 24px;
+      }
+
+      .section-head h2 {
+        margin-bottom: 0;
+        font-size: clamp(1.8rem, 3.6vw, 3.5rem);
+        line-height: 1;
+        letter-spacing: -.06em;
+      }
+
+      .section-head p {
+        max-width: 610px;
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: .95rem;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--plate);
+        box-shadow: 0 18px 38px rgb(var(--shadow) / 5%);
+      }
+
+      .truth-banner {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 16px;
+        align-items: start;
+        padding: 18px 20px;
+        border: 1px solid var(--sage-line);
+        border-radius: var(--radius-md);
+        background: var(--sage-soft);
+        color: var(--ink-body);
+      }
+
+      .truth-banner strong {
+        color: var(--sage);
+      }
+
+      .truth-banner .dot {
+        width: 12px;
+        height: 12px;
+        margin-top: 5px;
+        border-radius: 50%;
+        background: var(--sage);
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--sage) 15%, transparent);
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        overflow: hidden;
+        margin-top: 20px;
+      }
+
+      .metric {
+        min-height: 136px;
+        padding: 18px;
+        border-right: 1px solid var(--line);
+        background: var(--plate);
+      }
+
+      .metric:last-child {
+        border-right: 0;
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: clamp(1.7rem, 3vw, 2.7rem);
+        letter-spacing: -.07em;
+      }
+
+      .metric b {
+        display: block;
+        margin-bottom: 6px;
+        font-size: .75rem;
+      }
+
+      .metric span {
+        display: block;
+        color: var(--ink-faint);
+        font-size: .72rem;
+      }
+
+      .truth-table,
+      .contract-table,
+      .gate-table,
+      .acceptance-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .truth-table-wrap,
+      .contract-table-wrap,
+      .gate-table-wrap,
+      .acceptance-table-wrap {
+        overflow-x: auto;
+      }
+
+      th,
+      td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line-soft);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--ink-faint);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .69rem;
+        font-weight: 700;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+      }
+
+      td {
+        color: var(--ink-body);
+        font-size: .84rem;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      td strong {
+        color: var(--ink);
+      }
+
+      code,
+      .mono {
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: .86em;
+      }
+
+      code {
+        padding: 2px 5px;
+        border-radius: 5px;
+        background: var(--plate-soft);
+        color: var(--accent-strong);
+      }
+
+      .note {
+        margin: 16px 0 0;
+        padding: 13px 15px;
+        border-left: 3px solid var(--line-strong);
+        background: var(--plate-soft);
+        color: var(--ink-soft);
+        font-size: .82rem;
+      }
+
+      .note.warn {
+        border-color: var(--rust);
+        background: var(--rust-soft);
+      }
+
+      .note.ok {
+        border-color: var(--sage);
+        background: var(--sage-soft);
+      }
+
+      .not-add {
+        display: grid;
+        grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .ladder,
+      .legend {
+        padding: 20px;
+      }
+
+      .ladder h3,
+      .legend h3 {
+        margin-bottom: 14px;
+        font-size: 1.06rem;
+        letter-spacing: -.02em;
+      }
+
+      .ladder-list {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .ladder-list li {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        padding: 9px 0;
+        border-bottom: 1px dashed var(--line);
+        color: var(--ink-body);
+        font-size: .82rem;
+      }
+
+      .ladder-list li:last-child {
+        border-bottom: 0;
+      }
+
+      .step-no {
+        display: grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        border: 1px solid var(--accent-line);
+        border-radius: 7px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .72rem;
+        font-weight: 700;
+      }
+
+      .legend-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .legend-row {
+        display: grid;
+        grid-template-columns: 170px minmax(0, 1fr);
+        gap: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .legend-row:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .legend-row strong {
+        color: var(--ink);
+        font-size: .82rem;
+      }
+
+      .legend-row span {
+        color: var(--ink-soft);
+        font-size: .8rem;
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 0;
+        align-items: stretch;
+        margin-top: 22px;
+      }
+
+      .flow-node {
+        position: relative;
+        min-height: 190px;
+        padding: 18px 17px;
+        border: 1px solid var(--line);
+        border-right: 0;
+        background: var(--plate);
+      }
+
+      .flow-node:first-child {
+        border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      }
+
+      .flow-node:last-child {
+        border-right: 1px solid var(--line);
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      }
+
+      .flow-node::after {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        right: -11px;
+        width: 20px;
+        height: 20px;
+        border-top: 1px solid var(--accent);
+        border-right: 1px solid var(--accent);
+        background: var(--plate);
+        transform: translateY(-50%) rotate(45deg);
+        content: "";
+      }
+
+      .flow-node:last-child::after {
+        display: none;
+      }
+
+      .flow-node .index {
+        display: block;
+        margin-bottom: 28px;
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .71rem;
+        font-weight: 700;
+      }
+
+      .flow-node h3 {
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+        letter-spacing: -.03em;
+      }
+
+      .flow-node p {
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: .78rem;
+      }
+
+      .owner {
+        display: inline-flex;
+        margin-top: 14px;
+        padding: 4px 7px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        color: var(--ink-faint);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .64rem;
+      }
+
+      .example-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(250px, .85fr);
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .example-intro .panel {
+        padding: 18px 20px;
+      }
+
+      .example-intro h3 {
+        margin-bottom: 8px;
+        font-size: 1.05rem;
+      }
+
+      .example-intro p {
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: .83rem;
+      }
+
+      .example-shell {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        background: var(--plate);
+        box-shadow: 0 24px 64px rgb(var(--shadow) / 10%);
+      }
+
+      .example-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        padding: 17px 20px;
+        border-bottom: 1px solid var(--line);
+        background: var(--plate-raised);
+      }
+
+      .example-head strong {
+        font-size: 1.02rem;
+      }
+
+      .example-head .mono {
+        color: var(--ink-faint);
+        font-size: .72rem;
+      }
+
+      .example-main {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr);
+        min-width: 0;
+      }
+
+      .question-pane {
+        min-width: 0;
+        padding: 24px;
+        border-right: 1px solid var(--line);
+      }
+
+      .question-pane h3 {
+        max-width: 720px;
+        margin-bottom: 10px;
+        font-size: clamp(1.45rem, 3vw, 2.75rem);
+        line-height: 1.05;
+        letter-spacing: -.05em;
+      }
+
+      .question-pane > p {
+        max-width: 680px;
+        margin-bottom: 18px;
+        color: var(--ink-soft);
+        font-size: .92rem;
+      }
+
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin: 18px 0 22px;
+      }
+
+      .tabs button {
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--plate);
+        color: var(--ink-soft);
+        font: inherit;
+        font-size: .78rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .tabs button:hover,
+      .tabs button[aria-pressed="true"] {
+        border-color: var(--accent-line);
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+      }
+
+      .layer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .layer {
+        min-height: 140px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--plate-raised);
+      }
+
+      .layer h4 {
+        margin-bottom: 8px;
+        font-size: .87rem;
+      }
+
+      .layer p {
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: .77rem;
+      }
+
+      .brief {
+        margin-top: 12px;
+        padding: 17px;
+        border: 1px solid var(--warm-line);
+        border-radius: var(--radius-md);
+        background: var(--warm-soft);
+      }
+
+      .brief-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: start;
+        margin-bottom: 12px;
+      }
+
+      .brief-head h4 {
+        margin-bottom: 0;
+        font-size: .97rem;
+      }
+
+      .brief-head .mono {
+        color: var(--warm);
+        font-size: .7rem;
+      }
+
+      .brief ul {
+        display: grid;
+        gap: 5px;
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink-body);
+        font-size: .78rem;
+      }
+
+      .runtime-pane {
+        min-width: 0;
+        padding: 24px;
+        background: var(--plate-soft);
+      }
+
+      .runtime-pane h3 {
+        margin-bottom: 5px;
+        font-size: 1.23rem;
+        letter-spacing: -.04em;
+      }
+
+      .runtime-pane .lead {
+        margin-bottom: 16px;
+        color: var(--ink-soft);
+        font-size: .8rem;
+      }
+
+      .variant-meta {
+        display: grid;
+        gap: 9px;
+        margin-bottom: 18px;
+      }
+
+      .meta-line {
+        display: grid;
+        grid-template-columns: 108px minmax(0, 1fr);
+        gap: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .meta-line span:first-child {
+        color: var(--ink-faint);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .67rem;
+        text-transform: uppercase;
+      }
+
+      .meta-line span:last-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        color: var(--ink-body);
+        font-size: .78rem;
+        font-weight: 700;
+      }
+
+      .terminal {
+        padding: 15px;
+        border: 1px solid var(--terminal-line);
+        border-radius: var(--radius-md);
+        background: var(--terminal);
+        color: var(--terminal-ink);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .72rem;
+        line-height: 1.65;
+      }
+
+      .terminal .dim {
+        color: var(--terminal-muted);
+      }
+
+      .terminal .ok {
+        color: #b6cf82;
+      }
+
+      .terminal .warn {
+        color: #e5b16c;
+      }
+
+      .evidence {
+        display: grid;
+        gap: 7px;
+        margin-top: 13px;
+      }
+
+      .evidence-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--plate);
+        font-size: .75rem;
+      }
+
+      .evidence-row span:first-child {
+        color: var(--ink-soft);
+      }
+
+      .evidence-row strong {
+        color: var(--ink);
+      }
+
+      .live-callout {
+        margin-top: 14px;
+        padding: 12px 13px;
+        border: 1px solid var(--rust-line);
+        border-radius: 9px;
+        background: var(--rust-soft);
+        color: var(--ink-body);
+        font-size: .76rem;
+      }
+
+      .live-callout strong {
+        color: var(--rust);
+      }
+
+      .model-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .model-card {
+        padding: 18px;
+        border-top: 3px solid var(--accent);
+        border-radius: var(--radius-md);
+        background: var(--plate);
+      }
+
+      .model-card.runtime {
+        border-top-color: var(--warm);
+      }
+
+      .model-card.lab {
+        border-top-color: var(--sage);
+      }
+
+      .model-card h3 {
+        margin-bottom: 7px;
+        font-size: .98rem;
+      }
+
+      .model-card p {
+        margin-bottom: 10px;
+        color: var(--ink-soft);
+        font-size: .77rem;
+      }
+
+      .model-card ul {
+        display: grid;
+        gap: 5px;
+        margin: 0;
+        padding-left: 17px;
+        color: var(--ink-body);
+        font-size: .75rem;
+      }
+
+      .ownership-note {
+        margin-top: 16px;
+        padding: 16px 18px;
+        border: 1px dashed var(--line-strong);
+        border-radius: var(--radius-md);
+        color: var(--ink-soft);
+        font-size: .8rem;
+      }
+
+      .route-map {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .route-step {
+        position: relative;
+        min-height: 152px;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--plate);
+      }
+
+      .route-step:not(:last-child)::after {
+        position: absolute;
+        top: 27px;
+        right: -17px;
+        width: 25px;
+        border-top: 1px solid var(--accent);
+        content: "";
+      }
+
+      .route-step .mono {
+        color: var(--accent);
+        font-size: .69rem;
+        font-weight: 700;
+      }
+
+      .route-step h3 {
+        margin: 23px 0 7px;
+        font-size: .99rem;
+      }
+
+      .route-step p {
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: .76rem;
+      }
+
+      .mode-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 15px;
+      }
+
+      .mode {
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--plate-soft);
+      }
+
+      .mode strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--accent-strong);
+        font-size: .88rem;
+      }
+
+      .mode span {
+        color: var(--ink-soft);
+        font-size: .75rem;
+      }
+
+      .gate-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .gate {
+        display: grid;
+        grid-template-columns: 82px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--plate);
+      }
+
+      .gate-id {
+        color: var(--accent-strong);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: .77rem;
+        font-weight: 800;
+      }
+
+      .gate h3 {
+        margin-bottom: 5px;
+        font-size: .96rem;
+      }
+
+      .gate p {
+        margin-bottom: 7px;
+        color: var(--ink-soft);
+        font-size: .78rem;
+      }
+
+      .gate small {
+        display: block;
+        color: var(--ink-faint);
+        font-size: .72rem;
+      }
+
+      .status {
+        white-space: nowrap;
+        font-size: .68rem;
+      }
+
+      .status.ready {
+        border-color: var(--sage-line);
+        background: var(--sage-soft);
+        color: var(--sage);
+      }
+
+      .status.live {
+        border-color: var(--accent-line);
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+      }
+
+      .status.plan {
+        border-color: var(--warm-line);
+        background: var(--warm-soft);
+        color: var(--warm);
+      }
+
+      .status.blocked {
+        border-color: var(--rust-line);
+        background: var(--rust-soft);
+        color: var(--rust);
+      }
+
+      .decision {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, .68fr);
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .decision > .panel {
+        padding: 20px;
+      }
+
+      .decision h3 {
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+      }
+
+      .decision ol,
+      .decision ul {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding-left: 20px;
+        color: var(--ink-body);
+        font-size: .82rem;
+      }
+
+      .release-check {
+        display: grid;
+        gap: 9px;
+      }
+
+      .check {
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 9px;
+        align-items: start;
+        font-size: .79rem;
+      }
+
+      .check::before {
+        display: grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--line-strong);
+        border-radius: 5px;
+        color: var(--sage);
+        font-size: .72rem;
+        content: "✓";
+      }
+
+      .audit-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .audit-box {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--plate);
+      }
+
+      .audit-box h3 {
+        margin-bottom: 10px;
+        font-size: 1rem;
+      }
+
+      .audit-box ul {
+        display: grid;
+        gap: 7px;
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink-body);
+        font-size: .79rem;
+      }
+
+      .source-list {
+        display: grid;
+        gap: 8px;
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .source-list li {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 9px;
+        align-items: start;
+        color: var(--ink-soft);
+        font-size: .77rem;
+      }
+
+      .source-list b {
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+      }
+
+      .footer {
+        margin-top: 70px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--ink-faint);
+        font-size: .72rem;
+      }
+
+      .footer strong {
+        color: var(--ink-soft);
+      }
+
+      .reveal {
+        animation: enter 520ms var(--ease) both;
+      }
+
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(7px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: .001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: .001ms !important;
+        }
+      }
+
+      @media (max-width: 1180px) {
+        :root {
+          --rail: 214px;
+        }
+        .metric-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .metric {
+          border-bottom: 1px solid var(--line);
+        }
+        .metric:nth-child(3) {
+          border-right: 0;
+        }
+        .metric:nth-child(n + 4) {
+          border-bottom: 0;
+        }
+        .flow {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+        }
+        .flow-node,
+        .flow-node:last-child {
+          border: 1px solid var(--line);
+          border-radius: var(--radius-md);
+        }
+        .flow-node::after {
+          display: none;
+        }
+        .route-map {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .route-step:not(:last-child)::after {
+          display: none;
+        }
+      }
+
+      @media (max-width: 850px) {
+        .shell {
+          display: block;
+        }
+        .rail {
+          position: static;
+          min-height: 0;
+          max-height: none;
+          padding: 16px 18px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .rail-kicker,
+        .rail-note {
+          display: none;
+        }
+        .brand {
+          padding-bottom: 14px;
+          border-bottom: 0;
+        }
+        .toc {
+          display: flex;
+          gap: 5px;
+          overflow-x: auto;
+          padding-top: 10px;
+        }
+        .toc a {
+          flex: 0 0 auto;
+          grid-template-columns: auto;
+          min-height: 0;
+          padding: 7px 9px;
+          font-size: .72rem;
+        }
+        .toc b {
+          display: none;
+        }
+        .topbar {
+          position: static;
+          padding: 12px 18px;
+        }
+        main {
+          width: min(100% - 28px, var(--max));
+          padding-top: 32px;
+        }
+        .hero,
+        .example-intro,
+        .decision,
+        .not-add {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: clamp(2.65rem, 13vw, 5.3rem);
+        }
+        .section-head {
+          display: block;
+        }
+        .section-head p {
+          margin-top: 12px;
+        }
+        .metric-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .metric:nth-child(3) {
+          border-right: 1px solid var(--line);
+        }
+        .metric:nth-child(even) {
+          border-right: 0;
+        }
+        .metric:nth-last-child(-n + 2) {
+          border-bottom: 0;
+        }
+        .flow,
+        .model-grid,
+        .mode-grid {
+          grid-template-columns: 1fr;
+        }
+        .flow-node,
+        .flow-node:last-child {
+          min-height: 0;
+        }
+        .flow-node .index {
+          margin-bottom: 10px;
+        }
+        .example-main {
+          grid-template-columns: 1fr;
+        }
+        .question-pane {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .layer-grid,
+        .route-map,
+        .audit-grid {
+          grid-template-columns: 1fr;
+        }
+        .gate {
+          grid-template-columns: 64px minmax(0, 1fr);
+        }
+        .gate .status {
+          grid-column: 2;
+          justify-self: start;
+        }
+        .legend-row {
+          grid-template-columns: 1fr;
+          gap: 2px;
+        }
+      }
+
+      @media print {
+        .rail,
+        .topbar,
+        .read-order,
+        .tabs {
+          display: none !important;
+        }
+        .shell {
+          display: block;
+        }
+        main {
+          width: 100%;
+          padding: 0;
+        }
+        section {
+          break-inside: avoid;
+        }
+        .panel,
+        .example-shell {
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Перейти к содержанию</a>
+    <div class="shell">
+      <aside class="rail" aria-label="Навигация по отчёту">
+        <div class="brand">
+          <span class="mark" aria-hidden="true"></span>
+          <div>
+            <strong>Fluent Interview</strong>
+            <span>Question → Task → Evidence</span>
+          </div>
+        </div>
+        <div class="rail-kicker">Read order</div>
+        <nav class="toc" aria-label="Разделы">
+          <a href="#truth"><b>01</b><span>Что есть сейчас</span></a>
+          <a href="#model"><b>02</b><span>Модель сущностей</span></a>
+          <a href="#example"><b>03</b><span>Rate limiter</span></a>
+          <a href="#contracts"><b>04</b><span>Границы систем</span></a>
+          <a href="#routes"><b>05</b><span>Пути и разблокировка</span></a>
+          <a href="#gates"><b>06</b><span>Production gates</span></a>
+          <a href="#acceptance"><b>07</b><span>Приёмка</span></a>
+          <a href="#audit"><b>08</b><span>Самопроверка</span></a>
+        </nav>
+        <div class="rail-note">
+          <strong>Правило документа</strong>
+          Ни один live-факт не смешивается с иллюстрацией. Сначала источник истины и контракт, затем UI.
+        </div>
+      </aside>
+
+      <div class="content">
+        <header class="topbar">
+          <div class="crumbs">FLUENT INTERVIEW / <b>FINAL PLAN</b> / 2026-08-23</div>
+          <div class="toolbar">
+            <span class="toolbar-label">тема</span>
+            <div class="theme-switcher" role="group" aria-label="Тема документа">
+              <button type="button" data-theme-choice="system" aria-pressed="true">Auto</button>
+              <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+              <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+            </div>
+          </div>
+        </header>
+
+        <main id="content" tabindex="-1">
+          <div class="hero reveal">
+            <div>
+              <div class="eyebrow">финальный план · версия для ревью</div>
+              <h1>От вопроса к доказуемому навыку</h1>
+              <p class="hero-lede">
+                Это не ещё один список карточек. Целевой production-сценарий — взять одну
+                <strong>QuestionCard</strong>, понять теорию и system design, открыть связанный
+                <strong>TaskBrief</strong>, выбрать язык, выполнить неизменяемую ревизию и получить
+                проверяемое <strong>Evidence</strong>. Ни один слой не подменяет другой.
+              </p>
+              <div class="hero-meta" aria-label="Свойства документа">
+                <span class="pill accent">desktop first</span>
+                <span class="pill sage">source-of-truth reviewed</span>
+                <span class="pill warm">без fallback</span>
+                <span class="pill rust">код не изменяется этим отчётом</span>
+              </div>
+            </div>
+            <aside class="hero-side">
+              <h2>Вердикт в одной фразе</h2>
+              <p>
+                Архитектура правильная, если Question Brain публикует смысл, Task Runtime исполняет
+                код, а Fluent Lab только строит путь и показывает доказательства. Сейчас нужно
+                закрыть связи, проекции и release-gates, а не добавлять ещё один каталог.
+              </p>
+            </aside>
+          </div>
+
+          <nav class="read-order" aria-label="Быстрый переход">
+            <a href="#truth">Сначала цифры</a>
+            <a href="#model">Потом модель</a>
+            <a href="#example">Затем пример</a>
+            <a href="#gates">В конце шаги</a>
+          </nav>
+
+          <section id="truth">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">01 · current truth</div>
+                <h2>Что есть сейчас</h2>
+              </div>
+              <p>
+                Снимок собран из live API 23 августа 2026 года. Числа относятся к разным сущностям,
+                поэтому их нельзя складывать или называть одним «количеством вопросов».
+              </p>
+            </div>
+
+            <div class="truth-banner">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <strong>Источник вопросов уже подключён.</strong>
+                Lab отдаёт <code>source: question-brain</code> и тот же
+                <code>releaseId: question-release-15e032d7b732f8c1</code>. Следующая проблема —
+                не импорт карточек, а честная проекция графа, связывание задач и понятная семантика
+                Program / Knowledge Map.
+              </div>
+            </div>
+
+            <div class="metric-grid panel" aria-label="Ключевые live-метрики">
+              <div class="metric">
+                <strong>1 392</strong>
+                <b>Question Cards</b>
+                <span>опубликовано в Question Brain</span>
+              </div>
+              <div class="metric">
+                <strong>134</strong>
+                <b>тематических групп</b>
+                <span>таксономия, не 134 маршрута</span>
+              </div>
+              <div class="metric">
+                <strong>2</strong>
+                <b>локали</b>
+                <span>en + ru, quality check без пропусков</span>
+              </div>
+              <div class="metric">
+                <strong>18</strong>
+                <b>исполняемых задач</b>
+                <span>Task Runtime, пять профилей</span>
+              </div>
+              <div class="metric">
+                <strong>5</strong>
+                <b>runtime profiles</b>
+                <span>Node, .NET, Postgres, Go, Java</span>
+              </div>
+            </div>
+
+            <div class="truth-table-wrap panel" style="margin-top: 18px">
+              <table class="truth-table">
+                <thead>
+                  <tr>
+                    <th>Сущность</th>
+                    <th>Live-снимок</th>
+                    <th>Что это значит</th>
+                    <th>Владелец</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Question Cards</strong></td>
+                    <td><code>1 392</code>, en/ru</td>
+                    <td>Контентные единицы: вопрос, ответ, слои объяснения, локали, происхождение.</td>
+                    <td>Question Brain</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Topics</strong></td>
+                    <td><code>134</code></td>
+                    <td>Группы классификации. Тема может входить в несколько путей.</td>
+                    <td>Question Brain</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Base graph</strong></td>
+                    <td><code>15</code> areas · <code>81</code> stations</td>
+                    <td>Program-каркас компетенций и связей; это не количество карточек.</td>
+                    <td>Fluent Lab projection</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Map projection</strong></td>
+                    <td><code>35</code> path steps · <code>5</code> next gates</td>
+                    <td>Рекомендованный путь — компактная projection поверх полного корпуса, а не второй каталог.</td>
+                    <td>Lab projection, питается release</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Compact UI map</strong></td>
+                    <td><code>52</code> nodes · <code>49</code> edges</td>
+                    <td>Упрощённая визуальная проекция для экрана, а не «весь граф».</td>
+                    <td>Fluent Lab</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Task revisions</strong></td>
+                    <td><code>18</code> tasks · 5 profiles</td>
+                    <td>Исполняемые задания и варианты запуска. Одна capability может иметь несколько языков.</td>
+                    <td>Task Runtime</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="note warn">
+              <strong>Почему раньше были «Program 15» и «Knowledge Map 79», а сейчас 81?</strong>
+              Это числа старой UI-проекции/снимка и другой гранулярности. Они не равны
+              <code>1 392</code> карточкам и не должны называться «81 вопрос». До G0 мы обязуемся
+              показывать рядом тип метрики, release и дату; старые 15/79 помечаются как stale и не
+              участвуют в learner unlock-логике.
+            </p>
+
+            <div class="not-add">
+              <div class="panel ladder">
+                <h3>Не складывать в одну сумму</h3>
+                <ol class="ladder-list">
+                  <li><span class="step-no">1</span><span><strong>Card</strong> — что нужно уметь объяснить.</span></li>
+                  <li><span class="step-no">2</span><span><strong>Capability</strong> — какой навык проверяет карта.</span></li>
+                  <li><span class="step-no">3</span><span><strong>Route step</strong> — станция, в которой Lab её показывает.</span></li>
+                  <li><span class="step-no">4</span><span><strong>Task</strong> — практический brief с одной или несколькими ревизиями.</span></li>
+                  <li><span class="step-no">5</span><span><strong>Run / Evidence</strong> — конкретная попытка и её доказательство.</span></li>
+                </ol>
+              </div>
+              <div class="panel legend">
+                <h3>Как читать числа в интерфейсе</h3>
+                <div class="legend-grid">
+                  <div class="legend-row"><strong>Program</strong><span>набор треков и доменов, а не карточки. В production лучше переименовать в <em>Tracks</em>.</span></div>
+                  <div class="legend-row"><strong>Knowledge Map</strong><span>визуальная карта capability и связей. Счётчик показывает projection nodes, рядом нужен вопросный coverage.</span></div>
+                  <div class="legend-row"><strong>Questions</strong><span>инвентарь карточек из Question Brain. Одна карта может быть в нескольких темах и путях.</span></div>
+                  <div class="legend-row"><strong>Open</strong><span>разрешение открыть станцию/карточку в выбранном режиме, а не признак существования контента.</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="model">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">02 · domain model</div>
+                <h2>Одна цепочка, пять сущностей</h2>
+              </div>
+              <p>
+                QuestionCard и задача связаны, но не являются одним объектом. Это позволяет объяснить
+                идею устно, затем проверить её кодом, SQL или system-design сценарием.
+              </p>
+            </div>
+
+            <div class="flow" aria-label="Связь QuestionCard, TaskBrief, TaskRevision, Run и Evidence">
+              <article class="flow-node">
+                <span class="index">01 / SEMANTIC</span>
+                <h3>QuestionCard</h3>
+                <p>Короткий ответ, теория, traps, follow-ups, локали и provenance.</p>
+                <span class="owner">Question Brain</span>
+              </article>
+              <article class="flow-node">
+                <span class="index">02 / PRACTICE</span>
+                <h3>TaskBrief</h3>
+                <p>Контракт задачи: цель, вход, ограничения, rubric и capability, которую проверяем.</p>
+                <span class="owner">Question Brain</span>
+              </article>
+              <article class="flow-node">
+                <span class="index">03 / EXECUTABLE</span>
+                <h3>TaskRevision</h3>
+                <p>Языковой вариант brief: starter, tests, toolchain, limits, revision id.</p>
+                <span class="owner">Task Runtime</span>
+              </article>
+              <article class="flow-node">
+                <span class="index">04 / OBSERVED</span>
+                <h3>Run</h3>
+                <p>Одна попытка в sandbox с профилем, commit-like input и статусом.</p>
+                <span class="owner">Task Runtime</span>
+              </article>
+              <article class="flow-node">
+                <span class="index">05 / PROOF</span>
+                <h3>Evidence</h3>
+                <p>Trace, score, tests, explanation и связь с прогрессом learner.</p>
+                <span class="owner">Lab + Runtime</span>
+              </article>
+            </div>
+
+            <div class="ownership-note">
+              <strong>Ключевой контракт:</strong> Question Brain публикует смысл и ссылку на TaskBrief;
+              Runtime никогда не переписывает ответ на вопрос; Lab не копирует карточки и не решает, что
+              «правильно». Lab показывает release-scoped projection и сохраняет learner progress.
+            </div>
+          </section>
+
+          <section id="example">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">03 · concrete example</div>
+                <h2>Rate limiter: от идеи к запуску</h2>
+              </div>
+              <p>
+                Ниже — production-целевой экран. Интерактивные языковые вкладки меняют только
+                TaskRevision и профиль запуска; смысл QuestionCard остаётся единым.
+              </p>
+            </div>
+
+            <div class="example-intro">
+              <div class="panel">
+                <h3>Что здесь live, а что ещё план</h3>
+                <p>
+                  Реальные карточки: <code>question.q315</code>, <code>question.c024</code> и
+                  <code>question.q444</code>. Для них опубликованы четыре отдельные revisions:
+                  Node.js, Go, Java и PostgreSQL. У каждой свой starter, hidden tests и evidence;
+                  общий только capability-контракт.
+                </p>
+              </div>
+              <div class="panel">
+                <h3>Правильная связь</h3>
+                <p>
+                  <strong>QuestionCard</strong> «Спроектируй rate limiter» →
+                  <strong>TaskBrief</strong> «Реализовать token bucket» →
+                  <strong>revision</strong> на выбранном языке →
+                  <strong>Run</strong> →
+                  <strong>Evidence</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div class="example-shell" data-example>
+              <div class="example-head">
+                <strong>QuestionCard · «Спроектируй rate limiter»</strong>
+                <span class="mono">canonical key: question.q315 · release 15e032d7b732f8c1</span>
+              </div>
+              <div class="example-main">
+                <div class="question-pane">
+                  <span class="status live">карточка опубликована</span>
+                  <h3>Как ограничить поток запросов и не разрушить сервис?</h3>
+                  <p>
+                    Устно объяснить алгоритм, выбрать границы состояния и показать, как решение
+                    ведёт себя при burst, retry и распределённом размещении.
+                  </p>
+
+                  <div class="tabs" role="tablist" aria-label="Исполняемая ревизия">
+                    <button type="button" role="tab" data-runtime="node" aria-selected="true" aria-pressed="true">Node.js</button>
+                    <button type="button" role="tab" data-runtime="go" aria-selected="false" aria-pressed="false">Go</button>
+                    <button type="button" role="tab" data-runtime="java" aria-selected="false" aria-pressed="false">Java</button>
+                    <button type="button" role="tab" data-runtime="sql" aria-selected="false" aria-pressed="false">SQL / Postgres</button>
+                  </div>
+
+                  <div class="layer-grid">
+                    <article class="layer">
+                      <h4>Теория и короткий ответ</h4>
+                      <p>
+                        Token bucket ограничивает среднюю скорость, допускает контролируемый burst и
+                        требует явных правил clock, reset и bounded state.
+                      </p>
+                    </article>
+                    <article class="layer">
+                      <h4>System-design разбор</h4>
+                      <p>
+                        Сначала single-node invariant, затем shared state, consistency, hot keys,
+                        retry policy и наблюдаемость.
+                      </p>
+                    </article>
+                  </div>
+
+                  <div class="brief">
+                    <div class="brief-head">
+                      <h4>TaskBrief · «Реализовать token bucket»</h4>
+                      <span class="mono">TB-RL-001 · planned</span>
+                    </div>
+                    <ul>
+                      <li>Вход: <code>clientId</code>, timestamp и последовательность запросов.</li>
+                      <li>Цель: не больше 5 запросов за 10 секунд на клиента, burst — по спецификации.</li>
+                      <li>Rubric: correctness · boundary · bounded memory · explanation.</li>
+                      <li>Один brief допускает несколько валидных языковых ревизий, но не общий исходник.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <aside class="runtime-pane" aria-live="polite" data-runtime-panel>
+                    <span class="status live" data-runtime-status>готова к запуску</span>
+                  <h3 data-runtime-title>Node.js revision</h3>
+                  <p class="lead">
+                    Меняется исполняемый слой: toolchain, starter, tests и limits. Теория слева остаётся той же.
+                  </p>
+                  <div class="variant-meta">
+                    <div class="meta-line"><span>revision</span><span data-runtime-id>node-rate-limiter-001@1</span></div>
+                    <div class="meta-line"><span>profile</span><span data-runtime-profile>Node.js 24 · sandbox</span></div>
+                    <div class="meta-line"><span>state</span><span data-runtime-state>released · relation valid</span></div>
+                    <div class="meta-line"><span>evidence</span><span data-runtime-evidence>после запуска: trace + score + explanation</span></div>
+                  </div>
+                  <div class="terminal" aria-label="Пример журнала запуска">
+                    <div><span class="dim">$ run task</span> <span data-terminal-task>node-rate-limiter-001</span></div>
+                    <div><span class="dim">profile</span> <span data-terminal-profile>node24-sandbox</span></div>
+                    <div><span class="dim">tests</span> <span class="ok" data-terminal-tests>released · hidden tests</span></div>
+                    <div><span class="dim">trace</span> <span class="ok">reserved for immutable Run</span></div>
+                  </div>
+                  <div class="evidence" aria-label="Будущее доказательство">
+                    <div class="evidence-row"><span>public tests</span><strong data-evidence-public>released · 4 checks</strong></div>
+                    <div class="evidence-row"><span>hidden tests</span><strong>private runtime</strong></div>
+                    <div class="evidence-row"><span>explanation</span><strong>learner writes after run</strong></div>
+                  </div>
+                  <div class="live-callout" data-runtime-callout>
+                    <strong>Проверка relation:</strong> Task Runtime pin совпадает с текущим Question Brain release.
+                  </div>
+                </aside>
+              </div>
+            </div>
+
+            <p class="note warn">
+              <strong>Обязательный repair перед release:</strong> текущие
+              <code>go-rate-limiter-001</code> и <code>java-rate-limiter-001</code> в runtime связаны с
+              <code>question.q315</code>, <code>question.c024</code> и <code>question.q444</code>.
+              Canonical validator теперь проверяет <code>questionKey → taskBrief → revision</code>
+              против <code>question-release-15e032d7b732f8c1</code> до learner release.
+            </p>
+          </section>
+
+          <section id="contracts">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">04 · boundaries</div>
+                <h2>Три владельца — один контракт</h2>
+              </div>
+              <p>
+                Никаких общих таблиц, локальных каталогов и скрытых fallback. Сервисы обмениваются
+                versioned HTTP/event contracts и immutable release ids.
+              </p>
+            </div>
+
+            <div class="model-grid">
+              <article class="model-card">
+                <h3>Question Brain</h3>
+                <p>Редакторская и семантическая истина.</p>
+                <ul>
+                  <li>QuestionCard, ответы, локали, provenance.</li>
+                  <li>Topics, capabilities, typed edges.</li>
+                  <li>TaskBrief и связь capability ↔ brief.</li>
+                  <li>Release, search и embeddings.</li>
+                </ul>
+              </article>
+              <article class="model-card runtime">
+                <h3>Task Runtime</h3>
+                <p>Единственный исполнитель пользовательского кода.</p>
+                <ul>
+                  <li>TaskRevision и language manifest.</li>
+                  <li>Starter, public/hidden tests, limits.</li>
+                  <li>Sandbox, Run trace, score и diagnostics.</li>
+                  <li>Профили Node, Go, Java, .NET, Postgres.</li>
+                </ul>
+              </article>
+              <article class="model-card lab">
+                <h3>Fluent Lab</h3>
+                <p>Продуктовый путь и learner state.</p>
+                <ul>
+                  <li>Projection выбранного Question release.</li>
+                  <li>Tracks, modes, route и unlock rules.</li>
+                  <li>Progress, recall, journal и evidence view.</li>
+                  <li>Только кэш, который можно пересобрать.</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="contract-table-wrap panel" style="margin-top: 18px">
+              <table class="contract-table">
+                <thead>
+                  <tr>
+                    <th>Событие</th>
+                    <th>Пишет</th>
+                    <th>Читает</th>
+                    <th>Гарантия</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>question-release.published</code></td>
+                    <td>Question Brain</td>
+                    <td>Lab, indexer</td>
+                    <td>release immutable; locale coverage проверена</td>
+                  </tr>
+                  <tr>
+                    <td><code>task-release.published</code></td>
+                    <td>Task Runtime</td>
+                    <td>Lab</td>
+                    <td>revision с profile, tests, resource limits</td>
+                  </tr>
+                  <tr>
+                    <td><code>run.completed</code></td>
+                    <td>Task Runtime</td>
+                    <td>Lab, observability</td>
+                    <td>run id immutable; raw secrets и hidden tests не покидают runtime</td>
+                  </tr>
+                  <tr>
+                    <td><code>evidence.attached</code></td>
+                    <td>Lab</td>
+                    <td>learner, recall</td>
+                    <td>ссылка на question release + task revision + run</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note ok">
+              <strong>Решение:</strong> оставляем три репозитория. Если появится общий contracts repository,
+              в нём будут только схемы и сгенерированные клиенты — не Question Cards и не task code.
+            </p>
+          </section>
+
+          <section id="routes">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">05 · route semantics</div>
+                <h2>Путь — это фильтр, не замок</h2>
+              </div>
+              <p>
+                Трек задаёт контекст (например, Backend · Node.js), capability — цель станции, а
+                карточки и задачи являются доказательствами. Любой released вопрос должен находиться
+                через поиск и Explorer, даже если он ещё не входит в Recommended.
+              </p>
+            </div>
+
+            <div class="route-map">
+              <article class="route-step">
+                <span class="mono">01 · TRACK</span>
+                <h3>Backend · Node.js</h3>
+                <p>Основной стек и язык. Это не ограничение содержимого Question Brain.</p>
+              </article>
+              <article class="route-step">
+                <span class="mono">02 · DOMAIN</span>
+                <h3>Runtime / HTTP / Postgres</h3>
+                <p>Крупные области, которые дают понятную карту, а не 1 392 пункта меню.</p>
+              </article>
+              <article class="route-step">
+                <span class="mono">03 · CAPABILITY</span>
+                <h3>Rate limiting</h3>
+                <p>Проверяемый навык с prerequisites, related cards и TaskBrief.</p>
+              </article>
+              <article class="route-step">
+                <span class="mono">04 · EVIDENCE</span>
+                <h3>Explain → Run → Repeat</h3>
+                <p>Теория, практика, холодный повтор и trace определяют прогресс.</p>
+              </article>
+            </div>
+
+            <div class="mode-grid">
+              <div class="mode"><strong>Recommended</strong><span>Следующий capability рассчитан по prerequisite и evidence. Это совет, не блокировка.</span></div>
+              <div class="mode"><strong>Explorer</strong><span>Открытая карта: можно перейти к любой released capability и увидеть, чего не хватает.</span></div>
+              <div class="mode"><strong>Freely</strong><span>Прямой поиск по Question Brain; карточка доступна даже без route binding.</span></div>
+            </div>
+
+            <p class="note">
+              Для UI нужно переименовать счётчики: <strong>Tracks</strong> вместо неоднозначного Program,
+              <strong>Capabilities</strong> рядом с map count и отдельный <strong>Question coverage</strong>.
+              Тогда «15», «79» и «1 392» перестанут выглядеть взаимоисключающими.
+            </p>
+          </section>
+
+          <section id="gates">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">06 · sequential gates</div>
+                <h2>План до production</h2>
+              </div>
+              <p>
+                Gates последовательны: следующий не закрываем, пока не выполнены exit criteria
+                предыдущего. Статусы ниже — текущая оценка после live-аудита, а не обещание, что всё уже сделано.
+              </p>
+            </div>
+
+            <div class="gate-list">
+              <article class="gate">
+                <div class="gate-id">G0</div>
+                <div><h3>Truth ledger и versioned contracts</h3><p>Зафиксировать release ids, определения метрик, владельцев и stale UI snapshots.</p><small>Done when: один diagnostics endpoint показывает card/topic/map/route/task counts и дату среза.</small></div>
+                <span class="status plan">закрыть первым</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G1</div>
+                <div><h3>Lab release adapter</h3><p>Доказать, что Lab читает только published Question Brain release; локальная копия и fallback удалены из steady state.</p><small>Done when: parity test 1 392/134/en+ru проходит после чистого старта и cache rebuild.</small></div>
+                <span class="status live">частично live</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G2</div>
+                <div><h3>Graph projection и bindings</h3><p>Связать capabilities, stages, prerequisites и QuestionCard coverage. Разделить base graph, compact map и route projection.</p><small>Done when: каждая released карта либо имеет capability binding, либо видна в Freely с явным статусом unplaced.</small></div>
+                <span class="status blocked">блокирует пути</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G3</div>
+                <div><h3>TaskBrief contract и relation validator</h3><p>Typed relation question → brief → revision и immutable release pin теперь проверяются на сервере.</p><small>Done when: validator не пропускает чужую questionKey, missing locale, profile или orphan revision.</small></div>
+                <span class="status live">закрыт для текущего release</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G4</div>
+                <div><h3>Языковые TaskRevisions</h3><p>Выпустить Node.js, Go, Java и PostgreSQL варианты rate limiter и затем расширять покрытие по capabilities.</p><small>Done when: каждый revision имеет starter, public/hidden tests, limits, deterministic result и explanation rubric.</small></div>
+                <span class="status live">закрыт для rate limiter</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G5</div>
+                <div><h3>Intake, enrichment и качество банка</h3><p>Новые пачки проходят staging, dedupe, provenance, locale checks и capability placement. Старые цифры «348 без RU» перепроверяются по release quality.</p><small>Done when: queue=0, missing locale=0, duplicate decisions audited, source license записана.</small></div>
+                <span class="status ready">quality live</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G6</div>
+                <div><h3>Routes, modes и unlock UX</h3><p>Recommended, Explorer и Freely работают на одной projection; «closed» означает рекомендательное состояние, а не потерю доступа.</p><small>Done when: keyboard + deep-link тесты открывают любую released card и объясняют причину recommendation.</small></div>
+                <span class="status plan">после G2</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G7</div>
+                <div><h3>Observability, performance и recovery</h3><p>Trace от card до run, lag индексов, map build, memory/time budgets, Jaeger, backup/restore и cold restart.</p><small>Done when: неделя telemetry даёт answer на «где застревают», а rebuild не меняет release semantics.</small></div>
+                <span class="status plan">hardening</span>
+              </article>
+              <article class="gate">
+                <div class="gate-id">G8</div>
+                <div><h3>Production release и legacy cleanup</h3><p>Один writer на домен, fallback выключен, старые projection paths удалены, rollback и reindex документированы.</p><small>Done when: clean Compose stack, smoke suite, accessibility pass и signed release manifest.</small></div>
+                <span class="status plan">финал</span>
+              </article>
+            </div>
+          </section>
+
+          <section id="acceptance">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">07 · acceptance</div>
+                <h2>Как поймём, что это готово</h2>
+              </div>
+              <p>
+                Проверяем не только красивый экран. Production-готовность — это воспроизводимая связь
+                контента, графа, runtime и evidence после перезапуска.
+              </p>
+            </div>
+
+            <div class="acceptance-table-wrap panel">
+              <table class="acceptance-table">
+                <thead>
+                  <tr>
+                    <th>Сценарий</th>
+                    <th>Проверка</th>
+                    <th>Ожидаемый результат</th>
+                    <th>Gate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Найти новый вопрос</td>
+                    <td>Поиск по RU/EN, topic, capability и похожему смыслу.</td>
+                    <td>Карточка находится в Freely даже без Recommended binding.</td>
+                    <td>G1/G2/G5</td>
+                  </tr>
+                  <tr>
+                    <td>Открыть rate limiter</td>
+                    <td>Deep link из map и из search.</td>
+                    <td>Теория, design, TaskBrief и статусы ревизий видны без «закрытого тупика».</td>
+                    <td>G2/G6</td>
+                  </tr>
+                  <tr>
+                    <td>Выбрать Go</td>
+                    <td>Запустить released revision в sandbox.</td>
+                    <td>Правильная questionKey, deterministic tests, run id и trace.</td>
+                    <td>G3/G4</td>
+                  </tr>
+                  <tr>
+                    <td>Перезапустить стек</td>
+                    <td>Compose down/up без удаления durable volumes.</td>
+                    <td>Release ids и evidence сохраняются; projection rebuild повторяем.</td>
+                    <td>G1/G7/G8</td>
+                  </tr>
+                  <tr>
+                    <td>Разобрать неделю ошибок</td>
+                    <td>Jaeger/metrics: search zero-result, map gap, run failure, latency, memory.</td>
+                    <td>Можно назвать capability и шаг, где learner застрял, без raw secrets.</td>
+                    <td>G7</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="decision">
+              <div class="panel">
+                <h3>Оптимальный сценарий реализации</h3>
+                <ol>
+                  <li>Сначала выпустить truth ledger и relation validator, не меняя визуальную семантику вслепую.</li>
+                  <li>Пересобрать projection из Question Brain release и показать coverage отдельно от количества узлов.</li>
+                  <li>Починить один capability end-to-end на rate limiter: карточка, brief, Go/Java, затем Node/SQL.</li>
+                  <li>После доказанного vertical slice массово обогащать банк и добавлять языковые ревизии.</li>
+                  <li>Включить modes и unlock rules, затем удалить stale/legacy paths и оставить только release-driven данные.</li>
+                  <li>Закрыть observability, performance, recovery и только после этого назвать сборку production.</li>
+                </ol>
+              </div>
+              <div class="panel release-check">
+                <h3>Release checklist</h3>
+                <div class="check">Нет локального Question catalog и fallback в steady state.</div>
+                <div class="check">Каждый displayed count имеет тип, release и timestamp.</div>
+                <div class="check">Нет orphan question, TaskBrief или TaskRevision.</div>
+                <div class="check">RU/EN, deep links, keyboard и dark/light не ломают layout.</div>
+                <div class="check">Run trace и Evidence связаны, но hidden tests остаются приватными.</div>
+                <div class="check">Rollback/reindex проверены на чистом Compose stack.</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="audit">
+            <div class="section-head">
+              <div>
+                <div class="section-kicker">08 · self-audit</div>
+                <h2>Что этот документ утверждает</h2>
+              </div>
+              <p>
+                Финальная проверка против упрощений и противоречий: live, plan и stale явно разделены.
+              </p>
+            </div>
+
+            <div class="audit-grid">
+              <article class="audit-box">
+                <h3><span class="status ready">live</span> Подтверждено</h3>
+                <ul>
+                  <li>Question Brain quality: 1 392 published, graph accepted, en/ru coverage и embedding checks без warnings.</li>
+                  <li>Lab questions endpoint читает source question-brain с тем же release id.</li>
+                  <li>Task Runtime отвечает: 18 tasks, пять runtime profiles, четыре rate-limiter revisions.</li>
+                  <li>Relation audit связывает released tasks с текущим release; capability-only project task отмечен явно.</li>
+                </ul>
+              </article>
+              <article class="audit-box">
+                <h3><span class="status plan">plan</span> Нужно сделать</h3>
+                <ul>
+                  <li>Расширить graph projection так, чтобы все 1 392 cards были видимы через Search/Explorer.</li>
+                  <li>Поддерживать relation validator при каждом новом Question Brain release.</li>
+                  <li>Добавлять языковые revisions по мере покрытия capability, не копируя исходники.</li>
+                  <li>Сделать modes, clean restart, traces, recovery и release gate G8.</li>
+                </ul>
+              </article>
+              <article class="audit-box">
+                <h3><span class="status blocked">stale / contradiction</span> Не принимать за truth</h3>
+                <ul>
+                  <li>«Program 15» и «Knowledge Map 79» без типа projection и release.</li>
+                  <li>PDF-утверждение про 172 learner-visible и вторую копию Lab — это старый baseline; live API сейчас сообщает source question-brain/1 392.</li>
+                  <li>Демо-IDs Q-0421 и task.rate-limiter.node.v1 из прежнего отчёта — иллюстрация, не production IDs.</li>
+                  <li>«18 задач» не означает 18 rate-limiter вариантов и не означает покрытие всех capabilities.</li>
+                </ul>
+              </article>
+              <article class="audit-box">
+                <h3><span class="status live">definition of done</span> Высший вариант</h3>
+                <ul>
+                  <li>Пользователь видит всю released базу через Search/Explorer и понятный рекомендованный путь.</li>
+                  <li>Для каждой capability видно: cards, theory, TaskBrief, доступные языки и evidence.</li>
+                  <li>Система сама ловит неверные ссылки, дубликаты, missing locale и orphan bindings до release.</li>
+                  <li>Любой экран восстанавливается из release + learner events без второго владельца данных.</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="panel" style="margin-top: 18px; padding: 20px">
+              <h3 style="margin-bottom: 10px; font-size: 1rem">Источники проверки</h3>
+              <ul class="source-list">
+                <li><b>API</b><span><code>GET /v1/quality?workspace=fluent-interview</code> на Question Brain; <code>GET /api/questions/summary</code> и <code>GET /api/knowledge/learning-map</code> на Lab; <code>GET /v1/tasks</code> на Task Runtime.</span></li>
+                <li><b>DOC</b><span><code>fluent-engineering-lab/CONTEXT.md</code>, <code>README.md</code> и source-of-truth audit 2026-08-22 — договоры владельцев и migration invariants.</span></li>
+                <li><b>RUNTIME</b><span><code>/v1/tasks</code> и <code>/api/runtime/relations</code> — фактический canonical binding, release pin и relation audit.</span></li>
+                <li><b>PDF</b><span><code>/Users/sergeyzhechko/Downloads/Дорога до готового продукта.pdf</code> — полезная дорожная карта, но baseline и визуальные контрасты нужно считать историческим входом, пока G0 не подтвердит их в live release.</span></li>
+              </ul>
+            </div>
+          </section>
+
+          <div class="footer">
+            <strong>Fluent Interview · финальный план 2026-08-23.</strong>
+            Документ создан для ревью архитектуры и последовательного исполнения. Он не изменяет
+            Question Brain, Task Runtime или Fluent Lab и не заменяет release checks.
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const root = document.documentElement;
+        const themeButtons = Array.from(document.querySelectorAll("[data-theme-choice]"));
+        const storedTheme = localStorage.getItem("fluent-report-theme");
+        if (storedTheme === "light" || storedTheme === "dark") {
+          root.dataset.theme = storedTheme;
+        }
+
+        function syncThemeButtons() {
+          const value = root.dataset.theme || "system";
+          themeButtons.forEach((button) => {
+            button.setAttribute("aria-pressed", String(button.dataset.themeChoice === value));
+          });
+        }
+
+        themeButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const choice = button.dataset.themeChoice;
+            if (choice === "system") {
+              delete root.dataset.theme;
+              localStorage.removeItem("fluent-report-theme");
+            } else {
+              root.dataset.theme = choice;
+              localStorage.setItem("fluent-report-theme", choice);
+            }
+            syncThemeButtons();
+          });
+        });
+        syncThemeButtons();
+
+        const variants = {
+          node: {
+            title: "Node.js revision",
+            id: "node-rate-limiter-001@1",
+            profile: "Node.js 24 · sandbox",
+            state: "released · relation valid",
+            evidence: "после запуска: trace + score + explanation",
+            status: "готова к запуску",
+            statusClass: "live",
+            task: "node-rate-limiter-001",
+            tests: "released · hidden tests",
+            public: "released · 4 checks",
+            callout: "Node.js revision опубликована и привязана к текущему Question Brain release."
+          },
+          go: {
+            title: "Go revision",
+            id: "go-rate-limiter-001@1",
+            profile: "Go 1.24 · sandbox",
+            state: "released · relation valid",
+            evidence: "после запуска: trace + score + explanation",
+            status: "готова к запуску",
+            statusClass: "live",
+            task: "go-rate-limiter-001",
+            tests: "released · hidden tests",
+            public: "released · 4 checks",
+            callout: "Go revision использует три canonical rate-limiter cards и тот же immutable release."
+          },
+          java: {
+            title: "Java revision",
+            id: "java-rate-limiter-001@1",
+            profile: "Java 21 · sandbox",
+            state: "released · relation valid",
+            evidence: "после запуска: trace + score + explanation",
+            status: "готова к запуску",
+            statusClass: "live",
+            task: "java-rate-limiter-001",
+            tests: "released · hidden tests",
+            public: "released · 4 checks",
+            callout: "Java revision использует три canonical rate-limiter cards и тот же immutable release."
+          },
+          sql: {
+            title: "SQL / Postgres revision",
+            id: "pg-rate-limiter-001@1",
+            profile: "PostgreSQL 17 · isolated DB",
+            state: "released · relation valid",
+            evidence: "после запуска: query plan + score + explanation",
+            status: "готова к запуску",
+            statusClass: "live",
+            task: "pg-rate-limiter-001",
+            tests: "released · hidden tests",
+            public: "released · 4 checks",
+            callout: "SQL — отдельная DB-backed задача про rate limiting, а не тот же исходник, запущенный в четырёх языках."
+          }
+        };
+
+        const example = document.querySelector("[data-example]");
+        if (example) {
+          const buttons = Array.from(example.querySelectorAll("[data-runtime]"));
+          const panel = example.querySelector("[data-runtime-panel]");
+          const setText = (selector, value) => {
+            const node = panel.querySelector(selector);
+            if (node) node.textContent = value;
+          };
+          buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+              const variant = variants[button.dataset.runtime];
+              buttons.forEach((candidate) => {
+                const active = candidate === button;
+                candidate.setAttribute("aria-selected", String(active));
+                candidate.setAttribute("aria-pressed", String(active));
+              });
+              const status = panel.querySelector("[data-runtime-status]");
+              status.textContent = variant.status;
+              status.className = "status " + variant.statusClass;
+              setText("[data-runtime-title]", variant.title);
+              setText("[data-runtime-id]", variant.id);
+              setText("[data-runtime-profile]", variant.profile);
+              setText("[data-runtime-state]", variant.state);
+              setText("[data-runtime-evidence]", variant.evidence);
+              setText("[data-terminal-task]", variant.task);
+              setText("[data-terminal-profile]", variant.profile.split(" · ")[0].toLowerCase().replace(" ", ""));
+              setText("[data-terminal-tests]", variant.tests);
+              setText("[data-evidence-public]", variant.public);
+              setText("[data-runtime-callout]", variant.callout);
+              panel.querySelector("[data-runtime-callout]").innerHTML = "<strong>Проверка перед release:</strong> " + variant.callout;
+            });
+          });
+        }
+
+        const sections = Array.from(document.querySelectorAll("main section[id]"));
+        const navLinks = Array.from(document.querySelectorAll(".toc a"));
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach((link) => {
+              link.dataset.active = String(link.getAttribute("href") === "#" + entry.target.id);
+            });
+          });
+        }, { rootMargin: "-18% 0px -66% 0px", threshold: 0 });
+        sections.forEach((section) => observer.observe(section));
+      })();
+    </script>
+  </body>
+</html>
