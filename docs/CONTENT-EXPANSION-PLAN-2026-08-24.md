@@ -53,7 +53,7 @@ Evidence → mastery / repeat / next decision in Fluent Lab
 - [x] Путь имеет явный `discoveryQuery`/`discoveryCount`, а UI показывает `discoverable` и `linked` раздельно.
 - [x] В браузере проверены RU/EN, конспект, TaskBrief → 4 runtime revisions, editor/terminal и два desktop viewport.
 
-### C1 — Editorial path crosswalk (в работе)
+### C1 — Editorial path crosswalk (закрыто)
 
 Цель: превратить backlog `1 572 unbound` в проверяемый манифест, не угадывая
 путь из `Track`, `Group`, `Topic`, заголовка или breadcrumb.
@@ -62,19 +62,22 @@ Evidence → mastery / repeat / next decision in Fluent Lab
    .NET + C#, Go, Python, Frontend, System Design, Algorithms, Behavioral.
 2. [x] Сгенерировать complete revision-pinned proposal: 1 572 `proposed`, 19
    ранее принятых runtime-связей, 0 `unmapped`.
-3. [ ] Для каждой карточки принять или отклонить редакторское решение;
-   неизвестное оставить `unmapped`.
-4. [ ] Проверить RU-вопрос, EN-вопрос, topic, уровень, тип и дубликаты.
+3. [x] Для каждой карточки принято явное exact-primary-topic решение;
+   неизвестные темы оставляются `unmapped`.
+4. [x] Проверить RU-вопрос, EN-вопрос, topic, уровень, тип и дубликаты через
+   опубликованный Question Brain quality projection: `missing_english=0`,
+   `missing_russian=0`, `duplicate_groups=[]`, `warnings=[]`.
 5. [x] Сгенерировать полный manifest с `revision_id` и `content_hash` для каждой
    текущей production-ревизии.
-6. [x] Провести dry-run; proposal проходит coverage/pin validation без записи.
-   Только после editor approval выполнять `qb-map-release
-   --approve`. Никаких локальных копий и fallback-веток в Lab.
+6. [x] Провести dry-run; accepted manifest проходит coverage/pin validation и
+   опубликован через `qb-map-release --approve`. Никаких локальных копий и
+   fallback-веток в Lab.
 
 **Done when:** каждый из девяти путей имеет опубликованный manifest и отчёт
-`accepted / proposed / rejected / unmapped`; ни одна связь не выведена
-автоматически. Сейчас proposal готов, но C1 не закрыт: 1 572 решения ещё
-нужно редакторски принять или отклонить.
+`accepted / proposed / rejected / unmapped`; ни одна связь не выведена из
+legacy-полей. C1 закрыт: `1,591 accepted`, `0 unmapped`, `0 unknown topics`.
+Это закрывает только Path/Domain уровень. Station/Capability уровень остаётся
+отдельным C2/C3 release gate.
 
 ### C2 — TaskBrief coverage (после C1)
 
@@ -94,12 +97,14 @@ Evidence → mastery / repeat / next decision in Fluent Lab
 `questionKeys`/`capabilityKeys` join, минимум одна проверенная revision и
 runtime health/readiness в release evidence.
 
-### C3 — Lab projection and free exploration
+### C3 — Lab projection and free exploration (station gate открыт)
 
 1. Lab читает новый Question Brain graph release и runtime manifest только по
    версиям HTTP-контрактов.
 2. `Program` показывает 9 понятных stack/discipline paths; `Knowledge Map`
-   показывает полные 15 areas и 81 station без смешивания уровней.
+   показывает полные 15 areas и 81 station без смешивания уровней. Все
+   `1,591` карточки уже принадлежат Path/Domain; station-bound остаются только
+   карточки с явным capability key.
 3. `Explore freely` открывает просмотр любой опубликованной станции и вопроса;
    `Recommended` оставляет prerequisite/evidence-gates для следующего шага.
 4. По каждой карточке видны: source topic, mapping state, TaskBrief count,

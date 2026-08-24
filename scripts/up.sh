@@ -6,7 +6,7 @@ QUESTION_BRAIN="$ROOT/fluent-question-brain"
 TASK_RUNTIME="$ROOT/fluent-task-runtime"
 LAB="$ROOT/fluent-engineering-lab"
 RUNTIME_RELEASE_FILE="task-release-2026-08-24-qb-d550846f-i2.json"
-QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-24-runtime-crosswalk.json"
+QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-24-editorial-approved.json"
 
 mode="development"
 build_args=(--build)
@@ -121,7 +121,7 @@ test -s "$TASK_RUNTIME/releases/$RUNTIME_RELEASE_FILE" || {
 }
 test -s "$QUESTION_BRAIN/releases/$QUESTION_BRAIN_MAPPING_FILE" || {
   echo "Missing explicit Question Brain mapping release: $QUESTION_BRAIN/releases/$QUESTION_BRAIN_MAPPING_FILE" >&2
-  echo 'Generate and review the complete revision-pinned crosswalk before starting the workspace.' >&2
+  echo 'Generate and explicitly review the complete revision-pinned crosswalk before starting the workspace.' >&2
   exit 1
 }
 
