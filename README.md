@@ -91,6 +91,12 @@ pass — для этого остаётся отдельный guided-путь �
 карточки без русской формулировки или проверенного ответа в production не
 попадают.
 
+Полный ordered frontier после этого checkpoint записан в
+[`docs/CONTENT-EXPANSION-PLAN-2026-08-24.md`](docs/CONTENT-EXPANSION-PLAN-2026-08-24.md):
+сначала explicit Question Brain crosswalk, затем TaskBrief/runtime revisions,
+затем новая Lab projection. Там же зафиксировано, почему discovery-карточки
+не считаются автоматически станциями и почему `Explore` не выдаёт mastery.
+
 ## Where Nx fits
 
 The architecture is intentionally hybrid, as described in the workspace
