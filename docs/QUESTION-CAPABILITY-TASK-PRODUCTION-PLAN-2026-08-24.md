@@ -496,33 +496,33 @@ display, and learner-state edges.
 
 ### Changes
 
-- [ ] Replace or extend the empty `content.question_edge` model with a
+- [x] Replace or extend the empty `content.question_edge` model with a
       revision-aware proposal and accepted-edge model.
-- [ ] Support the reviewed relation types:
+- [x] Support the reviewed relation types:
       `prerequisite`, `related`, `contrast`, `follow_up`, `variant`,
       `duplicate`, and `supersedes`.
-- [ ] Store status, confidence, actor, rationale, source/evidence, creation
+- [x] Store status, confidence, actor, rationale, source/evidence, creation
       revision, decision timestamp, and deciding actor.
-- [ ] Separate proposal rows from immutable released edge rows, or prove that
+- [x] Separate proposal rows from immutable released edge rows, or prove that
       one table enforces the same lifecycle without mutating a released graph.
-- [ ] Add deterministic graph release IDs pinned to Question Brain revisions.
-- [ ] Add dry-run, approve, reject, supersede, rollback, and export commands.
-- [ ] Add APIs for neighborhood, prerequisites, contrasts, variants, and release
+- [x] Add deterministic graph release IDs pinned to Question Brain revisions.
+- [x] Add dry-run, approve, reject, supersede, rollback, and export commands.
+- [x] Add APIs for neighborhood, prerequisites, contrasts, variants, and release
       metadata.
-- [ ] Validate workspace isolation, no dangling endpoints, no self-edges, no
+- [x] Validate workspace isolation, no dangling endpoints, no self-edges, no
       duplicate accepted edge, and no prerequisite cycle.
-- [ ] Keep `question_topic` as legacy/editorial placement; never call it a
+- [x] Keep `question_topic` as legacy/editorial placement; never call it a
       question-to-question graph.
 
 ### Required tests
 
-- [ ] Proposed edges cannot leak into a learner release.
-- [ ] Rejected proposals remain auditable.
-- [ ] Accepted prerequisite cycles are blocked transactionally.
-- [ ] Superseding a question preserves inbound/outbound historical provenance.
-- [ ] Concurrent approval is idempotent.
-- [ ] Rollback restores the previous immutable graph release.
-- [ ] A locale change does not create a semantically unrelated graph identity.
+- [x] Proposed edges cannot leak into a learner release.
+- [x] Rejected proposals remain auditable.
+- [x] Accepted prerequisite cycles are blocked transactionally.
+- [x] Superseding a question preserves inbound/outbound historical provenance.
+- [x] Concurrent approval is idempotent.
+- [x] Rollback restores the previous immutable graph release.
+- [x] A locale change does not create a semantically unrelated graph identity.
 
 ### Required verification before commit
 
@@ -530,20 +530,24 @@ display, and learner-state edges.
 cd /Users/sergeyzhechko/developer/fluent-interview/fluent-question-brain
 make check
 make smoke
+make graph-smoke
 curl -fsS http://127.0.0.1:48127/v1/quality
 git diff --check
 ```
 
-- [ ] Create a deterministic fixture graph containing a valid chain, contrast,
+- [x] Create a deterministic fixture graph containing a valid chain, contrast,
       variant, rejected proposal, supersession, and deliberately rejected
       cycle.
-- [ ] Record the graph release ID and validation report.
+- [x] Record the graph release ID and validation report.
 
 ### Gate acceptance
 
-- [ ] `question_edge=0` is no longer true for the reviewed fixture/release.
-- [ ] A real Go writer and versioned API own every graph change.
-- [ ] Lab can consume a released content neighborhood without direct SQL.
+- [x] `question_edge=0` is no longer true for the reviewed fixture/release.
+- [x] A real Go writer and versioned API own every graph change.
+- [x] Lab can consume a released content neighborhood without direct SQL.
+
+Evidence: `docs/verification/G5-CONTENT-GRAPH-2026-08-25.md` and
+`fluent-question-brain/docs/verification/G5-CONTENT-GRAPH-2026-08-25.md`.
 
 Suggested commit: `feat(graph): publish reviewed question relations`
 
