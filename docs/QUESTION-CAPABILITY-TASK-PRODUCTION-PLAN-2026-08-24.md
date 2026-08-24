@@ -442,30 +442,30 @@ Suggested commit: `feat(runtime): add task families and language revisions`
 
 ### Changes
 
-- [ ] Inventory every Question Brain `TaskBlock` containing `starter`,
+- [x] Inventory every Question Brain `TaskBlock` containing `starter`,
       `solution`, executable files, commands, or code that duplicates a Runtime
       task.
-- [ ] Classify each block as one of:
+- [x] Classify each block as one of:
       `discussion_prompt`, `design_exercise`, `runtime_task_reference`, or
       `historical_content`.
-- [ ] Keep theory, condition, walkthrough, interview explanation, and rubric in
+- [x] Keep theory, condition, walkthrough, interview explanation, and rubric in
       Question Brain when they are editorial content.
-- [ ] Move executable starter/solution/test material into the owning
+- [x] Move executable starter/solution/test material into the owning
       TaskRevision.
-- [ ] Replace executable TaskBlocks with a released TaskFamily reference plus
+- [x] Replace executable TaskBlocks with a released TaskFamily reference plus
       an optional localized preparation note.
-- [ ] Preserve immutable old question revisions; publish new revisions through
+- [x] Preserve immutable old question revisions; publish new revisions through
       the normal release flow.
-- [ ] Add a validator that forbids executable commands, hidden-test markers,
+- [x] Add a validator that forbids executable commands, hidden-test markers,
       Runtime paths, or solution files in new Question Brain cards.
 
 ### Required tests
 
-- [ ] A discussion-only exercise remains valid without Runtime.
-- [ ] An executable card must resolve a released TaskFamily reference.
-- [ ] A Runtime task does not require copying question prose.
-- [ ] Editing starter code does not create a Question Brain revision.
-- [ ] Editing theory does not rewrite a TaskRevision.
+- [x] A discussion-only exercise remains valid without Runtime.
+- [x] An executable card must resolve a released TaskFamily reference.
+- [x] A Runtime task does not require copying question prose.
+- [x] Editing starter code does not create a Question Brain revision.
+- [x] Editing theory does not rewrite a TaskRevision.
 
 ### Required verification before commit
 
@@ -479,10 +479,10 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] Zero current production cards duplicate executable Runtime source or
+- [x] Zero current production cards duplicate executable Runtime source or
       solutions.
-- [ ] Every moved block has a provenance report and rollback mapping.
-- [ ] Discussion/design exercises remain searchable and bilingual.
+- [x] Every moved block has a provenance report and rollback mapping.
+- [x] Discussion/design exercises remain searchable and bilingual.
 
 Suggested commit: `refactor(content): separate editorial exercises from runtime tasks`
 
@@ -1145,7 +1145,7 @@ fully checked and its evidence is committed.
 | G1 — domain contract | complete | `docs/verification/G1-CONTRACT-2026-08-24.md` | Brain `21a7b86`; Runtime `53663ba`; Lab `a098f36` |
 | G2 — capability registry | complete | `docs/verification/G2-CAPABILITY-2026-08-24.md` (registry migration, aliases, supersedes integrity, dry-run, live counts) | Brain `7daf53d`, `89946a3`, `19e9fdf` |
 | G3 — TaskFamily | complete | `docs/verification/G3-TASK-FAMILY-2026-08-25.md` (Runtime manifest/API, immutable hashes, Docker pass/fail, Jaeger) | Runtime `4a9c3c9` |
-| G4 — remove task duplication | not started | — | — |
+| G4 — remove task duplication | complete | Brain `docs/verification/G4-TASK-BOUNDARY-2026-08-25.md` (47 legacy blocks migrated, 0 current embedded solutions, one live TaskFamily join) | Brain `78cc4da`, `942c9b3` |
 | G5 — content graph | not started | — | — |
 | G6 — semantic proposal pipeline | not started | — | — |
 | G7 — question-capability bindings | not started | — | — |
