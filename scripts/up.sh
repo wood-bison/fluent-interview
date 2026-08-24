@@ -5,7 +5,8 @@ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 QUESTION_BRAIN="$ROOT/fluent-question-brain"
 TASK_RUNTIME="$ROOT/fluent-task-runtime"
 LAB="$ROOT/fluent-engineering-lab"
-RUNTIME_RELEASE_FILE="task-release-2026-08-24-qb-d550846f.json"
+RUNTIME_RELEASE_FILE="task-release-2026-08-24-qb-d550846f-i2.json"
+QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-24-runtime-crosswalk.json"
 
 mode="development"
 build_args=(--build)
@@ -85,6 +86,11 @@ test -s "$TASK_RUNTIME/releases/$RUNTIME_RELEASE_FILE" || {
   echo 'Generate it from the current Question Brain release before starting the workspace.' >&2
   exit 1
 }
+test -s "$QUESTION_BRAIN/releases/$QUESTION_BRAIN_MAPPING_FILE" || {
+  echo "Missing explicit Question Brain mapping release: $QUESTION_BRAIN/releases/$QUESTION_BRAIN_MAPPING_FILE" >&2
+  echo 'Generate and review the complete revision-pinned crosswalk before starting the workspace.' >&2
+  exit 1
+}
 
 echo 'Fluent Interview workspace'
 echo "root: $ROOT"
@@ -92,8 +98,15 @@ echo '1/2  Question Brain'
 "${compose_question_brain[@]}" up -d "${build_args[@]}"
 wait_for 'Question Brain' 'http://127.0.0.1:48127/health/ready'
 # Existing PostgreSQL volumes do not re-run initdb scripts. Apply the
-# revision-scoped mapping migration on every start; the SQL is idempotent.
+# revision-scoped mapping migration and the checked-in explicit crosswalk on
+# every start; both operations are idempotent. Never fall back to inferred
+# Track/Group/Topic placement.
 "$QUESTION_BRAIN/scripts/apply-curriculum-mapping-migration.sh"
+echo 'Applying explicit Question Brain → Lab curriculum crosswalk'
+"${compose_question_brain[@]}" exec -T api /qb-map-release \
+  -database-url 'postgres://question_brain:question_brain@postgres:5432/question_brain?sslmode=disable' \
+  -manifest "/opt/releases/$QUESTION_BRAIN_MAPPING_FILE" \
+  -approve >/dev/null
 
 echo '2/2  Task Runtime'
 RUNTIME_HOST_WORK_ROOT="$TASK_RUNTIME/.runtime-work" \
