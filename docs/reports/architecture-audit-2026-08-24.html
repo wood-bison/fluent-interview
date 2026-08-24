@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluent Interview — архитектурный аудит</title>
+<style>
+:root{
+  --bg:#f5f3ee; --card:#fffdf9; --ink:#22211d; --body:#403d36; --faint:#8b857a;
+  --line:#e3ded2; --blue:#1b4fd8; --green:#0d7d6a; --red:#b4442c; --amber:#8f5f08;
+  --code-bg:#16191f; --code-fg:#cbc7bc;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,sans-serif;
+}
+html[data-theme="dark"]{
+  --bg:#111318; --card:#181c22; --ink:#eceae3; --body:#c8c4b9; --faint:#807a6c;
+  --line:#282d36; --blue:#7ba1ee; --green:#4fb8a5; --red:#e58468; --amber:#d9a441;
+  --code-bg:#0d1015; --code-fg:#cbc7bc;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--body);line-height:1.7;font-size:16.5px}
+.wrap{max-width:60rem;margin:0 auto;padding:0 22px}
+h1{font-size:1.95rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em}
+h2{font-size:1.45rem;color:var(--ink);margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:1.1rem;color:var(--ink);margin:26px 0 10px}
+p{margin:0 0 14px;max-width:64ch}
+ul,ol{margin:0 0 14px 22px;max-width:64ch}li{margin-bottom:7px}
+a{color:var(--blue)}
+code{font-family:var(--mono);font-size:.88em;background:var(--line);padding:1.5px 5px;border-radius:4px}
+pre{background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border-radius:9px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6;margin:0 0 16px}
+pre code{background:none;padding:0;font-size:inherit;color:inherit}
+header{padding:46px 0 26px;border-bottom:2px solid var(--line)}
+.sub{font-family:var(--mono);font-size:.87rem;color:var(--faint);margin-top:8px}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:11px 0;z-index:9;font-family:var(--mono);font-size:.8rem;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--faint);margin-right:17px;text-decoration:none}
+nav a:hover{color:var(--blue)}
+section{padding:38px 0;border-bottom:1px solid var(--line)}
+.lead{background:var(--blue);color:#fff;padding:24px 26px;border-radius:10px;margin:22px 0;font-size:1.02rem}
+.lead p{color:#fff;max-width:none}.lead p:last-child{margin-bottom:0}
+.lead strong{color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+.card h3{margin-top:0}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:16px 0}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.73rem;padding:2px 8px;border-radius:11px;white-space:nowrap}
+.t-ok{background:#d3e9dd;color:#0c5136}.t-bad{background:#f6d8d3;color:#8d2f19}
+.t-warn{background:#faeecd;color:#6b4805}.t-info{background:#d5e0fa;color:#0b3a91}
+html[data-theme="dark"] .t-ok{background:#14453c;color:#a7e8d0}
+html[data-theme="dark"] .t-bad{background:#4f2119;color:#f5b5a4}
+html[data-theme="dark"] .t-warn{background:#4d3a0d;color:#f0d18a}
+html[data-theme="dark"] .t-info{background:#1c3160;color:#a8c2f5}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.ba>div{border-radius:10px;padding:18px 20px;border:1px solid var(--line);background:var(--card)}
+.ba .before{border-left:4px solid var(--red)}
+.ba .after{border-left:4px solid var(--green)}
+.ba h4{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin:0 0 12px}
+.before h4{color:var(--red)}.after h4{color:var(--green)}
+.ba p,.ba li{font-size:.93rem;max-width:none}
+.ba ul{margin-left:18px}
+.flow{font-family:var(--mono);font-size:.85rem;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:16px 18px;margin:16px 0;overflow-x:auto;line-height:1.85}
+.q{border-left:3px solid var(--faint);padding-left:16px;margin:16px 0;color:var(--faint);font-style:italic}
+.toggle{display:inline-flex;gap:5px;margin-top:12px}
+.toggle button{font-family:var(--mono);font-size:.78rem;background:none;border:1px solid var(--line);color:var(--faint);padding:3px 11px;border-radius:5px;cursor:pointer}
+.toggle button[aria-pressed="true"]{border-color:var(--blue);color:var(--blue)}
+ol.steps{list-style:none;margin-left:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding-left:40px;margin-bottom:18px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:27px;height:27px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem}
+footer{padding:26px 0 44px;font-size:.85rem;color:var(--faint);text-align:center}
+@media(max-width:720px){.ba{grid-template-columns:1fr}h1{font-size:1.5rem}}
+@media print{nav,.toggle{display:none}body{font-size:10.5pt;background:#fff}pre{white-space:pre-wrap;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <h1>Fluent Interview — архитектурный аудит</h1>
+  <div class="sub">24.08.2026 · три репозитория · 1591 карточка · 4697 файлов в Lab</div>
+  <div class="toggle">
+    <button onclick="th('light')" aria-pressed="true">Светлая</button>
+    <button onclick="th('dark')" aria-pressed="false">Тёмная</button>
+  </div>
+</div></header>
+
+<nav><div class="wrap">
+  <a href="#verdict">Вердикт</a>
+  <a href="#map">Что построено</a>
+  <a href="#root">Корень проблемы</a>
+  <a href="#graph">Граф вопросов</a>
+  <a href="#dedup">+500 вопросов</a>
+  <a href="#vault">Vault и markdown</a>
+  <a href="#cms">CMS</a>
+  <a href="#no">Что НЕ надо делать</a>
+  <a href="#plan">План</a>
+  <a href="#facts">Доказательства</a>
+</div></nav>
+
+<section id="verdict"><div class="wrap">
+<h2>Вердикт</h2>
+
+<div class="lead">
+<p><strong>У вас не каша и не костыли. У вас — остановленная на середине миграция, которая была правильно спроектирована и записана в ADR-0029.</strong></p>
+<p>Три репозитория точно соответствуют той архитектуре, которую вы описали как желаемую. Runtime для запуска любого кода — есть и работает. Хранилище вопросов — есть. Приложение-лаборатория — есть. Векторный поиск — есть.</p>
+<p>Настоящая проблема одна и она конкретная: <strong>граф связей между вопросами — ваша главная идея — не реализован ни в одной из систем как рабочий механизм</strong>, и путь импорта не проверяет новые вопросы на смысловые дубли. Именно поэтому «+500 вопросов через два месяца» сегодня развалит банк.</p>
+</div>
+
+<p>Вы написали: «код писал AI, я не очень владею материалом, я доверился, и видишь — ошибка». Проверив три репозитория, я обязан сказать прямо: <b>основные решения здесь приняты правильно</b>. 35 ADR в Lab, контракты в отдельной библиотеке, иммутабельные ревизии, изолированный исполнитель на Docker — это уровень, который в реальных компаниях встречается редко.</p>
+
+<p>Ощущение каши возникло не от плохой архитектуры, а от того, что <b>две модели одного и того же живут одновременно</b> — старая (в Lab) и новая (в Question Brain) — потому что переезд между ними не закончен. Это лечится доведением миграции до конца, а не переписыванием.</p>
+</div></section>
+
+<section id="map"><div class="wrap">
+<h2>Что у вас на самом деле построено</h2>
+
+<p>Сравним вашу идею с тем, что лежит на диске.</p>
+
+<table>
+<tr><th>Ваша идея</th><th>Что есть</th><th>Статус</th></tr>
+<tr>
+  <td>Слой runtime: запускать код на C#, TypeScript, Go, Java, SQL, докеры</td>
+  <td><code>fluent-task-runtime</code> — Go, control plane на HTTP, профили Node / .NET / PostgreSQL / Go / Java, запуск в Docker без сети, с лимитами CPU/памяти/PIDs, read-only монтирование решения и скрытых тестов</td>
+  <td><span class="tag t-ok">СДЕЛАНО</span></td>
+</tr>
+<tr>
+  <td>Отдельный репозиторий-хранилище вопросов</td>
+  <td><code>fluent-question-brain</code> — Go + PostgreSQL, иммутабельные ревизии с SHA-256, локали en/ru, 1591 опубликованная карточка</td>
+  <td><span class="tag t-ok">СДЕЛАНО</span></td>
+</tr>
+<tr>
+  <td>Векторный поиск, чтобы ничего не терялось</td>
+  <td>pgvector + bge-m3 через Ollama, 1024 измерения; поиск стадийный: точное совпадение → полнотекст/триграммы → семантика → слияние RRF</td>
+  <td><span class="tag t-ok">СДЕЛАНО</span></td>
+</tr>
+<tr>
+  <td>Приложение-лаборатория: проверяет, как я решаю задачи и учу теорию</td>
+  <td><code>fluent-engineering-lab</code> — Nx-монорепо, NestJS 11 + Angular 22, цикл <code>Recall → Predict → Build → Run → Break → Observe → Explain → Evidence → Repeat</code></td>
+  <td><span class="tag t-ok">СДЕЛАНО</span></td>
+</tr>
+<tr>
+  <td><b>Хранить вопросы как граф, чтобы понимать последовательность</b></td>
+  <td>Богатая модель графа описана в <code>libs/lab-contracts</code> (26 типов рёбер!). В Question Brain создана таблица <code>question_edge</code> — <b>и она пуста, в неё не пишет ни одна строчка Go-кода</b></td>
+  <td><span class="tag t-bad">НЕ РАБОТАЕТ</span></td>
+</tr>
+<tr>
+  <td><b>Правильно вставлять новые вопросы, не дублируя</b></td>
+  <td>Есть таблица <code>duplicate_candidate</code> и ручная команда <code>qb-audit</code>. Но в импортёре <code>internal/ingest/</code> <b>нет ни одного обращения к дедупликации</b></td>
+  <td><span class="tag t-bad">НЕ РАБОТАЕТ</span></td>
+</tr>
+</table>
+
+<p>Четыре из шести пунктов вашего замысла реализованы, причём хорошо. Не работают ровно те два, которые вы сейчас и назвали главными.</p>
+
+<h3>Как три системы связаны сегодня</h3>
+<div class="flow">
+Obsidian vault (1597 .md на диске)<br>
+&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;├──► qb-import ──► PostgreSQL <code>content.*</code> ──► Question Brain API :48127<br>
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lab (NestJS) ──► Angular UI<br>
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼<br>
+&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; task-runtime :48227 (Docker)<br>
+&nbsp;&nbsp;└──► Payload CMS ──► POST /v1/promote ──► те же <code>content.*</code> &nbsp;<span class="tag t-warn">6 карточек из 1375</span>
+</div>
+
+<p>Связи между системами сделаны честно: Lab ходит в Question Brain по HTTP через версионированный контракт (<code>question-brain.catalog.v1</code>), а не лезет в чужую базу. Это правильная граница.</p>
+</div></section>
+
+<section id="root"><div class="wrap">
+<h2>Корень проблемы: миграция, которую не довели</h2>
+
+<p>Вот документ, который объясняет всё ощущение путаницы. Это ADR-0029 из Lab, датированный 22 августа:</p>
+
+<div class="card">
+<h3>ADR-0029: Question Brain is the canonical content release</h3>
+<p class="sub" style="margin-bottom:12px">Статус: <b style="color:var(--amber)">Accepted for migration</b> — принято к миграции</p>
+<p>«Fluent Lab начинался с архива Obsidian, снимка вопросов на стороне Lab и нескольких проекций графа. Такое устройство было полезно для поиска решения, но <b>небезопасно как долгосрочная модель авторства: больший банк создаёт дублирующиеся ответы, неоднозначность размещения, устаревшие счётчики и конкурирующих писателей</b>».</p>
+<p>Решение: <code>fluent-question-brain</code> владеет ревизиями вопросов, дубликатами, семантическим поиском, <b>предложениями размещения в графе, принятыми рёбрами и иммутабельными релизами графа</b>. Lab владеет состоянием ученика и презентацией.</p>
+</div>
+
+<p>Обратите внимание на два обстоятельства.</p>
+
+<p><b>Первое.</b> Этот документ уже описывает ровно ту проблему, которую вы сейчас формулируете, — почти вашими словами. Дублирующиеся ответы, конкурирующие писатели. То есть система <i>знала</i> о проблеме и спроектировала решение.</p>
+
+<p><b>Второе.</b> Статус — «принято к миграции», а не «внедрено». И миграция действительно не закончена. Отсюда все ваши ощущения:</p>
+
+<table>
+<tr><th>Что вы видите</th><th>Почему так</th></tr>
+<tr><td>«Markdown в отдельной папке — странно»</td><td>Vault был первым источником и остался главным; ADR понизил его до «read-only recovery snapshot», но импорт всё ещё идёт из него</td></tr>
+<tr><td>«Зачем CMS, если не пользуемся»</td><td>CMS — вторая дверь авторства, построенная до ADR-0029; через неё прошло 6 карточек, и она отстала от модели данных</td></tr>
+<tr><td>«Где мой граф?»</td><td>Граф спроектирован в Lab, ADR постановил перенести его в Question Brain, перенос не сделан — таблица создана и пуста</td></tr>
+<tr><td>«Что-то мы не доделали»</td><td>Совершенно верно. Именно не доделали — конкретно шаги переноса графа и дедупликации</td></tr>
+</table>
+
+<p class="q">Ваша интуиция была точной. Ошибочен только вывод из неё: вы решили, что архитектура плохая, а на самом деле она хорошая и незавершённая. Это принципиально разные диагнозы с противоположным лечением.</p>
+</div></section>
+
+<section id="graph"><div class="wrap">
+<h2>Граф вопросов — ваша главная идея</h2>
+
+<p>Вы сказали: нужно, чтобы вопросы понимали последовательность, чтобы новые правильно вставлялись, чтобы можно было расширять существующие. Разберём, что для этого уже есть.</p>
+
+<h3>Модель в Lab — именно то, что вы хотели</h3>
+
+<p>В <code>libs/lab-contracts/src/lib/knowledge-graph.ts</code> описан граф с 15 типами узлов и <b>26 типами рёбер</b>. Среди узлов — <code>question</code>, <code>question_variant</code>, <code>concept</code>, <code>capability</code>. Среди рёбер:</p>
+
+<pre><code>prerequisiteOf   — вопрос A нужно понять до вопроса B
+relatedTo        — связанные
+contrastsWith    — противопоставление (Kafka vs RabbitMQ)
+variantOf        — переформулировка того же
+duplicates       — дубль
+supersedes       — заменяет устаревший
+coldRepeatOf     — холодный повтор для интервального повторения
+assesses         — вопрос проверяет способность
+answeredBy       — ответ живёт вот здесь
+needsReview      — требует человеческого решения</code></pre>
+
+<p>И каждое ребро несёт метаданные, которые решают вашу задачу:</p>
+
+<pre><code>status:     'proposed' | 'accepted' | 'rejected' | 'superseded'
+confidence: number
+actor:      'system' | 'human' | 'llm' | 'importer'
+rationale?: string</code></pre>
+
+<p>Это промышленная модель. <code>proposed</code> + <code>confidence</code> + <code>actor: 'llm'</code> означает: машина предлагает связь, человек подтверждает. Ровно тот рабочий процесс, который нужен, когда вы приносите 500 новых вопросов.</p>
+
+<h3>Что из этого работает</h3>
+
+<p>В Question Brain создана таблица <code>content.question_edge</code> — упрощённая версия той же идеи:</p>
+
+<pre><code>create table content.question_edge (
+  from_question_id uuid not null references content.question(id),
+  to_question_id   uuid not null references content.question(id),
+  kind text not null,
+  weight numeric(6,5),
+  check (kind in ('prerequisite','related','contrast','follow_up','example_of')),
+  check (from_question_id &lt;&gt; to_question_id)
+);</code></pre>
+
+<p>Схема корректна. Но:</p>
+
+<ul>
+<li><b>В неё не пишет ни одна строка Go-кода.</b> Поиск по всему репозиторию: <code>grep -rn "question_edge" --include='*.go'</code> не находит ничего, кроме миграции.</li>
+<li>Команда <code>qb-graph-release</code>, которая по названию должна публиковать граф, материализует только <code>content.question_topic</code> — привязку вопроса к теме. Это классификация, а не последовательность.</li>
+<li>Модель беднее, чем в Lab: пять типов связей вместо двадцати шести, нет <code>status</code>, нет <code>confidence</code>, нет <code>actor</code>. То есть нет самого механизма «машина предложила — человек подтвердил».</li>
+</ul>
+
+<div class="ba">
+<div class="before"><h4>Сейчас</h4>
+<p>Вопросы связаны только через тему: «Q039 относится к Messaging &amp; Event Streaming». Плоский список внутри темы.</p>
+<p>Система не знает, что <code>Q039</code> (партиции и консьюмеры) требует понимания <code>Q001</code> (что такое Kafka вообще). Не знает, что два вопроса — переформулировки. Не знает порядка изучения.</p>
+<p><b>Последовательность существует только у вас в голове.</b></p>
+</div>
+<div class="after"><h4>После</h4>
+<p>Граф вопрос→вопрос заполнен рёбрами <code>prerequisiteOf</code>, <code>variantOf</code>, <code>contrastsWith</code>.</p>
+<p>Lab строит маршрут обучения: топологическая сортировка по <code>prerequisiteOf</code> даёт правильный порядок. Провалили Q039 — система показывает предпосылки. Готовитесь к собеседованию в Ozon — фильтр по компании плюс порядок по графу.</p>
+<p><b>Последовательность выводится машиной и проверяема.</b></p>
+</div>
+</div>
+
+<h3>Рекомендация</h3>
+
+<p>Расширить <code>question_edge</code> в Question Brain до модели, которая уже описана в <code>lab-contracts</code> — добавить <code>status</code>, <code>confidence</code>, <code>actor</code>, <code>rationale</code> и полный набор видов связи. Затем написать то, чего нет: генератор предложений и команду подтверждения.</p>
+
+<p>Не изобретайте модель заново — она уже спроектирована и продумана лучше, чем то, что попало в SQL. Задача сводится к переносу и дописыванию writer'а.</p>
+</div></section>
+
+<section id="dedup"><div class="wrap">
+<h2>Сценарий «+500 вопросов через два месяца»</h2>
+
+<p>Это главный вопрос, который вы задали. Отвечаю конкретно, потому что здесь система сегодня сломается.</p>
+
+<h3>Что происходит при импорте сейчас</h3>
+
+<p>Защита от дублей существует в двух местах, и обе не покрывают ваш случай:</p>
+
+<table>
+<tr><th>Механизм</th><th>Что ловит</th><th>Ваш случай</th></tr>
+<tr>
+  <td><code>qb-release</code></td>
+  <td>Одинаковый <code>stable_key</code> или одинаковый <code>content_hash</code></td>
+  <td><span class="tag t-bad">не поможет</span> Ловит только побайтово идентичный текст</td>
+</tr>
+<tr>
+  <td><code>qb-audit</code></td>
+  <td>Фиксирует решение по паре: <code>--left X --right Y --decision merge</code></td>
+  <td><span class="tag t-bad">не поможет</span> Пару нужно найти самому, руками</td>
+</tr>
+<tr>
+  <td>Семантический дедуп на импорте</td>
+  <td colspan="2"><span class="tag t-bad">ОТСУТСТВУЕТ</span> — в <code>internal/ingest/</code> нет ни одного упоминания дедупликации</td>
+</tr>
+</table>
+
+<p>Практический итог. Вы сходили на пять собеседований, собрали 500 вопросов. Из них, по опыту, около сотни — это переформулировки того, что уже лежит в банке: «Чем Kafka отличается от RabbitMQ?» против «Когда выбрать Kafka, а когда RabbitMQ?». Разный текст → разный SHA-256 → <b>система пропустит все сто как новые вопросы</b>.</p>
+
+<p>Через два-три таких цикла банк перестанет быть банком. Это не гипотеза — это ровно то, о чём предупреждает ADR-0029 в разделе Context.</p>
+
+<h3>Как должно быть</h3>
+
+<p>Ирония в том, что все детали для решения уже есть. Не хватает только сборки их в один конвейер:</p>
+
+<ul>
+<li><code>question_embedding</code> — вектора bge-m3, 1024 измерения <span class="tag t-ok">есть</span></li>
+<li><code>duplicate_candidate</code> с полями <code>exact_score</code>, <code>semantic_score</code>, <code>decision</code> <span class="tag t-ok">есть</span></li>
+<li>Гибридный поиск с RRF <span class="tag t-ok">есть</span></li>
+<li><code>import_run</code> / <code>import_item</code> — журнал импорта <span class="tag t-ok">есть</span></li>
+<li>Проверки качества <span class="tag t-ok">есть</span></li>
+<li><b>Вызов всего этого из пути импорта</b> <span class="tag t-bad">нет</span></li>
+</ul>
+
+<div class="ba">
+<div class="before"><h4>Сейчас: 500 вопросов</h4>
+<pre style="font-size:12.5px"><code>qb-import
+  ├ распарсить markdown
+  ├ проверки качества
+  ├ SHA-256
+  ├ уже есть точно такой хеш? нет
+  └ ЗАПИСАТЬ как новый
+
+Результат:
+  +500 карточек
+  ~100 скрытых дублей
+  0 связей с существующими</code></pre>
+</div>
+<div class="after"><h4>После: 500 вопросов</h4>
+<pre style="font-size:12.5px"><code>qb-import --stage
+  ├ распарсить + проверки
+  ├ векторизовать
+  ├ найти соседей (косинус)
+  │   &gt;0.93 → duplicate_candidate
+  │   0.80–0.93 → предложить
+  │              variantOf / relatedTo
+  │   &lt;0.80 → новый вопрос
+  └ записать в STAGING
+
+qb-review   ← человек решает
+  merge / keep_separate / new
+
+qb-promote  ← только принятое</code></pre>
+</div>
+</div>
+
+<h3>Рабочий процесс, который нужно построить</h3>
+
+<ol class="steps">
+<li><b>Импорт в карантин, а не сразу в канон.</b> Новые карточки получают статус <code>proposed</code> и не попадают в релиз, пока не пройдут ревью. Схема это уже позволяет: у <code>question.status</code> есть CHECK-констрейнт.</li>
+<li><b>Автоматический поиск соседей.</b> Для каждой новой карточки — векторный поиск по существующим. Три порога: явный дубль, вероятный вариант, новый вопрос. Пороги подбираются на ваших же данных, не берутся из книжки.</li>
+<li><b>Очередь ревью с предложениями.</b> Не «вот 500 карточек, разбирайся», а «вот 100 пар, для каждой — кнопки: это дубль / это вариант / это новое». Заметьте: Review Workbench для этого уже описан в ADR-0008 и частично сделан в Angular на маршруте <code>/questions</code>.</li>
+<li><b>Предложение рёбер графа.</b> Соседи по вектору — естественные кандидаты в <code>relatedTo</code>. Карточки той же темы с меньшим уровнем — кандидаты в <code>prerequisiteOf</code>. Всё создаётся со статусом <code>proposed</code> и <code>actor: 'llm'</code>, человек подтверждает.</li>
+<li><b>Продвижение в канон одной транзакцией.</b> Принятое становится опубликованной ревизией, отклонённое остаётся в журнале с обоснованием — чтобы через год было видно, почему решили именно так.</li>
+</ol>
+
+<p>Это и есть ответ на «как правильно вставлять новые вопросы». Не структура хранения, а <b>конвейер приёмки</b>. Ваша ошибка в постановке вопроса была в том, что вы искали проблему в том, где лежат данные, а она — в том, что нет процедуры их приёма.</p>
+</div></section>
+
+<section id="vault"><div class="wrap">
+<h2>Vault и markdown: где вы правы и где нет</h2>
+
+<div class="q">«А то, что сейчас тут Markdown хранится в отдельном репозитории, в отдельной папке, как-то супер странно. Наверное, так не надо делать. Наверное, нужно хранить их в базе».</div>
+
+<h3>Где вы не правы</h3>
+
+<p>Хранение авторского контента как markdown в git — <b>не костыль</b>. Это зрелая практика (docs-as-code), у неё есть конкретные преимущества, которых база не даёт: история правок с обоснованием, ревью через diff, работа офлайн в удобном редакторе, отсутствие вендор-лока, восстановление из любой точки.</p>
+
+<p>Перенос вопросов «в базу как JSONB» вместо файлов лишил бы вас всего этого и дал взамен… ничего. База у вас <b>уже есть</b> — Postgres наполняется из markdown импортёром. Это не «или-или», а конвейер: файлы — авторский формат, база — рабочий индекс. Так же устроены статические генераторы сайтов и почти вся техническая документация в больших компаниях.</p>
+
+<h3>Где вы правы — и проблема серьёзнее, чем вам казалось</h3>
+
+<p>Настоящий дефект не в том, <i>что</i> markdown, а в том, что <b>контракт между файлами и парсером нигде не зафиксирован и не проверяется на стороне автора</b>.</p>
+
+<p>Смотрите. В <code>internal/normalize/card.go</code> лежит таблица соответствия названий секций полям структуры:</p>
+
+<pre><code>{"Task",         → Condition}
+{"Задача",       → Condition}
+{"Условие",      → Condition}
+{"Условие задачи", → Condition}
+{"Starter",      → Starter}
+{"Schema",       → Starter}
+{"DDL",          → Starter}
+{"Входные данные", → Starter}
+{"Solution",     → Solution}
+{"Решение",      → Solution}
+...</code></pre>
+
+<p><b>Эта таблица и есть схема ваших данных.</b> Она написана на Go в одном репозитории и применяется к файлам в другом. Автор о ней не знает. Проверки при написании файла нет. Версии у неё нет.</p>
+
+<p>Последствия конкретные. Вы пишете в карточке заголовок <code>## Условия</code> вместо <code>## Условие</code> — множественное число вместо единственного. Парсер молча не находит совпадения, поле <code>Condition</code> остаётся пустым, карточка импортируется как валидная. Вы узнаете об этом через месяц, открыв задачу без условия.</p>
+
+<p>Ровно этот класс ошибок и породил BUG-1 и BUG-2 из вашего наряда: 70 карточек с заголовком раздела вместо вопроса прошли приёмку. Это не четыре независимых бага, это один корень — <b>отсутствие валидации на стороне автора</b>.</p>
+
+<p>Добавлю деталь, которую видно на реальной карточке. Вот начало <code>Q039</code>:</p>
+
+<pre><code># Q039 — If a Kafka topic has 4 partitions...
+
+ID: Q039
+Track: Backend
+Topic: Messaging &amp; Event Streaming
+Level: Middle+</code></pre>
+
+<p>Метаданные записаны свободными строками <code>Ключ: значение</code>, а не YAML-frontmatter в блоке <code>---</code>. Это значит, что ни Obsidian, ни любой стандартный инструмент не может их провалидировать — для всех них это просто текст абзаца.</p>
+
+<div class="ba">
+<div class="before"><h4>Сейчас</h4>
+<ul>
+<li>Схема живёт в Go-коде репозитория А</li>
+<li>Файлы — в репозитории Б</li>
+<li>Автор пишет вслепую</li>
+<li>Опечатка в заголовке = тихая потеря данных</li>
+<li>Метаданные не в frontmatter — не валидируются ничем</li>
+<li>Ошибка обнаруживается через недели</li>
+</ul>
+</div>
+<div class="after"><h4>После</h4>
+<ul>
+<li>Схема — один версионированный артефакт (JSON Schema), опубликованный из Question Brain</li>
+<li>YAML-frontmatter вместо свободных строк</li>
+<li><code>qb-lint</code> запускается прямо в vault</li>
+<li>Опечатка = ошибка при коммите, с указанием строки и подсказкой</li>
+<li>Git-хук в vault не даёт закоммитить сломанную карточку</li>
+<li>Ошибка обнаруживается через секунды</li>
+</ul>
+</div>
+</div>
+
+<h3>Отдельно: у vault нет удалённого репозитория</h3>
+
+<p>Я проверил ещё раз: в <code>~/developer/fluent-question-vault</code> команда <code>git remote -v</code> возвращает пустоту. 1597 файлов, включая 689 русских переводов, которые существуют только там, живут на одном диске.</p>
+
+<p>Это самый дешёвый и самый важный пункт всего аудита. Всё остальное в этом отчёте — про то, как сделать лучше. Этот — про то, как не потерять всё. Создайте приватный репозиторий и запушьте сегодня.</p>
+</div></section>
+
+<section id="cms"><div class="wrap">
+<h2>Payload CMS: зачем она и что с ней делать</h2>
+
+<div class="q">«Зачем вообще этот CMS тогда нужен, если мы вообще не пользуемся им».</div>
+
+<p>CMS задумывалась как вторая дверь авторства — для правки вопросов через веб-интерфейс, без Obsidian и git. Сама идея («CMS как редакторская поверхность над каноническим хранилищем») правильная и распространённая: Payload бесплатно даёт черновики, версии, diff и локализацию.</p>
+
+<p>Но по факту: через CMS прошло <b>6 карточек из 1375</b>. И есть причина, по которой больше и не пройдёт.</p>
+
+<p>Эндпоинт продвижения <code>POST /v1/promote</code> в <code>internal/httpapi/server.go:320</code> принимает такой набор полей:</p>
+
+<pre><code>stable_key, slug, title, track, topic, scope, lang,
+priority, group, level, question, sections
++ опционально: program_key, path_key, domain_key,
+               capability_key, mapping_state</code></pre>
+
+<p>А импортёр в <code>internal/normalize/card.go</code> умеет заметно больше — там есть <code>Company</code>, <code>Task</code>, <code>Choices</code>, <code>Rubric</code>. То есть карточку с практической задачей, с вариантами ответа или с оценочной рубрикой <b>через CMS создать физически невозможно</b> — эти поля до канона не доедут.</p>
+
+<p>CMS отстала от собственной модели данных. Вы ей не пользуетесь не по лени, а потому что она не умеет то, что вам нужно.</p>
+
+<h3>Решение</h3>
+
+<p>Здесь у вас честный выбор, и это <b>продуктовое решение, а не техническое</b> — поэтому его должны принять вы, а не я. Но моя рекомендация определённая:</p>
+
+<div class="card">
+<h3>Рекомендую: выключить Payload, а редактор построить как часть Lab</h3>
+<p>Обоснование. Вам всё равно нужен <b>Review Workbench</b> — интерфейс приёмки новых вопросов из раздела выше. Это не «CMS для правки текста», это очередь решений: дубль или нет, какие рёбра графа принять. Payload такого не умеет и не для этого сделан — вы будете с ним бороться.</p>
+<p>При этом в Lab уже есть Angular-приложение, есть маршрут <code>/questions</code>, есть описанный в ADR-0008 Review Workbench, есть дизайн-система. Достроить там очередь ревью дешевле и правильнее, чем чинить Payload и параллельно строить очередь ревью где-то ещё.</p>
+<p>Плюс к этому уходит целый класс проблем: третья схема в базе (<code>cms.*</code>), хук <code>afterChange</code>, который не различает сохранение черновика и публикацию (известная неоднозначность Payload), и неработающий healthcheck.</p>
+</div>
+
+<p>Альтернатива — достроить <code>promoteRequest</code> до полной модели и остаться на Payload. Это допустимо, если вам важно редактировать вопросы с телефона или отдать авторство другому человеку. Но тогда Review Workbench всё равно придётся делать отдельно.</p>
+
+<p>Чего точно не надо — оставлять как есть. Половинчатое состояние стоит денег на поддержку и не даёт пользы.</p>
+</div></section>
+
+<section id="no"><div class="wrap">
+<h2>Что НЕ надо делать</h2>
+
+<p>Вы дали мне мандат: «если скажешь, что всё работало идеально — напишем на Rust». Я отношусь к этому серьёзно, поэтому отвечаю прямо: <b>нет, не надо</b>. Ниже — решения, которые выглядят как «сделать правильно и по-большому», а на деле уничтожат работающие системы.</p>
+
+<h3>Не переписывать на Rust</h3>
+
+<p>Question Brain и task-runtime уже на Go. Для HTTP-сервиса поверх PostgreSQL Rust не даёт ничего: узкое место — запросы к базе и вызовы модели эмбеддингов, а не скорость языка. Go с этим справляется с запасом; в вашем же прогоне <code>g5-hardening-2026-08-22</code> зафиксирован p95 40.25 мс (правда, всего на 60 запросах — выборка маленькая).</p>
+
+<p>Цена переписывания — потеря конвейера, через который прошли 1591 карточка со всеми проверками качества, плюс месяцы работы, плюс новый класс багов в коде, который вы будете читать хуже, чем нынешний. Это не движение к Big Tech, это движение назад.</p>
+
+<p>Замечу и общий принцип: в больших компаниях выбор языка определяется не тем, какой язык «правильнее», а тем, где команда сильнее и где экосистема ближе к задаче. У вас Go для сервисов и TypeScript для продукта — это связная и обоснованная пара.</p>
+
+<h3>Не выносить вектора в отдельную векторную базу</h3>
+
+<p>У вас 7626 векторов по 1024 измерения — это около 30 МБ, весь набор помещается в память с огромным запасом. Отдельная векторная БД (Pinecone, Qdrant, Weaviate) добавит сетевой вызов, вторую систему для эксплуатации и рассинхронизацию с каноном — ради выигрыша, которого при таком объёме просто нет.</p>
+
+<p>Ориентир для пересмотра — десятки миллионов векторов либо измеренная деградация p95. Ни того, ни другого. pgvector в Postgres — правильный выбор, и он у вас уже сделан.</p>
+
+<h3>Не заводить отдельную графовую базу</h3>
+
+<p>Та же логика. 1591 узел и, скажем, 5000 рёбер — это масштаб, на котором рекурсивный CTE в PostgreSQL отработает за миллисекунды. Neo4j здесь — чистый оверхед. Графовые БД начинают окупаться на обходах в глубину по десяткам миллионов рёбер.</p>
+
+<h3>Не переписывать Lab</h3>
+
+<p>11 ГБ, 4697 файлов, 35 ADR, NestJS + Angular с контрактами в отдельной библиотеке. Я специально смотрел на швы между системами — они сделаны правильно: Lab ходит в Question Brain по HTTP через версионированный контракт, а не в чужую базу напрямую. Это то, что чаще всего делают неправильно, и здесь это сделано верно.</p>
+
+<h3>Не «упрощать», сливая репозитории в один</h3>
+
+<p>Соблазн понятен: три репозитория кажутся сложностью. Но границы между ними проведены по реальным линиям — у контента, исполнения кода и состояния ученика разные жизненные циклы и, главное, <b>разные границы безопасности</b>. task-runtime исполняет недоверенный код в Docker без сети; смешивать его с API, который ходит в вашу базу, нельзя. Эта граница названа в ADR-0034 и она правильная.</p>
+
+<div class="card">
+<p><b>Общий принцип.</b> Ощущение «тут костыли, надо переписать» почти всегда возникает от непонимания системы, а не от её дефектов. Проверив эти три репозитория, я вижу инженерию выше среднего уровня. Проблема не в качестве решений, а в том, что <b>вам никто не объяснил их целиком</b>, — и в двух незаконченных участках, названных выше.</p>
+</div>
+</div></section>
+
+<section id="plan"><div class="wrap">
+<h2>План действий</h2>
+
+<p>Вы просили убрать критерий времени и делать правильно. Порядок ниже — не по трудоёмкости, а по последовательности: каждый следующий шаг опирается на предыдущий.</p>
+
+<ol class="steps">
+<li>
+<b>Сохранить vault.</b> Приватный репозиторий, проверка на секреты, <code>git push</code>. Единственный пункт, где цена ошибки необратима. Пятнадцать минут.
+</li>
+<li>
+<b>Зафиксировать контракт карточки.</b> Вынести схему из <code>normalize/card.go</code> в версионированный артефакт: JSON Schema плюс переход на YAML-frontmatter. Написать <code>qb-lint</code>, который запускается внутри vault и проверяет файл до коммита. Повесить git-хук. Это закрывает BUG-1 и BUG-2 в корне, а не по симптомам.
+</li>
+<li>
+<b>Достроить модель графа в Question Brain.</b> Расширить <code>question_edge</code> до модели из <code>lab-contracts</code>: <code>status</code>, <code>confidence</code>, <code>actor</code>, <code>rationale</code>, полный набор видов связи. Не проектировать заново — перенести.
+</li>
+<li>
+<b>Построить конвейер приёмки.</b> Импорт в staging → векторный поиск соседей → предложения дублей и рёбер → очередь решений → продвижение в канон. Это ядро всего аудита и прямой ответ на «+500 вопросов».
+</li>
+<li>
+<b>Сделать Review Workbench в Lab.</b> Очередь пар и предложенных рёбер с кнопками решения. Опереться на существующий маршрут <code>/questions</code> и ADR-0008.
+</li>
+<li>
+<b>Закрыть судьбу CMS.</b> По рекомендации — выключить Payload после того, как Workbench заработает, и убрать схему <code>cms.*</code>. Если решите оставить — достроить <code>promoteRequest</code> до полной модели.
+</li>
+<li>
+<b>Довести ADR-0029 до статуса Accepted.</b> Когда граф и дедуп переехали, а второй писатель выключен — переписать статус и зафиксировать инвариант: один канон, один писатель. Это то, что не даст каше вернуться.
+</li>
+<li>
+<b>Починить поиск по мелочи.</b> BUG-7 (порог на слитом RRF-скоре перенести внутрь каждого плеча) и BUG-8 (удалить ANN-индексы, не оправданные на 7626 векторах). Обе правки локальные.
+</li>
+<li>
+<b>Словари нормализации.</b> <code>company</code> и <code>group</code> — по образцу <code>internal/taxonomy</code>, с отбраковкой на импорте. Иначе <code>Avito</code>/<code>avito</code>/<code>wb</code> вернутся со следующей партией.
+</li>
+</ol>
+
+<p>Шаги 1–2 стоит сделать до того, как вы принесёте следующую партию вопросов. Шаги 3–5 — до того, как партия станет большой.</p>
+</div></section>
+
+<section id="facts"><div class="wrap">
+<h2>Доказательства</h2>
+
+<p>Каждое утверждение выше проверено в коде. Ниже — где именно, чтобы вы могли перепроверить сами.</p>
+
+<table>
+<tr><th>Утверждение</th><th>Проверка</th></tr>
+<tr><td>В <code>question_edge</code> не пишет ни одна строка Go</td><td><code>grep -rn "question_edge" --include='*.go' .</code> → пусто</td></tr>
+<tr><td><code>qb-graph-release</code> материализует только темы</td><td><code>cmd/qb-graph-release/main.go</code>, комментарий: «materialize accepted source placements into content.question_topic»</td></tr>
+<tr><td>Дедупликации нет в пути импорта</td><td><code>grep -rn "duplicate" --include='*.go' internal/ingest/</code> → пусто</td></tr>
+<tr><td>Промоушен не передаёт task/rubric/choices/company</td><td><code>internal/httpapi/server.go:320</code>, структура <code>promoteRequest</code></td></tr>
+<tr><td>Импортёр эти поля умеет</td><td><code>internal/normalize/card.go:70,81,83</code> — <code>Company</code>, <code>Task</code>, <code>Choices</code>, <code>Rubric</code></td></tr>
+<tr><td>Схема секций — таблица алиасов в Go</td><td><code>internal/normalize/card.go:282–300</code></td></tr>
+<tr><td>У vault нет remote</td><td><code>cd ~/developer/fluent-question-vault &amp;&amp; git remote -v</code> → пусто; 1597 .md; HEAD <code>f4d4622</code></td></tr>
+<tr><td>Метаданные не в YAML-frontmatter</td><td><code>Question Cards/Q039 — ....md</code>, строки 3–9</td></tr>
+<tr><td>Через CMS прошло 6 карточек</td><td><code>HANDOFF-BRIEF.md:679</code> — <code>source_system</code>: vault 1369, payload-cms 6</td></tr>
+<tr><td>Модель графа в Lab: 26 типов рёбер</td><td><code>libs/lab-contracts/src/lib/knowledge-graph.ts:34–68</code></td></tr>
+<tr><td>ADR-0029 в статусе миграции</td><td><code>docs/adr/0029-question-brain-canonical-content-release.md</code>, «Status: Accepted for migration»</td></tr>
+<tr><td>Lab ходит в QB по HTTP-контракту</td><td><code>apps/learning-api/src/app/question-brain/question-brain.client.ts:79,179</code></td></tr>
+<tr><td>task-runtime исполняет в Docker с лимитами</td><td><code>fluent-task-runtime/README.md</code>, <code>internal/engine/docker_executor.go</code></td></tr>
+<tr><td>p95 40.25 мс</td><td><code>docs/verification/g5-hardening-2026-08-22.md</code>, 60 запросов</td></tr>
+<tr><td>7626 векторов</td><td><code>HANDOFF-BUGS.md</code>, BUG-8</td></tr>
+</table>
+
+<h3>Что осталось за рамками</h3>
+
+<p>Честно обозначу границы этого аудита:</p>
+<ul>
+<li>Я <b>не запускал</b> системы и не проверял поведение вживую — выводы сделаны по коду, схемам и документации.</li>
+<li>Lab (11 ГБ, 4697 файлов) изучен на уровне архитектуры: ADR, контракты, границы между системами. Реализацию внутри модулей я не читал.</li>
+<li>Пороги для семантической дедупликации (0.93 / 0.80 в примере выше) — иллюстративные. Их нужно подбирать на ваших данных: взять полсотни известных пар и посмотреть, где проходит граница.</li>
+<li>Оценок трудоёмкости в отчёте нет — вы просили их убрать.</li>
+</ul>
+</div></section>
+
+<footer><div class="wrap">
+Fluent Interview · архитектурный аудит · 24.08.2026
+</div></footer>
+
+<script>
+function th(t){
+  document.documentElement.setAttribute('data-theme',t);
+  document.querySelectorAll('.toggle button').forEach(function(b){
+    b.setAttribute('aria-pressed', b.textContent.toLowerCase().indexOf(t==='dark'?'тёмная':'светлая')>=0);
+  });
+}
+if(matchMedia('(prefers-color-scheme:dark)').matches){th('dark')}
+</script>
+</body>
+</html>
