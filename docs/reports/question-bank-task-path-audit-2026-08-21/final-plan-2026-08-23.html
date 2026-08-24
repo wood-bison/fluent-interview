@@ -1631,7 +1631,7 @@
 
       <div class="content">
         <header class="topbar">
-          <div class="crumbs">FLUENT INTERVIEW / <b>FINAL PLAN</b> / 2026-08-23</div>
+              <div class="crumbs">FLUENT INTERVIEW / <b>FINAL PLAN</b> / 2026-08-24 LIVE AUDIT</div>
           <div class="toolbar">
             <span class="toolbar-label">тема</span>
             <div class="theme-switcher" role="group" aria-label="Тема документа">
@@ -2133,7 +2133,8 @@
               </div>
               <p>
                 Gates последовательны: следующий не закрываем, пока не выполнены exit criteria
-                предыдущего. Статусы ниже — текущая оценка после live-аудита, а не обещание, что всё уже сделано.
+                предыдущего. Статусы ниже — текущая оценка после live-аудита 2026-08-24. Зелёные
+                gates реально проверены; жёлтые требуют контентного решения, а не косметического фикса.
               </p>
             </div>
 
@@ -2141,17 +2142,17 @@
               <article class="gate">
                 <div class="gate-id">G0</div>
                 <div><h3>Truth ledger и versioned contracts</h3><p>Зафиксировать release ids, определения метрик, владельцев и stale UI snapshots.</p><small>Done when: один diagnostics endpoint показывает card/topic/map/route/task counts и дату среза.</small></div>
-                <span class="status plan">закрыть первым</span>
+                <span class="status live">закрыт</span>
               </article>
               <article class="gate">
                 <div class="gate-id">G1</div>
                 <div><h3>Lab release adapter</h3><p>Доказать, что Lab читает только published Question Brain release; локальная копия и fallback удалены из steady state.</p><small>Done when: parity test 1 392/134/en+ru проходит после чистого старта и cache rebuild.</small></div>
-                <span class="status live">частично live</span>
+                <span class="status live">закрыт</span>
               </article>
               <article class="gate">
                 <div class="gate-id">G2</div>
                 <div><h3>Graph projection и bindings</h3><p>Связать capabilities, stages, prerequisites и QuestionCard coverage. Разделить base graph, compact map и route projection.</p><small>Done when: каждая released карта либо имеет capability binding, либо видна в Freely с явным статусом unplaced.</small></div>
-                <span class="status blocked">блокирует пути</span>
+                <span class="status blocked">единственный контентный блокер</span>
               </article>
               <article class="gate">
                 <div class="gate-id">G3</div>
@@ -2166,22 +2167,22 @@
               <article class="gate">
                 <div class="gate-id">G5</div>
                 <div><h3>Intake, enrichment и качество банка</h3><p>Новые пачки проходят staging, dedupe, provenance, locale checks и capability placement. Старые цифры «348 без RU» перепроверяются по release quality.</p><small>Done when: queue=0, missing locale=0, duplicate decisions audited, source license записана.</small></div>
-                <span class="status ready">quality live</span>
+                <span class="status ready">качество закрыто; placement ждёт G2</span>
               </article>
               <article class="gate">
                 <div class="gate-id">G6</div>
                 <div><h3>Routes, modes и unlock UX</h3><p>Recommended, Explorer и Freely работают на одной projection; «closed» означает рекомендательное состояние, а не потерю доступа.</p><small>Done when: keyboard + deep-link тесты открывают любую released card и объясняют причину recommendation.</small></div>
-                <span class="status plan">после G2</span>
+                <span class="status ready">карточки live; Projects gated</span>
               </article>
               <article class="gate">
                 <div class="gate-id">G7</div>
                 <div><h3>Observability, performance и recovery</h3><p>Trace от card до run, lag индексов, map build, memory/time budgets, Jaeger, backup/restore и cold restart.</p><small>Done when: неделя telemetry даёт answer на «где застревают», а rebuild не меняет release semantics.</small></div>
-                <span class="status plan">hardening</span>
+                <span class="status ready">smoke live; недельный baseline впереди</span>
               </article>
               <article class="gate">
                 <div class="gate-id">G8</div>
                 <div><h3>Production release и legacy cleanup</h3><p>Один writer на домен, fallback выключен, старые projection paths удалены, rollback и reindex документированы.</p><small>Done when: clean Compose stack, smoke suite, accessibility pass и signed release manifest.</small></div>
-                <span class="status plan">финал</span>
+                <span class="status ready">stack live; release sign-off впереди</span>
               </article>
             </div>
           </section>
@@ -2291,10 +2292,10 @@
               <article class="audit-box">
                 <h3><span class="status plan">plan</span> Нужно сделать</h3>
                 <ul>
-                  <li>Расширить graph projection так, чтобы все 1 392 cards были видимы через Search/Explorer.</li>
+                  <li>Выпустить reviewed Question Brain → Lab crosswalk: явные stage_key/capability_key для карточек, а не keyword-guessing.</li>
                   <li>Поддерживать relation validator при каждом новом Question Brain release.</li>
                   <li>Добавлять языковые revisions по мере покрытия capability, не копируя исходники.</li>
-                  <li>Сделать modes, clean restart, traces, recovery и release gate G8.</li>
+                  <li>Снять недельный observability baseline, уменьшить bundle-budget warnings и подписать production release G8.</li>
                 </ul>
               </article>
               <article class="audit-box">
@@ -2329,7 +2330,7 @@
           </section>
 
           <div class="footer">
-            <strong>Fluent Interview · финальный план 2026-08-23.</strong>
+            <strong>Fluent Interview · финальный план · live audit 2026-08-24.</strong>
             Документ создан для ревью архитектуры и последовательного исполнения. Он не изменяет
             Question Brain, Task Runtime или Fluent Lab и не заменяет release checks.
           </div>
