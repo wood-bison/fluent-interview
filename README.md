@@ -63,7 +63,7 @@ recovery. `pnpm dev` is the normal human-facing command.
 | Paths | 8 | Node.js + TypeScript, Java + Spring, .NET + C#, Go, Frontend, System Design, Algorithms, Behavioral |
 | Areas / stations | 15 / 81 | опубликованные учебные области и станции, а не количество карточек |
 | Question Brain cards | 1,591 | канонические карточки вопросов, доступные через библиотеку |
-| Topic groups | 135 | legacy-тематические группы источника, не отдельные программы |
+| Topic groups | 135 raw / 133 quality | legacy-тематические группы источника (после quality-нормализации 133), не отдельные программы |
 | Runtime tasks | 18 | исполняемые revisions с профилем и hidden checks; одна карточка может иметь несколько задач |
 
 В текущем crosswalk принято 19 карточек (`accepted`); остальные 1,572 явно
