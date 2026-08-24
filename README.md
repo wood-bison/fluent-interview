@@ -60,7 +60,7 @@ recovery. `pnpm dev` is the normal human-facing command.
 | Слой | Сейчас | Что это означает |
 | --- | ---: | --- |
 | Program | 1 | `Backend Engineer`, контейнер всей учебной системы |
-| Paths | 8 | Node.js + TypeScript, Java + Spring, .NET + C#, Go, Frontend, System Design, Algorithms, Behavioral |
+| Paths | 9 | Node.js + TypeScript, Java + Spring, .NET + C#, Go, Python, Frontend, System Design, Algorithms, Behavioral |
 | Areas / stations | 15 / 81 | опубликованные учебные области и станции, а не количество карточек |
 | Question Brain cards | 1,591 | канонические карточки вопросов, доступные через библиотеку |
 | Topic groups | 135 raw / 133 quality | legacy-тематические группы источника (после quality-нормализации 133), не отдельные программы |

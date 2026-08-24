@@ -53,24 +53,28 @@ Evidence → mastery / repeat / next decision in Fluent Lab
 - [x] Путь имеет явный `discoveryQuery`/`discoveryCount`, а UI показывает `discoverable` и `linked` раздельно.
 - [x] В браузере проверены RU/EN, конспект, TaskBrief → 4 runtime revisions, editor/terminal и два desktop viewport.
 
-### C1 — Editorial path crosswalk (следующий блок)
+### C1 — Editorial path crosswalk (в работе)
 
 Цель: превратить backlog `1 572 unbound` в проверяемый манифест, не угадывая
 путь из `Track`, `Group`, `Topic`, заголовка или breadcrumb.
 
-1. Собрать партиции по будущим путям: Node.js + TypeScript, Java + Spring,
-   .NET + C#, Go, Frontend, System Design, Algorithms, Behavioral.
-2. Для каждой карточки выбрать `program_key`, `path_key`, `domain_key` и при
-   необходимости `capability_key`; неизвестное оставить `unmapped`.
-3. Проверить RU-вопрос, EN-вопрос, topic, уровень, тип и дубликаты.
-4. Сгенерировать полный manifest с `revision_id` и `content_hash` для каждой
+1. [x] Собрать первую exact-topic registry по путям: Node.js + TypeScript, Java + Spring,
+   .NET + C#, Go, Python, Frontend, System Design, Algorithms, Behavioral.
+2. [x] Сгенерировать complete revision-pinned proposal: 1 572 `proposed`, 19
+   ранее принятых runtime-связей, 0 `unmapped`.
+3. [ ] Для каждой карточки принять или отклонить редакторское решение;
+   неизвестное оставить `unmapped`.
+4. [ ] Проверить RU-вопрос, EN-вопрос, topic, уровень, тип и дубликаты.
+5. [x] Сгенерировать полный manifest с `revision_id` и `content_hash` для каждой
    текущей production-ревизии.
-5. Провести dry-run; только после editor approval выполнить `qb-map-release
+6. [x] Провести dry-run; proposal проходит coverage/pin validation без записи.
+   Только после editor approval выполнять `qb-map-release
    --approve`. Никаких локальных копий и fallback-веток в Lab.
 
-**Done when:** каждый из восьми путей имеет опубликованный manifest и отчёт
+**Done when:** каждый из девяти путей имеет опубликованный manifest и отчёт
 `accepted / proposed / rejected / unmapped`; ни одна связь не выведена
-автоматически.
+автоматически. Сейчас proposal готов, но C1 не закрыт: 1 572 решения ещё
+нужно редакторски принять или отклонить.
 
 ### C2 — TaskBrief coverage (после C1)
 
@@ -94,7 +98,7 @@ runtime health/readiness в release evidence.
 
 1. Lab читает новый Question Brain graph release и runtime manifest только по
    версиям HTTP-контрактов.
-2. `Program` показывает 8 понятных stack/discipline paths; `Knowledge Map`
+2. `Program` показывает 9 понятных stack/discipline paths; `Knowledge Map`
    показывает полные 15 areas и 81 station без смешивания уровней.
 3. `Explore freely` открывает просмотр любой опубликованной станции и вопроса;
    `Recommended` оставляет prerequisite/evidence-gates для следующего шага.
@@ -115,8 +119,10 @@ released`, если для них ещё нет crosswalk/runtime.
 - [ ] Release rollback и backup/restore drill для каждого crosswalk/revision.
 - [ ] Desktop a11y, no-overflow, performance и observability smoke на
   `1728×1117` и `2560×1440`.
-- [ ] Git commit/push всех трёх репозиториев только после доказательств C1–C3;
-  vault, Question Brain, Runtime и Lab не становятся вторыми источниками.
+- [ ] Promotion commit/push нового learner release выполнять только после
+  доказательств C1–C3; промежуточные contract/docs/test commits разрешены и
+  должны быть пушены отдельно. Vault, Question Brain, Runtime и Lab не
+  становятся вторыми источниками.
 
 ## Что не делаем
 
