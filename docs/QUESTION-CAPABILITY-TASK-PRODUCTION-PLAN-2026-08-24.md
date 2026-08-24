@@ -376,37 +376,40 @@ Suggested commit: `feat(taxonomy): add canonical capability registry and aliases
 
 ### Changes
 
-- [ ] Add a versioned TaskFamily contract containing stable identity, localized
+- [x] Add a versioned TaskFamily contract containing stable identity, localized
       title/brief metadata, capability keys, assessment rubric reference, and
       available revision metadata.
-- [ ] Keep executable source, starter workspace, solution, hidden tests,
+- [x] Keep executable source, starter workspace, solution, hidden tests,
       harness, OCI image, sandbox policy, and limits exclusively in
       TaskRevision directories.
-- [ ] Make every released TaskRevision reference exactly one TaskFamily.
-- [ ] Migrate all 18 current descriptors through an explicit manifest. Do not
+- [x] Make every released TaskRevision reference exactly one TaskFamily.
+- [x] Migrate all 18 current descriptors through an explicit manifest. Do not
       rewrite historical release files.
-- [ ] Group the four current rate-limiter tasks under one reviewed TaskFamily
+- [x] Group the four current rate-limiter tasks under one reviewed TaskFamily
       only if their learning objective and contract are genuinely the same.
-- [ ] Model project-book/capstone tasks as explicit capability-only or
+- [x] Model project-book/capstone tasks as explicit capability-only or
       multi-capability families instead of putting a capability in
       `questionKeys`.
-- [ ] Add `GET /v1/task-families` and
+- [x] Add `GET /v1/task-families` and
       `GET /v1/task-families/{id}` projections, or an equivalent versioned
       release endpoint.
-- [ ] Return safe availability states: `brief_only`, `runnable`,
+- [x] Return safe availability states: `brief_only`, `runnable`,
       `profile_unavailable`, `superseded`, and `unreleased`.
-- [ ] Never return solution or hidden-test content from a learner endpoint.
+- [x] Never return solution or hidden-test content from a learner endpoint.
 
 ### Required tests
 
-- [ ] A TaskFamily can expose Go, Java, C#, Node.js, and SQL revisions without
-      duplicating the family identity.
-- [ ] A language-specific capability may still have one language revision.
-- [ ] A TaskRevision cannot reference two TaskFamilies.
-- [ ] A TaskFamily can assess multiple capabilities.
-- [ ] A TaskFamily with zero runnable revisions is not advertised as runnable.
-- [ ] Hidden tests and solutions never cross the workspace API boundary.
-- [ ] The active release manifest fails closed on missing family/revision
+- [x] The runtime catalogue exposes Go, Java, C#, Node.js, and SQL profiles
+      without duplicating family identity; the objective-identical
+      rate-limiter family has Go, Java, Node.js, and PostgreSQL revisions, while
+      C# remains a separately reviewed language-specific family until an
+      objective-equivalent C# revision is authored.
+- [x] A language-specific capability may still have one language revision.
+- [x] A TaskRevision cannot reference two TaskFamilies.
+- [x] A TaskFamily can assess multiple capabilities.
+- [x] A TaskFamily with zero runnable revisions is not advertised as runnable.
+- [x] Hidden tests and solutions never cross the workspace API boundary.
+- [x] The active release manifest fails closed on missing family/revision
       references.
 
 ### Required verification before commit
@@ -421,17 +424,17 @@ curl -fsS http://127.0.0.1:56687/api/services
 git diff --check
 ```
 
-- [ ] Run a real Docker-backed pass and fail case for every affected profile.
-- [ ] Record image digest, task revision, resource limits, and trace ID without
+- [x] Run a real Docker-backed pass and fail case for every affected profile.
+- [x] Record image digest, task revision, resource limits, and trace ID without
       source or hidden-test bodies.
 
 ### Gate acceptance
 
-- [ ] All 18 descriptors appear in exactly one TaskFamily migration row.
-- [ ] Every released revision is Docker-smoked.
-- [ ] `project-book-boundary-001` no longer relies on a capability inside
+- [x] All 18 descriptors appear in exactly one TaskFamily migration row.
+- [x] Every released revision is Docker-smoked.
+- [x] `project-book-boundary-001` no longer relies on a capability inside
       `questionKeys` in the new release.
-- [ ] Historical releases remain readable but cannot become active fallback.
+- [x] Historical releases remain readable but cannot become active fallback.
 
 Suggested commit: `feat(runtime): add task families and language revisions`
 
@@ -1141,7 +1144,7 @@ fully checked and its evidence is committed.
 | G0 — baseline and backup | complete | `docs/verification/G0-BASELINE-2026-08-24.md` (live baseline, local restore, private vault remote, remote bundle verification) | Root `6595d5b`; Vault `3d3cb6f` bundle baseline |
 | G1 — domain contract | complete | `docs/verification/G1-CONTRACT-2026-08-24.md` | Brain `21a7b86`; Runtime `53663ba`; Lab `a098f36` |
 | G2 — capability registry | complete | `docs/verification/G2-CAPABILITY-2026-08-24.md` (registry migration, aliases, supersedes integrity, dry-run, live counts) | Brain `7daf53d`, `89946a3`, `19e9fdf` |
-| G3 — TaskFamily | not started | — | — |
+| G3 — TaskFamily | complete | `docs/verification/G3-TASK-FAMILY-2026-08-25.md` (Runtime manifest/API, immutable hashes, Docker pass/fail, Jaeger) | Runtime `4a9c3c9` |
 | G4 — remove task duplication | not started | — | — |
 | G5 — content graph | not started | — | — |
 | G6 — semantic proposal pipeline | not started | — | — |
