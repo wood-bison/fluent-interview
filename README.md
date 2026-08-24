@@ -53,6 +53,39 @@ pnpm ports                     # verify the workspace port registry has no dupli
 The underlying `scripts/*.sh` commands remain available for automation and
 recovery. `pnpm dev` is the normal human-facing command.
 
+## Как читать текущий release
+
+Количество карточек и количество экранов — разные уровни одной модели:
+
+| Слой | Сейчас | Что это означает |
+| --- | ---: | --- |
+| Program | 1 | `Backend Engineer`, контейнер всей учебной системы |
+| Paths | 8 | Node.js + TypeScript, Java + Spring, .NET + C#, Go, Frontend, System Design, Algorithms, Behavioral |
+| Areas / stations | 15 / 81 | опубликованные учебные области и станции, а не количество карточек |
+| Question Brain cards | 1,591 | канонические карточки вопросов, доступные через библиотеку |
+| Topic groups | 135 | legacy-тематические группы источника, не отдельные программы |
+| Runtime tasks | 18 | исполняемые revisions с профилем и hidden checks; одна карточка может иметь несколько задач |
+
+В текущем crosswalk принято 19 карточек (`accepted`); остальные 1,572 явно
+помечены `unmapped`. Это не потеря и не fallback: они опубликованы в Question
+Brain и ищутся в библиотеке, но ещё не получили редакторское решение, в какую
+станцию Lab их проецировать. Граф не угадывает путь по словам `Track`/`Topic`.
+После ревью создаётся полный revision-pinned mapping release, затем отдельный
+runtime release join.
+
+В интерфейсе по умолчанию включён `Explore`: можно открыть любую опубликованную
+область и посмотреть урок или workspace. Это не создаёт evidence, mastery или
+pass — для этого остаётся отдельный guided-путь и детерминированный runtime.
+Проекты сейчас являются read-only preview до выпуска их execution tier; это
+намеренный gate, а не сломанная ссылка.
+
+Последний контентный checkpoint (без неподтверждённого массового импорта):
+[audit phases 4.2/4.5/4.6/5.3](fluent-question-brain/docs/audits/content-phases-4-2-4-5-4-6-5-3-checkpoint-2026-08-24.md).
+Следующий безопасный шаг для новых источников — source-backed batch →
+`qb-import --strict-taxonomy --dry-run` → editorial review → release evidence;
+карточки без русской формулировки или проверенного ответа в production не
+попадают.
+
 ## Where Nx fits
 
 The architecture is intentionally hybrid, as described in the workspace
