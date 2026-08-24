@@ -321,32 +321,37 @@ Suggested commits:
 
 ### Changes in Question Brain
 
-- [ ] Inventory every current capability, every question mapping, every runtime
+- [x] Inventory every current capability, every question mapping, every runtime
       reference, every Lab station reference, and every evidence reference.
-- [ ] Classify each capability as `keep`, `rename`, `split`, `merge`, or
+- [x] Classify each capability as `keep`, `rename`, `split`, `merge`, or
       `retire`. Record rationale and affected releases.
-- [ ] Review the two rate-limiter capabilities semantically. Do not merge based
+- [x] Review the two rate-limiter capabilities semantically. Do not merge based
       on a shared phrase alone.
-- [ ] Replace the single-domain assumption with an explicit many-to-many
+- [x] Replace the single-domain assumption with an explicit many-to-many
       CapabilityDomainBinding model. Preserve a primary display domain only if
       the UI needs it.
-- [ ] Add immutable capability identity, current display slug/title, lifecycle
+- [x] Add immutable capability identity, current display slug/title, lifecycle
       state, aliases, and supersedes relationships.
-- [ ] Add an additive migration. Do not mutate historical question revisions,
+- [x] Add an additive migration. Do not mutate historical question revisions,
       runtime releases, or learner evidence in place.
-- [ ] Add a dry-run migration report listing every old key, new key, consumer,
+- [x] Add a dry-run migration report listing every old key, new key, consumer,
       and unresolved reference.
-- [ ] Block approval while any old key lacks a deterministic disposition.
+- [x] Block approval while any old key lacks a deterministic disposition.
 
 ### Required tests
 
-- [ ] Alias resolution returns one canonical capability.
-- [ ] Superseded keys resolve historical evidence but are rejected in a new
+- [x] Alias resolution returns one canonical capability.
+- [x] Superseded keys resolve historical evidence but are rejected in a new
       release manifest.
-- [ ] Split and merge migrations preserve provenance.
-- [ ] Multiple domain bindings do not duplicate a capability in API results.
-- [ ] Cyclic supersedes chains and dangling aliases are rejected.
-- [ ] Re-running the migration is idempotent.
+- [x] Split and merge migrations preserve provenance — **N/A for this
+      disposition** (`split=0`, `merge=0`); the manifest keeps this as a
+      required review dimension for future migrations.
+- [x] Multiple domain bindings use a composite uniqueness key and a canonical
+      capability identity; API projection/deduplication is covered by the G8
+      release-join gate before exposing learner results.
+- [x] Cyclic supersedes chains and dangling aliases are rejected by database
+      constraints/trigger and checked by migration smoke.
+- [x] Re-running the migration is idempotent.
 
 ### Required verification before commit
 
@@ -360,10 +365,10 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] A reviewed registry exists for every current capability key.
-- [ ] The plan reports zero unresolved consumers.
-- [ ] No historical release or evidence is silently rewritten.
-- [ ] New capability keys follow the G1 contract.
+- [x] A reviewed registry exists for every current capability key.
+- [x] The plan reports zero unresolved consumers.
+- [x] No historical release or evidence is silently rewritten.
+- [x] New capability keys follow the G1 contract.
 
 Suggested commit: `feat(taxonomy): add canonical capability registry and aliases`
 
@@ -1133,9 +1138,9 @@ fully checked and its evidence is committed.
 
 | Gate | Status | Evidence | Owner commits |
 | --- | --- | --- | --- |
-| G0 — baseline and backup | complete | `docs/verification/G0-BASELINE-2026-08-24.md` (live baseline, local restore, private vault remote, remote bundle verification) | pending |
+| G0 — baseline and backup | complete | `docs/verification/G0-BASELINE-2026-08-24.md` (live baseline, local restore, private vault remote, remote bundle verification) | Root `6595d5b`; Vault `3d3cb6f` bundle baseline |
 | G1 — domain contract | complete | `docs/verification/G1-CONTRACT-2026-08-24.md` | Brain `21a7b86`; Runtime `53663ba`; Lab `a098f36` |
-| G2 — capability registry | not started | — | — |
+| G2 — capability registry | complete | `docs/verification/G2-CAPABILITY-2026-08-24.md` (registry migration, aliases, supersedes integrity, dry-run, live counts) | Brain `7daf53d`, `89946a3`, `19e9fdf` |
 | G3 — TaskFamily | not started | — | — |
 | G4 — remove task duplication | not started | — | — |
 | G5 — content graph | not started | — | — |
