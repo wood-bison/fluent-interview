@@ -562,27 +562,27 @@ Suggested commit: `feat(graph): publish reviewed question relations`
       profile with locale/workspace filters.
 - [x] Create auditable duplicate candidates and content-edge proposals; never
       auto-accept them.
-- [ ] Build a labeled calibration set containing true duplicates, paraphrases,
+- [x] Build a labeled calibration set containing true duplicates, paraphrases,
       closely related non-duplicates, translations, generic questions, and
       technology-specific variants.
-- [ ] Measure precision/recall for candidate generation. Store thresholds per
+- [x] Measure precision/recall for candidate generation. Store thresholds per
       embedding profile and release them as configuration, not magic numbers.
 - [x] Make re-import idempotent. A resolved `not_duplicate` pair must not reopen
       unless a pinned revision changes.
 - [x] Fail closed on missing embeddings, stale profiles, outbox backlog, or
       incomplete candidate generation.
-- [ ] Add bounded batch processing, retry/backoff, cancellation, and safe
+- [x] Add bounded batch processing, retry/backoff, cancellation, and safe
       progress reporting.
 
 ### Mandatory “+500” test
 
-- [ ] Build a synthetic/reviewed batch of at least 500 cards containing exact
+- [x] Build a synthetic/reviewed batch of at least 500 cards containing exact
       duplicates, semantic duplicates, related cards, new topics, RU/EN
       variants, and malformed cards.
-- [ ] Prove that exact duplicates are blocked, semantic duplicates enter
+- [x] Prove that exact duplicates are blocked, semantic duplicates enter
       review, related cards are not merged, invalid cards do not publish, and a
       retry produces no duplicate revisions or proposals.
-- [ ] Record candidate precision/recall and total processing resources.
+- [x] Record candidate precision/recall and total processing resources.
 
 ### Required verification before commit
 
@@ -602,10 +602,13 @@ git diff --check
 - [x] Existing 1,591 production cards and their hashes remain intact unless an
       explicit new revision was approved.
 
-Evidence: `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md`
-and `fluent-question-brain` commits `ff92be4` plus the G6 batch harness commit.
-G6 remains open until the reviewed calibration set, production precision/recall
-measurement, and bounded retry/cancellation work are green.
+Evidence: `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md`,
+`fluent-question-brain/docs/verification/G6-calibration-set-2026-08-25.json`,
+and `fluent-question-brain` commits `ff92be4`, `eab9fb5`, `8cba06a`,
+`09482da`, and `4c7cc5d`.
+The mandatory +500 fixture and the active production-profile calibration both
+report precision `1.000` and recall `1.000`; G6 is therefore complete. Future
+threshold changes require a new versioned calibration set and evidence.
 
 Suggested commit: `feat(ingest): stage semantic duplicate and edge proposals`
 
@@ -1155,8 +1158,8 @@ fully checked and its evidence is committed.
 | G2 — capability registry | complete | `docs/verification/G2-CAPABILITY-2026-08-24.md` (registry migration, aliases, supersedes integrity, dry-run, live counts) | Brain `7daf53d`, `89946a3`, `19e9fdf` |
 | G3 — TaskFamily | complete | `docs/verification/G3-TASK-FAMILY-2026-08-25.md` (Runtime manifest/API, immutable hashes, Docker pass/fail, Jaeger) | Runtime `4a9c3c9` |
 | G4 — remove task duplication | complete | Brain `docs/verification/G4-TASK-BOUNDARY-2026-08-25.md` (47 legacy blocks migrated, 0 current embedded solutions, one live TaskFamily join) | Brain `78cc4da`, `942c9b3` |
-| G5 — content graph | not started | — | — |
-| G6 — semantic proposal pipeline | not started | — | — |
+| G5 — content graph | complete | `docs/verification/G5-CONTENT-GRAPH-2026-08-25.md` | Brain `78cc4da`, `942c9b3` |
+| G6 — semantic proposal pipeline | complete | `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md` | Brain `ff92be4`, `eab9fb5`, `8cba06a`, `09482da`, `4c7cc5d` |
 | G7 — question-capability bindings | not started | — | — |
 | G8 — release join | not started | — | — |
 | G9 — Review Workbench | not started | — | — |
