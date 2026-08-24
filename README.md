@@ -24,6 +24,14 @@ and Task Runtime first, waits for their readiness contracts, then starts Fluent
 Lab. The three repositories and their Compose boundaries remain independent.
 Open `http://localhost:47300/`.
 
+Startup also applies the idempotent Question Brain curriculum-mapping migration
+for existing PostgreSQL volumes and pins Task Runtime to the checked-in release
+join in `fluent-task-runtime/releases/`. This prevents a stale volume or an
+implicit runtime fallback from changing what the Lab can execute. When Question
+Brain publishes a new release, generate and review the matching runtime
+manifest, update `RUNTIME_RELEASE_FILE` in `scripts/up.sh`, and commit both
+repositories together.
+
 For the packaged local release:
 
 ```bash

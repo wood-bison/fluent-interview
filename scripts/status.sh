@@ -46,6 +46,17 @@ printf '  Fluent Lab web  %s  http://localhost:47300/\n' "$(http_status 'http://
 printf '  Lab package     %s  http://localhost:49300/onboarding\n' "$(http_status 'http://localhost:49300/onboarding')"
 
 echo
+echo 'Release joins:'
+printf '  Question Brain  '
+curl --silent --show-error --max-time 3 'http://127.0.0.1:48127/v1/quality?workspace=fluent-interview' 2>/dev/null \
+  | python3 -c 'import json,sys; d=json.load(sys.stdin); c=d.get("checks",{}); print("{} · {} published · mapped {} · unmapped {}".format(d.get("release_id","unknown"), d.get("total",0), c.get("curriculum_mapped",0), c.get("curriculum_unmapped",0)))' \
+  || echo 'unavailable'
+printf '  Task Runtime    '
+curl --silent --show-error --max-time 3 'http://127.0.0.1:48227/v1/tasks/summary' 2>/dev/null \
+  | python3 -c 'import json,sys; d=json.load(sys.stdin); print("{} · runtime {} · question {} · runnable {}".format(d.get("bindingState","unknown"), d.get("runtimeReleaseId","none"), d.get("questionReleaseId","none"), d.get("runnable",False)))' \
+  || echo 'unavailable'
+
+echo
 echo 'Observability:'
 printf '  Question Brain Jaeger  %s  http://localhost:56686\n' "$(http_status 'http://localhost:56686')"
 printf '  Task Runtime Jaeger    %s  http://localhost:56687\n' "$(http_status 'http://localhost:56687')"

@@ -5,6 +5,7 @@ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 QUESTION_BRAIN="$ROOT/fluent-question-brain"
 TASK_RUNTIME="$ROOT/fluent-task-runtime"
 LAB="$ROOT/fluent-engineering-lab"
+RUNTIME_RELEASE_FILE="task-release-2026-08-24-qb-d550846f.json"
 
 mode="development"
 build_args=(--build)
@@ -79,15 +80,24 @@ fi
 test -d "$QUESTION_BRAIN" || { echo "Missing repository: $QUESTION_BRAIN" >&2; exit 1; }
 test -d "$TASK_RUNTIME" || { echo "Missing repository: $TASK_RUNTIME" >&2; exit 1; }
 test -d "$LAB" || { echo "Missing repository: $LAB" >&2; exit 1; }
+test -s "$TASK_RUNTIME/releases/$RUNTIME_RELEASE_FILE" || {
+  echo "Missing reconciled runtime release: $TASK_RUNTIME/releases/$RUNTIME_RELEASE_FILE" >&2
+  echo 'Generate it from the current Question Brain release before starting the workspace.' >&2
+  exit 1
+}
 
 echo 'Fluent Interview workspace'
 echo "root: $ROOT"
 echo '1/2  Question Brain'
 "${compose_question_brain[@]}" up -d "${build_args[@]}"
 wait_for 'Question Brain' 'http://127.0.0.1:48127/health/ready'
+# Existing PostgreSQL volumes do not re-run initdb scripts. Apply the
+# revision-scoped mapping migration on every start; the SQL is idempotent.
+"$QUESTION_BRAIN/scripts/apply-curriculum-mapping-migration.sh"
 
 echo '2/2  Task Runtime'
 RUNTIME_HOST_WORK_ROOT="$TASK_RUNTIME/.runtime-work" \
+RUNTIME_RELEASE_MANIFEST="/opt/releases/$RUNTIME_RELEASE_FILE" \
   "${compose_task_runtime[@]}" up -d "${build_args[@]}"
 wait_for 'Task Runtime' 'http://127.0.0.1:48227/v1/health/ready'
 
