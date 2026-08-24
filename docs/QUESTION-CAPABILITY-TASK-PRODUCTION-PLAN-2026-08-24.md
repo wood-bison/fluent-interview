@@ -1133,7 +1133,7 @@ fully checked and its evidence is committed.
 
 | Gate | Status | Evidence | Owner commits |
 | --- | --- | --- | --- |
-| G0 — baseline and backup | not started | — | — |
+| G0 — baseline and backup | partial / blocked on private vault remote | `docs/verification/G0-BASELINE-2026-08-24.md` (local dump + restore green; remote missing) | — |
 | G1 — domain contract | not started | — | — |
 | G2 — capability registry | not started | — | — |
 | G3 — TaskFamily | not started | — | — |
