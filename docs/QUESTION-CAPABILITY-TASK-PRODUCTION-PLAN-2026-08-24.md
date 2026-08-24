@@ -1134,7 +1134,7 @@ fully checked and its evidence is committed.
 | Gate | Status | Evidence | Owner commits |
 | --- | --- | --- | --- |
 | G0 — baseline and backup | complete | `docs/verification/G0-BASELINE-2026-08-24.md` (live baseline, local restore, private vault remote, remote bundle verification) | pending |
-| G1 — domain contract | not started | — | — |
+| G1 — domain contract | complete | `docs/verification/G1-CONTRACT-2026-08-24.md` | Brain `21a7b86`; Runtime `53663ba`; Lab `a098f36` |
 | G2 — capability registry | not started | — | — |
 | G3 — TaskFamily | not started | — | — |
 | G4 — remove task duplication | not started | — | — |
