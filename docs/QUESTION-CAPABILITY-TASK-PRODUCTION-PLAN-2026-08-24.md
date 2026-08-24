@@ -1,7 +1,9 @@
 # Question → Capability → Task: production convergence plan
 
-Status: **authoritative gated execution plan**  
-Created: **2026-08-24**  
+Status: **authoritative gated execution plan**
+
+Created: **2026-08-24**
+
 Scope: `fluent-question-brain`, `fluent-task-runtime`,
 `fluent-engineering-lab`, and the `fluent-interview` workspace integration.
 
@@ -85,46 +87,56 @@ same count. `1,591 cards` does not mean `1,591 stations` or `1,591 tasks`.
 
 ### 3.1 Domain terms
 
-**QuestionCard**  
+**QuestionCard**
+
 An immutable, localized Question Brain content revision that teaches or checks
 knowledge. A card can relate to zero, one, or many capabilities.
 
-**Capability**  
+**Capability**
+
 A stable, observable skill a learner can demonstrate. It is not a task ID, UI
 station number, language profile, or free-form topic.
 
-**CapabilityDomainBinding**  
+**CapabilityDomainBinding**
+
 A reviewed many-to-many classification of a capability into shared domains.
 One capability may belong to HTTP/API and Distributed Systems simultaneously.
 
-**QuestionCapabilityBinding**  
+**QuestionCapabilityBinding**
+
 A reviewed, revision-pinned relationship between a QuestionCard and a
 Capability. Its role is explicit, for example `primary`, `prerequisite`,
 `follow_up`, `contrast`, or `recall`.
 
-**TaskFamily**  
+**TaskFamily**
+
 A language-neutral practice objective, such as “implement a token bucket” or
 “implement the circuit-breaker state machine”. It declares the capabilities it
 assesses and groups executable language revisions.
 
-**TaskRevision**  
+**TaskRevision**
+
 An immutable executable revision owned by Task Runtime. It declares exactly one
 language/profile and owns the starter workspace, solution, hidden tests,
 sandbox policy, resource limits, and deterministic result contract.
 
-**QuestionBinding**  
+**QuestionBinding**
+
 An optional curated TaskFamily/TaskRevision reference to the exact Question
 Brain revision and content hash that should be shown as preparation or context.
 It supplements the Capability join; it does not replace it.
 
-**ContentRelation**  
+**ContentRelation**
+
 A typed Question Brain relationship between cards, such as prerequisite,
 related, contrast, follow-up, variant, duplicate, or supersession.
 
-**Run**  
+**Run**
+
 One Task Runtime execution attempt against an immutable TaskRevision.
 
-**Evidence**  
+**Evidence**
+
 The Lab-owned durable projection of a deterministic Run result plus learner
 explanation and repeat state. Evidence is not stored in Question Brain.
 
