@@ -598,14 +598,14 @@ git diff --check
 
 - [x] Import cannot bypass candidate generation.
 - [x] No candidate is accepted without an explicit actor and rationale.
-- [ ] The +500 test is reproducible and idempotent.
+- [x] The +500 test is reproducible and idempotent.
 - [x] Existing 1,591 production cards and their hashes remain intact unless an
       explicit new revision was approved.
 
 Evidence: `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md`
-and `fluent-question-brain` commit `ff92be4`. G6 remains open until the
-calibration, precision/recall, bounded batch, and live +500 semantic acceptance
-criteria are green.
+and `fluent-question-brain` commits `ff92be4` plus the G6 batch harness commit.
+G6 remains open until the reviewed calibration set, production precision/recall
+measurement, and bounded retry/cancellation work are green.
 
 Suggested commit: `feat(ingest): stage semantic duplicate and edge proposals`
 
