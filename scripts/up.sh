@@ -79,10 +79,10 @@ start_packaged_lab() {
   local max_attempts=20
   local log_file
   log_file="$(mktemp "${TMPDIR:-/tmp}/fluent-interview-package.XXXXXX")"
-  trap 'rm -f "$log_file"' RETURN
   while (( attempt <= max_attempts )); do
     if pnpm --dir "$LAB" package:local:restart >"$log_file" 2>&1; then
       cat "$log_file"
+      rm -f "$log_file"
       return 0
     fi
     if grep -q '"code": "package.lock-held"' "$log_file"; then
@@ -92,9 +92,11 @@ start_packaged_lab() {
       continue
     fi
     cat "$log_file" >&2
+    rm -f "$log_file"
     return 1
   done
   cat "$log_file" >&2
+  rm -f "$log_file"
   echo 'Packaged Lab did not converge after waiting for the bounded operation lock.' >&2
   return 1
 }
