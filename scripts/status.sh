@@ -40,10 +40,17 @@ docker compose --project-name fluent-engineering-lab \
 
 echo
 echo 'Readiness:'
-printf '  Question Brain  %s  http://127.0.0.1:48127/health/ready\n' "$(http_status 'http://127.0.0.1:48127/health/ready')"
-printf '  Task Runtime    %s  http://127.0.0.1:48227/v1/health/ready\n' "$(http_status 'http://127.0.0.1:48227/v1/health/ready')"
-printf '  Fluent Lab web  %s  http://localhost:47300/\n' "$(http_status 'http://localhost:47300/')"
-printf '  Lab package     %s  http://localhost:49300/onboarding\n' "$(http_status 'http://localhost:49300/onboarding')"
+question_brain_status="$(http_status 'http://127.0.0.1:48127/health/ready')"
+task_runtime_status="$(http_status 'http://127.0.0.1:48227/v1/health/ready')"
+lab_dev_status="$(http_status 'http://localhost:47300/')"
+lab_package_status="$(http_status 'http://localhost:49300/onboarding')"
+if [[ "$lab_package_status" == 'offline' && "$lab_dev_status" != 'offline' ]]; then
+  lab_package_status='not started (dev mode)'
+fi
+printf '  Question Brain  %s  http://127.0.0.1:48127/health/ready\n' "$question_brain_status"
+printf '  Task Runtime    %s  http://127.0.0.1:48227/v1/health/ready\n' "$task_runtime_status"
+printf '  Fluent Lab web  %s  http://localhost:47300/\n' "$lab_dev_status"
+printf '  Lab package     %s  http://localhost:49300/onboarding\n' "$lab_package_status"
 
 echo
 echo 'Release joins:'
