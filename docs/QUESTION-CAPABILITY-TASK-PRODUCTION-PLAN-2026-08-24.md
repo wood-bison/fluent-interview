@@ -555,21 +555,21 @@ Suggested commit: `feat(graph): publish reviewed question relations`
 
 ### Changes
 
-- [ ] Add an import staging state. A new/changed card cannot publish directly
+- [x] Add an import staging state. A new/changed card cannot publish directly
       before duplicate and placement checks finish.
-- [ ] Run exact stable-key/content-hash checks first.
-- [ ] Generate lexical and embedding neighbors from the active embedding
+- [x] Run exact stable-key/content-hash checks first.
+- [x] Generate lexical and embedding neighbors from the active embedding
       profile with locale/workspace filters.
-- [ ] Create auditable duplicate candidates and content-edge proposals; never
+- [x] Create auditable duplicate candidates and content-edge proposals; never
       auto-accept them.
 - [ ] Build a labeled calibration set containing true duplicates, paraphrases,
       closely related non-duplicates, translations, generic questions, and
       technology-specific variants.
 - [ ] Measure precision/recall for candidate generation. Store thresholds per
       embedding profile and release them as configuration, not magic numbers.
-- [ ] Make re-import idempotent. A resolved `not_duplicate` pair must not reopen
+- [x] Make re-import idempotent. A resolved `not_duplicate` pair must not reopen
       unless a pinned revision changes.
-- [ ] Fail closed on missing embeddings, stale profiles, outbox backlog, or
+- [x] Fail closed on missing embeddings, stale profiles, outbox backlog, or
       incomplete candidate generation.
 - [ ] Add bounded batch processing, retry/backoff, cancellation, and safe
       progress reporting.
@@ -596,11 +596,16 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] Import cannot bypass candidate generation.
-- [ ] No candidate is accepted without an explicit actor and rationale.
+- [x] Import cannot bypass candidate generation.
+- [x] No candidate is accepted without an explicit actor and rationale.
 - [ ] The +500 test is reproducible and idempotent.
-- [ ] Existing 1,591 production cards and their hashes remain intact unless an
+- [x] Existing 1,591 production cards and their hashes remain intact unless an
       explicit new revision was approved.
+
+Evidence: `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md`
+and `fluent-question-brain` commit `ff92be4`. G6 remains open until the
+calibration, precision/recall, bounded batch, and live +500 semantic acceptance
+criteria are green.
 
 Suggested commit: `feat(ingest): stage semantic duplicate and edge proposals`
 
