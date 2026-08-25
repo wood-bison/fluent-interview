@@ -1,12 +1,12 @@
 {
   "evidenceVersion": "product-audit-browser-smoke.v2",
-  "capturedAt": "2026-08-25T14:20:00+02:00",
-  "sourceRevision": "92eeac6688595ffbbcd3c8ba4975f77253b60c17",
+  "capturedAt": "2026-08-25T14:16:00+02:00",
+  "sourceRevision": "d7a6662ed84ce085819183d14cdedd7a47792056",
   "browser": "Codex in-app Browser",
   "viewport": "default desktop viewport (not a target-size screenshot)",
   "package": {
     "state": "ready",
-    "operationId": "10a97afb-0454-4a30-a5bf-32a5ea0b4af3",
+    "operationId": "046281b8-e861-4bdf-a5c0-7f4c55d49e0a",
     "graphReleaseId": "2026.08.06-curriculum-graph.3",
     "ports": {
       "learnerWeb": 49300,
@@ -15,6 +15,14 @@
       "redis": 49303
     }
   },
+  "runtimeSmoke": [
+    {"taskId": "go-rate-limiter-001", "http": 200, "status": "pass", "tests": ["pass", "pass", "pass", "pass"]},
+    {"taskId": "csharp-rate-limiter-001", "http": 200, "status": "pass", "tests": ["pass", "pass", "pass", "pass"]},
+    {"taskId": "java-rate-limiter-001", "http": 200, "status": "pass", "tests": ["pass", "pass", "pass", "pass"]},
+    {"taskId": "ts-rate-limiter-001", "http": 200, "status": "pass", "tests": ["pass", "pass", "pass", "pass"]},
+    {"taskId": "node-rate-limiter-001", "http": 200, "status": "pass", "tests": ["pass", "pass", "pass", "pass"]},
+    {"taskId": "pg-rate-limiter-001", "http": 200, "status": "pass", "tests": ["pass", "pass", "pass", "pass"]}
+  ],
   "routes": [
     {
       "path": "/learning-map",
@@ -114,6 +122,19 @@
       "horizontalOverflow": false,
       "codeMirrorTokenSpans": 127,
       "language": "typescript",
+      "runtimeVisible": true,
+      "evidenceVisible": true,
+      "runActionVisible": true
+    },
+    {
+      "path": "/practice/lab/node-rate-limiter-001",
+      "locale": "ru",
+      "heading": "Rate limiter in Node.js",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "codeMirrorTokenSpans": 179,
+      "language": "javascript",
       "runtimeVisible": true,
       "evidenceVisible": true,
       "runActionVisible": true

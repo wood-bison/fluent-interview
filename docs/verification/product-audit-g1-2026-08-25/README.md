@@ -1,7 +1,7 @@
-# Follow-up production smoke — Lab `92eeac6`
+# Follow-up production smoke — Lab `d7a6662`
 
-Date: 2026-08-25 14:00–14:20 Europe/Warsaw
-Scope: `fluent-engineering-lab` after `92eeac6 fix(routes): open released runtime task revisions`
+Date: 2026-08-25 14:00–14:16 Europe/Warsaw
+Scope: `fluent-engineering-lab` after `d7a6662 fix(routes): preserve concept route boundaries`
 
 This is a follow-up to `product-audit-g0-2026-08-25`. It records the
 post-change local production package and a fresh Browser run. It is not a
@@ -12,9 +12,9 @@ still open in the authoritative remediation plan.
 ## Package boundary
 
 - local package state: `ready`
-- source revision: `92eeac6688595ffbbcd3c8ba4975f77253b60c17`
-- latest Lab commits in this audit: `4f9ea7f`, `92eeac6`
-- final operation boundary: `10a97afb-0454-4a30-a5bf-32a5ea0b4af3`
+- source revision: `d7a6662ed84ce085819183d14cdedd7a47792056`
+- latest Lab commits in this audit: `4f9ea7f`, `92eeac6`, `d7a6662`
+- final operation boundary: `046281b8-e861-4bdf-a5c0-7f4c55d49e0a`
 - graph release: `2026.08.06-curriculum-graph.3`
 - learner route: `http://localhost:49300/onboarding`
 - learning API: `http://localhost:49301/api`
@@ -38,6 +38,7 @@ and zero captured console errors.
 | `/practice/lab/csharp-rate-limiter-001` | `Rate limiter in .NET`; C# tokens, editable `RateLimiter.cs`, Run and Evidence present; no alert/overflow |
 | `/practice/lab/java-rate-limiter-001` | `Rate limiter in Java`; Java tokens, editable `RateLimiter.java`, Run and Evidence present; no alert/overflow |
 | `/practice/lab/ts-rate-limiter-001` | `Rate limiter in TypeScript`; TypeScript tokens, editable `rate-limiter.ts`, Run and Evidence present; no alert/overflow |
+| `/practice/lab/node-rate-limiter-001` | `Rate limiter in Node.js`; JavaScript tokens, editable `rate-limiter.js`, Run and Evidence present; no alert/overflow |
 | `/practice/lab/pg-rate-limiter-001` | `Rate limiter in PostgreSQL`; SQL tokens, editable SQL workspace, Run and Evidence present; no alert/overflow |
 
 The published path matrix also passed directly: all nine routes from
@@ -59,12 +60,12 @@ context as `ready` instead of being rejected as unknown curriculum labs.
 - route-context unit suite: 4 tests passed, including a runtime-only
   TypeScript revision.
 - `pnpm nx lint web --skip-nx-cache`: 0 errors, 13 existing warnings.
-- Task Runtime Docker smoke: TypeScript and C# solutions returned HTTP 200 with
-  four passing checks each (recorded in
+- Task Runtime Docker smoke: Go, C#, Java, TypeScript, JavaScript and SQL
+  solutions returned HTTP 200 with four passing checks each (recorded in
   `fluent-task-runtime/docs/verification/G9-RATE-LIMITER-LANGUAGE-REVISIONS-2026-08-25.md`).
 - production build completed; existing warnings remain: initial bundle
   `547.08 kB` vs `520 kB` budget and `lab.route.scss` `62.45 kB` vs `44 kB`.
-- `git` status was clean in the Lab after commit `92eeac6`, which is pushed to
+- `git` status was clean in the Lab after commit `d7a6662`, which is pushed to
   `origin/main`; the workspace launcher is pinned to Runtime release g9.
 
 ## Interpretation
@@ -74,6 +75,8 @@ registered in the shared CodeMirror language registry; commit `4f9ea7f` adds the
 Go grammar, extension and label. C# and TypeScript were published in Runtime
 but were not admitted by Lab's route-context projection; commit `92eeac6`
 admits released runnable revisions while keeping graph metadata canonical for
-existing stations. The Browser now observes colored CodeMirror token spans for
-all five requested languages and the Runtime API has already returned passing
-Docker evidence for TypeScript and C#.
+existing stations. The follow-up safety boundary in `d7a6662` prevents a
+runtime task ID from accidentally overriding a real concept station. The
+Browser now observes colored CodeMirror token spans for all five requested
+languages (and JavaScript), and the Runtime API has returned passing Docker
+evidence for all six revisions.
