@@ -4,7 +4,8 @@
 
 **Lab commits:** `e3dcf50` (server slice), `4e895cf` (learner UI transport),
 `4443bc8` (lint-clean Angular client), `2f19db4` (explanation/reflection and
-server-owned cold-repeat scheduling), `98177b4` (reconciled inventory compiler)
+server-owned cold-repeat scheduling), `98177b4` (reconciled inventory compiler),
+`2e2a54b` (rail inventory boundary)
 
 ## What is proven
 
@@ -42,7 +43,7 @@ fixtures may test the state machine, but cannot close the human gate.
 - targeted service tests: `4 passed`;
 - focused ledger tests: `3 passed / 1 skipped` (Postgres integration is opt-in);
 - full Lab `pnpm check`: curriculum drift `0`; lab-contracts `247/1254`,
-  learning-api `165/711 + 1 skipped`, web `78/378`, observability `7/39`;
+  learning-api `165/711 + 1 skipped`, web `79/380`, observability `7/39`;
   production builds and browser boundary guard green. Existing warnings remain
   explicitly listed below.
 - current release remains `NOT_RELEASED` until the human acceptance section is
