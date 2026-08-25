@@ -91,6 +91,7 @@ footer{padding:26px 0 44px;font-size:.85rem;color:var(--faint);text-align:center
   <a href="#vault">Vault и markdown</a>
   <a href="#cms">CMS</a>
   <a href="#no">Что НЕ надо делать</a>
+  <a href="#tasks">Вопросы и задачи</a>
   <a href="#plan">План</a>
   <a href="#facts">Доказательства</a>
 </div></nav>
@@ -501,6 +502,198 @@ priority, group, level, question, sections
 <div class="card">
 <p><b>Общий принцип.</b> Ощущение «тут костыли, надо переписать» почти всегда возникает от непонимания системы, а не от её дефектов. Проверив эти три репозитория, я вижу инженерию выше среднего уровня. Проблема не в качестве решений, а в том, что <b>вам никто не объяснил их целиком</b>, — и в двух незаконченных участках, названных выше.</p>
 </div>
+</div></section>
+
+
+<section id="tasks"><div class="wrap">
+<h2>Как связать вопросы и задачи</h2>
+
+<p>Циркуит-брейкер реализуем на Go, Java, C#, TypeScript. Куда его положить и как связать с теорией — вопрос, на который в вашей системе <b>уже есть правильный ответ</b>, реализованный ровно один раз. Разберём его и превратим в правило.</p>
+
+<h3>Ось — это capability, а не прямая связь</h3>
+
+<p>Соблазн — связать вопрос с задачей напрямую. Это тупик: у одной задачи четыре языковые версии, у одного вопроса несколько задач, и связь превращается в кашу «многие ко многим» без смысла.</p>
+
+<p>Правильно — ввести между ними третью сущность: <b>способность</b> (capability). Вопрос проверяет способность. Задача тренирует способность. Язык — атрибут задачи.</p>
+
+<div class="flow">
+&nbsp;&nbsp;&nbsp;вопросы (теория)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;задачи (практика)<br>
+&nbsp;&nbsp;&nbsp;q315 ─┐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┌─ node-rate-limiter-001 (js)<br>
+&nbsp;&nbsp;&nbsp;c024 ─┼─► <b>capability.distributed-systems.rate-limiter</b> ─┼─ go-rate-limiter-001 (go)<br>
+&nbsp;&nbsp;&nbsp;q444 ─┘&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ java-rate-limiter-001 (java)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ pg-rate-limiter-001 (sql)
+</div>
+
+<p>Это не теория — так уже устроен rate limiter у вас. Четыре файла <code>task.json</code>, разные <code>taskId</code>, <code>language</code> и <code>profile</code>, но <b>один и тот же</b> <code>capabilityKeys</code> и <b>один и тот же</b> набор <code>questionKeys</code>.</p>
+
+<h3>Правило именования — главное в этом разделе</h3>
+
+<div class="card">
+<p style="font-size:1.05rem"><b>Ключ способности называет то, что человек умеет делать. Язык, фреймворк, домен и порядковый номер задачи — это атрибуты, и они никогда не входят в идентификатор.</b></p>
+</div>
+
+<p>Проверить правило легко: если, прочитав ключ, вы можете сказать «а вот то же самое на Java» и ключ при этом не меняется — ключ хороший.</p>
+
+<h3>Почему это не абстракция: 2 против 13</h3>
+
+<p>Вот все способности, заведённые в вашей базе миграциями 0011 и 0013:</p>
+
+<table>
+<tr><th>Ключ</th><th>Оценка</th></tr>
+<tr><td><code>capability.distributed-systems.rate-limiter</code></td><td><span class="tag t-ok">ПРАВИЛЬНО</span> называет умение</td></tr>
+<tr><td><code>capability.http-api.rate-limiter</code></td><td><span class="tag t-warn">ДУБЛЬ</span> то же умение, другой домен в имени</td></tr>
+<tr><td><code>capability.runtime.node-event-loop-001</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span> язык + номер в имени</td></tr>
+<tr><td><code>capability.runtime.node-cpu-bound-002</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.runtime.node-streams-003</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.runtime.node-memory-004</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.runtime.node-concurrency-012</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.runtime.dotnet-cancellation-001</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.runtime.deferred</code>, <code>capability.runtime.fluent-calculator</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧИ</span></td></tr>
+<tr><td><code>capability.data-postgresql.pg-indexes-008</code>, <code>pg-locks-016</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧИ</span></td></tr>
+<tr><td><code>capability.http-api.node-auth-015</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.delivery-observability.node-cache-014</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+<tr><td><code>capability.distributed-systems.node-idempotency-013</code></td><td><span class="tag t-bad">ЭТО ЗАДАЧА</span></td></tr>
+</table>
+
+<p>Тринадцать из пятнадцати ключей — это <code>taskId</code>, переодетый в способность. В них зашит язык (<code>node</code>, <code>pg</code>, <code>dotnet</code>) и порядковый номер.</p>
+
+<p>Формально ничто не запрещает объявить в Java-задаче <code>capability.runtime.node-event-loop-001</code> — CHECK в миграции проверяет только формат ключа. Но это будет ложью внутри идентификатора. Практический эффект: <b><code>capabilityKeys</code> перестаёт быть осью соединения и становится второй копией <code>taskId</code></b>. Соединять по нему нечего.</p>
+
+<p>И обратите внимание на корреляцию: единственная правильно названная способность — единственная, вокруг которой собрались четыре языковые реализации. Остальные так и остались один-к-одному.</p>
+
+<h3>Второй дефект имени: домен внутри ключа</h3>
+
+<p>У вас есть <code>capability.distributed-systems.rate-limiter</code> и <code>capability.http-api.rate-limiter</code> — одно умение, два идентификатора. Причина в том, что домен встроен в ключ, а умение честно принадлежит двум доменам сразу. Все четыре задачи ссылаются только на первый, поэтому второй остался с привязками вопросов, оторванными от задач.</p>
+
+<p>Вывод тот же: домен — это <b>атрибут</b> способности (в схеме для него уже есть колонка <code>domain_key</code>), а не часть её имени.</p>
+
+<h3>Где хранить саму задачу: граница проходит по исполняемости</h3>
+
+<p>Здесь у вас сейчас два представления задачи одновременно, и это источник путаницы «что из них правда».</p>
+
+<table>
+<tr><th>Где</th><th>Что лежит</th><th>Верно?</th></tr>
+<tr>
+  <td>Question Brain, <code>TaskBlock</code> в <code>normalize/card.go</code></td>
+  <td><code>Condition</code>, <code>Starter</code>, <code>Solution</code>, <code>Walkthrough</code>, <code>Difficulty</code>, <code>Constraints</code> — текстом, внутри payload вопроса, внутри SHA-256</td>
+  <td><span class="tag t-warn">частично</span></td>
+</tr>
+<tr>
+  <td>task-runtime, <code>tasks/&lt;id&gt;/task.json</code></td>
+  <td><code>image</code>, <code>checkCommand</code>, <code>editableFiles</code>, стартовый код, скрытые тесты, лимиты CPU/памяти</td>
+  <td><span class="tag t-ok">верно</span></td>
+</tr>
+</table>
+
+<p>ADR-0029 уже провёл эту границу явно: «Starter code, hidden tests, OCI images, sandbox policy, run results, and traces belong to <code>fluent-task-runtime</code>, not Question Brain». То есть <code>TaskBlock.Starter</code> и <code>TaskBlock.Solution</code> сегодня лежат <b>не на своей стороне</b>.</p>
+
+<div class="ba">
+<div class="before"><h4>Сейчас</h4>
+<p>Стартовый код и эталонное решение живут в двух местах: текстом в карточке вопроса и файлами в task-runtime. Какое из них правда — не определено.</p>
+<p>Хуже: текст решения входит в <code>content_hash</code> ревизии. Правка отступа в примере кода порождает новую ревизию вопроса, хотя вопрос не менялся.</p>
+</div>
+<div class="after"><h4>После</h4>
+<p><b>Question Brain — редакторская часть:</b> <code>Condition</code> (о чём задача) и <code>Walkthrough</code> (как её обсуждать на собеседовании). То, что произносится словами.</p>
+<p><b>task-runtime — исполняемая часть:</b> <code>Starter</code>, <code>Solution</code>, скрытые тесты, образ, лимиты. То, что запускается.</p>
+<p>Правило: <i>если это можно выполнить — это runtime; если это можно рассказать — это Question Brain.</i></p>
+</div>
+</div>
+
+<h3>Связь односторонняя</h3>
+
+<p>Сегодня <code>task.json</code> знает о вопросах через <code>questionKeys</code>, а Question Brain о задачах не знает ничего — таблицы задач в его схеме нет. Практическое следствие: на вопрос «покажи все языковые реализации вот этой темы» нельзя ответить запросом, только просмотром 18 файлов <code>task.json</code>.</p>
+
+<p>Здесь у вас развилка, и это осознанный выбор, а не дефект:</p>
+
+<ul>
+<li><b>Реестр задач в Question Brain</b> — таблица <code>task</code> со ссылкой на capability и язык, наполняемая из релиза runtime. Плюс: один запрос отвечает на всё. Минус: канон начинает знать про исполнение.</li>
+<li><b>Соединение на стороне Lab</b> — Lab читает релиз Question Brain и релиз runtime и соединяет их по <code>capability_key</code> у себя. Плюс: границы чище, каждая система знает только своё. Минус: соединение живёт в третьем месте.</li>
+</ul>
+
+<p>Рекомендую второй вариант: он совпадает с ADR-0029, где Lab прямо назван потребителем двух релизов, и не заставляет канон контента знать про Docker-образы.</p>
+
+<h3>Ключ соединения не описан и не проверяется</h3>
+
+<p>Связь между системами держится на правиле <code>Q792</code> → <code>question.q792</code> — нижний регистр плюс префикс. Это правило <b>нигде не записано как контракт и нигде не валидируется</b>. Именно поэтому ссылка <code>CAP-01</code> в одной из задач указывает на несуществующий вопрос и была найдена вручную (BUG-11).</p>
+
+<p>Любой ответ на «как связать правильно» обязан включать: правило записано в контракт, проверка целостности гоняется в CI и падает на битой ссылке.</p>
+
+<h3>Механизм есть — наполнения нет</h3>
+
+<p>Хорошая новость: в отличие от <code>question_edge</code>, ось capability <b>работает</b>. Таблица <code>content.question_capability</code> создана миграцией 0011, у неё есть <code>mapping_state</code> со значениями <code>proposed/accepted/rejected</code>, и её наполняет реальный код — <code>internal/mapping/manifest.go</code> через команду <code>qb-map-release</code>.</p>
+
+<p>Плохая новость — в отчёте о последнем прогоне <code>docs/verification/i2-runtime-crosswalk-2026-08-24.json</code>:</p>
+
+<pre><code>published:        1591
+mapped:             19   ← привязаны к способности
+unmapped:         1572   ← ни к чему не привязаны
+proposed:            0</code></pre>
+
+<p>Девятнадцать вопросов из 1591. Это ровно те, что подвязаны к 18 задачам runtime. <b>98.8% банка не участвует в связи «теория ↔ практика» вообще.</b></p>
+
+<p>То есть механизм построен правильно и включён, но по нему ничего не течёт. Наполнение — отдельная работа, и она напрашивается на тот же конвейер, что и дедупликация: векторный поиск предлагает способность для вопроса, человек подтверждает, <code>mapping_state</code> переходит из <code>proposed</code> в <code>accepted</code>.</p>
+
+<h3>Про RDF</h3>
+
+<p>Триплстор и SPARQL заводить не надо — по той же причине, что и графовую БД: вторая система хранения снова расщепит канон, который вы как раз собираете воедино.</p>
+
+<p>Но полезная половина вашей интуиции уже реализована, просто вы её не узнали в лицо. Посмотрите на типы рёбер в <code>lab-contracts</code>: <code>broaderThan</code>, <code>narrowerThan</code>, <code>sameAs</code>, <code>relatedTo</code>. <b>Это SKOS</b> — стандартный словарь для тезаурусов, выведенный здесь вручную. То свойство, ради которого вы вспомнили RDF — устойчивые идентификаторы плюс типизированные связи, проходимые машиной, — у вас есть. Оно просто хранится строками в PostgreSQL, а не триплетами.</p>
+
+<p>Если однажды понадобится обмен с внешним миром, отображение делается механически: <code>broaderThan</code> → <code>skos:broader</code>, <code>sameAs</code> → <code>skos:exactMatch</code>. Это экспорт, а не смена хранилища.</p>
+
+<h3>Циркуит-брейкер целиком</h3>
+
+<p>Соберём всё сказанное на вашем примере.</p>
+
+<pre><code><b>1. Способность</b> — одна, без языка, домена и номера:
+
+   capability.resilience.circuit-breaker
+     domain_key: domain.distributed-systems   ← атрибут, не часть имени
+
+<b>2. Вопросы</b> — теория, через content.question_capability:
+
+   question.q501 «Что такое circuit breaker и зачем он»
+   question.q502 «Состояния closed / open / half-open»
+   question.q503 «Circuit breaker против retry с backoff»
+        │  mapping_state: proposed → accepted
+        ▼
+   capability.resilience.circuit-breaker
+
+<b>3. Задачи</b> — практика, каждая объявляет ту же способность:
+
+   tasks/go-circuit-breaker-001/task.json
+     language: go,     profile: go
+     capabilityKeys: ["capability.resilience.circuit-breaker"]
+
+   tasks/java-circuit-breaker-001/task.json
+     language: java,   profile: java
+     capabilityKeys: ["capability.resilience.circuit-breaker"]
+
+   tasks/dotnet-circuit-breaker-001/task.json
+     language: csharp, profile: dotnet
+     capabilityKeys: ["capability.resilience.circuit-breaker"]
+
+<b>4. Граф вопросов</b> — последовательность внутри теории:
+
+   q501 --prerequisiteOf--> q502
+   q503 --contrastsWith--> question.q444 (retry)
+
+<b>5. Lab соединяет два релиза по capability_key</b> и показывает:
+   «Circuit Breaker: 3 вопроса теории, 3 языка на выбор,
+    сначала q501 — он предпосылка остальных»</code></pre>
+
+<p>Добавить четвёртый язык — значит добавить один файл <code>task.json</code> с тем же <code>capabilityKeys</code>. Ни вопросы, ни способность, ни граф не трогаются. Это и есть признак того, что модель выбрана верно.</p>
+
+<h3>Что сделать</h3>
+
+<ol class="steps">
+<li><b>Переименовать 13 способностей</b> так, чтобы имя называло умение, а не задачу. <code>capability.runtime.node-event-loop-001</code> → <code>capability.runtime.event-loop-ordering</code>. Обновить <code>capabilityKeys</code> в соответствующих <code>task.json</code>.</li>
+<li><b>Слить пару rate-limiter</b> в один ключ, домен вынести в атрибут.</li>
+<li><b>Записать правило именования</b> в контракт рядом с CHECK-констрейнтом, чтобы следующая способность не завелась по-старому.</li>
+<li><b>Развести TaskBlock:</b> <code>Condition</code> и <code>Walkthrough</code> остаются в Question Brain, <code>Starter</code> и <code>Solution</code> уезжают в task-runtime. Это заодно уберёт лишние ревизии вопросов при правке кода.</li>
+<li><b>Сделать правило <code>Q792 → question.q792</code> контрактом</b> и добавить проверку целостности ссылок в CI.</li>
+<li><b>Наполнить ось:</b> предложить способность для каждого из 1572 непривязанных вопросов через векторный поиск, принять через ту же очередь ревью, что и дубли.</li>
+</ol>
 </div></section>
 
 <section id="plan"><div class="wrap">
