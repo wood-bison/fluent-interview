@@ -6,8 +6,8 @@ set -Eeuo pipefail
 ports=(
   47000 47300
   48127 48128 48227
-  49300 49301 49302 49303 49304 49305 49306 49307 49308 49312
-  14317 14318 54317 54318 55437 56686 56687
+  49300 49301 49302 49303 49304 49305 49306 49312
+  54317 54318 55437 56686
 )
 
 declare -A seen=()
@@ -22,6 +22,6 @@ done
 printf 'Host port registry: %d unique dedicated ports (no standard app binds)\n' "${#ports[@]}"
 printf '  Lab dev      web 47300 · API 47000\n'
 printf '  Lab package  web 49300 · API 49301 · Postgres 49302 · Redis 49303\n'
-printf '  Lab telemetry Grafana 49304 · Prometheus 49305 · Loki 49306 · Tempo 49307/49308 · Kafka 49312\n'
+printf '  Lab telemetry Grafana 49304 · Prometheus 49305 · Loki 49306 · Kafka 49312\n'
 printf '  Question Brain API 48127 · CMS 48128 · Postgres 55437 · Jaeger 56686\n'
-printf '  Task Runtime API 48227 · Jaeger 56687\n'
+printf '  Task Runtime API 48227 · traces via shared Jaeger OTLP 54317/54318\n'

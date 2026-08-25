@@ -66,5 +66,5 @@ curl --silent --show-error --max-time 3 'http://127.0.0.1:48227/v1/tasks/summary
 echo
 echo 'Observability:'
 printf '  Question Brain Jaeger  %s  http://localhost:56686\n' "$(http_status 'http://localhost:56686')"
-printf '  Task Runtime Jaeger    %s  http://localhost:56687\n' "$(http_status 'http://localhost:56687')"
+printf '  Task Runtime traces    shared OTLP 54317/54318 → Jaeger 56686\n'
 printf '  Lab Grafana            %s  http://localhost:49304\n' "$(http_status 'http://localhost:49304')"

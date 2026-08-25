@@ -10,6 +10,7 @@
     "dev:production:quick": "bash scripts/up.sh --production --no-build",
     "status": "bash scripts/status.sh",
     "down": "bash scripts/down.sh",
+    "prune:workspace": "bash scripts/prune.sh",
     "ports": "bash scripts/ports.sh",
     "lab:nx": "pnpm -C fluent-engineering-lab exec nx",
     "lab:graph": "pnpm -C fluent-engineering-lab exec nx graph",

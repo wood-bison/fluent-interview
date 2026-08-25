@@ -47,6 +47,7 @@ pnpm dev:quick                 # reuse existing images
 pnpm dev:production:quick      # packaged release, reuse existing images
 pnpm status                    # Git, Compose, health, and observability report
 pnpm down                      # stop services without deleting volumes
+pnpm prune:workspace           # remove only known stale workspace Docker artefacts
 pnpm ports                     # verify the workspace port registry has no duplicates
 ```
 
@@ -63,15 +64,23 @@ recovery. `pnpm dev` is the normal human-facing command.
 | Paths | 9 | Node.js + TypeScript, Java + Spring, .NET + C#, Go, Python, Frontend, System Design, Algorithms, Behavioral |
 | Areas / stations | 15 / 81 | опубликованные учебные области и станции, а не количество карточек |
 | Question Brain cards | 1,591 | канонические карточки вопросов, доступные через библиотеку |
-| Topic groups | 135 raw / 133 quality | legacy-тематические группы источника (после quality-нормализации 133), не отдельные программы |
-| Runtime tasks | 18 | исполняемые revisions с профилем и hidden checks; одна карточка может иметь несколько задач |
+| Topic groups | 135 | тематические группы Question Brain, не отдельные программы |
+| Task families / revisions | 15 / 20 | семейства задач и исполняемые языковые revisions; одна семья может иметь несколько реализаций |
 
-В текущем crosswalk принято 19 карточек (`accepted`); остальные 1,572 явно
-помечены `unmapped`. Это не потеря и не fallback: они опубликованы в Question
-Brain и ищутся в библиотеке, но ещё не получили редакторское решение, в какую
-станцию Lab их проецировать. Граф не угадывает путь по словам `Track`/`Topic`.
-После ревью создаётся полный revision-pinned mapping release, затем отдельный
-runtime release join.
+Текущий release сверяет 1,591 из 1,591 карточек: `accepted=1,591`,
+`proposed=0`, `unmapped=0`. Это означает, что каждая карточка имеет принятую
+placement-связь в Question Brain. Это всё ещё не означает 1,591 экран или
+1,591 runnable-задачу: Lab агрегирует карточки в 15 областей и 81 станцию, а
+исполнение подключено только там, где есть TaskBrief и runtime revision.
+Сейчас таких station-bound карточек 6, а runnable revisions — 20. Остальные
+карточки доступны в библиотеке и графе как учебный контент; задача добавляется
+отдельным release join, а не угадывается по словам `Track`/`Topic`.
+
+Идентификаторы текущего согласованного среза: Question Brain
+`question-release-d00a14931e607336`, curriculum graph
+`2026.08.06-curriculum-graph.3`, Task Runtime
+`runtime-task-release-2026-08-25-qb-d00a1493-g9`. В API inventory все проверки
+reconciliation имеют значение `true`.
 
 Карточка каждого пути теперь показывает два разных числа: `discoveryCount` —
 точный результат серверного поискового профиля в общей базе (например, `Go`), и
@@ -83,6 +92,13 @@ runtime release join.
 pass — для этого остаётся отдельный guided-путь и детерминированный runtime.
 Проекты сейчас являются read-only preview до выпуска их execution tier; это
 намеренный gate, а не сломанная ссылка.
+
+Fluent Lab и Task Runtime используют общий Jaeger Question Brain для
+трассировок (`56686`; OTLP `54317/54318`). Grafana Lab
+подключается к Jaeger как datasource; отдельного Tempo-сервиса и его volume в
+Lab Compose больше нет. `pnpm prune:workspace` удаляет только известные старые
+`fluent-engineering-lab_fel-*` volumes и остановленные контейнеры этого Compose
+проекта; он не выполняет опасный глобальный `docker system prune`.
 
 Последний контентный checkpoint (без неподтверждённого массового импорта):
 [audit phases 4.2/4.5/4.6/5.3](fluent-question-brain/docs/audits/content-phases-4-2-4-5-4-6-5-3-checkpoint-2026-08-24.md).
@@ -120,7 +136,7 @@ languages and independent release units are one source tree.
 | Service | API/readiness | Operator UI |
 | --- | --- | --- |
 | Question Brain | `127.0.0.1:48127` | Payload `localhost:48128/admin`; Jaeger `localhost:56686` |
-| Task Runtime | `127.0.0.1:48227` | Jaeger `localhost:56687` |
+| Task Runtime | `127.0.0.1:48227` | traces через общий Jaeger `localhost:56686` |
 | Fluent Lab dev | web `localhost:47300`, API `localhost:47000` | learner UI |
 | Fluent Lab package | web `localhost:49300`, API `localhost:49301` | learner UI |
 | Fluent Lab durable data | Postgres `localhost:49302`, Redis `localhost:49303` | package-owned volumes |

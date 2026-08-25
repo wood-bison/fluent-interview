@@ -1,5 +1,12 @@
 # Docker stack and resource audit — 2026-08-23
 
+> **Current-state addendum — 2026-08-25.** This report preserves the original
+> 2026-08-23 evidence, but its pre-migration Tempo/per-repository Jaeger
+> snapshot is historical. The active stack now uses the shared Question Brain
+> Jaeger (`56686`, OTLP `54317/54318`) for Brain, Runtime and Lab; Lab has no
+> Tempo service or Tempo volume, and Task Runtime has no Jaeger container.
+> Re-run `pnpm status` and `pnpm prune:workspace` for the current state.
+
 ## Verdict
 
 PASS after remediation. The Fluent Interview workspace is three explicitly
@@ -29,7 +36,7 @@ because the runtime captures stdout/stderr directly.
 | --- | --- | --- | --- |
 | `fluent-question-brain` | `fluent-question-brain/deploy/compose/compose.yaml` | `api`, `cms`, `postgres`, `jaeger` | `fluent-question-brain-postgres` |
 | `fluent-task-runtime` | `fluent-task-runtime/deploy/compose/compose.yaml` | `runtime`, `jaeger` | none in the control stack; each task workspace is disposable |
-| `fluent-engineering-lab` | `fluent-engineering-lab/docker-compose.yml` | required: `postgres`, `redis`; optional: `observability` (`prometheus`, `loki`, `promtail`, `tempo`, `grafana`); optional `broker` (`kafka`) | `fluent-engineering-lab-{postgres,tempo,prometheus,loki,grafana}-data` |
+| `fluent-engineering-lab` | `fluent-engineering-lab/docker-compose.yml` | required: `postgres`, `redis`; optional: `observability` (`prometheus`, `loki`, `promtail`, `grafana`); optional `broker` (`kafka`) | `fluent-engineering-lab-{postgres,prometheus,loki,grafana}-data` |
 
 The parent workspace (`fluent-interview`) is an orchestrator, not a fourth
 Docker stack. `scripts/up.sh`, `scripts/down.sh` and `scripts/status.sh` use
@@ -53,7 +60,7 @@ now shows one coherent entry for each project, with no mixed old checkout.
 
 ## Port and exposure check
 
-All 22 workspace ports are unique and loopback-only. Internal container ports
+All 17 current workspace ports are unique and loopback-only. Internal container ports
 remain standard (`5432`, `6379`, `8080`, `3000`, `4317/4318`, etc.); only host
 ports are dedicated. The runtime API, databases, Jaeger instances and Lab
 observability endpoints are not exposed to the LAN.
@@ -93,17 +100,15 @@ named and intentionally preserved by normal shutdown; `down.sh` never uses
 
 The optional Kafka profile was measured at roughly `470 MiB` on this Mac and
 was removed after the check because the current Lab path does not require it.
-The optional Grafana/Loki/Prometheus/Tempo profile remains available for
-observability and measured roughly `0.3 GiB` combined after warm-up. The normal
+The optional Grafana/Loki/Prometheus profile remains available for
+observability and measured roughly `0.3 GiB` combined after warm-up. Traces are
+sent to the shared Question Brain Jaeger; the normal
 `scripts/up.sh` path does not start either optional profile.
 
-The daemon also contains five historical `fluent-engineering-lab_fel-*`
-volumes with zero links to running containers (about `112 MiB` total). They are
-legacy volume names from an earlier Compose file, not inputs to the current
-stack. They were intentionally left untouched in this audit because deleting a
-volume is irreversible; a separate, explicitly approved storage cleanup can
-remove them after a final data-retention decision. Current package data lives
-in the explicitly named `fluent-engineering-lab-*` volumes.
+The five historical `fluent-engineering-lab_fel-*` volumes from the original
+snapshot were removed by the scoped `pnpm prune:workspace` cleanup after
+confirming they had no mounts. Current package data lives in the explicitly
+named `fluent-engineering-lab-*` volumes.
 
 ### Current warm service snapshot
 
@@ -113,8 +118,8 @@ observability endpoints returned HTTP `200`:
 - Question Brain readiness `48127`: `200`;
 - Task Runtime readiness `48227`: `200`;
 - Lab package `49300`: `200`;
-- Grafana `49304`, Prometheus `49305`, Loki `49306`, Tempo `49307`, and both
-  Jaeger UIs `56686/56687`: `200`.
+- Grafana `49304`, Prometheus `49305`, Loki `49306`, and the shared Jaeger UI
+  `56686`: `200`.
 
 ## Known boundaries (not leaks)
 

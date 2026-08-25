@@ -131,7 +131,7 @@ test -s "$QUESTION_BRAIN/releases/$QUESTION_BRAIN_MAPPING_FILE" || {
 echo 'Fluent Interview workspace'
 echo "root: $ROOT"
 echo '1/2  Question Brain'
-"${compose_question_brain[@]}" up -d "${build_args[@]}"
+"${compose_question_brain[@]}" up -d --remove-orphans "${build_args[@]}"
 wait_for 'Question Brain' 'http://127.0.0.1:48127/health/ready'
 # Existing PostgreSQL volumes do not re-run initdb scripts. Apply the
 # revision-scoped mapping migration and the checked-in explicit crosswalk on
@@ -147,7 +147,7 @@ echo 'Applying explicit Question Brain → Lab curriculum crosswalk'
 echo '2/2  Task Runtime'
 RUNTIME_HOST_WORK_ROOT="$TASK_RUNTIME/.runtime-work" \
 RUNTIME_RELEASE_MANIFEST="/opt/releases/$RUNTIME_RELEASE_FILE" \
-  "${compose_task_runtime[@]}" up -d "${build_args[@]}"
+  "${compose_task_runtime[@]}" up -d --remove-orphans "${build_args[@]}"
 wait_for 'Task Runtime' 'http://127.0.0.1:48227/v1/health/ready'
 
 echo
