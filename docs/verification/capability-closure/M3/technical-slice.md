@@ -5,7 +5,7 @@
 **Lab commits:** `e3dcf50` (server slice), `4e895cf` (learner UI transport),
 `4443bc8` (lint-clean Angular client), `2f19db4` (explanation/reflection and
 server-owned cold-repeat scheduling), `98177b4` (reconciled inventory compiler),
-`2e2a54b` (rail inventory boundary)
+`2e2a54b` (rail inventory boundary), `7f4c9b6` (Practice task count reconciliation)
 
 ## What is proven
 

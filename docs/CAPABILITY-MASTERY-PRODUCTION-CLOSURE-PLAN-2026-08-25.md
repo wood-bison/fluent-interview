@@ -769,7 +769,7 @@ TaskFamily показывается один раз. UI подписывает r
 
 Серверная граница golden capability реализована в
 `fluent-engineering-lab@e3dcf50`, а learner UI-связка опубликована в
-`fluent-engineering-lab@2e2a54b` в `main`. Она ещё не закрывает
+`fluent-engineering-lab@7f4c9b6` в `main`. Она ещё не закрывает
 весь M3: это проверенный технический срез, а не выданное mastery.
 
 - `POST /api/capability-sessions` принимает только released
@@ -809,9 +809,10 @@ E2E evidence не может закрыть его за человека.
 
 ### Подготовка M4 — 2026-08-25
 
-В Lab `2e2a54b` вынесен единый `product-inventory` compiler и подключён к
+В Lab `7f4c9b6` вынесен единый `product-inventory` compiler и подключён к
 learner rail: Program/Map, Question Brain corpus, Runtime relation audit и profile progress теперь
-собираются в один server-owned counter projection; path count больше не
+собираются в один server-owned counter projection; rail и Practice task catalogue
+показывают release-owned counts; path count больше не
 зашит литералом `9`, неизвестные station keys не считаются bound, старый
 отдельный Question Brain summary больше не используется rail, а invalid Runtime
 bindings делают inventory недействительным. Это техническая основа,
@@ -1756,7 +1757,7 @@ read → implement → run → break → measure → explain → defend
 | M0 | `DONE` | root | 2026-08-25 | `49406ef`, `53f623c`, `7999f19`, `7d26d38`, `37bcaa9` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review PASS |
 | M1 | `DONE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f`, root `4cb6ce7` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json), [`M1/review.md`](verification/capability-closure/M1/review.md) | independent review PASS |
 | M2 | `DONE` | Lab | 2026-08-25 | Lab `00460fa`, root close proof | [`M2/baseline.json`](verification/capability-closure/M2/baseline.json), [`M2/review.md`](verification/capability-closure/M2/review.md) | independent review PASS |
-| M3 | `ACTIVE` | all/golden slice | 2026-08-25 | Lab `e3dcf50` + `4e895cf` + `4443bc8` + `2f19db4` + `98177b4` + `2e2a54b` | [`M3/baseline.json`](verification/capability-closure/M3/baseline.json), [`M3/technical-slice.md`](verification/capability-closure/M3/technical-slice.md) | technical slice PASS; human acceptance WAITING |
+| M3 | `ACTIVE` | all/golden slice | 2026-08-25 | Lab `e3dcf50` + `4e895cf` + `4443bc8` + `2f19db4` + `98177b4` + `2e2a54b` + `7f4c9b6` | [`M3/baseline.json`](verification/capability-closure/M3/baseline.json), [`M3/technical-slice.md`](verification/capability-closure/M3/technical-slice.md) | technical slice PASS; human acceptance WAITING |
 | M4 | `TODO` | Lab/compiler | — | — | — | — |
 | M5 | `TODO` | Lab/UI | — | — | — | — |
 | M6 | `TODO` | Brain/editorial | — | — | — | — |

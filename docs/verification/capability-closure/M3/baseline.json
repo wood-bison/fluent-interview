@@ -2,7 +2,7 @@
   "gate": "M3",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T21:26:31Z",
+  "capturedAt": "2026-08-25T21:30:24Z",
   "canonicalCapability": "capability.distributed-systems.rate-limiter",
   "taskFamily": "task-family.rate-limiter",
   "primaryQuestion": "question.q315",
@@ -11,7 +11,7 @@
       "headBeforeProof": "732f94a6ea4643e8c0dc5f98bcdb81da7a414193"
     },
     "fluent-engineering-lab": {
-      "head": "2e2a54b"
+      "head": "7f4c9b6"
     },
     "fluent-question-brain": {
       "head": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
