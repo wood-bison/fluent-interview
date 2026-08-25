@@ -754,6 +754,23 @@ Suggested commits:
 
 ## G9 — Build the Review Workbench in Fluent Lab
 
+### Implementation slice shipped 2026-08-25
+
+The first production slice is live and pushed. Fluent Lab now reads the
+answer-free Question Brain review projection, exposes all five typed queues,
+shows RU/EN prompts plus release/provenance/graph/capability/task-family
+evidence, and writes duplicate/edge/import/capability decisions through the
+Question Brain HTTP boundary with actor, rationale, token authentication and
+compare-and-set conflict handling. The desktop browser smoke passed at
+1728×1117 and 2560×1440; the packaged stack is ready on Lab commit `0a54467`.
+Brain's review boundary is on `b40ab03`. Evidence:
+[`G9-REVIEW-WORKBENCH-2026-08-25.md`](../fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md).
+
+The gate remains **in progress**. Bulk selection/confirmation, deterministic
+focus return, immutable before/after release preview with rollback consequences,
+and a dedicated alias/supersession write contract are intentionally not claimed
+as complete yet.
+
 ### Changes
 
 - [ ] Add read/write adapters for Question Brain review APIs; never connect to
@@ -1191,7 +1208,7 @@ fully checked and its evidence is committed.
 | G6 — semantic proposal pipeline | complete | `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md` | Brain `ff92be4`, `eab9fb5`, `8cba06a`, `09482da`, `4c7cc5d` |
 | G7 — question-capability bindings | complete | `fluent-question-brain/docs/verification/G7-QUESTION-CAPABILITY-2026-08-25.md` plus live coverage/report and smoke evidence | Brain `cca733b`, `f848e8c`, `a44347b`, `88e8bac`, `8343904`, `391895e` |
 | G8 — release join | complete | Runtime `docs/verification/G8-RELEASE-JOIN-2026-08-25.md`, `scripts/release/g8-release-join-smoke.sh`, live summary/relations and Lab health-gate evidence | Runtime `25dbb8d`; Lab `6634feb` |
-| G9 — Review Workbench | not started | — | — |
+| G9 — Review Workbench | in progress | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md` (live contract, queues, RU/EN desktop smoke, privacy boundary) | Brain `b40ab03`; Lab `0a54467` |
 | G10 — learner projection | not started | — | — |
 | G11 — bilingual/a11y/design | not started | — | — |
 | G12 — task coverage | not started | — | — |
