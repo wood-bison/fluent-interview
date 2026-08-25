@@ -15,8 +15,8 @@
       "dirty": false
     },
     "fluent-engineering-lab": {
-      "head": "a01b44f",
-      "originMain": "a01b44f",
+      "head": "af0ccf8",
+      "originMain": "af0ccf8",
       "dirty": false
     },
     "fluent-question-brain": {
@@ -32,7 +32,7 @@
   },
   "implementation": {
     "repository": "fluent-engineering-lab",
-    "commit": "a01b44f",
+    "commit": "af0ccf8",
     "contractVersion": "capability-mastery-ledger.v2",
     "eventContractVersion": "capability-evidence.v2",
     "sessionContractVersion": "learning-session.v1",
@@ -60,6 +60,8 @@
       "future and out-of-order timestamps, unsupported versions, private fields and identity mismatches fail closed",
       "legacy completion.v1 is imported as legacy-incomplete or quarantined and never promotes mastery",
       "backup and restore allow-list includes all 28 learner surfaces and restore is disposable-schema-only",
+      "backup artifact counts are compared with live source rows and restored rows for every surface",
+      "human capability projections are revision-scoped; cross-session identity conflicts fail closed",
       "in-memory and Postgres implementations share the same contract state machine and replay current time"
     ]
   },
@@ -91,17 +93,17 @@
     "backupArtifact": {
       "command": "DATABASE_URL=postgres://fel:fel@127.0.0.1:49302/fluent_lab pnpm g8:02:artifact",
       "result": "pass",
-      "details": "live Sergey-scoped artifact verified: 28/28 surfaces, 0600 mode, bounded rows/bytes, no private payloads"
+      "details": "live Sergey-scoped artifact verified: 28/28 surfaces, source row counts match artifact counts, 0600 mode, bounded rows/bytes, no private payloads"
     },
     "restoreRoundTrip": {
       "command": "DATABASE_URL=postgres://fel:fel@127.0.0.1:49302/fluent_lab node scripts/g8-02-restore-gate.mjs --check",
       "result": "pass",
-      "details": "live disposable-schema round trip verified; public table count unchanged, disposable schema cleaned, same-schema restore refused"
+      "details": "live disposable-schema round trip verified; source counts match artifact and restored rows for all 28 surfaces, public table count unchanged, disposable schema cleaned, same-schema restore refused"
     },
     "fullLabCheck": {
       "command": "pnpm check",
       "result": "pass",
-      "details": "curriculum drift 0; lab-contracts 247 suites/1253 tests; learning-api 163 suites/704 passed tests (1 skipped); web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
+      "details": "curriculum drift 0; lab-contracts 247 suites/1254 tests; learning-api 163 suites/704 passed tests (1 skipped); web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
       "knownWarnings": "pre-existing lint and non-fatal bundle budget warnings only"
     }
   },
@@ -112,7 +114,8 @@
       "Postgres schema, transaction, advisory lock, idempotency and projection repository",
       "current curriculum Progress/readiness mastery reads server projection instead of legacy completion.v1",
       "legacy completion import is an explicit operator-only service and cannot be invoked by learner GET, browser or LLM paths",
-      "Postgres projection is replayed from append-only events at read time so repeat_due is current after restart"
+      "Postgres projection is replayed from append-only events at read time so repeat_due is current after restart",
+      "revision identity is part of the capability stream; conflicting human revisions cannot append or produce a projection"
     ],
     "nextGate": [
       "M3 must bridge the real rate-limiter human session producers to this ledger",
