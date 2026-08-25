@@ -1,12 +1,12 @@
 {
   "evidenceVersion": "product-audit-browser-smoke.v2",
-  "capturedAt": "2026-08-25T13:40:00+02:00",
-  "sourceRevision": "6b936f535bf41b39965d90d89d672a40d1256c61",
+  "capturedAt": "2026-08-25T14:20:00+02:00",
+  "sourceRevision": "92eeac6688595ffbbcd3c8ba4975f77253b60c17",
   "browser": "Codex in-app Browser",
   "viewport": "default desktop viewport (not a target-size screenshot)",
   "package": {
     "state": "ready",
-    "operationId": "7a1473e9-0d3c-4749-ad97-fecb086999d6",
+    "operationId": "10a97afb-0454-4a30-a5bf-32a5ea0b4af3",
     "graphReleaseId": "2026.08.06-curriculum-graph.3",
     "ports": {
       "learnerWeb": 49300,
@@ -43,7 +43,25 @@
       "horizontalOverflow": false,
       "countLine": "1 вопрос · 1 загружено",
       "taskFamily": "task-family.rate-limiter",
-      "revisionLinks": 4
+      "revisionCount": 6,
+      "languages": ["Go", "C#", "Java", "TypeScript", "JavaScript", "SQL"]
+    },
+    {
+      "path": "/practice/task-family/task-family.rate-limiter",
+      "locale": "ru",
+      "heading": "Ограничитель частоты",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "revisionCount": 6,
+      "selectionSmoke": [
+        {"language": "Go", "taskId": "go-rate-limiter-001", "runnable": true},
+        {"language": "C#", "taskId": "csharp-rate-limiter-001", "runnable": true},
+        {"language": "Java", "taskId": "java-rate-limiter-001", "runnable": true},
+        {"language": "TypeScript", "taskId": "ts-rate-limiter-001", "runnable": true},
+        {"language": "JavaScript", "taskId": "node-rate-limiter-001", "runnable": true},
+        {"language": "SQL", "taskId": "pg-rate-limiter-001", "runnable": true}
+      ]
     },
     {
       "path": "/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter",
@@ -52,12 +70,66 @@
       "mainLandmarks": 1,
       "alerts": 0,
       "horizontalOverflow": false,
+      "codeMirrorTokenSpans": 147,
+      "language": "go",
       "runtimeVisible": true,
       "evidenceVisible": true,
-      "publicChecks": "4/4",
+      "runActionVisible": true,
       "xtermVisible": true,
       "visibleInteractiveBelow44px": 1,
       "smallElementReason": "native checkbox box; its wrapping label is the 44px hit-area"
+    },
+    {
+      "path": "/practice/lab/csharp-rate-limiter-001",
+      "locale": "ru",
+      "heading": "Rate limiter in .NET",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "codeMirrorTokenSpans": 71,
+      "language": "csharp",
+      "runtimeVisible": true,
+      "evidenceVisible": true,
+      "runActionVisible": true
+    },
+    {
+      "path": "/practice/lab/java-rate-limiter-001",
+      "locale": "ru",
+      "heading": "Rate limiter in Java",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "codeMirrorTokenSpans": 169,
+      "language": "java",
+      "runtimeVisible": true,
+      "evidenceVisible": true,
+      "runActionVisible": true
+    },
+    {
+      "path": "/practice/lab/ts-rate-limiter-001",
+      "locale": "ru",
+      "heading": "Rate limiter in TypeScript",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "codeMirrorTokenSpans": 127,
+      "language": "typescript",
+      "runtimeVisible": true,
+      "evidenceVisible": true,
+      "runActionVisible": true
+    },
+    {
+      "path": "/practice/lab/pg-rate-limiter-001",
+      "locale": "ru",
+      "heading": "Rate limiter in PostgreSQL",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "codeMirrorTokenSpans": 33,
+      "language": "sql",
+      "runtimeVisible": true,
+      "evidenceVisible": true,
+      "runActionVisible": true
     }
   ],
   "publishedPathMatrix": [
