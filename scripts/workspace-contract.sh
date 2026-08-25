@@ -5,6 +5,24 @@ set -Eeuo pipefail
 # Ruby's YAML parser is part of macOS; the values are shell-escaped before
 # export so a contract edit cannot turn into command injection.
 WORKSPACE_CONTRACT_ROOT="${ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+
+if [[ "${1:-}" == "check" ]]; then
+  bundle="${WORKSPACE_CONTRACT_ROOT}/docs/contracts/capability-mastery-bundle.v1.fixture.json"
+  test -s "${bundle}"
+  jq -e '.contractVersion == "capability-mastery-bundle.v1"' "${bundle}" >/dev/null
+  canonical_digest="$(jq -S -c . "${bundle}" | shasum -a 256 | awk '{print $1}')"
+  for copy in \
+    "${WORKSPACE_CONTRACT_ROOT}/fluent-engineering-lab/docs/contracts/capability-mastery-bundle.v1.fixture.json" \
+    "${WORKSPACE_CONTRACT_ROOT}/fluent-question-brain/docs/contracts/capability-mastery-bundle.v1.fixture.json" \
+    "${WORKSPACE_CONTRACT_ROOT}/fluent-task-runtime/docs/contracts/capability-mastery-bundle.v1.fixture.json"; do
+    test -s "${copy}"
+    copy_digest="$(jq -S -c . "${copy}" | shasum -a 256 | awk '{print $1}')"
+    test "${copy_digest}" = "${canonical_digest}"
+  done
+  printf 'workspace contract: capability-mastery-bundle.v1 copies match %s\n' "${canonical_digest}"
+  exit 0
+fi
+
 eval "$(ruby -ryaml -rshellwords -e '
   path = ARGV.fetch(0)
   doc = YAML.load_file(path)

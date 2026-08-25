@@ -1673,8 +1673,8 @@ read → implement → run → break → measure → explain → defend
 
 | Gate | Status | Owner | Started | Commit(s) | Proof | Reviewer |
 | --- | --- | --- | --- | --- | --- | --- |
-| M0 | `ACTIVE` | root | 2026-08-25 | `49406ef`, `a9b8a8d` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review pending |
-| M1 | `TODO` | all/contracts | — | — | — | — |
+| M0 | `DONE` | root | 2026-08-25 | `49406ef`, `53f623c`, `7999f19`, `7d26d38`, `37bcaa9` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review PASS |
+| M1 | `ACTIVE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json) | independent review pending |
 | M2 | `TODO` | Lab | — | — | — | — |
 | M3 | `TODO` | all/golden slice | — | — | — | — |
 | M4 | `TODO` | Lab/compiler | — | — | — | — |

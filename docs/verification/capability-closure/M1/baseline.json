@@ -1,0 +1,95 @@
+{
+  "contractVersion": "capability-closure.m1-baseline.v1",
+  "status": "self-check-pass-review-pending",
+  "capturedAt": "2026-08-25T18:49:10Z",
+  "plan": {
+    "id": "capability-mastery-production-closure",
+    "revision": "v2",
+    "currentGate": "M1",
+    "result": "NOT RELEASED"
+  },
+  "repositories": {
+    "root": {
+      "headBeforeProof": "37bcaa9d92faa17cf764e8cc9e2650c11a82f106",
+      "originMainBeforeProof": "37bcaa9d92faa17cf764e8cc9e2650c11a82f106",
+      "dirtyBeforeProof": true,
+      "reason": "M1 proof and plan ledger are this root commit"
+    },
+    "fluent-engineering-lab": {
+      "head": "401ee9fe8993fc739f2556deebf3cec4746e4848",
+      "originMain": "401ee9fe8993fc739f2556deebf3cec4746e4848",
+      "dirty": false
+    },
+    "fluent-question-brain": {
+      "head": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60",
+      "originMain": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60",
+      "dirty": false
+    },
+    "fluent-task-runtime": {
+      "head": "45c4519af67a61cee03c6dd02bf2b4b50d5b0bc6",
+      "originMain": "45c4519af67a61cee03c6dd02bf2b4b50d5b0bc6",
+      "dirty": false
+    }
+  },
+  "crossRepositoryFixture": {
+    "contractVersion": "capability-mastery-bundle.v1",
+    "sha256CanonicalJson": "9679a5ffe6b6eb3df1229cec1ab98366cf63252f228bf3e73aa4b38c34eb5bca",
+    "copies": [
+      "docs/contracts/capability-mastery-bundle.v1.fixture.json",
+      "fluent-engineering-lab/docs/contracts/capability-mastery-bundle.v1.fixture.json",
+      "fluent-question-brain/docs/contracts/capability-mastery-bundle.v1.fixture.json",
+      "fluent-task-runtime/docs/contracts/capability-mastery-bundle.v1.fixture.json"
+    ],
+    "digestCheck": "pass"
+  },
+  "runtimeReleaseTruth": {
+    "sourceManifest": "fluent-task-runtime/releases/task-release-2026-08-25-qb-d00a1493-g9.json",
+    "contractVersion": "fluent-task-runtime.task-release.v3",
+    "taskCount": 20,
+    "currentCountIsDerivedFromManifest": true,
+    "releaseJoinSmoke": "pass: 20 tasks",
+    "historical18RevisionTest": "preserved as immutable v1 history; not used by current smoke"
+  },
+  "verification": {
+    "lab": {
+      "command": "pnpm check",
+      "result": "pass",
+      "details": "curriculum drift 0; 4 projects lint/test/build; 162 learning-api suites/701 tests; web 77 files/376 tests; production bundle guard 61 chunks",
+      "knownWarnings": "existing lint warnings only; production bundle budget warnings are non-fatal and unchanged"
+    },
+    "questionBrain": {
+      "command": "make check",
+      "result": "pass",
+      "details": "contract check plus Docker golang:1.23-bookworm go test ./...; contractmodel tests included"
+    },
+    "taskRuntime": {
+      "command": "docker run --rm -v \"$PWD:/src\" -w /src golang:1.24-bookworm ... go test ./...",
+      "result": "pass",
+      "details": "contracts, engine and HTTP API tests pass; release join smoke passes 20 tasks"
+    },
+    "workspace": {
+      "command": "./scripts/workspace-contract.sh check",
+      "result": "pass",
+      "details": "canonical fixture and all three consumer copies have matching digest"
+    },
+    "browser": {
+      "result": "m0-pass-inherited",
+      "details": "M1 is contract/test-only; representative Browser crawl remains recorded in M0 baseline and is re-run at M12"
+    }
+  },
+  "m1Scope": {
+    "implemented": [
+      "typed fail-closed capability mastery bundle validators in Brain, Runtime and Lab",
+      "stale card/task hash, missing assessment plan, inactive registry, incomplete primary card, non-human provenance, wrong profile and contradictory release/runnable rejection tests",
+      "Brain make check cannot silently skip Go tests; Docker fallback derives image from go.mod",
+      "current Runtime release smoke derives task count from manifest and accepts v3 source history",
+      "Lab product inventory fixture reflects current 20 task revisions"
+    ],
+    "notImplementedByDesign": [
+      "human evidence ledger and mastery projection (M2)",
+      "full rate-limiter human golden slice (M3)",
+      "UI readiness compiler and route unlock policy (M4+)"
+    ]
+  },
+  "independentReviewer": "pending"
+}
