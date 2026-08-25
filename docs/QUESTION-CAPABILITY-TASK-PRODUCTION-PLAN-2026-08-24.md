@@ -761,20 +761,24 @@ answer-free Question Brain review projection, exposes all five typed queues,
 shows RU/EN prompts plus release/provenance/graph/capability/task-family
 evidence, and writes duplicate/edge/import/capability decisions through the
 Question Brain HTTP boundary with actor, rationale, token authentication and
-compare-and-set conflict handling. The desktop browser smoke passed at
-1728×1117 and 2560×1440; the packaged stack is ready on Lab commits `b54afdd`,
-`acc1f74`, and `162538b`. Brain's review boundary is on `39ef491`.
+compare-and-set conflict handling. The duplicate queue now consumes the
+durable `question-brain.duplicate-review.v1` contract. The desktop browser
+smoke passed at 1728×1117 and 2560×1440; the packaged stack is ready on Lab
+commit `9205385` and Brain commits `b46d7de`, `87fac21`, `6194577`, and
+`a8573c6`.
 Evidence:
 [`G9-REVIEW-WORKBENCH-2026-08-25.md`](../fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md).
+Brain duplicate evidence:
+[`G9-DUPLICATE-REVIEW-2026-08-25.md`](../fluent-question-brain/docs/verification/G9-DUPLICATE-REVIEW-2026-08-25.md).
 
 Bulk selection is capped at 50 and requires a visible two-step confirmation;
 focus returns to the selected row after queue changes; the release panel shows
 immutable before/after graph pins, dry-run status, blocked reasons, and rollback
 consequences. Bilingual aria-live announcements switch with the active locale.
-The gate remains **in progress** for the remaining live review matrix and the
-later Payload decision. The canonical alias/supersession write boundary is now
-published and exercised end-to-end; its empty queue is explicit, never a hidden
-fallback.
+The gate remains **in progress** only for the later Payload decision. The
+canonical alias/supersession write boundary and the complete live review matrix
+are published and exercised end-to-end; an empty queue is explicit, never a
+hidden fallback.
 
 ### Changes
 
@@ -818,13 +822,15 @@ git diff --check
 ```
 
 - [x] Use the real desktop browser at 1728×1117 and 2560×1440.
-- [ ] Review one duplicate, one rejected edge, one accepted prerequisite, one
+- [x] Review one duplicate, one rejected edge, one accepted prerequisite, one
       multi-capability binding, and one stale-revision conflict.
 
 ### Gate acceptance
 
-- [ ] Every machine proposal can be resolved without CLI or direct SQL (blocked
-      only by the not-yet-published alias/supersession writer).
+- [x] Every machine proposal can be resolved without CLI or direct SQL; the
+      only remaining G9 decision is whether Payload belongs in the authoring
+      path, and that decision is explicitly deferred until this Workbench is
+      accepted.
 - [x] Every implemented decision is visible in audit history and in the next
       dry-run.
 - [x] No review action directly grants learner mastery or task pass.
