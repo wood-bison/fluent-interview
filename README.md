@@ -65,7 +65,7 @@ recovery. `pnpm dev` is the normal human-facing command.
 | Areas / stations | 15 / 81 | опубликованные учебные области и станции, а не количество карточек |
 | Question Brain cards | 1,591 | канонические карточки вопросов, доступные через библиотеку |
 | Topic groups | 135 | тематические группы Question Brain, не отдельные программы |
-| Task families / revisions | 15 / 20 | семейства задач и исполняемые языковые revisions; одна семья может иметь несколько реализаций |
+| Task families / revisions | 16 / 20 | семейства задач и исполняемые языковые revisions; SQL-реализация rate limiter живёт в отдельной PostgreSQL-семье |
 
 Текущий release сверяет 1,591 из 1,591 карточек: `accepted=1,591`,
 `proposed=0`, `unmapped=0`. Это означает, что каждая карточка имеет принятую
@@ -79,7 +79,7 @@ placement-связь в Question Brain. Это всё ещё не означае
 Идентификаторы текущего согласованного среза: Question Brain
 `question-release-d00a14931e607336`, curriculum graph
 `2026.08.06-curriculum-graph.3`, Task Runtime
-`runtime-task-release-2026-08-25-qb-d00a1493-g9`. В API inventory все проверки
+`runtime-task-release-2026-08-26-qb-d00a1493-g10`. В API inventory все проверки
 reconciliation имеют значение `true`.
 
 Карточка каждого пути теперь показывает два разных числа: `discoveryCount` —

@@ -9,7 +9,7 @@ source "$ROOT/scripts/workspace-contract.sh"
 # Keep the workspace launcher pinned to the same reconciled release that the
 # Runtime Compose file exposes by default.  A stale filename here makes a
 # clean `pnpm dev` fail before any service can report its actual readiness.
-RUNTIME_RELEASE_FILE="task-release-2026-08-25-qb-d00a1493-g9.json"
+RUNTIME_RELEASE_FILE="task-release-2026-08-26-qb-d00a1493-g10.json"
 QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-25-canonical.json"
 
 mode="development"
