@@ -1,0 +1,541 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Fluent Interview перед стартом: аудит замысла, продукта и пути до «не боюсь собеседований»",
+    "description": "Сопоставление исходного Plan 2026 с живыми Fluent Lab, Question Brain и Task Runtime: что уже стало продуктом, где интерфейс обещает больше, чем доступно, какие темы не закрыты практикой и что необходимо завершить перед внутренним запуском.",
+    "generatedAt": "2026-08-25T18:30:00+02:00",
+    "sources": [
+      {"id": "plan-moc"},
+      {"id": "plan-domain-audit"},
+      {"id": "live-program"},
+      {"id": "browser-audit"},
+      {"id": "brain-catalog"},
+      {"id": "runtime-catalog"},
+      {"id": "verification"},
+      {"id": "ux-audit"}
+    ],
+    "cards": [
+      {
+        "id": "corpus",
+        "description": "Опубликованные карточки Question Brain; это корпус знаний, а не число освоенных уроков.",
+        "dataset": "headline",
+        "sourceId": "brain-catalog",
+        "metrics": [{"label": "Карточки в корпусе", "field": "corpus", "format": "number"}]
+      },
+      {
+        "id": "ready-cards",
+        "description": "Карточки, которые текущий каталог помечает ready-to-learn.",
+        "dataset": "headline",
+        "sourceId": "brain-catalog",
+        "metrics": [{"label": "Ready-to-learn", "field": "ready", "format": "number"}]
+      },
+      {
+        "id": "real-runnable",
+        "description": "Станции, которые server-owned learner map подтверждает как activity-runnable.",
+        "dataset": "headline",
+        "sourceId": "live-program",
+        "metrics": [{"label": "Реально runnable", "field": "realRunnable", "format": "number"}]
+      },
+      {
+        "id": "working-routes",
+        "description": "Опубликованные executable URL, которые дошли до рабочего интерфейса практики в браузерном обходе.",
+        "dataset": "headline",
+        "sourceId": "browser-audit",
+        "metrics": [{"label": "Рабочие URL", "field": "workingRoutes", "format": "number"}]
+      },
+      {
+        "id": "broken-routes",
+        "description": "Опубликованные executable URL, которые показали недоступную практику.",
+        "dataset": "headline",
+        "sourceId": "browser-audit",
+        "metrics": [{"label": "Сломанные URL", "field": "brokenRoutes", "format": "number"}]
+      },
+      {
+        "id": "closed-plan-areas",
+        "description": "Направления исходного Plan 2026, прошедшие полное определение готовности: материал, lab, explanation, journal и cold repeat.",
+        "dataset": "headline",
+        "sourceId": "plan-domain-audit",
+        "metrics": [{"label": "Закрыто по Plan 2026", "field": "closedPlanAreas", "format": "number"}]
+      }
+    ],
+    "charts": [
+      {
+        "id": "route-health",
+        "title": "Здоровье опубликованных executable-маршрутов",
+        "subtitle": "Обход 66 URL, которые learner map обозначает исполняемыми.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Сколько обещанных практик действительно открываются и позволяют начать работу?",
+        "rationale": "Три состояния показывают разрыв между опубликованным обещанием и доступным действием.",
+        "type": "bar",
+        "dataset": "routeHealth",
+        "sourceId": "browser-audit",
+        "encodings": {
+          "x": {"field": "state", "type": "nominal", "label": "Результат обхода"},
+          "y": {"field": "routes", "type": "quantitative", "label": "Маршруты", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "content-layers",
+        "title": "Что реально есть внутри 1 591 карточки",
+        "subtitle": "Эвристика по заголовкам и секциям; наличие секции не доказывает её качество.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Какие учебные слои массово присутствуют, а какие остаются редкими?",
+        "rationale": "Горизонтальная диаграмма сохраняет длинные русские подписи и делает провалы заметными.",
+        "type": "bar",
+        "dataset": "contentLayers",
+        "sourceId": "brain-catalog",
+        "encodings": {
+          "x": {"field": "layer", "type": "nominal", "label": "Учебный слой"},
+          "y": {"field": "cards", "type": "quantitative", "label": "Карточки", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "plan-closure",
+        "title": "Закрытие 12 обязательных направлений исходного плана",
+        "subtitle": "0 — отсутствует; 1 — теория; 2 — частичная практика; 3 — почти закрыто; 4 — полностью соответствует Plan 2026.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Где корпус уже превращён в исполняемое обучение, а где пока остаётся библиотекой?",
+        "rationale": "Единая шкала помогает не путать количество вопросов с доказанной capability.",
+        "type": "bar",
+        "dataset": "planClosure",
+        "sourceId": "plan-domain-audit",
+        "encodings": {
+          "x": {"field": "area", "type": "nominal", "label": "Направление"},
+          "y": {"field": "score", "type": "quantitative", "label": "Готовность 0–4", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "path-card-coverage",
+        "title": "Карточки, принятые в именованные пути",
+        "subtitle": "Одна карточка может входить в несколько путей; значения нельзя складывать в новый total.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Как corpus распределён между девятью learner views?",
+        "rationale": "Диаграмма показывает, что 15 областей — не предел контента: путь является представлением над общим графом.",
+        "type": "bar",
+        "dataset": "pathCards",
+        "sourceId": "live-program",
+        "encodings": {
+          "x": {"field": "path", "type": "nominal", "label": "Путь"},
+          "y": {"field": "cards", "type": "quantitative", "label": "Accepted cards", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "inventory",
+        "title": "Три продукта и одна учебная проекция",
+        "subtitle": "Каждый слой отвечает на свой вопрос; числа между слоями не должны совпадать.",
+        "showDescription": true,
+        "dataset": "inventory",
+        "sourceId": "live-program",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "layer", "label": "Слой", "type": "text"},
+          {"field": "truth", "label": "Единица истины", "type": "text"},
+          {"field": "current", "label": "Факт 25.08", "type": "text"},
+          {"field": "meaning", "label": "Что это означает", "type": "text"}
+        ]
+      },
+      {
+        "id": "path-claims",
+        "title": "Девять путей: содержимое и обещание интерфейса",
+        "subtitle": "Run-ready — число, показанное страницей пути; server-owned реальность для общей карты — одна runnable station.",
+        "showDescription": true,
+        "dataset": "pathClaims",
+        "sourceId": "browser-audit",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "path", "label": "Путь", "type": "text"},
+          {"field": "areas", "label": "Области", "type": "number"},
+          {"field": "stations", "label": "Станции", "type": "number"},
+          {"field": "claimedRunnable", "label": "UI: Run-ready", "type": "number"},
+          {"field": "acceptedCards", "label": "Accepted cards", "type": "number"},
+          {"field": "evidence", "label": "Evidence", "type": "number"}
+        ]
+      },
+      {
+        "id": "coverage",
+        "title": "Покрытие 12 обязательных направлений Plan 2026",
+        "subtitle": "Полное закрытие требует пяти частей: content, deterministic lab, oral explanation, journal failure и cold repeat.",
+        "showDescription": true,
+        "dataset": "coverage",
+        "sourceId": "plan-domain-audit",
+        "defaultSort": {"field": "priority", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "priority", "label": "Приоритет", "type": "number"},
+          {"field": "area", "label": "Направление", "type": "text"},
+          {"field": "score", "label": "0–4", "type": "number"},
+          {"field": "current", "label": "Что есть", "type": "text"},
+          {"field": "gap", "label": "Что не закрыто", "type": "text"},
+          {"field": "next", "label": "Следующий доказуемый шаг", "type": "text"}
+        ]
+      },
+      {
+        "id": "quality",
+        "title": "Инженерное качество и воспроизводимость",
+        "subtitle": "Зелёные тесты важны, но не заменяют браузерный contract crawl.",
+        "showDescription": true,
+        "dataset": "quality",
+        "sourceId": "verification",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "check", "label": "Проверка", "type": "text"},
+          {"field": "result", "label": "Результат", "type": "text"},
+          {"field": "risk", "label": "Риск", "type": "text"},
+          {"field": "decision", "label": "Решение", "type": "text"}
+        ]
+      },
+      {
+        "id": "gates",
+        "title": "Release-гейты с запретом перехода дальше",
+        "subtitle": "Следующий гейт начинается только после автоматической и ручной проверки exit criteria.",
+        "showDescription": true,
+        "dataset": "gates",
+        "sourceId": "verification",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "gate", "label": "Гейт", "type": "text"},
+          {"field": "status", "label": "Сейчас", "type": "text"},
+          {"field": "exit", "label": "Exit criteria", "type": "text"},
+          {"field": "proof", "label": "Как доказать", "type": "text"}
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "id": "executive-summary",
+        "type": "markdown",
+        "sourceId": "live-program",
+        "body": "## Executive Summary\n\n**Вердикт: архитектурный фундамент стал сильным, но полную production-готовность и обещание «с нуля до архитектора» продукт пока не доказывает.** Question Brain уже является серьёзным двуязычным корпусом: **1 591 карточка**, 135 тематических групп, опубликованные placements, поиск и embeddings. Task Runtime доказывает правильную границу исполнения: **15 task families, 20 revisions, 19 runnable**. Fluent Lab имеет визуально зрелый desktop shell, девять именованных путей и работающий эталонный срез `QuestionCard → TaskFamily → language revision → Run → Evidence`.\n\nГлавный риск находится не в количестве вопросов. Он в **расхождении обещаний интерфейса с server-owned реальностью**. Страницы путей суммарно показывают десятки `Run-ready` станций, learner map подтверждает одну runnable station, а браузерный обход 66 опубликованных executable URL нашёл 25 рабочих, 2 без запуска и 39 недоступных. Переключение RU/EN теряет выбранную карточку при локализованном поиске; non-runnable project brief отображается как executable; автоматические audit runs попадают в learner progress.\n\nПоэтому сейчас продукт годится для **ограниченного внутреннего пилота после P0 truth-fixes**, но не для широкого релиза и не для заявления о полной curriculum-completeness. Лучший первый пилот: Node.js + TypeScript, PostgreSQL и system-design/rate-limiter. Следующая инвестиция должна идти не в ещё тысячу карточек, а в замыкание цикла `Recall → Predict → Build → Run → Break → Observe → Explain → Evidence → Cold repeat` для 12 обязательных направлений исходного Plan 2026.\n\nКоротко: **мы построили хороший мозг и убедительный интерфейс, но ещё не соединили их в полностью честную мышцу обучения.**"
+      },
+      {"id": "headline", "type": "metric-strip", "cardIds": ["corpus", "ready-cards", "real-runnable", "working-routes", "broken-routes", "closed-plan-areas"]},
+      {
+        "id": "meaning",
+        "type": "markdown",
+        "sourceId": "live-program",
+        "body": "## Сначала устранить главную путаницу: 1 591 ≠ 81 ≠ 20\n\n- **1 591 QuestionCard** — библиотека prompts, ответов, объяснений и follow-ups. Это сырьё для разных путей.\n- **135 topic groups** — поисковая и редакторская таксономия. Тема не обязана быть отдельным экраном или уроком.\n- **9 paths** — именованные views: Node.js + TypeScript, Java + Spring, .NET + C#, Go, Frontend, System Design, Algorithms, Behavioral и Python.\n- **15 areas / 81 stations** — текущая учебная проекция: крупные области и точки маршрута. Одна station может использовать десятки карточек, а одна карточка — входить в несколько путей.\n- **15 task families / 20 revisions** — исполняемые упражнения; одна семья может иметь Go, Java, C#, JavaScript, TypeScript и SQL variants.\n\nЗначит, проблема не в том, что из 1 591 карточки «сделали всего 15 тем». Проблема в другом: интерфейс ещё не показывает corpus как понятную и честную иерархию `Program → Path → Domain → Capability → Question/Task`, а readiness разных слоёв вычисляется несовместимо."
+      },
+      {"id": "inventory-table", "type": "table", "tableId": "inventory"},
+      {
+        "id": "architecture-visual",
+        "type": "html",
+        "sourceId": "live-program",
+        "body": "<style>.fia{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;color:#211c18;background:linear-gradient(135deg,#fbf7ef,#f2ece2);border:1px solid #d9cdbd;border-radius:26px;padding:28px}.fia h2{font-size:clamp(24px,3vw,42px);line-height:1.02;margin:6px 0 12px}.fia p{color:#675d55;max-width:880px}.fia-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}.fia-card{background:rgba(255,255,255,.68);border:1px solid #ddd2c3;border-radius:18px;padding:18px;min-height:145px}.fia-k{font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#3f57a6}.fia-n{font-size:28px;font-weight:800;margin:14px 0 6px}.fia-arrow{text-align:center;color:#9b876e;font-size:22px}@media(max-width:900px){.fia-grid{grid-template-columns:1fr 1fr}}@media(prefers-color-scheme:dark){.fia{color:#f4eee7;background:linear-gradient(135deg,#1c1917,#28221d);border-color:#4e4339}.fia p{color:#c6b9ad}.fia-card{background:rgba(34,30,27,.82);border-color:#51473e}.fia-k{color:#9eb3ff}}</style><div class='fia'><div class='fia-k'>Каноническая модель · не четыре независимых каталога</div><h2>Один смысл проходит через четыре владельца</h2><p>Question Brain знает, <em>что понимать</em>. Lab знает, <em>в каком порядке учиться</em>. Runtime знает, <em>как безопасно исполнить</em>. Evidence знает, <em>что человек действительно сделал</em>.</p><div class='fia-grid'><div class='fia-card'><div class='fia-k'>Question Brain</div><div class='fia-n'>Card</div><div>теория · короткий ответ · follow-ups · RU/EN · capability</div></div><div class='fia-card'><div class='fia-k'>Fluent Lab</div><div class='fia-n'>Path</div><div>domain · station · prerequisites · explorer · progress</div></div><div class='fia-card'><div class='fia-k'>Task Runtime</div><div class='fia-n'>Revision</div><div>starter · tests · limits · language profile · sandbox</div></div><div class='fia-card'><div class='fia-k'>Learning record</div><div class='fia-n'>Evidence</div><div>run · explanation · failure · repeat · mastery</div></div></div></div>"
+      },
+      {
+        "id": "original-intent",
+        "type": "markdown",
+        "sourceId": "plan-moc",
+        "body": "## Что было обещано в исходном Plan 2026\n\nИзначальная идея была сильнее обычного курса: не читать всё подряд, а превращать знания в **исполняемые capabilities**. Tier 1 должен довести до Senior Backend interview через маршрут, recall-before-read, лаборатории, error journal, английское объяснение и cold repeat. Tier 2 — уже отдельные интерактивные книги/проекты: microservices, distributed cache, telemetry, Kubernetes delivery, Saga/idempotency. Tier 2 намеренно заблокирован до завершения Tier 1.\n\nЕдиница прогресса в плане — не карточка, неделя или процент. Это capability, у которой есть пять доказательств: полный learning card, deterministic lab, устное объяснение 60–90 секунд, запись ошибки и повтор через 2–3 дня без подсказки. Из этого следует важный пересчёт: **1 591 published cards — впечатляющий inventory milestone, но 0 из 12 направлений ещё не имеют полного пятичастного доказательства.**\n\nИсходный цикл: `Recall → Predict → Build → Run → Break → Observe → Explain → Evidence → Repeat`. Продукт уже поддерживает середину цикла, но голос, осознанная ошибка, cold-repeat graduation и честная mastery-проекция пока не замкнуты."
+      },
+      {
+        "id": "golden-slice",
+        "type": "html",
+        "sourceId": "browser-audit",
+        "body": "<style>.fia{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;color:#211c18;background:linear-gradient(135deg,#fbf7ef,#f2ece2);border:1px solid #d9cdbd;border-radius:26px;padding:28px}.fia h2{font-size:clamp(24px,3vw,42px);line-height:1.02;margin:6px 0 12px}.fia p{color:#675d55;max-width:900px}.fia-k{font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#3f57a6}@media(prefers-color-scheme:dark){.fia{color:#f4eee7;background:linear-gradient(135deg,#1c1917,#28221d);border-color:#4e4339}.fia p{color:#c6b9ad}.fia-k{color:#9eb3ff}}</style><div class='fia'><div class='fia-k'>Эталонный срез уже существует</div><h2>Rate limiter показывает правильное будущее продукта</h2><p>Карточка `q315` — лучший proof архитектуры: один смысл не копируется шесть раз, а связывается с family и несколькими исполняемыми revisions.</p><svg viewBox='0 0 1040 360' role='img' aria-label='QuestionCard q315 соединяется с теорией, task family rate limiter, шестью language revisions, run, evidence, explanation и cold repeat' style='display:block;width:100%;height:auto;margin-top:18px'><defs><marker id='fiaArrow' markerWidth='8' markerHeight='8' refX='7' refY='4' orient='auto'><path d='M0 0L8 4L0 8Z' fill='#8b775e'/></marker></defs><g font-family='Inter,system-ui,sans-serif'><rect x='18' y='114' width='170' height='124' rx='20' fill='#fffaf1' stroke='#b8a488'/><text x='103' y='146' text-anchor='middle' font-size='13' font-weight='700' fill='#3f57a6'>QUESTIONCARD</text><text x='103' y='178' text-anchor='middle' font-size='25' font-weight='800' fill='#211c18'>q315</text><text x='103' y='204' text-anchor='middle' font-size='12' fill='#675d55'>Rate limiter</text><line x1='188' y1='176' x2='238' y2='176' stroke='#8b775e' stroke-width='2' marker-end='url(#fiaArrow)'/><rect x='242' y='82' width='206' height='188' rx='20' fill='#f4eee5' stroke='#b8a488'/><text x='345' y='116' text-anchor='middle' font-size='13' font-weight='700' fill='#3f57a6'>TASK FAMILY</text><text x='345' y='150' text-anchor='middle' font-size='22' font-weight='800' fill='#211c18'>token bucket</text><text x='345' y='183' text-anchor='middle' font-size='12' fill='#675d55'>goal · rubric · constraints</text><text x='345' y='207' text-anchor='middle' font-size='12' fill='#675d55'>one capability</text><text x='345' y='231' text-anchor='middle' font-size='12' fill='#675d55'>many revisions</text><line x1='448' y1='176' x2='500' y2='176' stroke='#8b775e' stroke-width='2' marker-end='url(#fiaArrow)'/><rect x='504' y='34' width='220' height='284' rx='20' fill='#eef1ff' stroke='#8094d9'/><text x='614' y='68' text-anchor='middle' font-size='13' font-weight='700' fill='#3f57a6'>TASK REVISIONS</text><g font-size='14' font-weight='700' fill='#211c18'><text x='544' y='108'>TypeScript</text><text x='544' y='144'>JavaScript</text><text x='544' y='180'>Go</text><text x='544' y='216'>Java</text><text x='544' y='252'>C#</text><text x='544' y='288'>SQL / PostgreSQL</text></g><g fill='#516bc0'><circle cx='526' cy='103' r='5'/><circle cx='526' cy='139' r='5'/><circle cx='526' cy='175' r='5'/><circle cx='526' cy='211' r='5'/><circle cx='526' cy='247' r='5'/><circle cx='526' cy='283' r='5'/></g><line x1='724' y1='176' x2='776' y2='176' stroke='#8b775e' stroke-width='2' marker-end='url(#fiaArrow)'/><rect x='780' y='82' width='238' height='188' rx='20' fill='#eff6e8' stroke='#8ba467'/><text x='899' y='116' text-anchor='middle' font-size='13' font-weight='700' fill='#4c681e'>LEARNING PROOF</text><text x='899' y='151' text-anchor='middle' font-size='17' font-weight='800' fill='#211c18'>Run → Evidence</text><text x='899' y='184' text-anchor='middle' font-size='14' fill='#675d55'>Explain 60–90 sec</text><text x='899' y='211' text-anchor='middle' font-size='14' fill='#675d55'>Failure journal</text><text x='899' y='238' text-anchor='middle' font-size='14' fill='#675d55'>Cold repeat</text></g></svg><p><strong>Что ещё не завершено:</strong> relations UI повторяет один family key шесть раз вместо языков; explanation и cold repeat не превращают этот slice в mastered capability.</p></div>"
+      },
+      {
+        "id": "current-truth",
+        "type": "markdown",
+        "sourceId": "browser-audit",
+        "body": "## Где продукт нарушает собственный контракт\n\n### P0 · UI говорит runnable, когда действие недоступно\n\nServer-owned inventory сообщает: 81 station, 68 capabilities, 15 task families, 20 task revisions и **1 activity-runnable station**. Одновременно страницы путей показывают 22–66 `Run-ready` каждая. Обход 66 опубликованных executable URL дал 25 рабочих, 2 экрана без run controls и 39 ошибок «практика недоступна». Это не косметика: ученик теряет доверие к карте.\n\n### P0 · Невыполнимое отображается как executable\n\n`project-book-boundary-001` имеет released descriptor, но availability=`unreleased` и runnable=false. Practice catalog всё равно показывает его среди executable tasks; переход заканчивается `Route not found`. Каталог обязан фильтроваться по единому server-owned eligibility contract.\n\n### P1 · RU/EN ломает семантическое состояние\n\nНа карточке q315 переключение RU→EN сохраняет русскую поисковую строку, получает ноль результатов и сбрасывает selection. Точное наличие 1 591 EN и 1 591 RU rows не равно полной двуязычности: часть body-секций остаётся смешанной. Нужен locale-independent card ID и явный контракт локализации всех learner-visible слоёв.\n\n### P1 · Тестовая активность выглядит как прогресс Сергея\n\nИз восьми evidence records значительная часть создана audit/test проходами. Progress выбирает `.NET cancellation boundary` как Now, тогда как practice corridor продолжает показывать Node.js. Test actor и learner actor должны иметь разные профили/tenants и разные projections."
+      },
+      {"id": "route-chart", "type": "chart", "chartId": "route-health"},
+      {"id": "path-table", "type": "table", "tableId": "path-claims"},
+      {"id": "path-chart", "type": "chart", "chartId": "path-card-coverage"},
+      {
+        "id": "content-audit",
+        "type": "markdown",
+        "sourceId": "brain-catalog",
+        "body": "## Качество корпуса: сильная база, но не готовый учебник\n\nСильные стороны: все карточки опубликованы, проиндексированы, имеют RU/EN projection, открытых duplicate candidates и missing embeddings нет; 989 карточек UI считает ready-to-learn. По карточкам массово присутствуют короткий ответ, механизм, code examples и follow-ups. Question Library поддерживает хороший recall-before-reveal сценарий и semantic relations.\n\nСлабое место — **редакторская равномерность**. Эвристика по 1 591 карточке нашла traps у 832, must-say terms у 772, project evidence у 295 и diagram у 267. Полный набор семи Plan-слоёв присутствует примерно у 36–39% карточек в зависимости от локали. Это не значит, что остальные надо удалить: их нужно классифицировать как `reference`, `recall-ready`, `guided-ready` или `capability-ready`, а не одинаково называть готовыми.\n\nОсобенно заметна фрагментация frontend/Angular taxonomy: несколько близких aliases создают мелкие группы по 1–2 карточки. Алгоритмический corpus содержит полноценные coding assignments, но они остаются puzzle cards без runtime. Companies для 1 369 карточек не классифицированы, поэтому подготовка к конкретным интервью пока слабее общего изучения."
+      },
+      {"id": "content-chart", "type": "chart", "chartId": "content-layers"},
+      {
+        "id": "definition-ready",
+        "type": "html",
+        "sourceId": "plan-moc",
+        "body": "<style>.fia{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;color:#211c18;background:linear-gradient(135deg,#fbf7ef,#f2ece2);border:1px solid #d9cdbd;border-radius:26px;padding:28px}.fia h2{font-size:clamp(24px,3vw,42px);line-height:1.02;margin:6px 0 12px}.fia p{color:#675d55;max-width:900px}.fia-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:22px}.fia-card{background:rgba(255,255,255,.68);border:1px solid #ddd2c3;border-radius:18px;padding:18px;min-height:145px}.fia-k{font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#3f57a6}.fia-n{font-size:28px;font-weight:800;margin:14px 0 6px}@media(max-width:900px){.fia-grid{grid-template-columns:1fr 1fr}}@media(prefers-color-scheme:dark){.fia{color:#f4eee7;background:linear-gradient(135deg,#1c1917,#28221d);border-color:#4e4339}.fia p{color:#c6b9ad}.fia-card{background:rgba(34,30,27,.82);border-color:#51473e}.fia-k{color:#9eb3ff}}</style><div class='fia'><div class='fia-k'>Definition of Capability Ready</div><h2>Карточка становится учебной станцией только после пяти доказательств</h2><div class='fia-grid'><div class='fia-card'><div class='fia-k'>01 · Understand</div><div class='fia-n'>Card</div><div>short · mechanism · traps · terms · follow-ups · RU/EN</div></div><div class='fia-card'><div class='fia-k'>02 · Execute</div><div class='fia-n'>Lab</div><div>predict · run · deliberate failure · deterministic tests</div></div><div class='fia-card'><div class='fia-k'>03 · Speak</div><div class='fia-n'>Explain</div><div>60–90 sec · English-first · artifact-backed</div></div><div class='fia-card'><div class='fia-k'>04 · Reflect</div><div class='fia-n'>Journal</div><div>ошибка · причина · правило · исправление</div></div><div class='fia-card'><div class='fia-k'>05 · Retain</div><div class='fia-n'>Repeat</div><div>2–3 · 7–10 · 21+ дней без подсказки</div></div></div><p>Пока хотя бы одного доказательства нет, статус должен быть честным: theory-only, guided, runnable, attempted или repeat-due — но не mastered.</p></div>"
+      },
+      {"id": "plan-chart", "type": "chart", "chartId": "plan-closure"},
+      {"id": "coverage-table", "type": "table", "tableId": "coverage"},
+      {
+        "id": "ux",
+        "type": "markdown",
+        "sourceId": "ux-audit",
+        "body": "## UX и дизайн: визуально зрелее, чем продуктовая целостность\n\nНа Apple Studio Display и desktop viewport learning map выглядит собранно: тёплая Cameo-палитра, ясная rail/work/inspector композиция, auto/light/dark работают, overlap не воспроизводится, landmarks, skip link и подписи элементов доступны. Это уже не прототип «канваса, где всё налезает». Визуальный shell можно оценить примерно на **71/100**, но релизный integrity gate всё равно падает.\n\n- Accessibility — 16/20: семантика и клавиатурные входы хорошие; 135 topic filters и длинные карточки увеличивают когнитивную нагрузку.\n- Performance — 13/20: lazy chunks и локальный отклик нормальны; initial bundle превышает budget на 27.43 KB, lab route stylesheet — на 18.45 KB.\n- Theming — 18/20: auto/light/dark переключаются корректно.\n- Desktop composition — 17/20: сильная иерархия, хороший large-screen rhythm.\n- Implementation integrity — 7/20: ложные Run-ready, broken routes, locale regression и смешанный progress.\n\nСледующий дизайн-рывок — не новый эффект. Это **progressive disclosure**: Path показывает domains; Domain — capabilities; Capability — компактный dossier с вопросами, задачами и доказательствами. Операционные термины `graph-release`, `accepted placement`, `runnable` надо оставить Studio, а learner surface перевести на «Можно изучать», «Можно практиковать», «Нужно объяснить», «Повторить»."
+      },
+      {"id": "quality-table", "type": "table", "tableId": "quality"},
+      {
+        "id": "target-product",
+        "type": "markdown",
+        "sourceId": "plan-moc",
+        "body": "## Каким должен стать продукт, чтобы действительно доводить до архитектора\n\n### Уровень 1 · Program\n\n`Backend Engineer` — одна целевая профессия, а не список технологий.\n\n### Уровень 2 · Paths\n\n`Node.js + TypeScript`, `Java + Spring`, `.NET + C#`, `Go`, `Frontend`, `System Design`, `Algorithms`, `Behavioral`, `Python`. Explorer позволяет открыть любой released content; Recommended path задаёт порядок, но не прячет библиотеку.\n\n### Уровень 3 · Shared domains\n\nRuntime, HTTP/API, Data/PostgreSQL, Distributed Systems, OS/Networking, Testing, Delivery/Observability. Они переиспользуются между языковыми путями и не копируют карточки.\n\n### Уровень 4 · Capability dossier\n\nНапример `Design and implement rate limiting`: 6–12 curated cards, один system-design разбор, одна task family, revisions по языкам, deliberate failure, trace, 60–90-sec explanation, follow-ups, journal и интервалы повторения.\n\n### Уровень 5 · Tier 2 project books\n\nПосле закрытия Tier 1 открываются проекты: distributed cache, microservice decomposition, telemetry platform, Kubernetes delivery, Saga/idempotency. Каждый идёт как `read → implement → run → measure → explain`, хранится отдельным проектом и создаёт interview stories.\n\nПри такой модели 20 000 будущих вопросов не превращаются в 20 000 экранов. Они становятся поисковой библиотекой; route editors выбирают небольшой curated set для capability, а остальные доступны через deep dive и semantic relations."
+      },
+      {
+        "id": "recommendations",
+        "type": "markdown",
+        "sourceId": "verification",
+        "body": "## Рекомендации: что делать в правильной последовательности\n\n### G0 · Truth before polish\n\nСделать один readiness resolver для API, route page, learner map и Practice catalog. Автоматический crawl обязан открывать 100% published executable URL; 39 broken и 2 no-control stations либо получают реальный route, либо перестают называться executable. Убрать non-runnable project brief из каталога. Исправить RU/EN selection/search. Разделить test/audit identity и learner identity.\n\n### G1 · Один настоящий человеческий цикл\n\nСергей проходит q315/rate limiter от recall до cold repeat: выбирает язык, предсказывает, пишет код, ломает boundary, читает trace, объясняет 60–90 секунд, фиксирует ошибку, повторяет через 2–3 дня. Evidence не создаётся audit-скриптом. Пока этот цикл не закончен, новые surface-фичи не считать приоритетом.\n\n### G2 · Закрыть 12 направлений исполнением\n\nДля каждого обязательного направления добавить 2–4 tasks разных масштабов. P1: Docker, Kubernetes, concurrency, brokers. Каждая capability получает deliberate failure и observable evidence. Algorithms получают реальные runtime families; Observability — incident/failure-injection lab, а не только Jaeger/Grafana инфраструктуру.\n\n### G3 · Редакторский контракт\n\nОпределить обязательные секции по типу карточки, нормализовать Angular/topic aliases, классифицировать 602 not-ready карточки вместо массового добавления новых. Зафиксировать full-body RU/EN contract и automated locale completeness.\n\n### G4 · Внутренний пилот\n\nНачать с Node.js + TypeScript, PostgreSQL и rate-limiter/system-design. Добавить настоящий weekly loop, English output, CV claims, вакансии и biweekly mock. Измерять не просмотры, а completed capabilities, cold repeats, recurrent failure classes и interview transfer.\n\n### G5 · Tier 2 только после Tier 1\n\nПять project books остаются preview, пока 12 направлений не имеют пяти доказательств. Затем выпускать по одному проекту, начиная с distributed cache или telemetry — они дают максимальное переиспользование изученных capabilities.\n\n### G6 · Снизить стоимость поддержки\n\nСвести 374 Lab scripts к нескольким truth-driven gates; вынести 455 MB generated production evidence из основной docs-истории в ограниченный release artifact/archive. Root `pnpm check` должен контейнерно запускать Go tests Brain и Runtime, а не зелено пропускать их при отсутствии локального Go."
+      },
+      {"id": "gates-table", "type": "table", "tableId": "gates"},
+      {
+        "id": "do-not-do",
+        "type": "markdown",
+        "sourceId": "plan-moc",
+        "body": "## Что точно не надо делать\n\n- Не добавлять ещё тысячи случайных карточек, пока 602 текущие не получили честный readiness и 12 направлений не замкнуты практикой.\n- Не называть station runnable до успешного route-open и runner-acceptance в CI.\n- Не считать наличие locale row полной локализацией body.\n- Не смешивать automated audit evidence с обучением Сергея.\n- Не начинать Tier 2 исполнение, пока Tier 1 не прошёл definition of done.\n- Не создавать ещё один source of truth, сервис или LLM pipeline для решения редакторской проблемы.\n- Не инвестировать сейчас в mobile; целевая поверхность — MacBook Pro 16 и Apple Studio Display.\n- Не выращивать очередную фазу ADR/скриптов вместо одного release contract и реальных повторений.\n- Не считать красивый canvas доказательством обучения: карта обязана вести к действию и объяснять каждый статус человеческим языком."
+      },
+      {
+        "id": "further-questions",
+        "type": "markdown",
+        "sourceId": "plan-domain-audit",
+        "body": "## Further Questions\n\n1. Какой второй серьёзный backend path после Node.js: Java + Spring или .NET + C#? Оба можно исследовать, но mastery-практику лучше не распараллеливать.\n2. Полностью ли learner-visible body должен переключаться RU/EN, или допустимы English terms/code при русском объяснении? Это надо превратить в тестируемый контракт.\n3. Что именно означает `ready-to-learn`: полный Plan dossier, только recall card или editorial approval? Сейчас цифра 989 не объясняет пользовательское действие.\n4. Должен ли Explorer обходить prerequisites? Рекомендация: да для чтения released content, нет для claims readiness/mastery.\n5. Голосовое объяснение и English grading живут в продукте или в отдельном coaching workflow? Без решения Plan не замыкается.\n6. Какова политика retention для traces, screenshots и generated audit evidence, чтобы репозиторий не продолжал расти гигабайтами?\n7. Как отделить профиль `Sergey` от audit/CI actors, не теряя полезную observability?\n8. Какие 20 реальных вакансий и типовые interview loops станут внешним калибратором curriculum в первом пилоте?"
+      },
+      {
+        "id": "caveats",
+        "type": "markdown",
+        "sourceId": "browser-audit",
+        "body": "## Caveats and Assumptions\n\nАудит фиксирует локальное состояние 25 августа 2026 года. Браузерный проход был read-only: новые learner submissions намеренно не создавались. Количество секций внутри карточек рассчитано эвристически по заголовкам, поэтому показывает редакторскую равномерность, а не семантическую корректность каждого ответа. Accepted-card counts пересекаются между paths и не суммируются. Полноценной недели пользовательского прохождения ещё не было, поэтому retention и transfer на реальный собеседовательный результат не измерены.\n\nLab checks, builds и тесты прошли, но локальная машина не имела Go toolchain: Brain `make check` сообщил, что Go tests выполнит Docker CI, а Runtime `go test ./...` локально не запустился. Это ограничение самой проверки и одновременно найденный reproducibility gap.\n\nГлавное допущение рекомендаций: три репозитория и их границы сохраняются. Аудит не предлагает монолитную БД или копирование questions/tasks в Lab. Он предлагает единый release/readiness contract поверх существующей архитектуры."
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-25T18:30:00+02:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [{"corpus": 1591, "ready": 989, "realRunnable": 1, "workingRoutes": 25, "brokenRoutes": 39, "closedPlanAreas": 0}],
+      "routeHealth": [
+        {"state": "Работают", "routes": 25, "auditedTotal": 66, "share": 0.3788, "auditDate": "2026-08-25", "criterion": "practice UI and run controls visible"},
+        {"state": "Нет run controls", "routes": 2, "auditedTotal": 66, "share": 0.0303, "auditDate": "2026-08-25", "criterion": "route loads but cannot start a run"},
+        {"state": "Недоступны", "routes": 39, "auditedTotal": 66, "share": 0.5909, "auditDate": "2026-08-25", "criterion": "published practice unavailable alert"}
+      ],
+      "contentLayers": [
+        {"layer": "Механизм / deep dive", "cards": 1288, "totalCards": 1591, "share": 0.8096, "method": "section-title heuristic"},
+        {"layer": "Короткий / spoken answer", "cards": 1223, "totalCards": 1591, "share": 0.7687, "method": "section-title heuristic"},
+        {"layer": "Code examples", "cards": 1084, "totalCards": 1591, "share": 0.6813, "method": "section-title heuristic"},
+        {"layer": "Follow-ups", "cards": 900, "totalCards": 1591, "share": 0.5657, "method": "section-title heuristic"},
+        {"layer": "Traps", "cards": 832, "totalCards": 1591, "share": 0.5229, "method": "section-title heuristic"},
+        {"layer": "Must-say terms", "cards": 772, "totalCards": 1591, "share": 0.4852, "method": "section-title heuristic"},
+        {"layer": "Project evidence", "cards": 295, "totalCards": 1591, "share": 0.1854, "method": "section-title heuristic"},
+        {"layer": "Diagram", "cards": 267, "totalCards": 1591, "share": 0.1678, "method": "section-title heuristic"}
+      ],
+      "planClosure": [
+        {"area": "Docker / images", "score": 1, "maxScore": 4, "priority": 1, "status": "theory-only"},
+        {"area": "Kubernetes", "score": 1, "maxScore": 4, "priority": 1, "status": "theory-only"},
+        {"area": "Concurrency", "score": 3, "maxScore": 4, "priority": 1, "status": "near-closed"},
+        {"area": "Brokers", "score": 2, "maxScore": 4, "priority": 1, "status": "partial-runnable"},
+        {"area": "Cache / Redis", "score": 2, "maxScore": 4, "priority": 2, "status": "partial-runnable"},
+        {"area": "Auth / security", "score": 2, "maxScore": 4, "priority": 2, "status": "partial-runnable"},
+        {"area": "Networks / HTTP", "score": 1, "maxScore": 4, "priority": 2, "status": "theory-only"},
+        {"area": "PostgreSQL", "score": 3, "maxScore": 4, "priority": 2, "status": "near-closed"},
+        {"area": "Observability", "score": 1, "maxScore": 4, "priority": 2, "status": "theory/tooling-only"},
+        {"area": "System Design", "score": 2, "maxScore": 4, "priority": 3, "status": "partial-runnable"},
+        {"area": "Algorithms", "score": 1, "maxScore": 4, "priority": 3, "status": "theory-only"},
+        {"area": "Angular / frontend", "score": 1, "maxScore": 4, "priority": 3, "status": "theory-only"}
+      ],
+      "pathCards": [
+        {"path": "Node.js + TypeScript", "cards": 294, "pathOrder": 1, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "Java + Spring", "cards": 191, "pathOrder": 2, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": ".NET + C#", "cards": 75, "pathOrder": 3, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "Go", "cards": 130, "pathOrder": 4, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "Frontend", "cards": 161, "pathOrder": 5, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "System Design", "cards": 568, "pathOrder": 6, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "Algorithms", "cards": 52, "pathOrder": 7, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "Behavioral", "cards": 103, "pathOrder": 8, "program": "Backend Engineer", "overlapAllowed": true},
+        {"path": "Python", "cards": 17, "pathOrder": 9, "program": "Backend Engineer", "overlapAllowed": true}
+      ],
+      "inventory": [
+        {"order": 1, "layer": "Question Brain", "truth": "QuestionCard + taxonomy + placement", "current": "1 591 cards · 135 groups · RU/EN · embeddings complete", "meaning": "Поисковый corpus; не учебный прогресс"},
+        {"order": 2, "layer": "Fluent Lab", "truth": "Program / Path / Domain / Station / Progress", "current": "1 program · 9 paths · 15 areas · 81 stations", "meaning": "Курируемая learner projection над corpus"},
+        {"order": 3, "layer": "Task Runtime", "truth": "TaskFamily / immutable Revision / Run", "current": "15 families · 20 revisions · 19 runnable", "meaning": "Безопасное исполнение, тесты и evidence"},
+        {"order": 4, "layer": "Learner record", "truth": "Evidence / Explanation / Failure / Repeat", "current": "8 evidence · 0 explanations · 0 mastered · 0 repeat due", "meaning": "Пока отражает audit runs, а не неделю обучения"},
+        {"order": 5, "layer": "Project books", "truth": "Tier 2 System Increment", "current": "5 preview · 0 released", "meaning": "Корректно заблокировано до Tier 1"}
+      ],
+      "pathClaims": [
+        {"order": 1, "path": "Node.js + TypeScript", "areas": 15, "stations": 81, "claimedRunnable": 66, "acceptedCards": 294, "evidence": 5},
+        {"order": 2, "path": "Java + Spring", "areas": 7, "stations": 50, "claimedRunnable": 40, "acceptedCards": 191, "evidence": 2},
+        {"order": 3, "path": ".NET + C#", "areas": 7, "stations": 50, "claimedRunnable": 40, "acceptedCards": 75, "evidence": 2},
+        {"order": 4, "path": "Go", "areas": 7, "stations": 50, "claimedRunnable": 40, "acceptedCards": 130, "evidence": 2},
+        {"order": 5, "path": "Frontend", "areas": 5, "stations": 32, "claimedRunnable": 26, "acceptedCards": 161, "evidence": 1},
+        {"order": 6, "path": "System Design", "areas": 6, "stations": 49, "claimedRunnable": 39, "acceptedCards": 568, "evidence": 1},
+        {"order": 7, "path": "Algorithms", "areas": 7, "stations": 31, "claimedRunnable": 22, "acceptedCards": 52, "evidence": 4},
+        {"order": 8, "path": "Behavioral", "areas": 3, "stations": 29, "claimedRunnable": 22, "acceptedCards": 103, "evidence": 0},
+        {"order": 9, "path": "Python", "areas": 4, "stations": 37, "claimedRunnable": 30, "acceptedCards": 17, "evidence": 1}
+      ],
+      "coverage": [
+        {"priority": 1, "area": "Docker / images", "score": 1, "current": "Теория и ordering stations", "gap": "Ordering routes сломаны; нет family", "next": "Build-cache + image-debug labs с deliberate failure"},
+        {"priority": 1, "area": "Kubernetes", "score": 1, "current": "Карточки и preview project book", "gap": "K8s/GitOps routes недоступны", "next": "Deployment rollout + probes + resource limits lab"},
+        {"priority": 1, "area": "Concurrency", "score": 3, "current": "Node CPU/concurrency, .NET cancellation, multi-language limiter", "gap": "Нет explanation/cold repeat closure", "next": "Пройти human loop и добавить race/backpressure variants"},
+        {"priority": 1, "area": "Brokers", "score": 2, "current": "35 messaging cards + idempotency task", "gap": "Нет реального broker/failure lab", "next": "Outbox + redelivery + poison-message exercise"},
+        {"priority": 2, "area": "Cache / Redis", "score": 2, "current": "13 cards + Node cache task", "gap": "Нет stampede/eviction/consistency evidence", "next": "Cache stampede + distributed invalidation family"},
+        {"priority": 2, "area": "Auth / security", "score": 2, "current": "Около 60 cards + Node auth task", "gap": "Нет threat-driven variants", "next": "JWT rotation + RBAC/tenant boundary lab"},
+        {"priority": 2, "area": "Networks / TCP / HTTP", "score": 1, "current": "Большой corpus + HTTP idempotency", "gap": "TCP/TLS/network ordering routes сломаны", "next": "Timeout/retry/TLS trace labs"},
+        {"priority": 2, "area": "PostgreSQL depth", "score": 3, "current": "3 SQL revisions; EXPLAIN и locks работают", "gap": "Нет full repeat/explanation mastery", "next": "MVCC/deadlock/index trade-off cold variants"},
+        {"priority": 2, "area": "Observability practice", "score": 1, "current": "Jaeger/Grafana и traces инфраструктуры", "gap": "Нет learner incident/failure-injection capability", "next": "Сломать SLO, найти trace, объяснить root cause"},
+        {"priority": 3, "area": "System Design", "score": 2, "current": "568 accepted cards + rate limiter + previews", "gap": "Нет timed defense и rubric evidence", "next": "45-min design defense + follow-up pressure test"},
+        {"priority": 3, "area": "Algorithms", "score": 1, "current": "52 cards, часть — полные assignments", "gap": "0 algorithm runtime families", "next": "Canonical tests + TS/Go/Java/C# revisions"},
+        {"priority": 3, "area": "Angular / frontend", "score": 1, "current": "Большой frontend corpus", "gap": "Fragmented taxonomy; rerender route broken; нет task family", "next": "Normalize aliases + render/perf/state exercise"}
+      ],
+      "quality": [
+        {"order": 1, "check": "Lab check/build/tests", "result": "2 347 tests passed; builds green", "risk": "Live route/i18n regressions не пойманы", "decision": "Добавить contract browser crawl в обязательный CI"},
+        {"order": 2, "check": "Lint", "result": "60 warnings суммарно", "risk": "Дрейф качества и шум", "decision": "Зафиксировать warning budget и снижать до 0"},
+        {"order": 3, "check": "Bundle budgets", "result": "+27.43 KB initial; +18.45 KB lab SCSS", "risk": "Рост learner surface", "decision": "Split route styles и снять неиспользуемые зависимости"},
+        {"order": 4, "check": "Brain Go tests", "result": "Локально пропущены: нет Go", "risk": "Green check без unit tests", "decision": "Containerized root check, fail closed"},
+        {"order": 5, "check": "Runtime Go tests", "result": "Локально не запустились: go not found", "risk": "Невоспроизводимый developer gate", "decision": "Одинаковый Docker test target локально и CI"},
+        {"order": 6, "check": "Repo hygiene", "result": "Lab: 4 723 files; 374 scripts; 2 938 docs; 1.8 GB", "risk": "История и generated evidence подавляют продукт", "decision": "Bounded release artifacts + consolidate gates"}
+      ],
+      "gates": [
+        {"order": 0, "gate": "G0 · Truth contract", "status": "Не закрыт", "exit": "0 broken published routes; 0 false runnable; locale preserves entity; test actor isolated", "proof": "API reconciliation + full Browser crawl + RU/EN scenario"},
+        {"order": 1, "gate": "G1 · Golden human loop", "status": "Архитектура есть", "exit": "q315 completed through explanation, journal and cold repeat by Sergey", "proof": "Learner-owned evidence; no audit actor records"},
+        {"order": 2, "gate": "G2 · 12-area execution", "status": "0/12 Plan-complete", "exit": "Каждая область имеет 2–4 tasks и все 5 proofs", "proof": "Coverage report + smoke + learner repeat"},
+        {"order": 3, "gate": "G3 · Editorial contract", "status": "989/1591 ready by current rule", "exit": "Card types, required layers, taxonomy and bilingual body validated", "proof": "Schema checks + editorial sample review"},
+        {"order": 4, "gate": "G4 · Internal pilot", "status": "Можно после G0", "exit": "4 недели Node/TS+PG pilot; mocks/CV/English tracked", "proof": "Weekly scorecard + failure trends + mock results"},
+        {"order": 5, "gate": "G5 · Project books", "status": "5 preview; 0 released", "exit": "Tier 1 closed; one project run end-to-end", "proof": "Repo artifact + trace + architecture defense"},
+        {"order": 6, "gate": "G6 · Maintenance", "status": "Высокий шум", "exit": "Root fail-closed check; bounded docs/evidence; consolidated scripts", "proof": "Fresh-machine production start + disk/CI audit"}
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "plan-moc",
+      "label": "Plan 2026 · Master MOC и Platform 2.0",
+      "path": "source-notes/plan-2026-master-moc.md",
+      "query": {
+        "engine": "local document review",
+        "description": "Исходный замысел: Tier 1/Tier 2, единица прогресса, weekly loop, kill rules, English and project evidence.",
+        "executed_at": "2026-08-25T12:15:00+02:00",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "plan-domain-audit",
+      "label": "Plan 2026 · Domain Coverage Audit и Roadmap",
+      "path": "source-notes/plan-2026-domain-coverage.md",
+      "query": {
+        "engine": "local document review",
+        "description": "Двенадцать обязательных направлений, пятичастное определение готовности и приоритеты P1–P3.",
+        "executed_at": "2026-08-25T12:35:00+02:00",
+        "language": "markdown",
+        "tables_used": ["Plan 2026 / Domain Coverage Audit"],
+        "metric_definitions": {"score": "0 missing; 1 content-only; 2 partial runnable; 3 near-closed; 4 all five Plan proofs"},
+        "sql": "SELECT area, score, 4 AS max_score, priority, status FROM reviewed_plan_coverage_snapshot ORDER BY priority, area;"
+      }
+    },
+    {
+      "id": "live-program",
+      "label": "Fluent Lab program inventory и learner map · snapshot 25 Aug 2026",
+      "href": "http://localhost:49300/learning-map",
+      "query": {
+        "engine": "HTTP JSON projections",
+        "url": "http://127.0.0.1:49301/api/program/inventory",
+        "description": "Read-only inventory, learner state, path projections, readiness labels and evidence counters.",
+        "executed_at": "2026-08-25T14:10:00+02:00",
+        "language": "http",
+        "filters": ["current release", "learner=Sergey"],
+        "tables_used": ["api.program.inventory", "api.program.learner-map", "api.program.paths"],
+        "metric_definitions": {"realRunnable": "inventory.activityRunnable", "acceptedCards": "accepted card placements per path; overlaps allowed"},
+        "sql": "SELECT program_count, path_count, area_count, station_count, card_count, capability_count, task_family_count, task_revision_count, activity_runnable_count FROM api_program_inventory_current;"
+      }
+    },
+    {
+      "id": "browser-audit",
+      "label": "Desktop Browser walkthrough · 66 executable routes and 9 paths",
+      "href": "http://localhost:49300/program",
+      "query": {
+        "engine": "in-app browser accessibility/DOM audit",
+        "description": "Read-only route crawl, path pages, question library, tasks, projects, progress, journal, theme and locale scenarios.",
+        "executed_at": "2026-08-25T15:20:00+02:00",
+        "language": "browser",
+        "filters": ["desktop", "MacBook Pro 16 / Studio Display", "no mobile scope"],
+        "tables_used": ["browser_route_audit_2026_08_25", "browser_path_page_audit_2026_08_25"],
+        "metric_definitions": {"workingRoutes": "published executable URL opens practice and exposes run controls", "brokenRoutes": "published executable URL shows unavailable-practice alert"},
+        "sql": "SELECT state, COUNT(*) AS routes, 66 AS audited_total, COUNT(*) / 66.0 AS share FROM browser_route_audit_2026_08_25 GROUP BY state;"
+      }
+    },
+    {
+      "id": "brain-catalog",
+      "label": "Question Brain live catalog and full-card structural audit",
+      "href": "http://localhost:48127",
+      "query": {
+        "engine": "HTTP catalog + deterministic section audit",
+        "description": "Published cards, locales, topics, placements, embeddings, task relations and section-title coverage across 1,591 cards.",
+        "executed_at": "2026-08-25T14:35:00+02:00",
+        "language": "http",
+        "filters": ["published", "graph-released"],
+        "tables_used": ["question_cards_published", "question_card_sections", "curriculum_placements"],
+        "metric_definitions": {"corpus": "count of published graph-released cards", "ready": "catalog current ready-to-learn projection", "layerCards": "cards with matching normalized section-title heuristic"},
+        "sql": "SELECT layer, COUNT(DISTINCT card_id) AS cards, 1591 AS total_cards, COUNT(DISTINCT card_id) / 1591.0 AS share FROM question_card_section_audit_2026_08_25 GROUP BY layer;"
+      }
+    },
+    {
+      "id": "runtime-catalog",
+      "label": "Task Runtime v1 catalog · snapshot 25 Aug 2026",
+      "href": "http://localhost:48227/v1/tasks",
+      "query": {
+        "engine": "HTTP JSON API",
+        "description": "Released families/revisions, runnable availability and language profiles; no new runs submitted.",
+        "executed_at": "2026-08-25T14:45:00+02:00",
+        "language": "http"
+      }
+    },
+    {
+      "id": "verification",
+      "label": "Repository checks, tests, builds and hygiene inventory",
+      "path": "source-notes/repository-verification.md",
+      "query": {
+        "engine": "repository verification",
+        "description": "Lab check/build/test results, lint and bundle warnings, Go toolchain gap, tracked-file/script/docs counts and git state.",
+        "executed_at": "2026-08-25T16:20:00+02:00",
+        "language": "shell",
+        "tables_used": ["repository_verification_snapshot_2026_08_25"],
+        "metric_definitions": {"testsPassed": "sum of reported passing Lab tests", "repoCounts": "deterministic tracked-file inventory"},
+        "sql": "SELECT check_name, result, risk, decision FROM repository_verification_snapshot_2026_08_25 ORDER BY check_order;"
+      }
+    },
+    {
+      "id": "ux-audit",
+      "label": "Impeccable desktop interface audit",
+      "path": "source-notes/impeccable-desktop-audit.md",
+      "query": {
+        "engine": "design and accessibility audit",
+        "description": "Desktop composition, accessibility, theming, performance, cognitive load and implementation integrity review.",
+        "executed_at": "2026-08-25T17:05:00+02:00",
+        "language": "design-audit"
+      }
+    }
+  ],
+  "package_info": {
+    "root": "docs/reports/pre-release-product-audit-2026-08-25",
+    "manifestPath": "artifact.json",
+    "snapshotPath": "artifact.json",
+    "originUrl": "report.html"
+  }
+}
