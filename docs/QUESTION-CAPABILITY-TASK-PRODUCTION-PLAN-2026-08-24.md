@@ -1,6 +1,12 @@
 # Question → Capability → Task: production convergence plan
 
-Status: **authoritative gated execution plan**
+Status: **historical requirements; superseded execution queue**
+
+> This document preserves the 2026-08-24 design requirements and acceptance
+> evidence. It is not an active instruction queue. Execute only the root
+> [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md),
+> which owns the current gate state and may selectively carry these
+> requirements forward.
 
 Created: **2026-08-24**
 

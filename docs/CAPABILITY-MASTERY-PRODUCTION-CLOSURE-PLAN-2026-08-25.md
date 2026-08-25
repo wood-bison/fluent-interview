@@ -436,7 +436,7 @@ gate задним числом.
 
 | Gate | Результат | Статус |
 | --- | --- | --- |
-| M0 | recovery baseline, один glossary и один active plan | `READY` |
+| M0 | recovery baseline, один glossary и один active plan | `ACTIVE` — self-check PASS; independent review pending |
 | M1 | зелёные проверки и versioned cross-repo contracts | `TODO` |
 | M2 | `capability-mastery.v2`, ledger и миграции | `TODO` |
 | M3 | rate limiter проходит полный human golden slice | `TODO` |

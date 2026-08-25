@@ -68,7 +68,7 @@ ports:
     api: 48127
     cms: 48128
     postgres: 55437
-    jaegerUi: 56686
+    traceExplorerUi: 56686
     otlpGrpc: 54317
     otlpHttp: 54318
   taskRuntime:

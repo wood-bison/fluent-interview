@@ -1,10 +1,16 @@
 # Fluent Interview — полный production-аудит и обязательный план исправлений
 
-**Статус:** `AUTHORITATIVE / EXECUTION REQUIRED`  
-**Дата доказательной базы:** 2026-08-25  
-**Рабочая область:** `/Users/sergeyzhechko/developer/fluent-interview`  
-**Продукт:** Fluent Engineering Lab + Fluent Question Brain + Fluent Task Runtime  
+**Статус:** `ИСТОРИЧЕСКИЙ АУДИТ / ОЧЕРЕДЬ ЗАМЕНЕНА`
+**Дата доказательной базы:** 2026-08-25
+**Рабочая область:** `/Users/sergeyzhechko/developer/fluent-interview`
+**Продукт:** Fluent Engineering Lab + Fluent Question Brain + Fluent Task Runtime
 **Цель:** довести локальную desktop-платформу до честной, наблюдаемой и воспроизводимой production-версии без скрытых fallback, ложных счётчиков, разъезжающейся локализации и Docker-мусора.
+
+> Этот документ сохраняет полный аудит и исходные acceptance-находки. Он не
+> является активной инструкцией для агента. Единственная действующая очередь
+> находится в корневом
+> [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md);
+> переносить пункты из этого аудита можно только через её текущий gate.
 
 ---
 

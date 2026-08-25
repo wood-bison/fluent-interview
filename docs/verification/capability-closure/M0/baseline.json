@@ -1,7 +1,7 @@
 {
   "contractVersion": "capability-closure.m0-baseline.v1",
   "status": "self-check-pass-review-pending",
-  "capturedAt": "2026-08-25T18:08:30Z",
+  "capturedAt": "2026-08-25T18:19:19Z",
   "plan": {
     "id": "capability-mastery-production-closure",
     "revision": "v2",
@@ -11,8 +11,9 @@
   "repositories": {
     "root": {
       "path": ".",
-      "head": "49406ef8fb7d5b84043936b1aff71a097df36e05",
-      "originMain": "49406ef8fb7d5b84043936b1aff71a097df36e05",
+      "head": "53f623c065666e1623fefafe04c18796940144b8",
+      "originMain": "53f623c065666e1623fefafe04c18796940144b8",
+      "proofCommit": "53f623c065666e1623fefafe04c18796940144b8",
       "dirty": false
     },
     "fluent-engineering-lab": {
@@ -21,13 +22,13 @@
       "dirty": false
     },
     "fluent-question-brain": {
-      "head": "489830eb791e3f2ead4a1899407a2174b1b3c95e",
-      "originMain": "489830eb791e3f2ead4a1899407a2174b1b3c95e",
+      "head": "3b10ddf2bc1cd1ab12febf0e16e81a4b107e7e31",
+      "originMain": "3b10ddf2bc1cd1ab12febf0e16e81a4b107e7e31",
       "dirty": false
     },
     "fluent-task-runtime": {
-      "head": "9300e2f025eccfad0ecbf26d1773e41bbec61058",
-      "originMain": "9300e2f025eccfad0ecbf26d1773e41bbec61058",
+      "head": "050340be15d2ebc0d53406a713e814c7afac1366",
+      "originMain": "050340be15d2ebc0d53406a713e814c7afac1366",
       "dirty": false
     }
   },
@@ -47,7 +48,7 @@
       "dispositions": { "keep": 4, "add": 1, "rename": 11 }
     },
     "runtimeReleaseId": "runtime-task-release-2026-08-25-qb-d00a1493-g9",
-    "taskFamilyReleaseId": "task-family-release-2026-08-25",
+    "taskFamilyReleaseId": "task-family-release-2026-08-25-g9",
     "runtimeCatalog": {
       "familiesTotal": 15,
       "familiesReleased": 14,
@@ -112,7 +113,38 @@
     "uniqueRoutes": 81,
     "emptyRoutes": 0,
     "projectionStates": { "open": 5, "locked": 76 },
-    "browserCrawl": "deferred-to-M12",
+    "browserCrawl": {
+      "status": "pass",
+      "tool": "Codex In-app Browser",
+      "capturedAt": "2026-08-25T18:16:00Z",
+      "routesTested": 14,
+      "allRoutesResolved": true,
+      "runtimeErrors": 0,
+      "representativeRoutes": [
+        "/",
+        "/learning-map",
+        "/paths/nodejs-typescript",
+        "/paths/java-spring",
+        "/paths/dotnet-csharp",
+        "/paths/go",
+        "/paths/frontend",
+        "/paths/system-design",
+        "/paths/algorithms",
+        "/paths/behavioral",
+        "/practice",
+        "/practice/questions",
+        "/projects",
+        "/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter"
+      ],
+      "assertions": {
+        "pathHeadingsLoaded": 4,
+        "questionLibraryCards": 1591,
+        "questionLibraryTopicGroups": 135,
+        "goRateLimiterEvidence": "4/4 passed",
+        "projectCatalogPreviewBooks": 5
+      },
+      "deferred": false
+    },
     "legacyComparison": {
       "oldAdvertised": 66,
       "oldWorking": 25,
@@ -132,10 +164,10 @@
       "image": "cr.jaegertracing.io/jaegertracing/jaeger:2.20.0"
     },
     "rebuiltImages": {
-      "brainApi": "sha256:730201cf782a4acad2ba95317c7d51171eadaf037b2fb2f49308517b3531646d",
-      "brainCms": "sha256:33ab1e1f981a4d585f217b5a70043ddb639522b63eb8e5409a29f332c56579b1",
-      "brainIndexer": "sha256:f3bba06b51acea279ba5a9068ca2692f09dfc03891678f3b0f48c681f697a27d",
-      "runtime": "sha256:ac9bffea059dab5706cf23a8d4838a00b0fe29bba9239a6707c825f7b15fb989"
+      "brainApi": { "digest": "sha256:7cee28bdc2c137e44ffc4203acc606988295893b0c54f97495e112e6e3979e5e", "sourceRevision": "3b10ddf2bc1cd1ab12febf0e16e81a4b107e7e31" },
+      "brainCms": { "digest": "sha256:b46b9b416c7bed6e9600d9b457fe3ab86b00f08ee0903a8f5a1dab2daaa05360", "sourceRevision": "3b10ddf2bc1cd1ab12febf0e16e81a4b107e7e31" },
+      "brainIndexer": { "digest": "sha256:dfd37229f034810ee18b6ee408554588a6f5c7725dc9160859816d9b5c9ed882", "sourceRevision": "3b10ddf2bc1cd1ab12febf0e16e81a4b107e7e31" },
+      "runtime": { "digest": "sha256:aa611753a7b734da5b9e23e9b6a9fcbd2caa22dce931faadd955c432834fa649", "sourceRevision": "050340be15d2ebc0d53406a713e814c7afac1366" }
     },
     "spaceSnapshot": {
       "imagesTotal": 53,

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Load one machine-readable workspace contract for all launch/status helpers.
+# Ruby's YAML parser is part of macOS; the values are shell-escaped before
+# export so a contract edit cannot turn into command injection.
+WORKSPACE_CONTRACT_ROOT="${ROOT:-$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+eval "$(ruby -ryaml -rshellwords -e '
+  path = ARGV.fetch(0)
+  doc = YAML.load_file(path)
+  services = doc.fetch("services")
+  service = ->(id) { services.find { |entry| entry.fetch("id") == id } }
+  qb = service.call("question-brain")
+  rt = service.call("task-runtime")
+  lab = service.call("fluent-lab")
+  ports = doc.fetch("ports")
+  obs = doc.fetch("observability")
+  values = {
+    WS_QB_READY_URL: qb.fetch("readiness"),
+    WS_QB_API_URL: "http://127.0.0.1:#{ports.fetch("questionBrain").fetch("api")}",
+    WS_QB_CMS_URL: qb.fetch("ui"),
+    WS_RUNTIME_READY_URL: rt.fetch("readiness"),
+    WS_RUNTIME_API_URL: "http://127.0.0.1:#{ports.fetch("taskRuntime").fetch("api")}",
+    WS_LAB_DEV_URL: lab.fetch("devUrl"),
+    WS_LAB_PACKAGE_URL: lab.fetch("productionUrl"),
+    WS_LAB_PACKAGE_API_URL: "http://127.0.0.1:#{ports.fetch("fluentLab").fetch("packageApi")}",
+    WS_TRACE_URL: obs.fetch("traceExplorerUrl"),
+    WS_TRACE_UI_PORT: ports.fetch("questionBrain").fetch("traceExplorerUi"),
+    WS_OTLP_GRPC_PORT: obs.fetch("collector").fetch("otlpGrpc"),
+    WS_OTLP_HTTP_PORT: obs.fetch("collector").fetch("otlpHttp"),
+    WS_GRAFANA_URL: "http://localhost:#{ports.fetch("fluentLab").fetch("grafana")}",
+    WS_QB_API_PORT: ports.fetch("questionBrain").fetch("api"),
+    WS_QB_CMS_PORT: ports.fetch("questionBrain").fetch("cms"),
+    WS_QB_POSTGRES_PORT: ports.fetch("questionBrain").fetch("postgres"),
+    WS_RUNTIME_API_PORT: ports.fetch("taskRuntime").fetch("api"),
+    WS_LAB_DEV_API_PORT: ports.fetch("fluentLab").fetch("devApi"),
+    WS_LAB_DEV_WEB_PORT: ports.fetch("fluentLab").fetch("devWeb"),
+    WS_LAB_PACKAGE_WEB_PORT: ports.fetch("fluentLab").fetch("packageWeb"),
+    WS_LAB_PACKAGE_API_PORT: ports.fetch("fluentLab").fetch("packageApi"),
+    WS_LAB_POSTGRES_PORT: ports.fetch("fluentLab").fetch("postgres"),
+    WS_LAB_REDIS_PORT: ports.fetch("fluentLab").fetch("redis"),
+    WS_GRAFANA_PORT: ports.fetch("fluentLab").fetch("grafana"),
+    WS_PROMETHEUS_PORT: ports.fetch("fluentLab").fetch("prometheus"),
+    WS_LOKI_PORT: ports.fetch("fluentLab").fetch("loki"),
+    WS_KAFKA_PORT: ports.fetch("fluentLab").fetch("kafka")
+  }
+  values.each { |key, value| puts "export #{key}=#{Shellwords.escape(value.to_s)}" }
+' "$WORKSPACE_CONTRACT_ROOT/workspace.yaml")"

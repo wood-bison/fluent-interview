@@ -1,6 +1,12 @@
 # Fluent Interview: production integrity and UX remediation plan
 
-Status: **authoritative gated remediation plan**
+Status: **historical audit; superseded remediation queue**
+
+> This document preserves the live 2026-08-25 audit findings. It is not an
+> active execution queue. The root
+> [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md)
+> is the only active plan; findings here are evidence until explicitly
+> accepted into a current gate.
 Created: **2026-08-25**
 Scope: `fluent-engineering-lab`, `fluent-question-brain`,
 `fluent-task-runtime`, and the `fluent-interview` workspace.

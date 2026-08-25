@@ -5,6 +5,7 @@ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 QUESTION_BRAIN="$ROOT/fluent-question-brain"
 TASK_RUNTIME="$ROOT/fluent-task-runtime"
 LAB="$ROOT/fluent-engineering-lab"
+source "$ROOT/scripts/workspace-contract.sh"
 
 http_status() {
   local url="$1"
@@ -40,31 +41,31 @@ docker compose --project-name fluent-engineering-lab \
 
 echo
 echo 'Readiness:'
-question_brain_status="$(http_status 'http://127.0.0.1:48127/health/ready')"
-task_runtime_status="$(http_status 'http://127.0.0.1:48227/v1/health/ready')"
-lab_dev_status="$(http_status 'http://localhost:47300/')"
-lab_package_status="$(http_status 'http://localhost:49300/onboarding')"
+question_brain_status="$(http_status "$WS_QB_READY_URL")"
+task_runtime_status="$(http_status "$WS_RUNTIME_READY_URL")"
+lab_dev_status="$(http_status "$WS_LAB_DEV_URL")"
+lab_package_status="$(http_status "$WS_LAB_PACKAGE_URL")"
 if [[ "$lab_package_status" == 'offline' && "$lab_dev_status" != 'offline' ]]; then
   lab_package_status='not started (dev mode)'
 fi
-printf '  Question Brain  %s  http://127.0.0.1:48127/health/ready\n' "$question_brain_status"
-printf '  Task Runtime    %s  http://127.0.0.1:48227/v1/health/ready\n' "$task_runtime_status"
-printf '  Fluent Lab web  %s  http://localhost:47300/\n' "$lab_dev_status"
-printf '  Lab package     %s  http://localhost:49300/onboarding\n' "$lab_package_status"
+printf '  Question Brain  %s  %s\n' "$question_brain_status" "$WS_QB_READY_URL"
+printf '  Task Runtime    %s  %s\n' "$task_runtime_status" "$WS_RUNTIME_READY_URL"
+printf '  Fluent Lab web  %s  %s\n' "$lab_dev_status" "$WS_LAB_DEV_URL"
+printf '  Lab package     %s  %s\n' "$lab_package_status" "$WS_LAB_PACKAGE_URL"
 
 echo
 echo 'Release joins:'
 printf '  Question Brain  '
-curl --silent --show-error --max-time 3 'http://127.0.0.1:48127/v1/quality?workspace=fluent-interview' 2>/dev/null \
+curl --silent --show-error --max-time 3 "$WS_QB_API_URL/v1/quality?workspace=fluent-interview" 2>/dev/null \
   | python3 -c 'import json,sys; d=json.load(sys.stdin); c=d.get("checks",{}); print("{} · {} published · mapped {} · unmapped {}".format(d.get("release_id","unknown"), d.get("total",0), c.get("curriculum_mapped",0), c.get("curriculum_unmapped",0)))' \
   || echo 'unavailable'
 printf '  Task Runtime    '
-curl --silent --show-error --max-time 3 'http://127.0.0.1:48227/v1/tasks/summary' 2>/dev/null \
+curl --silent --show-error --max-time 3 "$WS_RUNTIME_API_URL/v1/tasks/summary" 2>/dev/null \
   | python3 -c 'import json,sys; d=json.load(sys.stdin); print("{} · runtime {} · question {} · runnable {}".format(d.get("bindingState","unknown"), d.get("runtimeReleaseId","none"), d.get("questionReleaseId","none"), d.get("runnable",False)))' \
   || echo 'unavailable'
 
 echo
 echo 'Observability:'
-printf '  Shared Trace Explorer   %s  http://localhost:56686\n' "$(http_status 'http://localhost:56686')"
-printf '  Shared traces            OTLP 54317/54318 → Trace Explorer 56686\n'
-printf '  Lab Grafana            %s  http://localhost:49304\n' "$(http_status 'http://localhost:49304')"
+printf '  Shared Trace Explorer   %s  %s\n' "$(http_status "$WS_TRACE_URL")" "$WS_TRACE_URL"
+printf '  Shared traces            OTLP %s/%s → Trace Explorer %s\n' "$WS_OTLP_GRPC_PORT" "$WS_OTLP_HTTP_PORT" "$WS_TRACE_UI_PORT"
+printf '  Lab Grafana              %s  %s\n' "$(http_status "$WS_GRAFANA_URL")" "$WS_GRAFANA_URL"

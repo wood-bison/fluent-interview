@@ -6,11 +6,14 @@ Active plan: [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](../../
 
 ## What was verified
 
-1. Root and all three repositories are clean and aligned with `origin/main`.
+1. Root proof source commit and all three repositories are recorded with exact
+   SHA values; the root proof was captured at `53f623c` and the two service
+   checkouts are `3b10ddf` (Question Brain) and `050340b` (Task Runtime).
 2. The packaged Lab, Question Brain, Runtime, Jaeger, and Grafana endpoints
    responded successfully.
 3. Brain quality and Runtime relation releases agree on
-   `question-release-d00a14931e607336`; there are no missing locales, graph
+   `question-release-d00a14931e607336`; the live Runtime reports
+   `task-family-release-2026-08-25-g9`. There are no missing locales, graph
    proposals, invalid bindings, or task-boundary violations in the live
    release.
 4. The Lab map projection is reproducible: 81 nodes, 81 non-empty routes, and
@@ -24,7 +27,15 @@ Active plan: [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](../../
    without touching a volume. No global prune or foreign-resource action was
    performed.
 8. Brain and Runtime images were rebuilt and recreated from the pinned clean
-   checkouts. Compose volumes were preserved.
+   checkouts. Each owned image now carries
+   `org.opencontainers.image.revision`; the label was inspected against the
+   checkout SHA. Compose volumes were preserved.
+9. A real in-app Browser crawl visited 14 representative learner routes after
+   API hydration. All resolved without runtime-error copy; the four primary
+   language paths rendered their headings, the question library rendered 1,591
+   cards and 135 topic groups, and the Go rate-limiter lab rendered 4/4
+   evidence checks. The crawl is recorded in `baseline.json` and is not
+   deferred to M12.
 
 ## Commands and evidence
 
@@ -39,8 +50,15 @@ curl -fsS 'http://127.0.0.1:48127/v1/quality?workspace=fluent-interview'
 curl -fsS http://127.0.0.1:48227/v1/tasks/summary
 docker compose --project-name fluent-question-brain --file fluent-question-brain/deploy/compose/compose.yaml build
 docker compose --project-name fluent-task-runtime --file fluent-task-runtime/deploy/compose/compose.yaml build
+QUESTION_BRAIN_SOURCE_REVISION="$(git -C fluent-question-brain rev-parse HEAD)" \
+  docker compose --project-name fluent-question-brain --file fluent-question-brain/deploy/compose/compose.yaml build
+TASK_RUNTIME_SOURCE_REVISION="$(git -C fluent-task-runtime rev-parse HEAD)" \
+  docker compose --project-name fluent-task-runtime --file fluent-task-runtime/deploy/compose/compose.yaml build
 docker compose --project-name fluent-question-brain --file fluent-question-brain/deploy/compose/compose.yaml up -d --force-recreate --remove-orphans
 docker compose --project-name fluent-task-runtime --file fluent-task-runtime/deploy/compose/compose.yaml up -d --force-recreate --remove-orphans
+docker inspect --format '{{.Name}}|{{.Image}}|{{index .Config.Labels "org.opencontainers.image.revision"}}' \
+  fluent-question-brain-api-1 fluent-question-brain-indexer-1 \
+  fluent-question-brain-cms-1 fluent-task-runtime-runtime-1
 ```
 
 Machine-readable results are in
@@ -57,6 +75,8 @@ historical 66/25/2/39 route comparison without treating it as current truth.
 | Source-of-truth matrix and taxonomy mapping published | PASS | contracts v1 |
 | Counters separate total/released/runnable | PASS | baseline + glossary counter policy |
 | Route manifest reproducible from API | PASS | 81/81/81 projection counts |
+| Representative Browser crawl after hydration | PASS | 14 routes; 0 runtime errors; 1,591 cards / 135 topics; Go lab 4/4 |
+| Image source revision is independently inspectable | PASS | OCI revision labels match service SHAs |
 | Shared Trace Explorer is not a Runtime UI | PASS | workspace contract + status output |
 | Profile-aware baseline | PASS | packaged API bases in baseline |
 | Historical `RELEASED` no longer active automation | PASS | historical headers + root AGENTS |

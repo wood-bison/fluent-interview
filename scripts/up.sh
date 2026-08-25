@@ -5,6 +5,7 @@ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 QUESTION_BRAIN="$ROOT/fluent-question-brain"
 TASK_RUNTIME="$ROOT/fluent-task-runtime"
 LAB="$ROOT/fluent-engineering-lab"
+source "$ROOT/scripts/workspace-contract.sh"
 # Keep the workspace launcher pinned to the same reconciled release that the
 # Runtime Compose file exposes by default.  A stale filename here makes a
 # clean `pnpm dev` fail before any service can report its actual readiness.
@@ -132,7 +133,7 @@ echo 'Fluent Interview workspace'
 echo "root: $ROOT"
 echo '1/2  Question Brain'
 "${compose_question_brain[@]}" up -d --remove-orphans "${build_args[@]}"
-wait_for 'Question Brain' 'http://127.0.0.1:48127/health/ready'
+wait_for 'Question Brain' "$WS_QB_READY_URL"
 # Existing PostgreSQL volumes do not re-run initdb scripts. Apply the
 # revision-scoped mapping migration and the checked-in explicit crosswalk on
 # every start; both operations are idempotent. Never fall back to inferred
@@ -148,21 +149,21 @@ echo '2/2  Task Runtime'
 RUNTIME_HOST_WORK_ROOT="$TASK_RUNTIME/.runtime-work" \
 RUNTIME_RELEASE_MANIFEST="/opt/releases/$RUNTIME_RELEASE_FILE" \
   "${compose_task_runtime[@]}" up -d --remove-orphans "${build_args[@]}"
-wait_for 'Task Runtime' 'http://127.0.0.1:48227/v1/health/ready'
+wait_for 'Task Runtime' "$WS_RUNTIME_READY_URL"
 
 echo
 mkdir -p "$ROOT/.workspace"
 app_pid_file="$ROOT/.workspace/fluent-lab.pid"
 
 if [[ "$mode" == 'production' ]]; then
-  echo 'Starting packaged Fluent Lab (http://localhost:49300/onboarding)'
+  echo "Starting packaged Fluent Lab ($WS_LAB_PACKAGE_URL)"
   # `restart` is intentionally idempotent.  The wrapper absorbs only a live
   # package.lock-held race, then lets the package contract report every other
   # failure with its normal recovery details.
   start_packaged_lab &
 else
   stop_packaged_lab
-  echo 'Starting Fluent Lab development (http://localhost:47300/)'
+  echo "Starting Fluent Lab development ($WS_LAB_DEV_URL)"
   pnpm --dir "$LAB" dev &
 fi
 
