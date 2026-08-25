@@ -681,28 +681,28 @@ topic, and capability. Brain commits: `cca733b`, `f848e8c`, `a44347b`,
 
 ### Changes
 
-- [ ] Make `questionBindings` with stable key, revision ID, and content hash the
+- [x] Make `questionBindings` with stable key, revision ID, and content hash the
       only authoritative question join in a new Runtime contract version.
-- [ ] Keep `capabilityKeys` separate and validate them against a pinned
+- [x] Keep `capabilityKeys` separate and validate them against a pinned
       Capability release.
-- [ ] Add `taskFamilyId` and TaskRevision identity to the immutable Runtime
+- [x] Add `taskFamilyId` and TaskRevision identity to the immutable Runtime
       release manifest.
-- [ ] Generate the manifest from released Question Brain and Runtime APIs; do
+- [x] Generate the manifest from released Question Brain and Runtime APIs; do
       not infer bindings from breadcrumbs, concepts, filenames, or titles.
-- [ ] Block Runtime readiness when an active manifest contains a missing,
+- [x] Block Runtime readiness when an active manifest contains a missing,
       superseded, hash-mismatched, wrong-workspace, or wrong-release reference.
-- [ ] Update the Lab adapter to consume the new contract behind an explicit
+- [x] Update the Lab adapter to consume the new contract behind an explicit
       migration switch that cannot fabricate runnable state.
-- [ ] Add cross-repository contract fixtures and CI checks.
+- [x] Add cross-repository contract fixtures and CI checks.
 
 ### Required tests
 
-- [ ] All current TaskRevisions resolve their TaskFamily and capability keys.
-- [ ] All question-backed tasks resolve exact current or explicitly pinned
+- [x] All current TaskRevisions resolve their TaskFamily and capability keys.
+- [x] All question-backed tasks resolve exact current or explicitly pinned
       historical revisions.
-- [ ] Capability-only capstones are explicit and do not abuse `questionKeys`.
-- [ ] A Question Brain release change requires a new Runtime release manifest.
-- [ ] A Runtime release mismatch produces a typed recovery state, not a local
+- [x] Capability-only capstones are explicit and do not abuse `questionKeys`.
+- [x] A Question Brain release change requires a new Runtime release manifest.
+- [x] A Runtime release mismatch produces a typed recovery state, not a local
       fallback.
 
 ### Required verification before commit
@@ -723,11 +723,29 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] Runtime summary reports the exact Question, Capability, TaskFamily, and
+- [x] Runtime summary reports the exact Question, Capability, TaskFamily, and
       Task release IDs.
-- [ ] Zero malformed `questionKeys` remain in the active release.
-- [ ] Lab displays a typed unavailable state for a deliberately mismatched
+- [x] Zero malformed `questionKeys` remain in the active release.
+- [x] Lab displays a typed unavailable state for a deliberately mismatched
       release.
+
+Evidence: Runtime commit `25dbb8d` publishes
+`fluent-task-runtime.task-release.v3` as
+`runtime-task-release-2026-08-25-qb-d00a1493-g8`. Its live summary pins
+Question Brain `question-release-d00a14931e607336`, source snapshot
+`question-release-d00a14931e607336`, capability binding
+`question-capability-release-3c38b4c8c0fa7f47`, capability registry
+`capability-registry-2026-08-25-v3`, and TaskFamily
+`task-family-release-2026-08-25`. The release contains 18 TaskRevisions: 17
+runnable and one explicit capability-only capstone. The generated release
+join is built only from the live Brain and Runtime APIs, rejects missing or
+stale bindings, and has no `questionKeys` in the active manifest. Runtime
+`go test ./...`, the G8 release-join smoke, a workspace fetch, and a real
+Node.js 24 run with trace evidence pass. Fluent Lab commit `6634feb` consumes
+the v3 summary and relation contract; targeted adapter/relation tests,
+`lab-contracts` (1,218 tests), production build, and `practice:health:gate`
+pass. A deliberate release mismatch is typed as degraded and cannot become
+local runnable state.
 
 Suggested commits:
 
@@ -1172,7 +1190,7 @@ fully checked and its evidence is committed.
 | G5 — content graph | complete | `docs/verification/G5-CONTENT-GRAPH-2026-08-25.md` | Brain `78cc4da`, `942c9b3` |
 | G6 — semantic proposal pipeline | complete | `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md` | Brain `ff92be4`, `eab9fb5`, `8cba06a`, `09482da`, `4c7cc5d` |
 | G7 — question-capability bindings | complete | `fluent-question-brain/docs/verification/G7-QUESTION-CAPABILITY-2026-08-25.md` plus live coverage/report and smoke evidence | Brain `cca733b`, `f848e8c`, `a44347b`, `88e8bac`, `8343904`, `391895e` |
-| G8 — release join | not started | — | — |
+| G8 — release join | complete | Runtime `docs/verification/G8-RELEASE-JOIN-2026-08-25.md`, `scripts/release/g8-release-join-smoke.sh`, live summary/relations and Lab health-gate evidence | Runtime `25dbb8d`; Lab `6634feb` |
 | G9 — Review Workbench | not started | — | — |
 | G10 — learner projection | not started | — | — |
 | G11 — bilingual/a11y/design | not started | — | — |
