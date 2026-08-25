@@ -1,0 +1,190 @@
+{
+  "contractVersion": "capability-closure.m0-baseline.v1",
+  "status": "self-check-pass-review-pending",
+  "capturedAt": "2026-08-25T18:08:30Z",
+  "plan": {
+    "id": "capability-mastery-production-closure",
+    "revision": "v2",
+    "currentGate": "M0",
+    "result": "NOT RELEASED"
+  },
+  "repositories": {
+    "root": {
+      "path": ".",
+      "head": "49406ef8fb7d5b84043936b1aff71a097df36e05",
+      "originMain": "49406ef8fb7d5b84043936b1aff71a097df36e05",
+      "dirty": false
+    },
+    "fluent-engineering-lab": {
+      "head": "a9b8a8d7571e1057528ee2cda7a5e99ab84bd4ab",
+      "originMain": "a9b8a8d7571e1057528ee2cda7a5e99ab84bd4ab",
+      "dirty": false
+    },
+    "fluent-question-brain": {
+      "head": "489830eb791e3f2ead4a1899407a2174b1b3c95e",
+      "originMain": "489830eb791e3f2ead4a1899407a2174b1b3c95e",
+      "dirty": false
+    },
+    "fluent-task-runtime": {
+      "head": "9300e2f025eccfad0ecbf26d1773e41bbec61058",
+      "originMain": "9300e2f025eccfad0ecbf26d1773e41bbec61058",
+      "dirty": false
+    }
+  },
+  "profile": {
+    "name": "packaged",
+    "labApiBase": "http://127.0.0.1:49301",
+    "brainApiBase": "http://127.0.0.1:48127",
+    "runtimeApiBase": "http://127.0.0.1:48227",
+    "labUrl": "http://localhost:49300/onboarding"
+  },
+  "releases": {
+    "questionReleaseId": "question-release-d00a14931e607336",
+    "capabilityRegistryReleaseId": "capability-registry-2026-08-25-v3",
+    "capabilityRegistry": {
+      "activeCanonical": 16,
+      "bindings": 19,
+      "dispositions": { "keep": 4, "add": 1, "rename": 11 }
+    },
+    "runtimeReleaseId": "runtime-task-release-2026-08-25-qb-d00a1493-g9",
+    "taskFamilyReleaseId": "task-family-release-2026-08-25",
+    "runtimeCatalog": {
+      "familiesTotal": 15,
+      "familiesReleased": 14,
+      "revisionsTotal": 20,
+      "revisionsRunnable": 19,
+      "revisionsUnreleased": 1,
+      "profileCounts": { "node": 13, "dotnet": 2, "postgres": 3, "go": 1, "java": 1 }
+    }
+  },
+  "labProjection": {
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "manifestVersion": "2026.08.02",
+    "programCount": 1,
+    "pathCount": 9,
+    "areaCount": 15,
+    "stationCount": 81,
+    "questionCardCount": 1591,
+    "topicGroupCount": 135,
+    "capabilityCount": 68,
+    "taskFamilyCount": 15,
+    "taskRevisionCount": 20,
+    "runnableStationCount": 1,
+    "stationBoundCardCount": 6,
+    "evidenceCount": 8,
+    "mapStateCounts": { "open": 5, "locked": 76 },
+    "readinessLabelCounts": { "theory-only": 15, "attempted": 1, "graph-locked": 58, "release-pending": 7 }
+  },
+  "questionQuality": {
+    "total": 1591,
+    "published": 1591,
+    "graphReleased": 1591,
+    "graphAcceptedPending": 0,
+    "graphProposed": 0,
+    "graphUnplaced": 0,
+    "missingEnglish": 0,
+    "missingRussian": 0,
+    "outboxPending": 0,
+    "localesWithoutEmbedding": 0,
+    "curriculumMapped": 1591,
+    "curriculumUnmapped": 0,
+    "curriculumAccepted": 1591,
+    "curriculumRejected": 0,
+    "curriculumCapabilities": 19,
+    "taskBlocks": 48,
+    "embeddedSolutions": 0,
+    "taskBoundaryViolations": 0,
+    "localeRows": { "en": 1591, "ru": 1591 },
+    "topicCount": 134
+  },
+  "runtimeRelations": {
+    "state": "ready",
+    "taskCount": 20,
+    "releasedTaskCount": 20,
+    "validTaskCount": 19,
+    "invalidTaskCount": 0,
+    "capabilityOnlyTaskCount": 1
+  },
+  "routeManifest": {
+    "source": "/api/program/learner-map",
+    "advertisedNodes": 81,
+    "routesResolved": 81,
+    "uniqueRoutes": 81,
+    "emptyRoutes": 0,
+    "projectionStates": { "open": 5, "locked": 76 },
+    "browserCrawl": "deferred-to-M12",
+    "legacyComparison": {
+      "oldAdvertised": 66,
+      "oldWorking": 25,
+      "oldNoRun": 2,
+      "oldBroken": 39,
+      "interpretation": "historical audit baseline, not a current counter"
+    }
+  },
+  "docker": {
+    "composeProjects": ["fluent-question-brain", "fluent-task-runtime", "fluent-engineering-lab"],
+    "activeOwnedContainers": 12,
+    "sharedTraceExplorer": {
+      "url": "http://localhost:56686",
+      "otlpGrpc": 54317,
+      "otlpHttp": 54318,
+      "container": "fluent-question-brain-jaeger-1",
+      "image": "cr.jaegertracing.io/jaegertracing/jaeger:2.20.0"
+    },
+    "rebuiltImages": {
+      "brainApi": "sha256:730201cf782a4acad2ba95317c7d51171eadaf037b2fb2f49308517b3531646d",
+      "brainCms": "sha256:33ab1e1f981a4d585f217b5a70043ddb639522b63eb8e5409a29f332c56579b1",
+      "brainIndexer": "sha256:f3bba06b51acea279ba5a9068ca2692f09dfc03891678f3b0f48c681f697a27d",
+      "runtime": "sha256:ac9bffea059dab5706cf23a8d4838a00b0fe29bba9239a6707c825f7b15fb989"
+    },
+    "spaceSnapshot": {
+      "imagesTotal": 53,
+      "imagesReclaimable": "6.021GB",
+      "containersTotal": 29,
+      "containersReclaimable": "453.3MB",
+      "volumesTotal": 155,
+      "volumesReclaimable": "9.526GB",
+      "buildCache": "3.603GB"
+    },
+    "ownedOrphanActions": [
+      {
+        "name": "fluent-runtime-task-node-cpu-bound-002-g15-timeout-valid-1787640642307",
+        "image": "fluent-runtime-task-node:1",
+        "action": "stopped; auto-removed by --rm",
+        "volumeTouched": false
+      }
+    ],
+    "foreignResources": "not modified; classify and clean only through a future owned preview"
+  },
+  "contracts": {
+    "glossary": "docs/contracts/fluent-interview-glossary.v1.md",
+    "sourceOfTruthMatrix": "docs/contracts/source-of-truth-matrix.v1.md",
+    "coverageManifest": "docs/contracts/coverage-manifest.v1.yaml",
+    "coverageManifestReleaseId": "coverage-manifest-2026-08-25-m0",
+    "coverageManifestState": {
+      "planAreas": 12,
+      "tier1Modules": 24,
+      "currentDomains": 15,
+      "canonicalCapabilitiesMapped": 16,
+      "labCapabilityBackfillRemaining": 52
+    },
+    "traceExplorerField": "observability.traceExplorerUrl",
+    "taskRuntimeUiFieldRemoved": true
+  },
+  "operationalDecision": {
+    "status": "accepted-for-M10",
+    "architecture": "TypeScript Aspire AppHost + central OTel Collector + one persistent Jaeger v2 + Prometheus/Loki/Grafana",
+    "currentM0Implementation": "Compose remains the working launcher; shell scripts remain recovery/status primitives until M10 migration parity is proven",
+    "tempo": "not introduced as a new consumer; removal waits for M10 trace parity"
+  },
+  "verification": {
+    "pnpmStatus": "pass",
+    "brainReadiness": "200",
+    "runtimeReadiness": "200",
+    "labPackageReadiness": "200",
+    "traceExplorer": "200",
+    "grafana": "200",
+    "sourceTreesClean": true,
+    "independentReviewer": "pending"
+  }
+}
