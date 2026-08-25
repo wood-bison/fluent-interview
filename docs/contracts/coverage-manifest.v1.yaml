@@ -1,0 +1,134 @@
+contractVersion: coverage-manifest.v1
+status: released-v1
+releaseId: coverage-manifest-2026-08-25-m0
+owner: fluent-interview
+purpose: >-
+  Acceptance/reporting mapping from Plan 2026 areas to Tier-1 modules,
+  current Lab stages, and reviewed canonical capabilities. This is not a
+  Question Brain taxonomy and does not create learner prerequisites by itself.
+
+planAreas:
+  - id: foundation-workflow
+    label: Foundations and engineering workflow
+    modules: [FND-01, FND-02]
+    currentDomains: [engineering-craft]
+  - id: language-runtime
+    label: JavaScript, TypeScript, and Node runtime
+    modules: [LANG-01, RUN-01]
+    currentDomains: [javascript, node-runtime]
+  - id: web-backend
+    label: Web, API, backend, and security
+    modules: [WEB-01]
+    currentDomains: [http-security, nest]
+  - id: frontend
+    label: Browser and frontend architecture
+    modules: [FE-01]
+    currentDomains: [frontend-depth]
+  - id: relational-data
+    label: Relational data and PostgreSQL
+    modules: [DATA-01]
+    currentDomains: [postgres]
+  - id: cache-search-graph
+    label: Cache, storage, search, and graph data
+    modules: [DATA-02]
+    currentDomains: [postgres, production]
+  - id: concurrency-networking
+    label: Concurrency, parallelism, and protocols
+    modules: [SYS-01, NET-01]
+    currentDomains: [machine-os, distributed]
+  - id: messaging-distributed
+    label: Messaging and distributed reliability
+    modules: [MSG-01, DIST-01]
+    currentDomains: [distributed]
+  - id: operating-systems
+    label: Operating systems, containers, and Docker
+    modules: [OPS-01, OPS-02]
+    currentDomains: [machine-os]
+  - id: delivery-observability
+    label: Delivery, cloud, and observability
+    modules: [OPS-03, OBS-01]
+    currentDomains: [production, ai-native]
+  - id: architecture-design
+    label: Architecture, algorithms, and system design
+    modules: [ARCH-01, ALG-01]
+    currentDomains: [distributed, engineering-craft]
+  - id: breadth-communication
+    label: Runtime breadth, AI, English defense, and capstone
+    modules: [RT-01, RT-02, RT-03, AI-01, COM-01, CAP-01]
+    currentDomains: [dotnet, java, go, other-runtimes, testing]
+
+currentDomainIds:
+  - javascript
+  - node-runtime
+  - dotnet
+  - go
+  - java
+  - nest
+  - http-security
+  - postgres
+  - distributed
+  - machine-os
+  - engineering-craft
+  - other-runtimes
+  - frontend-depth
+  - ai-native
+  - production
+
+capabilityMappings:
+  - capabilityKey: capability.runtime.deferred
+    planAreas: [language-runtime]
+    currentDomains: [javascript]
+  - capabilityKey: capability.runtime.fluent-calculator
+    planAreas: [language-runtime]
+    currentDomains: [javascript]
+  - capabilityKey: capability.distributed-systems.rate-limiter
+    planAreas: [messaging-distributed, architecture-design]
+    currentDomains: [distributed]
+  - capabilityKey: capability.http-api.rate-limiter
+    planAreas: [web-backend]
+    currentDomains: [http-security]
+  - capabilityKey: capability.delivery-observability.execution-boundary
+    planAreas: [delivery-observability]
+    currentDomains: [production]
+  - capabilityKey: capability.nodejs.event-loop-ordering
+    planAreas: [language-runtime]
+    currentDomains: [node-runtime]
+  - capabilityKey: capability.nodejs.cpu-bound-work
+    planAreas: [language-runtime, concurrency-networking]
+    currentDomains: [node-runtime, machine-os]
+  - capabilityKey: capability.nodejs.streams-backpressure
+    planAreas: [language-runtime]
+    currentDomains: [node-runtime]
+  - capabilityKey: capability.nodejs.memory-retention
+    planAreas: [language-runtime]
+    currentDomains: [node-runtime]
+  - capabilityKey: capability.nodejs.bounded-concurrency
+    planAreas: [concurrency-networking]
+    currentDomains: [node-runtime, distributed]
+  - capabilityKey: capability.dotnet.cancellation-boundary
+    planAreas: [breadth-communication]
+    currentDomains: [dotnet]
+  - capabilityKey: capability.http-api.authentication-authorization
+    planAreas: [web-backend]
+    currentDomains: [http-security]
+  - capabilityKey: capability.postgresql.query-planning
+    planAreas: [relational-data]
+    currentDomains: [postgres]
+  - capabilityKey: capability.postgresql.row-locks
+    planAreas: [relational-data, concurrency-networking]
+    currentDomains: [postgres, distributed]
+  - capabilityKey: capability.distributed-systems.idempotent-delivery
+    planAreas: [messaging-distributed]
+    currentDomains: [distributed]
+  - capabilityKey: capability.delivery-observability.cache-invalidation
+    planAreas: [cache-search-graph, delivery-observability]
+    currentDomains: [production]
+
+coverageState:
+  canonicalCapabilitiesMapped: 16
+  labCapabilitiesInInventory: 68
+  labCapabilityBackfillRemaining: 52
+  note: >-
+    M0 establishes the join contract and maps the current Brain registry.
+    M6/M8 must expand this manifest to every released Lab capability before
+    claiming PlanArea product readiness.

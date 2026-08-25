@@ -1,10 +1,15 @@
 # Fluent Interview: Aspire, Jaeger and Docker production convergence plan
 
-Status: **authoritative gated implementation handoff**  
-Created: **2026-08-25**  
-Scope: the `fluent-interview` workspace and its three independent repositories.  
+Status: **historical requirements, superseded as an execution queue**
+Created: **2026-08-25**
+Scope: the `fluent-interview` workspace and its three independent repositories.
 Audience: the implementation agent who will execute the work and the
 orchestrator who will independently accept or reject every gate.
+
+> **Active plan:** [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md).
+> This document preserves the adopted Aspire/Collector/Jaeger/Docker
+> requirements as evidence. It is not a second work queue. M10 of the active
+> plan owns implementation and acceptance.
 
 This document replaces ad-hoc decisions about local startup, health checks,
 tracing backends, Docker cleanup, and recovery UI. It does **not** merge the

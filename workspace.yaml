@@ -36,13 +36,20 @@ services:
     composeProject: fluent-task-runtime
     composeFile: fluent-task-runtime/deploy/compose/compose.yaml
     readiness: http://127.0.0.1:48227/v1/health/ready
-    ui: http://localhost:56686
   - id: fluent-lab
     repository: fluent-engineering-lab
     devCommand: pnpm dev
     devUrl: http://localhost:47300/
     productionCommand: pnpm package:local
     productionUrl: http://localhost:49300/onboarding
+
+observability:
+  # One shared Trace Explorer for the three repositories. This is a neutral
+  # workspace concern, not a second Task Runtime UI.
+  traceExplorerUrl: http://localhost:56686
+  collector:
+    otlpGrpc: 54317
+    otlpHttp: 54318
 
 ports:
   policy: dedicated-high-host-ports

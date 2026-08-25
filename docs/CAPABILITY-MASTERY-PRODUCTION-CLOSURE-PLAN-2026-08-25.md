@@ -166,6 +166,12 @@ LEARNER MASTERY
 источником задачи: это learner-facing проекция released `TaskFamily` и
 `TaskRevision`.
 
+Короткая машинно-читаемая версия этого glossary и ownership-матрица живут в
+[`docs/contracts/fluent-interview-glossary.v1.md`](contracts/fluent-interview-glossary.v1.md)
+и [`docs/contracts/source-of-truth-matrix.v1.md`](contracts/source-of-truth-matrix.v1.md).
+Они не вводят новые доменные сущности; это стабильная ссылка для агентов и
+ревьюеров.
+
 ### 3.4 Source-of-truth matrix и reporting views
 
 В M0 агент обязан сохранить машинно-читаемую матрицу источников истины:
@@ -438,7 +444,7 @@ gate задним числом.
 | M5 | Program → Path → Domain → Capability UX | `TODO` |
 | M6 | все 1 591 карточка классифицированы и локализованы честно | `TODO` |
 | M7 | текущий Runtime hardened; task gaps закрываются осмысленно | `TODO` |
-| M8 | 12 Plan areas product-ready | `TODO` |
+| M8 | 12 acceptance areas product-ready | `TODO` |
 | M9 | i18n, design, a11y и performance production gates | `TODO` |
 | M10 | recovery, observability и Docker lifecycle | `TODO` |
 | M11 | единый `pnpm verify`, docs и repo hygiene | `TODO` |
