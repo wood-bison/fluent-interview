@@ -775,7 +775,8 @@ Bulk selection is capped at 50 and requires a visible two-step confirmation;
 focus returns to the selected row after queue changes; the release panel shows
 immutable before/after graph pins, dry-run status, blocked reasons, and rollback
 consequences. Bilingual aria-live announcements switch with the active locale.
-The gate remains **in progress** only for the later learner projection gates.
+G9 is now **complete**. The only remaining work belongs to the later learner
+projection and release-quality gates below.
 The canonical alias/supersession write boundary, complete live review matrix,
 and Payload authoring decision are published and exercised end-to-end; an empty
 queue is explicit, never a hidden fallback. Payload remains a draft-only editor
@@ -862,37 +863,46 @@ Program
 
 ### Changes
 
-- [ ] Program shows one role outcome rather than the number of cards.
-- [ ] Paths show the nine reviewed routes and honest availability states.
-- [ ] Knowledge Map shows areas, capabilities/stations, prerequisites, and
+- [x] Program shows one role outcome rather than the number of cards.
+- [x] Paths show the nine reviewed routes and honest availability states.
+- [x] Knowledge Map shows areas, capabilities/stations, prerequisites, and
       recommended ordering; it does not present 1,591 cards as stations.
-- [ ] Question Library exposes every released card through Path/Domain filters,
+- [x] Question Library exposes every released card through Path/Domain filters,
       search, topics, related cards, prerequisites, and stable deep links.
-- [ ] A QuestionCard displays theory, short answer, system-design discussion,
+- [x] A QuestionCard displays theory, short answer, system-design discussion,
       related capabilities, content relations, TaskFamilies, available
       languages, and the reason a Run is unavailable.
-- [ ] A TaskFamily view allows language selection before opening the editor.
-- [ ] `Explore freely` permits inspection in any order and saves history without
+- [x] A TaskFamily view allows language selection before opening the editor.
+- [x] `Explore freely` permits inspection in any order and saves history without
       awarding mastery.
-- [ ] `Recommended` uses released prerequisites and learner evidence.
-- [ ] Eliminate misleading `locked` states. A genuine restriction must name
+- [x] `Recommended` uses released prerequisites and learner evidence.
+- [x] Eliminate misleading `locked` states. A genuine restriction must name
       its cause and recovery action.
-- [ ] Display truthful live counts with labels:
+- [x] Display truthful live counts with labels:
       cards, paths, domains, capabilities, stations, task families, runnable
       revisions, and current learner evidence.
-- [ ] Preserve progress when aliases/supersessions resolve old capability IDs.
+- [x] Preserve progress when aliases/supersessions resolve old capability IDs;
+      the canonical alias/supersession contract is verified in Question Brain
+      and the learner projection consumes only released canonical keys.
 
 ### Required learner journeys
 
-- [ ] Rate limiter: QuestionCard → capability cluster → TaskFamily → choose
+- [x] Rate limiter: QuestionCard → capability cluster → TaskFamily → choose
       Node.js/Go/Java/SQL → edit → Run → fail → fix → pass → Evidence.
-- [ ] Circuit breaker: theory and graph work even before executable revisions;
+- [x] Circuit breaker: theory and graph work even before executable revisions;
       released language revisions appear automatically when available.
-- [ ] Node event loop: stack-specific capability is displayed only in relevant
+- [x] Node event loop: stack-specific capability is displayed only in relevant
       paths but remains searchable globally.
-- [ ] Theory-only card: no fake Run button and no dead end.
-- [ ] Superseded capability: old deep link resolves to the canonical station and
+- [x] Theory-only card: no fake Run button and no dead end.
+- [x] Superseded capability: old deep link resolves to the canonical station and
       retains historical evidence.
+
+Evidence:
+[`G10-QUESTION-CARD-RELATIONS-2026-08-25.md`](../fluent-engineering-lab/docs/verification/G10-QUESTION-CARD-RELATIONS-2026-08-25.md).
+The packaged desktop smoke exercised the full QuestionCard → TaskFamily →
+revision → Run → Evidence flow, the theory-only circuit-breaker surface, the
+stack-specific event-loop surface, RU/EN route preservation, and the explicit
+Recommended/Explore freely distinction.
 
 ### Required verification before commit
 
@@ -909,11 +919,11 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] The UI never conflates 1,591 cards, 15 areas, 81 stations, capability
+- [x] The UI never conflates 1,591 cards, 15 areas, 81 stations, capability
       bindings, and Runtime tasks.
-- [ ] Every released card is reachable in Question Library.
-- [ ] Every released TaskRevision is reachable from its TaskFamily.
-- [ ] Free exploration and evidence-gated mastery behave differently and
+- [x] Every released card is reachable in Question Library.
+- [x] Every released TaskRevision is reachable from its TaskFamily.
+- [x] Free exploration and evidence-gated mastery behave differently and
       truthfully.
 
 Suggested commit: `feat(learning): project questions capabilities and task families`
@@ -1230,8 +1240,8 @@ fully checked and its evidence is committed.
 | G6 — semantic proposal pipeline | complete | `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md` | Brain `ff92be4`, `eab9fb5`, `8cba06a`, `09482da`, `4c7cc5d` |
 | G7 — question-capability bindings | complete | `fluent-question-brain/docs/verification/G7-QUESTION-CAPABILITY-2026-08-25.md` plus live coverage/report and smoke evidence | Brain `cca733b`, `f848e8c`, `a44347b`, `88e8bac`, `8343904`, `391895e` |
 | G8 — release join | complete | Runtime `docs/verification/G8-RELEASE-JOIN-2026-08-25.md`, `scripts/release/g8-release-join-smoke.sh`, live summary/relations and Lab health-gate evidence | Runtime `25dbb8d`; Lab `6634feb` |
-| G9 — Review Workbench | in progress | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md` and Brain `docs/verification/G9-ALIAS-SUPERSESSION-2026-08-25.md` (live five queues, canonical alias/supersession write smoke, bounded bulk confirmation, release preview, RU/EN desktop smoke, privacy boundary) | Brain `39ef491`, `a8573c6`; Lab `b54afdd`, `acc1f74`, `162538b`, `145d33a`, `bbd5331`, `4c1327f` |
-| G10 — learner projection | not started | — | — |
+| G9 — Review Workbench | complete | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md`, Brain `docs/verification/G9-DUPLICATE-REVIEW-2026-08-25.md`, and `docs/verification/G9-PAYLOAD-DECISION-2026-08-25.md` (durable five queues, canonical alias/supersession write smoke, bounded bulk confirmation, release preview, RU/EN desktop smoke, privacy boundary, draft-only Payload boundary) | Brain `87fac21`, `b46d7de`, `58c20d4`, `d3d7736`; Lab `52f32ad`, `9205385` |
+| G10 — learner projection | complete | `fluent-engineering-lab/docs/verification/G10-QUESTION-CARD-RELATIONS-2026-08-25.md` (one program → nine paths → 15 areas → 81 stations → 1,591 cards, full Question Library reachability, TaskFamily language selection, Go fail/fix/pass Evidence, theory-only and RU/EN browser matrix) | Lab `e216af3`, `df34a85`, `5e14731`, `425c98f`, `02815f6`, `e7cac6e`, `6ade0f0`, `9205385` |
 | G11 — bilingual/a11y/design | not started | — | — |
 | G12 — task coverage | not started | — | — |
 | G13 — legacy removal | not started | — | — |
