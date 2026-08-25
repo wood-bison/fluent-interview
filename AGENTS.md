@@ -31,6 +31,12 @@ service boundary.
 - Cross-service changes use versioned HTTP/event contracts and compatibility
   checks. A future contracts repository may contain schemas and generated
   clients, but not domain ownership.
+- Published releases are the only learner inputs: historical release files,
+  migration records, and rejection tests are provenance, never runtime
+  fallbacks. Payload is draft/review-only; it never writes published content.
+- A practice gap is represented explicitly as `runnable`, `brief_only`,
+  `recall_only`, or `deferred`; it must not be disguised as a lock, placeholder
+  task, or synthetic pass.
 - The three Compose projects remain independently stoppable and observable.
 - `fluent-interview` is the orchestrator, not a fourth Compose project; stack
   provenance must always point into this workspace checkout.

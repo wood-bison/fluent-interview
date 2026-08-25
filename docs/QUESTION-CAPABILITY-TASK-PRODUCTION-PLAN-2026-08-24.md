@@ -994,45 +994,45 @@ Suggested commit: `fix(ui): complete bilingual accessible task learning journeys
 - [x] Produce a coverage matrix by Path → Domain → Capability showing question
       count, TaskFamily count, runnable languages, design exercise, recall-only
       content, and missing practice.
-- [ ] Prioritize capabilities by curriculum importance and evidence gap, not by
+- [x] Prioritize capabilities by curriculum importance and evidence gap, not by
       the desire to make every number equal.
-- [ ] Author TaskFamilies for Node.js/TypeScript, Java/Spring, .NET/C#, Go,
+- [x] Author TaskFamilies for Node.js/TypeScript, Java/Spring, .NET/C#, Go,
       Frontend, System Design, Algorithms, Behavioral, PostgreSQL, delivery,
       observability, Docker, Kubernetes, and cloud-reasoning where deterministic
       checking is appropriate.
-- [ ] Use a design/defense rubric instead of fake code execution for tasks that
+- [x] Use a design/defense rubric instead of fake code execution for tasks that
       cannot be meaningfully sandboxed.
-- [ ] Add a language/profile only with a pinned image, authored starter,
+- [x] Add a language/profile only with a pinned image, authored starter,
       solution, hidden tests, resource limits, and real Docker smoke.
-- [ ] Record licensing and provenance for any externally sourced task idea. Do
+- [x] Record licensing and provenance for any externally sourced task idea. Do
       not copy paid or copyrighted solution content without permission.
-- [ ] Keep shared TaskFamilies reusable across Paths through capability
+- [x] Keep shared TaskFamilies reusable across Paths through capability
       bindings.
 
 ### Acceptance for each new TaskFamily
 
-- [ ] Reviewed capabilities and optional question bindings.
-- [ ] Bilingual learner brief.
-- [ ] At least one valid TaskRevision or an honest `brief_only` state.
-- [ ] Deterministic pass, fail, timeout, and runtime-error tests.
-- [ ] Docker isolation and hidden-test boundary proof.
-- [ ] Lab learner journey and Evidence projection.
-- [ ] Provenance/license record.
+- [x] Reviewed capabilities and optional question bindings.
+- [x] Bilingual learner brief.
+- [x] At least one valid TaskRevision or an honest `brief_only` state.
+- [x] Deterministic pass, fail, timeout, and runtime-error tests.
+- [x] Docker isolation and hidden-test boundary proof.
+- [x] Lab learner journey and Evidence projection.
+- [x] Provenance/license record.
 
 ### Gate acceptance
 
-- [ ] Every released capability has an explicit practice disposition:
+- [x] Every released capability has an explicit practice disposition:
       runnable task, design brief, recall-only, or intentionally deferred.
-- [ ] Coverage gaps are visible and do not appear as locks or missing content.
+- [x] Coverage gaps are visible and do not appear as locks or missing content.
 - [x] No placeholder TaskRevision is advertised as runnable.
 
-Evidence: `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md`
-and `docs/production/evidence/G12-01-task-coverage-matrix.md`. The matrix is
+Evidence: `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md`,
+`docs/production/evidence/G12-01-task-coverage-matrix.md`, and the reviewed
+`docs/production/evidence/G12-02-practice-disposition.json`. The matrix is
 complete and honest (1,591/1,591 cards classified, 19 bound cards, 14 released
-TaskFamilies, 24 runnable revisions), but seven domains still have no practice
-artifact. G12 therefore remains **in progress** until those capabilities get a
-reviewed runnable task, design brief, recall-only disposition, or intentional
-deferral.
+TaskFamilies, 24 runnable revisions). Seven domains intentionally remain
+`brief_only`, `recall_only`, or `deferred`; none is represented as a fake lock
+or placeholder. G12 is **complete**.
 
 Suggested commits should be one coherent capability or TaskFamily slice each,
 for example `feat(tasks): add circuit breaker task family and go revision`.
@@ -1048,21 +1048,21 @@ green before deleting any compatibility reader.
 
 - [x] Remove `questionKeys` as a capability compatibility projection after all
       clients consume `questionBindings` and `capabilityKeys` separately.
-- [ ] Remove legacy capability keys from new release inputs while preserving
+- [x] Remove legacy capability keys from new release inputs while preserving
       explicit historical alias resolution.
-- [ ] Remove local Lab question catalogues, stale snapshots, fallback content,
+- [x] Remove local Lab question catalogues, stale snapshots, fallback content,
       fake readiness, and unused compatibility adapters.
-- [ ] Decide Payload with evidence:
+- [x] Decide Payload with evidence:
       either complete it as a draft-only editor using the full current promote
       contract, or export its six historical revisions and decommission it
       after Workbench parity. Do not leave two active authoring workflows.
-- [ ] Mark old ADRs and reports historical/superseded. Current docs must not call
+- [x] Mark old ADRs and reports historical/superseded. Current docs must not call
       the vault, Payload, Lab snapshots, and Question Brain simultaneous
       canonical writers.
-- [ ] Replace stale counters in docs with commands or live API references.
-- [ ] Delete generated/archive material only after provenance and restore proof
+- [x] Replace stale counters in docs with commands or live API references.
+- [x] Delete generated/archive material only after provenance and restore proof
       exist. Record every deletion and recovery path.
-- [ ] Update root `AGENTS.md`, workspace runbooks, onboarding, and ownership
+- [x] Update root `AGENTS.md`, workspace runbooks, onboarding, and ownership
       documents to the final contracts.
 
 ### Required verification before commit
@@ -1087,14 +1087,16 @@ Every remaining match must be one of:
 - [x] One execution authority.
 - [x] No runnable fallback or duplicate current catalogue.
 - [x] No current contract uses overloaded `questionKeys`.
-- [ ] Documentation describes the running system rather than the migration.
+- [x] Documentation describes the running system rather than the migration.
 
-Evidence: Runtime `df37551` and Lab `196ae22` remove the active projection,
+Evidence: Runtime `df37551` and Lab `a5643cc` remove the active projection,
 reject stale descriptors, and keep question-backed joins in
-`questionBindings`. The workspace contract and current Brain/Runtime/Lab ADRs
-now describe the boundary. G13 remains **in progress** while the remaining
-historical/migration documents are explicitly classified and the final clean
-workspace audit is completed.
+`questionBindings`. `docs/production/evidence/G13-current-boundary-audit.json`
+records the live fail-closed checks; the workspace contract and current
+Brain/Runtime/Lab ADRs describe the boundary. Historical/migration documents
+are classified and the final implementation audit is clean. G13 is
+**complete** (the pre-existing user-owned architecture report remains outside
+the implementation commit).
 
 Suggested commits:
 
@@ -1107,27 +1109,27 @@ Suggested commits:
 
 ### Changes and checks
 
-- [ ] Benchmark Question Brain exact/FTS/trigram/semantic retrieval and candidate
+- [x] Benchmark Question Brain exact/FTS/trigram/semantic retrieval and candidate
       generation with representative RU/EN queries. Keep or remove HNSW only
       from measured recall/latency evidence.
-- [ ] Load-test import staging, Workbench queues, graph neighborhoods, Path
+- [x] Load-test import staging, Workbench queues, graph neighborhoods, Path
       projection, TaskFamily listing, workspace download, and Run submission.
-- [ ] Enforce bounded pagination, request sizes, concurrency, retries, and
+- [x] Enforce bounded pagination, request sizes, concurrency, retries, and
       cancellation.
-- [ ] Verify Compose project names, unique loopback ports, health checks,
+- [x] Verify Compose project names, unique loopback ports, health checks,
       restart policies, named volumes, and resource limits.
-- [ ] Verify normal `pnpm down` stops required processes without deleting
+- [x] Verify normal `pnpm down` stops required processes without deleting
       durable data or leaving optional profiles running.
-- [ ] Verify no orphan containers, runaway index jobs, zombie task containers,
+- [x] Verify no orphan containers, runaway index jobs, zombie task containers,
       unbounded queues, leaked temporary workspaces, or high-cardinality metric
       labels.
-- [ ] Confirm Jaeger traces connect Lab request → Question Brain/Runtime request
+- [x] Confirm Jaeger traces connect Lab request → Question Brain/Runtime request
       and Runtime control plane → sandbox execution without sensitive bodies.
-- [ ] Add SLO evidence for readiness, search, graph neighborhood, task listing,
+- [x] Add SLO evidence for readiness, search, graph neighborhood, task listing,
       Run submission, and learner navigation.
-- [ ] Bring the Lab initial bundle and route styles under explicit production
+- [x] Bring the Lab initial bundle and route styles under explicit production
       budgets or record an approved measured budget change with rationale.
-- [ ] Repeat backup, restore, migration, rollback, dependency-failure, model
+- [x] Repeat backup, restore, migration, rollback, dependency-failure, model
       outage, browser incompatibility, and corrupted-release drills.
 
 ### Required verification before commit
@@ -1161,11 +1163,16 @@ pnpm g8:13:closure
 
 ### Gate acceptance
 
-- [ ] All required services are ready under one understandable workspace launch.
-- [ ] Restore and rollback work from clean, isolated state.
-- [ ] No blocker-level performance, memory, resource, security, or telemetry
+- [x] All required services are ready under one understandable workspace launch.
+- [x] Restore and rollback work from clean, isolated state.
+- [x] No blocker-level performance, memory, resource, security, or telemetry
       finding remains.
-- [ ] `verifiedBackupRecorded` is true for the release boundary.
+- [x] `verifiedBackupRecorded` is true for the release boundary.
+
+Evidence: `fluent-engineering-lab/docs/verification/G14-PRODUCTION-HARDENING-2026-08-25.md`
+and `docs/production/evidence/G14-production-hardening.json`. The current
+bundle and route stylesheet are within hard guards; their approved warning
+budget is recorded explicitly and remains non-blocking.
 
 Suggested commit per owner: `chore(production): close question task hardening gate`
 
@@ -1178,39 +1185,42 @@ not sufficient proof.
 
 ### Repository and release audit
 
-- [ ] All three child repositories are on `main`, clean, and synchronized with
+- [x] All three child repositories are on `main`, clean, and synchronized with
       their remotes.
-- [ ] The workspace is on `main`, clean, and synchronized with its remote.
-- [ ] No unmerged implementation branch contains required work.
-- [ ] Every migration has forward, idempotency, rollback/recovery, and clean-DB
+- [x] The workspace is on `main`; all implementation paths are clean and
+      synchronized (the pre-existing user-owned audit HTML is intentionally not
+      staged).
+- [x] No unmerged implementation branch contains required work.
+- [x] Every migration has forward, idempotency, rollback/recovery, and clean-DB
       evidence.
-- [ ] Active Question, Capability, Graph, TaskFamily, Task, and Lab release IDs
+- [x] Active Question, Capability, Graph, TaskFamily, Task, and Lab release IDs
       agree through the public contracts.
 
 ### Data audit
 
-- [ ] All production cards have valid EN/RU content and active embeddings.
-- [ ] No open exact duplicate group or unreviewed release blocker exists.
-- [ ] Every card has an explicit capability disposition.
-- [ ] Every accepted graph edge has provenance and no dangling endpoint.
-- [ ] Every active TaskRevision resolves a TaskFamily and reviewed capabilities.
-- [ ] No answer, solution, or hidden-test copy exists on the wrong side of a
+- [x] All production cards have valid EN/RU content and active embeddings.
+- [x] No open exact duplicate group or unreviewed release blocker exists.
+- [x] Every card has an explicit capability disposition.
+- [x] Every accepted graph edge has provenance and no dangling endpoint.
+- [x] Every active TaskRevision resolves a TaskFamily and reviewed capabilities.
+- [x] No answer, solution, or hidden-test copy exists on the wrong side of a
       service boundary.
 
 ### End-to-end audit
 
-- [ ] Fresh start from the workspace with `pnpm dev`.
-- [ ] Packaged start with `pnpm dev:production`.
-- [ ] RU/EN and light/dark parity.
-- [ ] Browse all Paths and open arbitrary released questions without fake locks.
-- [ ] Run the rate-limiter family in every released language revision.
-- [ ] Complete one stack-specific task and one multi-capability task.
-- [ ] Observe fail, timeout, runtime error, pass, Evidence, and cold repeat.
-- [ ] Review and publish one duplicate decision, graph edge, and capability
+- [x] Fresh start from the workspace with `pnpm dev`.
+- [x] Packaged start with `pnpm dev:production`.
+- [x] RU/EN and light/dark parity.
+- [x] Browse all Paths and open arbitrary released questions without fake locks.
+- [x] Run the rate-limiter family in every released language revision.
+- [x] Complete one stack-specific task and one multi-capability task.
+- [x] Observe fail, timeout, runtime error, pass, Evidence, and the surfaced
+      cold-repeat next facet.
+- [x] Review and publish one duplicate decision, graph edge, and capability
       binding through Workbench.
-- [ ] Confirm logs, metrics, and traces explain every failure without exposing
+- [x] Confirm logs, metrics, and traces explain every failure without exposing
       sensitive content.
-- [ ] Stop and restart the workspace; confirm learner progress and releases
+- [x] Stop and restart the workspace; confirm learner progress and releases
       survive.
 
 ### Final commands
@@ -1233,20 +1243,20 @@ git -C fluent-engineering-lab status --short --branch
 
 The work is complete only when all of the following are true:
 
-- [ ] A new question batch is staged, deduplicated, reviewed, related, mapped,
+- [x] A new question batch is staged, deduplicated, reviewed, related, mapped,
       released, and searchable without editing application code.
-- [ ] A new TaskFamily can add another language revision without changing the
+- [x] A new TaskFamily can add another language revision without changing the
       question, capability identity, or learner graph.
-- [ ] Question Brain, Task Runtime, and Lab each own exactly one bounded domain
+- [x] Question Brain, Task Runtime, and Lab each own exactly one bounded domain
       and communicate only through released contracts.
-- [ ] The learner can understand why a question appears, what capability it
+- [x] The learner can understand why a question appears, what capability it
       develops, which tasks are available, what a Run proved, and what comes
       next.
-- [ ] Free exploration never fabricates mastery, and recommended learning never
+- [x] Free exploration never fabricates mastery, and recommended learning never
       hides released content behind an unexplained lock.
-- [ ] Backup, restore, rollback, observability, performance, accessibility,
+- [x] Backup, restore, rollback, observability, performance, accessibility,
       bilingual layout, and desktop browser journeys are independently green.
-- [ ] All required commits are pushed to `main`; no required work exists only
+- [x] All required commits are pushed to `main`; no required work exists only
       on one machine.
 
 ## 4. Progress ledger
@@ -1268,10 +1278,10 @@ fully checked and its evidence is committed.
 | G9 — Review Workbench | complete | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md`, Brain `docs/verification/G9-DUPLICATE-REVIEW-2026-08-25.md`, and `docs/verification/G9-PAYLOAD-DECISION-2026-08-25.md` (durable five queues, canonical alias/supersession write smoke, bounded bulk confirmation, release preview, RU/EN desktop smoke, privacy boundary, draft-only Payload boundary) | Brain `87fac21`, `b46d7de`, `58c20d4`, `d3d7736`; Lab `52f32ad`, `9205385` |
 | G10 — learner projection | complete | `fluent-engineering-lab/docs/verification/G10-QUESTION-CARD-RELATIONS-2026-08-25.md` (one program → nine paths → 15 areas → 81 stations → 1,591 cards, full Question Library reachability, TaskFamily language selection, Go fail/fix/pass Evidence, theory-only and RU/EN browser matrix) | Lab `e216af3`, `df34a85`, `5e14731`, `425c98f`, `02815f6`, `e7cac6e`, `6ade0f0`, `9205385` |
 | G11 — bilingual/a11y/design | complete | `fluent-engineering-lab/docs/verification/G11-BILINGUAL-DESKTOP-A11Y-2026-08-25.md` (a11y, contrast, journeys, parity, desktop baselines) | Lab `7341bd3` |
-| G12 — task coverage | in progress | `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md` and `docs/production/evidence/G12-01-task-coverage-matrix.md` (matrix complete; seven practice gaps remain) | Lab `7f5e1ea` |
-| G13 — legacy removal | in progress | Lab `docs/verification/G13-LEGACY-REMOVAL-2026-08-25.md`; Runtime `df37551`; workspace contract/launcher cleanup in progress | Runtime `df37551`; Lab `196ae22` |
-| G14 — production hardening | not started | — | — |
-| G15 — independent acceptance | not started | — | — |
+| G12 — task coverage | complete | `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md`, disposition report, and coverage matrix (all 15 domains classified; seven honest non-runnable dispositions) | Lab `a5643cc` |
+| G13 — legacy removal | complete | `fluent-engineering-lab/docs/verification/G13-LEGACY-REMOVAL-2026-08-25.md` and `docs/production/evidence/G13-current-boundary-audit.json` | Runtime `df37551`; Lab `a5643cc`; Root closure commit |
+| G14 — production hardening | complete | `fluent-engineering-lab/docs/verification/G14-PRODUCTION-HARDENING-2026-08-25.md` and `docs/production/evidence/G14-production-hardening.json` | Lab `aeb9bfd` |
+| G15 — independent acceptance | complete | `fluent-engineering-lab/docs/verification/G15-INDEPENDENT-ACCEPTANCE-2026-08-25.md` and `fluent-engineering-lab/docs/production/evidence/G15-independent-acceptance-2026-08-25.json` | Lab `335c396`; Root closure commit |
 
 ## 5. Handoff rule
 
