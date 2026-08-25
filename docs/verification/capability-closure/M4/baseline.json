@@ -2,11 +2,11 @@
   "gate": "M4",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T22:00:26.925Z",
+  "capturedAt": "2026-08-25T22:03:16.251Z",
   "localBaseUrl": "http://127.0.0.1:49300",
   "repositories": {
     "root": "38c85d3",
-    "fluent-engineering-lab": "f427ec7",
+    "fluent-engineering-lab": "9af8713",
     "fluent-question-brain": "e698fc2",
     "fluent-task-runtime": "45c4519"
   },
@@ -55,6 +55,7 @@
     "catalogueWorkspaces": "PASS",
     "exploreOpenTopics": "PASS",
     "consumerReleaseReconciliation": "PASS",
+    "publishedAndPracticeSurfaces": "PASS",
     "allConsumerSurfaces": "PARTIAL",
     "m4Result": "NOT_RELEASED"
   }

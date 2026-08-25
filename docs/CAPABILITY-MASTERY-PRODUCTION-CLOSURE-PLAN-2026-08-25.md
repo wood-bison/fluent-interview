@@ -827,14 +827,16 @@ acceptance.
 slice дал `pass` (81/81 routes, 1/1 executable station, 19/19 catalogue
 workspaces, zero unreleased catalogue tasks). Последующий commit `7289e7d`
 добавил в тот же независимый crawl Explore-проекцию: 81/81 topics open, 0
-locked, 66 runnable stations, inventory valid. Это закрывает только
-locked, 66 runnable stations, inventory valid. Commit `f427ec7` добавил в тот
-же read-only audit сверку Program, Coverage, Progress и Next: одна
+locked, 66 runnable stations, inventory valid. Commit `f427ec7` добавил
+read-only сверку Program, Coverage, Progress и Next: одна
 `programId`/graph release/manifest identity, 15 areas, 81 stations, 81
-released routes и 66 runnable Explore activities. Это закрывает только
-техническое доказательство route/catalogue и consumer identity rail, но не
-переводит M4 в PASS: Practice/Studio drill-down и полная counter ownership
-матрица остаются частью следующего acceptance-пакета. Capability-only `project-book-boundary-001` намеренно
+released routes и 66 runnable Explore activities. Commit `9af8713` расширил
+проверку на Practice, Published projection и flattened learner-map: Practice
+identity совпадает, Published содержит 15 domains, learner-map — 81 node. Это
+закрывает только техническое доказательство route/catalogue и consumer
+identity rail, но не переводит M4 в PASS: Studio drill-down и полная counter
+ownership матрица остаются частью следующего acceptance-пакета.
+Capability-only `project-book-boundary-001` намеренно
 остаётся в operator release, но не выдаётся ученику.
 
 Live evidence этого среза зафиксировано в
