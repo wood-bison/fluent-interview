@@ -621,30 +621,32 @@ G2 capability registry and G6 review pipeline must be complete. Do not map all
 
 ### Changes
 
-- [ ] Generate candidate capabilities for each current QuestionCard using
+- [x] Generate candidate capabilities for each current QuestionCard using
       exact editorial registries, semantic neighbors, and existing reviewed
       examples. Mark the source and confidence of each proposal.
-- [ ] Allow zero, one, or multiple capabilities per card.
-- [ ] Assign an explicit relationship role: primary, prerequisite, follow-up,
+- [x] Allow zero, one, or multiple capabilities per card.
+- [x] Assign an explicit relationship role: primary, prerequisite, follow-up,
       contrast, recall, or supporting evidence.
-- [ ] Preserve theory-only cards without manufacturing a fake station.
-- [ ] Populate the many-to-many `content.question_capability` relation only
+- [x] Preserve theory-only cards without manufacturing a fake station.
+- [x] Populate the many-to-many `content.question_capability` relation only
       after review.
-- [ ] Pin every binding to question revision, capability registry revision, and
+- [x] Pin every binding to question revision, capability registry revision, and
       release ID.
-- [ ] Add complete dry-run and accepted/rejected/unmapped reports by Path,
+- [x] Add complete dry-run and accepted/rejected/unmapped reports by Path,
       Domain, Capability, locale, card kind, and topic.
-- [ ] Keep the already accepted Path/Domain release separate from station-level
+- [x] Keep the already accepted Path/Domain release separate from station-level
       capability binding.
 
 ### Required tests
 
-- [ ] One question maps to multiple capabilities without duplication.
-- [ ] One capability maps to many questions and TaskFamilies.
-- [ ] A theory-only card remains released/searchable without a Run button.
-- [ ] A stale question revision blocks binding approval.
-- [ ] Superseded capability keys cannot receive new bindings.
-- [ ] A rollback restores the previous binding release.
+- [x] One question maps to multiple capabilities without duplication.
+- [x] One capability maps to many questions and TaskFamilies. Question Brain
+      proves the many-question relation in its manifest contract; TaskFamily
+      fan-out is consumed from the Runtime release join in G8.
+- [x] A theory-only card remains released/searchable without a Run button.
+- [x] A stale question revision blocks binding approval.
+- [x] Superseded capability keys cannot receive new bindings.
+- [x] A rollback restores the previous binding release.
 
 ### Required verification before commit
 
@@ -658,13 +660,22 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] Every current card has an explicit reviewed disposition:
+- [x] Every current card has an explicit reviewed disposition:
       `bound`, `theory_only`, `needs_new_capability`, or `rejected`.
-- [ ] No `unmapped` counter is hidden; each unresolved row has a review reason.
-- [ ] Coverage reports distinguish Path/Domain coverage from station/task
+- [x] No `unmapped` counter is hidden; each unresolved row has a review reason.
+- [x] Coverage reports distinguish Path/Domain coverage from station/task
       coverage.
 
-Suggested commit: `feat(mapping): release reviewed question capability bindings`
+Evidence: `fluent-question-brain/docs/verification/G7-QUESTION-CAPABILITY-2026-08-25.md`,
+`fluent-question-brain/docs/verification/G7-capability-binding-report-2026-08-25.json`,
+and `fluent-question-brain/docs/verification/G7-capability-binding-manifest-2026-08-25.json`.
+The live Compose smoke generated 1,591 dispositions (19 `bound`, 1,572
+`theory_only`), 19 accepted bindings, 1,373 semantic candidates with 1,288
+open review proposals, repeated approval without duplicate release items,
+rollback to the prior immutable release, and a deliberate stale-hash fixture
+that failed closed. Coverage is emitted for path, domain, locale, card kind,
+topic, and capability. Brain commits: `cca733b`, `f848e8c`, `a44347b`,
+`88e8bac`, `8343904`, `391895e`.
 
 ## G8 — Publish the Task Runtime ↔ Question Brain release join
 
@@ -1160,7 +1171,7 @@ fully checked and its evidence is committed.
 | G4 — remove task duplication | complete | Brain `docs/verification/G4-TASK-BOUNDARY-2026-08-25.md` (47 legacy blocks migrated, 0 current embedded solutions, one live TaskFamily join) | Brain `78cc4da`, `942c9b3` |
 | G5 — content graph | complete | `docs/verification/G5-CONTENT-GRAPH-2026-08-25.md` | Brain `78cc4da`, `942c9b3` |
 | G6 — semantic proposal pipeline | complete | `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md` | Brain `ff92be4`, `eab9fb5`, `8cba06a`, `09482da`, `4c7cc5d` |
-| G7 — question-capability bindings | not started | — | — |
+| G7 — question-capability bindings | complete | `fluent-question-brain/docs/verification/G7-QUESTION-CAPABILITY-2026-08-25.md` plus live coverage/report and smoke evidence | Brain `cca733b`, `f848e8c`, `a44347b`, `88e8bac`, `8343904`, `391895e` |
 | G8 — release join | not started | — | — |
 | G9 — Review Workbench | not started | — | — |
 | G10 — learner projection | not started | — | — |
