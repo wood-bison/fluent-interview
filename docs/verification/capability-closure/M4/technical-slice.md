@@ -26,7 +26,7 @@ At `2026-08-25T22:03:16.251Z`, the restarted production package on
 | Learner-visible TaskFamily keys | `14` |
 | Runnable stations | `1` |
 | `/api/labs/catalogue` | `19` items, six languages, zero missing capability keys; all 19 workspaces respond |
-| `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable station workspaces, 19/19 catalogue workspaces, Program/Coverage/Practice/Published/Progress/Next identities and counts reconciled |
+| `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable station workspaces, 19/19 catalogue workspaces, Program/Coverage/Practice/Published/Progress/Next and Studio Question Brain identities/counts reconciled |
 | Explore projection (`x-fel-mode: explore`) | `81` open topics, `0` locked topics, `66` runnable stations; inventory valid |
 
 The exact machine-readable capture is in
@@ -53,8 +53,21 @@ the exit status or hide a test/build failure.
 The compiler/contract change is in Lab `7635423`; the learner catalogue
 release-boundary fix is in Lab `7018909`; the independent audit crawl is in
 Lab `d4ef81b`; the Explore-mode acceptance assertion is in Lab `7289e7d`; the
-first consumer-surface release reconciliation is in Lab `f427ec7`, and the
-Practice/Published/learner-map extension is in Lab `9af8713`, all on `main`.
+first consumer-surface release reconciliation is in Lab `f427ec7`, the
+Practice/Published/learner-map extension is in Lab `9af8713`, and the Studio
+Question Brain counter reconciliation is in Lab `e088ad6`, all on `main`.
+
+At `2026-08-25T22:09:44.300Z`, the independent audit also verified the
+operator-facing Studio projections:
+
+- Question Brain summary release `question-release-d00a14931e607336` matches
+  `product-inventory.release.questionReleaseId`;
+- Studio summary and quality both report `1,591` cards and `135` topic groups;
+- published, graph-released, English and Russian checks reconcile to the same
+  release (`1,591 / 1,591 / 0 / 0`);
+- the inventory still reports only `6` station-bound cards, making the corpus
+  versus learning-station distinction explicit rather than silently claiming
+  that every card is already a learner station.
 
 ## What changed
 
@@ -76,8 +89,8 @@ Practice/Published/learner-map extension is in Lab `9af8713`, all on `main`.
 ## What this does not prove
 
 This is not an M4 release. The route-manifest join, zero-unreleased-task
-catalogue check, 19-workspace HTTP crawl and Explore-mode open-topic check are
-green, but complete counter drill-down reconciliation across Program, Map,
-Practice, Progress and Studio has not been accepted yet. Every counter still
-needs an owner, formula, release id and drill-down collection before the gate
-can move to `ACTIVE`.
+catalogue check, 19-workspace HTTP crawl, Explore-mode open-topic check and
+Studio release/counter reconciliation are green, but complete counter
+drill-down reconciliation across Program, Map, Practice, Progress and Studio
+has not been accepted yet. Every counter still needs an owner, formula,
+release id and drill-down collection before the gate can move to `ACTIVE`.

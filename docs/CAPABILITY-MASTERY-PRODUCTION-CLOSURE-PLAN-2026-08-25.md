@@ -836,6 +836,12 @@ identity совпадает, Published содержит 15 domains, learner-map 
 закрывает только техническое доказательство route/catalogue и consumer
 identity rail, но не переводит M4 в PASS: Studio drill-down и полная counter
 ownership матрица остаются частью следующего acceptance-пакета.
+Последующий commit `e088ad6` добавил в тот же независимый crawl Studio
+Question Brain: summary и quality release/счётчики сверяются с inventory
+(`1,591` карточка, `135` topic groups, `0` missing EN/RU), при этом отдельно
+сохраняется честный `stationBoundCardCount=6`. Это не автопривязка карточек и
+не закрытие M4: collection drill-down для каждого counter и его owner/formula
+ещё должны пройти acceptance.
 Capability-only `project-book-boundary-001` намеренно
 остаётся в operator release, но не выдаётся ученику.
 
