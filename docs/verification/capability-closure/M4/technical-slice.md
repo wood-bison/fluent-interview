@@ -9,7 +9,7 @@ collection; it is not allowed to redefine the released revision count.
 
 ## Live local evidence
 
-At `2026-08-25T21:40:26.000Z`, the restarted production package on
+At `2026-08-25T21:49:56.000Z`, the restarted production package on
 `127.0.0.1:49300` returned:
 
 | Surface | Result |
@@ -21,21 +21,28 @@ At `2026-08-25T21:40:26.000Z`, the restarted production package on
 | Stations | `81` |
 | Question Brain cards | `1,591` |
 | Question Brain topic groups | `135` |
-| Runtime task revisions | `20` |
+| Runtime release descriptors (operator view) | `20` |
+| Learner-visible Runtime revisions | `19` |
+| Learner-visible TaskFamily keys | `14` |
 | Runnable stations | `1` |
-| `/api/labs/catalogue` | `20` items, six languages, zero missing capability keys |
-| `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable workspaces |
+| `/api/labs/catalogue` | `19` items, six languages, zero missing capability keys; all 19 workspaces respond |
+| `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable station workspaces, 19/19 catalogue workspaces |
 
 The exact machine-readable capture is in
 [`baseline.json`](baseline.json).
 
-The compiler/contract change is in Lab `7635423`; the independent audit
-command is in Lab `cf31611` on `main`.
+The compiler/contract change is in Lab `7635423`; the learner catalogue
+release-boundary fix is in Lab `7018909`; the independent audit crawl is in
+Lab `d4ef81b` on `main`.
 
 ## What changed
 
 - `ProgramController` compiles the inventory from released Program/Map,
   Question Brain, Runtime relation audit and profile progress.
+- Runtime's operator descriptor count is deliberately not copied into the
+  learner counter: capability-only/unreleased descriptors remain available to
+  authoring and Studio, while only fully joined `valid` revisions become
+  learner TaskFamilies and revisions.
 - The same compiler emits a route manifest for every released station, with
   learner-safe route, kind, state, readiness and executable flag.
 - The shell rail no longer fetches a second Question Brain summary to build a
@@ -47,8 +54,8 @@ command is in Lab `cf31611` on `main`.
 
 ## What this does not prove
 
-This is not an M4 release. The route-manifest join and bounded HTTP crawl are
-now green, but no unreleased task exposure audit and no complete counter
-drill-down reconciliation across Progress and Studio have been accepted yet.
-Every counter still needs an owner, formula, release id and drill-down
-collection before the gate can move to `ACTIVE`.
+This is not an M4 release. The route-manifest join, zero-unreleased-task
+catalogue check and 19-workspace HTTP crawl are green, but complete counter
+drill-down reconciliation across Program, Map, Practice, Progress and Studio
+has not been accepted yet. Every counter still needs an owner, formula,
+release id and drill-down collection before the gate can move to `ACTIVE`.

@@ -2,11 +2,11 @@
   "gate": "M4",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T21:40:26.000Z",
+  "capturedAt": "2026-08-25T21:49:56.000Z",
   "localBaseUrl": "http://127.0.0.1:49300",
   "repositories": {
     "root": "4dbf6ec",
-    "fluent-engineering-lab": "cf31611",
+    "fluent-engineering-lab": "d4ef81b",
     "fluent-question-brain": "e698fc2",
     "fluent-task-runtime": "45c4519"
   },
@@ -22,8 +22,8 @@
       "questionCardCount": 1591,
       "topicGroupCount": 135,
       "capabilityCount": 68,
-      "taskFamilyCount": 15,
-      "taskRevisionCount": 20,
+      "taskFamilyCount": 14,
+      "taskRevisionCount": 19,
       "runnableStationCount": 1,
       "stationBoundCardCount": 6,
       "evidenceCount": 0
@@ -37,7 +37,9 @@
     "questionSummary": { "httpStatus": 200, "cardCount": 1591, "topicGroupCount": 135 },
     "taskCatalogue": {
       "httpStatus": 200,
-      "itemCount": 20,
+      "itemCount": 19,
+      "runtimeReleaseDescriptorCount": 20,
+      "runtimeLearnerRunnableCount": 19,
       "languages": ["csharp", "javascript", "go", "java", "sql", "typescript"],
       "missingCapabilityKeys": 0
     }
@@ -49,6 +51,8 @@
     "runtimeAndQuestionBrainJoin": "PASS",
     "routeManifestGeneratedFromInventory": "PASS",
     "independentExecutableRouteCrawl": "PASS",
+    "zeroUnreleasedLearnerTasks": "PASS",
+    "catalogueWorkspaces": "PASS",
     "allConsumerSurfaces": "PARTIAL",
     "m4Result": "NOT_RELEASED"
   }

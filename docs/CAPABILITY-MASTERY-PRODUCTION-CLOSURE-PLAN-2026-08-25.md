@@ -99,7 +99,7 @@ Baseline на 25 августа 2026:
 | Areas / stations | 15 / 81 | learner projection, а не число вопросов; Plan areas — отдельная acceptance view |
 | Brain capabilities / bindings | 16 active canonical / 19 bindings | 11 deprecated aliases сохраняются только для истории; 19 — не число capabilities |
 | Lab capabilities / placements | 68 / 81 | learner projection, не второй registry capabilities |
-| Task families / revisions | 15 total / 14 released / 20 revisions | canonical source — Runtime `task-family-release-2026-08-25` |
+| Task families / revisions | 15 operator families / 14 learner-visible families; 20 Runtime descriptors / 19 learner-visible revisions | canonical source — Runtime `task-family-release-2026-08-25`; capability-only `project-book-boundary-001` stays out of Practice until runnable |
 | Runtime revisions runnable | 19 | одна release-запись противоречива |
 | Server-owned runnable stations | 1 | реальная readiness намного ниже UI promises |
 | Обещанные executable routes | 66 | список для обязательного crawl |
@@ -816,17 +816,20 @@ learner rail: Program/Map, Question Brain corpus, Runtime relation audit и prof
 зашит литералом `9`, неизвестные station keys не считаются bound, старый
 отдельный Question Brain summary больше не используется rail, а invalid Runtime
 bindings делают inventory недействительным. Это техническая основа,
-но не закрытие M4: route manifest, все consumer surfaces и независимый
-crawl остаются в очереди. Гейт M4 не активируется, пока M3 не получит
-человеческое acceptance.
+но не закрытие M4: consumer surfaces и полная counter/drill-down сверка
+остаются в очереди. Гейт M4 не активируется, пока M3 не получит человеческое
+acceptance.
 
 В Lab `7635423` projection получил additive `routeManifest`: 81 route строится
 из тех же released stations и readiness-фактов, а не из второго UI-каталога.
-Независимый HTTP-аудит `pnpm m4:route-audit` проверяет map↔inventory join,
-SPA route shell и runnable workspace; live slice дал `pass` (81/81 routes,
-1/1 executable). Это закрывает только техническое доказательство route rail,
-но не переводит M4 в PASS: consumer surfaces, counters drill-down и полный
-independent crawl остаются частью следующего acceptance-пакета.
+Независимый HTTP-аудит `pnpm m4:route-audit` теперь также сверяет learner
+каталог с Runtime release summary и проходит все 19 learner workspaces; live
+slice дал `pass` (81/81 routes, 1/1 executable station, 19/19 catalogue
+workspaces, zero unreleased catalogue tasks). Это закрывает только
+техническое доказательство route/catalogue rail, но не переводит M4 в PASS:
+consumer surfaces и counters drill-down остаются частью следующего
+acceptance-пакета. Capability-only `project-book-boundary-001` намеренно
+остаётся в operator release, но не выдаётся ученику.
 
 Live evidence этого среза зафиксировано в
 [`M4/baseline.json`](verification/capability-closure/M4/baseline.json) и
