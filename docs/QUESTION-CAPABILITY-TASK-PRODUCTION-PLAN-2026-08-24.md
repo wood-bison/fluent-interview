@@ -775,10 +775,12 @@ Bulk selection is capped at 50 and requires a visible two-step confirmation;
 focus returns to the selected row after queue changes; the release panel shows
 immutable before/after graph pins, dry-run status, blocked reasons, and rollback
 consequences. Bilingual aria-live announcements switch with the active locale.
-The gate remains **in progress** only for the later Payload decision. The
-canonical alias/supersession write boundary and the complete live review matrix
-are published and exercised end-to-end; an empty queue is explicit, never a
-hidden fallback.
+The gate remains **in progress** only for the later learner projection gates.
+The canonical alias/supersession write boundary, complete live review matrix,
+and Payload authoring decision are published and exercised end-to-end; an empty
+queue is explicit, never a hidden fallback. Payload remains a draft-only editor
+with the authenticated promote seam; Question Brain remains the sole canonical
+published writer.
 
 ### Changes
 
@@ -798,7 +800,11 @@ hidden fallback.
 - [x] Publish the canonical alias/supersession proposal and decision contract;
       proposals are staged, accepted/rejected and materialized transactionally
       by Question Brain, while an empty queue remains explicit.
-- [ ] Decide Payload's future only after this Workbench is production-ready.
+- [x] Decide Payload's future only after this Workbench is production-ready:
+      keep it as draft-only authoring with a read-only released projection and
+      the existing authenticated `/v1/promote` seam. Evidence is recorded in
+      `fluent-question-brain/docs/adr/0004-payload-draft-only-authoring.md` and
+      `fluent-question-brain/docs/verification/G9-PAYLOAD-DECISION-2026-08-25.md`.
 
 ### Required tests
 
@@ -827,10 +833,9 @@ git diff --check
 
 ### Gate acceptance
 
-- [x] Every machine proposal can be resolved without CLI or direct SQL; the
-      only remaining G9 decision is whether Payload belongs in the authoring
-      path, and that decision is explicitly deferred until this Workbench is
-      accepted.
+- [x] Every machine proposal can be resolved without CLI or direct SQL. Payload
+      is explicitly draft-only and cannot bypass the Workbench/Question Brain
+      publish boundary.
 - [x] Every implemented decision is visible in audit history and in the next
       dry-run.
 - [x] No review action directly grants learner mastery or task pass.
