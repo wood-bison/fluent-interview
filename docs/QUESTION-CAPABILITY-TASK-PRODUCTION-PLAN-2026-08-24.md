@@ -771,9 +771,10 @@ Bulk selection is capped at 50 and requires a visible two-step confirmation;
 focus returns to the selected row after queue changes; the release panel shows
 immutable before/after graph pins, dry-run status, blocked reasons, and rollback
 consequences. Bilingual aria-live announcements switch with the active locale.
-The gate remains **in progress** only for a canonical alias/supersession write
-contract (there are currently zero pending proposals) and the later Payload
-decision; the empty queue is explicit, never a hidden fallback.
+The gate remains **in progress** for the remaining live review matrix and the
+later Payload decision. The canonical alias/supersession write boundary is now
+published and exercised end-to-end; its empty queue is explicit, never a hidden
+fallback.
 
 ### Changes
 
@@ -790,14 +791,15 @@ decision; the empty queue is explicit, never a hidden fallback.
       approval.
 - [x] Keep learner and operator routes separate; review permissions must not
       leak through learner APIs.
-- [ ] Publish the canonical alias/supersession proposal and decision contract;
-      until then the queue is read-only and explicitly empty when no proposals
-      exist.
+- [x] Publish the canonical alias/supersession proposal and decision contract;
+      proposals are staged, accepted/rejected and materialized transactionally
+      by Question Brain, while an empty queue remains explicit.
 - [ ] Decide Payload's future only after this Workbench is production-ready.
 
 ### Required tests
 
-- [x] Accept/reject/not-duplicate/supersede flows are idempotent.
+- [x] Accept/reject/not-duplicate/supersede flows are idempotent, including the
+      canonical alias/supersession decision endpoint.
 - [x] Concurrent decisions produce a conflict, not last-write-wins corruption.
 - [x] The Workbench never renders answer bodies or secrets into telemetry.
 - [x] RU and EN review views preserve layout and meaning.
@@ -1217,7 +1219,7 @@ fully checked and its evidence is committed.
 | G6 — semantic proposal pipeline | complete | `fluent-question-brain/docs/verification/G6-IMPORT-REVIEW-2026-08-25.md` | Brain `ff92be4`, `eab9fb5`, `8cba06a`, `09482da`, `4c7cc5d` |
 | G7 — question-capability bindings | complete | `fluent-question-brain/docs/verification/G7-QUESTION-CAPABILITY-2026-08-25.md` plus live coverage/report and smoke evidence | Brain `cca733b`, `f848e8c`, `a44347b`, `88e8bac`, `8343904`, `391895e` |
 | G8 — release join | complete | Runtime `docs/verification/G8-RELEASE-JOIN-2026-08-25.md`, `scripts/release/g8-release-join-smoke.sh`, live summary/relations and Lab health-gate evidence | Runtime `25dbb8d`; Lab `6634feb` |
-| G9 — Review Workbench | in progress | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md` (live contract, five queues, bounded bulk confirmation, release preview, RU/EN desktop smoke, privacy boundary) | Brain `39ef491`; Lab `b54afdd`, `acc1f74`, `162538b` |
+| G9 — Review Workbench | in progress | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md` and Brain `docs/verification/G9-ALIAS-SUPERSESSION-2026-08-25.md` (live five queues, canonical alias/supersession write smoke, bounded bulk confirmation, release preview, RU/EN desktop smoke, privacy boundary) | Brain `39ef491`, `a8573c6`; Lab `b54afdd`, `acc1f74`, `162538b`, `145d33a`, `bbd5331`, `4c1327f` |
 | G10 — learner projection | not started | — | — |
 | G11 — bilingual/a11y/design | not started | — | — |
 | G12 — task coverage | not started | — | — |
