@@ -15,8 +15,8 @@
       "dirty": false
     },
     "fluent-engineering-lab": {
-      "head": "d17ad90",
-      "originMain": "d17ad90",
+      "head": "a01b44f",
+      "originMain": "a01b44f",
       "dirty": false
     },
     "fluent-question-brain": {
@@ -32,7 +32,7 @@
   },
   "implementation": {
     "repository": "fluent-engineering-lab",
-    "commit": "d17ad90",
+    "commit": "a01b44f",
     "contractVersion": "capability-mastery-ledger.v2",
     "eventContractVersion": "capability-evidence.v2",
     "sessionContractVersion": "learning-session.v1",
@@ -101,7 +101,7 @@
     "fullLabCheck": {
       "command": "pnpm check",
       "result": "pass",
-      "details": "curriculum drift 0; lab-contracts 247 suites/1253 tests; learning-api 163 suites/703 tests; web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
+      "details": "curriculum drift 0; lab-contracts 247 suites/1253 tests; learning-api 163 suites/704 passed tests (1 skipped); web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
       "knownWarnings": "pre-existing lint and non-fatal bundle budget warnings only"
     }
   },
