@@ -1,6 +1,6 @@
 {
   "contractVersion": "capability-closure.m1-baseline.v1",
-  "status": "self-check-pass-review-pending",
+  "status": "independent-review-pass",
   "capturedAt": "2026-08-25T18:49:10Z",
   "plan": {
     "id": "capability-mastery-production-closure",
@@ -10,10 +10,9 @@
   },
   "repositories": {
     "root": {
-      "headBeforeProof": "37bcaa9d92faa17cf764e8cc9e2650c11a82f106",
-      "originMainBeforeProof": "37bcaa9d92faa17cf764e8cc9e2650c11a82f106",
-      "dirtyBeforeProof": true,
-      "reason": "M1 proof and plan ledger are this root commit"
+      "head": "4cb6ce773e9c3343d6693d83bb0170fdc12f1371",
+      "originMain": "4cb6ce773e9c3343d6693d83bb0170fdc12f1371",
+      "dirty": false
     },
     "fluent-engineering-lab": {
       "head": "401ee9fe8993fc739f2556deebf3cec4746e4848",
@@ -91,5 +90,21 @@
       "UI readiness compiler and route unlock policy (M4+)"
     ]
   },
-  "independentReviewer": "pending"
+  "independentReviewer": {
+    "status": "PASS",
+    "reviewer": "technical_release_plan",
+    "reviewedAt": "2026-08-25T18:50:00Z",
+    "notes": [
+      "all four trees clean and HEAD equals origin/main",
+      "all three repository checks passed without skipping Go",
+      "20-task v3 release join smoke passed with manifest-derived count",
+      "golden fixture digest matched in Brain, Runtime and Lab",
+      "historical 18-revision manifests were not modified"
+    ],
+    "nonBlockingFollowUps": [
+      "mirror the complete negative-test matrix in Brain and Runtime",
+      "add a root one-command containerized Go check",
+      "rebuild Compose images with M1 SHAs before a future live release crawl"
+    ]
+  }
 }

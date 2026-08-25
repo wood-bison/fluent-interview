@@ -4,7 +4,7 @@
 **Редакция:** `v2` — учтён аудит плана от 2026-08-25
 **Дата baseline:** 2026-08-25  
 **Рабочая область:** `/Users/sergeyzhechko/developer/fluent-interview`  
-**Текущий гейт:** `M1`
+**Текущий гейт:** `M2`
 **Текущий результат:** `NOT RELEASED`  
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
@@ -437,8 +437,8 @@ gate задним числом.
 | Gate | Результат | Статус |
 | --- | --- | --- |
 | M0 | recovery baseline, один glossary и один active plan | `DONE` — independent review PASS |
-| M1 | зелёные проверки и versioned cross-repo contracts | `ACTIVE` |
-| M2 | `capability-mastery.v2`, ledger и миграции | `TODO` |
+| M1 | зелёные проверки и versioned cross-repo contracts | `DONE` — independent review PASS |
+| M2 | `capability-mastery.v2`, ledger и миграции | `ACTIVE` |
 | M3 | rate limiter проходит полный human golden slice | `TODO` |
 | M4 | один readiness compiler и честные routes/counters | `TODO` |
 | M5 | Program → Path → Domain → Capability UX | `TODO` |
@@ -1674,8 +1674,8 @@ read → implement → run → break → measure → explain → defend
 | Gate | Status | Owner | Started | Commit(s) | Proof | Reviewer |
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | `DONE` | root | 2026-08-25 | `49406ef`, `53f623c`, `7999f19`, `7d26d38`, `37bcaa9` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review PASS |
-| M1 | `ACTIVE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json) | independent review pending |
-| M2 | `TODO` | Lab | — | — | — | — |
+| M1 | `DONE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f`, root `4cb6ce7` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json), [`M1/review.md`](verification/capability-closure/M1/review.md) | independent review PASS |
+| M2 | `ACTIVE` | Lab | 2026-08-25 | — | — | — |
 | M3 | `TODO` | all/golden slice | — | — | — | — |
 | M4 | `TODO` | Lab/compiler | — | — | — | — |
 | M5 | `TODO` | Lab/UI | — | — | — | — |
