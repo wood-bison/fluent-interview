@@ -50,6 +50,11 @@ The command still reports the existing non-fatal lint warnings (41 contracts,
 and lab route stylesheet). They are recorded as M11 work; they did not change
 the exit status or hide a test/build failure.
 
+The local production package was then rebuilt and restarted from Lab
+`e088ad6` at `2026-08-25T22:10:55.909Z`. The package state is `ready`, the
+learner route is `http://localhost:49300/onboarding`, and a fresh
+`pnpm m4:route-audit` returned `status=pass` with the Studio checks below.
+
 The compiler/contract change is in Lab `7635423`; the learner catalogue
 release-boundary fix is in Lab `7018909`; the independent audit crawl is in
 Lab `d4ef81b`; the Explore-mode acceptance assertion is in Lab `7289e7d`; the
