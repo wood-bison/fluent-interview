@@ -4,6 +4,15 @@ This directory is a workspace umbrella for three independent repositories. It
 is not a source monorepo and it must not become a second owner of application
 code, databases, question content, or task execution.
 
+## Current production closure
+
+The active cross-repository execution plan is
+[`docs/CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](docs/CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md).
+It supersedes historical `RELEASED` claims for current product acceptance.
+Dated audits and earlier plans remain evidence, but they are not parallel work
+queues. Execute the active plan gate by gate and do not advance past an open
+gate.
+
 ## Structure
 
 ```text
