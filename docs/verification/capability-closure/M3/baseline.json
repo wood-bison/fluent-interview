@@ -2,7 +2,7 @@
   "gate": "M3",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T21:00:00Z",
+  "capturedAt": "2026-08-25T21:07:00Z",
   "canonicalCapability": "capability.distributed-systems.rate-limiter",
   "taskFamily": "task-family.rate-limiter",
   "primaryQuestion": "question.q315",
@@ -11,7 +11,7 @@
       "headBeforeProof": "732f94a6ea4643e8c0dc5f98bcdb81da7a414193"
     },
     "fluent-engineering-lab": {
-      "head": "4e895cf"
+      "head": "4443bc8"
     },
     "fluent-question-brain": {
       "head": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
@@ -37,8 +37,9 @@
       "labContracts": "247 suites / 1254 passed",
       "learningApi": "164 suites / 708 passed / 1 skipped",
       "web": "78 files / 378 passed",
-      "productionBuilds": "web production build PASS; full pnpm check pending",
-      "browserBoundaryGuard": "PASS"
+      "productionBuilds": "PASS",
+      "browserBoundaryGuard": "PASS",
+      "observability": "7 suites / 39 passed"
     }
   },
   "humanAcceptance": {

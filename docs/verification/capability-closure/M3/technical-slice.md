@@ -2,7 +2,8 @@
 
 **Status:** `PASS` for the server boundary, `ACTIVE` for the full gate
 
-**Lab commits:** `e3dcf50` (server slice), `4e895cf` (learner UI transport)
+**Lab commits:** `e3dcf50` (server slice), `4e895cf` (learner UI transport),
+`4443bc8` (lint-clean Angular client)
 
 ## What is proven
 
@@ -35,7 +36,9 @@ fixtures may test the state machine, but cannot close the human gate.
 
 - targeted service tests: `3 passed`;
 - focused ledger tests: `3 passed / 1 skipped` (Postgres integration is opt-in);
-- web tests: `78/378` (uncached run) and web production build green; the full
-  Lab `pnpm check` is still required before closing M3;
+- full Lab `pnpm check`: curriculum drift `0`; lab-contracts `247/1254`,
+  learning-api `164/708 + 1 skipped`, web `78/378`, observability `7/39`;
+  production builds and browser boundary guard green. Existing warnings remain
+  explicitly listed below.
 - current release remains `NOT_RELEASED` until the human acceptance section is
   complete.
