@@ -1,0 +1,62 @@
+{
+  "evidenceVersion": "product-audit-browser-smoke.v2",
+  "capturedAt": "2026-08-25T13:31:00+02:00",
+  "sourceRevision": "b41b7e705dc5feb910c670fb4c0029eceee3923e",
+  "browser": "Codex in-app Browser",
+  "viewport": "default desktop viewport (not a target-size screenshot)",
+  "package": {
+    "state": "ready",
+    "operationId": "fb4b1e76-c206-4a0d-bbbb-52d8f45c487b",
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "ports": {
+      "learnerWeb": 49300,
+      "learningApi": 49301,
+      "postgres": 49302,
+      "redis": 49303
+    }
+  },
+  "routes": [
+    {
+      "path": "/learning-map",
+      "locale": "ru",
+      "heading": "Карта знаний",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "interactiveCount": 283,
+      "visibleInteractiveBelow44px": 0
+    },
+    {
+      "path": "/learning-map",
+      "locale": "en",
+      "heading": "Knowledge map",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "path": "/practice/questions?question=question.q315",
+      "locale": "ru",
+      "heading": "Библиотека вопросов",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "countLine": "1 вопрос · 1 загружено",
+      "taskFamily": "task-family.rate-limiter",
+      "revisionLinks": 4
+    },
+    {
+      "path": "/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter",
+      "locale": "ru",
+      "heading": "Rate limiter in Go",
+      "mainLandmarks": 1,
+      "alerts": 0,
+      "horizontalOverflow": false,
+      "runtimeVisible": true,
+      "evidenceVisible": true,
+      "publicChecks": "4/4",
+      "xtermVisible": true
+    }
+  ],
+  "consoleErrors": []
+}
