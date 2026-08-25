@@ -177,8 +177,10 @@ Learner             1 → * Evidence
    and runtime profile.
 6. Renames use an explicit alias/supersedes migration. Old keys remain
    resolvable for historical evidence but cannot be selected for new releases.
-7. `questionKeys` may contain only Question Brain stable keys. A capability ID
-   must never appear in `questionKeys`.
+7. Question-backed task joins use `questionBindings` with immutable revision and
+   content-hash pins; capability-only joins use `capabilityKeys`. The removed
+   overloaded `questionKeys` projection is rejected by current readers and is
+   retained only in explicit migration evidence.
 
 ### 3.5 Correct rate-limiter example
 
@@ -277,7 +279,8 @@ Suggested commit: `docs: capture question-task production baseline`
 - [ ] Reject capability keys containing task sequence suffixes such as `-001`.
 - [ ] Accept stack-specific capability namespaces only when explicitly
       registered.
-- [ ] Reject a capability ID in `questionKeys`.
+- [x] Reject the removed overloaded `questionKeys` projection and keep
+      capability keys in `capabilityKeys`.
 - [ ] Accept multiple domains for one capability.
 - [ ] Accept multiple capabilities for one QuestionCard and TaskFamily.
 - [ ] Reject TaskFamily language/profile fields.
@@ -932,20 +935,20 @@ Suggested commit: `feat(learning): project questions capabilities and task famil
 
 ### Changes
 
-- [ ] Move all new contract labels, statuses, errors, Workbench copy, graph
+- [x] Move all new contract labels, statuses, errors, Workbench copy, graph
       relation names, and TaskFamily availability states into RU/EN resources.
-- [ ] Verify switching locale preserves route, selected question, editor state,
+- [x] Verify switching locale preserves route, selected question, editor state,
       review draft, and learner progress.
-- [ ] Test long Russian and English strings, code identifiers, error details,
+- [x] Test long Russian and English strings, code identifiers, error details,
       and mixed-direction technical content for overflow.
-- [ ] Verify light, dark, and automatic themes with the repository design
+- [x] Verify light, dark, and automatic themes with the repository design
       tokens.
-- [ ] Ensure graph layout is deterministic, collision-free, keyboard
+- [x] Ensure graph layout is deterministic, collision-free, keyboard
       navigable, zoom-bounded, and readable at desktop target sizes.
-- [ ] Honor reduced motion and avoid decorative effects that obscure evidence
+- [x] Honor reduced motion and avoid decorative effects that obscure evidence
       or execution state.
-- [ ] Give status meaning through text and shape, not color alone.
-- [ ] Preserve editor, terminal, evidence, and task controls at 200% zoom.
+- [x] Give status meaning through text and shape, not color alone.
+- [x] Preserve editor, terminal, evidence, and task controls at 200% zoom.
 
 ### Required browser matrix
 
@@ -970,10 +973,17 @@ git diff --check
 
 ### Gate acceptance
 
-- [ ] Zero horizontal overflow or overlapping graph labels in the matrix.
-- [ ] Zero blocker-level accessibility issue.
-- [ ] All interactive elements expose meaningful accessible names and states.
-- [ ] Locale/theme switches preserve meaning and interaction state.
+- [x] Zero horizontal overflow or overlapping graph labels in the matrix.
+- [x] Zero blocker-level accessibility issue.
+- [x] All interactive elements expose meaningful accessible names and states.
+- [x] Locale/theme switches preserve meaning and interaction state.
+
+Evidence: `fluent-engineering-lab/docs/verification/G11-BILINGUAL-DESKTOP-A11Y-2026-08-25.md`.
+The committed matrix records 10/10 accessibility smoke checks, 15/15 source
+contrast checks, 6/6 operations contrast checks, 36/36 critical journeys,
+144/144 locale/theme/focus/zoom parity checks, and both desktop viewport
+baselines. Existing bundle-size warnings remain non-blocking and are tracked
+by G14 rather than hidden here.
 
 Suggested commit: `fix(ui): complete bilingual accessible task learning journeys`
 
@@ -981,7 +991,7 @@ Suggested commit: `fix(ui): complete bilingual accessible task learning journeys
 
 ### Changes
 
-- [ ] Produce a coverage matrix by Path → Domain → Capability showing question
+- [x] Produce a coverage matrix by Path → Domain → Capability showing question
       count, TaskFamily count, runnable languages, design exercise, recall-only
       content, and missing practice.
 - [ ] Prioritize capabilities by curriculum importance and evidence gap, not by
@@ -1014,7 +1024,15 @@ Suggested commit: `fix(ui): complete bilingual accessible task learning journeys
 - [ ] Every released capability has an explicit practice disposition:
       runnable task, design brief, recall-only, or intentionally deferred.
 - [ ] Coverage gaps are visible and do not appear as locks or missing content.
-- [ ] No placeholder TaskRevision is advertised as runnable.
+- [x] No placeholder TaskRevision is advertised as runnable.
+
+Evidence: `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md`
+and `docs/production/evidence/G12-01-task-coverage-matrix.md`. The matrix is
+complete and honest (1,591/1,591 cards classified, 19 bound cards, 14 released
+TaskFamilies, 24 runnable revisions), but seven domains still have no practice
+artifact. G12 therefore remains **in progress** until those capabilities get a
+reviewed runnable task, design brief, recall-only disposition, or intentional
+deferral.
 
 Suggested commits should be one coherent capability or TaskFamily slice each,
 for example `feat(tasks): add circuit breaker task family and go revision`.
@@ -1028,7 +1046,7 @@ green before deleting any compatibility reader.
 
 ### Changes
 
-- [ ] Remove `questionKeys` as a capability compatibility projection after all
+- [x] Remove `questionKeys` as a capability compatibility projection after all
       clients consume `questionBindings` and `capabilityKeys` separately.
 - [ ] Remove legacy capability keys from new release inputs while preserving
       explicit historical alias resolution.
@@ -1065,11 +1083,18 @@ Every remaining match must be one of:
 
 ### Gate acceptance
 
-- [ ] One canonical question writer.
-- [ ] One execution authority.
-- [ ] No runnable fallback or duplicate current catalogue.
-- [ ] No current contract uses overloaded `questionKeys`.
+- [x] One canonical question writer.
+- [x] One execution authority.
+- [x] No runnable fallback or duplicate current catalogue.
+- [x] No current contract uses overloaded `questionKeys`.
 - [ ] Documentation describes the running system rather than the migration.
+
+Evidence: Runtime `df37551` and Lab `196ae22` remove the active projection,
+reject stale descriptors, and keep question-backed joins in
+`questionBindings`. The workspace contract and current Brain/Runtime/Lab ADRs
+now describe the boundary. G13 remains **in progress** while the remaining
+historical/migration documents are explicitly classified and the final clean
+workspace audit is completed.
 
 Suggested commits:
 
@@ -1242,9 +1267,9 @@ fully checked and its evidence is committed.
 | G8 — release join | complete | Runtime `docs/verification/G8-RELEASE-JOIN-2026-08-25.md`, `scripts/release/g8-release-join-smoke.sh`, live summary/relations and Lab health-gate evidence | Runtime `25dbb8d`; Lab `6634feb` |
 | G9 — Review Workbench | complete | `fluent-engineering-lab/docs/verification/G9-REVIEW-WORKBENCH-2026-08-25.md`, Brain `docs/verification/G9-DUPLICATE-REVIEW-2026-08-25.md`, and `docs/verification/G9-PAYLOAD-DECISION-2026-08-25.md` (durable five queues, canonical alias/supersession write smoke, bounded bulk confirmation, release preview, RU/EN desktop smoke, privacy boundary, draft-only Payload boundary) | Brain `87fac21`, `b46d7de`, `58c20d4`, `d3d7736`; Lab `52f32ad`, `9205385` |
 | G10 — learner projection | complete | `fluent-engineering-lab/docs/verification/G10-QUESTION-CARD-RELATIONS-2026-08-25.md` (one program → nine paths → 15 areas → 81 stations → 1,591 cards, full Question Library reachability, TaskFamily language selection, Go fail/fix/pass Evidence, theory-only and RU/EN browser matrix) | Lab `e216af3`, `df34a85`, `5e14731`, `425c98f`, `02815f6`, `e7cac6e`, `6ade0f0`, `9205385` |
-| G11 — bilingual/a11y/design | not started | — | — |
-| G12 — task coverage | not started | — | — |
-| G13 — legacy removal | not started | — | — |
+| G11 — bilingual/a11y/design | complete | `fluent-engineering-lab/docs/verification/G11-BILINGUAL-DESKTOP-A11Y-2026-08-25.md` (a11y, contrast, journeys, parity, desktop baselines) | Lab `7341bd3` |
+| G12 — task coverage | in progress | `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md` and `docs/production/evidence/G12-01-task-coverage-matrix.md` (matrix complete; seven practice gaps remain) | Lab `7f5e1ea` |
+| G13 — legacy removal | in progress | Lab `docs/verification/G13-LEGACY-REMOVAL-2026-08-25.md`; Runtime `df37551`; workspace contract/launcher cleanup in progress | Runtime `df37551`; Lab `196ae22` |
 | G14 — production hardening | not started | — | — |
 | G15 — independent acceptance | not started | — | — |
 

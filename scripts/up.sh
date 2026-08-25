@@ -5,7 +5,10 @@ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 QUESTION_BRAIN="$ROOT/fluent-question-brain"
 TASK_RUNTIME="$ROOT/fluent-task-runtime"
 LAB="$ROOT/fluent-engineering-lab"
-RUNTIME_RELEASE_FILE="task-release-2026-08-24-qb-d550846f-i2.json"
+# Keep the workspace launcher pinned to the same reconciled release that the
+# Runtime Compose file exposes by default.  A stale filename here makes a
+# clean `pnpm dev` fail before any service can report its actual readiness.
+RUNTIME_RELEASE_FILE="task-release-2026-08-25-qb-d00a1493-g8.json"
 QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-24-editorial-approved.json"
 
 mode="development"

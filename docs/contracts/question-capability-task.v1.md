@@ -30,8 +30,11 @@ revisions. A Run can produce Evidence only through the Lab evidence contract.
 2. Domain membership is an explicit many-to-many relation.
 3. TaskFamily is language-neutral; TaskRevision owns exactly one language and
    profile.
-4. Every QuestionBinding carries stable key, immutable revision ID, and content
-   hash. `questionKeys` never contains a capability key.
+4. Every QuestionBinding carries a stable question key, immutable revision ID,
+   and content hash. Active Task Runtime contracts expose question-backed joins
+   only as `questionBindings`; capability-only joins use `capabilityKeys`. The
+   removed overloaded `questionKeys` projection is rejected by current
+   readers and is retained only in explicit migration evidence.
 5. Semantic edges and capability bindings are proposed/reviewed/released by
    Question Brain; Lab does not infer them from labels.
 6. Run and Evidence are never stored in Question Brain, and executable source
@@ -42,4 +45,3 @@ PostgreSQL-specific capability, a language-neutral rate limiter with four
 revisions, a circuit breaker under review, and a multi-capability capstone.
 It is the small cross-repository contract test before larger production data
 is migrated.
-
