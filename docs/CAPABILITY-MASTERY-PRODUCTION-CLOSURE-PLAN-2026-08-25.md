@@ -696,6 +696,18 @@ capability_mastery_projection (derived)
 - learner data backup/restore проходит;
 - independent reviewer: `PASS`.
 
+### Реализация M2 — 2026-08-25
+
+Append-only ledger и серверная projection реализованы в
+`fluent-engineering-lab@06045a0`. Реализация включает общую контрактную state
+machine `capability-mastery-ledger.v2`, named evidence tables, транзакционную
+Postgres persistence с advisory lock и идемпотентными duplicate-командами,
+restartable in-memory adapter и перевод текущего Progress/readiness на
+server-owned human projection. Полная проверка Lab (`pnpm check`), контрактные и
+Postgres integration tests зелёные; результат ещё не считается `DONE`, пока
+independent reviewer не подтвердит exit criteria. Полный machine-readable proof:
+[`M2/baseline.json`](verification/capability-closure/M2/baseline.json).
+
 ---
 
 ## M3 — Golden capability: rate limiter от q315 до cold repeat
@@ -1675,7 +1687,7 @@ read → implement → run → break → measure → explain → defend
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | `DONE` | root | 2026-08-25 | `49406ef`, `53f623c`, `7999f19`, `7d26d38`, `37bcaa9` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review PASS |
 | M1 | `DONE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f`, root `4cb6ce7` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json), [`M1/review.md`](verification/capability-closure/M1/review.md) | independent review PASS |
-| M2 | `ACTIVE` | Lab | 2026-08-25 | — | — | — |
+| M2 | `ACTIVE` | Lab | 2026-08-25 | Lab `06045a0` | [`M2/baseline.json`](verification/capability-closure/M2/baseline.json) | independent review pending |
 | M3 | `TODO` | all/golden slice | — | — | — | — |
 | M4 | `TODO` | Lab/compiler | — | — | — | — |
 | M5 | `TODO` | Lab/UI | — | — | — | — |

@@ -1,0 +1,108 @@
+{
+  "contractVersion": "capability-closure.m2-baseline.v1",
+  "status": "implementation-complete-review-pending",
+  "capturedAt": "2026-08-25T19:13:28Z",
+  "plan": {
+    "id": "capability-mastery-production-closure",
+    "revision": "v2",
+    "currentGate": "M2",
+    "result": "NOT RELEASED"
+  },
+  "repositories": {
+    "root": {
+      "head": "3fec363ce4b7dace3ecb356ab42c2c8a462e80bf",
+      "originMain": "3fec363ce4b7dace3ecb356ab42c2c8a462e80bf",
+      "dirty": false
+    },
+    "fluent-engineering-lab": {
+      "head": "06045a05902ea35c80cc03b64fc8da81ecf5638c",
+      "originMain": "06045a05902ea35c80cc03b64fc8da81ecf5638c",
+      "dirty": false
+    },
+    "fluent-question-brain": {
+      "head": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60",
+      "originMain": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60",
+      "dirty": false
+    },
+    "fluent-task-runtime": {
+      "head": "45c4519af67a61cee03c6dd02bf2b4b50d5b0bc6",
+      "originMain": "45c4519af67a61cee03c6dd02bf2b4b50d5b0bc6",
+      "dirty": false
+    }
+  },
+  "implementation": {
+    "repository": "fluent-engineering-lab",
+    "commit": "06045a05902ea35c80cc03b64fc8da81ecf5638c",
+    "contractVersion": "capability-mastery-ledger.v2",
+    "eventContractVersion": "capability-evidence.v2",
+    "sessionContractVersion": "learning-session.v1",
+    "storage": [
+      "learning_session",
+      "capability_ledger_event_index",
+      "capability_ledger_event",
+      "recall_evidence",
+      "prediction_evidence",
+      "run_evidence_ref",
+      "observation_evidence",
+      "explanation_evidence",
+      "session_reflection",
+      "cold_repeat_assignment",
+      "cold_repeat_evidence",
+      "capability_mastery_projection"
+    ],
+    "properties": [
+      "append-only event history with exact duplicate idempotency and conflicting duplicate rejection",
+      "server-owned mastery projection; browser and LLM cannot write mastery",
+      "human provenance is the only provenance eligible for learner mastery",
+      "recall -> reveal -> prediction -> run -> observation -> explanation -> reflection -> delayed repeat -> mastery",
+      "failed repeat removes mastery and returns the capability to attempted",
+      "future timestamps, unsupported versions, private fields and identity mismatches fail closed",
+      "in-memory and Postgres implementations share the same contract state machine"
+    ]
+  },
+  "verification": {
+    "contractStateMachine": {
+      "command": "pnpm nx test lab-contracts --runInBand --testPathPatterns=capability-mastery-ledger.spec.ts",
+      "result": "pass",
+      "details": "8 tests passed"
+    },
+    "persistence": {
+      "command": "pnpm nx test learning-api --runInBand --testPathPatterns=capability-mastery-ledger.repository",
+      "result": "pass",
+      "details": "in-memory, module wiring and Postgres repository tests passed"
+    },
+    "postgresIntegration": {
+      "command": "M2_POSTGRES_TEST=1 DATABASE_URL=postgres://fel:fel@127.0.0.1:49302/fluent_lab pnpm nx test learning-api --runInBand --testPathPatterns=postgres-capability-mastery-ledger.integration.spec.ts",
+      "result": "pass",
+      "details": "schema creation, append, exact duplicate, list, projection and exact synthetic cleanup passed"
+    },
+    "learningApiBuild": {
+      "command": "pnpm nx build learning-api --skip-nx-cache",
+      "result": "pass"
+    },
+    "fullLabCheck": {
+      "command": "pnpm check",
+      "result": "pass",
+      "details": "curriculum drift 0; lab-contracts 246 suites/1249 tests; learning-api 163 suites/703 tests; web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
+      "knownWarnings": "pre-existing lint and non-fatal bundle budget warnings only"
+    }
+  },
+  "scopeBoundary": {
+    "complete": [
+      "durable append-only ledger contract and state machine",
+      "in-memory restartable repository",
+      "Postgres schema, transaction, advisory lock, idempotency and projection repository",
+      "current curriculum Progress/readiness mastery reads server projection instead of legacy completion.v1"
+    ],
+    "nextGate": [
+      "M3 must bridge the real rate-limiter human session producers to this ledger",
+      "M3 must prove the full golden slice in the browser and runtime",
+      "Compose images still need a deliberate rebuild from this SHA before a live release crawl"
+    ],
+    "notRelease": true
+  },
+  "independentReviewer": {
+    "status": "pending",
+    "reviewer": "technical_release_plan"
+  }
+}
