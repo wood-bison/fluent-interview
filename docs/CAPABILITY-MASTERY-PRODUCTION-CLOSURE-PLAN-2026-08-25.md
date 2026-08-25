@@ -825,7 +825,9 @@ acceptance.
 Независимый HTTP-аудит `pnpm m4:route-audit` теперь также сверяет learner
 каталог с Runtime release summary и проходит все 19 learner workspaces; live
 slice дал `pass` (81/81 routes, 1/1 executable station, 19/19 catalogue
-workspaces, zero unreleased catalogue tasks). Это закрывает только
+workspaces, zero unreleased catalogue tasks). Последующий commit `7289e7d`
+добавил в тот же независимый crawl Explore-проекцию: 81/81 topics open, 0
+locked, 66 runnable stations, inventory valid. Это закрывает только
 техническое доказательство route/catalogue rail, но не переводит M4 в PASS:
 consumer surfaces и counters drill-down остаются частью следующего
 acceptance-пакета. Capability-only `project-book-boundary-001` намеренно

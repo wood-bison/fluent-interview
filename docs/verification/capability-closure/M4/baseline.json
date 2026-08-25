@@ -2,11 +2,11 @@
   "gate": "M4",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T21:49:56.000Z",
+  "capturedAt": "2026-08-25T21:54:16.594Z",
   "localBaseUrl": "http://127.0.0.1:49300",
   "repositories": {
-    "root": "4dbf6ec",
-    "fluent-engineering-lab": "d4ef81b",
+    "root": "38c85d3",
+    "fluent-engineering-lab": "7289e7d",
     "fluent-question-brain": "e698fc2",
     "fluent-task-runtime": "45c4519"
   },
@@ -53,6 +53,7 @@
     "independentExecutableRouteCrawl": "PASS",
     "zeroUnreleasedLearnerTasks": "PASS",
     "catalogueWorkspaces": "PASS",
+    "exploreOpenTopics": "PASS",
     "allConsumerSurfaces": "PARTIAL",
     "m4Result": "NOT_RELEASED"
   }

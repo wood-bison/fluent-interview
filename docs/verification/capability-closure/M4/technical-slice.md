@@ -9,7 +9,7 @@ collection; it is not allowed to redefine the released revision count.
 
 ## Live local evidence
 
-At `2026-08-25T21:49:56.000Z`, the restarted production package on
+At `2026-08-25T21:54:16.594Z`, the restarted production package on
 `127.0.0.1:49300` returned:
 
 | Surface | Result |
@@ -27,13 +27,15 @@ At `2026-08-25T21:49:56.000Z`, the restarted production package on
 | Runnable stations | `1` |
 | `/api/labs/catalogue` | `19` items, six languages, zero missing capability keys; all 19 workspaces respond |
 | `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable station workspaces, 19/19 catalogue workspaces |
+| Explore projection (`x-fel-mode: explore`) | `81` open topics, `0` locked topics, `66` runnable stations; inventory valid |
 
 The exact machine-readable capture is in
 [`baseline.json`](baseline.json).
 
 The compiler/contract change is in Lab `7635423`; the learner catalogue
 release-boundary fix is in Lab `7018909`; the independent audit crawl is in
-Lab `d4ef81b` on `main`.
+Lab `d4ef81b`; the Explore-mode acceptance assertion is in Lab `7289e7d`, all
+on `main`.
 
 ## What changed
 
@@ -55,7 +57,8 @@ Lab `d4ef81b` on `main`.
 ## What this does not prove
 
 This is not an M4 release. The route-manifest join, zero-unreleased-task
-catalogue check and 19-workspace HTTP crawl are green, but complete counter
-drill-down reconciliation across Program, Map, Practice, Progress and Studio
-has not been accepted yet. Every counter still needs an owner, formula,
-release id and drill-down collection before the gate can move to `ACTIVE`.
+catalogue check, 19-workspace HTTP crawl and Explore-mode open-topic check are
+green, but complete counter drill-down reconciliation across Program, Map,
+Practice, Progress and Studio has not been accepted yet. Every counter still
+needs an owner, formula, release id and drill-down collection before the gate
+can move to `ACTIVE`.
