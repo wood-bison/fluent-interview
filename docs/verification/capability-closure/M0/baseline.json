@@ -116,8 +116,8 @@
     "browserCrawl": {
       "status": "pass",
       "tool": "Codex In-app Browser",
-      "capturedAt": "2026-08-25T18:16:00Z",
-      "routesTested": 14,
+      "capturedAt": "2026-08-25T18:23:00Z",
+      "routesTested": 15,
       "allRoutesResolved": true,
       "runtimeErrors": 0,
       "representativeRoutes": [
@@ -131,13 +131,14 @@
         "/paths/system-design",
         "/paths/algorithms",
         "/paths/behavioral",
+        "/paths/python",
         "/practice",
         "/practice/questions",
         "/projects",
         "/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter"
       ],
       "assertions": {
-        "pathHeadingsLoaded": 4,
+        "pathHeadingsLoaded": 9,
         "questionLibraryCards": 1591,
         "questionLibraryTopicGroups": 135,
         "goRateLimiterEvidence": "4/4 passed",

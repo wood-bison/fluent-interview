@@ -30,9 +30,9 @@ Active plan: [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](../../
    checkouts. Each owned image now carries
    `org.opencontainers.image.revision`; the label was inspected against the
    checkout SHA. Compose volumes were preserved.
-9. A real in-app Browser crawl visited 14 representative learner routes after
-   API hydration. All resolved without runtime-error copy; the four primary
-   language paths rendered their headings, the question library rendered 1,591
+9. A real in-app Browser crawl visited 15 representative learner routes after
+   API hydration. All resolved without runtime-error copy; all nine learner
+   paths rendered their headings, the question library rendered 1,591
    cards and 135 topic groups, and the Go rate-limiter lab rendered 4/4
    evidence checks. The crawl is recorded in `baseline.json` and is not
    deferred to M12.
@@ -75,7 +75,7 @@ historical 66/25/2/39 route comparison without treating it as current truth.
 | Source-of-truth matrix and taxonomy mapping published | PASS | contracts v1 |
 | Counters separate total/released/runnable | PASS | baseline + glossary counter policy |
 | Route manifest reproducible from API | PASS | 81/81/81 projection counts |
-| Representative Browser crawl after hydration | PASS | 14 routes; 0 runtime errors; 1,591 cards / 135 topics; Go lab 4/4 |
+| Representative Browser crawl after hydration | PASS | 15 routes; 0 runtime errors; 9 paths; 1,591 cards / 135 topics; Go lab 4/4 |
 | Image source revision is independently inspectable | PASS | OCI revision labels match service SHAs |
 | Shared Trace Explorer is not a Runtime UI | PASS | workspace contract + status output |
 | Profile-aware baseline | PASS | packaged API bases in baseline |
