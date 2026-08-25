@@ -1,0 +1,27 @@
+{
+  "capturedAt": "2026-08-25T10:35:00+02:00",
+  "surface": "in-app-browser",
+  "baseUrl": "http://localhost:49300",
+  "invariants": {
+    "oneMain": true,
+    "oneH1": true,
+    "locale": "ru",
+    "horizontalOverflow": false,
+    "unexpectedConsoleLogs": 0
+  },
+  "routes": [
+    { "path": "/studio/system", "title": "System diagnostics", "status": "ready" },
+    { "path": "/studio/review", "title": "Очередь решений графа", "status": "ready" },
+    { "path": "/learning-map", "title": "Карта знаний", "status": "ready" },
+    { "path": "/practice/questions?question=question.q315", "title": "Библиотека вопросов", "status": "ready" },
+    { "path": "/practice/task-family/task-family.rate-limiter", "title": "Ограничитель частоты", "status": "ready" },
+    { "path": "/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter", "title": "Rate limiter in Go", "status": "ready" }
+  ],
+  "studioReviewControls": {
+    "visibleInteractiveTargetsBelow44px": 0
+  },
+  "notes": [
+    "This is Browser DOM/interaction evidence, not a replacement for the two target-size screenshot baselines required by G0.",
+    "The existing G8 evidence screenshots remain outside this snapshot and are preserved in the child-repository stash."
+  ]
+}

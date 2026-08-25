@@ -1,0 +1,1 @@
+{"contractVersion":"fluent-task-runtime.health.v1","service":"fluent-task-runtime","state":"ready","ready":true,"dependencies":{"catalogue":"ready","questionBindings":"manifest-loaded","questionRelease":"question-release-d00a14931e607336","sandbox":"ready"},"checkedAt":"2026-08-25T10:37:35.097570305Z"}

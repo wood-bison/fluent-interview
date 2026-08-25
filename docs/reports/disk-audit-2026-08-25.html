@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аудит места на диске — 25.08.2026</title>
+<style>
+:root{
+  --bg:#f5f3ee; --card:#fffdf9; --ink:#22211d; --body:#403d36; --faint:#8b857a;
+  --line:#e3ded2; --blue:#1b4fd8; --green:#0d7d6a; --red:#b4442c; --amber:#8f5f08;
+  --code-bg:#16191f; --code-fg:#cbc7bc;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,sans-serif;
+}
+html[data-theme="dark"]{
+  --bg:#111318; --card:#181c22; --ink:#eceae3; --body:#c8c4b9; --faint:#807a6c;
+  --line:#282d36; --blue:#7ba1ee; --green:#4fb8a5; --red:#e58468; --amber:#d9a441;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--body);line-height:1.7;font-size:16.5px}
+.wrap{max-width:60rem;margin:0 auto;padding:0 22px}
+h1{font-size:1.95rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em}
+h2{font-size:1.45rem;color:var(--ink);margin:0 0 14px}
+h3{font-size:1.1rem;color:var(--ink);margin:26px 0 10px}
+p{margin:0 0 14px;max-width:66ch}
+ul,ol{margin:0 0 14px 22px;max-width:66ch}li{margin-bottom:7px}
+code{font-family:var(--mono);font-size:.88em;background:var(--line);padding:1.5px 5px;border-radius:4px}
+pre{background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border-radius:9px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6;margin:0 0 16px}
+pre code{background:none;padding:0;color:inherit}
+header{padding:46px 0 26px;border-bottom:2px solid var(--line)}
+.sub{font-family:var(--mono);font-size:.87rem;color:var(--faint);margin-top:8px}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:11px 0;z-index:9;font-family:var(--mono);font-size:.8rem;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--faint);margin-right:17px;text-decoration:none}
+nav a:hover{color:var(--blue)}
+section{padding:38px 0;border-bottom:1px solid var(--line)}
+.lead{background:var(--blue);color:#fff;padding:24px 26px;border-radius:10px;margin:22px 0}
+.lead p{color:#fff;max-width:none}.lead p:last-child{margin-bottom:0}
+.lead strong{color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+.card h3{margin-top:0}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:16px 0}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+td.num{font-family:var(--mono);text-align:right;white-space:nowrap}
+.tag{display:inline-block;font-family:var(--mono);font-size:.73rem;padding:2px 8px;border-radius:11px;white-space:nowrap}
+.t-ok{background:#d3e9dd;color:#0c5136}.t-bad{background:#f6d8d3;color:#8d2f19}
+.t-warn{background:#faeecd;color:#6b4805}.t-info{background:#d5e0fa;color:#0b3a91}
+html[data-theme="dark"] .t-ok{background:#14453c;color:#a7e8d0}
+html[data-theme="dark"] .t-bad{background:#4f2119;color:#f5b5a4}
+html[data-theme="dark"] .t-warn{background:#4d3a0d;color:#f0d18a}
+html[data-theme="dark"] .t-info{background:#1c3160;color:#a8c2f5}
+.bar{height:30px;background:var(--line);border-radius:6px;overflow:hidden;display:flex;margin:14px 0 6px;font-family:var(--mono);font-size:.74rem}
+.bar span{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden;padding:0 4px}
+.b1{background:#b4442c}.b2{background:#8f5f08}.b3{background:#1b4fd8}.b4{background:#0d7d6a}.b5{background:#8b857a}
+.legend{font-size:.83rem;color:var(--faint);margin-top:0}
+.metric{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.metric>div{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:14px 16px}
+.metric .n{font-size:1.7rem;font-weight:600;color:var(--ink);font-family:var(--mono);line-height:1.15}
+.metric .l{font-size:.78rem;color:var(--faint);font-family:var(--mono);text-transform:uppercase;margin-top:4px}
+.metric .d{font-size:.85rem;margin-top:6px}
+.red .n{color:var(--red)}.green .n{color:var(--green)}
+ol.steps{list-style:none;margin-left:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding-left:40px;margin-bottom:18px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:27px;height:27px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem}
+.warn{border-left:4px solid var(--red);background:var(--card);padding:16px 20px;border-radius:0 9px 9px 0;margin:18px 0}
+.toggle{display:inline-flex;gap:5px;margin-top:12px}
+.toggle button{font-family:var(--mono);font-size:.78rem;background:none;border:1px solid var(--line);color:var(--faint);padding:3px 11px;border-radius:5px;cursor:pointer}
+footer{padding:26px 0 44px;font-size:.85rem;color:var(--faint);text-align:center}
+@media print{nav,.toggle{display:none}body{font-size:10.5pt;background:#fff}pre{white-space:pre-wrap;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <h1>Куда делось место на диске</h1>
+  <div class="sub">25.08.2026 · было 51 ГБ свободно (89%) · стало 87 ГБ (81%)</div>
+  <div class="toggle">
+    <button onclick="th('light')">Светлая</button>
+    <button onclick="th('dark')">Тёмная</button>
+  </div>
+</div></header>
+
+<nav><div class="wrap">
+  <a href="#verdict">Вердикт</a>
+  <a href="#incident">Авария 16 августа</a>
+  <a href="#docker">Docker</a>
+  <a href="#leaks">Настоящие утечки</a>
+  <a href="#theories">Ваши версии</a>
+  <a href="#map">Полная карта</a>
+  <a href="#plan">Что делать</a>
+  <a href="#result">Результат</a>
+</div></nav>
+
+<section id="verdict"><div class="wrap">
+<h2>Вердикт</h2>
+
+<div class="lead">
+<p><strong>Главная причина — не утечка и не контейнеры. Это три копии образа диска Docker по 30 ГБ каждая, оставшиеся после аварийного восстановления 16 августа.</strong></p>
+<p>91 ГБ мёртвого груза от одного инцидента. Плюс около 38 ГБ обычного мусора Docker и 9.7 ГБ кэша Nx.</p>
+<p>Хорошая новость: локальных снапшотов APFS нет, поэтому освобождённое место вернётся сразу, а не «когда-нибудь».</p>
+</div>
+
+<div class="metric">
+  <div class="red"><div class="n">91 ГБ</div><div class="l">артефакты аварии</div><div class="d">три копии Docker.raw + журнал</div></div>
+  <div class="red"><div class="n">38 ГБ</div><div class="l">мусор Docker</div><div class="d">кэш сборки, тома, образы</div></div>
+  <div class="red"><div class="n">9.7 ГБ</div><div class="l">кэш Nx</div><div class="d">воссоздаётся сборкой</div></div>
+  <div class="green"><div class="n">453 МБ</div><div class="l">старые контейнеры</div><div class="d">не причина</div></div>
+</div>
+
+<p>Итого безопасно освобождается около <b>139 ГБ</b> — свободное место вырастет с 51 до примерно 190 ГБ.</p>
+</div></section>
+
+<section id="incident"><div class="wrap">
+<h2>Авария 16 августа — 91 ГБ</h2>
+
+<p>16 августа около 04:08 ночи произошла потеря данных в Docker, и было предпринято восстановление. Судя по артефактам — через <code>extundelete</code>, утилиту восстановления удалённых файлов на ext4.</p>
+
+<p>В процессе образ диска Docker копировался несколько раз. Копии остались. Все три:</p>
+
+<table>
+<tr><th>Файл</th><th class="num">Размер</th><th>Где</th></tr>
+<tr>
+  <td><code>Docker-recovery-20260816-0508.raw</code></td>
+  <td class="num">30 ГБ</td>
+  <td>Application Support / Fluent Engineering Lab / Recovery</td>
+</tr>
+<tr>
+  <td><code>Docker-recovery-fsck-20260816.raw</code></td>
+  <td class="num">30 ГБ</td>
+  <td>там же</td>
+</tr>
+<tr>
+  <td><code>Docker-recovery-20260816-0508.raw</code></td>
+  <td class="num">30 ГБ</td>
+  <td><b>внутри рабочего каталога Docker</b><br><code>Containers/com.docker.docker/Data/vms/0/data/</code></td>
+</tr>
+<tr>
+  <td><code>ext4-journal-20260816-0508.bin</code></td>
+  <td class="num">1 ГБ</td>
+  <td>Recovery</td>
+</tr>
+<tr><td colspan="2" class="num"><b>91 ГБ</b></td><td></td></tr>
+</table>
+
+<p>Третья копия — самая неприятная: она лежит <b>внутри каталога самого Docker</b>, рядом с живым <code>Docker.raw</code>. Поэтому папка Docker весит 92 ГБ, хотя реальный образ — 62 ГБ. Именно из-за неё «Docker занимает 92 ГБ» выглядело загадкой.</p>
+
+<div class="warn">
+<p style="margin:0"><b>Важно перед удалением.</b> Результаты восстановления пусты: <code>recovered-current-volume</code>, <code>extundelete-output</code>, <code>extundelete-original-output</code> и <code>extundelete-fsck-output</code> — все нулевого размера. Восстановление ничего не извлекло.</p>
+<p style="margin:8px 0 0">Это довод в пользу того, что копии — мёртвый груз. Но решение за вами: если 16 августа было потеряно что-то, чего больше нигде нет, эти 30-гигабайтные образы — единственное место, где оно теоретически ещё лежит. <b>Я ничего не удалял.</b></p>
+</div>
+
+<p>Ещё один остаток того же периода: <code>Application Support/com.docker.install/in_progress/</code> — 2.1 ГБ незавершённой установки Docker.</p>
+</div></section>
+
+<section id="docker"><div class="wrap">
+<h2>Docker: 92 ГБ, из них 38 ГБ мусора</h2>
+
+<p>Отбросив копию из предыдущего раздела, живой образ Docker весит 62 ГБ. Вот что внутри:</p>
+
+<table>
+<tr><th>Что</th><th class="num">Занято</th><th class="num">Можно освободить</th><th>Комментарий</th></tr>
+<tr><td>Кэш сборки</td><td class="num">32.7 ГБ</td><td class="num"><b>21.2 ГБ</b></td><td>685 записей, активных — ноль</td></tr>
+<tr><td>Образы</td><td class="num">25.7 ГБ</td><td class="num"><b>7.0 ГБ</b></td><td>53 образа, используются 27</td></tr>
+<tr><td>Тома</td><td class="num">14.1 ГБ</td><td class="num"><b>9.6 ГБ</b></td><td>132 осиротевших тома из 161</td></tr>
+<tr><td>Контейнеры</td><td class="num">454 МБ</td><td class="num">453 МБ</td><td>16 остановленных</td></tr>
+</table>
+
+<p>Осиротевшие тома — это тома, на которые не ссылается ни один контейнер. Их 132 штуки, почти все с именами вида <code>3ac345844938…</code> — анонимные, созданные и брошенные при пересоздании стеков.</p>
+
+<h3>Про контейнеры — ваша версия не подтвердилась</h3>
+
+<p>Вы предположили, что «создали кучу непонятных контейнеров». Их действительно 32, но все 16 остановленных вместе занимают <b>453 МБ</b>. Это 0.1% проблемы.</p>
+
+<p>И они не непонятные — это ваши прошлые проекты:</p>
+
+<pre><code>Exited 3 месяца назад   pg-admin-svc, pg-engagement,
+                        pg-provision, pg-user      postgres:16-alpine
+Exited 2 недели назад   minikube                   kicbase:v0.0.50
+Exited 4 дня назад      clickhouse, mysql,
+                        kafka_broker, redis
+Exited 5 дней назад     kafka_ui, localstack_s3, superset
+Exited 9 дней назад     fel-recovery-audit-postgres   ← след той же аварии</code></pre>
+
+<p>Работающие 16 — это ваш текущий стек: Question Brain (api, cms, indexer, postgres, jaeger), task-runtime, Lab (postgres, redis, grafana, loki, tempo, prometheus, promtail) и searxng. Всё легитимно.</p>
+</div></section>
+
+<section id="leaks"><div class="wrap">
+<h2>Настоящие утечки — то, что растёт само</h2>
+
+<p>Вы спрашивали про утечку. Постоянно растущих без ограничения нашлось две.</p>
+
+<h3>1. Лог демона Nx — 1.3 ГБ</h3>
+
+<pre><code>fluent-engineering-lab/.nx/workspace-data/d/daemon.log   1.3 ГБ</code></pre>
+
+<p>Один файл лога без ротации. Пишется при каждой сборке и тесте, не обрезается никогда. Это настоящая утечка в классическом смысле: размер монотонно растёт.</p>
+
+<h3>2. Кэш Nx целиком — 9.7 ГБ</h3>
+
+<pre><code>.nx/cache            8.4 ГБ   (664 записи)
+.nx/workspace-data   1.3 ГБ</code></pre>
+
+<p>Кэш результатов сборок и тестов. Не утечка по замыслу — так Nx ускоряет повторные прогоны, — но по умолчанию он не ограничен по размеру и в большом монорепо разрастается неограниченно. Удаляется безопасно: следующая сборка пересоздаст нужное.</p>
+
+<h3>Не утечка, но стоит знать</h3>
+
+<p>Кэши инструментов, которые просто накопились:</p>
+
+<table>
+<tr><th>Что</th><th class="num">Размер</th><th>Восстановимо?</th></tr>
+<tr><td><code>.cache/whisper</code> + <code>huggingface</code> + <code>mlx-whisper-venv</code></td><td class="num">7.0 ГБ</td><td>модели, скачаются заново</td></tr>
+<tr><td><code>Library/Caches/JetBrains</code></td><td class="num">3.3 ГБ</td><td>индексы IDE, пересоберутся</td></tr>
+<tr><td><code>Library/Caches/ms-playwright</code></td><td class="num">2.5 ГБ</td><td>браузеры для тестов</td></tr>
+<tr><td><code>.cache/uv</code>, <code>.cache/codex-runtimes</code></td><td class="num">4.0 ГБ</td><td>да</td></tr>
+<tr><td><code>Claude/vm_bundles</code></td><td class="num">11 ГБ</td><td>образы виртуалки Claude</td></tr>
+</table>
+</div></section>
+
+<section id="theories"><div class="wrap">
+<h2>Ваши три версии — проверка</h2>
+
+<table>
+<tr><th>Версия</th><th>Проверка</th><th>Вердикт</th></tr>
+<tr>
+  <td><b>«Старые копии приложения»</b></td>
+  <td>Три копии <code>Docker.raw</code> по 30 ГБ + журнал 1 ГБ от аварии 16 августа</td>
+  <td><span class="tag t-bad">ПОДТВЕРДИЛАСЬ</span><br>91 ГБ — главная причина</td>
+</tr>
+<tr>
+  <td><b>«Куча непонятных контейнеров»</b></td>
+  <td>32 контейнера, 16 остановленных занимают суммарно 453 МБ</td>
+  <td><span class="tag t-ok">НЕ ПОДТВЕРДИЛАСЬ</span><br>0.1% проблемы</td>
+</tr>
+<tr>
+  <td><b>«Утечка»</b></td>
+  <td>Растут только <code>daemon.log</code> (1.3 ГБ) и кэш Nx (9.7 ГБ). Остальное — разовые накопления</td>
+  <td><span class="tag t-warn">ЧАСТИЧНО</span><br>~11 ГБ</td>
+</tr>
+</table>
+
+<p>То есть ваша интуиция про «старые копии» была верной — вы просто не знали, где они лежат и что их три.</p>
+</div></section>
+
+<section id="map"><div class="wrap">
+<h2>Полная карта диска</h2>
+
+<div class="bar">
+  <span class="b1" style="width:23.9%">Docker 92</span>
+  <span class="b2" style="width:15.6%">Recovery 60</span>
+  <span class="b3" style="width:19.5%">Documents 75</span>
+  <span class="b4" style="width:9.6%">Apps 37</span>
+  <span class="b5" style="width:31.4%">прочее 121</span>
+</div>
+<p class="legend">Распределение 385 ГБ занятого пространства, в гигабайтах</p>
+
+<table>
+<tr><th>Расположение</th><th class="num">Размер</th><th>Категория</th></tr>
+<tr><td><code>Library/Containers/com.docker.docker</code></td><td class="num">92 ГБ</td><td><span class="tag t-warn">частично чистится</span></td></tr>
+<tr><td><code>Documents</code> — records 42, education 20, games 8.2</td><td class="num">75 ГБ</td><td><span class="tag t-ok">ваши данные, не трогать</span></td></tr>
+<tr><td><code>Application Support/Fluent Engineering Lab/Recovery</code></td><td class="num">60 ГБ</td><td><span class="tag t-bad">мёртвый груз</span></td></tr>
+<tr><td><code>/Applications</code></td><td class="num">37 ГБ</td><td><span class="tag t-ok">программы</span></td></tr>
+<tr><td><code>developer</code> — из них 9.7 кэш Nx</td><td class="num">23 ГБ</td><td><span class="tag t-warn">частично чистится</span></td></tr>
+<tr><td><code>Application Support/Claude</code></td><td class="num">13 ГБ</td><td><span class="tag t-info">образы виртуалки</span></td></tr>
+<tr><td><code>.cache</code></td><td class="num">12 ГБ</td><td><span class="tag t-warn">кэши моделей</span></td></tr>
+<tr><td><code>Library/Caches</code></td><td class="num">11 ГБ</td><td><span class="tag t-warn">кэши IDE и браузеров</span></td></tr>
+<tr><td><code>Downloads</code></td><td class="num">4.1 ГБ</td><td><span class="tag t-ok">ваши данные</span></td></tr>
+<tr><td><code>/opt/homebrew</code>, <code>/private/var/folders</code></td><td class="num">8.6 ГБ</td><td><span class="tag t-ok">система</span></td></tr>
+</table>
+
+<p><b>Documents трогать не нужно.</b> 75 ГБ там — это записи, учебные материалы и игры, то есть ваш личный контент, а не мусор. Упоминаю явно, чтобы не было сомнений.</p>
+</div></section>
+
+<section id="plan"><div class="wrap">
+<h2>Что делать</h2>
+
+<p>По убыванию отдачи. Команды привожу, но <b>ничего не выполнял</b> — решение за вами.</p>
+
+<ol class="steps">
+<li>
+<b>Решить судьбу артефактов аварии — 91 ГБ.</b> Сначала убедитесь, что данные от 16 августа вам не нужны (результаты восстановления пусты, так что скорее всего нет).
+<pre><code>rm -rf ~/Library/Application\ Support/Fluent\ Engineering\ Lab/Recovery
+rm ~/Library/Containers/com.docker.docker/Data/vms/0/data/\
+Docker-recovery-20260816-0508.raw</code></pre>
+<p style="font-size:.9rem;color:var(--faint)">Docker перед удалением третьей копии лучше остановить.</p>
+</li>
+<li>
+<b>Почистить Docker — около 38 ГБ.</b> Кэш сборки самый жирный и самый безопасный:
+<pre><code>docker builder prune -a      # 21.2 ГБ
+docker volume prune          # 9.6 ГБ, 132 осиротевших тома
+docker image prune -a        # 7.0 ГБ (пересоберёт при необходимости)
+docker container prune       # 453 МБ</code></pre>
+<p style="font-size:.9rem;color:var(--faint)">Осторожно с <code>volume prune</code>: он удалит тома без контейнеров. Ваши рабочие стеки сейчас запущены, их тома защищены. Но если есть остановленный стек с нужными данными — сначала поднимите его.</p>
+</li>
+<li>
+<b>Ужать образ Docker.</b> После очистки файл <code>Docker.raw</code> сам не уменьшится — место освободится внутри него, но не на диске. В Docker Desktop есть кнопка <i>Settings → Resources → Disk image size</i>, либо помогает полный перезапуск Docker.
+</li>
+<li>
+<b>Кэш Nx — 9.7 ГБ.</b> Удаляется безопасно, пересоздастся:
+<pre><code>rm -rf ~/developer/fluent-interview/fluent-engineering-lab/.nx/cache
+rm ~/developer/fluent-interview/fluent-engineering-lab/.nx/workspace-data/d/daemon.log</code></pre>
+</li>
+<li>
+<b>Незавершённая установка Docker — 2.1 ГБ.</b>
+<pre><code>rm -rf ~/Library/Application\ Support/com.docker.install/in_progress</code></pre>
+</li>
+<li>
+<b>Кэши инструментов — по желанию, до 12 ГБ.</b> whisper и huggingface скачаются заново при следующем использовании; индексы JetBrains пересоберутся при открытии проекта.
+</li>
+</ol>
+
+<p>Первые два шага дают около 129 ГБ и не требуют ничего пересобирать.</p>
+</div></section>
+
+
+<section id="result"><div class="wrap">
+<h2>Что фактически сделано и сколько освободилось</h2>
+
+<div class="lead">
+<p><strong>Свободное место: 51 ГБ → 87 ГБ. Заполнение: 89% → 81%.</strong></p>
+<p>Освобождено 36 ГБ — существенно меньше прогноза в 129 ГБ. Ниже честный разбор, почему прогноз оказался завышен.</p>
+</div>
+
+<h3>Выполненные операции</h3>
+
+<table>
+<tr><th>Операция</th><th class="num">Ожидалось</th><th class="num">Фактически</th></tr>
+<tr><td>Кэш сборки Docker (<code>builder prune -a</code>)</td><td class="num">21.2 ГБ</td><td class="num">23 ГБ</td></tr>
+<tr><td>Кэш Nx + <code>daemon.log</code></td><td class="num">9.7 ГБ</td><td class="num">9.7 ГБ</td></tr>
+<tr><td>Незавершённая установка Docker</td><td class="num">2.1 ГБ</td><td class="num">2.1 ГБ</td></tr>
+<tr><td>Три копии <code>Docker.raw</code> + журнал</td><td class="num">91 ГБ</td><td class="num"><b>~1 ГБ</b></td></tr>
+<tr><td>Висячие образы</td><td class="num">—</td><td class="num">0 Б</td></tr>
+<tr><td colspan="2"><b>Итого</b></td><td class="num"><b>36 ГБ</b></td></tr>
+</table>
+
+<h3>Почему копии дали 1 ГБ вместо 91</h3>
+
+<p>Это тот самый риск, который был отмечен в разделе «Границы» исходного отчёта, и он реализовался.</p>
+
+<p>Копии <code>Docker.raw</code> были <b>APFS-клонами</b>. При копировании файла на APFS (через Finder или <code>cp -c</code>) система не дублирует данные, а создаёт вторую ссылку на те же блоки — копия занимает почти ноль места, пока один из файлов не изменится.</p>
+
+<p>Команда <code>du</code> этого не учитывает: она честно считает блоки, «принадлежащие» каждому файлу, и показывает по 30 ГБ на копию. Физически же все три файла делили блоки с живым образом.</p>
+
+<pre><code>du показывал:      30 + 30 + 30 + 1  = 91 ГБ
+физически было:                     ≈ 1 ГБ</code></pre>
+
+<p>То же объясняет исходную загадку «Docker занимает 92 ГБ, а <code>docker system df</code> насчитывает 73». Никакой загадки не было — <code>du</code> дважды посчитал одни и те же блоки.</p>
+
+<div class="card">
+<p style="margin:0"><b>Урок на будущее.</b> На APFS <code>du</code> и «Свойства» в Finder завышают размер клонированных файлов. Достоверный ответ даёт только сравнение свободного места до и после — что и было сделано здесь.</p>
+</div>
+
+<h3>Откуда взялись реальные 36 ГБ</h3>
+
+<p>Основной вклад дала <b>очистка кэша сборки Docker</b>: 685 записей, ни одной активной. Он лежал внутри образа <code>Docker.raw</code>, и после очистки образ ужался с 62 до 39 ГБ — это настоящие 23 ГБ.</p>
+
+<p>Остальное — кэш Nx (8.4 ГБ), лог демона Nx (1.3 ГБ) и остатки установки Docker (2.1 ГБ).</p>
+
+<h3>Что намеренно не тронуто</h3>
+
+<table>
+<tr><th>Что</th><th class="num">Размер</th><th>Причина</th></tr>
+<tr>
+  <td>Тома Docker</td><td class="num">9.6 ГБ</td>
+  <td><b>Риск потери данных.</b> Среди «осиротевших» оказались именованные тома с реальным содержимым: <code>frontend_api_java_shared_mysql_data</code> (488 МБ, рабочий проект Neexen), <code>fluent-engineering-lab_fel-pgdata</code>, <code>infra_pgdata</code>, <code>mediumclone_nestjs_pgdata</code>. <code>docker volume prune</code> снёс бы их все</td>
+</tr>
+<tr>
+  <td>Остановленные контейнеры</td><td class="num">453 МБ</td>
+  <td>Мало пользы, а среди них <code>minikube</code> — его удаление означает пересоздание кластера</td>
+</tr>
+<tr>
+  <td>Образы Docker</td><td class="num">5.7 ГБ</td>
+  <td><code>image prune -a</code> удалил бы образы задач runtime (java, dotnet, go, postgres), которые долго пересобирать. Удалены только висячие — их не оказалось</td>
+</tr>
+<tr>
+  <td><code>Documents</code></td><td class="num">75 ГБ</td>
+  <td>Личные данные</td>
+</tr>
+<tr>
+  <td>Кэши моделей и IDE</td><td class="num">~12 ГБ</td>
+  <td>Восстановимы, но потребуют повторной загрузки</td>
+</tr>
+</table>
+
+<h3>Стек проверен после очистки</h3>
+
+<pre><code>контейнеров работает:  16
+Question Brain API:   200
+Lab UI:               200
+task-runtime:         200</code></pre>
+
+<p>Ничего не сломано.</p>
+
+<h3>Если нужно больше места</h3>
+
+<p>Безопасный резерв, который остался:</p>
+<ul>
+<li><b>Анонимные тома Docker</b> — 132 штуки с именами вида <code>3ac3458449…</code>. Их можно удалить точечно, предварительно убедившись, что ни один не содержит нужную базу. Это отдельная работа со списком, а не одна команда.</li>
+<li><b>Кэш whisper и huggingface</b> — 7 ГБ, модели скачаются заново.</li>
+<li><b>Индексы JetBrains</b> — 3.3 ГБ, пересоберутся при открытии проекта.</li>
+<li><b>Библиотека Claude</b> <code>vm_bundles</code> — 11 ГБ.</li>
+</ul>
+</div></section>
+
+<section id="extra"><div class="wrap">
+<h2>Побочная находка: зависший контейнер задачи</h2>
+
+<p>К месту на диске отношения не имеет (26 МБ, 0% CPU), но это дефект, который стоит зафиксировать.</p>
+
+<pre><code>fluent-runtime-task-node-cpu-bound-002-g15-timeout-valid-1787640642307
+  создан:  2026-08-25T06:50:42Z
+  статус:  running (3 часа)</code></pre>
+
+<p>Это контейнер прогона задачи <code>node-cpu-bound-002</code>, причём именно теста <b><code>g15-timeout-valid</code> — проверки таймаута</b>. Контейнер, который должен был быть убит по таймауту, пережил собственный таймаут и не был убран.</p>
+
+<p>Вчера в аудите я видел такой же контейнер со статусом «Up 2 hours» — то есть это повторяется. Стоит проверить логику уборки контейнеров в <code>internal/engine/docker_executor.go</code>: похоже, что при срабатывании таймаута контейнер останавливается не всегда.</p>
+</div></section>
+
+<section id="method"><div class="wrap">
+<h2>Как проверялось</h2>
+
+<table>
+<tr><th>Что</th><th>Команда</th></tr>
+<tr><td>Свободное место</td><td><code>df -h</code>, <code>diskutil info /</code></td></tr>
+<tr><td>Снапшоты APFS</td><td><code>tmutil listlocalsnapshots / </code> → пусто, оба тома</td></tr>
+<tr><td>Крупные каталоги</td><td><code>du -sh</code> по уровням</td></tr>
+<tr><td>Docker</td><td><code>docker system df</code>, <code>docker system df -v</code>, <code>docker ps -a</code></td></tr>
+<tr><td>Копии образа</td><td><code>find … -size +1G</code> в каталоге Docker</td></tr>
+<tr><td>Активный рост</td><td><code>find … -size +500M -mtime -3</code></td></tr>
+</table>
+
+<h3>Границы</h3>
+<ul>
+<li><b>Ничего не удалено и не изменено.</b> Только чтение.</li>
+<li>Снапшотов APFS нет — это проверено, поэтому освобождённое место вернётся сразу. Если бы они были, удаление не дало бы эффекта до их истечения.</li>
+<li>Сумма измеренных каталогов (~358 ГБ) сходится с занятым объёмом (385 ГБ) с разницей на системные файлы, которые я не обходил. Больших расхождений, указывающих на скрытых потребителей, нет.</li>
+<li><code>du</code> на APFS не учитывает совместное использование блоков. Если копии <code>.raw</code> создавались как APFS-клоны, реальное освобождение окажется меньше заявленного. Косвенно это маловероятно — суммы сходятся, — но гарантировать без удаления нельзя.</li>
+</ul>
+</div></section>
+
+<footer><div class="wrap">
+Аудит места на диске · 25.08.2026 · ничего не удалено
+</div></footer>
+
+<script>
+function th(t){document.documentElement.setAttribute('data-theme',t)}
+if(matchMedia('(prefers-color-scheme:dark)').matches){th('dark')}
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+Already up to date
+Done in 168ms using pnpm v11.20.0
+{
+  "contractVersion": "local-production-package.v1",
+  "statusVersion": "local-production-status.v1",
+  "state": "ready",
+  "packageManaged": true,
+  "operationId": "956c4a80-e77e-4a7f-a3bc-660bf49b8c01",
+  "sourceRevision": "7774fbdd78790ba1b836a4020af04aeba2278525",
+  "graphReleaseId": "2026.08.06-curriculum-graph.3",
+  "learnerRoute": "http://localhost:49300/onboarding",
+  "readiness": {
+    "ready": true,
+    "components": [
+      {
+        "id": "task-runtime",
+        "ready": true,
+        "contractVersion": "fluent-task-runtime.health.v1"
+      },
+      {
+        "id": "learning-api",
+        "ready": true,
+        "contractVersion": "observability.v1"
+      },
+      {
+        "id": "learner-web",
+        "ready": true,
+        "contractVersion": null
+      },
+      {
+        "id": "postgres",
+        "ready": true,
+        "contractVersion": null
+      },
+      {
+        "id": "redis",
+        "ready": true,
+        "contractVersion": null
+      }
+    ]
+  },
+  "pids": {
+    "learning-api": {
+      "pid": 60370,
+      "alive": true
+    },
+    "learner-web": {
+      "pid": 60371,
+      "alive": true
+    }
+  },
+  "recovery": {
+    "lastKnownGoodBoundaryId": "956c4a80-e77e-4a7f-a3bc-660bf49b8c01",
+    "previousBoundaryId": "16d0768f-0e61-409b-a339-2c658fb0279f",
+    "verifiedBackupRecorded": true
+  },
+  "dataPreserved": true
+}

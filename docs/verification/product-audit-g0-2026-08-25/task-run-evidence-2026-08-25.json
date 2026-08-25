@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-08-25T10:35:00+02:00",
+  "taskId": "go-rate-limiter-001",
+  "taskFamily": "task-family.rate-limiter",
+  "revision": 1,
+  "route": "/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter",
+  "runId": "a45a16f7-106e-4a22-9653-7b44f77ab23f",
+  "checks": { "passed": 4, "total": 4, "exitCode": 0 },
+  "evidence": "accepted",
+  "proof": "server-owned",
+  "consoleErrors": 0,
+  "source": "in-app-browser"
+}

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluent Interview — аудит 25.08.2026</title>
+<style>
+:root{
+  --bg:#f5f3ee; --card:#fffdf9; --ink:#22211d; --body:#403d36; --faint:#8b857a;
+  --line:#e3ded2; --blue:#1b4fd8; --green:#0d7d6a; --red:#b4442c; --amber:#8f5f08;
+  --code-bg:#16191f; --code-fg:#cbc7bc;
+  --mono:"SF Mono","JetBrains Mono",ui-monospace,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,sans-serif;
+}
+html[data-theme="dark"]{
+  --bg:#111318; --card:#181c22; --ink:#eceae3; --body:#c8c4b9; --faint:#807a6c;
+  --line:#282d36; --blue:#7ba1ee; --green:#4fb8a5; --red:#e58468; --amber:#d9a441;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg);color:var(--body);line-height:1.7;font-size:16.5px}
+.wrap{max-width:62rem;margin:0 auto;padding:0 22px}
+h1{font-size:1.95rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em}
+h2{font-size:1.45rem;color:var(--ink);margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:1.1rem;color:var(--ink);margin:28px 0 10px}
+p{margin:0 0 14px;max-width:66ch}
+ul,ol{margin:0 0 14px 22px;max-width:66ch}li{margin-bottom:7px}
+a{color:var(--blue)}
+code{font-family:var(--mono);font-size:.88em;background:var(--line);padding:1.5px 5px;border-radius:4px}
+pre{background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border-radius:9px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6;margin:0 0 16px}
+pre code{background:none;padding:0;color:inherit}
+header{padding:46px 0 26px;border-bottom:2px solid var(--line)}
+.sub{font-family:var(--mono);font-size:.87rem;color:var(--faint);margin-top:8px}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:11px 0;z-index:9;font-family:var(--mono);font-size:.8rem;overflow-x:auto;white-space:nowrap}
+nav a{color:var(--faint);margin-right:17px;text-decoration:none}
+nav a:hover{color:var(--blue)}
+section{padding:38px 0;border-bottom:1px solid var(--line)}
+.lead{background:var(--blue);color:#fff;padding:24px 26px;border-radius:10px;margin:22px 0}
+.lead p{color:#fff;max-width:none}.lead p:last-child{margin-bottom:0}
+.lead strong{color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+.card h3{margin-top:0}
+table{width:100%;border-collapse:collapse;font-size:.93rem;margin:16px 0}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.73rem;padding:2px 8px;border-radius:11px;white-space:nowrap}
+.t-ok{background:#d3e9dd;color:#0c5136}.t-bad{background:#f6d8d3;color:#8d2f19}
+.t-warn{background:#faeecd;color:#6b4805}.t-info{background:#d5e0fa;color:#0b3a91}
+html[data-theme="dark"] .t-ok{background:#14453c;color:#a7e8d0}
+html[data-theme="dark"] .t-bad{background:#4f2119;color:#f5b5a4}
+html[data-theme="dark"] .t-warn{background:#4d3a0d;color:#f0d18a}
+html[data-theme="dark"] .t-info{background:#1c3160;color:#a8c2f5}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.ba>div{border-radius:10px;padding:18px 20px;border:1px solid var(--line);background:var(--card)}
+.ba .before{border-left:4px solid var(--red)}
+.ba .after{border-left:4px solid var(--green)}
+.ba h4{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin:0 0 12px}
+.before h4{color:var(--red)}.after h4{color:var(--green)}
+.ba p,.ba li{font-size:.93rem;max-width:none}
+.ba ul{margin-left:18px}
+figure{margin:20px 0}
+figure img{width:100%;border:1px solid var(--line);border-radius:10px;display:block}
+figcaption{font-size:.86rem;color:var(--faint);margin-top:8px;font-family:var(--mono)}
+.metric{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0}
+.metric>div{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:14px 16px}
+.metric .n{font-size:1.7rem;font-weight:600;color:var(--ink);font-family:var(--mono);line-height:1.15}
+.metric .l{font-size:.78rem;color:var(--faint);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+.metric .d{font-size:.85rem;margin-top:6px}
+.up{color:var(--green)}.down{color:var(--red)}
+.bar{height:22px;background:var(--line);border-radius:5px;overflow:hidden;display:flex;margin:6px 0 3px;font-family:var(--mono);font-size:.72rem}
+.bar span{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden}
+.b-green{background:var(--green)}.b-red{background:var(--red)}.b-amber{background:var(--amber)}.b-grey{background:var(--faint)}
+.q{border-left:3px solid var(--faint);padding-left:16px;margin:16px 0;color:var(--faint);font-style:italic}
+.toggle{display:inline-flex;gap:5px;margin-top:12px}
+.toggle button{font-family:var(--mono);font-size:.78rem;background:none;border:1px solid var(--line);color:var(--faint);padding:3px 11px;border-radius:5px;cursor:pointer}
+ol.steps{list-style:none;margin-left:0;counter-reset:s}
+ol.steps>li{counter-increment:s;position:relative;padding-left:40px;margin-bottom:18px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:27px;height:27px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.8rem}
+footer{padding:26px 0 44px;font-size:.85rem;color:var(--faint);text-align:center}
+@media(max-width:720px){.ba{grid-template-columns:1fr}h1{font-size:1.5rem}}
+@media print{nav,.toggle{display:none}body{font-size:10.5pt;background:#fff}pre{white-space:pre-wrap;border:1px solid #ccc}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap">
+  <h1>Fluent Interview — аудит после изменений</h1>
+  <div class="sub">25.08.2026 · 82 коммита за сутки · стек запущен и проверен вживую</div>
+  <div class="toggle">
+    <button onclick="th('light')">Светлая</button>
+    <button onclick="th('dark')">Тёмная</button>
+  </div>
+</div></header>
+
+<nav><div class="wrap">
+  <a href="#verdict">Вердикт</a>
+  <a href="#fixed">Что исправлено</a>
+  <a href="#ui">UI вживую</a>
+  <a href="#content">Вопросы и ответы</a>
+  <a href="#graph">Граф и связи</a>
+  <a href="#gates">Ложная зелень</a>
+  <a href="#plan">Что делать</a>
+  <a href="#method">Методика</a>
+</div></nav>
+
+<section id="verdict"><div class="wrap">
+<h2>Вердикт</h2>
+
+<div class="lead">
+<p><strong>За сутки закрыто больше, чем я ожидал. Конвейер приёмки построен, имена способностей исправлены, граница задач разведена, vault сохранён.</strong></p>
+<p>Но найдена проблема, которой вчера не было видно, потому что вчера я не смотрел контент: <strong>523 карточки (33% банка) показывают русский вопрос и английский ответ</strong>. При этом гейт качества рапортует «Без русского: 0» и «Quality release без предупреждений».</p>
+<p>И второе: конвейер построен, очередь наполнена <strong>2013 предложениями связей</strong> — но принято из них <strong>8</strong>. Механизм работает, ревью не проведено.</p>
+</div>
+
+<div class="metric">
+  <div><div class="n up">14 → 0</div><div class="l">нарушений границы задач</div><div class="d">TaskBlock разведён</div></div>
+  <div><div class="n up">0 → 2013</div><div class="l">предложений связей</div><div class="d">конвейер заработал</div></div>
+  <div><div class="n down">523</div><div class="l">карточки без RU-ответа</div><div class="d">33% банка</div></div>
+  <div><div class="n down">8</div><div class="l">принятых рёбер</div><div class="d">из 2013 предложений</div></div>
+</div>
+
+<p>Отдельно отмечу то, что редко встречается: <b>интерфейс не врёт</b>. Там, где связи нет, он прямо пишет «Это честное отсутствие связи, а не заблокированный вопрос», вместо того чтобы подсунуть выдуманную привязку. Это осознанное инженерное решение и оно правильное.</p>
+</div></section>
+
+<section id="fixed"><div class="wrap">
+<h2>Что исправлено со вчера</h2>
+
+<p>Сравнение с отчётом от 24.08. Все цифры получены из работающей системы, а не из документации.</p>
+
+<table>
+<tr><th>Находка 24.08</th><th>Было</th><th>Стало</th><th></th></tr>
+<tr>
+  <td>У vault нет удалённого репозитория</td>
+  <td><code>git remote -v</code> пусто</td>
+  <td><code>github.com/szhechko/<br>fluent-question-vault</code></td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>Дедупликации нет на пути импорта</td>
+  <td>только ручной <code>qb-audit</code></td>
+  <td><code>import_review_stage</code> 4419,<br><code>import_review_candidate</code> 2007</td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>Нет механизма предложений связей</td>
+  <td>таблицы не было</td>
+  <td><code>question_edge_proposal</code> 2013<br>со <code>status</code>, <code>confidence</code>, <code>rationale</code>, <code>decided_by</code></td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>13 из 15 способностей названы по задаче</td>
+  <td><code>capability.runtime.<br>node-event-loop-001</code></td>
+  <td><code>capability.nodejs.<br>event-loop-ordering</code></td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>Starter/Solution внутри хеша вопроса</td>
+  <td>нарушения границы</td>
+  <td><code>embedded_solutions: 0</code><br><code>task_boundary_violations: 0</code></td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>Review Workbench не построен</td>
+  <td>маршрута не было</td>
+  <td><code>/studio/review</code> — «Очередь решений графа»</td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>Вырожденные промпты (BUG-1)</td>
+  <td>70 карточек прошли гейт</td>
+  <td><code>degenerate_prompts: 0</code></td>
+  <td><span class="tag t-ok">ЗАКРЫТО</span></td>
+</tr>
+<tr>
+  <td>Дубль <code>rate-limiter</code> в двух доменах</td>
+  <td>2 ключа на одно умение</td>
+  <td>оба на месте</td>
+  <td><span class="tag t-warn">ОСТАЛОСЬ</span></td>
+</tr>
+<tr>
+  <td><code>capability.runtime.deferred</code>, <code>fluent-calculator</code></td>
+  <td>названы по задаче</td>
+  <td>не переименованы</td>
+  <td><span class="tag t-warn">ОСТАЛОСЬ</span></td>
+</tr>
+</table>
+
+<p>Семь из девяти пунктов закрыты за сутки. Это очень быстро, и качество исполнения высокое — модель предложений сделана ровно с теми полями (<code>confidence</code>, <code>rationale</code>, <code>actor</code>), которые нужны для рабочего процесса «машина предлагает, человек решает».</p>
+</div></section>
+
+<section id="ui"><div class="wrap">
+<h2>Как это выглядит вживую</h2>
+
+<p>Стек был запущен целиком: Question Brain API (:48127), CMS (:48128), task-runtime (:48227), Lab API (:49301), Lab UI (:49300), Postgres, Redis, Jaeger, Grafana. Скриншоты сделаны из работающего приложения.</p>
+
+<figure>
+  <img src="assets-2026-08-25/ui-questions.png" alt="Библиотека вопросов в Lab">
+  <figcaption>/practice/questions — библиотека вопросов, тёмная тема, переключатель RU/EN</figcaption>
+</figure>
+
+<p>Интерфейс сделан хорошо: типографика выдержана, есть переключатель языка и темы, боковая навигация с числами, «Штурман» для перехода по разделам. Это не прототип, это продукт.</p>
+
+<p>Но посмотрите на четыре плитки в блоке «Учебный маршрут»:</p>
+
+<div class="metric">
+  <div><div class="n">1591</div><div class="l">готово к пазлу</div><div class="d">из реального Short Interview Answer</div></div>
+  <div><div class="n down">0</div><div class="l">лаборатория</div><div class="d">код, запуск, проверка</div></div>
+  <div><div class="n down">0</div><div class="l">с сопровождением</div><div class="d">подсказка следующего шага</div></div>
+  <div><div class="n">1591</div><div class="l">учебные форматы</div><div class="d">пазл ответа и recall</div></div>
+</div>
+
+<p><b>«Лаборатория: 0».</b> Ни одна из 1591 карточки не связана с исполняемой задачей. При том что в task-runtime лежат 18 рабочих задач на пяти языках. Это визуальное проявление того, что принятых capability-привязок всего 19.</p>
+
+<p>Ниже в интерфейсе — панель конкретной карточки, и вот она говорит честно:</p>
+
+<div class="card">
+<p style="margin:0"><i>«У карточки нет опубликованной capability-привязки. Она остаётся доступной в библиотеке и не получает выдуманную станцию. Для этой карточки нет других опубликованных рёбер. <b>Это честное отсутствие связи, а не заблокированный вопрос.</b>»</i></p>
+</div>
+
+<p>Это отличная инженерия. Система знает, чего она не знает, и говорит об этом пользователю вместо того, чтобы выдумывать привязку. Такое встречается редко.</p>
+
+<figure>
+  <img src="assets-2026-08-25/ui-studio-review.png" alt="Очередь решений графа">
+  <figcaption>/studio/review — Review Workbench, построенный за сутки</figcaption>
+</figure>
+
+<p>Очередь решений существует и описана точно: «Здесь оператор принимает только предложения: дубликаты, связи графа, capability-привязки, алиасы и импорт. Карточки и ответы остаются в Question Brain». Граница проведена верно.</p>
+
+<p>Сообщение об ошибке на скриншоте — <b>не дефект</b>. API отвечает <code>403 operator.required</code>: очередь требует подтверждённого операторского контекста, которого нет у headless-браузера без сессии. В обычном браузере она должна открываться; проверить это я не мог и честно это отмечаю.</p>
+</div></section>
+
+<section id="content"><div class="wrap">
+<h2>Вопросы и ответы: связаны ли корректно</h2>
+
+<p>Это главное, что вы просили проверить. Я читал реальные пары «вопрос — ответ» из базы и через API.</p>
+
+<h3>Сначала хорошее: контент настоящий</h3>
+
+<p>Выборка русских карточек показала содержательные, технически корректные ответы живым языком. Примеры дословно:</p>
+
+<div class="card">
+<p style="font-size:.94rem"><b><code>question.q397</code></b> — «Постранично: что происходит при первой записи в только что выделенный через <code>malloc</code> буфер на 1 MB?»</p>
+<p style="font-size:.94rem;margin:0"><i>«<code>malloc</code> резервирует только виртуальное адресное пространство лениво — физической RAM за ним нет, пока ты не коснёшься страницы. Первая запись: MMU идёт по табл…»</i></p>
+</div>
+
+<div class="card">
+<p style="font-size:.94rem"><b><code>question.c003</code></b> — «Как опубликовать событие и обновить базу, не потеряв и не задублировав ни то, ни другое?»</p>
+<p style="font-size:.94rem;margin:0"><i>«Не записывайте в БД и не публикуйте в Kafka как два отдельных шага — любой из них может завершиться неудачей, оставив их в несогласованном состоянии. Вместо это…»</i></p>
+</div>
+
+<p>Вопросы соответствуют ответам по смыслу — рассинхронизации «вопрос про одно, ответ про другое» я не нашёл. Формулировки не машинные, это писал человек или очень хорошо направленная модель.</p>
+
+<h3>Теперь дефект: язык ответа</h3>
+
+<p>Из 1594 опубликованных русских локалей:</p>
+
+<div class="bar">
+  <span class="b-green" style="width:62.2%">992 — ответ на русском</span><span class="b-red" style="width:32.8%">523 — ответа нет</span><span class="b-amber" style="width:5%">79</span>
+</div>
+<p style="font-size:.84rem;color:var(--faint);margin-top:0">зелёный — <code>short_answer</code> заполнен · красный — русского ответа нет нигде · жёлтый — ответ есть, но только в секциях</p>
+
+<p><b>523 карточки (32.8%) имеют русский вопрос и не имеют русского ответа ни в одном виде.</b> Ещё у 79 ответ существует, но лежит в секциях и не спроецирован в поле.</p>
+
+<p>Вот что это значит на практике. Карточка <code>question.q740</code>, запрос через API Lab с <code>locale=ru</code>:</p>
+
+<pre><code>prompt:       156 симв  "Объясните распространенные антипаттерны:
+                         объект Бога, злоупотребление синглтоном…"
+short_answer:   0 симв  ""
+explanation:    0 симв  ""
+
+секций: 14
+  'Question (RU)'           156 симв   ← единственная русская
+  'Short Interview Answer'  1421 симв  ← английская
+  'Reference Answer'        8126 симв  ← английская
+  'Code Examples'           2015 симв  ← английская</code></pre>
+
+<p>А ответ, который UI покажет по этой карточке в русском режиме:</p>
+
+<pre><code>shortAnswer: "Anti-patterns are learned through failure.
+              Recognize God Objects (too many responsibilitie…"</code></pre>
+
+<div class="ba">
+<div class="before"><h4>Что видит пользователь сейчас</h4>
+<p>Переключает интерфейс в <b>RU</b>. Открывает карточку.</p>
+<p>Вопрос — по-русски. Нажимает «показать эталон».</p>
+<p><b>Ответ — по-английски.</b> И так у каждой третьей карточки.</p>
+<p>Метрика при этом говорит «Без русского: 0».</p>
+</div>
+<div class="after"><h4>Как должно быть</h4>
+<p>Гейт различает «локаль есть» и «в локали есть ответ».</p>
+<p>Карточка без русского ответа помечается явно — либо не попадает в русскую выдачу, либо показывается с честной пометкой «эталон только на английском».</p>
+<p>523 карточки попадают в очередь на перевод как отдельная работа с понятным объёмом.</p>
+</div>
+</div>
+
+<p>Важное уточнение: <b>контент не потерян</b>. Английская сторона у этих карточек полная и качественная. Это не дыра в данных, а незавершённая локализация, которую метрика не показывает.</p>
+</div></section>
+
+<section id="graph"><div class="wrap">
+<h2>Граф и связи: механизм есть, решения не приняты</h2>
+
+<p>Вчера <code>question_edge</code> была пуста и в неё не писала ни одна строка кода. Сегодня построен полноценный конвейер предложений. Смотрим, что в нём.</p>
+
+<table>
+<tr><th>Таблица</th><th>Строк</th><th>Что означает</th></tr>
+<tr><td><code>question_edge_proposal</code></td><td><b>2013</b></td><td>предложенные связи вопрос→вопрос</td></tr>
+<tr><td>— из них <code>accepted</code></td><td><b>8</b></td><td>принято человеком</td></tr>
+<tr><td>— из них <code>proposed</code></td><td><b>2001</b></td><td>ждут решения</td></tr>
+<tr><td><code>question_edge</code></td><td><b>0</b></td><td>материализованных рёбер нет</td></tr>
+<tr><td><code>question_capability_binding_proposal</code></td><td><b>2654</b></td><td>предложенные привязки к способностям</td></tr>
+<tr><td>— <code>accepted</code> / <code>proposed</code></td><td><b>78</b> / <b>2576</b></td><td></td></tr>
+<tr><td><code>question_capability</code></td><td><b>19</b></td><td>принятых привязок</td></tr>
+<tr><td><code>duplicate_candidate</code></td><td><b>4</b></td><td>3 «не дубль», 1 открыт</td></tr>
+</table>
+
+<div class="bar">
+  <span class="b-green" style="width:0.4%"></span><span class="b-amber" style="width:99.4%">2001 предложение ждёт решения</span><span class="b-red" style="width:0.2%"></span>
+</div>
+<p style="font-size:.84rem;color:var(--faint);margin-top:0">зелёный — 8 принято · жёлтый — 2001 в очереди · красный — 4 отклонено</p>
+
+<h3>Проблема серьёзнее, чем «не успели отревьюить»</h3>
+
+<p>Посмотрите на распределение предложенных связей по видам:</p>
+
+<table>
+<tr><th>Вид связи</th><th>Предложено</th><th></th></tr>
+<tr><td><code>related</code> — просто «связано»</td><td><b>2003</b></td><td><span class="tag t-warn">99.5%</span></td></tr>
+<tr><td><code>prerequisite</code> — «нужно изучить раньше»</td><td>3</td><td></td></tr>
+<tr><td><code>contrast</code> — противопоставление</td><td>2</td><td></td></tr>
+<tr><td><code>follow_up</code> — следующий шаг</td><td>2</td><td></td></tr>
+<tr><td><code>variant</code>, <code>duplicate</code>, <code>supersedes</code></td><td>по 1</td><td></td></tr>
+</table>
+
+<p>99.5% предложений — это <code>related</code>. И это закономерно, а не случайность: <b>генератор предложений работает на векторной близости, а косинусное расстояние умеет отвечать только на вопрос «похоже ли», но не на вопрос «что раньше».</b></p>
+
+<p>Ваша исходная цель — «чтобы вопросы понимали последовательность» — требует именно <code>prerequisite</code>. Их сгенерировано три штуки. Из векторов порядок изучения не выводится в принципе.</p>
+
+<div class="ba">
+<div class="before"><h4>Сейчас</h4>
+<p>Вектора дают 2003 связи «похоже».</p>
+<p>Последовательности нет: 3 ребра <code>prerequisite</code> на 1591 вопрос.</p>
+<p>Даже если принять все 2001 предложение, учебного маршрута не появится — появится облако похожести.</p>
+</div>
+<div class="after"><h4>Как получить последовательность</h4>
+<p>Порядок выводится не из векторов, а из сигналов, которые у вас уже есть:</p>
+<ul>
+<li><b>Уровень</b> — Junior раньше Senior внутри одной темы</li>
+<li><b>Способность</b> — вопросы одной capability упорядочиваются между собой</li>
+<li><b>Термины</b> — если ответ на B использует термин, который определяется в A, то A раньше B</li>
+</ul>
+<p>Всё три сигнала дают <code>prerequisite</code>-кандидатов, которые человек подтверждает в той же очереди.</p>
+</div>
+</div>
+
+<p>Отмечу инженерное качество: модель предложения содержит <code>confidence</code>, <code>rationale</code>, <code>source</code>, <code>decided_by</code>, <code>decided_at</code>. То есть когда вы через полгода спросите «почему эти два вопроса связаны», система ответит — кто решил, когда и на каком основании. Это сделано правильно.</p>
+</div></section>
+
+<section id="gates"><div class="wrap">
+<h2>Ложная зелень: главный риск</h2>
+
+<p>Самый опасный класс дефекта — не сломанное, а <b>то, что рапортует «всё хорошо», когда это не так</b>. Потому что оно гасит тревогу и работа не ставится в план. Я нашёл два таких места.</p>
+
+<h3>1. «Без русского: 0»</h3>
+
+<figure>
+  <img src="assets-2026-08-25/ui-studio-content.png" alt="Studio Content — гейт качества">
+  <figcaption>/studio/content — «Quality release без предупреждений», при 523 карточках без русского ответа</figcaption>
+</figure>
+
+<p>Гейт проверяет <b>наличие строки локали</b>, а не наличие ответа в ней. У всех 1591 карточки русская локаль существует, поэтому счётчик честно показывает ноль. Но в 523 из них есть только переведённый вопрос.</p>
+
+<h3>2. <code>curriculum_mapped: 1591</code></h3>
+
+<p>Эндпоинт <code>/v1/quality</code> отдаёт рядом две цифры:</p>
+
+<pre><code>"curriculum_mapped":       1591   ← выглядит как «всё связано»
+"curriculum_unmapped":        0
+"curriculum_capabilities":   19   ← реальная связь с практикой</code></pre>
+
+<p>Вот точный SQL из <code>internal/store/postgres.go:1780</code>:</p>
+
+<pre><code>count(*) filter (where m.revision_id is not null
+                   and m.mapping_state &lt;&gt; 'unmapped')  → mapped
+count(*) filter (where m.capability_key is not null)    → capabilities</code></pre>
+
+<p>То есть <code>mapped</code> считает привязку к программе/пути/домену, а <code>capability_key</code> при этом может быть <code>NULL</code>. Проверка в базе: из 1639 строк маппинга <b>1619 имеют <code>capability_key = NULL</code></b>.</p>
+
+<p>Обе цифры публикуются честно и рядом — эндпоинт не лжёт. Проблема в другом: <b>вчерашний артефакт <code>i2-runtime-crosswalk</code> использовал слово <code>mapped</code> в значении «привязан к способности» (19 из 1591), а сегодняшний <code>/v1/quality</code> — в значении «привязан к домену» (1591 из 1591)</b>. Одно имя, два знаменателя. Прочитав <code>unmapped: 0</code>, легко решить, что работа сделана.</p>
+
+<div class="card">
+<p style="margin:0"><b>Общее правило для обоих случаев:</b> метрика должна измерять то, ради чего она заведена. «Локаль существует» — не то же, что «на этом языке можно учиться». «Есть строка маппинга» — не то же, что «вопрос связан с практикой». Каждый гейт стоит проверить вопросом: <i>что именно сломается, если эта цифра станет нулём?</i></p>
+</div>
+</div></section>
+
+<section id="plan"><div class="wrap">
+<h2>Что делать дальше</h2>
+
+<p>Порядок — по влиянию на продукт, а не по трудоёмкости.</p>
+
+<ol class="steps">
+<li>
+<b>Починить два гейта.</b> «Без русского» должен считать наличие ответа, а не строки локали. <code>curriculum_mapped</code> — переименовать так, чтобы в имени было видно, что измеряется: <code>domain_mapped</code> против <code>capability_mapped</code>. Это дешевле всего и сразу вернёт приборам достоверность.
+</li>
+<li>
+<b>Разобраться с 523 карточками.</b> Решение продуктовое: переводить ответы или честно помечать карточку как «эталон на английском». Второе — законный вариант: вы готовитесь к собеседованиям, где терминология всё равно английская. Но выбор должен быть сделан явно, а не остаться побочным эффектом.
+</li>
+<li>
+<b>Добавить генераторы <code>prerequisite</code>.</b> По уровню, по способности, по терминам — три источника, описанные выше. Без них очередь так и будет наполняться связями «похоже», а последовательности не появится.
+</li>
+<li>
+<b>Провести ревью очереди.</b> 2001 предложение ждёт решения. Начать с малого и информативного: 3 <code>prerequisite</code>, 2 <code>contrast</code>, 1 <code>duplicate</code>, 1 <code>supersedes</code> — это 7 решений, которые сразу дадут первые настоящие рёбра и покажут, работает ли материализация в <code>question_edge</code>.
+</li>
+<li>
+<b>Принять capability-привязки.</b> 2576 предложений в очереди. Каждая принятая привязка — это карточка, которая перестаёт быть «Лаборатория 0» и получает связь с исполняемой задачей.
+</li>
+<li>
+<b>Дочистить имена способностей.</b> Слить пару <code>rate-limiter</code>, переименовать <code>capability.runtime.deferred</code> и <code>capability.runtime.fluent-calculator</code>.
+</li>
+<li>
+<b>Обновить граф-релиз в Lab.</b> Сейчас Lab работает на <code>2026.08.06-curriculum-graph.3</code> — от 6 августа, при том что каталог вопросов читается актуальный.
+</li>
+</ol>
+
+<p>Первые два пункта стоит сделать до следующей партии вопросов: пока гейты показывают ложную зелень, любая новая партия унаследует ту же проблему незаметно.</p>
+</div></section>
+
+<section id="method"><div class="wrap">
+<h2>Как проверялось</h2>
+
+<p>Чтобы вы могли перепроверить или повторить.</p>
+
+<table>
+<tr><th>Что</th><th>Как</th></tr>
+<tr><td>Состояние сервисов</td><td><code>docker ps</code>; Lab поднят как локальный пакет, PID 4147/4148</td></tr>
+<tr><td>Метрики качества</td><td><code>GET :48127/v1/quality</code></td></tr>
+<tr><td>Содержимое таблиц</td><td><code>psql</code> в контейнере <code>fluent-question-brain-postgres-1</code>, только <code>select</code></td></tr>
+<tr><td>Пары вопрос-ответ</td><td>выборка <code>order by random()</code> + адресные запросы по <code>stable_key</code></td></tr>
+<tr><td>Язык ответа</td><td><code>GET :48127/v1/questions/question.q740?locale=ru</code>, <code>GET :49301/api/questions/…/content?locale=ru</code></td></tr>
+<tr><td>Скриншоты</td><td>Chrome headless, 1440px, <code>--virtual-time-budget=9000</code></td></tr>
+<tr><td>SQL метрики <code>curriculum_mapped</code></td><td><code>internal/store/postgres.go:1780–1800</code></td></tr>
+</table>
+
+<h3>Границы этого аудита</h3>
+<ul>
+<li><b>Ничего не изменено.</b> Только <code>select</code>, <code>GET</code> и скриншоты — как вы и просили. Ни одного <code>--approve</code>, ни одной правки файлов проекта.</li>
+<li>Очередь ревью <b>не проверена в работе</b>: она требует операторского контекста (<code>403 operator.required</code>), которого нет у headless-браузера. Открывается ли она в обычном браузере — не знаю.</li>
+<li>Задачи в task-runtime не запускались; исполнение кода не проверялось.</li>
+<li>Контент оценивался по выборке (около 20 карточек), а не сплошным чтением. Цифры по пустым ответам — сплошные, из SQL.</li>
+<li>Во время съёмки скриншотов Lab на несколько секунд перестал отвечать при двух параллельных Chrome, затем восстановился сам. Одного наблюдения мало, чтобы называть это дефектом.</li>
+</ul>
+</div></section>
+
+<footer><div class="wrap">
+Fluent Interview · аудит после изменений · 25.08.2026 · предыдущий отчёт: architecture-audit-2026-08-24.html
+</div></footer>
+
+<script>
+function th(t){document.documentElement.setAttribute('data-theme',t)}
+if(matchMedia('(prefers-color-scheme:dark)').matches){th('dark')}
+</script>
+</body>
+</html>
