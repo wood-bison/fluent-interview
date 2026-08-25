@@ -1,0 +1,55 @@
+{
+  "gate": "M3",
+  "status": "technical-slice",
+  "result": "NOT_RELEASED",
+  "capturedAt": "2026-08-25T20:43:51Z",
+  "canonicalCapability": "capability.distributed-systems.rate-limiter",
+  "taskFamily": "task-family.rate-limiter",
+  "primaryQuestion": "question.q315",
+  "repositories": {
+    "root": {
+      "headBeforeProof": "732f94a6ea4643e8c0dc5f98bcdb81da7a414193"
+    },
+    "fluent-engineering-lab": {
+      "head": "e3dcf505c275ae2a1cc6548bf4a9324b69f712e8"
+    },
+    "fluent-question-brain": {
+      "head": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
+    },
+    "fluent-task-runtime": {
+      "head": "45c4519af67a61cee03c6dd02bf2b4b50d5b0bc6"
+    }
+  },
+  "technicalAcceptance": {
+    "serverStart": "PASS",
+    "releasePinning": "PASS",
+    "questionRevisionAndHashBinding": "PASS",
+    "taskFamilyRuntimeBinding": "PASS",
+    "idempotentStart": "PASS",
+    "idempotentEventAppend": "PASS",
+    "typedConflictOnIdentityReuse": "PASS",
+    "failClosedOnDegradedOrMismatchedRelease": "PASS",
+    "allowListedEvidenceDto": "PASS",
+    "targetedServiceTests": "3 passed",
+    "focusedLedgerTests": "3 passed / 1 skipped (Postgres opt-in)",
+    "fullLabCheck": {
+      "labContracts": "247 suites / 1254 passed",
+      "learningApi": "164 suites / 708 passed / 1 skipped",
+      "web": "77 files / 376 passed",
+      "productionBuilds": "PASS",
+      "browserBoundaryGuard": "PASS"
+    }
+  },
+  "humanAcceptance": {
+    "status": "WAITING_HUMAN",
+    "initialSession": "TODO",
+    "spokenExplanation": "TODO",
+    "reflection": "TODO",
+    "coldRepeat": "WAITING_48_72H",
+    "mastery": "NOT_GRANTED"
+  },
+  "knownWarnings": [
+    "existing lint warnings remain in lab-contracts, learning-api and web",
+    "existing initial bundle and lab SCSS performance budgets remain above target; tracked for M11"
+  ]
+}

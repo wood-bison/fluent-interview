@@ -733,7 +733,7 @@ schema удаляются. Решение ревью зафиксировано 
 ### Canonical capability
 
 ```text
-capability.rate-limiting.bounded-token-bucket
+capability.distributed-systems.rate-limiter
 domains:
   - domain.http-api
   - domain.distributed-systems
@@ -764,6 +764,39 @@ TaskFamily показывается один раз. UI подписывает r
 `node`/`postgres` profile IDs. Для базового language-neutral mastery достаточно
 одной revision при `assessmentPlan.anyOf`. Cross-stack transfer — отдельное
 явное требование, а не скрытая обязанность пройти шесть языков.
+
+### Технический M3 slice — 2026-08-25
+
+Серверная граница golden capability реализована в
+`fluent-engineering-lab@e3dcf50` и опубликована в `main`. Она ещё не закрывает
+весь M3: это проверенный технический срез, а не выданное mastery.
+
+- `POST /api/capability-sessions` принимает только released
+  `task-family.rate-limiter` revision и связывает три immutable release pins:
+  Runtime, Question Brain и TaskFamily;
+- QuestionCard `question.q315` проверяется по `release_id`, `revision_id` и
+  `content_hash`; capability key должен совпасть в Brain binding, Runtime task и
+  TaskFamily;
+- start и каждое evidence-командное событие требуют `Idempotency-Key`, получают
+  deterministic ID и серверное время; повтор возвращает тот же результат, а
+  конфликт identity закрывается typed error;
+- HTTP DTO allow-list не пропускает raw answer, hidden tests, solution, verdict
+  или browser-owned `mastered`;
+- append-only ledger и projection остаются единственным владельцем переходов;
+  профиль берётся из server-owned write context, а не из тела запроса.
+
+Техническое доказательство: 3 целевых `learning-api` tests (release pinning,
+idempotent start/event, fail-closed degraded/mismatch), focused ledger suite
+`3 passed / 1 skipped` (Postgres integration opt-in), полный `pnpm check` Lab:
+`learning-api 164 suites / 708 passed / 1 skipped`, `lab-contracts 247 / 1254`,
+`web 77 / 376`, production builds и browser boundary guard зелёные. Нефатальные
+lint/performance budget warnings перечислены в M11, они не замалчиваются.
+
+Остаётся до M3 PASS: реальная learner UI-связка этих endpoints с q315,
+первичная human-сессия Сергея, запись spoken explanation/reflection, настоящее
+ожидание 48–72 часов и changed-context cold repeat. До этого статус гейта
+остаётся `ACTIVE`, а human acceptance — `WAITING_HUMAN`; никакой synthetic или
+E2E evidence не может закрыть его за человека.
 
 ### Полная human session
 
@@ -1702,7 +1735,7 @@ read → implement → run → break → measure → explain → defend
 | M0 | `DONE` | root | 2026-08-25 | `49406ef`, `53f623c`, `7999f19`, `7d26d38`, `37bcaa9` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review PASS |
 | M1 | `DONE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f`, root `4cb6ce7` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json), [`M1/review.md`](verification/capability-closure/M1/review.md) | independent review PASS |
 | M2 | `DONE` | Lab | 2026-08-25 | Lab `00460fa`, root close proof | [`M2/baseline.json`](verification/capability-closure/M2/baseline.json), [`M2/review.md`](verification/capability-closure/M2/review.md) | independent review PASS |
-| M3 | `ACTIVE` | all/golden slice | 2026-08-25 | — | — | — |
+| M3 | `ACTIVE` | all/golden slice | 2026-08-25 | Lab `e3dcf50` | [`M3/baseline.json`](verification/capability-closure/M3/baseline.json), [`M3/technical-slice.md`](verification/capability-closure/M3/technical-slice.md) | technical slice PASS; human acceptance WAITING |
 | M4 | `TODO` | Lab/compiler | — | — | — | — |
 | M5 | `TODO` | Lab/UI | — | — | — | — |
 | M6 | `TODO` | Brain/editorial | — | — | — | — |
