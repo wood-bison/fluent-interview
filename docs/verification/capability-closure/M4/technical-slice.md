@@ -32,6 +32,24 @@ At `2026-08-25T22:03:16.251Z`, the restarted production package on
 The exact machine-readable capture is in
 [`baseline.json`](baseline.json).
 
+## Follow-up validation
+
+At `2026-08-26T00:05:49Z`, after the package restart on Lab `9af8713`, the
+full `NX_SKIP_NX_CACHE=true pnpm check` completed with exit code `0`:
+
+- curriculum drift: `valid=true`, `issueCount=0`;
+- Lab contracts: `247` suites / `1,254` tests passed;
+- learning API: `165` suites passed, `1` intentionally skipped (`712/713`
+  tests passed);
+- learner web: `79` suites / `380` tests passed;
+- observability: `7` suites / `39` tests passed;
+- production bundle guard: `59` browser chunks scanned, pass.
+
+The command still reports the existing non-fatal lint warnings (41 contracts,
+6 API, 13 web) and two Angular performance-budget warnings (initial bundle
+and lab route stylesheet). They are recorded as M11 work; they did not change
+the exit status or hide a test/build failure.
+
 The compiler/contract change is in Lab `7635423`; the learner catalogue
 release-boundary fix is in Lab `7018909`; the independent audit crawl is in
 Lab `d4ef81b`; the Explore-mode acceptance assertion is in Lab `7289e7d`; the
