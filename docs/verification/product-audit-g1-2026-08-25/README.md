@@ -1,7 +1,7 @@
 # Follow-up production smoke — Lab `b41b7e7`
 
-Date: 2026-08-25 13:28–13:31 Europe/Warsaw  
-Scope: `fluent-engineering-lab` after `b41b7e7 fix(a11y): enlarge task workspace controls`
+Date: 2026-08-25 13:28–13:40 Europe/Warsaw
+Scope: `fluent-engineering-lab` after `6b936f5 fix(a11y): size lesson self-check disclosures`
 
 This is a follow-up to `product-audit-g0-2026-08-25`. It records the
 post-change local production package and a fresh Browser run. It is not a
@@ -12,7 +12,9 @@ still open in the authoritative remediation plan.
 ## Package boundary
 
 - local package state: `ready`
-- source revision: `b41b7e705dc5feb910c670fb4c0029eceee3923e`
+- source revision: `6b936f535bf41b39965d90d89d672a40d1256c61`
+- latest Lab commits in this audit: `b41b7e7`, `ade7d9d`, `6b936f5`
+- final operation boundary: `7a1473e9-0d3c-4749-ad97-fecb086999d6`
 - graph release: `2026.08.06-curriculum-graph.3`
 - learner route: `http://localhost:49300/onboarding`
 - learning API: `http://localhost:49301/api`
@@ -57,7 +59,8 @@ step.
 
 The change closes the small task-workspace hit-area regression for the four
 controls it owns (theme select, OS-sync label, Grafana run link, and runner
-output disclosure). The remaining small items observed in the lab are the
-native checkbox box inside its 44px label and dense secondary links/details;
-they are tracked as accessibility/design follow-up, not silently counted as
-closed.
+output disclosure), plus the lesson self-check disclosures and server-owned
+next-action link. The final Browser audit found only the native checkbox box
+inside its 44px label; it is a system control, while the label remains the
+actual pointer/keyboard target. It is not silently counted as a failed
+journey.

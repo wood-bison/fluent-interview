@@ -1,12 +1,12 @@
 {
   "evidenceVersion": "product-audit-browser-smoke.v2",
-  "capturedAt": "2026-08-25T13:31:00+02:00",
-  "sourceRevision": "b41b7e705dc5feb910c670fb4c0029eceee3923e",
+  "capturedAt": "2026-08-25T13:40:00+02:00",
+  "sourceRevision": "6b936f535bf41b39965d90d89d672a40d1256c61",
   "browser": "Codex in-app Browser",
   "viewport": "default desktop viewport (not a target-size screenshot)",
   "package": {
     "state": "ready",
-    "operationId": "fb4b1e76-c206-4a0d-bbbb-52d8f45c487b",
+    "operationId": "7a1473e9-0d3c-4749-ad97-fecb086999d6",
     "graphReleaseId": "2026.08.06-curriculum-graph.3",
     "ports": {
       "learnerWeb": 49300,
@@ -55,7 +55,9 @@
       "runtimeVisible": true,
       "evidenceVisible": true,
       "publicChecks": "4/4",
-      "xtermVisible": true
+      "xtermVisible": true,
+      "visibleInteractiveBelow44px": 1,
+      "smallElementReason": "native checkbox box; its wrapping label is the 44px hit-area"
     }
   ],
   "publishedPathMatrix": [
