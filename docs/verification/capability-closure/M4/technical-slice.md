@@ -9,7 +9,7 @@ collection; it is not allowed to redefine the released revision count.
 
 ## Live local evidence
 
-At `2026-08-25T21:54:16.594Z`, the restarted production package on
+At `2026-08-25T22:00:26.925Z`, the restarted production package on
 `127.0.0.1:49300` returned:
 
 | Surface | Result |
@@ -26,7 +26,7 @@ At `2026-08-25T21:54:16.594Z`, the restarted production package on
 | Learner-visible TaskFamily keys | `14` |
 | Runnable stations | `1` |
 | `/api/labs/catalogue` | `19` items, six languages, zero missing capability keys; all 19 workspaces respond |
-| `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable station workspaces, 19/19 catalogue workspaces |
+| `pnpm m4:route-audit` | `pass`, 81/81 map joins, 81/81 HTML routes, 1/1 runnable station workspaces, 19/19 catalogue workspaces, consumer release identities/counts reconciled |
 | Explore projection (`x-fel-mode: explore`) | `81` open topics, `0` locked topics, `66` runnable stations; inventory valid |
 
 The exact machine-readable capture is in
@@ -34,8 +34,8 @@ The exact machine-readable capture is in
 
 The compiler/contract change is in Lab `7635423`; the learner catalogue
 release-boundary fix is in Lab `7018909`; the independent audit crawl is in
-Lab `d4ef81b`; the Explore-mode acceptance assertion is in Lab `7289e7d`, all
-on `main`.
+Lab `d4ef81b`; the Explore-mode acceptance assertion is in Lab `7289e7d`; the
+consumer-surface release reconciliation is in Lab `f427ec7`, all on `main`.
 
 ## What changed
 
