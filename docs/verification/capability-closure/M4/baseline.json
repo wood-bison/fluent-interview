@@ -1,0 +1,53 @@
+{
+  "gate": "M4",
+  "status": "technical-slice",
+  "result": "NOT_RELEASED",
+  "capturedAt": "2026-08-25T21:30:26.000Z",
+  "localBaseUrl": "http://127.0.0.1:49300",
+  "repositories": {
+    "root": "9968071",
+    "fluent-engineering-lab": "7f4c9b6",
+    "fluent-question-brain": "e698fc2",
+    "fluent-task-runtime": "45c4519"
+  },
+  "inventoryEndpoint": {
+    "path": "/api/program/inventory",
+    "httpStatus": 200,
+    "contractVersion": "product-inventory.v1",
+    "counts": {
+      "programCount": 1,
+      "pathCount": 9,
+      "areaCount": 15,
+      "stationCount": 81,
+      "questionCardCount": 1591,
+      "topicGroupCount": 135,
+      "capabilityCount": 68,
+      "taskFamilyCount": 15,
+      "taskRevisionCount": 20,
+      "runnableStationCount": 1,
+      "stationBoundCardCount": 6,
+      "evidenceCount": 8
+    },
+    "reconciliationValid": true
+  },
+  "drillDownEndpoints": {
+    "programMap": { "httpStatus": 200, "pathCount": 9, "stationCount": 81 },
+    "questionSummary": { "httpStatus": 200, "cardCount": 1591, "topicGroupCount": 135 },
+    "taskCatalogue": {
+      "httpStatus": 200,
+      "itemCount": 20,
+      "languages": ["csharp", "javascript", "go", "java", "sql", "typescript"],
+      "missingCapabilityKeys": 0
+    }
+  },
+  "technicalAcceptance": {
+    "singleServerOwnedInventoryCompiler": "PASS",
+    "railConsumesInventory": "PASS",
+    "practiceTaskCountReconcilesWithRuntimeRelease": "PASS",
+    "runtimeAndQuestionBrainJoin": "PASS",
+    "routeManifestGeneratedFromInventory": "TODO",
+    "independentExecutableRouteCrawl": "TODO",
+    "allConsumerSurfaces": "PARTIAL",
+    "m4Result": "NOT_RELEASED"
+  }
+}

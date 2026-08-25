@@ -820,6 +820,10 @@ bindings делают inventory недействительным. Это тех�
 crawl остаются в очереди. Гейт M4 не активируется, пока M3 не получит
 человеческое acceptance.
 
+Live evidence этого среза зафиксировано в
+[`M4/baseline.json`](verification/capability-closure/M4/baseline.json) и
+[`M4/technical-slice.md`](verification/capability-closure/M4/technical-slice.md).
+
 ### Полная human session
 
 1. Закрытый recall q315.
