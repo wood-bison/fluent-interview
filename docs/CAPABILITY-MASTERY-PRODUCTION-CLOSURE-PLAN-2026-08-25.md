@@ -1,6 +1,7 @@
 # Fluent Interview — план доведения от банка вопросов до настоящего mastery
 
 **Статус:** `AUTHORITATIVE / READY FOR EXECUTION`  
+**Редакция:** `v2` — учтён аудит плана от 2026-08-25
 **Дата baseline:** 2026-08-25  
 **Рабочая область:** `/Users/sergeyzhechko/developer/fluent-interview`  
 **Текущий гейт:** `M0`  
@@ -20,6 +21,22 @@ Recall → Predict → Build → Run → Break → Observe
 готовности. Они не исполняются параллельно. Полезные требования из них уже
 включены ниже.
 
+### Что исправлено после аудита плана
+
+- `16 active canonical capabilities / 19 bindings` теперь разделены явно;
+- Runtime manifest назначен источником истины для `15 total / 14 released /
+  20 revisions / 19 runnable`, а старые Lab `14/24` требуют stale/reissue
+  disposition;
+- `PlanArea` определён как acceptance view, а `CoverageManifest` обязан
+  раскрывать mapping с 24 модулями, 15 доменами и canonical capabilities;
+- operational cleanup, fresh-image/rebuild и profile-aware API endpoints
+  перенесены в M0;
+- Review Workbench возвращён в M6 как обязательный human-review seam;
+- Aspire/AppHost, Collector, shared Jaeger и Docker lifecycle явно включены в
+  M10, а `56686` зафиксирован как один shared Trace Explorer;
+- digest pinning и threat model обязательны для Runtime, а gVisor, FSRS,
+  Open Badges и xAPI оставлены отдельными upgrade/export paths.
+
 ---
 
 ## Handoff агенту — можно копировать целиком
@@ -34,7 +51,8 @@ Recall → Predict → Build → Run → Break → Observe
 > snapshot и выполни M0. Не создавай новые QuestionCard. Разрешены исправление,
 > перевод, enrichment, binding и классификация существующих 1 591 карточек.
 > Новые TaskFamily разрешены только как минимальное исполняемое доказательство
-> capability из 12 обязательных областей.
+> capability из 12 acceptance-областей; эти области берутся из
+> `CoverageManifest` и не становятся новой Brain taxonomy.
 >
 > Не создавай fallback, shadow catalogue, локальную копию вопросов, browser-side
 > verdict, fake pass или автоматически выданный mastery. Question Brain,
@@ -62,7 +80,8 @@ Recall → Predict → Build → Run → Break → Observe
 `locked`, `Run-ready` и исторические evidence одним строгим контрактом
 `CapabilityDossier`, пройти одну capability rate limiter от закрытого ответа до
 реального холодного повтора, а затем масштабировать доказанный шаблон на
-существующий корпус и 12 обязательных областей. Визуальная система Cameo /
+существующий корпус и 12 acceptance-областей (это reporting view, а не новая
+таксономическая сущность). Визуальная система Cameo /
 Executable Trace Atlas сохраняется; переделываются информационная архитектура,
 честность действий и полнота learner loop, а не художественное направление.
 
@@ -75,11 +94,12 @@ Baseline на 25 августа 2026:
 | Факт | Значение | Что он доказывает |
 | --- | ---: | --- |
 | Published QuestionCard | 1 591 | большой поисковый корпус, не mastery |
-| Ready-to-learn по текущему UI | 989 | текущая редакторская проекция, определение требует уточнения |
+| Ready-to-learn по текущему UI | 989 | исторический UI counter; не является server-owned метрикой до M4 |
 | Paths | 9 | именованные views, а не количество тем |
-| Areas / stations | 15 / 81 | learner projection, а не число вопросов |
-| Brain / Lab capabilities | 19 / 68 | namespace ещё не канонизирован |
-| Task families / revisions | 15 / 20 | ранняя база исполнения |
+| Areas / stations | 15 / 81 | learner projection, а не число вопросов; Plan areas — отдельная acceptance view |
+| Brain capabilities / bindings | 16 active canonical / 19 bindings | 11 deprecated aliases сохраняются только для истории; 19 — не число capabilities |
+| Lab capabilities / placements | 68 / 81 | learner projection, не второй registry capabilities |
+| Task families / revisions | 15 total / 14 released / 20 revisions | canonical source — Runtime `task-family-release-2026-08-25` |
 | Runtime revisions runnable | 19 | одна release-запись противоречива |
 | Server-owned runnable stations | 1 | реальная readiness намного ниже UI promises |
 | Обещанные executable routes | 66 | список для обязательного crawl |
@@ -87,7 +107,9 @@ Baseline на 25 августа 2026:
 | Explanations / mastered | 0 / 0 | learner loop не замкнут |
 | Plan areas с пятью proofs | 0 из 12 | исходная цель ещё не достигнута |
 
-`0 из 12` не означает отсутствие материалов. Это означает, что ни одна область
+`0 из 12` не означает отсутствие материалов. Это означает, что ни одна
+acceptance-область (агрегация существующих capabilities, а не новая taxonomy)
+не
 ещё не имеет одновременно:
 
 1. полного learning content;
@@ -120,6 +142,7 @@ LEARNER MASTERY
 | `Program` | целевая профессия, сейчас `Backend Engineer` | Lab |
 | `Path` | рекомендуемая проекция программы: Node.js + TS, Java + Spring и т. д. | Lab |
 | `SharedDomain` | Runtime, HTTP/API, Data/PostgreSQL, Distributed Systems и т. д. | Brain taxonomy |
+| `PlanArea` | acceptance/reporting-группа capabilities для проверки полноты Plan 2026; не learner taxonomy | Lab projection / root manifest |
 | `Capability` | маленький наблюдаемый навык, который можно доказать | Brain registry |
 | `Station` | learner-facing placement capability внутри released path | Lab |
 | `QuestionCardRevision` | immutable локализованная редакция вопроса | Brain |
@@ -135,10 +158,31 @@ LEARNER MASTERY
 | `ColdRepeatAssignment` | отложенный changed-context repeat | Lab scheduler |
 | `MasteryClaim` | вычисляемый сервером результат; никогда не browser boolean | Lab evaluator |
 | `WeeklyRetro` | агрегация failure ledger и одно изменение следующей недели | Lab |
+| `CapabilityRegistryRelease` | immutable active/deprecated registry snapshot | Brain |
+| `TaskCatalogRelease` | immutable task-family/revision snapshot; единственный runtime count source | Runtime |
+| `OperationalResource` | shared Trace Explorer, Collector, Compose/AppHost resource с owner и lifecycle | workspace |
 
 `Station` не владеет вопросом или capability. `TaskBrief` не становится вторым
 источником задачи: это learner-facing проекция released `TaskFamily` и
 `TaskRevision`.
+
+### 3.4 Source-of-truth matrix и reporting views
+
+В M0 агент обязан сохранить машинно-читаемую матрицу источников истины:
+
+| Что считаем | Канонический источник | Допустимый consumer projection |
+| --- | --- | --- |
+| active canonical capabilities, aliases | Brain `CapabilityRegistryRelease` | Lab inventory и stations |
+| question bindings и их роли | Brain `QuestionCapabilityBindingRelease` | Lab dossier |
+| task families, revisions, availability | Runtime `TaskCatalogRelease` | Lab practice catalog |
+| learner stations и paths | Lab released projection | Web/UI |
+| 12 Plan areas | root/Lab `CoverageManifest` mapping capabilities → acceptance area | отчёты и counters |
+| shared traces и service health | workspace operational contract | Lab Studio / Control Center |
+
+`24 modules`, `15 current domains`, `12 Plan areas`, `9 paths` и `81 stations`
+не могут независимо объявлять один и тот же навык. `PlanArea` не получает
+собственный ID в Brain и не становится причиной новой карточки; это проверяемая
+группировка для coverage и release acceptance.
 
 ### 3.3 QuestionCard roles
 
@@ -426,6 +470,30 @@ gate задним числом.
    superseded/history; уникальную evidence не удалять.
 9. Зафиксировать канонический hierarchy и glossary из разделов 3–4.
 10. Исправить `PRODUCT.md`: workspace — polyrepo umbrella, не source monorepo.
+11. Исправить baseline и записать `SourceOfTruthMatrix`: Brain = 16 active
+    canonical capabilities / 19 bindings; Runtime = 15 total families, 14
+    released, 20 revisions, 19 runnable; Lab counters не становятся
+    источником истины. Старые `14/24` G12 counters пометить stale или
+    переиздать с явной семантикой.
+12. Создать `CoverageManifest` с явным mapping:
+    `12 Plan areas ↔ 24 Tier-1 modules ↔ 15 current domains ↔ capabilities`.
+    `PlanArea` остаётся acceptance/reporting view и не добавляется в Brain
+    taxonomy.
+13. Зафиксировать операционную семантику `56686`: это один shared Trace
+    Explorer/Jaeger, а не два UI-порта. Поле `task-runtime.ui` переименовать
+    в `observability.traceExplorerUrl` или эквивалентный neutral field; второй
+    Jaeger не поднимать.
+14. Выбрать профиль проверки (`dev` или `packaged`) и подставлять его API
+    bases из `workspace.yaml`/environment. Команды M0 не должны молча бить в
+    `49301`, если запущен `pnpm dev` на `47000`.
+15. Перед baseline crawl пересобрать/recreate только принадлежащие Fluent
+    Interview образы из текущих SHAs. Составить preview orphan inventory,
+    остановить только подтверждённые owned smoke/sandbox resources и записать
+    before/after в `baseline.json`; learner volumes и чужие resources не
+    трогать.
+16. Зафиксировать решение по операционному плану: принять Aspire/AppHost +
+    central Collector + shared Jaeger как M10 implementation, оставив shell
+    scripts recovery primitives; либо записать `rejected-with-cause` в M10.
 
 ### Команды
 
@@ -442,19 +510,34 @@ pnpm status
 docker compose ls
 docker system df -v
 
-curl -fsS http://127.0.0.1:49301/api/program/inventory | jq .
-curl -fsS http://127.0.0.1:49301/api/program/learner-map | jq .
-curl -fsS http://127.0.0.1:49301/api/runtime/relations | jq .
-curl -fsS 'http://127.0.0.1:48127/v1/quality?workspace=fluent-interview' | jq .
-curl -fsS http://127.0.0.1:48227/v1/tasks/summary | jq .
+LAB_API_BASE="${FLUENT_LAB_API_BASE:-http://127.0.0.1:49301}"
+BRAIN_API_BASE="${QUESTION_BRAIN_API_BASE:-http://127.0.0.1:48127}"
+RUNTIME_API_BASE="${TASK_RUNTIME_API_BASE:-http://127.0.0.1:48227}"
+
+curl -fsS "$LAB_API_BASE/api/program/inventory" | jq .
+curl -fsS "$LAB_API_BASE/api/program/learner-map" | jq .
+curl -fsS "$LAB_API_BASE/api/runtime/relations" | jq .
+curl -fsS "$BRAIN_API_BASE/v1/quality?workspace=fluent-interview" | jq .
+curl -fsS "$RUNTIME_API_BASE/v1/tasks/summary" | jq .
 ```
+
+Для dev-профиля перед проверкой использовать
+`FLUENT_LAB_API_BASE=http://127.0.0.1:47000`; для packaged-профиля — значение
+`49301`. Значения должны также приходить из machine-readable workspace contract,
+а не дублироваться в нескольких shell-скриптах.
 
 ### Exit criteria
 
 - один active plan и один glossary;
 - SHA/release/schema baseline сохранён;
 - известны все dirty changes и Docker owners;
+- `SourceOfTruthMatrix` и taxonomy mapping опубликованы;
+- counters разделяют total/released/runnable и имеют владельца;
 - route manifest воспроизводим из API;
+- текущие Fluent images соответствуют зафиксированным SHAs, owned orphan
+  resources классифицированы;
+- shared Trace Explorer не выглядит как отдельный Runtime UI;
+- dev/package API profile выбран и команды M0 воспроизводимы;
 - historic `RELEASED` больше не используется automation или агентами;
 - нет удалённых learner data или чужих Docker resources;
 - independent reviewer: `PASS`.
@@ -732,6 +815,11 @@ Path
 - `project-book-boundary-001` скрыт из executable до runnable release;
 - каждый task достижим из capability dossier;
 - каждый counter имеет формулу и drill-down;
+- `ready-to-learn` компилируется server-side как
+  `primary card structurally complete ∧ binding role assigned ∧ required
+  locales complete`; исторический UI counter `989` больше не используется;
+- `PlanArea` counters считаются только через опубликованный
+  `CoverageManifest`, а не через названия экранов или ручные числа;
 - `reconciliation.valid` проверяет реальные cross-service joins, а не значения
   с ними же;
 - 39 broken и 2 no-run либо реализованы, либо честно downgraded в
@@ -746,6 +834,7 @@ Path
 - 0 unreleased tasks в learner catalog;
 - 0 orphan runnable revisions;
 - 0 manual browser counters.
+- 0 counters без owner, formula, release ID и drill-down collection.
 
 ### Exit criteria
 
@@ -871,12 +960,33 @@ locale quality и placement без массового превращения в 
 
 - не auto-bind по title/topic/embedding;
 - embeddings предлагают, человек принимает;
-- 19 Brain и 68 Lab capabilities сходятся в одном stable namespace;
+- active Brain canonical capabilities и Lab placements сходятся через один
+  stable namespace; binding count не называется capability count;
 - Angular aliases и мелкие near-duplicate topics нормализуются;
 - повторный enrichment идемпотентен;
 - historical revisions сохраняются;
 - silent locale fallback запрещён;
 - code/identifiers могут быть language-neutral; объясняющий prose — reviewed locale.
+
+### Review Workbench — обязательная поверхность M6
+
+Для 1 591 карточки нужен не ручной обход по одной записи, а отдельный
+editorial workbench в Question Brain/Studio. Он обязан поддерживать:
+
+- batch-очередь по `needs-capability`, locale-gap, duplicate и
+  `rejected-with-cause`;
+- embedding-assisted cluster proposals с обязательным human accept/reject;
+- просмотр карточки, revision/hash, proposed capability, role, provenance и
+  соседних candidates в одном контексте;
+- bulk-операции только для одинакового проверенного решения, с preview;
+- append-only reviewer/audit trail, undo до release и idempotent re-run;
+- фильтры по всем Paths, SharedDomains, roles и PlanArea mapping;
+- экспорт deterministic ledger, из которого M6 coverage gates реально
+  воспроизводятся.
+
+Workbench не публикует binding автоматически и не является learner UI. Если
+Workbench не готов, M6 остаётся `BLOCKED`, а агент не компенсирует его ручным
+SQL или массовым auto-accept.
 
 ### Coverage gates
 
@@ -926,12 +1036,25 @@ mapping.
 - TaskFamily language-neutral;
 - TaskRevision владеет language/profile;
 - editable files, fixtures и hidden tests разделены;
-- pinned OCI image/harness;
+- pinned OCI image/harness (`name:tag@sha256:digest`, не только mutable tag);
 - no network, read-only input, bounded CPU/RAM/PID/time;
 - deterministic result envelope;
 - sandbox cleanup даже после timeout/cancel;
 - Docker socket остаётся local-dev boundary;
 - UI видит `TypeScript`, а не `node`.
+
+### Threat model и границы sandbox
+
+M7 фиксирует threat model для текущего local-dev boundary: Docker daemon/socket,
+host-mounted workspace и выбранные OCI images считаются доверенными только для
+локального пользователя. Digest pinning, минимальные capabilities и
+`--network none` обязательны для воспроизводимости и снижения риска, но не
+превращают Docker Desktop в multi-tenant isolation.
+
+gVisor/`runsc` не является обязательным acceptance checkbox для MacBook/Apple
+Studio-профиля: он требует Linux runtime и отдельной проверки совместимости и
+производительности. Возможный Linux production profile записывается как
+отдельный upgrade path с собственным threat-model review.
 
 ### CapabilityAssessmentPlan
 
@@ -961,12 +1084,13 @@ mapping.
 - 19 runnable реально принимаются Runtime;
 - non-runnable не рекламируется executable;
 - release join smoke строится из manifest;
+- все image references проверяются policy на digest;
 - task/result/source leakage tests зелёные;
 - независимый security/runtime reviewer: `PASS`.
 
 ---
 
-## M8 — Сделать 12 областей Plan 2026 product-ready
+## M8 — Сделать 12 acceptance-областей Plan 2026 product-ready
 
 ### Цель
 
@@ -974,6 +1098,21 @@ mapping.
 области. Это не означает автоматически, что Sergey уже их mastered.
 
 ### CoverageManifest
+
+`CoverageManifest` — это acceptance/reporting artifact, не новый Brain registry.
+Он обязан содержать явный mapping и provenance версии:
+
+```yaml
+taxonomyMapping:
+  planAreaToTier1Modules: {}
+  tier1ModuleToSharedDomains: {}
+  sharedDomainToCapabilityKeys: {}
+  capabilityToPaths: {}
+sourceReleases:
+  brainRegistryReleaseId: "..."
+  brainBindingReleaseId: "..."
+  runtimeTaskCatalogReleaseId: "..."
+```
 
 Для каждой области:
 
@@ -986,6 +1125,10 @@ areaKey:
   routeHealthRule: 100%
   repeatPolicy: capability-repeat-2-3d.v1
 ```
+
+Порядок областей определяется prerequisite graph и pilot value. Coverage-score
+может влиять на планирование работ, но сам по себе не меняет learner sequence.
+Каждая область должна иметь recorded rationale для своего места в маршруте.
 
 ### Минимальное executable coverage
 
@@ -1149,6 +1292,29 @@ Target: ≥18/20; A11y, Theming, Implementation Integrity = 4/4; остальн�
 
 ## M10 — Recovery, observability и безопасный Docker lifecycle
 
+### Operational architecture decision
+
+Исторический [ASPIRE-JAEGER-DOCKER-PRODUCTION-PLAN-2026-08-25.md](ASPIRE-JAEGER-DOCKER-PRODUCTION-PLAN-2026-08-25.md)
+не остаётся второй активной очередью. Его принятые operational requirements
+поглощаются этим гейтом:
+
+- TypeScript Aspire AppHost становится dev/local-product orchestrator;
+- `pnpm dev` и `pnpm dev:production` делегируют AppHost соответствующему
+  profile, а shell scripts остаются recovery/status primitives;
+- три domain repositories и их data ownership сохраняются независимыми;
+- один central OpenTelemetry Collector и один Jaeger v2 Trace Explorer;
+- Prometheus, Loki и Grafana сохраняются для metrics/logs/alerts;
+- Tempo и repo-local Jaeger удаляются только после trace-parity evidence;
+- resource names, ports, durable volumes и cleanup policy приходят из одного
+  workspace contract;
+- `task-runtime.ui` не создаёт второго UI: shared `observability.traceExplorerUrl`
+  используется всеми consumers.
+
+Если AppHost/AppCollector migration не принимается для текущего release, агент
+обязан записать `rejected-with-cause` и отдельный owner/date. Нельзя молча
+считать старый operational plan закрытым. В любом варианте обязательны shared
+trace contract, scoped cleanup, fresh-image check и failure matrix ниже.
+
 ### Failure matrix
 
 | Failure | Learner outcome |
@@ -1195,6 +1361,17 @@ logs, не high-cardinality metric labels.
 - unrelated sentinel container переживает cleanup;
 - disk budget и retention проверяются автоматически.
 
+### Required operational sub-gates
+
+1. **M10-A — AppHost/resource graph:** один запуск, один resource graph,
+   deterministic dev/package profiles, no duplicate project names.
+2. **M10-B — telemetry parity:** Browser → Learning API → Brain/Runtime trace
+   в одном Jaeger, Collector accepted/exported/dropped counters reconciled.
+3. **M10-C — storage and retention:** Jaeger/Prometheus/Loki/BuildKit budgets,
+   named-volume allowlist, restart persistence и bounded retention.
+4. **M10-D — cleanup and recovery:** orphan preview, owned-only cleanup,
+   unrelated sentinel survives, 20 sandbox runs leave no ephemeral resources.
+
 ### Exit criteria
 
 - Brain read и Runtime run видны как connected traces;
@@ -1213,12 +1390,15 @@ logs, не high-cardinality metric labels.
 pnpm verify
 pnpm verify:contracts
 pnpm verify:release-join
+pnpm verify:source-of-truth
+pnpm verify:taxonomy-mapping
 pnpm verify:routes
 pnpm verify:tasks
 pnpm verify:evidence
 pnpm verify:i18n
 pnpm verify:observability
 pnpm verify:docker
+pnpm verify:docker-hygiene
 pnpm verify:browser
 pnpm verify:docs
 ```
@@ -1432,6 +1612,16 @@ read → implement → run → break → measure → explain → defend
 - Не разрешать green CI при skipped Go tests.
 - Не использовать global Docker prune.
 - Не объединять три domain repositories или Compose projects.
+- Не создавать отдельный Brain `PlanArea` registry: 12 областей живут только
+  в versioned `CoverageManifest` и mapping к canonical capabilities.
+- Не считать shared Jaeger URL вторым Task Runtime UI или поднимать второй
+  Jaeger только из-за названия поля в `workspace.yaml`.
+- Не менять learner sequence только по coverage-score; prerequisite graph и
+  recorded pedagogical rationale обязательны.
+- Не объявлять gVisor/`runsc` поддержанным на desktop Mac без отдельного Linux
+  compatibility/performance proof.
+- Не делать FSRS, Open Badges или xAPI внутренними источниками истины; они
+  остаются scheduler/export adapters после evidence baseline.
 - Не начинать Tier 2 execution до Plan-2026-ready.
 - Не менять Cameo/Executable Trace Atlas до integrity closure.
 - Не добавлять VHS, glass, gradients или animation ради «wow» до zero P0/P1.
@@ -1519,7 +1709,8 @@ read → implement → run → break → measure → explain → defend
 10. Получить inspectable MasteryClaim только после всех proofs.
 11. Переключить RU/EN и тему, не потеряв состояние.
 12. Увидеть честное различие между theory-ready, practice-ready и mastered.
-13. Пройти тот же цикл в каждой из 12 областей.
+13. Пройти тот же цикл в каждой из 12 acceptance-областей, раскрытых через
+    `CoverageManifest`, без появления отдельной параллельной taxonomy.
 14. После Tier 1 открыть большой Project Book и использовать накопленные
     capabilities как строительные блоки реальной архитектуры.
 

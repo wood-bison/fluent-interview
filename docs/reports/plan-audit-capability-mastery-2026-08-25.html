@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аудит плана CAPABILITY-MASTERY-PRODUCTION-CLOSURE-2026-08-25</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #FAF8F4;
+    --surface:     #F2EDE5;
+    --surface-2:   #EBE4D8;
+    --border:      #d8d0c4;
+    --text:        #1C1815;
+    --muted:       #6e6e73;
+    --caption:     #86868b;
+    --brown:       #8B6F4E;
+    --olive:       #5E6E48;
+    --rust:        #A65D3A;
+    --forest:      #2D3B2D;
+    --code-bg:     #F0EDE7;
+    --code-text:   #A65D3A;
+    --radius:      12px;
+    --radius-sm:   6px;
+    --font:        -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    --font-display:-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    --font-mono:   "SF Mono", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #201d19;
+      --surface:   #2c2721;
+      --surface-2: #3f382e;
+      --border:    #4d4339;
+      --text:      #f2ebe0;
+      --muted:     #a8b08c;
+      --caption:   #8a7e70;
+      --brown:     #cdb68e;
+      --olive:     #97a55e;
+      --rust:      #c9918a;
+      --forest:    #d9cfc0;
+      --code-bg:   #171411;
+      --code-text: #cdb68e;
+    }
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  html { background: var(--bg); }
+  body {
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.529;
+    color: var(--text);
+    background: var(--bg);
+    padding: 0 24px 80px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wrapper {
+    max-width: 820px;
+    margin: 0 auto;
+    animation: fadeSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .doc-header {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .doc-header .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 10px;
+  }
+  .doc-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.003em;
+    color: var(--forest);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .doc-header .meta { font-size: 15px; color: var(--muted); }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.002em;
+    line-height: 1.15;
+    color: var(--forest);
+    margin-top: 48px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.001em;
+    line-height: 1.2;
+    color: var(--brown);
+    margin-top: 32px;
+    margin-bottom: 8px;
+  }
+  h4 { font-size: 15px; font-weight: 600; color: var(--muted); margin-top: 24px; margin-bottom: 6px; }
+
+  p { margin-bottom: 16px; max-width: 72ch; }
+  a { color: var(--brown); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  strong { font-weight: 600; color: var(--text); }
+  em { font-style: italic; color: var(--muted); }
+
+  ul, ol { margin: 0 0 20px 0; padding-left: 24px; }
+  li { margin-bottom: 6px; max-width: 72ch; }
+  li > ul, li > ol { margin-top: 6px; margin-bottom: 6px; }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--brown);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 24px 0;
+    position: relative;
+  }
+  pre code { background: none; border: none; padding: 0; color: var(--text); font-size: 13.5px; line-height: 1.6; }
+  .lang-label {
+    position: absolute; top: 12px; right: 16px;
+    font-size: 11px; font-family: var(--font-mono);
+    color: var(--caption); letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  .table-wrap { overflow-x: auto; margin: 24px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  thead tr { background: var(--surface-2); }
+  th {
+    text-align: left; padding: 8px 12px; font-weight: 600;
+    font-size: 12.5px; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--caption); border-bottom: 1px solid var(--border);
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface); transition: background 0.15s; }
+
+  blockquote {
+    margin: 24px 0; padding: 12px 20px;
+    background: color-mix(in srgb, var(--brown) 6%, transparent);
+    border-left: 3px solid var(--brown);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--muted);
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+  .card h3:first-child { margin-top: 0; }
+
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
+  }
+  .badge-pass { background: #DDE8D5; color: #2D5220; }
+  .badge-fail { background: #F2DEDA; color: #7A2A20; }
+  .badge-warn { background: #F2E8DA; color: #7A4A20; }
+  .badge-info { background: #DAE3E8; color: #204A5A; }
+  @media (prefers-color-scheme: dark) {
+    .badge-pass { background: #2a3820; color: #97a55e; }
+    .badge-fail { background: #3a1e1a; color: #c9918a; }
+    .badge-warn { background: #3a2e1a; color: #cdb68e; }
+    .badge-info { background: #1a2a30; color: #8aA0A8; }
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  .doc-footer {
+    margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--caption);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .doc-footer .brand {
+    font-weight: 600; color: var(--olive);
+    letter-spacing: 0.08em; font-size: 11px; text-transform: uppercase;
+  }
+
+  .verdict-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 24px 0; }
+  .verdict-grid .cell {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .verdict-grid .num { font-size: 26px; font-weight: 700; font-family: var(--font-display); }
+  .verdict-grid .lbl { font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px; }
+
+  .finding {
+    border: 1px solid var(--border); border-left: 3px solid var(--rust);
+    border-radius: var(--radius); background: var(--surface);
+    padding: 18px 22px; margin: 20px 0;
+  }
+  .finding.ok { border-left-color: var(--olive); }
+  .finding.warn { border-left-color: #b98a3d; }
+  .finding h3 { margin-top: 0; }
+  .finding .fid { font-family: var(--font-mono); font-size: 12px; color: var(--caption); letter-spacing: 0.06em; }
+
+  .en-term {
+    display: inline-block; font-family: var(--font-mono); font-size: 0.75em; font-weight: 600;
+    color: var(--olive); background: color-mix(in srgb, var(--olive) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--olive) 25%, transparent);
+    padding: 1px 7px; border-radius: 20px; margin-left: 4px; vertical-align: middle;
+  }
+
+  @media (max-width: 1068px) { body { font-size: 16px; } }
+  @media (max-width: 735px) {
+    body { padding: 0 16px 60px; font-size: 15px; }
+    .doc-header { padding: 40px 0 28px; }
+    pre { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header class="doc-header">
+    <div class="eyebrow">Fluent Interview · Аудит активного плана</div>
+    <h1>Аудит CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25</h1>
+    <div class="meta">25 августа 2026 · проверено тремя параллельными агентами + веб-исследование learning science и sandbox security</div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════ ВЕРДИКТ ═══════════ -->
+    <h2>Вердикт</h2>
+
+    <p><span class="badge badge-pass">✅ ПЛАН СИЛЬНЫЙ — ГОТОВ К ИСПОЛНЕНИЮ ПОСЛЕ ТОЧЕЧНЫХ ПРАВОК</span></p>
+
+    <p>План <code>docs/CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md</code> — самый зрелый из пяти планов workspace: большая часть baseline воспроизводится из данных, «честностная» механика (state machines, запрет shortcuts, auto-veto mastery) уникально глубока, а дизайн learner loop совпадает с современными данными cognitive science. Найдены <strong>одна фактическая ошибка в baseline</strong>, <strong>одно числовое противоречие между артефактами той же даты</strong>, <strong>одна невычисляемая UI-метрика</strong> и <strong>одна дыра поглощения</strong> старого observability-плана.</p>
+
+    <div class="verdict-grid">
+      <div class="cell"><div class="num" style="color:var(--olive)">10/13</div><div class="lbl">baseline метрик совпали точно</div></div>
+      <div class="cell"><div class="num" style="color:#b98a3d">1</div><div class="lbl">фактическая ошибка (Brain capabilities)</div></div>
+      <div class="cell"><div class="num" style="color:#b98a3d">1</div><div class="lbl">дыра покрытия (ASPIRE-Jaeger → M10)</div></div>
+      <div class="cell"><div class="num" style="color:var(--rust)">12</div><div class="lbl">рекомендаций «сделать лучше»</div></div>
+      <div class="cell"><div class="num">M0</div><div class="lbl">frontier: READY, ещё не начат</div></div>
+    </div>
+
+    <!-- ═══════════ МЕТОДИКА ═══════════ -->
+    <h2>Как проверялось</h2>
+
+    <ul>
+      <li><strong>Агент 1 — Fluent Lab:</strong> скрипты (374), capabilities, routes, readiness-компиляторы, модели evidence/mastery, git-состояние.</li>
+      <li><strong>Агент 2 — Question Brain + Task Runtime:</strong> живая БД, live API, манифесты релизов, Makefile, sandbox-исполнение, порты.</li>
+      <li><strong>Агент 3 — артефакты:</strong> сверка <code>artifact.json</code> аудита с разделом 2 плана, статус M0-proof, поглощение пяти исторических планов, git-история корня.</li>
+      <li><strong>Веб-исследование:</strong> FSRS/DSR-планирование повторений, pretesting/retrieval practice (Roediger, Bjork, Pan), OWASP Docker hardening, digest-pinning, gVisor/Firecracker, xAPI 2.0 / Open Badges 3.0.</li>
+    </ul>
+
+    <blockquote><p>Git: все четыре репозитория чистые, на <code>main</code>, синхронизированы с origin. Сам файл плана имеет ровно один коммит <code>498c2c8</code> (19:06) и после создания не менялся. Baseline-таблица писалась через ~22 минуты после финального audit-артефакта — поверх свежих данных.</p></blockquote>
+
+    <!-- ═══════════ BASELINE СВЕРКА ═══════════ -->
+    <h2>Сверка baseline (раздел 2 плана) с фактом</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Метрика</th><th>План</th><th>Факт (проверено)</th><th>Вердикт</th></tr></thead>
+      <tbody>
+        <tr><td>Published QuestionCard</td><td>1 591</td><td>1591 — живая БД + <code>/v1/quality</code> + G7-manifest (3 источника)</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Ready-to-learn</td><td>989</td><td>Не считается никаким серверным кодом; реконструкция ≈978</td><td><span class="badge badge-warn">⚠️ нет server-owned определения</span></td></tr>
+        <tr><td>Paths</td><td>9</td><td>9 (inventory)</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Areas / stations</td><td>15 / 81</td><td>15 / 81</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Brain capabilities</td><td>19</td><td><strong>16 активных canonical</strong> (+11 deprecated); «19» — это число bindings-карточек</td><td><span class="badge badge-fail">❌ перепутано</span></td></tr>
+        <tr><td>Lab capabilities</td><td>68</td><td>68 (<code>/api/program/inventory</code>, G12-матрица)</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Task families / revisions</td><td>15 / 20</td><td>15 / 20 (manifest.json + live API). Но G12-отчёт Lab говорит 14 / 24 runnable</td><td><span class="badge badge-warn">⚠️ противоречие артефактов</span></td></tr>
+        <tr><td>Runtime runnable</td><td>19</td><td>(released, runnable, true)=19; противоречивая — <code>project-book-boundary-001</code></td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Server-owned runnable stations</td><td>1</td><td>realRunnable=1</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Routes advertised</td><td>66</td><td>auditedTotal=66</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Working / no-run / broken</td><td>25 / 2 / 39</td><td>routeHealth: 37.9% / 3.0% / 59.1% — точно</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Explanations / mastered</td><td>0 / 0</td><td>0 / 0 (evidence=8, все legacy/audit)</td><td><span class="badge badge-pass">✅</span></td></tr>
+        <tr><td>Plan areas с пятью proofs</td><td>0 из 12</td><td>closedPlanAreas=0</td><td><span class="badge badge-pass">✅</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- ═══════════ НАЙДЕННЫЕ ПРОБЛЕМЫ ═══════════ -->
+    <h2>Что упущено или ошибочно — находки</h2>
+
+    <div class="finding">
+      <h3>F1 · «Brain capabilities = 19» — фактическая ошибка <span class="badge badge-fail">❌ CRITICAL для glossary</span></h3>
+      <p>План смешал два разных числа. Реестр Brain содержит <strong>16 активных canonical capabilities</strong> (+11 deprecated) — и в живой БД (<code>content.taxonomy_capability</code>), и в манифесте <code>capability-registry-2026-08-25.json</code>. Число 19 — это <code>curriculum_capabilities</code> из <code>/v1/quality</code>, которое код считает как <em>число карточек с binding</em> (<code>postgres.go:1790–1806</code>), и оно же равно числу строк в <code>question_capability</code> (G7-report: bindings=19).</p>
+      <p><strong>Почему важно:</strong> план требует в M0 «один глоссарий», но сам открывает его с перепутанным термином. Правильно: <em>«Brain capabilities: 16 active canonical; bindings: 19 карточек»</em>.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3>F2 · Противоречие числовых артефактов одной даты <span class="badge badge-warn">🟡 WARNING</span></h3>
+      <p>План: <em>15 families / 20 revisions / 19 runnable</em>. Коммитнутая G12-верификация Lab от того же дня (<code>G12-TASK-COVERAGE-2026-08-25.md</code>): <em>releasedTaskFamilies: 14, runnableRevisionCount: 24</em>. Оба источника «официальные». План честно разрешает M0 записать «новые фактические значения», но конфликт двух коммитнутых матрицы/манифеста надо разрешить явно — иначе M1 построит contract tests поверх неверного ожидания.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3>F3 · «12 обязательных областей» не существует как структуры <span class="badge badge-warn">🟡 WARNING</span></h3>
+      <p>Ни в одном репозитории нет списка из 12 областей — это конструкция самого плана (M8). В Lab живут <strong>три другие таксономии</strong>: 24 модуля <code>TIER1-CURRICULUM-SCOPE.md</code>, 15 доменов/81 станция learner-проекции, 9 путей. Космос Plan 2026 упоминает лишь подмножество тем (<code>vision.md:27–28</code>). Если в M8 появится четвёртый список без явного mapping «12 областей ↔ 24 модуля ↔ 15 доменов» — workspace получит очередную раскоординированную таксономию, с которой план борется.</p>
+    </div>
+
+    <div class="finding">
+      <h3>F4 · Дыра поглощения: ASPIRE-JAEGER-DOCKER план <span class="badge badge-fail">❌ COVERAGE GAP</span></h3>
+      <p>M10 нового плана покрывает «один shared Jaeger + failure matrix + Docker lifecycle», но из <code>ASPIRE-JAEGER-DOCKER-PRODUCTION-PLAN-2026-08-25.md</code> (1279 строк, G0–G13) <strong>выпала вся операционная консолидация</strong>: TypeScript Aspire AppHost вместо launcher-скриптов, центральный OTel Collector, decommission Tempo и двух repo-local Jaeger'ов с trace-parity evidence, Jaeger SPM/дашборды, политика persistent storage (Badger/OpenSearch retention), выделенный BuildKit builder. Grep по новому плану: <code>aspire=0, tempo=0, collector=0, prometheus=0, loki=0, grafana=0</code>.</p>
+      <p><strong>Рекомендация:</strong> это либо осознанное упрощение scope — тогда записать rejected-with-cause в M10, либо принять operational sub-gates из Aspire-плана (AppHost, Collector, trace parity, retention и cleanup). Молчать нельзя: сейчас это выглядит как закрытый вопрос, которым не является.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3>F5 · Живой Runtime stale относительно main + мусорный контейнер <span class="badge badge-warn">🟡 WARNING для M0</span></h3>
+      <p>Запущенный runtime-контейнер собран в 13:51 CEST — <em>до</em> коммитов <code>a82a078…9300e2f</code>, и ведёт себя не как текущий <code>main</code> (в <code>catalogue.go:196–215</code> противоречивая комбинация released/unreleased теперь невозможна — она fail-closed при загрузке). Плюс висит остаточный smoke-контейнер <code>fluent-runtime-task-node-cpu-bound-002-g15-timeout-valid-*</code> (Up 11 часов) — живое доказательство проблемы cleanup, которую план закрывает только в M7/M10.</p>
+      <p><strong>Рекомендация:</strong> добавить в M0 явные шаги: rebuild/recreate образов перед crawl-baseline и kill зависших smoke-контейнеров с фиксацией в baseline.json.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3>F6 · Workspace.yaml: shared Trace Explorer назван как Runtime UI <span class="badge badge-info">🔵 MINOR</span></h3>
+      <p><code>services.task-runtime.ui</code> и <code>ports.questionBrain.jaegerUi</code> указывают на один порт 56686. Это не обязательно конфликт: Runtime отправляет traces в общий Jaeger Brain. Проблема — misleading ownership/name после align shared Jaeger; в M0 нужно заменить поле на neutral <code>observability.traceExplorerUrl</code> и не поднимать второй UI.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3>F7 · Curl-команды M0 работают только в packaged-режиме <span class="badge badge-info">🔵 MINOR</span></h3>
+      <p>Команды M0 бьют в <code>49301</code> (packageApi). При <code>pnpm dev</code> Learning API живёт на <code>47000</code>, web на <code>47300</code>. План не уточняет режим стека — агент-исполнитель может решить, что система сломана.</p>
+    </div>
+
+    <div class="finding warn">
+      <h3>F8 · Review Workbench выпал при поглощении <span class="badge badge-warn">🟡 WARNING для M6</span></h3>
+      <p>G9 плана QUESTION-CAPABILITY-TASK (выделенный Review Workbench для bindings) свёрнут в M6 без инструмента. M6 требует классифицировать 1 591 карточку с правилом «embeddings предлагают — человек принимает». Без batch-review UI это крупнейший human bottleneck всего плана: тысячи ручных решений по одной карточке за раз.</p>
+    </div>
+
+    <!-- ═══════════ ЧТО ХОРОШО ═══════════ -->
+    <h2>Что подтвердилось и сделано хорошо</h2>
+
+    <div class="finding ok">
+      <h3>P1 · Честностная механика плана — главная ценность <span class="badge badge-pass">✅</span></h3>
+      <p>Три state machine вместо слова «готово», 21 пункт запрещённых shortcuts, авто-veto MasteryClaim (§9), WAITING_HUMAN вместо перемотки времени, запрет E2E-evidence в human profile. Это редкий уровень anti-self-deception инженерии — большинство «mastery»-платформ ломаются именно здесь.</p>
+    </div>
+
+    <div class="finding ok">
+      <h3>P2 · Sandbox Runtime уже близок к OWASP best practice <span class="badge badge-pass">✅</span></h3>
+      <p><code>docker_executor.go:220</code>: <code>--network none</code>, <code>--cap-drop ALL</code>, <code>no-new-privileges</code>, read-only rootfs, <code>--pids-limit 256</code>, CPU/RAM/wall-clock лимиты, solution и hidden tests смонтированы <code>:ro</code>, <code>--log-driver none</code>, <code>--pull never</code>, cleanup даже при timeout. Это ровно чеклист OWASP Docker Security Cheat Sheet. Остаётся один gap — образы запинены <em>тегами</em>, не digest (см. R6).</p>
+    </div>
+
+    <div class="finding ok">
+      <h3>P3 · Дизайн learner loop научно корректен <span class="badge badge-pass">✅</span></h3>
+      <p><strong>PredictionEvidence до Run</strong> — это pretesting/prequestioning effect (Pan &amp; Sana 2021: преимущество до d=0.30; обзор Educational Psychology Review 2023). <strong>Closed recall до reveal</strong> — retrieval practice/testing effect (Roediger &amp; Karpicke 2006). <strong>Changed-context cold repeat</strong> — «varying conditions of practice» из desirable difficulties Бьорк. План интуитивно воспроизвёл три самых надёжных эффекта literature.</p>
+    </div>
+
+    <div class="finding ok">
+      <h3>P4 · Риск «зелёных тестов без Go» реален, и план его ловит <span class="badge badge-pass">✅</span></h3>
+      <p>Подтверждено: <code>Makefile:33</code> Brain действительно делает <code>exit 0</code> при отсутствии Go с сообщением «Docker CI will run go test» — то есть <code>make check</code> зелёный без единого выполненного Go-теста. Требование M1 про fail-closed container target — обосновано, не паранойя.</p>
+    </div>
+
+    <div class="finding ok">
+      <h3>P5 · Silent locale fallback уже архитектурно исключён <span class="badge badge-pass">✅</span></h3>
+      <p>Живой Brain: точный join по локали, отсутствие строки → 404/исключение из выдачи, RU/EN полны 1591/1591, есть детектор «prompt==answer». Требование плана уже соблюдено — останется только не регрессировать.</p>
+    </div>
+
+    <div class="finding ok">
+      <h3>P6 · Поглощение исторических планов почти полное <span class="badge badge-pass">✅</span></h3>
+      <p>CONTENT-EXPANSION, QUESTION-CAPABILITY-TASK, PRODUCT-INTEGRITY-UX, FULL-PRODUCT-REMEDIATION — требования корректно разложены по M0–M13 без потери существа (кроме ASPIRE-операционки, F4, и Review Workbench, F8). MASTER-PLAN Lab помечен RELEASED и легитимно объявлен superseded.</p>
+    </div>
+
+    <!-- ═══════════ PLAN 2026 ═══════════ -->
+    <h2>Происхождение «Plan 2026» и эволюция цикла</h2>
+
+    <p>Исходный Plan 2026 лежит <strong>вне git</strong> — в Obsidian vault (<code>iCloud~md~obsidian/Documents/Education/Plan 2026</code>; путь зафиксирован в <code>PRODUCT.md:90–91</code>). In-repo производные: <code>docs/reference/plan-2026-exercise-inventory.md</code>, <code>TIER1-CURRICULUM-SCOPE.md</code>, <code>vision.md</code>. Ключевые пункты исходника, которые новый план сохранил:</p>
+
+    <ul>
+      <li>Девятичастный эталонный lab: граф станций, версионный starter-workspace, deterministic checks, hint ladder, solution gate, trace view, explanation rubric, cold variant;</li>
+      <li>Prediction до первого запуска; AI никогда не открывает gate;</li>
+      <li>Cold repeat 2–3 / 7–10 / 21+ дней с привязкой к исходной попытке;</li>
+      <li>Timebox как часть упражнения; локальный AI; два тира (Tier 1 платформа → Tier 2 Project Books).</li>
+    </ul>
+
+    <p>Одно тихое расхождение: канонический цикл в <code>vision.md:56</code> и <code>MASTER-PLAN.md:23</code> заканчивается на <em>Repeat</em>; новый план расширяет его до <em>… Evidence → Journal → Cold repeat → Mastery</em>. Расширение оправдано (Journal/Mastery — самые слабые звенья текущего продукта: 0 explanations, 0 mastered), но M0-глоссарий должен явно зафиксировать эту эволюцию терминов, чтобы две формулы цикла не жили параллельно.</p>
+
+    <!-- ═══════════ РЕКОМЕНДАЦИИ ═══════════ -->
+    <h2>12 рекомендаций «как сделать ещё лучше»</h2>
+
+    <div class="card">
+      <h3>R1 · Исправить baseline до старта M0</h3>
+      <p>В разделе 2 и M0-шагах: «Brain capabilities: 19» → «<strong>16 active canonical capabilities (+11 deprecated); 19 = capability bindings карточек</strong>». Одна строчка, но глоссарий начинается с неё.</p>
+    </div>
+
+    <div class="card">
+      <h3>R2 · Разрешить конфликт 15/20/19 ↔ G12 14/24 в M0 явно</h3>
+      <p>M0 должен не просто «записать новые значения», а назвать, какой источник канонический (manifest Runtime vs матрица Lab), и пометить второй устаревшим. Иначе M1 получит два «правдивых» счётчика задач.</p>
+    </div>
+
+    <div class="card">
+      <h3>R3 · CoverageManifest обязан содержать mapping таксономий</h3>
+      <p>Добавить в M8 обязательное поле: соответствие «12 областей плана ↔ 24 модуля TIER1-CURRICULUM-SCOPE ↔ 15 доменов проекции». Три параллельных списка областей — это следующая проблема «15/81 vs 12», которую план сам же закапывает.</p>
+    </div>
+
+    <div class="card">
+      <h3>R4 · Судьба ASPIRE-Jaeger — явное решение в M10</h3>
+      <p>Либо включить AppHost/OTel Collector/Tempo decommission/SPM/storage-retention в M10 (расширив гейт), либо создать запись <code>rejected-with-cause: "операционная консолидация отложена за пределы closure"</code>. Текущее молчание — скрытый scope hole.</p>
+    </div>
+
+    <div class="card">
+      <h3>R5 · Ready-to-learn: сразу server-owned формула</h3>
+      <p>Вместо «определение требует уточнения» зафиксировать в M4 readiness compiler: <code>ready := primary card structurally complete ∧ binding role assigned ∧ required locales complete</code>. Метрика 989 всё равно никем не считается — замените её компилируемой, чтобы counters имели формулу и drill-down, как требует сам план.</p>
+    </div>
+
+    <div class="card">
+      <h3>R6 · Digest-pinning + threat model в M7</h3>
+      <p>Критерий «pinned OCI image» уточнить до <code>name:tag@sha256:…</code> (тег мутабелен; известны container escape CVE вроде CVE-2024-21626). Добавить автоматический bump-path (Renovate/Dependabot digest PR), иначе пины протухнут. Отдельно задокументировать threat model текущего boundary («Docker socket, local-dev»). gVisor/<code>runsc</code> оставить отдельным Linux production upgrade path: официальный runtime требует Linux, поэтому на MacBook/Docker Desktop это не должен быть обязательный checkbox.</p>
+    </div>
+
+    <div class="card">
+      <h3>R7 · M0 дополнить operational hygiene</h3>
+      <p>Три конкретных шага: (1) rebuild/recreate runtime-образа перед crawl (контейнер старее main — F5); (2) удалить зависшие smoke-контейнеры с фиксацией в baseline.json; (3) заменить misleading <code>task-runtime.ui</code> на shared <code>observability.traceExplorerUrl</code> без второго Jaeger-порта.</p>
+    </div>
+
+    <div class="card">
+      <h3>R8 · Вернуть Review Workbench как инструмент M6</h3>
+      <p>Классификация 1 591 карточки с человеческим принятием решений требует batch-review поверхности: embeddings-assisted предложения группами, bulk accept/reject, очередь по disposition. Без него M6 растянется на недели ручной работы и будет искушать нарушить собственное правило «не auto-bind».</p>
+    </div>
+
+    <div class="card">
+      <h3>R9 · Порядок M8 — по данным, а не по интуиции</h3>
+      <p>Coverage-score из artifact.json: Concurrency <strong>3</strong>, PostgreSQL <strong>3</strong>, Brokers/Cache/Auth/System Design <strong>2</strong>, Docker/K8s/Networks/Observability/Algorithms/Angular <strong>1</strong>. План ставит Docker (score 1) вторым, а PostgreSQL (score 3) — восьмым. Если нет педагогического основания — переупорядочить: Concurrency → PostgreSQL → Brokers → … Либо записать, почему данные проигнорированы.</p>
+    </div>
+
+    <div class="card">
+      <h3>R10 · Адаптивное планирование повторений — заложить фундамент сейчас</h3>
+      <p>Фиксированный gate 48–72ч — правильный deterministic минимум. Но ступени 7–10/21+ день можно персонализировать моделью DSR (Difficulty/Stability/Retrievability) — алгоритм <strong>FSRS</strong> даёт те же ~20–30% меньше повторений при той же retention и встроен в Anki с 23.10; есть готовый <code>ts-fsrs</code>. Рекомендация: не менять план, но уже в M2 писать в evidence поля, нужные будущему планировщику (latency, self-grade, repeat outcome), чтобы миграция на FSRS была data-ready.</p>
+    </div>
+
+    <div class="card">
+      <h3>R11 · Interleaving — недостающий четвёртый desirable difficulty</h3>
+      <p>Spacing ✓, varying context ✓, testing-as-event ✓ — но блокированная практика (все повторы одной области подряд) остаётся дефолтом. Добавить в M8 <code>repeat variant policy</code> опцию interleaved sessions (смешанные repeats разных capabilities) — это дешёвое усиление retention по Бьорк.</p>
+    </div>
+
+    <div class="card">
+      <h3>R12 · Портируемость доказательств: семантическое выравнивание, не имплементация</h3>
+      <p>Спроектировать поля <code>MasteryClaim</code>/<code>EvidenceBundle</code> совместимыми <em>по смыслу</em> с <strong>Open Badges 3.0</strong> AchievementCredential (Verifiable Credentials v2.0) и statement-моделью <strong>xAPI 2.0</strong> (IEEE): subject, achievement, criteria, evidence[], issuer, provenance. Ноль нового кода сейчас — просто не выбирать имена/структуры, которые сделают будущий экспорт невозможным. Для CV/interview calibration из M13 это прямой мост.</p>
+    </div>
+
+    <!-- ═══════════ ИСТОЧНИКИ ═══════════ -->
+    <h2>Скрытые самоцветы из сети — референсы</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Тема</th><th>Источник</th><th>Что взять</th></tr></thead>
+      <tbody>
+        <tr><td>FSRS / DSR memory model</td><td><a href="https://github.com/open-spaced-repetition/fsrs4anki/wiki">fsrs4anki wiki</a>, <a href="https://smartrecallai.com/blog/fsrs-vs-sm2-deep-dive">FSRS vs SM-2 deep dive</a></td><td>Difficulty/Stability/Retrievability; desired retention 90%; −20–30% повторений; <code>ts-fsrs</code> для Lab</td></tr>
+        <tr><td>Pretesting effect</td><td><a href="https://link.springer.com/article/10.1007/s10648-023-09814-5">Springer Ed Psych Review 2023</a>; Pan &amp; Sana 2021 (d≈0.30)</td><td>Научное обоснование PredictionEvidence до Run</td></tr>
+        <tr><td>Testing effect</td><td><a href="https://journals.sagepub.com/doi/10.1111/j.1467-9280.2006.01693.x">Roediger &amp; Karpicke 2006</a></td><td>Closed recall до reveal бьёт re-study на отсроченных тестах</td></tr>
+        <tr><td>Desirable difficulties</td><td><a href="https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/04/EBjork_RBjork_2011.pdf">Bjork &amp; Bjork 2011</a></td><td>Spacing, interleaving, varying conditions — чеклист для repeat policy</td></tr>
+        <tr><td>Docker hardening</td><td><a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html">OWASP Docker Cheat Sheet</a></td><td>Sandbox Runtime уже соответствует; rootless mode как следующий слой</td></tr>
+        <tr><td>Digest pinning</td><td><a href="https://docs.docker.com/build/policies/validate-images/">Docker image validation policies</a>; <a href="https://docs.ozarksecuritylabs.com/supply-chain/tier-2-hardened/container-image-digests/">Rule 2.3 digest pins</a></td><td><code>name:tag@sha256:</code> везде; manifest-list digest для multi-arch; Renovate bump</td></tr>
+        <tr><td>Изоляция untrusted code</td><td><a href="https://northflank.com/blog/firecracker-vs-gvisor">Firecracker vs gVisor</a>; <a href="https://amux.io/guides/ai-agent-sandboxing/">AI Agent Sandboxing 2026</a></td><td>gVisor <code>runsc</code> = drop-in upgrade Docker; threat model doc для M7</td></tr>
+        <tr><td>Evidence interoperability</td><td><a href="https://www.imsglobal.org/spec/ob/v3p0">Open Badges 3.0</a> (VC v2); <a href="https://github.com/adlnet/xAPI-Spec/">xAPI 2.0</a>; ISO/IEC TS 20748-3</td><td>Семантика MasteryClaim как verifiable credential; экспорт за пределы продукта</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- ═══════════ ИТОГ ═══════════ -->
+    <h2>Итоговая оценка</h2>
+
+    <div class="table-wrap">
+    <table>
+      <thead><tr><th>Критерий</th><th>Оценка</th><th>Комментарий</th></tr></thead>
+      <tbody>
+        <tr><td>Точность baseline</td><td><span class="badge badge-warn">⚠️ 10/13</span></td><td>Одна перепутанная метрика (F1), одно межартефактное противоречие (F2), одна невычисляемая UI-метрика (Ready-to-learn)</td></tr>
+        <tr><td>Анти-самообман механика</td><td><span class="badge badge-pass">✅ отлично</span></td><td>Лучшее, что есть в плане; сохранять без послаблений</td></tr>
+        <tr><td>Полнота поглощения истории</td><td><span class="badge badge-warn">⚠️ хорошо</span></td><td>ASPIRE-операционка (F4) и Review Workbench (F8) требуют решения</td></tr>
+        <tr><td>Соответствие learning science</td><td><span class="badge badge-pass">✅ отлично</span></td><td>Pretesting + retrieval + spacing подтверждены; interleaving и FSRS-data — в рост (R10, R11)</td></tr>
+        <tr><td>Sandbox security</td><td><span class="badge badge-pass">✅ сильно</span></td><td>OWASP-чеклист выполнен; digest-pin и threat model — зазор (R6)</td></tr>
+        <tr><td>Исполнимость M6/M8</td><td><span class="badge badge-warn">⚠️ риск</span></td><td>1591 ручных классификаций без workbench; порядок областей противоречит данным</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <blockquote>
+      <p><strong>Итог:</strong> исполнять этот план можно уже сейчас — начиная с M0, попутно внеся правки R1–R3 в текст плана одним коммитом и зафиксировав решение по R4. Всё остальное (R5–R12) встраивается в соответствующие гейты без реструктуризации. Статус M0 подтверждён: <code>READY</code>, proof-директория <code>docs/verification/capability-closure/M0/</code> ещё не существует.</p>
+    </blockquote>
+
+  </main>
+
+  <footer class="doc-footer">
+    <span class="brand">Fluent Interview · Audit</span>
+    <span>3 explore-агента · 4 веб-исследования · 25.08.2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
