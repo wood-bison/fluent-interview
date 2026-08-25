@@ -33,6 +33,12 @@ and zero captured console errors.
 | `/practice/questions?question=question.q315` | `Библиотека вопросов`; `1 вопрос · 1 загружено`; one TaskFamily with four links to the rate-limiter family |
 | `/practice/lab/go-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter` | `Rate limiter in Go`; xterm, Task Runtime, Evidence present; public result `4/4`; no console errors |
 
+The published path matrix also passed directly: all nine routes from
+`/api/program/map` (`nodejs-typescript`, `java-spring`, `dotnet-csharp`, `go`,
+`frontend`, `system-design`, `algorithms`, `behavioral`, `python`) rendered a
+distinct H1 with one `main`, no lock state, no 404 state, no overflow, and no
+captured console errors.
+
 The question screen was left open with q315's executable-revision disclosure
 expanded for review. Four links point to the same TaskFamily rather than four
 copied families; language-specific workspace selection remains the next

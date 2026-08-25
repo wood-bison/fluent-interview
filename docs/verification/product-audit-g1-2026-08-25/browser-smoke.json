@@ -58,5 +58,16 @@
       "xtermVisible": true
     }
   ],
+  "publishedPathMatrix": [
+    { "route": "/paths/nodejs-typescript", "heading": "Node.js + TypeScript", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/java-spring", "heading": "Java + Spring", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/dotnet-csharp", "heading": ".NET + C#", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/go", "heading": "Go", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/frontend", "heading": "Frontend", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/system-design", "heading": "System Design", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/algorithms", "heading": "Algorithms", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/behavioral", "heading": "Behavioral", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false },
+    { "route": "/paths/python", "heading": "Python", "mainLandmarks": 1, "locked": false, "notFound": false, "horizontalOverflow": false }
+  ],
   "consoleErrors": []
 }
