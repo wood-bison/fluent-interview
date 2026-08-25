@@ -1,7 +1,7 @@
 # M0 review — recovery baseline, vocabulary, and authority
 
 Date: 2026-08-25
-Status: **self-check PASS / independent reviewer PENDING**
+Status: **self-check PASS / independent reviewer PASS**
 Active plan: [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](../../../CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md)
 
 ## What was verified
@@ -36,6 +36,11 @@ Active plan: [`CAPABILITY-MASTERY-PRODUCTION-CLOSURE-PLAN-2026-08-25.md`](../../
    cards and 135 topic groups, and the Go rate-limiter lab rendered 4/4
    evidence checks. The crawl is recorded in `baseline.json` and is not
    deferred to M12.
+
+10. Independent release review returned **PASS** against root proof record
+    `7d26d38`. The reviewer separately confirmed that the 4/4 smoke evidence
+    belongs to `sergey-production-smoke`, while the default `sergey` learner
+    profile remains isolated from it.
 
 ## Commands and evidence
 
@@ -81,7 +86,7 @@ historical 66/25/2/39 route comparison without treating it as current truth.
 | Profile-aware baseline | PASS | packaged API bases in baseline |
 | Historical `RELEASED` no longer active automation | PASS | historical headers + root AGENTS |
 | Learner/foreign Docker data preserved | PASS | exact stop only; no volume deletion |
-| Independent reviewer | **PENDING** | required before M0 → M1 |
+| Independent reviewer | PASS | release review at root `7d26d38` |
 
-M0 therefore remains `ACTIVE` until an independent reviewer checks this proof
-and records `PASS`. No M1 implementation may be claimed from this self-check.
+M0 is **DONE**. M1 may begin; its contracts and fixtures must still pass an
+independent review before M2 starts.

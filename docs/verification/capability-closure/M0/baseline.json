@@ -14,6 +14,7 @@
       "head": "53f623c065666e1623fefafe04c18796940144b8",
       "originMain": "53f623c065666e1623fefafe04c18796940144b8",
       "proofCommit": "53f623c065666e1623fefafe04c18796940144b8",
+      "proofRecordCommit": "7d26d38546a3688cbebcd5516b26b829e88de73a",
       "dirty": false
     },
     "fluent-engineering-lab": {
@@ -142,6 +143,7 @@
         "questionLibraryCards": 1591,
         "questionLibraryTopicGroups": 135,
         "goRateLimiterEvidence": "4/4 passed",
+        "goRateLimiterEvidenceProfile": "sergey-production-smoke",
         "projectCatalogPreviewBooks": 5
       },
       "deferred": false

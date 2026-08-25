@@ -4,7 +4,7 @@
 **Редакция:** `v2` — учтён аудит плана от 2026-08-25
 **Дата baseline:** 2026-08-25  
 **Рабочая область:** `/Users/sergeyzhechko/developer/fluent-interview`  
-**Текущий гейт:** `M0`  
+**Текущий гейт:** `M1`
 **Текущий результат:** `NOT RELEASED`  
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
@@ -436,8 +436,8 @@ gate задним числом.
 
 | Gate | Результат | Статус |
 | --- | --- | --- |
-| M0 | recovery baseline, один glossary и один active plan | `ACTIVE` — self-check PASS; independent review pending |
-| M1 | зелёные проверки и versioned cross-repo contracts | `TODO` |
+| M0 | recovery baseline, один glossary и один active plan | `DONE` — independent review PASS |
+| M1 | зелёные проверки и versioned cross-repo contracts | `ACTIVE` |
 | M2 | `capability-mastery.v2`, ledger и миграции | `TODO` |
 | M3 | rate limiter проходит полный human golden slice | `TODO` |
 | M4 | один readiness compiler и честные routes/counters | `TODO` |
