@@ -1,17 +1,17 @@
 {
   "contractVersion": "capability-closure.m2-baseline.v1",
-  "status": "implementation-complete-review-pending",
-  "capturedAt": "2026-08-25T20:19:00Z",
+  "status": "independent-review-pass",
+  "capturedAt": "2026-08-25T20:28:00Z",
   "plan": {
     "id": "capability-mastery-production-closure",
     "revision": "v2",
-    "currentGate": "M2",
+    "currentGate": "M3",
     "result": "NOT RELEASED"
   },
   "repositories": {
     "root": {
-      "head": "58e43f9",
-      "originMain": "58e43f9",
+      "head": "d76f271",
+      "originMain": "d76f271",
       "dirty": false
     },
     "fluent-engineering-lab": {
@@ -100,10 +100,15 @@
       "result": "pass",
       "details": "live disposable-schema round trip verified; source counts match artifact and restored rows for all 28 surfaces, public table count unchanged, disposable schema cleaned, same-schema restore refused; bounded non-empty M2 fixture spans all 13 M2 surfaces with source→artifact→restored count, identity and digest parity, then cleans its fixture and schema"
     },
+    "m2FixtureRoundTrip": {
+      "command": "DATABASE_URL=postgres://fel:fel@127.0.0.1:49302/fluent_lab pnpm g8:02:restore:gate --check",
+      "result": "pass",
+      "details": "two consecutive deterministic checks passed; generated fixture is non-empty on all 13 M2 surfaces, source/artifact/restored counts and identity references match, per-surface SHA-256 digests match, and fixture rows plus disposable schema are zero after cleanup"
+    },
     "fullLabCheck": {
       "command": "pnpm check",
       "result": "pass",
-      "details": "curriculum drift 0; lab-contracts 247 suites/1254 tests; learning-api 163 suites/704 passed tests (1 skipped); web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
+      "details": "curriculum drift 0; lab-contracts 247 suites/1254 tests; learning-api 163 suites/705 passed tests (1 skipped); web 77 files/376 tests; production build and 61-chunk browser boundary guard pass",
       "knownWarnings": "pre-existing lint and non-fatal bundle budget warnings only"
     }
   },
@@ -127,7 +132,15 @@
     "notRelease": true
   },
   "independentReviewer": {
-    "status": "pending",
-    "reviewer": "technical_release_plan"
+    "status": "PASS",
+    "reviewer": "technical_release_plan",
+    "reviewedAt": "2026-08-25T20:27:00Z",
+    "reviewedCommits": {
+      "root": "d76f271179c82d0cfb8e6d3f8a883471a856c3a4",
+      "fluent-engineering-lab": "00460faac4c41762518a75278e72c9f5ff5849ad",
+      "fluent-question-brain": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60",
+      "fluent-task-runtime": "45c4519af67a61cee03c6dd02bf2b4b50d5b0bc6"
+    },
+    "notes": "M2 acceptance passed: global event identity parity, idempotency/conflict handling, full 28-surface backup, non-empty 13-surface fixture round trip, cleanup, focused tests and full pnpm check. M3 is the only active gate."
   }
 }

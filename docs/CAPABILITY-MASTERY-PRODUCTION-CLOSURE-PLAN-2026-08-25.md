@@ -4,7 +4,7 @@
 **Редакция:** `v2` — учтён аудит плана от 2026-08-25
 **Дата baseline:** 2026-08-25  
 **Рабочая область:** `/Users/sergeyzhechko/developer/fluent-interview`  
-**Текущий гейт:** `M2`
+**Текущий гейт:** `M3`
 **Текущий результат:** `NOT RELEASED`  
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
@@ -438,8 +438,8 @@ gate задним числом.
 | --- | --- | --- |
 | M0 | recovery baseline, один glossary и один active plan | `DONE` — independent review PASS |
 | M1 | зелёные проверки и versioned cross-repo contracts | `DONE` — independent review PASS |
-| M2 | `capability-mastery.v2`, ledger и миграции | `ACTIVE` |
-| M3 | rate limiter проходит полный human golden slice | `TODO` |
+| M2 | `capability-mastery.v2`, ledger и миграции | `DONE — independent review PASS` |
+| M3 | rate limiter проходит полный human golden slice | `ACTIVE` |
 | M4 | один readiness compiler и честные routes/counters | `TODO` |
 | M5 | Program → Path → Domain → Capability UX | `TODO` |
 | M6 | все 1 591 карточка классифицированы и локализованы честно | `TODO` |
@@ -710,15 +710,17 @@ artifact → restored row counts и использует disposable schema. Capa
 identity (card/task/revision/release) теперь является частью stream scope:
 конфликтующие human revisions отклоняются на append, а replay fail-closes.
 Полная проверка Lab (`pnpm check`), live backup/restore, контрактные и Postgres
-integration tests зелёные; результат ещё не считается `DONE`, пока independent
-reviewer не подтвердит exit criteria. Полный machine-readable proof:
+integration tests зелёные. Независимый reviewer подтвердил все exit criteria:
+`M2` закрыт со статусом `PASS`, а следующим активным гейтом становится `M3`.
+Полный machine-readable proof:
 [`M2/baseline.json`](verification/capability-closure/M2/baseline.json). В этой
 редакции `eventId` защищён глобальной advisory/idempotency-проверкой до
 capability-scoped записи (конфликт между профилями возвращается typed
 `conflicting_duplicate`), а backup/restore gate имеет bounded synthetic fixture:
 непустые строки во всех 13 M2 surfaces проходят `source → artifact → restored`
 по count, identity references и sha256 digest, после чего fixture и disposable
-schema удаляются. `M2` остаётся `ACTIVE` до независимого review.
+schema удаляются. Решение ревью зафиксировано в
+[`M2/review.md`](verification/capability-closure/M2/review.md).
 
 ---
 
@@ -1699,8 +1701,8 @@ read → implement → run → break → measure → explain → defend
 | --- | --- | --- | --- | --- | --- | --- |
 | M0 | `DONE` | root | 2026-08-25 | `49406ef`, `53f623c`, `7999f19`, `7d26d38`, `37bcaa9` | [`M0/baseline.json`](verification/capability-closure/M0/baseline.json), [`M0/review.md`](verification/capability-closure/M0/review.md) | independent review PASS |
 | M1 | `DONE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f`, root `4cb6ce7` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json), [`M1/review.md`](verification/capability-closure/M1/review.md) | independent review PASS |
-| M2 | `ACTIVE` | Lab | 2026-08-25 | Lab `00460fa` | [`M2/baseline.json`](verification/capability-closure/M2/baseline.json) | independent review pending |
-| M3 | `TODO` | all/golden slice | — | — | — | — |
+| M2 | `DONE` | Lab | 2026-08-25 | Lab `00460fa`, root close proof | [`M2/baseline.json`](verification/capability-closure/M2/baseline.json), [`M2/review.md`](verification/capability-closure/M2/review.md) | independent review PASS |
+| M3 | `ACTIVE` | all/golden slice | 2026-08-25 | — | — | — |
 | M4 | `TODO` | Lab/compiler | — | — | — | — |
 | M5 | `TODO` | Lab/UI | — | — | — | — |
 | M6 | `TODO` | Brain/editorial | — | — | — | — |
