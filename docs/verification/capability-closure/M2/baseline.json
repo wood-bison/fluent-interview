@@ -15,8 +15,8 @@
       "dirty": false
     },
     "fluent-engineering-lab": {
-      "head": "2133494",
-      "originMain": "2133494",
+      "head": "68c8dfa",
+      "originMain": "68c8dfa",
       "dirty": false
     },
     "fluent-question-brain": {
@@ -32,7 +32,7 @@
   },
   "implementation": {
     "repository": "fluent-engineering-lab",
-    "commit": "2133494",
+    "commit": "68c8dfa",
     "contractVersion": "capability-mastery-ledger.v2",
     "eventContractVersion": "capability-evidence.v2",
     "sessionContractVersion": "learning-session.v1",
