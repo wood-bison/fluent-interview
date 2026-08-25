@@ -820,6 +820,14 @@ bindings делают inventory недействительным. Это тех�
 crawl остаются в очереди. Гейт M4 не активируется, пока M3 не получит
 человеческое acceptance.
 
+В Lab `7635423` projection получил additive `routeManifest`: 81 route строится
+из тех же released stations и readiness-фактов, а не из второго UI-каталога.
+Независимый HTTP-аудит `pnpm m4:route-audit` проверяет map↔inventory join,
+SPA route shell и runnable workspace; live slice дал `pass` (81/81 routes,
+1/1 executable). Это закрывает только техническое доказательство route rail,
+но не переводит M4 в PASS: consumer surfaces, counters drill-down и полный
+independent crawl остаются частью следующего acceptance-пакета.
+
 Live evidence этого среза зафиксировано в
 [`M4/baseline.json`](verification/capability-closure/M4/baseline.json) и
 [`M4/technical-slice.md`](verification/capability-closure/M4/technical-slice.md).

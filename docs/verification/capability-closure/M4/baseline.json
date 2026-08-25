@@ -2,11 +2,11 @@
   "gate": "M4",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T21:30:26.000Z",
+  "capturedAt": "2026-08-25T21:37:02.000Z",
   "localBaseUrl": "http://127.0.0.1:49300",
   "repositories": {
-    "root": "9968071",
-    "fluent-engineering-lab": "7f4c9b6",
+    "root": "9aea2ce",
+    "fluent-engineering-lab": "cf31611",
     "fluent-question-brain": "e698fc2",
     "fluent-task-runtime": "45c4519"
   },
@@ -26,9 +26,11 @@
       "taskRevisionCount": 20,
       "runnableStationCount": 1,
       "stationBoundCardCount": 6,
-      "evidenceCount": 8
+      "evidenceCount": 0
     },
-    "reconciliationValid": true
+    "reconciliationValid": true,
+    "routeManifestCount": 81,
+    "executableRouteCount": 1
   },
   "drillDownEndpoints": {
     "programMap": { "httpStatus": 200, "pathCount": 9, "stationCount": 81 },
@@ -45,8 +47,8 @@
     "railConsumesInventory": "PASS",
     "practiceTaskCountReconcilesWithRuntimeRelease": "PASS",
     "runtimeAndQuestionBrainJoin": "PASS",
-    "routeManifestGeneratedFromInventory": "TODO",
-    "independentExecutableRouteCrawl": "TODO",
+    "routeManifestGeneratedFromInventory": "PASS",
+    "independentExecutableRouteCrawl": "PASS",
     "allConsumerSurfaces": "PARTIAL",
     "m4Result": "NOT_RELEASED"
   }
