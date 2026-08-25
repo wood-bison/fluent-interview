@@ -9,7 +9,7 @@ collection; it is not allowed to redefine the released revision count.
 
 ## Live local evidence
 
-At `2026-08-25T21:37:02.000Z`, the restarted production package on
+At `2026-08-25T21:40:26.000Z`, the restarted production package on
 `127.0.0.1:49300` returned:
 
 | Surface | Result |

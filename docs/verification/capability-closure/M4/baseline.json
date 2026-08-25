@@ -2,10 +2,10 @@
   "gate": "M4",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T21:37:02.000Z",
+  "capturedAt": "2026-08-25T21:40:26.000Z",
   "localBaseUrl": "http://127.0.0.1:49300",
   "repositories": {
-    "root": "9aea2ce",
+    "root": "4dbf6ec",
     "fluent-engineering-lab": "cf31611",
     "fluent-question-brain": "e698fc2",
     "fluent-task-runtime": "45c4519"
