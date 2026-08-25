@@ -2,7 +2,7 @@
   "gate": "M3",
   "status": "technical-slice",
   "result": "NOT_RELEASED",
-  "capturedAt": "2026-08-25T20:43:51Z",
+  "capturedAt": "2026-08-25T21:00:00Z",
   "canonicalCapability": "capability.distributed-systems.rate-limiter",
   "taskFamily": "task-family.rate-limiter",
   "primaryQuestion": "question.q315",
@@ -11,7 +11,7 @@
       "headBeforeProof": "732f94a6ea4643e8c0dc5f98bcdb81da7a414193"
     },
     "fluent-engineering-lab": {
-      "head": "e3dcf505c275ae2a1cc6548bf4a9324b69f712e8"
+      "head": "4e895cf"
     },
     "fluent-question-brain": {
       "head": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
@@ -30,13 +30,14 @@
     "typedConflictOnIdentityReuse": "PASS",
     "failClosedOnDegradedOrMismatchedRelease": "PASS",
     "allowListedEvidenceDto": "PASS",
+    "learnerSessionSurface": "PASS — golden rate-limiter lab starts and appends through the server API",
     "targetedServiceTests": "3 passed",
     "focusedLedgerTests": "3 passed / 1 skipped (Postgres opt-in)",
     "fullLabCheck": {
       "labContracts": "247 suites / 1254 passed",
       "learningApi": "164 suites / 708 passed / 1 skipped",
-      "web": "77 files / 376 passed",
-      "productionBuilds": "PASS",
+      "web": "78 files / 378 passed",
+      "productionBuilds": "web production build PASS; full pnpm check pending",
       "browserBoundaryGuard": "PASS"
     }
   },

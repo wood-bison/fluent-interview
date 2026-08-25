@@ -2,7 +2,7 @@
 
 **Status:** `PASS` for the server boundary, `ACTIVE` for the full gate
 
-**Lab commit:** `e3dcf505c275ae2a1cc6548bf4a9324b69f712e8`
+**Lab commits:** `e3dcf50` (server slice), `4e895cf` (learner UI transport)
 
 ## What is proven
 
@@ -17,20 +17,25 @@ retry returns the same immutable event. Reusing an event/session identity with
 different release or content data is rejected. The DTO deliberately has no
 field for raw answers, hidden tests, solutions, verdicts or `mastered`.
 
+The golden rate-limiter learner route now starts that server session, displays
+the current gate, links to `q315`, records recall/reveal/prediction/observation,
+and appends the runtime result with the Task Runtime revision contract. The
+Run action is fail-closed until the server projection says `run`; a browser
+refresh cannot mint a new key for the same profile/task while storage is
+available.
+
 ## What is not proven yet
 
-This slice does not pretend that Sergey has mastered the capability. The web
-learner surface still needs to call these endpoints in the actual q315 flow,
-render the evidence state, and keep language-specific drafts. Then a real human
-session must be completed, followed by a genuine 48–72-hour changed-context
-repeat. E2E fixtures may test the state machine, but cannot close the human
-gate.
+This slice does not pretend that Sergey has mastered the capability. A real
+human session must be completed, including the spoken 60–90 second explanation
+and reflection, followed by a genuine 48–72-hour changed-context repeat. E2E
+fixtures may test the state machine, but cannot close the human gate.
 
 ## Verification record
 
 - targeted service tests: `3 passed`;
 - focused ledger tests: `3 passed / 1 skipped` (Postgres integration is opt-in);
-- full Lab `pnpm check`: contracts `247/1254`, API `164/708 + 1 skipped`, web
-  `77/376`, production builds and browser boundary guard all green;
+- web tests: `78/378` (uncached run) and web production build green; the full
+  Lab `pnpm check` is still required before closing M3;
 - current release remains `NOT_RELEASED` until the human acceptance section is
   complete.
