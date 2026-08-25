@@ -1279,9 +1279,9 @@ fully checked and its evidence is committed.
 | G10 — learner projection | complete | `fluent-engineering-lab/docs/verification/G10-QUESTION-CARD-RELATIONS-2026-08-25.md` (one program → nine paths → 15 areas → 81 stations → 1,591 cards, full Question Library reachability, TaskFamily language selection, Go fail/fix/pass Evidence, theory-only and RU/EN browser matrix) | Lab `e216af3`, `df34a85`, `5e14731`, `425c98f`, `02815f6`, `e7cac6e`, `6ade0f0`, `9205385` |
 | G11 — bilingual/a11y/design | complete | `fluent-engineering-lab/docs/verification/G11-BILINGUAL-DESKTOP-A11Y-2026-08-25.md` (a11y, contrast, journeys, parity, desktop baselines) | Lab `7341bd3` |
 | G12 — task coverage | complete | `fluent-engineering-lab/docs/verification/G12-TASK-COVERAGE-2026-08-25.md`, disposition report, and coverage matrix (all 15 domains classified; seven honest non-runnable dispositions) | Lab `a5643cc` |
-| G13 — legacy removal | complete | `fluent-engineering-lab/docs/verification/G13-LEGACY-REMOVAL-2026-08-25.md` and `docs/production/evidence/G13-current-boundary-audit.json` | Runtime `df37551`; Lab `a5643cc`; Root closure commit |
+| G13 — legacy removal | complete | `fluent-engineering-lab/docs/verification/G13-LEGACY-REMOVAL-2026-08-25.md` and `docs/production/evidence/G13-current-boundary-audit.json` | Runtime `df37551`; Lab `a5643cc`; Root `0efa224` |
 | G14 — production hardening | complete | `fluent-engineering-lab/docs/verification/G14-PRODUCTION-HARDENING-2026-08-25.md` and `docs/production/evidence/G14-production-hardening.json` | Lab `aeb9bfd` |
-| G15 — independent acceptance | complete | `fluent-engineering-lab/docs/verification/G15-INDEPENDENT-ACCEPTANCE-2026-08-25.md` and `fluent-engineering-lab/docs/production/evidence/G15-independent-acceptance-2026-08-25.json` | Lab `335c396`; Root closure commit |
+| G15 — independent acceptance | complete | `fluent-engineering-lab/docs/verification/G15-INDEPENDENT-ACCEPTANCE-2026-08-25.md` and `fluent-engineering-lab/docs/production/evidence/G15-independent-acceptance-2026-08-25.json` | Lab `335c396`; Root `0efa224` |
 
 ## 5. Handoff rule
 
