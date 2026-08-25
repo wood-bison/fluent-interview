@@ -1,7 +1,7 @@
 {
   "contractVersion": "capability-closure.m2-baseline.v1",
   "status": "implementation-complete-review-pending",
-  "capturedAt": "2026-08-25T19:44:00Z",
+  "capturedAt": "2026-08-25T20:19:00Z",
   "plan": {
     "id": "capability-mastery-production-closure",
     "revision": "v2",
@@ -15,8 +15,8 @@
       "dirty": false
     },
     "fluent-engineering-lab": {
-      "head": "af0ccf8",
-      "originMain": "af0ccf8",
+      "head": "2133494",
+      "originMain": "2133494",
       "dirty": false
     },
     "fluent-question-brain": {
@@ -32,7 +32,7 @@
   },
   "implementation": {
     "repository": "fluent-engineering-lab",
-    "commit": "af0ccf8",
+    "commit": "2133494",
     "contractVersion": "capability-mastery-ledger.v2",
     "eventContractVersion": "capability-evidence.v2",
     "sessionContractVersion": "learning-session.v1",
@@ -79,7 +79,7 @@
     "postgresIntegration": {
       "command": "M2_POSTGRES_TEST=1 DATABASE_URL=postgres://fel:fel@127.0.0.1:49302/fluent_lab pnpm nx test learning-api --runInBand --testPathPatterns=postgres-capability-mastery-ledger.integration.spec.ts",
       "result": "pass",
-      "details": "schema creation, append, exact duplicate, cross-identity rejection, backdated-event rejection, list, projection and exact synthetic cleanup passed"
+      "details": "schema creation, append, exact duplicate, global cross-profile event-id collision rejection, cross-identity rejection, backdated-event rejection, list, projection and exact synthetic cleanup passed"
     },
     "learningApiBuild": {
       "command": "pnpm nx build learning-api --skip-nx-cache",
@@ -98,7 +98,7 @@
     "restoreRoundTrip": {
       "command": "DATABASE_URL=postgres://fel:fel@127.0.0.1:49302/fluent_lab node scripts/g8-02-restore-gate.mjs --check",
       "result": "pass",
-      "details": "live disposable-schema round trip verified; source counts match artifact and restored rows for all 28 surfaces, public table count unchanged, disposable schema cleaned, same-schema restore refused"
+      "details": "live disposable-schema round trip verified; source counts match artifact and restored rows for all 28 surfaces, public table count unchanged, disposable schema cleaned, same-schema restore refused; bounded non-empty M2 fixture spans all 13 M2 surfaces with source→artifact→restored count, identity and digest parity, then cleans its fixture and schema"
     },
     "fullLabCheck": {
       "command": "pnpm check",
@@ -115,7 +115,9 @@
       "current curriculum Progress/readiness mastery reads server projection instead of legacy completion.v1",
       "legacy completion import is an explicit operator-only service and cannot be invoked by learner GET, browser or LLM paths",
       "Postgres projection is replayed from append-only events at read time so repeat_due is current after restart",
-      "revision identity is part of the capability stream; conflicting human revisions cannot append or produce a projection"
+      "revision identity is part of the capability stream; conflicting human revisions cannot append or produce a projection",
+      "eventId is globally locked and typed-conflict checked before any capability-scoped write; no cross-profile overwrite or raw primary-key error",
+      "backup/restore proof uses a bounded synthetic fixture with non-empty rows across all 13 M2 surfaces and exact count/identity/digest parity before cleanup"
     ],
     "nextGate": [
       "M3 must bridge the real rate-limiter human session producers to this ledger",
