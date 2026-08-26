@@ -81,6 +81,8 @@ packaged local boundary поднят и readiness — **5/5 компоненто
 - Lab `114e9bd` — Vue стал единственным learner web runtime.
 - Lab `8d2b792` — production gates, shared telemetry и Tier-1 evidence
   синхронизированы с Vue.
+- Lab `78ec62a` — удалены последние Angular editor/recommendation hints из
+  tracked developer tooling.
 - Vue `345bc18` — standalone learner workspace с полным route surface.
 
 ## Результат закрытия
