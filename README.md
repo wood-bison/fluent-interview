@@ -6,7 +6,8 @@ ownership:
 
 | Repository | Responsibility |
 | --- | --- |
-| `fluent-engineering-lab` | learner UI, curriculum projection, progress, evidence |
+| `fluent-engineering-lab` | Nest learning API, curriculum projection, progress, evidence |
+| `fluent-engineering-vue` | only learner/operator web UI (Vue 3 + Vite) |
 | `fluent-question-brain` | canonical questions, locales, graph, search, releases |
 | `fluent-task-runtime` | task revisions, sandboxes, hidden tests, execution traces |
 
@@ -16,13 +17,13 @@ Start the complete local development stack from this directory:
 
 ```bash
 cd /Users/sergeyzhechko/developer/fluent-interview
-pnpm dev
+pnpm run dev
 ```
 
 The root `pnpm` command is only a friendly entrypoint: it starts Question Brain
-and Task Runtime first, waits for their readiness contracts, then starts Fluent
-Lab. The three repositories and their Compose boundaries remain independent.
-Open `http://localhost:47300/`.
+and Task Runtime first, waits for their readiness contracts, then starts the
+Vue learner/operator shell. The repositories and their Compose boundaries
+remain independent. Open the application at `http://localhost:47350/`.
 
 Startup also applies the idempotent Question Brain curriculum-mapping migration
 for existing PostgreSQL volumes and pins Task Runtime to the checked-in release
@@ -129,7 +130,9 @@ decision report:
   versioned HTTP/schema contracts and their own Go toolchains.
 
 This gives one short command for development without pretending that different
-languages and independent release units are one source tree.
+languages and independent release units are one source tree. The previous
+client and its Nx web libraries are retired; there is no second web
+runtime to keep in sync.
 
 ## Service surfaces
 
@@ -137,7 +140,7 @@ languages and independent release units are one source tree.
 | --- | --- | --- |
 | Question Brain | `127.0.0.1:48127` | Payload `localhost:48128/admin`; Jaeger `localhost:56686` |
 | Task Runtime | `127.0.0.1:48227` | traces через общий Jaeger `localhost:56686` |
-| Fluent Lab dev | web `localhost:47300`, API `localhost:47000` | learner UI |
+| Fluent Lab dev | Vue `localhost:47350`, API `localhost:47000` | learner + operator UI |
 | Fluent Lab package | web `localhost:49300`, API `localhost:49301` | learner UI |
 | Fluent Lab durable data | Postgres `localhost:49302`, Redis `localhost:49303` | package-owned volumes |
 

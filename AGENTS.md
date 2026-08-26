@@ -1,6 +1,6 @@
 # AGENTS.md — Fluent Interview workspace
 
-This directory is a workspace umbrella for three independent repositories. It
+This directory is a workspace umbrella for four independent repositories. It
 is not a source monorepo and it must not become a second owner of application
 code, databases, question content, or task execution.
 
@@ -16,7 +16,8 @@ gate.
 ## Structure
 
 ```text
-fluent-engineering-lab/   learner product, UI, curriculum projection, progress
+fluent-engineering-lab/   Nest learner API, curriculum projection, progress
+fluent-engineering-vue/   only learner/operator web UI (Vue 3 + Vite)
 fluent-question-brain/    canonical questions, locales, graph, search, releases
 fluent-task-runtime/      task revisions, sandboxes, hidden tests, run traces
 workspace.yaml             repository pins, ports, readiness, launch contract
@@ -34,7 +35,8 @@ service boundary.
 
 - Question Brain is the only question/content authority.
 - Task Runtime is the only learner-code execution authority.
-- Fluent Lab owns learner UX, progress, evidence, and the released projection.
+- Fluent Lab owns learner API, progress, evidence, and the released projection;
+  the sibling Vue workspace owns all browser rendering.
 - Do not share PostgreSQL tables, ORM entities, local catalogues, or fallback
   data between repositories.
 - Cross-service changes use versioned HTTP/event contracts and compatibility
@@ -46,7 +48,8 @@ service boundary.
 - A practice gap is represented explicitly as `runnable`, `brief_only`,
   `recall_only`, or `deferred`; it must not be disguised as a lock, placeholder
   task, or synthetic pass.
-- The three Compose projects remain independently stoppable and observable.
+- The three Compose projects remain independently stoppable and observable;
+  the Vue workspace is a local web repository served by the Lab launcher.
 - `fluent-interview` is the orchestrator, not a fourth Compose project; stack
   provenance must always point into this workspace checkout.
 - Normal shutdown removes required services and any enabled Lab profiles while

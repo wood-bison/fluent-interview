@@ -22,7 +22,7 @@ for port in "${ports[@]}"; do
 done
 
 printf 'Host port registry: %d unique dedicated ports (no standard app binds)\n' "${#ports[@]}"
-printf '  Lab dev      web %s · API %s\n' "$WS_LAB_DEV_WEB_PORT" "$WS_LAB_DEV_API_PORT"
+printf '  Lab dev      Vue %s · API %s\n' "$WS_LAB_DEV_WEB_PORT" "$WS_LAB_DEV_API_PORT"
 printf '  Lab package  web %s · API %s · Postgres %s · Redis %s\n' "$WS_LAB_PACKAGE_WEB_PORT" "$WS_LAB_PACKAGE_API_PORT" "$WS_LAB_POSTGRES_PORT" "$WS_LAB_REDIS_PORT"
 printf '  Lab telemetry Grafana %s · Prometheus %s · Loki %s · Kafka %s\n' "$WS_GRAFANA_PORT" "$WS_PROMETHEUS_PORT" "$WS_LOKI_PORT" "$WS_KAFKA_PORT"
 printf '  Question Brain API %s · CMS %s · Postgres %s\n' "$WS_QB_API_PORT" "$WS_QB_CMS_PORT" "$WS_QB_POSTGRES_PORT"

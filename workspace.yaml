@@ -13,6 +13,11 @@ repositories:
     role: learner-product
     remote: git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
     branch: main
+  - id: fluent-engineering-vue
+    path: fluent-engineering-vue
+    role: learner-web
+    remote: local-only
+    branch: main
   - id: fluent-question-brain
     path: fluent-question-brain
     role: question-source-of-truth
@@ -39,7 +44,8 @@ services:
   - id: fluent-lab
     repository: fluent-engineering-lab
     devCommand: pnpm dev
-    devUrl: http://localhost:47300/
+    # Vue is the only learner and operator shell for the standard launch.
+    devUrl: http://localhost:47350/
     productionCommand: pnpm package:local
     productionUrl: http://localhost:49300/onboarding
 
@@ -54,7 +60,7 @@ observability:
 ports:
   policy: dedicated-high-host-ports
   fluentLab:
-    devWeb: 47300
+    devWeb: 47350
     devApi: 47000
     packageWeb: 49300
     packageApi: 49301

@@ -22,7 +22,8 @@ for arg in "$@"; do
       cat <<'USAGE'
 Usage: ./scripts/up.sh [--no-build] [--production]
 
-  (default)      start Question Brain, Task Runtime, and Fluent Lab dev
+  (default)      start Question Brain, Task Runtime, learning-api, and Vue
+                 learner/operator shell
   --no-build     reuse existing Compose images
   --production   start dependencies and the packaged Fluent Lab release
 USAGE
@@ -163,8 +164,15 @@ if [[ "$mode" == 'production' ]]; then
   start_packaged_lab &
 else
   stop_packaged_lab
-  echo "Starting Fluent Lab development ($WS_LAB_DEV_URL)"
-  pnpm --dir "$LAB" dev &
+  # Vue is the single learner and operator shell in development. The Lab
+  # preflight starts learning-api and the sibling Vue Vite workspace together.
+  VUE_ROOT="$ROOT/fluent-engineering-vue"
+  test -s "$VUE_ROOT/package.json" || {
+    echo "Missing Vue frontend repository: $VUE_ROOT" >&2
+    exit 1
+  }
+  echo "Starting Fluent Lab development (Vue primary: $WS_LAB_DEV_URL)"
+  FEL_VUE_ROOT="$VUE_ROOT" FEL_WEB_PORT="$WS_LAB_DEV_WEB_PORT" pnpm --dir "$LAB" dev &
 fi
 
 app_pid=$!

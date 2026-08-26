@@ -19,7 +19,7 @@ echo 'Fluent Interview workspace status'
 echo "root: $ROOT"
 echo
 echo 'Repositories:'
-for repo in fluent-engineering-lab fluent-question-brain fluent-task-runtime; do
+for repo in fluent-engineering-lab fluent-engineering-vue fluent-question-brain fluent-task-runtime; do
   path="$ROOT/$repo"
   if [[ -d "$path/.git" ]]; then
     printf '  %-26s ' "$repo"
