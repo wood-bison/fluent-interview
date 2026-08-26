@@ -83,6 +83,8 @@ packaged local boundary поднят и readiness — **5/5 компоненто
   синхронизированы с Vue.
 - Lab `78ec62a` — удалены последние Angular editor/recommendation hints из
   tracked developer tooling.
+- Lab `f2cb172` — удалена последняя Angular cache-ignore запись из tracked
+  tooling configuration.
 - Vue `345bc18` — standalone learner workspace с полным route surface.
 
 ## Результат закрытия
