@@ -10,7 +10,7 @@ workspace:
 repositories:
   - id: fluent-engineering-lab
     path: fluent-engineering-lab
-    role: learner-product
+    role: learning-api
     remote: git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
     branch: main
   - id: fluent-engineering-vue
