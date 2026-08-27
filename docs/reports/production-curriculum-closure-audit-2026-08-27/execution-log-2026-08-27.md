@@ -11,10 +11,14 @@ production-ready**.
 | Task Runtime | `cbcb8085ecbcb5d1b0bc01ab788dd5a9adc5c668` | `TaskPortfolioManifest` 168 families / 456 revisions target и portfolio validator |
 | Task Runtime | `31faf9355fcacd40cafc016d374ef5847598666f` | deterministic answer-free backlog: 153 family + 437 revision work items, six bounded waves |
 | Task Runtime | `59ee13fee149cdbeaeeb67f70284fe458b63ee02` | sandbox hardening: immutable image verification, learner-diagnostic redaction, and bounded cleanup of timed-out containers |
+| Task Runtime | `e0a794a7ac9268089f9b216b2a3d17756c4a80e8` | consolidated task release hardening, image-manifest check, language task descriptors and CI verification |
 | Fluent Lab | `8786016502cb5d6949eade1e967743bbe985ef92` | quality/evidence gates, learning-module release и coverage operational finish |
 | Fluent Lab | `44cb5d1709257a8e8e2b64dd6cfd9884e913903d` | deterministic path-completion authoring backlog |
 | Fluent Lab | `ac7488d4255597ff109e50ce0f49f22ff703a452` | deterministic ordering of path backlog waves |
 | Fluent Lab | `83b3dea5ad79ce47a5f209663d1d72d0f41e02ab` | canonical Brain binding release pin in PathCompletionManifest (removed file-digest identity drift) |
+| Fluent Lab | `2dd4d39d7bc60717d7e4f60f8d8a9e5537a9df6f` | consolidated curriculum projection, runtime binding, route, accessibility, desktop and production-gate hardening |
+| Vue learner | `1ddcc83f2c6a920a3d3e49c9a2fdc4075a8f8cc4` | consolidated route/runtime parity, reusable UI runtime picker and E2E/visual matrix |
+| Question Brain | `0baa8ef5a3dcc0fcf848831833e585824ec57fcb` | domain-separated graph release, evidence guards, migrations and graph-release audit |
 | Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
 
