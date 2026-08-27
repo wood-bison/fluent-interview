@@ -25,7 +25,7 @@ repositories:
     role: question-source-of-truth
     remote: git@github-woodbison:wood-bison/fluent-question-brain.git
     branch: main
-    revision: b1ac0a88fe57714e54f537cb980f0c5243dc520b
+    revision: b415dc3136353e40cb7473cd516413ae6e2b70b6
   - id: fluent-task-runtime
     path: fluent-task-runtime
     role: task-execution-authority
