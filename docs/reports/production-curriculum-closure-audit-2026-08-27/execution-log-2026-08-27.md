@@ -28,7 +28,7 @@ production-ready**.
 | Question Brain | `79ffe30effb9fd0881921768991f87129e6b1cac` | event-loop binding wave evidence: ten reviewed placements and immutable release `e7d6f9ad743d4f43` |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `e7d6f9ad743d4f43` |
+| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `e7d6f9ad743d4f43`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
