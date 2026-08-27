@@ -9,9 +9,11 @@ production-ready**.
 | --- | --- | --- |
 | Question Brain | `060b834708bd04875ebd122401e4319812d2f976` | release-pinned capability coverage target, migration `0022`, fail-closed binding contract |
 | Task Runtime | `cbcb8085ecbcb5d1b0bc01ab788dd5a9adc5c668` | `TaskPortfolioManifest` 168 families / 456 revisions target и portfolio validator |
+| Task Runtime | `31faf9355fcacd40cafc016d374ef5847598666f` | deterministic answer-free backlog: 153 family + 437 revision work items, six bounded waves |
 | Fluent Lab | `8786016502cb5d6949eade1e967743bbe985ef92` | quality/evidence gates, learning-module release и coverage operational finish |
 | Fluent Lab | `44cb5d1709257a8e8e2b64dd6cfd9884e913903d` | deterministic path-completion authoring backlog |
-| Workspace | `5fe61a5` | pin Lab revision и release verifier с path/backlog gate |
+| Fluent Lab | `ac7488d4255597ff109e50ce0f49f22ff703a452` | deterministic ordering of path backlog waves |
+| Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -26,6 +28,7 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - `lab-check`, `vue-check`, schema/canonical route/observability;
 - graph release, learning-module release, TrackView isolation;
 - path completion и path-completion backlog;
+- Task Runtime portfolio backlog (`590` open items: `153` families + `437` revisions);
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
 - runtime boundary negative test и failure matrix.
@@ -59,6 +62,11 @@ production package.
 Backlog не генерирует вопросы и ответы, не удаляет discovery-карточки и не
 публикует runtime revisions. Python остаётся нулевым learner target preview и
 не превращается в destructive reclassification queue.
+
+Task Runtime backlog соблюдает тот же принцип: это не runnable-каталог и не
+filler-контент. Он адресует exact compatibility gaps у известных семейств и
+новые family/revision пары, а release допускается только после immutable
+starter/hidden-test/hash и deterministic pass/fail/error evidence.
 
 ## Следующая волна
 

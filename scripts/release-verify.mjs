@@ -26,6 +26,7 @@ delete env.FORCE_COLOR;
 const steps = [];
 const labRoot = path.join(root, 'fluent-engineering-lab');
 const vueRoot = path.join(root, 'fluent-engineering-vue');
+const runtimeRoot = path.join(root, 'fluent-task-runtime');
 
 function run(id, command, args, options = {}) {
   const started = Date.now();
@@ -119,6 +120,13 @@ for (const repository of ['fluent-engineering-lab', 'fluent-engineering-vue', 'f
 }
 
 const packageState = packagePlan();
+// Task Runtime owns the portfolio contract and its answer-free authoring
+// backlog. Go is intentionally kept inside the pinned container image so the
+// umbrella verifier does not invent a second host toolchain.
+run('runtime-task-portfolio-backlog', 'docker', [
+  'run', '--rm', '-v', `${runtimeRoot}:/src`, '-w', '/src',
+  'golang:1.24', 'go', 'run', './cmd/portfolio-backlog', '--check',
+], { cwd: root, timeoutMs: 180_000 });
 // Both application owners run their own deterministic quality suites here.
 // Go-owned Brain/Runtime checks stay in their repositories' CI because this
 // umbrella must not invent a second toolchain or a second dependency cache.

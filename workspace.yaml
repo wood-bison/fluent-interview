@@ -31,7 +31,7 @@ repositories:
     role: task-execution-authority
     remote: git@github-woodbison:wood-bison/fluent-task-runtime.git
     branch: main
-    revision: cbcb8085ecbcb5d1b0bc01ab788dd5a9adc5c668
+    revision: 31faf9355fcacd40cafc016d374ef5847598666f
   - id: fluent-question-vault
     path: fluent-question-vault
     role: card-history-mirror
