@@ -10,6 +10,7 @@ production-ready**.
 | Question Brain | `060b834708bd04875ebd122401e4319812d2f976` | release-pinned capability coverage target, migration `0022`, fail-closed binding contract |
 | Task Runtime | `cbcb8085ecbcb5d1b0bc01ab788dd5a9adc5c668` | `TaskPortfolioManifest` 168 families / 456 revisions target и portfolio validator |
 | Task Runtime | `31faf9355fcacd40cafc016d374ef5847598666f` | deterministic answer-free backlog: 153 family + 437 revision work items, six bounded waves |
+| Task Runtime | `59ee13fee149cdbeaeeb67f70284fe458b63ee02` | sandbox hardening: immutable image verification, learner-diagnostic redaction, and bounded cleanup of timed-out containers |
 | Fluent Lab | `8786016502cb5d6949eade1e967743bbe985ef92` | quality/evidence gates, learning-module release и coverage operational finish |
 | Fluent Lab | `44cb5d1709257a8e8e2b64dd6cfd9884e913903d` | deterministic path-completion authoring backlog |
 | Fluent Lab | `ac7488d4255597ff109e50ce0f49f22ff703a452` | deterministic ordering of path backlog waves |
@@ -36,6 +37,14 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
 - runtime boundary negative test и failure matrix.
+
+После того прогона failure matrix отдельно поймала operational-регрессию: Jaeger
+зависал на поиске trace после серии timeout-run, а Docker оставлял живые
+`audit-failure-timeout` контейнеры. Они были удалены точечно (9 контейнеров),
+Jaeger перезапущен, runtime пересобран с `59ee13f`. Повторная live-матрица
+завершилась `valid=true`: pass/fail/compile/timeout, redaction,
+resource-policy и `trace-evidence-identity` прошли; после неё namespace
+`fluent-runtime-task-*` пуст.
 
 Единственное предупреждение development-профиля —
 `package-provenance-plan (executable=false)`: пять рабочих деревьев содержат
