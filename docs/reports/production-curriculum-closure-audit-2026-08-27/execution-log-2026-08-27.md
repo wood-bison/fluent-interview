@@ -17,6 +17,7 @@ production-ready**.
 | Fluent Lab | `ac7488d4255597ff109e50ce0f49f22ff703a452` | deterministic ordering of path backlog waves |
 | Fluent Lab | `83b3dea5ad79ce47a5f209663d1d72d0f41e02ab` | canonical Brain binding release pin in PathCompletionManifest (removed file-digest identity drift) |
 | Fluent Lab | `2dd4d39d7bc60717d7e4f60f8d8a9e5537a9df6f` | consolidated curriculum projection, runtime binding, route, accessibility, desktop and production-gate hardening |
+| Fluent Lab | `708a3ce9f58ef9d5cf4dce3a67ee5c14d54a3f6a` | current live gate evidence refreshed after clean-child release rehearsal |
 | Vue learner | `1ddcc83f2c6a920a3d3e49c9a2fdc4075a8f8cc4` | consolidated route/runtime parity, reusable UI runtime picker and E2E/visual matrix |
 | Question Brain | `0baa8ef5a3dcc0fcf848831833e585824ec57fcb` | domain-separated graph release, evidence guards, migrations and graph-release audit |
 | Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |
