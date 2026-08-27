@@ -39,9 +39,12 @@ production-ready**. Последнее обновление: 28 августа 2
 | Question Brain | `570e423c76d43629c8486972d98b0669d7fdb112` | G13C Node runtime depth: five newly bound cards (timers, p99/CPU, stream cancellation, worker transfer/pool); three path-mismatched proposals revoked before release; immutable release `185232db4689818b` |
 | Fluent Lab | `3499a2fd630533de395255d5cbe263d24cf40184` | consumed G13C binding release and refreshed path projection/backlog defaults plus gate evidence |
 | Fluent Lab | `0cfddcf3cb7ccfe5ffc14877c469424066504c03` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after the final G13C dev rehearsal |
+| Question Brain | `4648d5142b312332ae2b98c5b71a5c1386cb70bd` | G13D Node orchestration depth: two newly bound cards (BullMQ offload and NestJS transports); one frontend path mismatch revoked before release; immutable release `da343f56ed8db7bc` |
+| Fluent Lab | `83aa2f078e09d7cec6597533e855644c5b87dbc2` | consumed G13D binding release and refreshed path projection/backlog defaults |
+| Fluent Lab | `52511caee00e309b8084804fac92af4f50ba29a8` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after the final G13D dev rehearsal |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-185232db4689818b`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-da343f56ed8db7bc`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -57,7 +60,7 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - graph release, learning-module release, TrackView isolation;
 - path completion и path-completion backlog;
 - Task Runtime portfolio backlog (`590` open items: `153` families + `437` revisions);
-- cross-repo Question Brain coverage backlog (`1513` exact path/card items,
+- cross-repo Question Brain coverage backlog (`1511` exact path/card items,
   16 bounded waves; all currently `theory_only` and intentionally unbound);
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
@@ -84,14 +87,14 @@ lesson/checkpoint registry, а supporting/activity coverage не достига�
 learner contract 1601/699/464/51. Точные текущие IDs и blockers остаются в
 этом manifest; G8, G10, G11, G12, G13B и G13C волны закрыли только reviewed supporting bindings,
 а не весь production gap. Текущий manifest digest:
-`578cc621e417a640d91a4f6347024a8e03fcc6dc73220f0842893f8485ca1263`.
+`72fc090006eab3c7cdf49f0cb8c3599c4fe6934a1638aa662f6cddf59ee84407`.
 
 Новая очередь
 `fluent-engineering-lab/docs/manifests/path-completion-backlog-2026-08-27.json`
-содержит 3586 стабильных открытых item (digest
-`efeb39f78634054c5a1fa3bb03f9ff9d3a8372dda8bca927e2bb7ec6dda6ef78`):
+содержит 3584 стабильных открытых item (digest
+`e310ae91729a5f45fdf8cdd02dfed1117f07cd02edecd61ddca80f6df28ff02c`):
 
-- 1513 `capability-binding` review;
+- 1511 `capability-binding` review;
 - 699 `supporting-prompt` authoring;
 - 431 `activity` authoring/binding;
 - 334 missing `primary-question` slots;
@@ -110,7 +113,7 @@ filler-контент. Он адресует exact compatibility gaps у изв�
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
 
 Question coverage backlog (`docs/verification/two-audit-remediation/W13`) не
-пытается «угадать» capability по prompt. Он сверяет все 1513 unresolved IDs с
+пытается «угадать» capability по prompt. Он сверяет все 1511 unresolved IDs с
 Brain revision/hash и canonical binding report, объединяет capability/role
 issues в один path/card item и требует новый immutable Brain release перед
 пересборкой Lab projection. Десять event-loop items удалены из очереди только
@@ -122,18 +125,20 @@ G8–G10, восемь deferred-execution items — в G11, а G12 добави�
 сохранили проверенные связи), а устаревший q1071 path был отозван до публикации.
 G13C добавила пять новых bound cards (q1025, q359, q784, q800, q803) и отозвала
 три path-mismatched предложения до публикации (c026, q1100, q1101).
-Текущий W13 digest: `a06ff3b1787f7b9866b6abf6975a88109c1c67139278be9e99507d2579caeaf7`;
-открыто 1513 exact path/card items.
+G13D добавила два новых bound cards (q1024, q1029) и отозвала
+path-mismatched q1072 до публикации. Текущий W13 digest:
+`e4c8547e5f027331c19de925effdf5909fc5089a632accc890e2f0f47b4fb2fc`;
+открыто 1511 exact path/card items.
 
 Дополнительный cross-repository fix устранил identity drift: Lab больше не
 вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Полный development-прогон от `2026-08-27T23:22:35.473Z` завершился
+Полный development-прогон от `2026-08-27T23:32:26.041Z` завершился
 `valid=true`: 55/55 шагов (`lab-check`, `vue-check`, readiness,
 graph/path/content gates, runtime failure matrix, accessibility, desktop
-visual/regression и Vue E2E) прошли на G13C Brain/Lab release tuple.
+visual/regression и Vue E2E) прошли на G13D Brain/Lab release tuple.
 `productionPromotable=false` является ожидаемым результатом режима `--dev`, а
 не ошибкой проверки.
 
@@ -153,6 +158,10 @@ G13C сохраняет все предыдущие артефакты и доб
 `G13C-capability-binding-manifest-2026-08-28.json` и
 `G13C-capability-binding-release-2026-08-28.json` с tuple
 `question-capability-release-185232db4689818b`.
+G13D сохраняет все предыдущие артефакты и добавляет
+`G13D-capability-binding-manifest-2026-08-28.json` и
+`G13D-capability-binding-release-2026-08-28.json` с tuple
+`question-capability-release-da343f56ed8db7bc`.
 
 ## Следующая волна
 

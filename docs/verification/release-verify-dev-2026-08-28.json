@@ -1,6 +1,6 @@
 {
   "reportVersion": "release-verify.v1",
-  "generatedAt": "2026-08-27T23:22:35.473Z",
+  "generatedAt": "2026-08-27T23:32:26.041Z",
   "mode": "development",
   "valid": true,
   "productionPromotable": false,
@@ -9,19 +9,19 @@
       "id": "workspace-git",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/workspace-git-check.mjs --development",
       "status": "pass",
-      "durationMs": 363
+      "durationMs": 356
     },
     {
       "id": "workspace-contract",
       "command": "bash scripts/workspace-contract.sh check",
       "status": "pass",
-      "durationMs": 119
+      "durationMs": 112
     },
     {
       "id": "ci-inventory",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/ci-inventory.mjs --check",
       "status": "pass",
-      "durationMs": 31
+      "durationMs": 32
     },
     {
       "id": "design-tokens",
@@ -33,7 +33,7 @@
       "id": "vue-performance",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/vue-performance-gate.mjs --check",
       "status": "pass",
-      "durationMs": 61
+      "durationMs": 60
     },
     {
       "id": "observability",
@@ -45,25 +45,25 @@
       "id": "validation-matrix-static",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/validation-matrix-gate.mjs --static --check",
       "status": "pass",
-      "durationMs": 94
+      "durationMs": 95
     },
     {
       "id": "canonical-routes",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/canonical-route-gate.mjs",
       "status": "pass",
-      "durationMs": 30
+      "durationMs": 29
     },
     {
       "id": "schema-compatibility",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/schema-compatibility-gate.mjs",
       "status": "pass",
-      "durationMs": 597
+      "durationMs": 614
     },
     {
       "id": "layout",
       "command": "bash scripts/layout-check.sh",
       "status": "pass",
-      "durationMs": 16
+      "durationMs": 18
     },
     {
       "id": "ports",
@@ -75,13 +75,13 @@
       "id": "mode-guard",
       "command": "bash scripts/mode-guard.sh check",
       "status": "pass",
-      "durationMs": 90
+      "durationMs": 86
     },
     {
       "id": "runtime-image-manifest",
       "command": "bash fluent-task-runtime/scripts/image-manifest-check.sh --static",
       "status": "pass",
-      "durationMs": 87
+      "durationMs": 85
     },
     {
       "id": "docker-provenance",
@@ -100,61 +100,61 @@
       "id": "lab-glossary-code-contract",
       "command": "pnpm glossary:code:contract:check",
       "status": "pass",
-      "durationMs": 229
+      "durationMs": 247
     },
     {
       "id": "lab-browser-owner-boundary",
       "command": "pnpm browser:owner-boundary:check",
       "status": "pass",
-      "durationMs": 287
+      "durationMs": 295
     },
     {
       "id": "diff-check:fluent-engineering-lab",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 36
+      "durationMs": 33
     },
     {
       "id": "diff-check:fluent-engineering-vue",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 28
+      "durationMs": 26
     },
     {
       "id": "diff-check:fluent-task-runtime",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 35
+      "durationMs": 26
     },
     {
       "id": "diff-check:fluent-question-brain",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 27
+      "durationMs": 21
     },
     {
       "id": "diff-check:fluent-question-vault",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 32
+      "durationMs": 27
     },
     {
       "id": "runtime-task-portfolio-backlog",
       "command": "docker run --rm -v /Users/sergeyzhechko/developer/fluent-interview/fluent-task-runtime:/src -w /src golang:1.24 go run ./cmd/portfolio-backlog --check",
       "status": "pass",
-      "durationMs": 1996
+      "durationMs": 2010
     },
     {
       "id": "lab-check",
       "command": "pnpm check",
       "status": "pass",
-      "durationMs": 26714
+      "durationMs": 26050
     },
     {
       "id": "vue-check",
       "command": "pnpm check",
       "status": "pass",
-      "durationMs": 5824
+      "durationMs": 5690
     },
     {
       "id": "question-brain-readiness",
@@ -181,73 +181,73 @@
       "id": "validation-matrix-live",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/validation-matrix-gate.mjs --check",
       "status": "pass",
-      "durationMs": 1587
+      "durationMs": 1575
     },
     {
       "id": "runtime-boundary-negative",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/runtime-boundary-gate.mjs --check",
       "status": "pass",
-      "durationMs": 2991
+      "durationMs": 2885
     },
     {
       "id": "runtime-release-join",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/runtime-release-join-gate.mjs",
       "status": "pass",
-      "durationMs": 277
+      "durationMs": 268
     },
     {
       "id": "runtime-failure-matrix",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/runtime-failure-matrix-gate.mjs",
       "status": "pass",
-      "durationMs": 38630
+      "durationMs": 38002
     },
     {
       "id": "lab-route-audit",
       "command": "pnpm m4:route-audit",
       "status": "pass",
-      "durationMs": 1796
+      "durationMs": 1842
     },
     {
       "id": "lab-g12-coverage",
       "command": "pnpm g12:coverage:matrix:check",
       "status": "pass",
-      "durationMs": 458
+      "durationMs": 452
     },
     {
       "id": "lab-g12-practice-disposition",
       "command": "pnpm g12:practice:disposition:check",
       "status": "pass",
-      "durationMs": 496
+      "durationMs": 493
     },
     {
       "id": "lab-semantic-placement",
       "command": "pnpm semantic:placement:check",
       "status": "pass",
-      "durationMs": 283
+      "durationMs": 275
     },
     {
       "id": "lab-question-curriculum-shape",
       "command": "pnpm question:curriculum:shape:check",
       "status": "pass",
-      "durationMs": 433
+      "durationMs": 435
     },
     {
       "id": "question-graph-release-audit",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node fluent-question-brain/scripts/graph-release-audit.mjs --check",
       "status": "pass",
-      "durationMs": 244
+      "durationMs": 243
     },
     {
       "id": "lab-learning-module-release",
       "command": "pnpm learning:modules:gate:check",
       "status": "pass",
-      "durationMs": 458
+      "durationMs": 457
     },
     {
       "id": "lab-track-view-isolation",
       "command": "pnpm track:views:gate:check",
       "status": "pass",
-      "durationMs": 454
+      "durationMs": 466
     },
     {
       "id": "lab-path-completion",
@@ -259,85 +259,85 @@
       "id": "lab-path-completion-backlog",
       "command": "pnpm curriculum:path-completion:backlog:check",
       "status": "pass",
-      "durationMs": 257
+      "durationMs": 259
     },
     {
       "id": "question-coverage-backlog",
       "command": "pnpm coverage:backlog:check",
       "status": "pass",
-      "durationMs": 265
+      "durationMs": 254
     },
     {
       "id": "lab-activity-corpus",
       "command": "pnpm activity:gate:check",
       "status": "pass",
-      "durationMs": 450
+      "durationMs": 449
     },
     {
       "id": "lab-runtime-bindings",
       "command": "pnpm runtime:bindings:gate:check",
       "status": "pass",
-      "durationMs": 439
+      "durationMs": 435
     },
     {
       "id": "lab-route-actions",
       "command": "pnpm route:actions:gate:check",
       "status": "pass",
-      "durationMs": 417
+      "durationMs": 399
     },
     {
       "id": "lab-question-curriculum-funnel-en",
       "command": "pnpm question:curriculum:funnel:check -- --locale=en",
       "status": "pass",
-      "durationMs": 265
+      "durationMs": 264
     },
     {
       "id": "lab-question-curriculum-funnel-ru",
       "command": "pnpm question:curriculum:funnel:check -- --locale=ru",
       "status": "pass",
-      "durationMs": 481
+      "durationMs": 451
     },
     {
       "id": "lab-question-catalog-integrity",
       "command": "pnpm question:catalog:integrity:check",
       "status": "pass",
-      "durationMs": 906
+      "durationMs": 875
     },
     {
       "id": "lab-g13-boundary",
       "command": "pnpm g13:boundary:audit:check",
       "status": "pass",
-      "durationMs": 245
+      "durationMs": 257
     },
     {
       "id": "lab-g9-vue-deviations",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/g9-deviation-gate.mjs --check",
       "status": "pass",
-      "durationMs": 40
+      "durationMs": 35
     },
     {
       "id": "lab-accessibility",
       "command": "pnpm a11y:smoke",
       "status": "pass",
-      "durationMs": 3876
+      "durationMs": 3837
     },
     {
       "id": "lab-desktop-visual",
       "command": "pnpm desktop:visual:check",
       "status": "pass",
-      "durationMs": 9775
+      "durationMs": 9777
     },
     {
       "id": "lab-desktop-regression",
       "command": "pnpm desktop:regression:guard",
       "status": "pass",
-      "durationMs": 251
+      "durationMs": 246
     },
     {
       "id": "vue-e2e",
       "command": "pnpm e2e",
       "status": "pass",
-      "durationMs": 58663
+      "durationMs": 58466
     }
   ]
 }
