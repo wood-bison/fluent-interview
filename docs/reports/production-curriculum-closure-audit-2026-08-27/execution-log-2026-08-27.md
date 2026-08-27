@@ -15,6 +15,7 @@ production-ready**.
 | Fluent Lab | `ac7488d4255597ff109e50ce0f49f22ff703a452` | deterministic ordering of path backlog waves |
 | Fluent Lab | `83b3dea5ad79ce47a5f209663d1d72d0f41e02ab` | canonical Brain binding release pin in PathCompletionManifest (removed file-digest identity drift) |
 | Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |
+| Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -30,6 +31,8 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - graph release, learning-module release, TrackView isolation;
 - path completion и path-completion backlog;
 - Task Runtime portfolio backlog (`590` open items: `153` families + `437` revisions);
+- cross-repo Question Brain coverage backlog (`1572` exact path/card items,
+  16 bounded waves; all currently `theory_only` and intentionally unbound);
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
 - runtime boundary negative test и failure matrix.
@@ -68,6 +71,12 @@ Task Runtime backlog соблюдает тот же принцип: это не 
 filler-контент. Он адресует exact compatibility gaps у известных семейств и
 новые family/revision пары, а release допускается только после immutable
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
+
+Question coverage backlog (`docs/verification/two-audit-remediation/W13`) не
+пытается «угадать» capability по prompt. Он сверяет все 1572 unresolved IDs с
+Brain revision/hash и canonical binding report, объединяет capability/role
+issues в один path/card item и требует новый immutable Brain release перед
+пересборкой Lab projection.
 
 Дополнительный cross-repository fix устранил identity drift: Lab больше не
 вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет
