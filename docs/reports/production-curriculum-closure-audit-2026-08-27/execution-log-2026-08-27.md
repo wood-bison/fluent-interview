@@ -13,6 +13,7 @@ production-ready**.
 | Fluent Lab | `8786016502cb5d6949eade1e967743bbe985ef92` | quality/evidence gates, learning-module release и coverage operational finish |
 | Fluent Lab | `44cb5d1709257a8e8e2b64dd6cfd9884e913903d` | deterministic path-completion authoring backlog |
 | Fluent Lab | `ac7488d4255597ff109e50ce0f49f22ff703a452` | deterministic ordering of path backlog waves |
+| Fluent Lab | `83b3dea5ad79ce47a5f209663d1d72d0f41e02ab` | canonical Brain binding release pin in PathCompletionManifest (removed file-digest identity drift) |
 | Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
@@ -67,6 +68,11 @@ Task Runtime backlog соблюдает тот же принцип: это не 
 filler-контент. Он адресует exact compatibility gaps у известных семейств и
 новые family/revision пары, а release допускается только после immutable
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
+
+Дополнительный cross-repository fix устранил identity drift: Lab больше не
+вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет
+подписанный Brain verification report, сверяет question release и число
+entries, и публикует canonical `question-capability-release-…`.
 
 ## Следующая волна
 
