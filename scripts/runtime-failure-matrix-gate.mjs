@@ -20,6 +20,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const runtimeRoot = path.join(root, 'fluent-task-runtime');
 const runtimeUrl = (process.env.RUNTIME_API_URL ?? 'http://127.0.0.1:48227').replace(/\/$/u, '');
 const jaegerApiUrl = (process.env.JAEGER_API_URL ?? 'http://127.0.0.1:56686/api/traces').replace(/\/$/u, '');
+const jaegerLookback = process.env.JAEGER_TRACE_LOOKBACK ?? '10m';
+const jaegerLimit = Number(process.env.JAEGER_TRACE_LIMIT ?? 20);
+const jaegerRequestTimeoutMs = Number(process.env.JAEGER_TRACE_TIMEOUT_MS ?? 5_000);
 const outArg = process.argv.find((value) => value.startsWith('--out='));
 const out = outArg
   ? path.resolve(root, outArg.slice('--out='.length))
@@ -134,10 +137,19 @@ async function checkTraceIdentity(run) {
     return false;
   }
   let lastDetail = 'trace was not exported';
+  const traceQuery = new URL(jaegerApiUrl);
+  traceQuery.searchParams.set('service', 'fluent-task-runtime');
+  traceQuery.searchParams.set('lookback', jaegerLookback);
+  traceQuery.searchParams.set('limit', String(Number.isFinite(jaegerLimit) && jaegerLimit > 0 ? jaegerLimit : 20));
+  // Correlation ids are unique per disposable run.  Filtering at the Jaeger
+  // query boundary keeps this gate deterministic even when the shared in-
+  // memory store contains many newer readiness/metrics spans; fetching a
+  // small “latest N” page and hoping the target is present is not a proof.
+  traceQuery.searchParams.set('tag', `fluent.run.correlation_id:${run.correlationId}`);
   for (let attempt = 0; attempt < 12; attempt += 1) {
     try {
-      const response = await fetch(`${jaegerApiUrl}?service=fluent-task-runtime&lookback=1h&limit=100`, {
-        signal: AbortSignal.timeout(5_000),
+      const response = await fetch(traceQuery, {
+        signal: AbortSignal.timeout(jaegerRequestTimeoutMs),
       });
       const payload = await response.json();
       const trace = (Array.isArray(payload?.data) ? payload.data : []).find((candidate) =>

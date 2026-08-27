@@ -18,6 +18,8 @@ production-ready**.
 | Fluent Lab | `83b3dea5ad79ce47a5f209663d1d72d0f41e02ab` | canonical Brain binding release pin in PathCompletionManifest (removed file-digest identity drift) |
 | Fluent Lab | `2dd4d39d7bc60717d7e4f60f8d8a9e5537a9df6f` | consolidated curriculum projection, runtime binding, route, accessibility, desktop and production-gate hardening |
 | Fluent Lab | `708a3ce9f58ef9d5cf4dce3a67ee5c14d54a3f6a` | current live gate evidence refreshed after clean-child release rehearsal |
+| Fluent Lab | `c8f73c37c642a65a42127b9696022f9fbd59e4d8` | final live evidence refresh after runtime/Jaeger operational repair |
+| Fluent Lab | `957e15ef5d58b9c2d6c809c714b330afac112e6e` | owner-boundary/glossary evidence refreshed during verifier parser repair |
 | Vue learner | `1ddcc83f2c6a920a3d3e49c9a2fdc4075a8f8cc4` | consolidated route/runtime parity, reusable UI runtime picker and E2E/visual matrix |
 | Question Brain | `0baa8ef5a3dcc0fcf848831833e585824ec57fcb` | domain-separated graph release, evidence guards, migrations and graph-release audit |
 | Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |

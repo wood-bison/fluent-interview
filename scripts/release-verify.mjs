@@ -63,6 +63,16 @@ async function httpReady(id, url) {
   }
 }
 
+function parseTrailingJson(value) {
+  const text = String(value ?? '').trim();
+  const starts = [0];
+  for (const match of text.matchAll(/\n\{/gu)) starts.push((match.index ?? 0) + 1);
+  for (const start of starts.reverse()) {
+    try { return JSON.parse(text.slice(start).trim()); } catch { /* try an earlier JSON object */ }
+  }
+  return null;
+}
+
 function packagePlan() {
   const result = spawnSync('pnpm', ['--dir', path.join(root, 'fluent-engineering-lab'), 'package:local:plan'], {
     cwd: root,
@@ -71,8 +81,7 @@ function packagePlan() {
     timeout: 120_000,
     maxBuffer: 16 * 1024 * 1024,
   });
-  let parsed = null;
-  try { parsed = JSON.parse(result.stdout?.trim() ?? ''); } catch { /* reported below */ }
+  const parsed = parseTrailingJson(result.stdout);
   const executable = parsed?.executable === true;
   const boundaryOk = result.status === 0 && Boolean(parsed) && executable;
   const ok = result.status === 0 && Boolean(parsed) && (dev || boundaryOk);
@@ -102,6 +111,13 @@ const staticSteps = [
 ];
 for (const [id, command, args] of staticSteps) run(id, command, args);
 
+// Capture the package boundary before any repository-owned live gate can
+// refresh timestamped evidence files.  Several Lab `--check` commands are
+// intentionally evidence-producing; evaluating provenance after them would
+// report a false dirty tree even when all five source repositories started
+// clean and pinned.
+const packageState = packagePlan();
+
 // Domain-model and browser ownership guards are source checks. They run in
 // every mode so a strict package cannot bypass the same cross-service rules
 // used by the development release gate.
@@ -119,7 +135,6 @@ for (const repository of ['fluent-engineering-lab', 'fluent-engineering-vue', 'f
   run(`diff-check:${repository}`, 'git', ['diff', '--check'], { cwd: path.join(root, repository), timeoutMs: 120_000 });
 }
 
-const packageState = packagePlan();
 // Task Runtime owns the portfolio contract and its answer-free authoring
 // backlog. Go is intentionally kept inside the pinned container image so the
 // umbrella verifier does not invent a second host toolchain.
