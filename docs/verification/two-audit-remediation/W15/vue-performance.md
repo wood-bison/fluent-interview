@@ -1,6 +1,6 @@
 # W15 — Vue performance gate
 
-Снимок: 2026-08-27T23:29:45.642Z
+Снимок: 2026-08-27T23:38:44.059Z
 Статус: **pass**
 
 | Boundary | Result |
