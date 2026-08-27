@@ -87,7 +87,14 @@ function packagePlan() {
   const ok = result.status === 0 && Boolean(parsed) && (dev || boundaryOk);
   const detail = !parsed ? (result.stderr?.trim() || 'package plan did not return JSON') : (executable ? undefined : `package boundary is not executable: ${parsed.blockedReason ?? 'dirty or unpinned source'}`);
   const status = !boundaryOk && dev ? 'warn' : ok ? 'pass' : 'fail';
-  steps.push({ id: 'package-provenance-plan', command: 'pnpm --dir fluent-engineering-lab package:local:plan', status, executable, sourceClean: parsed?.sourceClean ?? false, detail });
+  steps.push({
+    id: 'package-provenance-plan',
+    command: 'pnpm --dir fluent-engineering-lab package:local:plan',
+    status,
+    executable,
+    sourceClean: parsed?.source?.clean === true,
+    detail,
+  });
   console.log(`${status === 'pass' ? 'PASS' : status === 'warn' ? 'WARN' : 'FAIL'} package-provenance-plan (executable=${executable})`);
   if (!ok && detail) console.error(detail);
   return { ok, executable, parsed };

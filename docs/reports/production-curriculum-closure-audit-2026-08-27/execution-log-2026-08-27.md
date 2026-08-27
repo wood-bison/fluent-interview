@@ -20,9 +20,10 @@ production-ready**.
 | Fluent Lab | `708a3ce9f58ef9d5cf4dce3a67ee5c14d54a3f6a` | current live gate evidence refreshed after clean-child release rehearsal |
 | Fluent Lab | `c8f73c37c642a65a42127b9696022f9fbd59e4d8` | final live evidence refresh after runtime/Jaeger operational repair |
 | Fluent Lab | `957e15ef5d58b9c2d6c809c714b330afac112e6e` | owner-boundary/glossary evidence refreshed during verifier parser repair |
+| Fluent Lab | `a82696b79ddd05116c71ca4d8f2efb1f28b6de7c` | deterministic verifier evidence captured after the final clean-child rehearsal |
 | Vue learner | `1ddcc83f2c6a920a3d3e49c9a2fdc4075a8f8cc4` | consolidated route/runtime parity, reusable UI runtime picker and E2E/visual matrix |
 | Question Brain | `0baa8ef5a3dcc0fcf848831833e585824ec57fcb` | domain-separated graph release, evidence guards, migrations and graph-release audit |
-| Workspace | `5fe61a5` + current wave | pin Lab/Runtime revisions и release verifier с path/backlog gates |
+| Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
@@ -53,10 +54,10 @@ Jaeger перезапущен, runtime пересобран с `59ee13f`. Пов
 resource-policy и `trace-evidence-identity` прошли; после неё namespace
 `fluent-runtime-task-*` пуст.
 
-Единственное предупреждение development-профиля —
-`package-provenance-plan (executable=false)`: пять рабочих деревьев содержат
-локальные изменения, поэтому строгий package gate правильно не называет их
-production package.
+В финальном development-прогоне предупреждений нет: `package-provenance-plan`
+прошёл с `executable=true` и `sourceClean=true` после фиксации всех child
+evidence. Строгий production-профиль по-прежнему отдельно требует
+`publish_authorized=true` и закрытия нормативного контентного разрыва.
 
 ## Текущая projection и честный разрыв
 
@@ -98,6 +99,12 @@ issues в один path/card item и требует новый immutable Brain r
 вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
+
+Финальный прогон от `2026-08-27T21:49:35.449Z` завершился `valid=true`:
+51/51 шагов (`lab-check`, `vue-check`, readiness, graph/path/content gates,
+runtime failure matrix, accessibility, desktop visual/regression и Vue E2E)
+прошли. `productionPromotable=false` является ожидаемым результатом режима
+`--dev`, а не ошибкой проверки.
 
 ## Следующая волна
 
