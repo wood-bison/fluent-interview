@@ -1,0 +1,5 @@
+{"command":"pnpm layout:check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"layout: OK — 5 independent Git repositories"}
+{"command":"pnpm verify:git:dev","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"valid=true; strictReleaseReady=false; Vue remote-unavailable; dirty trees reported"}
+{"command":"pnpm verify:git","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":1,"result":"fail-closed: strictReleaseReady=false; no hard failures; Vue remote unavailable and dirty trees remain"}
+{"command":"git diff --check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"clean"}
+{"command":"find /Users/sergeyzhechko/developer -mindepth 2 -maxdepth 2 -type d -name 'fluent-*'","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"three classified historical sandbox repositories; none deleted"}

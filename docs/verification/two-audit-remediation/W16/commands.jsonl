@@ -1,0 +1,12 @@
+{"command":"node scripts/observability-gate.mjs --check --tests","result":"pass; 22 source checks and observability unit suite"}
+{"command":"pnpm observability:live","result":"pass-with-warnings; 7 required live probes pass, optional Prometheus/Loki/Grafana offline, Jaeger UI reachable"}
+{"command":"pnpm observability:check","result":"pass-with-warnings; static contract/topology gate"}
+{"command":"pnpm --dir fluent-engineering-vue check","result":"pass; typecheck, lint, Vitest and Vite build"}
+{"command":"pnpm --dir fluent-engineering-vue e2e","result":"pass; 76 desktop scenarios"}
+{"command":"docker compose --project-name fluent-engineering-lab --file fluent-engineering-lab/docker-compose.yml --profile observability up -d","result":"pass; Prometheus, Loki, Promtail and Grafana started with digest-pinned images; existing durable volumes preserved"}
+{"command":"pnpm observability:live","result":"pass-with-warnings; 22 static checks, 15 live checks, 9 required and 6 optional collector/dashboard probes pass; only Brain scrape-target and learner-funnel taxonomy warnings remain"}
+{"command":"env -u FORCE_COLOR -u NO_COLOR pnpm exec nx test observability --skip-nx-cache --runInBand --silent","result":"pass; 7 suites, 42 tests"}
+{"command":"env -u FORCE_COLOR -u NO_COLOR pnpm exec nx test learning-api --skip-nx-cache --runInBand --silent","result":"pass; 167 suites passed, 1 skipped; 741 tests passed, 1 skipped"}
+{"command":"pnpm observability:live","result":"pass-with-warnings; 24 static checks, 15 live checks, 9 required and 6 optional collector/dashboard probes pass; only Brain scrape-target warning remains"}
+{"command":"node scripts/observability-journey-gate.mjs","result":"pass; disposable node-rate-limiter-001 route/run, 4/4 released tests, first-run histogram delta=1, Jaeger shared trace, Sergey stable progress unchanged"}
+{"command":"pnpm observability:live","result":"pass; 24 static checks, 15 live checks, 9 required and 6 optional collector/dashboard probes pass; zero warnings and failures"}

@@ -1,0 +1,213 @@
+{
+  "reportVersion": "runtime-release-join-gate.v1",
+  "generatedAt": "2026-08-27T21:27:50.560Z",
+  "brainUrl": "http://127.0.0.1:48127",
+  "runtimeUrl": "http://127.0.0.1:48227",
+  "releaseTuple": {
+    "questionReleaseId": "question-release-d00a14931e607336",
+    "catalogReleaseId": "question-release-d00a14931e607336",
+    "runtimeQuestionReleaseId": "question-release-d00a14931e607336",
+    "runtimeReleaseId": "task-family-release-2026-08-26-g10"
+  },
+  "counts": {
+    "brainCatalog": 1591,
+    "runtimeFamilies": 16,
+    "runtimeQuestionBindings": 22,
+    "runtimeRevisions": 20,
+    "runnableRevisions": 19,
+    "deferredRevisions": 1
+  },
+  "checks": [
+    {
+      "id": "brain-release-readable",
+      "status": "pass",
+      "detail": "JSON projection available",
+      "url": "http://127.0.0.1:48127/v1/release",
+      "httpStatus": 200
+    },
+    {
+      "id": "brain-catalog-readable",
+      "status": "pass",
+      "detail": "JSON projection available",
+      "url": "http://127.0.0.1:48127/v1/catalog?limit=2000",
+      "httpStatus": 200
+    },
+    {
+      "id": "runtime-readiness-readable",
+      "status": "pass",
+      "detail": "JSON projection available",
+      "url": "http://127.0.0.1:48227/v1/health/ready",
+      "httpStatus": 200
+    },
+    {
+      "id": "runtime-catalog-readable",
+      "status": "pass",
+      "detail": "JSON projection available",
+      "url": "http://127.0.0.1:48227/v1/task-families",
+      "httpStatus": 200
+    },
+    {
+      "id": "brain-catalog-release-identity",
+      "status": "pass",
+      "detail": "question-release-d00a14931e607336 == question-release-d00a14931e607336",
+      "brainReleaseId": "question-release-d00a14931e607336",
+      "catalogReleaseId": "question-release-d00a14931e607336"
+    },
+    {
+      "id": "runtime-question-release-identity",
+      "status": "pass",
+      "detail": "question-release-d00a14931e607336 == question-release-d00a14931e607336",
+      "brainReleaseId": "question-release-d00a14931e607336",
+      "runtimeQuestionRelease": "question-release-d00a14931e607336"
+    },
+    {
+      "id": "brain-production-only",
+      "status": "pass",
+      "detail": "Question release excludes fixtures",
+      "includeFixtures": false,
+      "fixtureCount": 0
+    },
+    {
+      "id": "runtime-ready",
+      "status": "pass",
+      "detail": "Task Runtime reports ready",
+      "state": "ready"
+    },
+    {
+      "id": "runtime-release-id",
+      "status": "pass",
+      "detail": "task-family-release-2026-08-26-g10",
+      "runtimeReleaseId": "task-family-release-2026-08-26-g10"
+    },
+    {
+      "id": "family:task-family.deferred:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.deferred",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.dotnet-cancellation:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.dotnet-cancellation",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.fluent-calculator:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.fluent-calculator",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.rate-limiter:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.rate-limiter",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.authentication-authorization:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.authentication-authorization",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.cache-invalidation:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.cache-invalidation",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.bounded-concurrency:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.bounded-concurrency",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.cpu-bound-work:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.cpu-bound-work",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.event-loop-ordering:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.event-loop-ordering",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.idempotent-delivery:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.idempotent-delivery",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.memory-retention:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.memory-retention",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.streams-backpressure:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.streams-backpressure",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.postgresql-query-planning:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.postgresql-query-planning",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.postgresql-row-locks:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.postgresql-row-locks",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.postgresql-rate-limiting:released",
+      "status": "pass",
+      "detail": "released",
+      "family": "task-family.postgresql-rate-limiting",
+      "deferredCapabilityOnly": false
+    },
+    {
+      "id": "family:task-family.project-book-boundary:deferred",
+      "status": "pass",
+      "detail": "deferred capability-only family is non-runnable",
+      "family": "task-family.project-book-boundary",
+      "deferredCapabilityOnly": true
+    },
+    {
+      "id": "runtime-question-bindings",
+      "status": "pass",
+      "detail": "22 binding(s) match Brain revision and content hash",
+      "bindingCount": 22,
+      "mismatches": []
+    },
+    {
+      "id": "runtime-revisions-immutable-runnable",
+      "status": "pass",
+      "detail": "20 revision(s) have immutable hashes; 19 runnable and 1 explicitly deferred",
+      "revisionCount": 20,
+      "runnableRevisionCount": 19,
+      "deferredRevisionCount": 1,
+      "invalid": []
+    }
+  ],
+  "failures": [],
+  "valid": true
+}

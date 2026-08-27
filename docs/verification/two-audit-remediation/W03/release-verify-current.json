@@ -1,0 +1,302 @@
+{
+  "reportVersion": "release-verify.v1",
+  "generatedAt": "2026-08-27T13:58:21.399Z",
+  "mode": "development",
+  "valid": true,
+  "productionPromotable": false,
+  "steps": [
+    {
+      "id": "workspace-git",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/workspace-git-check.mjs --development",
+      "status": "pass",
+      "durationMs": 515
+    },
+    {
+      "id": "workspace-contract",
+      "command": "bash scripts/workspace-contract.sh check",
+      "status": "pass",
+      "durationMs": 116
+    },
+    {
+      "id": "ci-inventory",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/ci-inventory.mjs --check",
+      "status": "pass",
+      "durationMs": 35
+    },
+    {
+      "id": "design-tokens",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/design-token-audit.mjs --check",
+      "status": "pass",
+      "durationMs": 49
+    },
+    {
+      "id": "vue-performance",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/vue-performance-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 64
+    },
+    {
+      "id": "observability",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/observability-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 46
+    },
+    {
+      "id": "validation-matrix-static",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/validation-matrix-gate.mjs --static --check",
+      "status": "pass",
+      "durationMs": 117
+    },
+    {
+      "id": "schema-compatibility",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/schema-compatibility-gate.mjs",
+      "status": "pass",
+      "durationMs": 747
+    },
+    {
+      "id": "layout",
+      "command": "bash scripts/layout-check.sh",
+      "status": "pass",
+      "durationMs": 21
+    },
+    {
+      "id": "ports",
+      "command": "bash scripts/ports.sh",
+      "status": "pass",
+      "durationMs": 120
+    },
+    {
+      "id": "mode-guard",
+      "command": "bash scripts/mode-guard.sh check",
+      "status": "pass",
+      "durationMs": 139
+    },
+    {
+      "id": "runtime-image-manifest",
+      "command": "bash fluent-task-runtime/scripts/image-manifest-check.sh --static",
+      "status": "pass",
+      "durationMs": 202
+    },
+    {
+      "id": "docker-provenance",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/docker-provenance-check.mjs",
+      "status": "pass",
+      "durationMs": 37
+    },
+    {
+      "id": "lab-glossary-code-contract",
+      "command": "pnpm glossary:code:contract:check",
+      "status": "pass",
+      "durationMs": 269
+    },
+    {
+      "id": "lab-browser-owner-boundary",
+      "command": "pnpm browser:owner-boundary:check",
+      "status": "pass",
+      "durationMs": 298
+    },
+    {
+      "id": "diff-check:fluent-engineering-lab",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 91
+    },
+    {
+      "id": "diff-check:fluent-engineering-vue",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 38
+    },
+    {
+      "id": "diff-check:fluent-task-runtime",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 27
+    },
+    {
+      "id": "diff-check:fluent-question-brain",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 25
+    },
+    {
+      "id": "diff-check:fluent-question-vault",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 17
+    },
+    {
+      "id": "package-provenance-plan",
+      "command": "pnpm --dir fluent-engineering-lab package:local:plan",
+      "status": "warn",
+      "executable": false,
+      "sourceClean": false,
+      "detail": "package boundary is not executable: dirty or unpinned source"
+    },
+    {
+      "id": "lab-check",
+      "command": "pnpm check",
+      "status": "pass",
+      "durationMs": 35203
+    },
+    {
+      "id": "vue-check",
+      "command": "pnpm check",
+      "status": "pass",
+      "durationMs": 6619
+    },
+    {
+      "id": "question-brain-readiness",
+      "command": "GET http://127.0.0.1:48127/health/ready",
+      "status": "pass",
+      "durationMs": 23,
+      "httpStatus": 200
+    },
+    {
+      "id": "task-runtime-readiness",
+      "command": "GET http://127.0.0.1:48227/v1/health/ready",
+      "status": "pass",
+      "durationMs": 21,
+      "httpStatus": 200
+    },
+    {
+      "id": "lab-dev-web",
+      "command": "GET http://localhost:47350/",
+      "status": "pass",
+      "durationMs": 12,
+      "httpStatus": 200
+    },
+    {
+      "id": "validation-matrix-live",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/validation-matrix-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 1804
+    },
+    {
+      "id": "runtime-boundary-negative",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/runtime-boundary-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 4104
+    },
+    {
+      "id": "lab-route-audit",
+      "command": "pnpm m4:route-audit",
+      "status": "pass",
+      "durationMs": 1759
+    },
+    {
+      "id": "lab-g12-coverage",
+      "command": "pnpm g12:coverage:matrix:check",
+      "status": "pass",
+      "durationMs": 482
+    },
+    {
+      "id": "lab-g12-practice-disposition",
+      "command": "pnpm g12:practice:disposition:check",
+      "status": "pass",
+      "durationMs": 543
+    },
+    {
+      "id": "lab-semantic-placement",
+      "command": "pnpm semantic:placement:check",
+      "status": "pass",
+      "durationMs": 316
+    },
+    {
+      "id": "lab-question-curriculum-shape",
+      "command": "pnpm question:curriculum:shape:check",
+      "status": "pass",
+      "durationMs": 482
+    },
+    {
+      "id": "question-graph-release-audit",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node fluent-question-brain/scripts/graph-release-audit.mjs --check",
+      "status": "pass",
+      "durationMs": 237
+    },
+    {
+      "id": "lab-learning-module-release",
+      "command": "pnpm learning:modules:gate:check",
+      "status": "pass",
+      "durationMs": 547
+    },
+    {
+      "id": "lab-track-view-isolation",
+      "command": "pnpm track:views:gate:check",
+      "status": "pass",
+      "durationMs": 501
+    },
+    {
+      "id": "lab-activity-corpus",
+      "command": "pnpm activity:gate:check",
+      "status": "pass",
+      "durationMs": 493
+    },
+    {
+      "id": "lab-runtime-bindings",
+      "command": "pnpm runtime:bindings:gate:check",
+      "status": "pass",
+      "durationMs": 536
+    },
+    {
+      "id": "lab-route-actions",
+      "command": "pnpm route:actions:gate:check",
+      "status": "pass",
+      "durationMs": 507
+    },
+    {
+      "id": "lab-question-curriculum-funnel-en",
+      "command": "pnpm question:curriculum:funnel:check -- --locale=en",
+      "status": "pass",
+      "durationMs": 286
+    },
+    {
+      "id": "lab-question-curriculum-funnel-ru",
+      "command": "pnpm question:curriculum:funnel:check -- --locale=ru",
+      "status": "pass",
+      "durationMs": 525
+    },
+    {
+      "id": "lab-question-catalog-integrity",
+      "command": "pnpm question:catalog:integrity:check",
+      "status": "pass",
+      "durationMs": 935
+    },
+    {
+      "id": "lab-g13-boundary",
+      "command": "pnpm g13:boundary:audit:check",
+      "status": "pass",
+      "durationMs": 293
+    },
+    {
+      "id": "lab-g9-vue-deviations",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/g9-deviation-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 41
+    },
+    {
+      "id": "lab-accessibility",
+      "command": "pnpm a11y:smoke",
+      "status": "pass",
+      "durationMs": 4258
+    },
+    {
+      "id": "lab-desktop-visual",
+      "command": "pnpm desktop:visual:check",
+      "status": "pass",
+      "durationMs": 10034
+    },
+    {
+      "id": "lab-desktop-regression",
+      "command": "pnpm desktop:regression:guard",
+      "status": "pass",
+      "durationMs": 302
+    },
+    {
+      "id": "vue-e2e",
+      "command": "pnpm e2e",
+      "status": "pass",
+      "durationMs": 64021
+    }
+  ]
+}

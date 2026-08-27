@@ -1,0 +1,42 @@
+{
+  "schema": "fluent-interview.two-audit-gate-tests.v1",
+  "wave": "W03",
+  "status": "pass-with-ci-coverage-gaps",
+  "aggregate": {
+    "valid": true,
+    "productionPromotable": false,
+    "report": "release-verify-current.json",
+    "passCount": 47,
+    "warnCount": 1,
+    "failCount": 0
+  },
+  "passed": [
+    "child workflow inventory and stale-reference guard",
+    "Brain gofmt/test/vet plus backup/restore workflow steps",
+    "Runtime gofmt/test/vet/image manifest workflow steps",
+    "Lab and Vue owner quality workflows",
+    "aggregate release verification with bounded child timeouts (48 steps: 47 pass, 1 warn)",
+    "question catalogue integrity, curriculum shape/funnel and semantic placement checks",
+    "route/action, route, accessibility, visual, desktop regression and Question Brain graph release gates",
+    "Vue end-to-end route suite",
+    "learning-api complete owner suite after readiness fixture repair"
+  ],
+  "open": [
+    "hosted Vue two-viewport route E2E job",
+    "umbrella CI topology/bootstrap workflow",
+    "production graph and runtime-join gates in aggregate",
+    "G14 hardening in aggregate"
+  ],
+  "negativeCases": [
+    {
+      "case": "missing or stale workflow marker",
+      "expected": "ci-inventory exits non-zero",
+      "observed": "guard compares required markers and stale references"
+    },
+    {
+      "case": "owner test fixture omits server readiness dimensions",
+      "expected": "TypeScript compilation fails instead of silently dropping readiness",
+      "observed": "learning-api suite failed, fixture was corrected, then 731 tests passed"
+    }
+  ]
+}

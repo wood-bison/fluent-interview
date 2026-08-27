@@ -1,0 +1,31 @@
+{
+  "schema": "fluent-interview.domain-model-baseline.v1",
+  "wave": "W02",
+  "capturedAt": "2026-08-27T08:56:00Z",
+  "sources": [
+    "docs/contracts/fluent-interview-glossary.v1.md",
+    "CONTEXT.md",
+    "fluent-engineering-lab/docs/adr/README.md",
+    "fluent-engineering-lab/docs/adr/0038-learning-modules-and-question-placements.md",
+    "fluent-engineering-lab/docs/adr/0039-content-and-curriculum-graphs.md",
+    "fluent-engineering-lab/docs/adr/0040-readiness-and-activity-evidence.md"
+  ],
+  "canonicalTerms": [
+    "Program",
+    "Path",
+    "TrackView",
+    "LearningModule",
+    "QuestionPlacement",
+    "Activity",
+    "EvidenceMode",
+    "ContentReadiness",
+    "PlacementReadiness",
+    "RuntimeReadiness",
+    "LearnerReadiness"
+  ],
+  "invariants": [
+    "generic QuestionCards are stored once and reused through reviewed placements",
+    "content graph and curriculum graph are separate owners",
+    "unqualified ready is forbidden in cross-service claims"
+  ]
+}

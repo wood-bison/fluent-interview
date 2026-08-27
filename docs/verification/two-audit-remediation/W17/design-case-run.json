@@ -1,0 +1,37 @@
+{
+  "evidenceVersion": "design-case-run.v1",
+  "wave": "W17",
+  "observedAt": "2026-08-27T14:10:31Z",
+  "labBase": "http://127.0.0.1:47000",
+  "labId": "ordering-docker-build-cache",
+  "puzzleVersion": "2026.08.06.1",
+  "profile": "w17-ordering-live",
+  "sourceId": "source-2312b800-06dd-4e92-9d88-b7ee0fee51e4",
+  "attemptId": "attempt-bb8760eb-f817-433e-9a4d-7d973a601c6b",
+  "status": "pass",
+  "httpStatus": 201,
+  "assessment": {
+    "outcome": "correct",
+    "correct": true,
+    "correctCount": 8,
+    "totalCount": 8,
+    "firstIncorrect": null
+  },
+  "activity": {
+    "publicSourceIssued": true,
+    "serverAssessedCommit": true,
+    "explanationRequired": true,
+    "answerKeyReturned": false
+  },
+  "isolation": {
+    "sergeyProfileMutated": false,
+    "releaseMutated": false,
+    "graphMutated": false,
+    "dockerStateMutated": false,
+    "correlationScope": "disposable W17 ordering profile"
+  },
+  "notes": [
+    "The answer key was used only from the server-side authored catalogue for this verification request and is not stored in public evidence.",
+    "The browser remains covered by the public source boundary; this record proves the server acceptance path end to end."
+  ]
+}

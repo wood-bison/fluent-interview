@@ -1,0 +1,21 @@
+{
+  "wave": "W16",
+  "scope": "observability and learner analytics boundary",
+  "observedAt": "2026-08-27",
+  "requiredServices": ["learning-api", "task-runtime", "web", "observability-stack"],
+  "contractVersion": "observability.v1",
+  "retention": {
+    "aggregateMetricsDays": 7,
+    "structuredLogsDays": 7,
+    "redactedTraceHours": 24,
+    "replayArtifactHours": 24,
+    "learnerProjectionHours": 0,
+    "maxReplayLogLines": 500,
+    "maxReplaySpans": 256
+  },
+  "knownGaps": [
+    "optional Prometheus/Loki/Grafana profile is not started by the learner-only dev mode",
+    "the full route → question → family → revision → attempt join remains an open contract item (W16-003); this wave proves route → released family/revision → attempt",
+    "production promotion still requires a clean, pinned five-repository boundary and external CI/independent visual sign-off"
+  ]
+}

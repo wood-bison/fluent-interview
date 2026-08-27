@@ -1,0 +1,20 @@
+{
+  "wave": "W08",
+  "status": "partial-pass",
+  "passed": [
+    "learning-placement contract supports roles and many-to-many exact-tuple validation",
+    "learning-placement contract rejects missing and cyclic prerequisites",
+    "deterministic module release generated from Brain release question-release-d00a14931e607336",
+    "17 required module families present",
+    "1591 published cards have exactly one primary placement",
+    "shared/native/future visibility and path semantics pass",
+    "release-local prerequisite DAG is acyclic and complete",
+    "answer/private fields absent from manifest and placements",
+    "W08 gate --check passes against stored digest"
+  ],
+  "warnings": [
+    "follow-up/contrast/recall editorial placements are deferred until reviewed graph edges exist",
+    "per-card capability and station bindings remain an editorial W08/W09 backlog",
+    "Python runtime placements are future preview and not runnable"
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "reportVersion": "release-verify.v1",
+  "generatedAt": "2026-08-27T03:20:13.144Z",
+  "mode": "development",
+  "valid": true,
+  "productionPromotable": false,
+  "steps": [
+    {
+      "id": "workspace-git",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/workspace-git-check.mjs --development",
+      "status": "pass",
+      "durationMs": 383
+    },
+    {
+      "id": "workspace-contract",
+      "command": "bash scripts/workspace-contract.sh check",
+      "status": "pass",
+      "durationMs": 168
+    },
+    {
+      "id": "layout",
+      "command": "bash scripts/layout-check.sh",
+      "status": "pass",
+      "durationMs": 14
+    },
+    {
+      "id": "ports",
+      "command": "bash scripts/ports.sh",
+      "status": "pass",
+      "durationMs": 105
+    },
+    {
+      "id": "runtime-image-manifest",
+      "command": "bash fluent-task-runtime/scripts/image-manifest-check.sh --static",
+      "status": "pass",
+      "durationMs": 97
+    },
+    {
+      "id": "diff-check:fluent-engineering-lab",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 50
+    },
+    {
+      "id": "diff-check:fluent-engineering-vue",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 23
+    },
+    {
+      "id": "diff-check:fluent-task-runtime",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 21
+    },
+    {
+      "id": "diff-check:fluent-question-brain",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 14
+    },
+    {
+      "id": "diff-check:fluent-question-vault",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 13
+    },
+    {
+      "id": "package-provenance-plan",
+      "command": "pnpm --dir fluent-engineering-lab package:local:plan",
+      "status": "warn",
+      "executable": false,
+      "sourceClean": false,
+      "detail": "package boundary is not executable: dirty or unpinned source"
+    },
+    {
+      "id": "lab-check",
+      "command": "pnpm check",
+      "status": "pass",
+      "durationMs": 26721
+    },
+    {
+      "id": "vue-check",
+      "command": "pnpm check",
+      "status": "pass",
+      "durationMs": 5649
+    },
+    {
+      "id": "question-brain-readiness",
+      "command": "GET http://127.0.0.1:48127/health/ready",
+      "status": "pass",
+      "durationMs": 20,
+      "httpStatus": 200
+    },
+    {
+      "id": "task-runtime-readiness",
+      "command": "GET http://127.0.0.1:48227/v1/health/ready",
+      "status": "pass",
+      "durationMs": 15,
+      "httpStatus": 200
+    },
+    {
+      "id": "lab-dev-web",
+      "command": "GET http://localhost:47350/",
+      "status": "pass",
+      "durationMs": 8,
+      "httpStatus": 200
+    },
+    {
+      "id": "lab-route-audit",
+      "command": "pnpm m4:route-audit",
+      "status": "pass",
+      "durationMs": 1556
+    },
+    {
+      "id": "lab-g12-coverage",
+      "command": "pnpm g12:coverage:matrix:check",
+      "status": "pass",
+      "durationMs": 463
+    },
+    {
+      "id": "lab-g12-practice-disposition",
+      "command": "pnpm g12:practice:disposition:check",
+      "status": "pass",
+      "durationMs": 539
+    },
+    {
+      "id": "lab-semantic-placement",
+      "command": "pnpm semantic:placement:check",
+      "status": "pass",
+      "durationMs": 305
+    },
+    {
+      "id": "lab-g13-boundary",
+      "command": "pnpm g13:boundary:audit:check",
+      "status": "pass",
+      "durationMs": 267
+    },
+    {
+      "id": "lab-g9-vue-deviations",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/g9-deviation-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 36
+    },
+    {
+      "id": "lab-accessibility",
+      "command": "pnpm a11y:smoke",
+      "status": "pass",
+      "durationMs": 4170
+    },
+    {
+      "id": "lab-desktop-visual",
+      "command": "pnpm desktop:visual:check",
+      "status": "pass",
+      "durationMs": 9715
+    },
+    {
+      "id": "lab-desktop-regression",
+      "command": "pnpm desktop:regression:guard",
+      "status": "pass",
+      "durationMs": 251
+    },
+    {
+      "id": "vue-e2e",
+      "command": "pnpm e2e",
+      "status": "pass",
+      "durationMs": 37464
+    }
+  ]
+}

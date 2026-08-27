@@ -1,0 +1,4 @@
+{"command":"sed/read glossary and CONTEXT","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"canonical vocabulary and four readiness dimensions are documented"}
+{"command":"sed/read ADR-0038..0040 and ADR README","cwd":"/Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-lab","exitCode":0,"result":"module placement, graph ownership and activity evidence decisions are indexed"}
+{"command":"pnpm -C fluent-engineering-lab exec nx run-many -t lint,test,build --projects=learning-api,lab-contracts,observability --parallel=3 --skip-nx-cache","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"contract and owner-boundary suites passed in the W06 run"}
+{"command":"pnpm release:verify:dev","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"server-owned Program/Map/Questions/Practice projections and browser E2E passed"}

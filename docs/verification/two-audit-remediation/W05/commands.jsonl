@@ -1,0 +1,11 @@
+{"command":"pnpm question:catalog:integrity","cwd":"fluent-engineering-lab","exitCode":0,"purpose":"EN/RU catalogue, IDs, enums, normalized prompt and alias audit after durable decisions"}
+{"command":"curl -fsS -X POST /v1/duplicates/decision","cwd":"fluent-interview","exitCode":0,"purpose":"Record reviewed keep_separate decision for question.c004 and question.q016 through Brain write boundary"}
+{"command":"pnpm question:catalog:integrity:check","cwd":"fluent-engineering-lab","exitCode":0,"purpose":"Recompute stable digest and fail closed on open duplicate collisions"}
+{"command":"pnpm semantic:placement","cwd":"fluent-engineering-lab","exitCode":0,"purpose":"Verify explicit placement and reviewed aliases"}
+{"command":"bash scripts/apply-domain-separation-migration.sh","cwd":"fluent-question-brain","exitCode":0,"purpose":"Replay idempotent Algorithms/Behavioral domain migration"}
+{"command":"/qb-map-release -manifest /opt/releases/curriculum-mapping-2026-08-27-domain-separated.json","cwd":"fluent-question-brain container api","exitCode":0,"purpose":"Dry-run complete revision-pinned domain-separated mapping release"}
+{"command":"psql path/domain count query","cwd":"fluent-question-brain container postgres","exitCode":0,"purpose":"Verify 52 Algorithms and 103 Behavioral production rows after migration"}
+{"command":"pnpm exec nx test lab-contracts --skip-nx-cache --runInBand --testPathPatterns='learner-paths\\.spec\\.ts|learning-placement\\.spec\\.ts'","cwd":"fluent-engineering-lab","exitCode":0,"purpose":"Validate shared-domain path catalog and learning placement contracts"}
+{"command":"bash scripts/check-contract.sh","cwd":"fluent-question-brain","exitCode":0,"purpose":"Validate Brain migration, release mount and contract files"}
+{"command":"BRAIN_API_URL=http://127.0.0.1:48127 pnpm question:curriculum:shape","cwd":"fluent-engineering-lab","exitCode":0,"purpose":"Validate released Path × Domain × Topic × Language shape"}
+{"command":"BRAIN_API_URL=http://127.0.0.1:48127 pnpm question:curriculum:shape:check","cwd":"fluent-engineering-lab","exitCode":0,"purpose":"Recompute curriculum shape digest and fail closed on violations"}

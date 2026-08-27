@@ -1,0 +1,121 @@
+{
+  "contractVersion": "question-catalog-integrity-audit.v1",
+  "generatedAt": "2026-08-27T17:57:47.651Z",
+  "apiUrl": "http://127.0.0.1:47000",
+  "brainApiUrl": "http://127.0.0.1:48127",
+  "valid": true,
+  "checks": {
+    "contractEn": {
+      "status": "pass"
+    },
+    "contractRu": {
+      "status": "pass"
+    },
+    "stableIdUniquenessEn": {
+      "status": "pass"
+    },
+    "stableIdUniquenessRu": {
+      "status": "pass"
+    },
+    "localeIdParity": {
+      "status": "pass",
+      "detail": "only_en=0 only_ru=0"
+    },
+    "publishedEnums": {
+      "status": "pass"
+    },
+    "normalizedPromptUniqueness": {
+      "status": "pass",
+      "detail": "open_duplicate_groups=0; observed=2"
+    },
+    "canonicalTopicAliases": {
+      "status": "review",
+      "detail": "alias_groups=3"
+    }
+  },
+  "summary": {
+    "totalEn": 1591,
+    "totalRu": 1591,
+    "uniqueIdsEn": 1591,
+    "uniqueIdsRu": 1591,
+    "onlyEn": [],
+    "onlyRu": [],
+    "duplicatePromptGroups": 2,
+    "openDuplicatePromptGroups": 0,
+    "topicAliasGroups": 3,
+    "issueCount": 0,
+    "blockingCount": 0,
+    "laneCounts": {
+      "en": {
+        "algorithms": 52,
+        "backend": 900,
+        "dotnet": 75,
+        "frontend": 167,
+        "node": 289,
+        "other": 108
+      },
+      "ru": {
+        "algorithms": 52,
+        "backend": 900,
+        "dotnet": 75,
+        "frontend": 167,
+        "node": 289,
+        "other": 108
+      }
+    }
+  },
+  "duplicatePrompts": [
+    {
+      "normalizedPrompt": "what is the difference between authentication and authorization",
+      "questionIds": [
+        "question.c010",
+        "question.q195"
+      ],
+      "prompts": [
+        "What is the difference between authentication and authorization?"
+      ],
+      "disposition": "resolved:not_duplicate"
+    },
+    {
+      "normalizedPrompt": "what is the n 1 query problem and how do you fix it",
+      "questionIds": [
+        "question.c004",
+        "question.q016"
+      ],
+      "prompts": [
+        "What is the N+1 query problem and how do you fix it?",
+        "What is the N+1 query problem, and how do you fix it?"
+      ],
+      "disposition": "resolved:keep_separate"
+    }
+  ],
+  "openDuplicatePrompts": [],
+  "topicAliases": [
+    {
+      "normalizedTopic": "distributed systems resilience",
+      "labels": [
+        "Distributed Systems & Resilience",
+        "Distributed Systems / Resilience"
+      ],
+      "questionCount": 22
+    },
+    {
+      "normalizedTopic": "go channels select",
+      "labels": [
+        "Go / Channels & Select",
+        "Go / Channels & select"
+      ],
+      "questionCount": 13
+    },
+    {
+      "normalizedTopic": "go sync patterns",
+      "labels": [
+        "Go / Sync & Patterns",
+        "Go / Sync Patterns"
+      ],
+      "questionCount": 12
+    }
+  ],
+  "structuralIssues": [],
+  "contentDigest": "6cc1df1d3049e591cae0b32ca723e10f1db64f369c232640db56da22f04e4c09"
+}

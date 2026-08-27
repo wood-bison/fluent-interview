@@ -1,0 +1,16 @@
+{
+  "wave": "W01",
+  "capturedAt": "2026-08-27T08:32:22Z",
+  "workspace": "/Users/sergeyzhechko/developer/fluent-interview",
+  "manifest": "workspace.yaml",
+  "repositories": [
+    {"id":"fluent-engineering-lab","branch":"main","revision":"f2cb172706bb6386cfef4ad730891d0b83d2d4ec","remote":"git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git","clean":false},
+    {"id":"fluent-engineering-vue","branch":"main","revision":"345bc186afbfb1e5124f84655a98ccebb209d62c","remote":null,"clean":false},
+    {"id":"fluent-question-brain","branch":"main","revision":"e698fc2e76c6f8c27ec71dc6231f415467e8fe60","remote":"git@github-woodbison:wood-bison/fluent-question-brain.git","clean":false},
+    {"id":"fluent-task-runtime","branch":"main","revision":"24639471e7f2e013b1e717f148bb10a0f0a93e98","remote":"git@github-woodbison:wood-bison/fluent-task-runtime.git","clean":false},
+    {"id":"fluent-question-vault","branch":"main","revision":"f4d46228cd366c218b29423323da8fe8bad796f1","remote":"git@github.com:szhechko/fluent-question-vault.git","clean":true}
+  ],
+  "toolchain": {"node":"v26.7.0","pnpm":"11.20.0","docker":"29.7.2","compose":"v5.4.0","git":"2.50.1"},
+  "layout": {"independentGitRootsUnderWorkspace":5,"layoutCheck":"PASS"},
+  "strictProvenance": {"result":"BLOCKED","remaining":["Vue has no origin remote","four repositories contain uncommitted remediation changes"]}
+}

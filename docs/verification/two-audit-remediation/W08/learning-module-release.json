@@ -1,0 +1,47 @@
+{
+  "reportVersion": "learning-module-release-gate.v1",
+  "generatedAt": "2026-08-27T11:05:04.451Z",
+  "brainApiUrl": "http://127.0.0.1:48127",
+  "workspace": "fluent-interview",
+  "releaseId": "learning-module-release-2026-08-27.1",
+  "graphReleaseId": "question-graph-release-e3b0c44298fc1c14",
+  "questionReleaseId": "question-release-d00a14931e607336",
+  "valid": true,
+  "summary": {
+    "questionCount": 1591,
+    "placementCount": 1591,
+    "moduleCount": 17,
+    "sharedPlacementCount": 910,
+    "nativePlacementCount": 664,
+    "futurePlacementCount": 17,
+    "moduleCounts": {
+      "module.go-runtime": 127,
+      "module.java-spring-runtime": 155,
+      "module.universal-cs-core": 52,
+      "module.python-runtime-preview": 17,
+      "module.http-api-security": 166,
+      "module.os-networking": 33,
+      "module.nodejs-typescript-runtime": 215,
+      "module.testing": 48,
+      "module.distributed-systems": 275,
+      "module.behavioral-english": 103,
+      "module.data-postgresql": 171,
+      "module.frontend-runtime": 111,
+      "module.delivery-observability": 62,
+      "module.dotnet-csharp-runtime": 56
+    },
+    "pathCounts": {
+      "path.go": 127,
+      "path.java-spring": 155,
+      "shared": 910,
+      "path.python": 17,
+      "path.nodejs-typescript": 215,
+      "path.frontend": 111,
+      "path.dotnet-csharp": 56
+    },
+    "missingPlacementCount": 0
+  },
+  "violations": [],
+  "warnings": [],
+  "contentDigest": "833dbf314250b3313f15a599bf2b590956d328ca9de5ec2c603fa768496699e9"
+}

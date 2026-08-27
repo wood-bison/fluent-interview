@@ -1,0 +1,3 @@
+{"command":"pnpm --dir fluent-engineering-vue build","result":"pass; manifest emitted with route and lazy chunks"}
+{"command":"pnpm performance:vue:check","result":"pass; initial JS/CSS budgets, lazy xterm and bounded pagination"}
+{"command":"pnpm --dir fluent-engineering-vue e2e","result":"pass; 76 desktop scenarios"}

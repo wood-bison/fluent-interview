@@ -1,0 +1,24 @@
+{
+  "schema": "fluent-interview.ci-release-gate-baseline.v1",
+  "wave": "W03",
+  "capturedAt": "2026-08-27T09:49:17.710Z",
+  "root": {
+    "branch": "main",
+    "head": "5ecc69f8d18f4e7e068855575c8db40f4053ea19",
+    "dirty": true
+  },
+  "childWorkflowInventory": {
+    "fluent-engineering-lab": 2,
+    "fluent-engineering-vue": 1,
+    "fluent-question-brain": 1,
+    "fluent-task-runtime": 1,
+    "fluent-question-vault": 0
+  },
+  "aggregateReport": "docs/verification/two-audit-remediation/W03/release-verify-current.json",
+  "aggregateValid": true,
+  "productionPromotable": false,
+  "intentionalWarnings": [
+    "package-provenance-plan: dirty/unpinned source tuple",
+    "Question Vault has no independent CI workflow because Brain owns its release gate"
+  ]
+}

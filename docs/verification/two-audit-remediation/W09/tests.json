@@ -1,0 +1,17 @@
+{
+  "wave": "W09",
+  "status": "partial-pass",
+  "passed": [
+    "nine canonical path records are present",
+    "nine shared-domain records are present",
+    "all path counters reconcile to the published Brain release",
+    "accepted and proposed counters are honest",
+    "canonical path entry routes pass",
+    "Algorithms and Behavioral dedicated-lane isolation passes",
+    "track-view gate --check passes against stored digest"
+  ],
+  "warnings": [
+    "native syllabus and runnable family depth remain W09/W10/W11 editorial work",
+    "Python remains preview-only"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "wave": "W12",
+  "capturedAt": "2026-08-27T11:36:00Z",
+  "workspace": "fluent-interview",
+  "routeContextContract": "learner-route-context.v1",
+  "routeCases": 12,
+  "routeGateBeforeFix": "10/11 (practice entry incorrectly exposed a stale phase/action projection)",
+  "risks": [
+    "Browser CTA destinations can drift from server-resolved route state.",
+    "A task id can have multiple Runtime revisions or families; latest/first-row fallback can run the wrong program.",
+    "Untrusted returnTo and revision/family query parameters must fail closed without leaking private content."
+  ]
+}

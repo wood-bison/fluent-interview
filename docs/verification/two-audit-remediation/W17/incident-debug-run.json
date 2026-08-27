@@ -1,0 +1,38 @@
+{
+  "evidenceVersion": "incident-debug-run.v1",
+  "wave": "W17",
+  "observedAt": "2026-08-27T14:11:00Z",
+  "runtimeBase": "http://127.0.0.1:48227",
+  "taskId": "node-cpu-bound-002",
+  "taskRevision": 1,
+  "runtime": "Node.js 24",
+  "profile": "node",
+  "correlationId": "w17-incident-20260827-r1",
+  "status": "pass",
+  "exitCode": 0,
+  "durationMs": 535.303,
+  "tests": [
+    { "name": "returns the worker result", "status": "pass" },
+    { "name": "does not block the caller while work is running", "status": "pass" },
+    { "name": "honours AbortSignal cancellation", "status": "pass" },
+    { "name": "cleans up a worker after completion", "status": "pass" }
+  ],
+  "activity": {
+    "releasedTaskBoundary": true,
+    "realWorkerThreads": true,
+    "cancellationObserved": true,
+    "cleanupObserved": true,
+    "learnerSolutionStored": false
+  },
+  "isolation": {
+    "learnerProgressMutated": false,
+    "releaseMutated": false,
+    "graphMutated": false,
+    "dockerStateMutated": false,
+    "correlationScope": "isolated runtime task sandbox"
+  },
+  "notes": [
+    "The submitted solution is intentionally omitted from evidence.",
+    "The harness executed the released Node.js 24 task rather than a mocked browser response."
+  ]
+}

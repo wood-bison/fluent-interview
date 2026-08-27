@@ -1,0 +1,28 @@
+{
+  "wave": "W17",
+  "scope": "bounded API, route, semantic, learner-journey and isolated runtime validation",
+  "observedAt": "2026-08-27T15:30:06Z",
+  "webRouteRecords": 35,
+  "sampledWebRoutes": 43,
+  "apiProbes": 16,
+  "semanticPathProjections": 9,
+  "semanticChecks": 27,
+  "browserProjects": [
+    "macbook-pro-16-light (1728x1117)",
+    "studio-display-dark (2560x1440)"
+  ],
+  "publishedQuestionCount": 1591,
+  "goldenJourneyExecutions": 14,
+  "visualStateExecutions": 8,
+  "runtimeReleaseJoinChecks": 27,
+  "release": {
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "manifestVersion": "2026.08.02",
+    "questionReleaseId": "question-release-d00a14931e607336"
+  },
+  "knownGaps": [
+    "W17-026: the released Frontend projection still needs a Vue-native syllabus",
+    "W17-059: human screenshot diff and independent visual sign-off remain separate review steps",
+    "full package-mode multi-language runtime execution is covered by Runtime owner gates, not this read-only web matrix"
+  ]
+}

@@ -1,8 +1,14 @@
-# Vue migration closure evidence
+# Vue migration closure evidence (historical snapshot)
 
 Этот каталог содержит только актуальные материалы Vue-only миграции. Старые
 pilot-документы, описывавшие второй frontend runtime, удалены, чтобы не давать
 агентам и разработчикам ложный rollback-путь.
+
+> Это evidence миграционной волны, а не текущий production verdict. Текущий
+> рабочий статус проверяется из umbrella командой
+> `pnpm release:verify:dev`; строгий production verdict —
+> `pnpm release:verify`. На 2026-08-27 strict gate fail-closed, потому что
+> child repositories ещё не образуют clean immutable five-root package tuple.
 
 ## Runtime boundary
 
@@ -21,8 +27,9 @@ pilot-документы, описывавшие второй frontend runtime, 
 - [x] Lab contracts/API baseline green after curriculum terminology migration.
 - [x] Fresh G9/production bundle evidence regenerated from the Vue dist.
 - [x] Packaged local release smoke repeated after the final dist rebuild.
-- [x] G14 hardening evidence is valid: shared Jaeger, trace continuity, health
-  and benchmark checks all pass.
+- [x] G14 hardening evidence from the 2026-08-25 packaged snapshot is valid:
+  shared Jaeger, trace continuity, health and benchmark checks all pass in that
+  historical package.
 - [x] Tier-1 G5-24.06 operations evidence is valid: profile isolation, recovery
   and recursive browser source scan pass.
 

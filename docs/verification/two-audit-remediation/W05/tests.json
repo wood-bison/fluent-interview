@@ -1,0 +1,21 @@
+{
+  "wave": "W05",
+  "checks": [
+    {"name":"question:catalog:integrity","status":"pass","detail":"1591/1591 EN/RU, unique IDs, enums and zero open normalized prompt collisions"},
+    {"name":"semantic:placement","status":"pass","detail":"1591 cards, zero placement violations, three reviewed alias warnings"},
+    {"name":"brain-go-tests","status":"pass","detail":"go test ./... in the Brain Go check container"},
+    {"name":"duplicate-decision-boundary","status":"pass","detail":"Authenticated write returned question-brain.duplicate-review.v1"},
+    {"name":"negative-case","status":"pass","detail":"Unresolved duplicate groups remain blocking; no automatic merge is performed"}
+  ],
+  "blockingIssues": 0,
+  "reviewWarnings": 3,
+  "domainSeparation": {
+    "status": "pass",
+    "migration": "0020_curriculum_domain_separation.sql",
+    "mappingReleaseId": "question-mapping-release-026566381561db3e",
+    "algorithms": {"before": "domain.runtime", "after": "domain.algorithms", "count": 52},
+    "behavioral": {"before": "domain.testing", "after": "domain.behavioral", "count": 103},
+    "idempotentReplay": true,
+    "shapeNegativeCases": 3
+  }
+}

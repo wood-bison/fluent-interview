@@ -1,0 +1,14 @@
+{
+  "capturedAt": "2026-08-27",
+  "source": "releases/curriculum-mapping-2026-08-27-domain-separated.json",
+  "sourceSha256": "a4e66d3b9e2a7ca5c4bd2cddc67a74f15ab51b7dd64eba3ae951d2de5a661daf",
+  "questionReleaseId": "question-release-d00a14931e607336",
+  "mappingReleaseId": "question-mapping-release-026566381561db3e",
+  "publishedProductionEntries": 1591,
+  "pathDomainCounts": {
+    "path.algorithms\tdomain.algorithms": 52,
+    "path.behavioral\tdomain.behavioral": 103
+  },
+  "unchangedEntryCount": 1436,
+  "fixtureRowsExcluded": 5
+}

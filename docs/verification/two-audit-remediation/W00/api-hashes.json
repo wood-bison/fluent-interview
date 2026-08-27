@@ -1,0 +1,17 @@
+{
+  "schema": "fluent-interview.api-baseline.v1",
+  "capturedAt": "2026-08-27T10:16:00+02:00",
+  "base": "http://localhost:47350",
+  "profile": "sergey",
+  "responses": [
+    {"path":"/api/program/current","status":200,"bytes":16218,"sha256":"fae166ca3111fcd9511032a2af294500c882c03036cf06831dd504baae291cbe"},
+    {"path":"/api/program/map","status":200,"bytes":136084,"sha256":"daf5428574a4d5cb8ea582995509b1e4b6c55b8ef4a1903ea1a05f3865f2718b"},
+    {"path":"/api/program/learner-map","status":200,"bytes":123102,"sha256":"b406019041a5f61499fffdba3651ca52f12d7990ae9c898ab2879e0967208798"},
+    {"path":"/api/questions/query?locale=en","status":200,"bytes":33920,"sha256":"07cc3164b031ade41c2b1f38e9d87209289deeafcf88f8a9a77cc14a75b26092"},
+    {"path":"/api/questions/summary","status":200,"bytes":12838,"sha256":"74d6c573c0f2a7ea57ec505ff889ec1f8ad700d208afbad8eda29d2e5f57b16b"},
+    {"path":"/api/practice/current","status":200,"bytes":18077,"sha256":"246c8e3957755e25ffc13f3f1fcc8eaf3be212b244a05c1cb39b67c898ea881b"},
+    {"path":"/api/progress","status":200,"bytes":197730,"sha256":"d6d8e677ce10bd9050d71bfd4124943aa2884ecec9f43fc6098682e59c7e94d7"},
+    {"path":"/api/recall/journal","status":200,"bytes":964,"sha256":"c8facfed33f2f4f988d99a6f6425bdafda548169e47b055b0fb00875314952ab"},
+    {"path":"/api/session/current","status":200,"bytes":1095,"sha256":"2e37d2d7065457a667bea748acc82f0357f145e0b1f8628fa8356290d1e89570"}
+  ]
+}

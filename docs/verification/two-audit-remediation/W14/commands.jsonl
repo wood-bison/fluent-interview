@@ -1,0 +1,3 @@
+{"command":"pnpm design:tokens:check","result":"pass; 116 tokens, 0 missing, 0 duplicate @theme declarations, 0 raw feature colours"}
+{"command":"pnpm --dir fluent-engineering-vue check","result":"pass; typecheck, lint, Vitest and Vite build"}
+{"command":"pnpm --dir fluent-engineering-vue e2e","result":"pass; 76 desktop scenarios across MacBook Pro 16 and Studio Display profiles"}

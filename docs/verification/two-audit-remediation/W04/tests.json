@@ -1,0 +1,45 @@
+{
+  "schema": "fluent-interview.two-audit-gate-tests.v1",
+  "wave": "W04",
+  "status": "partial-pass",
+  "passed": [
+    "compose config for all three owned projects",
+    "exactly three owned running Compose projects",
+    "digest-pinned Dockerfile base images",
+    "fail-closed source revision build arguments",
+    "live immutable image IDs and OCI revision labels",
+    "immutable Task Runtime image manifest",
+    "read-only prune plan with no unrelated resource mutation",
+    "Brain and Runtime readiness after image recreation",
+    "exclusive development/production mode lock and conflict rejection",
+    "fresh pnpm dev acquires lock and reports live learner endpoint"
+  ],
+  "open": [
+    "clean production package tuple",
+    "service image digest manifest in package mode",
+    "SBOM/provenance attestation references",
+    "exact-digest rollback and durable-volume restart proof"
+  ],
+  "negativeCases": [
+    {
+      "case": "Dockerfile built without a real source SHA",
+      "expected": "build fails closed",
+      "observed": "RUN grep gate rejects unknown/non-SHA values"
+    },
+    {
+      "case": "prune plan with unrelated exited Compose project",
+      "expected": "unrelated project is not a cleanup target",
+      "observed": "spearad-test-stack recorded and untouched"
+    },
+    {
+      "case": "second launcher requests production while development lock is live",
+      "expected": "mode guard exits non-zero without touching services",
+      "observed": "exit 1 with Workspace mode conflict"
+    },
+    {
+      "case": "learner endpoint is online but no mode lock exists",
+      "expected": "new launcher refuses to adopt unmanaged process",
+      "observed": "exit 1; endpoint and resources remain untouched"
+    }
+  ]
+}

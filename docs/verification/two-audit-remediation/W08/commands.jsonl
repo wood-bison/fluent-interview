@@ -1,0 +1,4 @@
+{"command":"BRAIN_API_URL=http://127.0.0.1:48127 pnpm learning:modules:derive","result":"17 modules; 1591 placements; graph question-graph-release-e3b0c44298fc1c14; Brain question-release-d00a14931e607336"}
+{"command":"BRAIN_API_URL=http://127.0.0.1:48127 pnpm learning:modules:gate","result":"valid=true; modules=17; placements=1591; shared=910; native=664; future=17; missing=0"}
+{"command":"BRAIN_API_URL=http://127.0.0.1:48127 pnpm learning:modules:gate:check","result":"valid=true; stored content digest matches"}
+{"command":"pnpm exec nx test lab-contracts --skip-nx-cache --runInBand --testPathPatterns='learning-placement\\.spec\\.ts'","result":"1 suite; 4 tests passed"}

@@ -1,0 +1,135 @@
+{
+  "reportVersion": "w16-observability-journey.v1",
+  "generatedAt": "2026-08-27T18:40:57.552Z",
+  "task": {
+    "taskId": "node-rate-limiter-001",
+    "taskFamilyKey": "task-family.rate-limiter",
+    "revision": 1,
+    "execution": "workspace"
+  },
+  "correlationId": "e7857511-063a-46d6-87c6-e1c426b66fe5",
+  "route": {
+    "status": 200,
+    "resourceId": "node-rate-limiter-001",
+    "readiness": "ready",
+    "runAllowed": true
+  },
+  "run": {
+    "status": 201,
+    "result": "pass",
+    "testCount": 4,
+    "passedTestCount": 4
+  },
+  "firstRunTiming": {
+    "beforeCount": 10,
+    "afterCount": 11,
+    "delta": 1
+  },
+  "syntheticIsolation": {
+    "profile": "disposable",
+    "beforeSergeyHash": "502dbf32ac3eee92fe405b6b842c6ae296904a1e73a137b34d9dfe885bd6f85c",
+    "afterSergeyHash": "502dbf32ac3eee92fe405b6b842c6ae296904a1e73a137b34d9dfe885bd6f85c",
+    "unchanged": true
+  },
+  "jaeger": {
+    "services": [
+      "fluent-task-runtime",
+      "learning-api"
+    ],
+    "routeSpanCount": 1,
+    "runSpanCount": 1,
+    "runtimeSpanCount": 1,
+    "sharedTraceCount": 1,
+    "operations": [
+      "GET",
+      "GET /api/learner/route-context",
+      "POST",
+      "POST /api/labs/:labId/run",
+      "middleware - correlationMiddleware",
+      "task-runtime.status",
+      "task-runtime.workspace.run",
+      "task.run"
+    ],
+    "spanIds": [
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "fcb5d903d73027d6",
+        "service": "learning-api",
+        "operationName": "GET"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "82d7bb50ef50f777",
+        "service": "learning-api",
+        "operationName": "GET"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "11a992ba28cd160c",
+        "service": "learning-api",
+        "operationName": "GET"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "be8105b2351eac31",
+        "service": "learning-api",
+        "operationName": "GET"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "a318af67acfebf95",
+        "service": "learning-api",
+        "operationName": "POST"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "1c2ff0021c8840d6",
+        "service": "learning-api",
+        "operationName": "POST /api/labs/:labId/run"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "b205d1d5c90835d6",
+        "service": "learning-api",
+        "operationName": "middleware - correlationMiddleware"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "048485f4e452ed76",
+        "service": "learning-api",
+        "operationName": "task-runtime.status"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "5c9e1ec65b3c6d6b",
+        "service": "learning-api",
+        "operationName": "task-runtime.workspace.run"
+      },
+      {
+        "traceId": "11ee6931373a0106b18f6706bc4c9d74",
+        "spanId": "5dc7f4a778c3130d",
+        "service": "learning-api",
+        "operationName": "GET"
+      },
+      {
+        "traceId": "11ee6931373a0106b18f6706bc4c9d74",
+        "spanId": "fdfcc9ab6f79f3af",
+        "service": "learning-api",
+        "operationName": "GET /api/learner/route-context"
+      },
+      {
+        "traceId": "11ee6931373a0106b18f6706bc4c9d74",
+        "spanId": "2064ea0dc54dc5d7",
+        "service": "learning-api",
+        "operationName": "middleware - correlationMiddleware"
+      },
+      {
+        "traceId": "acf905eea9e1e43d3feae3815eb1996d",
+        "spanId": "e726504ac9bc89d8",
+        "service": "fluent-task-runtime",
+        "operationName": "task.run"
+      }
+    ]
+  },
+  "valid": true
+}

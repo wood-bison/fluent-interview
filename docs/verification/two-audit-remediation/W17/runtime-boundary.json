@@ -1,0 +1,49 @@
+{
+  "reportVersion": "runtime-boundary-gate.v1",
+  "generatedAt": "2026-08-27T21:27:50.273Z",
+  "valid": true,
+  "status": "pass",
+  "contracts": {
+    "invalidRelease": true,
+    "staleRevision": true,
+    "malformedRevision": true,
+    "mismatchedFamily": true,
+    "retryIdempotencyTimeout": true
+  },
+  "checks": [
+    {
+      "id": "invalid-release-id-rejected",
+      "status": "pass",
+      "url": "http://127.0.0.1:48127/v1/graph/releases/w17-invalid-release-id",
+      "httpStatus": 404,
+      "code": null
+    },
+    {
+      "id": "stale-runtime-revision-rejected",
+      "status": "pass",
+      "url": "http://127.0.0.1:48227/v1/tasks/node-event-loop-001/workspace?revision=999999",
+      "httpStatus": 404,
+      "code": "unknown_task"
+    },
+    {
+      "id": "invalid-runtime-revision-rejected",
+      "status": "pass",
+      "url": "http://127.0.0.1:48227/v1/tasks/node-event-loop-001/workspace?revision=0",
+      "httpStatus": 400,
+      "code": "invalid_request"
+    },
+    {
+      "id": "mismatched-task-family-refused",
+      "status": "pass",
+      "url": "http://127.0.0.1:47000/api/labs/node-event-loop-001/workspace?revision=1&taskFamily=task-family.rate-limiter",
+      "httpStatus": 502,
+      "code": "runner.protocol"
+    },
+    {
+      "id": "owner-retry-idempotency-timeout-tests",
+      "status": "pass",
+      "command": "pnpm exec nx test learning-api --skip-nx-cache --runInBand --testPathPatterns=attempt.coordinator.spec.ts|code-workspace.recovery.http.spec.ts|task-runtime-workspace.client.spec.ts|labs.controller.spec.ts",
+      "tests": "54 targeted tests"
+    }
+  ]
+}

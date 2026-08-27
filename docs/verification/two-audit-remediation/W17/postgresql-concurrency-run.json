@@ -1,0 +1,54 @@
+{
+  "evidenceVersion": "postgresql-concurrency-run.v1",
+  "wave": "W17",
+  "observedAt": "2026-08-27T14:07:13Z",
+  "runtimeBase": "http://127.0.0.1:48227",
+  "taskId": "pg-locks-016",
+  "taskRevision": 1,
+  "runtime": "PostgreSQL 17",
+  "correlationId": "w17-pg-concurrency-20260827-r2",
+  "status": "pass",
+  "exitCode": 0,
+  "durationMs": 864.364,
+  "tests": [
+    {
+      "name": "defines the claim_jobs function",
+      "status": "pass",
+      "message": "pg_proc catalog check"
+    },
+    {
+      "name": "claims exactly the requested batch size",
+      "status": "pass",
+      "message": "claimed 5 of 5"
+    },
+    {
+      "name": "two concurrent workers never claim the same job",
+      "status": "pass",
+      "message": "0 overlapping ids"
+    },
+    {
+      "name": "a locked row is skipped, not waited on",
+      "status": "pass",
+      "message": "40 distinct ids across both workers, expected 40"
+    },
+    {
+      "name": "claimed jobs are marked running, not left pending",
+      "status": "pass",
+      "message": "45 rows running, expected 45"
+    }
+  ],
+  "artifacts": {
+    "claims.json": "[{\"claimed_by\":\"w0\",\"claimed\":5}, {\"claimed_by\":\"w1\",\"claimed\":20}, {\"claimed_by\":\"w2\",\"claimed\":20}]"
+  },
+  "isolation": {
+    "learnerProgressMutated": false,
+    "releaseMutated": false,
+    "graphMutated": false,
+    "dockerStateMutated": false,
+    "correlationScope": "isolated runtime task sandbox"
+  },
+  "notes": [
+    "The solution is intentionally not stored in evidence; the run was issued against the released task boundary.",
+    "The harness executed real concurrent PostgreSQL sessions, not a browser fixture or mocked response."
+  ]
+}

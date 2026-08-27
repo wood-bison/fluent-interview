@@ -25,7 +25,10 @@ if [[ -f "$ROOT/.workspace/fluent-lab.pid" ]]; then
 fi
 
 if [[ -f "$LAB/.fel/local-production/state.json" ]] && command -v pnpm >/dev/null 2>&1; then
-  pnpm --dir "$LAB" package:local:stop || true
+  if ! pnpm --dir "$LAB" package:local:stop; then
+    echo 'Packaged Lab stop failed; refusing to claim a clean shutdown.' >&2
+    exit 1
+  fi
 fi
 
 "${compose_question_brain[@]}" down --remove-orphans
@@ -35,6 +38,8 @@ docker compose --project-name fluent-engineering-lab \
   --file "$ROOT/fluent-engineering-lab/docker-compose.yml" \
   --profile broker \
   --profile observability \
-  down --remove-orphans 2>/dev/null || true
+  down --remove-orphans
+
+"$ROOT/scripts/mode-guard.sh" release
 
 echo 'Removed containers and networks. Durable volumes were not deleted.'

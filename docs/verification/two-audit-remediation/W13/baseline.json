@@ -1,0 +1,16 @@
+{
+  "wave": "W13",
+  "capturedAt": "2026-08-27T11:46:39Z",
+  "workspace": "fluent-interview",
+  "surface": "Vue learner shell",
+  "supportedViewports": [
+    { "name": "MacBook Pro 16 Light", "width": 1728, "height": 1117 },
+    { "name": "Studio Display Dark", "width": 2560, "height": 1440 }
+  ],
+  "knownE2EBaseline": "76 Chromium scenarios across the two configured desktop projects (historical baseline was 72)",
+  "risks": [
+    "A route can render a visually plausible card while its server action is unavailable.",
+    "Language/revision selection can be lost between Path, TaskFamily and Workspace.",
+    "Long Russian/English content and nested workspaces can reintroduce overflow or stale evidence."
+  ]
+}

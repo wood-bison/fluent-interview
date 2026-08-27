@@ -1,0 +1,23 @@
+{
+  "wave": "W07",
+  "status": "partial-pass",
+  "passed": [
+    "edge-kind registry has seven deterministic semantic entries",
+    "confidence 1.0 rejects missing rationale or provenance",
+    "production proposal rejects fixture/smoke/test provenance",
+    "database evidence guards apply idempotently",
+    "all eight historical fixture/smoke proposals rejected through review API",
+    "approved production graph release is deterministic and empty",
+    "read-only graph release audit passes with zero violations",
+    "graph audit checks endpoint status, revision pins, proposal evidence, cycles and duplicates"
+  ],
+  "warnings": [
+    "2,001 proposed related edges remain intentionally unreviewed",
+    "no real human-reviewed semantic edge release has been authored",
+    "rollback and TrackView impact preview are not rehearsed in this wave"
+  ],
+  "negativeCases": [
+    {"case":"production proposal with source=test-fixture and actor=test-agent","expected":"HTTP 400; isolated graph workspace required","observed":"HTTP 400"},
+    {"case":"confidence=1 without rationale","expected":"HTTP 400; evidence required","observed":"HTTP 400"}
+  ]
+}

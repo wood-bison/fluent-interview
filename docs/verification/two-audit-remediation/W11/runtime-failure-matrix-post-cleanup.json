@@ -1,0 +1,157 @@
+{
+  "reportVersion": "runtime-failure-matrix-gate.v1",
+  "generatedAt": "2026-08-27T21:20:10.959Z",
+  "runtimeUrl": "http://127.0.0.1:48227",
+  "valid": false,
+  "status": "blocked",
+  "cases": [
+    {
+      "id": "missing-revision-rejected",
+      "status": "pass",
+      "detail": "HTTP 400 revision_required for node-rate-limiter-001",
+      "taskId": "node-rate-limiter-001",
+      "httpStatus": 400,
+      "observedCode": "revision_required"
+    },
+    {
+      "id": "pass",
+      "status": "pass",
+      "detail": "HTTP 200, status=pass, duration=226ms",
+      "taskId": "node-rate-limiter-001",
+      "correlationId": "audit-failure-pass-mtc0yo71",
+      "httpStatus": 200,
+      "observedStatus": "pass",
+      "expectedStatus": "pass",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 4,
+      "sourceDigest": "3722c0e5fd4d6e7007d39fc411f4e0923461277aba0df23e9573337bfc9d6ca3",
+      "durationMs": 226.123
+    },
+    {
+      "id": "go-pass",
+      "status": "pass",
+      "detail": "HTTP 200, status=pass, duration=10223ms",
+      "taskId": "go-rate-limiter-001",
+      "correlationId": "audit-failure-go-pass-mtc0yoe1",
+      "httpStatus": 200,
+      "observedStatus": "pass",
+      "expectedStatus": "pass",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 4,
+      "sourceDigest": "5f106fe9492226f8090a72e9b7b8190eb1dc7aa3029200009a689758b37eb727",
+      "durationMs": 10223.454
+    },
+    {
+      "id": "java-pass",
+      "status": "pass",
+      "detail": "HTTP 200, status=pass, duration=666ms",
+      "taskId": "java-rate-limiter-001",
+      "correlationId": "audit-failure-java-pass-mtc0ywhu",
+      "httpStatus": 200,
+      "observedStatus": "pass",
+      "expectedStatus": "pass",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 4,
+      "sourceDigest": "f4bf0cd1e7d51967121266782e6f397625f24882f6faf03a81e71b801a33e01a",
+      "durationMs": 666.117
+    },
+    {
+      "id": "csharp-pass",
+      "status": "pass",
+      "detail": "HTTP 200, status=pass, duration=2286ms",
+      "taskId": "csharp-rate-limiter-001",
+      "correlationId": "audit-failure-csharp-pass-mtc0yx1b",
+      "httpStatus": 200,
+      "observedStatus": "pass",
+      "expectedStatus": "pass",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 4,
+      "sourceDigest": "2d75750c46ac976c0c4d29a4d0d465bbdd8f55b9f58966bd0ed7810aeb3713f5",
+      "durationMs": 2285.646
+    },
+    {
+      "id": "postgres-pass",
+      "status": "pass",
+      "detail": "HTTP 200, status=pass, duration=765ms",
+      "taskId": "pg-rate-limiter-001",
+      "correlationId": "audit-failure-postgres-pass-mtc0yytw",
+      "httpStatus": 200,
+      "observedStatus": "pass",
+      "expectedStatus": "pass",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 4,
+      "sourceDigest": "b15c5bed7504d70638741902b2c18673932280a188ac2e1fea9a57ef649c59e9",
+      "durationMs": 764.907
+    },
+    {
+      "id": "test-failure",
+      "status": "pass",
+      "detail": "HTTP 200, status=fail, duration=238ms",
+      "taskId": "node-rate-limiter-001",
+      "correlationId": "audit-failure-test-failure-mtc0yzg6",
+      "httpStatus": 200,
+      "observedStatus": "fail",
+      "expectedStatus": "fail",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 4,
+      "sourceDigest": "e530ed0505d1d6e565064141cf00af29edd700b294ce97ad4080064a241119f0",
+      "durationMs": 238.315
+    },
+    {
+      "id": "compile-failure",
+      "status": "pass",
+      "detail": "HTTP 200, status=error, duration=238ms",
+      "taskId": "node-rate-limiter-001",
+      "correlationId": "audit-failure-compile-failure-mtc0yznr",
+      "httpStatus": 200,
+      "observedStatus": "error",
+      "expectedStatus": "error",
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 0,
+      "sourceDigest": "e3751f79b4d9918adcfe2f2a29fc0ec7763b39520fa88649bcaabd59d3b01d25",
+      "durationMs": 237.704
+    },
+    {
+      "id": "timeout",
+      "status": "pass",
+      "detail": "HTTP 504, status=timeout, duration=n/a",
+      "taskId": "fluent-calculator",
+      "correlationId": "audit-failure-timeout-mtc0yzvg",
+      "httpStatus": 504,
+      "observedStatus": "timeout",
+      "expectedStatus": null,
+      "correlationMatches": true,
+      "noPrivateLeakage": true,
+      "testCount": 0,
+      "sourceDigest": "a2fb7c2d59fd77815f241df6db38455d47fce6f1e8cb356459510a5a991551de",
+      "durationMs": null
+    },
+    {
+      "id": "trace-evidence-identity",
+      "status": "fail",
+      "detail": "The operation was aborted due to timeout",
+      "correlationId": "audit-failure-pass-mtc0yo71"
+    },
+    {
+      "id": "resource-and-isolation-policy",
+      "status": "pass",
+      "detail": "memory/cpu/PID/network/read-only policy assertions pass",
+      "command": "docker run --rm -v /Users/sergeyzhechko/developer/fluent-interview/fluent-task-runtime:/src -w /src golang:1.24 go test ./internal/engine -run ^TestDockerArgsEnforceResourceAndIsolationLimits$"
+    }
+  ],
+  "failures": [
+    "trace-evidence-identity"
+  ],
+  "notes": [
+    "Runs are disposable Task Runtime executions; Lab progress is not touched.",
+    "Source is represented by SHA-256 only; private tests and answers are never persisted.",
+    "Resource policy is proven by the engine unit test that inspects Docker arguments; no destructive OOM probe is used."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "capturedAt": "2026-08-27",
+  "source": "releases/curriculum-mapping-2026-08-25-canonical.json",
+  "questionReleaseId": "question-release-d00a14931e607336",
+  "publishedProductionEntries": 1591,
+  "pathDomainCounts": {
+    "path.algorithms\tdomain.runtime": 52,
+    "path.behavioral\tdomain.testing": 103
+  },
+  "note": "Read-only pre-migration manifest snapshot; fixture rows excluded."
+}

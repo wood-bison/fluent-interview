@@ -1,0 +1,162 @@
+{
+  "reportVersion": "release-verify.v1",
+  "generatedAt": "2026-08-27T17:33:42.416Z",
+  "mode": "strict-production",
+  "valid": false,
+  "productionPromotable": false,
+  "steps": [
+    {
+      "id": "workspace-git",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/workspace-git-check.mjs",
+      "status": "fail",
+      "durationMs": 970,
+      "detail": "ics.md\",\n          \"?? internal/store/catalog_layers.go\",\n          \"?? internal/store/catalog_layers_test.go\",\n          \"?? releases/curriculum-mapping-2026-08-27-domain-separated.json\",\n          \"?? scripts/apply-domain-separation-migration.sh\",\n          \"?? scripts/apply-question-graph-evidence-migration.sh\",\n          \"?? scripts/graph-release-audit.mjs\",\n          \"?? scripts/mapping/derive-domain-separated-release.mjs\"\n        ]\n      },\n      \"failures\": [],\n      \"warnings\": [\n        {\n          \"code\": \"dirty-tree\",\n          \"detail\": \"28 changed path(s)\"\n        }\n      ]\n    },\n    {\n      \"id\": \"fluent-task-runtime\",\n      \"path\": \"fluent-task-runtime\",\n      \"remote\": \"git@github-woodbison:wood-bison/fluent-task-runtime.git\",\n      \"branch\": \"main\",\n      \"revision\": \"24639471e7f2e013b1e717f148bb10a0f0a93e98\",\n      \"resolvedPath\": \"fluent-task-runtime\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-task-runtime\",\n        \"remote\": \"git@github-woodbison:wood-bison/fluent-task-runtime.git\",\n        \"branch\": \"main\",\n        \"revision\": \"24639471e7f2e013b1e717f148bb10a0f0a93e98\",\n        \"treeDigest\": \"07be6685356fc4ad6b846169cc4bca232d0d9aef\",\n        \"clean\": false,\n        \"dirtyFiles\": [\n          \"M AGENTS.md\",\n          \" M README.md\",\n          \" M contracts/runtime.go\",\n          \" M deploy/compose/Dockerfile\",\n          \" M deploy/compose/compose.yaml\",\n          \" M docs/contracts/question-brain-release-binding.md\",\n          \" M internal/engine/catalogue.go\",\n          \" M internal/engine/docker_executor.go\",\n          \" M internal/httpapi/server.go\",\n          \" M internal/httpapi/server_test.go\",\n          \" M task-families/manifest.json\",\n          \" M task-images/manifest.json\",\n          \" M task-images/node/harness/run.js\",\n          \" M tasks/csharp-rate-limiter-001/task.json\",\n          \" M tasks/deferred/task.json\",\n          \" M tasks/dotnet-cancellation-001/task.json\",\n          \" M tasks/fluent-calculator/task.json\",\n          \" M tasks/go-rate-limiter-001/task.json\",\n          \" M tasks/java-rate-limiter-001/task.json\",\n          \" M tasks/node-auth-015/task.json\",\n          \" M tasks/node-cache-014/task.json\",\n          \" M tasks/node-concurrency-012/task.json\",\n          \" M tasks/node-cpu-bound-002/task.json\",\n          \" M tasks/node-event-loop-001/task.json\",\n          \" M tasks/node-idempotency-013/task.json\",\n          \" M tasks/node-memory-004/task.json\",\n          \" M tasks/node-rate-limiter-001/task.json\",\n          \" M tasks/node-streams-003/task.json\",\n          \" M tasks/pg-indexes-008/task.json\",\n          \" M tasks/pg-locks-016/task.json\",\n          \" M tasks/pg-rate-limiter-001/task.json\",\n          \" M tasks/project-book-boundary-001/task.json\",\n          \" M tasks/ts-rate-limiter-001/task.json\",\n          \"?? .github/workflows/verify.yml\",\n          \"?? internal/engine/docker_executor_test.go\",\n          \"?? internal/engine/sanitize_test.go\",\n          \"?? scripts/image-manifest-check.sh\"\n        ]\n      },\n      \"failures\": [],\n      \"warnings\": [\n        {\n          \"code\": \"dirty-tree\",\n          \"detail\": \"37 changed path(s)\"\n        }\n      ]\n    },\n    {\n      \"id\": \"fluent-question-vault\",\n      \"path\": \"fluent-question-vault\",\n      \"remote\": \"git@github.com:szhechko/fluent-question-vault.git\",\n      \"branch\": \"main\",\n      \"revision\": \"f4d46228cd366c218b29423323da8fe8bad796f1\",\n      \"resolvedPath\": \"fluent-question-vault\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-question-vault\",\n        \"remote\": \"git@github.com:szhechko/fluent-question-vault.git\",\n        \"branch\": \"main\",\n        \"revision\": \"f4d46228cd366c218b29423323da8fe8bad796f1\",\n        \"treeDigest\": \"eb800aecd34d36eb30cd62c8861ecdc83320ea79\",\n        \"clean\": true,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    }\n  ]\n}"
+    },
+    {
+      "id": "workspace-contract",
+      "command": "bash scripts/workspace-contract.sh check",
+      "status": "pass",
+      "durationMs": 143
+    },
+    {
+      "id": "ci-inventory",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/ci-inventory.mjs --check",
+      "status": "pass",
+      "durationMs": 43
+    },
+    {
+      "id": "design-tokens",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/design-token-audit.mjs --check",
+      "status": "pass",
+      "durationMs": 74
+    },
+    {
+      "id": "vue-performance",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/vue-performance-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 93
+    },
+    {
+      "id": "observability",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/observability-gate.mjs --check",
+      "status": "pass",
+      "durationMs": 77
+    },
+    {
+      "id": "validation-matrix-static",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/validation-matrix-gate.mjs --static --check",
+      "status": "pass",
+      "durationMs": 194
+    },
+    {
+      "id": "canonical-routes",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/canonical-route-gate.mjs",
+      "status": "pass",
+      "durationMs": 42
+    },
+    {
+      "id": "schema-compatibility",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/schema-compatibility-gate.mjs",
+      "status": "pass",
+      "durationMs": 910
+    },
+    {
+      "id": "layout",
+      "command": "bash scripts/layout-check.sh",
+      "status": "pass",
+      "durationMs": 28
+    },
+    {
+      "id": "ports",
+      "command": "bash scripts/ports.sh",
+      "status": "pass",
+      "durationMs": 136
+    },
+    {
+      "id": "mode-guard",
+      "command": "bash scripts/mode-guard.sh check",
+      "status": "pass",
+      "durationMs": 183
+    },
+    {
+      "id": "runtime-image-manifest",
+      "command": "bash fluent-task-runtime/scripts/image-manifest-check.sh --static",
+      "status": "pass",
+      "durationMs": 250
+    },
+    {
+      "id": "docker-provenance",
+      "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/docker-provenance-check.mjs",
+      "status": "pass",
+      "durationMs": 45
+    },
+    {
+      "id": "lab-glossary-code-contract",
+      "command": "pnpm glossary:code:contract:check",
+      "status": "pass",
+      "durationMs": 388
+    },
+    {
+      "id": "lab-browser-owner-boundary",
+      "command": "pnpm browser:owner-boundary:check",
+      "status": "pass",
+      "durationMs": 599
+    },
+    {
+      "id": "diff-check:fluent-engineering-lab",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 135
+    },
+    {
+      "id": "diff-check:fluent-engineering-vue",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 152
+    },
+    {
+      "id": "diff-check:fluent-task-runtime",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 60
+    },
+    {
+      "id": "diff-check:fluent-question-brain",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 39
+    },
+    {
+      "id": "diff-check:fluent-question-vault",
+      "command": "git diff --check",
+      "status": "pass",
+      "durationMs": 35
+    },
+    {
+      "id": "package-provenance-plan",
+      "command": "pnpm --dir fluent-engineering-lab package:local:plan",
+      "status": "fail",
+      "executable": false,
+      "sourceClean": false,
+      "detail": "package boundary is not executable: dirty or unpinned source"
+    },
+    {
+      "id": "lab-check",
+      "command": "pnpm check",
+      "status": "pass",
+      "durationMs": 44371
+    },
+    {
+      "id": "vue-check",
+      "command": "pnpm check",
+      "status": "pass",
+      "durationMs": 9183
+    },
+    {
+      "id": "production-package-boundary",
+      "command": "package:local:plan",
+      "status": "fail",
+      "detail": "clean five-root package boundary is required before production verification"
+    }
+  ]
+}

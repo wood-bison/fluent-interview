@@ -1,0 +1,15 @@
+{
+  "wave": "W14",
+  "capturedAt": "2026-08-27T14:20:00Z",
+  "surface": "Vue design system",
+  "tokenSource": "fluent-engineering-vue/packages/design-tokens/tokens.css",
+  "featureRoots": [
+    "fluent-engineering-vue/apps/web/src",
+    "fluent-engineering-vue/packages/ui/src"
+  ],
+  "knownRisks": [
+    "Feature CSS can silently introduce a raw colour or a second spacing/motion scale.",
+    "Tailwind utilities can bypass semantic roles unless @theme mapping is checked.",
+    "Reduced motion/transparency behaviour can regress independently of light/dark tokens."
+  ]
+}

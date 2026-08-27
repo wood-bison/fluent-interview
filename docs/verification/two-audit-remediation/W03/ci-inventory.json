@@ -1,0 +1,143 @@
+{
+  "reportVersion": "ci-inventory.v1",
+  "generatedAt": "2026-08-27T21:27:07.553Z",
+  "workspace": "fluent-interview",
+  "valid": true,
+  "status": "pass-with-coverage-gaps",
+  "failures": [],
+  "warnings": [
+    {
+      "code": "intentional-no-ci",
+      "repository": "fluent-question-vault",
+      "detail": "History mirror; CI owner is the content source/release gate."
+    }
+  ],
+  "repositories": [
+    {
+      "id": "fluent-engineering-lab",
+      "path": "fluent-engineering-lab",
+      "role": "learning-api",
+      "workflowCount": 2,
+      "workflows": [
+        {
+          "name": "ci.yml",
+          "bytes": 1108,
+          "markers": [
+            "lint",
+            "test",
+            "build",
+            "g13:boundary"
+          ],
+          "staleReferences": []
+        },
+        {
+          "name": "quality.yml",
+          "bytes": 1134,
+          "markers": [
+            "lint",
+            "test",
+            "build",
+            "g13:boundary"
+          ],
+          "staleReferences": []
+        }
+      ],
+      "requiredMarkers": [
+        "lint",
+        "test",
+        "build",
+        "g13:boundary"
+      ],
+      "missingMarkers": [],
+      "staleReferences": [],
+      "status": "pass"
+    },
+    {
+      "id": "fluent-engineering-vue",
+      "path": "fluent-engineering-vue",
+      "role": "learner-web",
+      "workflowCount": 1,
+      "workflows": [
+        {
+          "name": "quality.yml",
+          "bytes": 936,
+          "markers": [
+            "pnpm check",
+            "frozen-lockfile"
+          ],
+          "staleReferences": []
+        }
+      ],
+      "requiredMarkers": [
+        "pnpm check",
+        "frozen-lockfile"
+      ],
+      "missingMarkers": [],
+      "staleReferences": [],
+      "status": "pass"
+    },
+    {
+      "id": "fluent-question-brain",
+      "path": "fluent-question-brain",
+      "role": "question-source-of-truth",
+      "workflowCount": 1,
+      "workflows": [
+        {
+          "name": "verify.yml",
+          "bytes": 1804,
+          "markers": [
+            "go test",
+            "go vet",
+            "gofmt"
+          ],
+          "staleReferences": []
+        }
+      ],
+      "requiredMarkers": [
+        "go test",
+        "go vet",
+        "gofmt"
+      ],
+      "missingMarkers": [],
+      "staleReferences": [],
+      "status": "pass"
+    },
+    {
+      "id": "fluent-task-runtime",
+      "path": "fluent-task-runtime",
+      "role": "task-execution-authority",
+      "workflowCount": 1,
+      "workflows": [
+        {
+          "name": "verify.yml",
+          "bytes": 1127,
+          "markers": [
+            "go test",
+            "go vet",
+            "image-manifest"
+          ],
+          "staleReferences": []
+        }
+      ],
+      "requiredMarkers": [
+        "go test",
+        "go vet",
+        "image-manifest"
+      ],
+      "missingMarkers": [],
+      "staleReferences": [],
+      "status": "pass"
+    },
+    {
+      "id": "fluent-question-vault",
+      "path": "fluent-question-vault",
+      "role": "card-history-mirror",
+      "workflowCount": 0,
+      "workflows": [],
+      "requiredMarkers": [],
+      "missingMarkers": [],
+      "staleReferences": [],
+      "status": "pass"
+    }
+  ]
+}

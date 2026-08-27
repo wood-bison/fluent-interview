@@ -1,0 +1,184 @@
+{
+  "wave": "W17",
+  "status": "pass-with-explicit-matrix-gaps",
+  "observedAt": "2026-08-27T18:42:04Z",
+  "sourceState": "live stack verified after quality projection stability fix and bounded cache hardening; source trees contain uncommitted audit changes",
+  "validationMatrix": {
+    "routeRecords": 35,
+    "sampledRoutes": 43,
+    "apiProbes": 16,
+    "checks": 107,
+    "passed": 107,
+    "failed": 0,
+    "digest": "03108a79af9ad488814b7d2a2a8e5e79b2b9fd558373c47af67ac0d50c2e6ffe",
+    "sourceRevisions": {
+      "umbrella": "5ecc69f8d18f4e7e068855575c8db40f4053ea19",
+      "lab": "f2cb172706bb6386cfef4ad730891d0b83d2d4ec",
+      "vue": "345bc186afbfb1e5124f84655a98ccebb209d62c",
+      "brain": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60",
+      "runtime": "24639471e7f2e013b1e717f148bb10a0f0a93e98",
+      "vault": "f4d46228cd366c218b294233da8fe8bad796f1"
+    }
+  },
+  "browserRouteMatrix": {
+    "routes": 41,
+    "projects": ["macbook-pro-16-light", "studio-display-dark"],
+    "scenarios": 2,
+    "assertions": ["meaningful h1", "no console error/warning", "no failed request", "no document/main horizontal overflow"],
+    "status": "pass"
+  },
+  "canonicalRouteGuard": {
+    "checks": 8,
+    "passed": 8,
+    "status": "pass",
+    "evidence": "../W12/canonical-route-gate.json",
+    "coveredAliases": ["/program", "/map", "/practice/questions", "/practice/lab/:labId", "/studio/recovery"]
+  },
+  "semanticPathMatrix": {
+    "paths": 9,
+    "checks": 27,
+    "passed": 27,
+    "status": "pass-with-explicit-vue-gap",
+    "counts": {
+      "path.nodejs-typescript": 294,
+      "path.java-spring": 191,
+      "path.dotnet-csharp": 75,
+      "path.go": 130,
+      "path.frontend": 161,
+      "path.system-design": 568,
+      "path.algorithms": 52,
+      "path.behavioral": 103,
+      "path.python": 17
+    },
+    "openGaps": ["W17-026"]
+  },
+  "negativeBoundaryMatrix": {
+    "checks": 5,
+    "passed": 5,
+    "status": "pass",
+    "contracts": [
+      "invalid release id → 404",
+      "stale runtime revision → 404 unknown_task",
+      "malformed runtime revision → 400 invalid_request",
+      "mismatched TaskFamily → typed 502 runner.protocol",
+      "retry/idempotency/timeout owner fixtures → 54 tests"
+    ]
+  },
+  "qualityProjectionStability": {
+    "initialFailure": "concurrent cold quality reads exceeded the Lab 1.2s operator client budget and exhausted the local four-connection pool",
+    "brainProtection": "identical workspace/fixture quality reads coalesced with a two-second answer-free snapshot cache bounded to 32 entries",
+    "labTimeoutMs": 4000,
+    "brainImageDigest": "sha256:e8eb5769d54ddfd9ca7d30666812415c9ce2868fea1e21b01b921e634d351438",
+    "concurrentProbeRequests": 20,
+    "concurrentProbeHttp200": 20,
+    "catalogueIntegrity": "pass",
+    "studioSystemBrowserError": false,
+    "status": "pass"
+  },
+  "runtimeFailureMatrix": {
+    "checks": 11,
+    "passed": 11,
+    "status": "pass",
+    "evidence": "../W11/runtime-failure-matrix.json",
+    "cases": [
+      "missing exact revision refusal",
+      "Node/Go/Java/.NET/PostgreSQL rate-limiter pass",
+      "Node assertion/compile/timeout and private-diagnostic redaction",
+      "Jaeger task.run correlation/task/revision identity",
+      "Docker memory/CPU/PID/network/read-only policy"
+    ]
+  },
+  "runtimeReleaseJoin": {
+    "checks": 27,
+    "passed": 27,
+    "status": "pass",
+    "questionReleaseId": "question-release-d00a14931e607336",
+    "runtimeReleaseId": "task-family-release-2026-08-26-g10",
+    "bindings": 22,
+    "revisions": 20,
+    "runnableRevisions": 19,
+    "deferredRevisions": 1,
+    "evidence": "../W11/runtime-release-join.json"
+  },
+  "vueE2E": {
+    "scenarios": 102,
+    "projects": ["macbook-pro-16-light", "studio-display-dark"],
+    "status": "pass"
+  },
+  "goldenJourneys": {
+    "testFile": "apps/web/tests/golden-journeys.spec.ts",
+    "scenarios": 14,
+    "projects": ["macbook-pro-16-light", "studio-display-dark"],
+    "cases": [
+      "W17-030 placement visibility",
+      "W17-031 theory-only",
+      "W17-032 incomplete",
+      "W17-033 rich learning layers",
+      "W17-034 Event Loop language loop",
+      "W17-035..039 rate limiter language revisions",
+      "W13-016 CodeMirror grammar follows the selected runtime language",
+      "W17-040 PostgreSQL SQL boundary",
+      "W17-043 project-book checkpoint",
+      "W17-046 AI cancellation"
+    ],
+    "status": "pass-with-explicit-gaps",
+    "postgresConcurrency": {
+      "status": "pass",
+      "evidence": "postgresql-concurrency-run.json",
+      "tests": 5,
+      "passed": 5,
+      "runtime": "PostgreSQL 17",
+      "correlationId": "w17-pg-concurrency-20260827-r2"
+    },
+    "designCase": {
+      "status": "pass",
+      "evidence": "design-case-run.json",
+      "tests": 8,
+      "passed": 8,
+      "labId": "ordering-docker-build-cache"
+    },
+    "incidentDebug": {
+      "status": "pass",
+      "evidence": "incident-debug-run.json",
+      "tests": 4,
+      "passed": 4,
+      "taskId": "node-cpu-bound-002"
+    },
+    "coldRepeat": {
+      "status": "pass",
+      "evidence": "cold-repeat-http-run.json",
+      "steps": 5,
+      "passed": 5,
+      "boundary": "real AppModule HTTP integration"
+    }
+  },
+  "visualStateMatrix": {
+    "testFile": "apps/web/tests/visual-state-matrix.spec.ts",
+    "scenarios": 8,
+    "projects": ["macbook-pro-16-light", "studio-display-dark"],
+    "checks": [
+      "RU/EN × light/dark",
+      "keyboard skip link and pagination",
+      "reduced motion/transparency",
+      "200% zoom without horizontal overflow"
+    ],
+    "status": "pass"
+  },
+  "schemaCompatibility": {
+    "currentCurrent": true,
+    "previousCurrent": true,
+    "tests": 14,
+    "status": "pass",
+    "digest": "schema-compatibility-gate.v1"
+  },
+  "releaseIdentity": {
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "manifestVersion": "2026.08.02",
+    "questionReleaseId": "question-release-d00a14931e607336"
+  },
+  "openMatrixGroups": [
+    "Vue-native Frontend syllabus (W17-026)",
+    "human screenshot diff and independent visual sign-off (W17-059)",
+    "full multi-language runtime execution in package mode"
+  ]
+}

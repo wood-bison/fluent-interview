@@ -1,0 +1,7 @@
+{"command":"LEARNING_API_URL=http://127.0.0.1:47000 pnpm --dir fluent-engineering-lab route:actions:gate","result":"valid=true; cases=12; passed=12; failed=0; exactRuntimeCases=3; recoveryCases=2"}
+{"command":"LEARNING_API_URL=http://127.0.0.1:47000 pnpm --dir fluent-engineering-lab route:actions:gate:check","result":"valid=true; stored content digest matches"}
+{"command":"pnpm --dir fluent-engineering-lab exec nx test lab-contracts --skip-nx-cache --runInBand --testPathPatterns='learning-placement\\.spec\\.ts|learner-route-context\\.spec\\.ts'","result":"pass; contract suites and route-context tests"}
+{"command":"pnpm --dir fluent-engineering-lab exec nx test learning-api --skip-nx-cache --runInBand --testPathPatterns='learner-route-context|task-runtime-workspace.client|code-workspace.runner'","result":"pass; route and exact Runtime selection tests"}
+{"command":"pnpm --dir fluent-engineering-lab exec nx test learning-api --skip-nx-cache --runInBand --testPathPatterns='learner-route-context'","result":"pass; 2 suites, 8 tests including TaskFamily and repeat-due projections"}
+{"command":"pnpm --dir fluent-engineering-vue check","result":"pass; API schema, shell and workspace exact-selection changes type-check"}
+{"command":"pnpm release:verify:dev --out=docs/verification/two-audit-remediation/W03/release-verify-current.json","result":"valid=true; 41 steps; 40 pass; 1 explicit package-provenance warning; productionPromotable=false"}

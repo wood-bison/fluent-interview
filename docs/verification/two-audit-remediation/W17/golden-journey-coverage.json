@@ -1,0 +1,136 @@
+{
+  "reportVersion": "golden-journey-coverage.v1",
+  "wave": "W17",
+  "generatedAt": "2026-08-27T14:27:58Z",
+  "testFile": "fluent-engineering-vue/apps/web/tests/golden-journeys.spec.ts",
+  "projects": [
+    "macbook-pro-16-light",
+    "studio-display-dark"
+  ],
+  "scenarioCount": 14,
+  "status": "pass-with-explicit-gaps",
+  "cases": [
+    {
+      "id": "W17-030",
+      "status": "fixture-pass",
+      "evidence": [
+        "fluent-engineering-lab/apps/learning-api/src/app/question-brain/practice-library-query.service.spec.ts",
+        "fluent-engineering-vue/apps/web/tests/smoke.spec.ts"
+      ],
+      "note": "Learner projection explains native/shared/proposed/unmapped placement; the current released graph has no shared card to exercise in the browser."
+    },
+    {
+      "id": "W17-031",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · theory-only card stays honest and reveals its released answer"
+    },
+    {
+      "id": "W17-032",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · incomplete card renders an explicit missing short-answer state"
+    },
+    {
+      "id": "W17-033",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · rich learning layers stay behind deliberate reveal with relation context"
+    },
+    {
+      "id": "W17-034",
+      "status": "pass",
+      "evidence": "smoke.spec.ts · six Event Loop challenges recover after runtime failure and reload"
+    },
+    {
+      "id": "W17-035",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · JS revision binding; fluent-task-runtime/docs/verification/G9-RATE-LIMITER-LANGUAGE-REVISIONS-2026-08-25.md · runtime 4/4"
+    },
+    {
+      "id": "W17-036",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · TypeScript revision binding; G9 runtime 4/4"
+    },
+    {
+      "id": "W17-037",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · Go revision binding; G9 runtime 4/4"
+    },
+    {
+      "id": "W17-038",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · Java revision binding; G9 runtime 4/4"
+    },
+    {
+      "id": "W17-039",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · C# revision binding; G9 runtime 4/4"
+    },
+    {
+      "id": "W13-016",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · CodeMirror editor host exposes the selected JavaScript/TypeScript/Go/Java/C# grammar on both desktop projects"
+    },
+    {
+      "id": "W17-040",
+      "status": "pass",
+      "evidence": [
+        "golden-journeys.spec.ts · PostgreSQL row-locks SQL boundary opens with PostgreSQL 17",
+        "postgresql-concurrency-run.json · real concurrent PostgreSQL 17 sandbox run, 5/5 checks"
+      ]
+    },
+    {
+      "id": "W17-041",
+      "status": "pass",
+      "evidence": [
+        "smoke.spec.ts · ordering design-case route and public source boundary",
+        "design-case-run.json · server-issued source and correct commit, 8/8"
+      ]
+    },
+    {
+      "id": "W17-042",
+      "status": "pass",
+      "evidence": [
+        "smoke.spec.ts · CPU-bound incident route and typed timeout recovery",
+        "incident-debug-run.json · released Node.js 24 task, 4/4 worker/cancellation checks"
+      ]
+    },
+    {
+      "id": "W17-043",
+      "status": "pass",
+      "evidence": "smoke.spec.ts · project-book checkpoint remains inside the Vue learner shell"
+    },
+    {
+      "id": "W17-044",
+      "status": "pass",
+      "evidence": "smoke.spec.ts · Event Loop explanation, trace and server evidence after reload"
+    },
+    {
+      "id": "W17-045",
+      "status": "pass",
+      "evidence": [
+        "Project chapter projections expose a server-owned cold-repeat prompt",
+        "cold-repeat-http-run.json · AppModule creates initial → explanation → linked repeat and retained comeback"
+      ]
+    },
+    {
+      "id": "W17-046",
+      "status": "pass",
+      "evidence": "golden-journeys.spec.ts · local AI cancellation; smoke.spec.ts · outage and retry"
+    },
+    {
+      "id": "W17-047",
+      "status": "pass",
+      "evidence": "smoke.spec.ts · typed runtime failure → retry → evidence restore for all six challenges"
+    }
+  ],
+  "openRows": [
+    "W17-026",
+    "W17-059"
+  ],
+  "notes": [
+    "The seven named tests run once per supported desktop project, giving 14 browser executions; scenarioCount reports Playwright executions.",
+    "Runtime language rows rely on the immutable G9 owner evidence for real sandbox runs and the new browser binding matrix for current UI wiring.",
+    "W17-040 now has a real isolated PostgreSQL 17 run with five passing harness checks; the learner solution remains absent from public evidence.",
+    "No learner progress, release, graph, or Docker state is mutated by these journeys.",
+    "The aggregate run also passed the Brain ↔ Runtime release join gate: 22 bindings and 20 revisions (19 runnable, 1 deferred) reconcile by release ID and hash."
+  ]
+}

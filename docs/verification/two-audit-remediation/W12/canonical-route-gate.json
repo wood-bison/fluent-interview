@@ -1,0 +1,48 @@
+{
+  "reportVersion": "canonical-route-gate.v1",
+  "generatedAt": "2026-08-27T15:26:44.267Z",
+  "valid": true,
+  "checks": [
+    {
+      "id": "router-program-alias",
+      "status": "pass",
+      "detail": "legacy /program redirects to the root Program route"
+    },
+    {
+      "id": "router-map-alias",
+      "status": "pass",
+      "detail": "legacy /map redirects to /learning-map"
+    },
+    {
+      "id": "route-links-program-normalization",
+      "status": "pass",
+      "detail": "vueHref normalizes /program to /"
+    },
+    {
+      "id": "route-links-map-normalization",
+      "status": "pass",
+      "detail": "vueHref normalizes /map to /learning-map"
+    },
+    {
+      "id": "route-links-preserves-suffix",
+      "status": "pass",
+      "detail": "query/hash suffix is retained after normalization"
+    },
+    {
+      "id": "lesson-no-event-loop-hardcode",
+      "status": "pass",
+      "detail": "LessonView reads controlled destination from Program map"
+    },
+    {
+      "id": "question-no-event-loop-hardcode",
+      "status": "pass",
+      "detail": "QuestionDetailView never invents a Node Event Loop destination"
+    },
+    {
+      "id": "browser-alias-regression",
+      "status": "pass",
+      "detail": "desktop browser coverage exercises aliases and query/hash preservation"
+    }
+  ],
+  "failures": []
+}

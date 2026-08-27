@@ -1,0 +1,17 @@
+{
+  "wave": "W10",
+  "status": "partial-pass",
+  "passed": [
+    "all 1591 published cards receive a disposition",
+    "behavioral and design activities are not classified as sandbox-only",
+    "Practical Tasks without structured objects enter bounded editorial queue",
+    "activity/evidence enums are validated",
+    "Run requires a released TaskFamily binding",
+    "activity gate --check passes against stored digest"
+  ],
+  "warnings": [
+    "85 Practical Tasks cards still require editorial normalization",
+    "released TaskFamily binding is deferred to W11",
+    "no prompt or answer bodies are copied into evidence"
+  ]
+}

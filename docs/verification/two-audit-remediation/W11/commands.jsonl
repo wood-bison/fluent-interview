@@ -1,0 +1,3 @@
+{"command":"RUNTIME_API_URL=http://127.0.0.1:48227 BRAIN_API_URL=http://127.0.0.1:48127 pnpm runtime:bindings:gate","result":"valid=true; raw=20; learnerValid=19; families=16; runnableFamilies=15; boundQuestions=19"}
+{"command":"RUNTIME_API_URL=http://127.0.0.1:48227 BRAIN_API_URL=http://127.0.0.1:48127 pnpm runtime:bindings:gate:check","result":"valid=true; stored content digest matches"}
+{"command":"pnpm runtime:failure:matrix:check --out=docs/verification/two-audit-remediation/W11/runtime-failure-matrix.json","result":"valid=true; 11 cases pass: missing-revision refusal, Node/Go/Java/.NET/PostgreSQL rate-limiter pass, Node fail/compile/timeout, trace/evidence identity, resource-and-isolation-policy; runs disposable and source is digest-only"}

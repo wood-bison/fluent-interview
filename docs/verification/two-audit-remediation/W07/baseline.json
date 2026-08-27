@@ -1,0 +1,24 @@
+{
+  "wave": "W07",
+  "capturedAt": "2026-08-27T10:46:00Z",
+  "workspace": "fluent-interview",
+  "preCleanup": {
+    "activeGraphRelease": "question-graph-release-7c9d2bf4a73a5d49",
+    "activeEdgeCount": 7,
+    "acceptedProposalCount": 8,
+    "testLikeAcceptedProposals": 8,
+    "note": "All eight accepted rows were g5/g9 fixture or smoke provenance; seven were present in the active release."
+  },
+  "postCleanup": {
+    "activeGraphRelease": "question-graph-release-e3b0c44298fc1c14",
+    "activeEdgeCount": 0,
+    "acceptedProposalCount": 0,
+    "rejectedHistoricalProposals": 8,
+    "catalogCount": 1591
+  },
+  "contracts": [
+    "question-brain.graph-edge.v1",
+    "question-graph-release-audit.v1",
+    "0021_question_graph_evidence_guards.sql"
+  ]
+}

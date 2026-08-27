@@ -1,0 +1,19 @@
+{
+  "wave": "W09",
+  "capturedAt": "2026-08-27T11:20:00Z",
+  "workspace": "fluent-interview",
+  "brainReleaseId": "question-release-d00a14931e607336",
+  "pathCount": 9,
+  "pathKeys": [
+    "path.nodejs-typescript",
+    "path.java-spring",
+    "path.dotnet-csharp",
+    "path.go",
+    "path.frontend",
+    "path.system-design",
+    "path.algorithms",
+    "path.behavioral",
+    "path.python"
+  ],
+  "previousRisk": "Path counters and domain labels could drift from the Brain crosswalk or leak unrelated dedicated-lane content."
+}

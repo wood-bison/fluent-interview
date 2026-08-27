@@ -1,0 +1,144 @@
+{
+  "reportVersion": "observability-gate.v1",
+  "generatedAt": "2026-08-27T21:27:07.685Z",
+  "mode": "source",
+  "valid": true,
+  "status": "pass",
+  "staticChecks": [
+    {
+      "id": "contract-version",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "service-vocabulary",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "operation-vocabulary",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "bounded-retention",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "forbidden-field-boundary",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "identity-and-trace-validation",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "bounded-metrics",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "build-release-identity",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "learner-funnel-taxonomy",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "learning-api-correlation",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "learning-api-metrics-boundary",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "studio-redacted-boundary",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "ai-telemetry",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "runtime-trace-boundary",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "brain-trace-and-metrics",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "collector-topology",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "collector-pins-and-bounds",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "prometheus-scrape-config",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "loki-retention-config",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "grafana-provisioning",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "runtime-metrics-target",
+      "status": "pass",
+      "detail": "Task Runtime exposes a bounded Prometheus endpoint; keep its scrape target explicit and cardinality-safe in every promoted profile."
+    },
+    {
+      "id": "brain-prometheus-target",
+      "status": "pass",
+      "missing": []
+    },
+    {
+      "id": "learner-funnel-timing",
+      "status": "pass",
+      "detail": "Time-to-first-run records a bounded browser session marker only after a first run is persisted."
+    }
+  ],
+  "liveChecks": [],
+  "warnings": [],
+  "failures": [],
+  "promotionEvidence": {
+    "brainPrometheusTarget": true,
+    "routeRunTraceContinuity": true,
+    "syntheticProgressIsolation": true,
+    "journeyEvidence": "docs/verification/two-audit-remediation/W16/jaeger-continuity.json"
+  },
+  "supportedSignals": [
+    "correlation route → service → run/AI operation",
+    "W3C trace identity and redacted replay bounds",
+    "Prometheus service/readiness/runtime signals",
+    "AI provider/status/latency aggregates without prompt/output",
+    "bounded learner funnel and first-run timing without learner labels",
+    "Studio-only diagnostics and redacted operator replay"
+  ],
+  "openPromotionItems": [
+    "Run live collector probes with the Prometheus/Loki/Jaeger/Grafana profile enabled."
+  ]
+}

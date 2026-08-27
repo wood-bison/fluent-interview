@@ -1,0 +1,23 @@
+{
+  "reportVersion": "question-graph-release-audit.v1",
+  "generatedAt": "2026-08-27T10:44:34.078Z",
+  "apiUrl": "http://127.0.0.1:48127",
+  "workspace": "fluent-interview",
+  "releaseId": "question-graph-release-e3b0c44298fc1c14",
+  "valid": true,
+  "summary": {
+    "edgeCount": 0,
+    "acceptedProposalCount": 0,
+    "catalogCount": 1591,
+    "orphaned": 0,
+    "stale": 0,
+    "archived": 0,
+    "invalidStatus": 0,
+    "missingEvidence": 0,
+    "testProvenance": 0,
+    "cycleCount": 0
+  },
+  "violations": [],
+  "warnings": [],
+  "contentDigest": "f0b86bc98bec316bc296c0b52662aea8b911f9acc0749dcaa1b12725e5dbe03d"
+}

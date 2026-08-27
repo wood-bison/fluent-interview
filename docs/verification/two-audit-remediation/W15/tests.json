@@ -1,0 +1,22 @@
+{
+  "wave": "W15",
+  "status": "partial-pass",
+  "performance": {
+    "status": "pass",
+    "initialJsRawBytes": 305380,
+    "initialJsGzipBytes": 94833,
+    "initialCssRawBytes": 48423,
+    "initialCssGzipBytes": 9572,
+    "xtermRawBytes": 331270,
+    "initialHasXterm": false,
+    "dynamicEntryCount": 28
+  },
+  "passed": [
+    "Vite manifest and initial/dynamic loading boundary",
+    "xterm lazy chunk budget",
+    "bounded Question Brain pagination"
+  ],
+  "warnings": [
+    "interaction timings, dependency deprecations and evidence retention remain open"
+  ]
+}

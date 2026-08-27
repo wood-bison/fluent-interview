@@ -1,0 +1,24 @@
+{
+  "wave": "W11",
+  "status": "partial-pass",
+  "passed": [
+    "20 raw tasks and 16 family rows reconcile",
+    "19 learner-valid runnable revisions and 15 runnable families are explicit",
+    "all Brain question binding revision/content hashes reconcile",
+    "runnable images are digest-pinned and network is none",
+    "family/raw runnable flags agree",
+    "runtime binding gate --check passes against stored digest",
+    "missing workspace revision returns typed revision_required refusal",
+    "live rate-limiter pass matrix passes for Node, Go, Java, .NET and PostgreSQL",
+    "live Node assertion/compile/timeout matrix passes",
+    "private runtime paths and test_code are redacted",
+    "live Jaeger task.run span matches pass correlation, task and revision",
+    "Docker resource/isolation policy regression passes"
+  ],
+  "warnings": [
+    "compile/test/timeout adversarial cases are still only exercised for Node",
+    "Runtime retry/idempotency semantics still need an explicit end-to-end probe",
+    "project-book boundary remains intentionally unreleased",
+    "Python/browser profiles remain deferred"
+  ]
+}

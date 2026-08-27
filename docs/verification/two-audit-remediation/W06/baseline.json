@@ -1,0 +1,31 @@
+{
+  "wave": "W06",
+  "capturedAt": "2026-08-27T08:35:40Z",
+  "sourceRelease": "question-release-d00a14931e607336",
+  "catalogTotal": 1591,
+  "localeSnapshots": {
+    "en": {"learningReady": 1100, "guided": 491, "readyFilterTotal": 1100, "guidedFilterTotal": 491},
+    "ru": {"learningReady": 989, "guided": 602, "readyFilterTotal": 989, "guidedFilterTotal": 602}
+  },
+  "sampleIncomplete": {
+    "id": "question.av-127",
+    "learningReady": false,
+    "learningReadiness": "guided",
+    "learningLayers": {"shortAnswer":false,"mechanism":false,"russianLayer":true,"followUps":false,"traps":false,"terms":false,"practice":true}
+  },
+  "sampleProjectEvidence": {
+    "id": "question.q001",
+    "flag": true,
+    "detailLayer": "translated",
+    "source": "Question Brain released content"
+  },
+  "readinessDimensions": ["content", "placement", "runtime", "learner"],
+  "contract": "practice-library-query.v1",
+  "funnel": {
+    "contract": "question-curriculum-funnel.v1",
+    "queueLimit": 100,
+    "en": {"contentReady": 1100, "guided": 491, "queueTotal": 491, "returnedQueueItems": 100, "digest": "b1b6af995809a0ee45c9302cf92575cb4fb4be0af1ab4e485eafc95be5cfc68f"},
+    "ru": {"contentReady": 989, "guided": 602, "queueTotal": 602, "returnedQueueItems": 100, "digest": "1c182f9a2a1a4296d158839d966eeaf3ab55c8f0940981a4a068e67f77c27730"},
+    "optionalLayerMetadata": "unknown-depth-and-execution-mode-conservative-zero-denominators"
+  }
+}

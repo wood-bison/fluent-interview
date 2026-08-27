@@ -1,0 +1,9 @@
+{"command":"docker compose ... config --quiet","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"Brain, Runtime and Lab Compose contracts render successfully"}
+{"command":"docker compose ls --all --format json","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"exactly three owned projects running; external spearad-test-stack recorded but not owned"}
+{"command":"pnpm docker:provenance:check:static","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"all four Dockerfiles use digest-pinned FROM lines, source revision args and OCI revision labels"}
+{"command":"pnpm docker:provenance:check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"live service image IDs are immutable sha256 values and all four labels are 40-character source SHAs"}
+{"command":"pnpm runtime:images:check:static","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"5 immutable task image references verified across 20 descriptors"}
+{"command":"pnpm prune:workspace --plan","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"read-only plan found no legacy volumes or stopped owned containers; unrelated resources not targeted"}
+{"command":"curl /health/ready; curl /v1/health/ready","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"Brain and Runtime readiness returned 200 after image recreation"}
+{"command":"pnpm mode:guard:test","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"mode guard acquire/check/conflict/release/clear negative matrix passed"}
+{"command":"pnpm down; pnpm dev; pnpm mode:check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"fresh launcher acquired development lock; learner endpoint online; durable volumes preserved"}

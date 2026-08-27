@@ -1,0 +1,16 @@
+{
+  "schema": "fluent-interview.two-audit-gate-tests.v1",
+  "wave": "W00",
+  "status": "PASS_WITH_DECLARED_PROVENANCE_BLOCKER",
+  "checks": {
+    "workspaceStatus": "PASS",
+    "composeInventory": "PASS",
+    "diffCheck": "PASS",
+    "questionBrainBackupRestore": {"status":"PASS","dumpBytes":126951879,"restoredQuestions":6012,"isolatedDatabase":true},
+    "releaseVerifyDev": {"status":"PASS","valid":true,"productionPromotable":false,"failedSteps":[],"warning":"package boundary is not executable: dirty or unpinned source"}
+  },
+  "negativeCases": [
+    {"case":"dirty-or-unpinned-production-package","expected":"non-promotable","observed":"non-promotable"},
+    {"case":"external-compose-project","expected":"not-owned-and-not-cleaned","observed":"spearad-test-stack recorded as external"}
+  ]
+}

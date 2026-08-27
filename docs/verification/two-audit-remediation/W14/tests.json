@@ -1,0 +1,22 @@
+{
+  "wave": "W14",
+  "status": "partial-pass",
+  "tokenAudit": {
+    "status": "pass",
+    "tokenCount": 116,
+    "requiredTokenCount": 49,
+    "rawColourViolations": 0,
+    "duplicateThemeDeclarations": 0,
+    "missingThemeHooks": []
+  },
+  "passed": [
+    "semantic token inventory and required scales",
+    "Tailwind @theme mapping and policy documentation",
+    "raw colour boundary",
+    "light/dark/system/reduced-motion/reduced-transparency hooks"
+  ],
+  "warnings": [
+    "compatibility aliases and component primitive extraction remain open",
+    "visual/a11y matrix remains open in W17"
+  ]
+}

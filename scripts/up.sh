@@ -10,7 +10,9 @@ source "$ROOT/scripts/workspace-contract.sh"
 # Runtime Compose file exposes by default.  A stale filename here makes a
 # clean `pnpm dev` fail before any service can report its actual readiness.
 RUNTIME_RELEASE_FILE="task-release-2026-08-26-qb-d00a1493-g10.json"
-QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-25-canonical.json"
+# Current mapping release after W05 domain separation. The prior canonical
+# manifest remains mounted/available as the immutable rollback reference.
+QUESTION_BRAIN_MAPPING_FILE="curriculum-mapping-2026-08-27-domain-separated.json"
 
 mode="development"
 build_args=(--build)
@@ -35,6 +37,18 @@ done
 
 compose_question_brain=(docker compose --project-name fluent-question-brain --file "$QUESTION_BRAIN/deploy/compose/compose.yaml")
 compose_task_runtime=(docker compose --project-name fluent-task-runtime --file "$TASK_RUNTIME/deploy/compose/compose.yaml")
+
+# Every built service carries the exact source revision that was inspected.
+# Compose keeps a permissive `unknown` default for standalone diagnostics, but
+# the umbrella launcher always supplies a real SHA so a restart cannot silently
+# replace the code behind a healthy endpoint.
+QUESTION_BRAIN_SOURCE_REVISION="${QUESTION_BRAIN_SOURCE_REVISION:-$(git -C "$QUESTION_BRAIN" rev-parse HEAD)}"
+TASK_RUNTIME_SOURCE_REVISION="${TASK_RUNTIME_SOURCE_REVISION:-$(git -C "$TASK_RUNTIME" rev-parse HEAD)}"
+QUESTION_BRAIN_RELEASE_ID="${QUESTION_BRAIN_RELEASE_ID:-${QUESTION_BRAIN_MAPPING_FILE%.json}}"
+TASK_RUNTIME_RELEASE_ID="${TASK_RUNTIME_RELEASE_ID:-${RUNTIME_RELEASE_FILE%.json}}"
+FEL_ENVIRONMENT="${FEL_ENVIRONMENT:-local-compose}"
+export QUESTION_BRAIN_SOURCE_REVISION TASK_RUNTIME_SOURCE_REVISION
+export QUESTION_BRAIN_RELEASE_ID TASK_RUNTIME_RELEASE_ID FEL_ENVIRONMENT
 
 require_command() {
   command -v "$1" >/dev/null 2>&1 || {
@@ -130,6 +144,28 @@ test -s "$QUESTION_BRAIN/releases/$QUESTION_BRAIN_MAPPING_FILE" || {
   exit 1
 }
 
+mkdir -p "$ROOT/.workspace"
+app_pid_file="$ROOT/.workspace/fluent-lab.pid"
+
+# Development and packaged Lab share the learner profile. Claim the
+# workspace-owned mode before touching Compose so a second launcher fails
+# closed even when it would otherwise reuse apparently free application ports.
+MODE_LOCK_PID="$$" "$ROOT/scripts/mode-guard.sh" acquire "$mode"
+mode_lock_claimed=true
+
+cleanup() {
+  rm -f "$app_pid_file"
+  if [[ "${mode_lock_claimed:-false}" == true ]]; then
+    # Development exits with the launcher; packaged mode intentionally keeps
+    # its lock while the detached package is serving and releases it from
+    # `pnpm down` (or here when startup failed before readiness).
+    if [[ "$mode" == 'development' ]] || ! curl --silent --show-error --fail --max-time 1 "$WS_LAB_PACKAGE_URL" >/dev/null 2>&1; then
+      "$ROOT/scripts/mode-guard.sh" release >/dev/null 2>&1 || true
+    fi
+  fi
+}
+trap cleanup EXIT
+
 echo 'Fluent Interview workspace'
 echo "root: $ROOT"
 echo '1/2  Question Brain'
@@ -140,6 +176,7 @@ wait_for 'Question Brain' "$WS_QB_READY_URL"
 # every start; both operations are idempotent. Never fall back to inferred
 # Track/Group/Topic placement.
 "$QUESTION_BRAIN/scripts/apply-curriculum-mapping-migration.sh"
+"$QUESTION_BRAIN/scripts/apply-question-graph-evidence-migration.sh"
 echo 'Applying explicit Question Brain → Lab curriculum crosswalk'
 "${compose_question_brain[@]}" exec -T api /qb-map-release \
   -database-url 'postgres://question_brain:question_brain@postgres:5432/question_brain?sslmode=disable' \
@@ -153,9 +190,6 @@ RUNTIME_RELEASE_MANIFEST="/opt/releases/$RUNTIME_RELEASE_FILE" \
 wait_for 'Task Runtime' "$WS_RUNTIME_READY_URL"
 
 echo
-mkdir -p "$ROOT/.workspace"
-app_pid_file="$ROOT/.workspace/fluent-lab.pid"
-
 if [[ "$mode" == 'production' ]]; then
   echo "Starting packaged Fluent Lab ($WS_LAB_PACKAGE_URL)"
   # `restart` is intentionally idempotent.  The wrapper absorbs only a live
@@ -180,9 +214,5 @@ printf '%s\n' "$app_pid" > "$app_pid_file"
 stop_app() {
   kill -TERM "$app_pid" 2>/dev/null || true
 }
-cleanup() {
-  rm -f "$app_pid_file"
-}
 trap stop_app INT TERM
-trap cleanup EXIT
 wait "$app_pid"

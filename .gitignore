@@ -1,9 +1,11 @@
-# The umbrella may later become a small orchestration repository. The service
-# repositories below remain independent Git roots and are never vendored here.
+# The umbrella is an orchestration repository. The project repositories below
+# remain independent Git roots and are intentionally never vendored here.
 fluent-engineering-lab/
 fluent-question-brain/
 fluent-task-runtime/
 fluent-engineering-vue/
+fluent-question-vault/
 .workspace/
+.pi/
 node_modules/
 .DS_Store

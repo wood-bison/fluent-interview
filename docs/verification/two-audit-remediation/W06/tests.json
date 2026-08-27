@@ -1,0 +1,28 @@
+{
+  "wave": "W06",
+  "status": "partial-pass-with-live-funnel",
+  "passed": [
+    "Brain catalog layer summarizer unit tests",
+    "Brain full Go test suite",
+    "Lab lint/test/build for learning-api, lab-contracts, observability",
+    "malformed learning_layers fail-closed client test",
+    "Project Evidence layer maps list → detail → learner content",
+    "explicit readiness dimensions validate and survive learner projection",
+    "editorial section-title variants preserve layer parity",
+    "incomplete card projects as guided",
+    "EN/RU readiness filters equal their booleans",
+    "EN curriculum funnel live contract/arithmetic/privacy/policy gate",
+    "RU curriculum funnel live contract/arithmetic/privacy/policy gate",
+    "funnel queue is bounded at 100 and exposes no answer bodies",
+    "Studio funnel query includes locale and release-pinned report"
+  ],
+  "warnings": [
+    "Jest reports one skipped suite and a worker teardown warning from existing integration tests",
+    "Live catalog has no numeric depth/execution_mode metadata; optional layer denominators conservatively remain zero",
+    "Queue owner assignment, topic batching and human-review evidence are not yet implemented"
+  ],
+  "negativeCases": [
+    {"case":"incomplete card with learningReadiness=learning-ready","expected":"public guided","observed":"public guided"},
+    {"case":"malformed learning_layers payload","expected":"Question Brain unavailable","observed":"client rejects contract"}
+  ]
+}

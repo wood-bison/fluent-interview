@@ -1,0 +1,49 @@
+{
+  "schema": "fluent-interview.docker-provenance-baseline.v1",
+  "wave": "W04",
+  "capturedAt": "2026-08-27T08:53:00Z",
+  "ownedComposeProjects": [
+    "fluent-engineering-lab",
+    "fluent-question-brain",
+    "fluent-task-runtime"
+  ],
+  "externalObserved": {
+    "name": "spearad-test-stack",
+    "status": "exited(8)",
+    "ownerPath": "/Users/sergeyzhechko/developer/neexen",
+    "touched": false
+  },
+  "serviceImages": {
+    "fluent-question-brain-api-1": {
+      "imageId": "sha256:3131c58c13fd8b2bea01d3ef42c1e565d00bec0985a37e4a7b09c25b1272299d",
+      "sourceRevision": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
+    },
+    "fluent-question-brain-indexer-1": {
+      "imageId": "sha256:8e5d710bab03d2dbc543a6a018ae09afd75eeddb48e3655a02c4fae061eff51d",
+      "sourceRevision": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
+    },
+    "fluent-question-brain-cms-1": {
+      "imageId": "sha256:f1168a39c0855ba951e1ef1afcb88f9223db08feba7e246e9d68c695749a8034",
+      "sourceRevision": "e698fc2e76c6f8c27ec71dc6231f415467e8fe60"
+    },
+    "fluent-task-runtime-runtime-1": {
+      "imageId": "sha256:e156db3671acf088d80db21b5162dc62ecc7e4e9104008816d32171e2acb701c",
+      "sourceRevision": "24639471e7f2e013b1e717f148bb10a0f0a93e98"
+    }
+  },
+  "readiness": {
+    "questionBrain": 200,
+    "taskRuntime": 200,
+    "grafana": 200
+  },
+  "modeLock": {
+    "schemaVersion": "workspace-mode-lock.v1",
+    "afterRestart": {
+      "state": "held",
+      "mode": "development",
+      "ownerLive": true,
+      "endpoint": "online"
+    },
+    "scope": "workspace/.workspace/mode-lock"
+  }
+}

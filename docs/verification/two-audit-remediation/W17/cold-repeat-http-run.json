@@ -1,0 +1,35 @@
+{
+  "evidenceVersion": "cold-repeat-http-run.v1",
+  "wave": "W17",
+  "observedAt": "2026-08-27T14:14:59Z",
+  "service": "fluent-engineering-lab/apps/learning-api",
+  "boundary": "real AppModule HTTP integration",
+  "testFile": "apps/learning-api/src/app/app.module.spec.ts",
+  "profile": "w17-cold-repeat-http",
+  "status": "pass",
+  "steps": [
+    { "step": "server creates explained initial attempt", "status": "pass" },
+    { "step": "deterministic explanation rubric passes", "status": "pass" },
+    { "step": "server creates linked cold-repeat attempt", "status": "pass" },
+    { "step": "repeat receives a pass timestamp", "status": "pass" },
+    { "step": "comeback projection reports retained/passed and no next action", "status": "pass" }
+  ],
+  "activity": {
+    "initialRun": true,
+    "explanation": true,
+    "coldRepeatRun": true,
+    "comebackProjection": true,
+    "answerOrAttemptIdsPublished": false
+  },
+  "isolation": {
+    "persistence": "test fixture adapter",
+    "sergeyProfileMutated": false,
+    "releaseMutated": false,
+    "graphMutated": false,
+    "dockerStateMutated": false
+  },
+  "notes": [
+    "The integration boots the production AppModule and uses HTTP routes; only LocalAiService is replaced by an advisory fixture so the test does not depend on LM Studio availability.",
+    "The learner-facing comeback response is checked for absence of attempt IDs, source IDs, predictions and solutions."
+  ]
+}

@@ -8,6 +8,26 @@
 **Текущий результат:** `NOT RELEASED`  
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
+### Scope expansion v3 — 27 августа 2026
+
+Пользователь явно расширил цель: этот план больше не ограничивается пилотным
+mastery-срезом и не должен запрещать authoring новых high-signal вопросов. Его
+безопасная M0–M13 последовательность остаётся обязательной для release truth,
+но конечная production-complete цель, learner-visible denominators, path packs,
+TaskPortfolio и commit/rollback gates теперь определены в
+[`production-curriculum-closure-audit-2026-08-27/agent-production-closure-plan.md`](reports/production-curriculum-closure-audit-2026-08-27/agent-production-closure-plan.md).
+
+Это **не второй активный план**: текущий документ остаётся operational
+frontier, а новый файл — его versioned scope-and-execution annex. Правила
+старого handoff «не создавать QuestionCard» заменяются на: не authorить до
+W04 unique-card/placement manifest, затем разрешать только role-complete,
+licensed, reviewed new revisions. Historical releases остаются immutable.
+
+Обязательные конечные targets annex: 2 300 core placements (1 601 primary +
+699 supporting), 233 Lessons, 51 checkpoints, 70 activities на backend path,
+50 на Vue, 60 algorithm problems и 168 TaskFamily / 456 runnable revisions.
+`production-usable` (48/92) — промежуточный tier, а не завершение этого плана.
+
 Этот документ — единая активная очередь работ по превращению текущего Fluent
 Interview в продукт исходного Plan 2026:
 
@@ -48,11 +68,12 @@ Recall → Predict → Build → Run → Break → Observe
 > review и не получил доказательства, указанные в таблице прогресса.
 >
 > Сначала прочитай root и три repository `AGENTS.md`, затем сделай recovery
-> snapshot и выполни M0. Не создавай новые QuestionCard. Разрешены исправление,
-> перевод, enrichment, binding и классификация существующих 1 591 карточек.
-> Новые TaskFamily разрешены только как минимальное исполняемое доказательство
-> capability из 12 acceptance-областей; эти области берутся из
-> `CoverageManifest` и не становятся новой Brain taxonomy.
+> snapshot и выполни M0. До W04 не author новые QuestionCard: сначала выпусти
+> unique-card/placement и TaskPortfolio manifests. После W04 разрешены только
+> role-complete, licensed, reviewed enrichment и новые high-signal QuestionCard
+> revisions из gap ledger. Новые TaskFamily разрешены по exact target manifest
+> annex: 60 algorithms + 12 shared backend + 80 native + 16 PostgreSQL.
+> `CoverageManifest` — release view, а не новая Brain taxonomy.
 >
 > Не создавай fallback, shadow catalogue, локальную копию вопросов, browser-side
 > verdict, fake pass или автоматически выданный mastery. Question Brain,
@@ -1263,9 +1284,12 @@ areaKey:
 | Algorithms | hash/array; graph/tree; sliding-window/two-pointer; DP/greedy |
 | Angular / frontend | change detection/signals; RxJS; forms/a11y; rerender/performance |
 
-Новые TaskFamily разрешены здесь только если CoverageManifest показывает
-отсутствующий proof. Не каждая task обязана иметь TS/Java/C#/Go/SQL variants:
-revision создаётся только там, где язык сохраняет смысл проверки.
+Pilot minimum остаётся применимым для M0–M13, но не является конечным target.
+Новые TaskFamily разрешены только при exact `TaskPortfolioManifest`; конечный
+scope annex требует 60 algorithm + 12 shared backend + 80 native + 16
+PostgreSQL families. Не каждая task обязана иметь все language variants:
+пять revisions создаются для portable families, а native/profile-specific
+mechanics остаются в своём runtime.
 
 ### Area product-ready
 
@@ -1712,7 +1736,9 @@ read → implement → run → break → measure → explain → defend
 
 ## 8. Запрещённые shortcuts
 
-- Не добавлять QuestionCard во время M0–M13.
+- Не добавлять QuestionCard до W04 unique-card/placement manifest. После W04
+  новые revisions разрешены только по gap ledger и проходят полный editorial,
+  provenance и release gate из scope annex.
 - Не создавать fallback JSON, shadow catalogue, second vector DB или local task
   runner.
 - Не читать чужие database tables напрямую между сервисами.

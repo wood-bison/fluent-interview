@@ -1,0 +1,13 @@
+{
+  "wave": "W01",
+  "checks": [
+    {"name":"layout-check","status":"passed"},
+    {"name":"development-provenance","status":"passed-with-declared-warnings"},
+    {"name":"strict-provenance","status":"blocked","reason":"Vue origin missing and dirty source trees"},
+    {"name":"diff-check","status":"passed"}
+  ],
+  "negativeCases": [
+    {"case":"missing Vue origin","status":"observed","expected":"strict fail-closed"},
+    {"case":"dirty child repository","status":"observed","expected":"strict warning / non-promotable"}
+  ]
+}

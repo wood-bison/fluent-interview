@@ -1,0 +1,12 @@
+{
+  "wave": "W11",
+  "capturedAt": "2026-08-27T11:55:00Z",
+  "workspace": "fluent-interview",
+  "runtimeReleaseId": "task-family-release-2026-08-26-g10",
+  "brainReleaseId": "question-release-d00a14931e607336",
+  "rawTasks": 20,
+  "learnerValidRunnableTasks": 19,
+  "families": 16,
+  "runnableFamilies": 15,
+  "priorRisk": "Raw Runtime rows and family projections could drift, silently select latest revisions, or lose Question Brain identity."
+}

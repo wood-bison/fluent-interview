@@ -40,6 +40,7 @@ eval "$(ruby -ryaml -rshellwords -e '
     WS_RUNTIME_READY_URL: rt.fetch("readiness"),
     WS_RUNTIME_API_URL: "http://127.0.0.1:#{ports.fetch("taskRuntime").fetch("api")}",
     WS_LAB_DEV_URL: lab.fetch("devUrl"),
+    WS_LAB_DEV_API_URL: "http://127.0.0.1:#{ports.fetch("fluentLab").fetch("devApi")}",
     WS_LAB_PACKAGE_URL: lab.fetch("productionUrl"),
     WS_LAB_PACKAGE_API_URL: "http://127.0.0.1:#{ports.fetch("fluentLab").fetch("packageApi")}",
     WS_TRACE_URL: obs.fetch("traceExplorerUrl"),

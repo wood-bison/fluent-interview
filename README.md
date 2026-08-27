@@ -1,7 +1,7 @@
 # Fluent Interview workspace
 
 This is the desktop-first workspace for the Fluent Interview platform. It
-coordinates three independent repositories without merging their source or
+coordinates five independent repositories without merging their source or
 ownership:
 
 | Repository | Responsibility |
@@ -10,6 +10,13 @@ ownership:
 | `fluent-engineering-vue` | only learner/operator web UI (Vue 3 + Vite) |
 | `fluent-question-brain` | canonical questions, locales, graph, search, releases |
 | `fluent-task-runtime` | task revisions, sandboxes, hidden tests, execution traces |
+| `fluent-question-vault` | Git history mirror of the Obsidian question-card vault |
+
+All five project repositories are direct children of this directory and retain
+their own `.git` history and remote. The root repository owns only orchestration
+scripts, contracts, documentation, and workspace metadata; it does not vendor
+the child repositories. The current topology and the treatment of historical
+sandbox prototypes are recorded in [`docs/WORKSPACE-TOPOLOGY.md`](docs/WORKSPACE-TOPOLOGY.md).
 
 ## One command
 
@@ -47,6 +54,11 @@ Useful variants:
 pnpm dev:quick                 # reuse existing images
 pnpm dev:production:quick      # packaged release, reuse existing images
 pnpm status                    # Git, Compose, health, and observability report
+pnpm layout:check              # verify the five independent Git roots
+pnpm verify:git:dev            # read-only Git/topology report for local work
+pnpm release:verify:dev        # full live dev quality + browser gate
+pnpm release:verify            # strict production gate (fails closed until pinned/clean)
+pnpm runtime:images:check      # verify immutable task image refs + daemon
 pnpm down                      # stop services without deleting volumes
 pnpm prune:workspace           # remove only known stale workspace Docker artefacts
 pnpm ports                     # verify the workspace port registry has no duplicates
@@ -54,6 +66,14 @@ pnpm ports                     # verify the workspace port registry has no dupli
 
 The underlying `scripts/*.sh` commands remain available for automation and
 recovery. `pnpm dev` is the normal human-facing command.
+
+`release:verify:dev` is the command to use while developing: it checks the
+running Brain/Runtime/Lab/Vue stack, route projection, semantic placement,
+accessibility, desktop visual budgets and the two target Chromium profiles. It
+does not promote a package. `release:verify` is intentionally stricter: it
+requires a clean, immutable five-repository provenance tuple and a ready
+packaged Lab before it will run G14 hardening. A dirty or locally-only checkout
+therefore produces an explicit release blocker instead of a false green.
 
 ## Как читать текущий release
 
@@ -66,14 +86,16 @@ recovery. `pnpm dev` is the normal human-facing command.
 | Areas / stations | 15 / 81 | опубликованные учебные области и станции, а не количество карточек |
 | Question Brain cards | 1,591 | канонические карточки вопросов, доступные через библиотеку |
 | Topic groups | 135 | тематические группы Question Brain, не отдельные программы |
-| Task families / revisions | 16 / 20 | семейства задач и исполняемые языковые revisions; SQL-реализация rate limiter живёт в отдельной PostgreSQL-семье |
+| Task families / revisions | 16 / 20 raw · 15 / 19 learner-runnable | полный каталог семейств/revisions; один capability-only revision остаётся видимым, но не запускается как learner lab |
 
 Текущий release сверяет 1,591 из 1,591 карточек: `accepted=1,591`,
 `proposed=0`, `unmapped=0`. Это означает, что каждая карточка имеет принятую
 placement-связь в Question Brain. Это всё ещё не означает 1,591 экран или
 1,591 runnable-задачу: Lab агрегирует карточки в 15 областей и 81 станцию, а
 исполнение подключено только там, где есть TaskBrief и runtime revision.
-Сейчас таких station-bound карточек 6, а runnable revisions — 20. Остальные
+Сейчас таких station-bound карточек 6, а в learner-поверхности доступны 19
+runnable revisions (20 raw revisions в каталоге, включая один capability-only
+revision). Остальные
 карточки доступны в библиотеке и графе как учебный контент; задача добавляется
 отдельным release join, а не угадывается по словам `Track`/`Topic`.
 

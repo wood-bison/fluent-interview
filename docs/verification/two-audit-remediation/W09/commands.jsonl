@@ -1,0 +1,2 @@
+{"command":"LEARNING_API_URL=http://127.0.0.1:47000 BRAIN_API_URL=http://127.0.0.1:48127 pnpm track:views:gate","result":"valid=true; paths=9; domains=9; Brain cards=1591; violations=0"}
+{"command":"LEARNING_API_URL=http://127.0.0.1:47000 BRAIN_API_URL=http://127.0.0.1:48127 pnpm track:views:gate:check","result":"valid=true; stored content digest matches"}

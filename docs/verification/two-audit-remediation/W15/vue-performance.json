@@ -1,0 +1,112 @@
+{
+  "reportVersion": "vue-performance.v1",
+  "generatedAt": "2026-08-27T21:27:07.650Z",
+  "mode": "read-existing-dist",
+  "valid": true,
+  "status": "pass",
+  "budgets": {
+    "initialJsRawBytes": 350000,
+    "initialJsGzipBytes": 110000,
+    "initialCssRawBytes": 60000,
+    "xtermLazyRawBytes": 400000
+  },
+  "entry": {
+    "key": "index.html",
+    "file": "assets/index-BEZGpvNX.js"
+  },
+  "initial": {
+    "js": [
+      {
+        "file": "assets/index-BEZGpvNX.js",
+        "rawBytes": 223459,
+        "gzipBytes": 62768
+      },
+      {
+        "file": "assets/preferences-kzWIaMEu.js",
+        "rawBytes": 82851,
+        "gzipBytes": 32301
+      }
+    ],
+    "css": [
+      {
+        "file": "assets/index-CKNpFdxQ.css",
+        "rawBytes": 41423,
+        "gzipBytes": 7827
+      },
+      {
+        "file": "assets/preferences-CpqG5H3U.css",
+        "rawBytes": 7000,
+        "gzipBytes": 1746
+      }
+    ],
+    "jsRawBytes": 306310,
+    "jsGzipBytes": 95069,
+    "cssRawBytes": 48423,
+    "cssGzipBytes": 9573
+  },
+  "xterm": {
+    "file": "assets/xterm-C3BHN0de.js",
+    "rawBytes": 331270,
+    "gzipBytes": 82437
+  },
+  "initialHasXterm": false,
+  "dynamicEntryCount": 31,
+  "largestDynamicAssets": [
+    {
+      "file": "assets/xterm-C3BHN0de.js",
+      "rawBytes": 331270,
+      "gzipBytes": 82437
+    },
+    {
+      "file": "assets/dist-BhB8rv2X.js",
+      "rawBytes": 133613,
+      "gzipBytes": 48593
+    },
+    {
+      "file": "assets/dist-DkagLNiP.js",
+      "rawBytes": 84410,
+      "gzipBytes": 32507
+    },
+    {
+      "file": "assets/dist-CSM6bqXQ.js",
+      "rawBytes": 54578,
+      "gzipBytes": 17873
+    },
+    {
+      "file": "assets/dist-Bn7Wk6NV.js",
+      "rawBytes": 40704,
+      "gzipBytes": 16146
+    },
+    {
+      "file": "assets/EventLoopLabView-Wq1uYw-D.js",
+      "rawBytes": 37529,
+      "gzipBytes": 12182
+    },
+    {
+      "file": "assets/dist-CfA7vebp.js",
+      "rawBytes": 30713,
+      "gzipBytes": 12280
+    },
+    {
+      "file": "assets/WorkspaceLabView-Df8Qk_bC.js",
+      "rawBytes": 23330,
+      "gzipBytes": 7679
+    },
+    {
+      "file": "assets/StudioBoundaryView-DhwWXlF7.js",
+      "rawBytes": 21858,
+      "gzipBytes": 7444
+    },
+    {
+      "file": "assets/PathProjectionView-DwBBlcpm.js",
+      "rawBytes": 21439,
+      "gzipBytes": 7016
+    }
+  ],
+  "pagination": {
+    "boundedPageSize": true,
+    "hasCursorLoad": true,
+    "noUnboundedRender": true
+  },
+  "failures": []
+}

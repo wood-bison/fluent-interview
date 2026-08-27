@@ -1,0 +1,22 @@
+{
+  "wave": "W13",
+  "status": "partial-pass",
+  "e2e": {
+    "status": "pass",
+    "recordedScenarios": 76,
+    "projects": ["macbook-pro-16-light", "studio-display-dark"]
+  },
+  "passed": [
+    "Program, Atlas, paths, Practice and Questions journeys",
+    "server-owned runtime picker and exact family/revision workspace links",
+    "TaskFamily language-neutral boundary",
+    "Event Loop prediction → run → trace/evidence → explain flow",
+    "Workspace hidden checks, retry, timeout, malformed response, exact run identity and reload evidence",
+    "projects/defense, RU/EN, light/dark, Navigator dock and AI settings",
+    "horizontal overflow and meaningful heading assertions on tested surfaces"
+  ],
+  "warnings": [
+    "synthetic-profile progress isolation remains open",
+    "production promotion is still blocked by package provenance, not by local E2E"
+  ]
+}

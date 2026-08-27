@@ -1,0 +1,16 @@
+{
+  "wave": "W15",
+  "capturedAt": "2026-08-27T14:30:00Z",
+  "owner": "fluent-engineering-vue",
+  "knownRisks": [
+    "xterm and CodeMirror can accidentally enter the initial learner shell chunk.",
+    "Question lists can grow into an unbounded DOM when the API corpus grows.",
+    "A green local build does not prove route interaction budgets or clean package provenance."
+  ],
+  "budgets": {
+    "initialJsRawBytes": 350000,
+    "initialJsGzipBytes": 110000,
+    "initialCssRawBytes": 60000,
+    "xtermLazyRawBytes": 400000
+  }
+}

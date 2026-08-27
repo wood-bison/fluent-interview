@@ -1,0 +1,30 @@
+{
+  "wave": "W05",
+  "capturedAt": "2026-08-27",
+  "owner": "fluent-question-brain",
+  "learnerProjection": "question-brain learner v1",
+  "release": "question-release-d00a14931e607336",
+  "catalogue": {
+    "en": 1591,
+    "ru": 1591,
+    "stableIdsEn": 1591,
+    "stableIdsRu": 1591,
+    "onlyEn": 0,
+    "onlyRu": 0
+  },
+  "preChangeOpenDuplicateGroups": 2,
+  "preChangeTopicAliasGroups": 3,
+  "preChangeDomainCounts": {
+    "domain.runtime": 733,
+    "domain.testing": 151
+  },
+  "domainMigration": {
+    "algorithms": "path.algorithms/domain.runtime -> path.algorithms/domain.algorithms (52)",
+    "behavioral": "path.behavioral/domain.testing -> path.behavioral/domain.behavioral (103)"
+  },
+  "notes": [
+    "The first snapshot was intentionally read-only and exposed two normalized prompt collisions.",
+    "One pair already had a durable not_duplicate decision; the second was reviewed as keep_separate because it is generic versus Java/Hibernate-specific content.",
+    "Five published fixture rows are excluded from the learner release; the database has 1,596 published rows while the production catalogue has 1,591."
+  ]
+}

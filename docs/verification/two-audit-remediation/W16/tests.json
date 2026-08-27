@@ -1,0 +1,21 @@
+{
+  "wave": "W16",
+  "status": "pass",
+  "staticChecks": 24,
+  "liveChecks": 15,
+  "requiredLivePasses": 9,
+  "optionalCollectorsOnline": 6,
+  "unitTests": "pass",
+  "redaction": "pass",
+  "contractVersion": "observability.v1",
+  "warnings": [],
+  "liveEvidence": {
+    "prometheusTargets": "task-runtime and question-brain targets are explicit and up; package-oriented learning-api target is intentionally down during the dev-only profile",
+    "lokiQuery": "query_range for {job=\"fel\"} returned HTTP 200 and status=success",
+    "grafana": "health endpoint returned HTTP 200 and FEL golden-signals dashboard projection returned HTTP 200",
+    "jaeger": "route-context and lab-run spans share a correlation id and a Task Runtime task.run span in one Jaeger trace",
+    "timeToFirstRun": "bounded browser session marker is accepted on run and recorded once after the first persisted run",
+    "syntheticIsolation": "disposable rate-limiter run passed 4/4 tests and Sergey stable progress projection hash remained unchanged"
+  },
+  "journeyEvidence": "jaeger-continuity.json"
+}

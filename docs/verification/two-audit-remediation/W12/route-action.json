@@ -1,0 +1,271 @@
+{
+  "reportVersion": "route-action-gate.v1",
+  "generatedAt": "2026-08-27T11:44:00.863Z",
+  "learningApiUrl": "http://127.0.0.1:47000",
+  "valid": true,
+  "summary": {
+    "caseCount": 12,
+    "passed": 12,
+    "failed": 0,
+    "runtimeExactCases": 3,
+    "recoveryCases": 2
+  },
+  "rows": [
+    {
+      "id": "program",
+      "path": "/",
+      "valid": true,
+      "issues": [],
+      "family": "program",
+      "canonicalPath": "/",
+      "phase": "overview",
+      "readiness": "overview",
+      "resource": null,
+      "allowedActions": [
+        "open-map",
+        "open-practice",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "knowledge-map",
+      "path": "/learning-map",
+      "valid": true,
+      "issues": [],
+      "family": "knowledge-map",
+      "canonicalPath": "/learning-map",
+      "phase": "overview",
+      "readiness": "overview",
+      "resource": null,
+      "allowedActions": [
+        "back",
+        "open-program",
+        "open-practice"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "practice-entry",
+      "path": "/practice",
+      "valid": true,
+      "issues": [],
+      "family": "practice-lab",
+      "canonicalPath": "/practice",
+      "phase": "overview",
+      "readiness": "unknown",
+      "resource": null,
+      "allowedActions": [
+        "back",
+        "open-program",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "task-family",
+      "path": "/practice/task-family/task-family.deferred",
+      "valid": true,
+      "issues": [],
+      "family": "practice-task-family",
+      "canonicalPath": "/practice/task-family/task-family.deferred",
+      "phase": "overview",
+      "readiness": "overview",
+      "resource": {
+        "id": "task-family.deferred",
+        "kind": "executable",
+        "execution": "workspace",
+        "revision": null,
+        "taskFamilyKey": "task-family.deferred"
+      },
+      "allowedActions": [
+        "back",
+        "open-practice",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "question-practice",
+      "path": "/practice/questions?question=Q001#review",
+      "valid": true,
+      "issues": [],
+      "family": "practice-questions",
+      "canonicalPath": "/practice/questions",
+      "phase": "practice",
+      "readiness": "overview",
+      "resource": null,
+      "allowedActions": [
+        "back",
+        "open-practice",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "theory-lesson",
+      "path": "/practice/lesson/js-prediction",
+      "valid": true,
+      "issues": [],
+      "family": "practice-lesson",
+      "canonicalPath": "/practice/lesson/js-prediction",
+      "phase": "lesson",
+      "readiness": "theory-only",
+      "resource": {
+        "id": "js-prediction",
+        "kind": "concept",
+        "execution": "concept",
+        "revision": null,
+        "taskFamilyKey": null
+      },
+      "allowedActions": [
+        "back",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "controlled-lab",
+      "path": "/practice/lab/node-event-loop-001#traces",
+      "valid": true,
+      "issues": [],
+      "family": "practice-lab",
+      "canonicalPath": "/practice/lab/node-event-loop-001",
+      "phase": "trace",
+      "readiness": "ready",
+      "resource": {
+        "id": "node-event-loop-001",
+        "kind": "executable",
+        "execution": "controlled",
+        "revision": 1,
+        "taskFamilyKey": "task-family.event-loop-ordering"
+      },
+      "allowedActions": [
+        "back",
+        "open-practice",
+        "run",
+        "open-traces",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "runtime-exact",
+      "path": "/practice/lab/deferred?revision=1&taskFamily=task-family.deferred#prediction",
+      "valid": true,
+      "issues": [],
+      "family": "practice-lab",
+      "canonicalPath": "/practice/lab/deferred?revision=1&taskFamily=task-family.deferred",
+      "phase": "predict",
+      "readiness": "ready",
+      "resource": {
+        "id": "deferred",
+        "kind": "executable",
+        "execution": "workspace",
+        "revision": 1,
+        "taskFamilyKey": "task-family.deferred"
+      },
+      "allowedActions": [
+        "back",
+        "open-practice",
+        "run",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "journal-alias",
+      "path": "/journal",
+      "valid": true,
+      "issues": [],
+      "family": "progress",
+      "canonicalPath": "/journal?view=recall",
+      "phase": "progress",
+      "readiness": "overview",
+      "resource": null,
+      "allowedActions": [
+        "back",
+        "open-program",
+        "open-practice"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "unknown-recovery",
+      "path": "/does-not-exist",
+      "valid": true,
+      "issues": [],
+      "family": "recovery",
+      "canonicalPath": null,
+      "phase": "recovery",
+      "readiness": "unknown",
+      "resource": null,
+      "allowedActions": [
+        "recover",
+        "open-program",
+        "open-map"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    },
+    {
+      "id": "external-return-rejected",
+      "path": "/practice/lab/node-event-loop-001?returnTo=https%3A%2F%2Fevil.example",
+      "valid": true,
+      "issues": [],
+      "family": "practice-lab",
+      "canonicalPath": "/practice/lab/node-event-loop-001",
+      "phase": "predict",
+      "readiness": "ready",
+      "resource": {
+        "id": "node-event-loop-001",
+        "kind": "executable",
+        "execution": "controlled",
+        "revision": 1,
+        "taskFamilyKey": "task-family.event-loop-ordering"
+      },
+      "allowedActions": [
+        "back",
+        "open-practice",
+        "run",
+        "open-progress"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": true
+    },
+    {
+      "id": "invalid-runtime-selection",
+      "path": "/practice/lab/deferred?revision=0&taskFamily=task-family.deferred",
+      "valid": true,
+      "issues": [],
+      "family": "recovery",
+      "canonicalPath": null,
+      "phase": "recovery",
+      "readiness": "unknown",
+      "resource": null,
+      "allowedActions": [
+        "recover",
+        "open-program",
+        "open-map"
+      ],
+      "droppedQueryKeys": [],
+      "rejectedReturnTo": false
+    }
+  ],
+  "policy": {
+    "serverOwnedActions": true,
+    "silentLatestFallback": false,
+    "privateAnswerLeakage": false,
+    "incompatibleRuntimeSelection": "recover"
+  },
+  "contentDigest": "c1511649c8e9578de4b2d9829fefc8db386ff0a91aeb2c7a84b0173346799937"
+}

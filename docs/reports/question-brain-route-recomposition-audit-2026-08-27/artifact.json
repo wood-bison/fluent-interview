@@ -1,0 +1,399 @@
+{
+  "surface": "report",
+  "manifest": {
+    "surface": "report",
+    "version": 1,
+    "title": "Question Brain → учебные маршруты — аудит 27 августа 2026",
+    "description": "Read-only технический аудит 1 591 опубликованной карточки Question Brain, их связей с Fluent Lab и Task Runtime и целевой композиции Node.js, Java, Go, .NET, Python, Frontend, Algorithms и System Design путей.",
+    "generatedAt": "2026-08-27T12:00:00+02:00",
+    "sources": [
+      {"id": "brain-db"},
+      {"id": "lab-live"},
+      {"id": "runtime-live"},
+      {"id": "workspace-contracts"},
+      {"id": "research"}
+    ],
+    "cards": [
+      {
+        "id": "published-cards",
+        "description": "Опубликованные production-карточки в текущем Question Brain release; каждая имеет EN и RU locale.",
+        "dataset": "headline",
+        "sourceId": "brain-db",
+        "metrics": [{"label": "Карточки Brain", "field": "cards", "format": "number"}]
+      },
+      {
+        "id": "station-bound",
+        "description": "Карточки, имеющие опубликованный capability bridge до конкретной Lab station.",
+        "dataset": "headline",
+        "sourceId": "lab-live",
+        "metrics": [{"label": "Точно привязаны к station", "field": "stationBound", "format": "number"}]
+      },
+      {
+        "id": "graph-edges",
+        "description": "Связи в активном Question Brain graph release; текущий release создан тестовым актором.",
+        "dataset": "headline",
+        "sourceId": "brain-db",
+        "metrics": [{"label": "Активные смысловые связи", "field": "graphEdges", "format": "number"}]
+      },
+      {
+        "id": "task-candidates",
+        "description": "Уникальные карточки с task-like group, секцией или структурированным task object; это кандидаты на редакторскую классификацию, а не автоматически исполняемые задачи.",
+        "dataset": "headline",
+        "sourceId": "brain-db",
+        "metrics": [{"label": "Task-like карточки", "field": "taskLike", "format": "number"}]
+      },
+      {
+        "id": "structured-tasks",
+        "description": "Карточки с нормализованным task object в Question Brain.",
+        "dataset": "headline",
+        "sourceId": "brain-db",
+        "metrics": [{"label": "Structured task briefs", "field": "structuredTasks", "format": "number"}]
+      },
+      {
+        "id": "runtime-bindings",
+        "description": "Уникальные опубликованные вопросы, на которые ссылаются released Task Runtime revisions.",
+        "dataset": "headline",
+        "sourceId": "runtime-live",
+        "metrics": [{"label": "Вопросы с Runtime binding", "field": "runtimeBoundQuestions", "format": "number"}]
+      },
+      {
+        "id": "project-evidence",
+        "description": "Карточки, уже содержащие source section Project Evidence и пригодные для проектных защит после нормализации.",
+        "dataset": "headline",
+        "sourceId": "brain-db",
+        "metrics": [{"label": "Project Evidence blocks", "field": "projectEvidence", "format": "number"}]
+      }
+    ],
+    "charts": [
+      {
+        "id": "path-card-distribution",
+        "title": "Карточки по текущему path_key",
+        "subtitle": "Path сегодня используется и как маршрут, и как контейнер контента; особенно заметен catch-all path.system-design.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Как опубликованный корпус распределён между текущими путями?",
+        "rationale": "Категориальная столбчатая диаграмма показывает масштаб языковых и shared-корпусов без ложной временной оси.",
+        "type": "bar",
+        "dataset": "paths",
+        "sourceId": "brain-db",
+        "encodings": {
+          "x": {"field": "path", "type": "nominal", "label": "Текущий path"},
+          "y": {"field": "cards", "type": "quantitative", "label": "Карточки", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "source-layer-coverage",
+        "title": "Полезные learning layers в исходных карточках",
+        "subtitle": "Количество карточек с распознаваемой секцией; list projection сейчас не публикует Follow-ups, Traps, Terms и Practice.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Какой уже написанный учебный материал можно поднять в интерфейс и маршруты?",
+        "rationale": "Столбцы сравнивают однородные абсолютные количества карточек по типу учебного слоя.",
+        "type": "bar",
+        "dataset": "sourceLayers",
+        "sourceId": "brain-db",
+        "encodings": {
+          "x": {"field": "layer", "type": "nominal", "label": "Learning layer"},
+          "y": {"field": "cards", "type": "quantitative", "label": "Карточки", "format": "number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "path-task-coverage",
+        "title": "Потенциал практики по текущим путям",
+        "subtitle": "Task-like — editorial candidates; structured — нормализованный task object; Runtime binding — authoritative executable join.",
+        "showDescription": true,
+        "dataset": "pathTasks",
+        "sourceId": "brain-db",
+        "defaultSort": {"field": "cards", "direction": "desc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "path", "label": "Путь", "type": "text"},
+          {"field": "cards", "label": "Карточки", "type": "number"},
+          {"field": "taskLike", "label": "Task-like", "type": "number"},
+          {"field": "structured", "label": "Structured", "type": "number"},
+          {"field": "runtimeRefsInBrain", "label": "TaskFamily ref в Brain", "type": "number"},
+          {"field": "practiceSections", "label": "Practice sections", "type": "number"}
+        ]
+      },
+      {
+        "id": "route-blueprint",
+        "title": "Целевая композиция маршрутов",
+        "subtitle": "Shared-модули подключаются ссылками, а не копированием карточек в каждый язык.",
+        "showDescription": true,
+        "dataset": "routeBlueprint",
+        "sourceId": "workspace-contracts",
+        "defaultSort": {"field": "route", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "route", "label": "Route view", "type": "text"},
+          {"field": "native", "label": "Native corpus", "type": "text"},
+          {"field": "inherits", "label": "Shared modules", "type": "text"},
+          {"field": "criticalGap", "label": "Главный пробел", "type": "text"}
+        ]
+      },
+      {
+        "id": "domain-model",
+        "title": "Канонические сущности новой учебной модели",
+        "subtitle": "Разделяет источник контента, наблюдаемый навык, композицию пути и исполняемую ревизию.",
+        "showDescription": true,
+        "dataset": "domainModel",
+        "sourceId": "workspace-contracts",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field": "order", "label": "№", "type": "number"},
+          {"field": "term", "label": "Сущность", "type": "text"},
+          {"field": "meaning", "label": "Значение", "type": "text"},
+          {"field": "owner", "label": "Владелец", "type": "text"},
+          {"field": "invariant", "label": "Инвариант", "type": "text"}
+        ]
+      },
+      {
+        "id": "findings",
+        "title": "Реестр новых дефектов",
+        "subtitle": "Приоритет отражает влияние на возможность честно проходить платформу.",
+        "showDescription": true,
+        "dataset": "findings",
+        "sourceId": "brain-db",
+        "defaultSort": {"field": "severity", "direction": "asc"},
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {"field": "severity", "label": "Приоритет", "type": "text"},
+          {"field": "finding", "label": "Дефект", "type": "text"},
+          {"field": "evidence", "label": "Доказательство", "type": "text"},
+          {"field": "fix", "label": "Исправление", "type": "text"}
+        ]
+      }
+    ],
+    "blocks": [
+      {
+        "id": "technical-summary",
+        "type": "markdown",
+        "body": "# Question Brain → учебные маршруты: аудит извлечения контента и пересборки путей — 27 августа 2026\n\n## Техническое резюме\n\n**Brain уже содержит достаточно материала, чтобы радикально усилить платформу, но текущая модель извлекает лишь малую часть его учебной ценности.** В опубликованном release находятся 1 591 двуязычная production-карточка. Все они получили один `path_key` и один широкий `domain_key`, однако только 19 карточек имеют reviewed capability binding, только 6 доходят до конкретной Lab station, а активный question graph содержит 7 связей.\n\nВ корпусе найдено 245 task-like карточек, включая 48 нормализованных task objects, 901 карточку с practice section и 295 с Project Evidence. При этом learner projection объявляет все 1 591 карточку одним режимом `puzzle`, показывает ноль controlled-lab/workspace activities и не публикует в списке уже существующие follow-ups, traps, terms и practice.\n\n**Правильное решение — не копировать generic-вопросы в Node, Java, Go и .NET.** Question Brain должен хранить одну каноническую карточку и many-to-many placement на capabilities/modules. Языковой путь должен быть именованным `TrackView`, который композиционно подключает Universal CS Core, Backend Core, System Design, Behavioral/English и только затем language-native syllabus."
+      },
+      {
+        "id": "headline",
+        "type": "metric-strip",
+        "cardIds": ["published-cards", "station-bound", "graph-edges", "task-candidates", "structured-tasks", "runtime-bindings", "project-evidence"]
+      },
+      {
+        "id": "scope-definitions",
+        "type": "markdown",
+        "body": "## Что именно измерено\n\n**Grain корпуса:** одна текущая опубликованная production revision на `stable_key` в Question Brain release `question-release-d00a14931e607336`. Fixtures, migration и example content исключены.\n\n**Task-like card** — карточка, у которой task-oriented group, нормализованный `task` object или явно распознаваемая секция Task/Задача/Условие/Code Review/Walkthrough. Это очередь editorial triage, а не обещание, что каждая карточка обязана запускаться в sandbox.\n\n**Station-bound card** — карточка с reviewed capability bridge, который Lab может однозначно спроецировать в конкретную учебную station. Простой `path_key` или `domain_key` такой гарантии не даёт.\n\n**Learning layer** — уже написанный элемент урока: короткий ответ, механизм, follow-up, ловушка, обязательные термины или practice prompt. Счётчики source sections и learner list projection намеренно разделены."
+      },
+      {
+        "id": "path-result",
+        "type": "markdown",
+        "body": "## `path.system-design` стал складом shared-контента, а не настоящим путём\n\n568 карточек лежат в `path.system-design`: 235 distributed systems, 148 data/PostgreSQL, 76 HTTP/API, 61 delivery/observability, 33 OS/networking и 15 testing. Это именно тот общий backend-корпус, который нужен Node.js, Java, Go и .NET, но текущий singular `path_key` делает его внешним по отношению к каждому языковому пути.\n\nИз 135 topic labels только три встречаются более чем в одном пути. Следовательно, текущая модель почти не умеет выражать shared learning content. Нельзя лечить это массовым копированием: появятся расходящиеся ответы, прогресс и provenance. Нужны reusable modules и many-to-many path membership."
+      },
+      {"id": "path-chart", "type": "chart", "chartId": "path-card-distribution"},
+      {
+        "id": "layers-result",
+        "type": "markdown",
+        "body": "## Богатый материал уже существует, но learner index его обнуляет\n\nИсходные revisions содержат 900 наборов follow-up, 832 карточки с traps/common mistakes, 772 словаря must-say terms, 901 practice section и 295 project-evidence blocks. Детальная карточка умеет показать эти слои, но список Questions создаётся из урезанного catalog index: для всех 1 591 карточки `followUps=false`, `traps=false`, `terms=false`, `practice=false`.\n\nОтдельно обнаружена логическая ошибка readiness-фильтра: в русской проекции 989 карточек имеют short answer, но фильтр `learning-ready` возвращает все 1 591, включая элементы с `learningReady=false`; `guided` возвращает 0. Это делает readiness-фильтр аналитически и продуктово недостоверным."
+      },
+      {"id": "layer-chart", "type": "chart", "chartId": "source-layer-coverage"},
+      {
+        "id": "practice-result",
+        "type": "markdown",
+        "body": "## В Brain уже есть 245 кандидатов на практику, но runtime-контракт охватывает единицы\n\n197 task-like карточек не имеют нормализованного task object. Из 48 structured task objects только один содержит `task_family_key`; starter присутствует у одной карточки, walkthrough — у 25. Task Runtime отдельно и корректно публикует 20 revisions в 16 families и связывает их с 19 уникальными вопросами.\n\nЭто означает, что source material не следует автоматически превращать в sandbox tasks. Нужен triage каждого кандидата в один из режимов: `recall`, `predict`, `code`, `debug`, `design`, `incident`, `project checkpoint`, `behavioral rehearsal` или `external repository`. Только режимы `code/debug/data/incident`, имеющие детерминированный oracle, должны получать TaskFamily/TaskRevision."
+      },
+      {"id": "task-table", "type": "table", "tableId": "path-task-coverage"},
+      {
+        "id": "graph-result",
+        "type": "markdown",
+        "body": "## Активный graph release нельзя считать production curriculum graph\n\nАктивный release содержит 7 edges и создан актором `g5-concurrency-test`; в rationale встречается `g5 fixture decision`. Например, общий multi-language rate-limiter question объявляет Node.js Event Loop prerequisite, хотя C#, Java, Go и PostgreSQL revisions не требуют знания Node event loop.\n\nВ proposal queue находятся 2 001 related edges с confidence 1.0, почти полностью ведущие к архивным fixture-карточкам. Для learner path это хуже отсутствия графа: связь выглядит канонической, но создаёт ложный prerequisite. До пересборки production graph relations должны быть помечены как test-only и не участвовать в unlock или recommendation logic."
+      },
+      {
+        "id": "target-model-result",
+        "type": "markdown",
+        "body": "## Целевая модель: один контент, много path views\n\nПредлагаемый словарь устраняет перегрузку слова «путь». `QuestionCard` остаётся каноническим содержанием. `Capability` описывает наблюдаемый навык. `LearningModule` объединяет способности в повторно используемый блок. `TrackView` собирает конкретный маршрут из shared и native modules. `Activity` определяет способ практики. `TaskFamily` и `TaskRevision` остаются в Runtime.\n\nТак Node.js и Java используют одну карточку про идемпотентность, PostgreSQL isolation или observability, но получают разные language-native implementation activities и сохраняют единый mastery/evidence ledger."
+      },
+      {"id": "model-table", "type": "table", "tableId": "domain-model"},
+      {
+        "id": "routes-result",
+        "type": "markdown",
+        "body": "## Все языковые маршруты должны наследовать общий инженерный позвоночник\n\nКаждый backend route строится в одном порядке: diagnostic → Universal CS Core → language-native runtime → Backend Core → data/concurrency → distributed systems → production/observability → system design cases → behavioral/English → project defense. Сложность задаётся не номером вопроса, а `capability depth`, prerequisites и типом evidence.\n\nUniversal CS Core включает algorithms/data structures, complexity, OS/concurrency, testing и tooling. Backend Core включает HTTP/API, authentication/authorization, SQL/data modelling, caching, messaging, reliability, observability, security и delivery. Эти модули подключаются к Node.js, Java, Go, .NET и Python как ссылки на одну release-версию."
+      },
+      {"id": "route-table", "type": "table", "tableId": "route-blueprint"},
+      {
+        "id": "research-result",
+        "type": "markdown",
+        "body": "## Почему эта схема соответствует зрелым практикам\n\n[Exercism syllabus](https://exercism.org/docs/building/tracks/syllabus) разделяет Concept Exercises и Practice Exercises, требует language-specific concept tree и строит порядок через prerequisites. Практическая задача отдельно указывает concepts, которые она тренирует, и prerequisites; одна задача не обязана обучать новый concept.\n\n[1EdTech CASE](https://www.1edtech.org/standards/case) отделяет competency framework, competency items, associations и rubrics и использует стабильные идентификаторы для привязки контента и assessments. Это подтверждает необходимость отдельного capability graph вместо использования topic label как координаты.\n\n[Open edX Content Libraries](https://docs.openedx.org/en/latest/educators/how-tos/course_development/add_library_content_to_a_course.html) позволяют одному опубликованному content item переиспользоваться во многих courses. Это прямой аналог shared modules без копирования QuestionCard.\n\n[ACM CS2023](https://csed.acm.org/wp-content/uploads/2023/09/Version-Gamma.pdf) организует curriculum через knowledge areas и competency model, но оставляет packaging адаптивным. Следовательно, Brain должен владеть знаниями и связями, а Node/Java/Go/.NET routes — их разными композициями."
+      },
+      {
+        "id": "findings-result",
+        "type": "markdown",
+        "body": "## Что обязательно исправить до начала системного прохождения\n\nГлавная задача — не написать ещё сотню карточек, а восстановить доверие к координатам существующих 1 591. Сначала нормализуются topics и capability registry, затем строятся module placements, после этого из task-like corpus создаётся practice backlog и только потом публикуются новые route releases. Любой автоматический LLM mapping должен создавать proposal с evidence, но не выпускать prerequisite или TaskFamily без human review и executable proof."
+      },
+      {"id": "findings-table", "type": "table", "tableId": "findings"},
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "body": "## Методика, ограничения и проверки устойчивости\n\nПроверены current published revisions в PostgreSQL Question Brain, `/v1/catalog`, `/v1/quality`, активные graph и capability releases, Lab learner projections и Runtime catalog/relations. Количества source layers рассчитаны по нормализованным section titles; task-like union дедуплицирован по question id.\n\nАудит не утверждает, что все 245 task-like карточек должны стать code tasks: behavioral prompts и design cases требуют другого evidence. Также `Project Evidence` означает наличие блока в карточке, а не доказанную связь с конкретной project book. Полнота предметной области оценена по topic/title taxonomy, а не построчно по каждому длинному ответу; следующий editorial pass должен проверять карточки внутри каждого proposed module.\n\nQuality API показывает ноль технических warnings, но его текущие checks не измеряют педагогическую полноту graph, корректность shared-route composition или сохранность learning layers в learner projection."
+      },
+      {
+        "id": "next-steps",
+        "type": "markdown",
+        "body": "## Рекомендуемая последовательность реализации\n\n1. Заморозить текущий test graph release и запретить ему влиять на learner recommendations.\n2. Нормализовать три duplicate topic families и перестать использовать `stage_key = domain_key` как полноценную stage coordinate.\n3. Ввести `LearningModule`, `TrackViewModule`, `QuestionPlacement` и versioned association roles.\n4. Построить shared Universal CS и Backend Core modules поверх существующих 723 generic-path карточек, не копируя контент.\n5. Разложить 1 591 карточку по capability depth и role: diagnostic, core, prerequisite, follow-up, contrast, drill, project evidence.\n6. Исправить learner content projection и readiness filter; показывать реальные source layers.\n7. Провести editorial triage 245 task-like карточек и связать подходящие с TaskFamily или project checkpoint.\n8. Выпустить сначала Node.js route как reference implementation, затем Java, Go, .NET, Python и Frontend/Vue через те же shared modules.\n9. Добавить release guards: orphan question, orphan activity, false prerequisite, duplicate topic, missing evidence mode, language mismatch и path composition drift."
+      },
+      {
+        "id": "further-questions",
+        "type": "markdown",
+        "body": "## Вопросы, которые остаются проектными решениями\n\n- Должны ли Algorithms и Behavioral быть обязательными shared modules или selectable interview overlays?\n- Какой минимальный capability depth обязателен для Middle, Middle+ и Senior?\n- Какие из 295 Project Evidence blocks связываются с существующими project books, а какие требуют новых проектов?\n- Нужен ли Python production route сейчас или его следует оставить в library view до появления полноценного runtime family coverage?\n- Frontend route должен сохранить Angular/React historical corpus, но для текущего Vue-продукта отсутствует отдельный Vue syllabus — его нужно создать как native module, а не подменять общими frontend-карточками."
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-27T12:00:00+02:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [
+        {"cards": 1591, "stationBound": 6, "graphEdges": 7, "taskLike": 245, "structuredTasks": 48, "runtimeBoundQuestions": 19, "projectEvidence": 295}
+      ],
+      "paths": [
+        {"path": "System Design/shared", "cards": 568},
+        {"path": "Node.js + TypeScript", "cards": 294},
+        {"path": "Java + Spring", "cards": 191},
+        {"path": "Frontend", "cards": 161},
+        {"path": "Go", "cards": 130},
+        {"path": "Behavioral", "cards": 103},
+        {"path": ".NET + C#", "cards": 75},
+        {"path": "Algorithms", "cards": 52},
+        {"path": "Python", "cards": 17}
+      ],
+      "sourceLayers": [
+        {"layer": "Mechanism", "cards": 1416},
+        {"layer": "Answer", "cards": 1224},
+        {"layer": "Practice", "cards": 901},
+        {"layer": "Follow-ups", "cards": 900},
+        {"layer": "Traps", "cards": 832},
+        {"layer": "Terms", "cards": 772},
+        {"layer": "Project Evidence", "cards": 295}
+      ],
+      "pathTasks": [
+        {"path": "System Design/shared", "cards": 568, "taskLike": 66, "structured": 10, "runtimeRefsInBrain": 1, "practiceSections": 372},
+        {"path": "Node.js + TypeScript", "cards": 294, "taskLike": 35, "structured": 18, "runtimeRefsInBrain": 0, "practiceSections": 116},
+        {"path": "Java + Spring", "cards": 191, "taskLike": 10, "structured": 0, "runtimeRefsInBrain": 0, "practiceSections": 37},
+        {"path": "Frontend", "cards": 161, "taskLike": 8, "structured": 1, "runtimeRefsInBrain": 0, "practiceSections": 109},
+        {"path": "Go", "cards": 130, "taskLike": 47, "structured": 6, "runtimeRefsInBrain": 0, "practiceSections": 78},
+        {"path": "Behavioral", "cards": 103, "taskLike": 53, "structured": 0, "runtimeRefsInBrain": 0, "practiceSections": 72},
+        {"path": ".NET + C#", "cards": 75, "taskLike": 0, "structured": 0, "runtimeRefsInBrain": 0, "practiceSections": 54},
+        {"path": "Algorithms", "cards": 52, "taskLike": 19, "structured": 11, "runtimeRefsInBrain": 0, "practiceSections": 51},
+        {"path": "Python", "cards": 17, "taskLike": 7, "structured": 2, "runtimeRefsInBrain": 0, "practiceSections": 12}
+      ],
+      "routeBlueprint": [
+        {"order": 1, "route": "Backend · Node.js/TypeScript", "native": "294 cards · 13 Runtime revisions", "inherits": "Universal CS + Backend Core + System Design + Behavioral/English", "criticalGap": "289 questions visible in Node lane, but only a handful have station/capability placement"},
+        {"order": 2, "route": "Backend · Java/Spring", "native": "191 cards · 1 Runtime revision", "inherits": "Universal CS + Backend Core + System Design + Behavioral/English", "criticalGap": "10 task-like cards, zero structured tasks; Spring/Security/Data need finer capabilities"},
+        {"order": 3, "route": "Backend · Go", "native": "130 cards · 1 Runtime revision", "inherits": "Universal CS + Backend Core + System Design + Behavioral/English", "criticalGap": "47 task-like cards but only 6 structured; net/http, database/sql, pprof and testing are shallow"},
+        {"order": 4, "route": "Backend · .NET/C#", "native": "75 cards · 2 Runtime revisions", "inherits": "Universal CS + Backend Core + System Design + Behavioral/English", "criticalGap": "No task-like cards detected despite strong theory coverage"},
+        {"order": 5, "route": "Backend · Python", "native": "17 cards · no Runtime revision", "inherits": "Universal CS + Backend Core + System Design + Behavioral/English", "criticalGap": "Corpus and runtime are too small for a published production route"},
+        {"order": 6, "route": "Frontend · Vue/TypeScript", "native": "161 generic/Angular/React cards · no browser Runtime", "inherits": "Selected Universal CS + Web Core + Frontend System Design + Behavioral/English", "criticalGap": "No canonical Vue syllabus despite Vue being the product UI and target work stack"}
+      ],
+      "domainModel": [
+        {"order": 1, "term": "QuestionCard", "meaning": "Один канонический prompt с локалями и learning layers", "owner": "Question Brain", "invariant": "Не копируется между routes"},
+        {"order": 2, "term": "Capability", "meaning": "Наблюдаемый и проверяемый навык", "owner": "Question Brain registry", "invariant": "Stable identity; many-to-many domains and questions"},
+        {"order": 3, "term": "LearningModule", "meaning": "Версионированная композиция capabilities с внутренним prerequisite DAG", "owner": "Lab curriculum", "invariant": "Может быть shared или language-native"},
+        {"order": 4, "term": "TrackView", "meaning": "Node/Java/Go/.NET/Vue маршрут как ordered view над modules", "owner": "Lab curriculum", "invariant": "Не владеет копиями вопросов"},
+        {"order": 5, "term": "Activity", "meaning": "Recall, predict, code, debug, design, incident или defense", "owner": "Lab", "invariant": "Имеет явный evidence mode"},
+        {"order": 6, "term": "TaskFamily", "meaning": "Общая задача и capability contract для одной или нескольких реализаций", "owner": "Task Runtime", "invariant": "Может иметь несколько language revisions"},
+        {"order": 7, "term": "TaskRevision", "meaning": "Immutable runtime/profile/starter/hidden tests", "owner": "Task Runtime", "invariant": "Только deterministic execution даёт verdict"}
+      ],
+      "findings": [
+        {"rank": 1, "severity": "P0", "finding": "Активный semantic graph является test release", "evidence": "7 edges; actor g5-concurrency-test; fixture rationale", "impact": "Ложные prerequisites и recommendations", "fix": "Отделить test workspace/release; выпустить human-reviewed production graph"},
+        {"rank": 2, "severity": "P1", "finding": "Точная curriculum placement почти отсутствует", "evidence": "6 station-bound из 1 591; 19 capability-bound", "impact": "Вопросы нельзя последовательно включить в path", "fix": "Many-to-many QuestionPlacement + module release"},
+        {"rank": 3, "severity": "P1", "finding": "Path и content scope смешаны", "evidence": "568 shared backend cards заперты в path.system-design", "impact": "Node/Java/Go/.NET не наследуют общий backend core", "fix": "TrackView composition поверх reusable modules"},
+        {"rank": 4, "severity": "P1", "finding": "Learner list теряет богатые learning layers", "evidence": "Source: 900 follow-ups, 832 traps, 772 terms, 901 practice; list: 0", "impact": "Платформа выглядит пустее Brain и не использует готовый материал", "fix": "Версионированная summary projection реальных layer facts"},
+        {"rank": 5, "severity": "P1", "finding": "Readiness filter недостоверен", "evidence": "RU short answer 989, но learning-ready filter возвращает 1 591", "impact": "Нельзя отделить готовый урок от неполной карточки", "fix": "Фильтровать learningReady boolean и разделить content/placement/runtime readiness"},
+        {"rank": 6, "severity": "P1", "finding": "Task corpus не нормализован до activity contract", "evidence": "245 task-like; 48 structured; 1 task_family_key", "impact": "Большинство задач нельзя запустить или честно пометить external/design", "fix": "Editorial triage + TaskBrief/Activity/TaskFamily binding"},
+        {"rank": 7, "severity": "P1", "finding": "Все карточки проецируются как puzzle", "evidence": "1 591 puzzle; 0 controlled-lab/workspace/external-brief", "impact": "Тип обучения и ожидаемое evidence не различаются", "fix": "Опубликовать activity_kind и evidence_mode"},
+        {"rank": 8, "severity": "P2", "finding": "Topic taxonomy содержит нормализованные дубли", "evidence": "3 duplicate families: distributed resilience, Go select, Go sync", "impact": "Фильтры и агрегаты раздваиваются", "fix": "Canonical topic id + aliases + migration guard"},
+        {"rank": 9, "severity": "P2", "finding": "Metadata completeness не соответствует path ambition", "evidence": "978 missing lang; 42 missing level; 54 missing group", "impact": "Сложно строить level- и language-aware маршруты", "fix": "Accepted-values registry и release completeness thresholds"},
+        {"rank": 10, "severity": "P2", "finding": "Некоторые path/domain пары семантически неверны", "evidence": "Algorithms mapped to domain.runtime; Behavioral mapped to domain.testing", "impact": "Аналитика coverage и shared inheritance вводит в заблуждение", "fix": "Расширить domain registry: algorithms, engineering-practice, behavioral"},
+        {"rank": 11, "severity": "P2", "finding": "Vue syllabus отсутствует", "evidence": "Frontend содержит Angular/React/RxJS, но нет Vue topic family", "impact": "Платформа не обучает собственному активному UI stack", "fix": "Создать language-native Vue/TypeScript module и activity sequence"}
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "brain-db",
+      "label": "Question Brain production corpus and graph · captured 27 Aug 2026",
+      "href": "http://127.0.0.1:48127/v1/quality?workspace=fluent-interview",
+      "query": {
+        "engine": "PostgreSQL 18 + Question Brain HTTP API",
+        "description": "Current published production revisions, normalized sections, curriculum mappings, capability binding release, active graph release and task-like classifications.",
+        "executed_at": "2026-08-27T12:00:00+02:00",
+        "language": "sql",
+        "tables_used": ["content.question", "content.question_revision", "content.question_curriculum_mapping", "content.question_capability_binding_release_item", "content.question_graph_release", "content.question_edge_release"],
+        "filters": ["status=published", "content_kind=production", "current_revision only", "workspace=fluent-interview"],
+        "sql": "SELECT m.path_key, count(*) AS cards FROM content.question q JOIN content.question_revision r ON r.id=q.current_revision_id JOIN content.question_curriculum_mapping m ON m.revision_id=r.id WHERE q.status='published' AND q.content_kind='production' GROUP BY m.path_key;"
+      }
+    },
+    {
+      "id": "lab-live",
+      "label": "Fluent Lab learner projections · captured 27 Aug 2026",
+      "href": "http://localhost:47350/api/questions/query?locale=ru",
+      "query": {
+        "engine": "NestJS HTTP JSON projection",
+        "description": "Read-only learner question summary, filters, program coverage and station binding counters.",
+        "executed_at": "2026-08-27T12:00:00+02:00",
+        "language": "http",
+        "filters": ["learner mode=guided", "locale=en and ru", "published release only"],
+        "sql": "SELECT 1591 AS published_cards, 6 AS station_bound_cards, 1585 AS station_unbound_cards, 989 AS ru_learning_ready;"
+      }
+    },
+    {
+      "id": "runtime-live",
+      "label": "Task Runtime catalog and Lab relation join · captured 27 Aug 2026",
+      "href": "http://127.0.0.1:48227/v1/tasks",
+      "query": {
+        "engine": "Task Runtime + Lab HTTP JSON APIs",
+        "description": "Released runtime revisions, profiles, task families, capability keys and immutable question bindings.",
+        "executed_at": "2026-08-27T12:00:00+02:00",
+        "language": "http",
+        "filters": ["status=released", "current runtime release"],
+        "sql": "SELECT 20 AS task_revisions, 16 AS task_families, 19 AS released_question_bindings, 5 AS runtime_profiles;"
+      }
+    },
+    {
+      "id": "workspace-contracts",
+      "label": "Fluent Interview ownership contracts and curriculum boundary",
+      "query": {
+        "engine": "repository documents",
+        "description": "Workspace, Lab, Question Brain and Task Runtime AGENTS/CONTEXT ownership rules inspected read-only.",
+        "executed_at": "2026-08-27T12:00:00+02:00",
+        "language": "markdown",
+        "filters": ["current workspace contracts"],
+        "sql": "SELECT * FROM (VALUES ('QuestionCard','Question Brain'),('TaskRevision','Task Runtime'),('LearningModule','Fluent Lab'),('TrackView','Fluent Lab')) AS ownership(entity, owner);"
+      }
+    },
+    {
+      "id": "research",
+      "label": "Primary curriculum and reusable-content references",
+      "href": "https://exercism.org/docs/building/tracks/syllabus",
+      "query": {
+        "engine": "web research",
+        "description": "Official Exercism syllabus/concept/practice documentation, 1EdTech CASE, Open edX Content Libraries and ACM CS2023 reviewed for curriculum composition and competency modeling.",
+        "executed_at": "2026-08-27T12:00:00+02:00",
+        "language": "web",
+        "filters": ["official or primary sources", "current on 27 Aug 2026"]
+      }
+    }
+  ],
+  "package_info": {
+    "root": "docs/reports/question-brain-route-recomposition-audit-2026-08-27",
+    "manifestPath": "artifact.json",
+    "snapshotPath": "artifact.json"
+  }
+}

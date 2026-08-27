@@ -1,0 +1,18 @@
+{
+  "schema": "fluent-interview.two-audit-gate-tests.v1",
+  "wave": "W02",
+  "status": "pass-with-explicit-transitional-debt",
+  "passed": [
+    "canonical vocabulary is present in glossary and CONTEXT",
+    "ADR index includes module/placement, graph ownership and activity evidence decisions",
+    "generic-card duplication is explicitly rejected",
+    "existing learner projection validators reject private/source fields",
+    "versioned module/placement contract rejects duplicate joins, foreign/private fields and cycles",
+    "browser owner-boundary guard rejects new local verdicts and tracks 14 explicit W12 entries",
+    "development release verification passes server-owned route projections"
+  ],
+  "open": [
+    "replace 14 transitional browser derivations with LearningActionProjection in W12",
+    "versioned public Program projection for module/placement fields"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "reportVersion": "design-token-audit.v1",
+  "generatedAt": "2026-08-27T21:27:07.588Z",
+  "tokenFile": "fluent-engineering-vue/packages/design-tokens/tokens.css",
+  "policyFile": "docs/design-system/fluent-design-tokens.v1.md",
+  "valid": true,
+  "status": "pass",
+  "tokenCount": 116,
+  "requiredTokenCount": 49,
+  "missingTokens": [],
+  "duplicateThemeDeclarations": [],
+  "rawColourViolations": [],
+  "themeHooks": {
+    "explicitLight": true,
+    "explicitDark": true,
+    "systemFallback": true,
+    "reducedTransparency": true,
+    "reducedMotion": true
+  },
+  "missingThemeHooks": [],
+  "policySections": [
+    "Semantic roles",
+    "Scales",
+    "Tailwind policy",
+    "Material boundary",
+    "Ownership and change protocol"
+  ],
+  "missingPolicySections": [],
+  "featureRoots": [
+    "fluent-engineering-vue/apps/web/src",
+    "fluent-engineering-vue/packages/ui/src"
+  ],
+  "failures": []
+}

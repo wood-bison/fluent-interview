@@ -1,0 +1,8 @@
+{"command":"pnpm ci:inventory:check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"five child workflow inventories checked; no stale references; Vault coverage gap explicit"}
+{"command":"pnpm mode:guard:test","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"workspace mode guard negative matrix passed"}
+{"command":"pnpm release:verify:dev --out=docs/verification/two-audit-remediation/W03/release-verify-current.json","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"aggregate development release gate passed; 48 steps (47 pass, 1 provenance warning); productionPromotable remains false by policy"}
+{"command":"pnpm validation:matrix:check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"40 sampled web routes, 16 public API probes and release identity reconciliation passed"}
+{"command":"pnpm exec nx test learning-api --skip-nx-cache --runInBand","cwd":"/Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-lab","exitCode":0,"result":"167 suites passed; 731 tests passed; one suite skipped"}
+{"command":"pnpm e2e","cwd":"/Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-vue","exitCode":0,"result":"Vue E2E passed as part of aggregate gate"}
+{"command":"pnpm verify:schema:check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"current/current and previous/current Question Brain envelopes accepted; 13 contract tests passed"}
+{"command":"git diff --check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"root diff has no whitespace errors"}

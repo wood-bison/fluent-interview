@@ -1,0 +1,42 @@
+{
+  "schema": "fluent-interview.two-audit-baseline.v1",
+  "capturedAt": "2026-08-27T10:12:00+02:00",
+  "workspace": "/Users/sergeyzhechko/developer/fluent-interview",
+  "mode": "read-only",
+  "repos": [
+    {"name":"umbrella","path":".","branch":"main","head":"5ecc69f8d18f4e7e068855575c8db40f4053ea19","remote":"git@github-woodbison:wood-bison/fluent-interview.git","dirty":true},
+    {"name":"fluent-engineering-lab","path":"fluent-engineering-lab","branch":"main","head":"f2cb172706bb6386cfef4ad730891d0b83d2d4ec","remote":"git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git","dirty":true},
+    {"name":"fluent-engineering-vue","path":"fluent-engineering-vue","branch":"main","head":"345bc186afbfb1e5124f84655a98ccebb209d62c","remote":null,"dirty":true},
+    {"name":"fluent-question-brain","path":"fluent-question-brain","branch":"main","head":"e698fc2e76c6f8c27ec71dc6231f415467e8fe60","remote":"git@github-woodbison:wood-bison/fluent-question-brain.git","dirty":true},
+    {"name":"fluent-task-runtime","path":"fluent-task-runtime","branch":"main","head":"24639471e7f2e013b1e717f148bb10a0f0a93e98","remote":"git@github-woodbison:wood-bison/fluent-task-runtime.git","dirty":true},
+    {"name":"fluent-question-vault","path":"fluent-question-vault","branch":"codex/content-ozon-go-first10-2026-08-24","head":"f4d46228cd366c218b29423323da8fe8bad796f1","remote":"git@github.com:szhechko/fluent-question-vault.git","dirty":false}
+  ],
+  "composeProjects": {
+    "owned": ["fluent-engineering-lab","fluent-question-brain","fluent-task-runtime"],
+    "running": ["fluent-engineering-lab","fluent-question-brain","fluent-task-runtime"],
+    "externalObserved": [{"name":"spearad-test-stack","status":"exited(8)","owner":"/Users/sergeyzhechko/developer/neexen"}]
+  },
+  "readiness": {
+    "questionBrain": {"status":200,"url":"http://127.0.0.1:48127/health/ready","release":"question-release-d00a14931e607336","published":1591,"mapped":1591,"unmapped":0},
+    "taskRuntime": {"status":200,"url":"http://127.0.0.1:48227/v1/health/ready","release":"runtime-task-release-2026-08-26-qb-d00a1493-g10","runnable":true},
+    "labWeb": {"status":200,"url":"http://localhost:47350/"},
+    "labPackage": {"status":"not-started","url":"http://localhost:49300/onboarding"}
+  },
+  "observability": {
+    "jaeger": {"status":200,"url":"http://localhost:56686"},
+    "grafana": {"status":200,"url":"http://localhost:49304"},
+    "prometheus": {"status":200,"url":"http://localhost:49305"},
+    "loki": {"status":200,"url":"http://localhost:49306"}
+  },
+  "knownRisks": [
+    "All product roots except Vault are dirty; do not overwrite.",
+    "Vue has no remote and is not reproducible from a clean clone.",
+    "An external exited Compose project and unrelated containers are present; cleanup is out of scope.",
+    "Current Brain/Runtime/Lab release counts are structural, not proof of semantic placement or learner readiness."
+  ],
+  "checks": {
+    "pnpmStatusExit": 0,
+    "gitDiffCheckExit": 0,
+    "backupRestore": "not-run-in-W00-baseline; must be completed before W00 gate"
+  }
+}

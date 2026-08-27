@@ -1,0 +1,5 @@
+{"command":"pnpm status","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"three owned Compose projects healthy; Vue remote missing; product roots dirty"}
+{"command":"docker compose ls --all","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"fluent-engineering-lab, fluent-question-brain, fluent-task-runtime running; external spearad-test-stack exited"}
+{"command":"git diff --check","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"all current working-tree diffs whitespace-clean"}
+{"command":"bash scripts/backup-restore-smoke.sh","cwd":"/Users/sergeyzhechko/developer/fluent-interview/fluent-question-brain","exitCode":0,"result":"dump_bytes=126951879 restored_questions=6012"}
+{"command":"pnpm release:verify:dev","cwd":"/Users/sergeyzhechko/developer/fluent-interview","exitCode":0,"result":"valid=true; productionPromotable=false; all executable dev steps pass; package-provenance-plan warning"}

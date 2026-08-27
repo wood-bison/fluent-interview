@@ -1,0 +1,326 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "title": "Fluent Interview — путь к production",
+    "description": "Production closure audit: как превратить Brain, Runtime, Lab и Vue в полностью проходящую учебную платформу без заморозки разработки.",
+    "blocks": [
+      {
+        "id": "summary",
+        "type": "markdown",
+        "body": "# Fluent Interview — путь к production\n\n## Технический вывод\n\n**Проект не нужно замораживать и не нужно уменьшать его замысел.** Текущий продукт уже имеет здоровый umbrella workspace, 1 591 опубликованную карточку, 15 released TaskFamily и 19 runnable revisions. Но это пока большой инвентарь, а не доказанно полный curriculum: только 19 карточек имеют явный `capability_key`, shared-контент не собирается в path-scoped Questions, Java и Go считаются покрытыми одной задачей, а Frontend не содержит ни одной Vue-маркированной карточки.\n\nРешение — не скрывать пути, а построить производственный конвейер: CapabilityRegistry → Primary/Supporting placements → Lesson → native/shared TrackView → typed Activity → TaskFamily → language-specific TaskRevision → immutable release. Конечная Big-Tech цель: **2 300 production-core cards**, превращённых в **233 Lessons, 1 601 самостоятельный вопрос и 699 supporting prompts**, а также **168 executable families** и **456 runnable revisions**. Backend path получает 70 осмысленных activities, Vue — 50, System Design — 50. Все пробелы получают owner, research, provenance, tests, отдельный commit и новый release ID."
+      },
+      {
+        "id": "headline-strip",
+        "type": "metric-strip",
+        "cardIds": ["published", "ready", "capability", "families", "revisions", "target"]
+      },
+      {
+        "id": "implementation-progress",
+        "type": "markdown",
+        "body": "## Что уже начали реализовывать по этому плану\n\nW04/W06 Brain contract уже зафиксирован отдельным локальным commit `060b834708bd04875ebd122401e4319812d2f976`: release-pinned coverage targets, Primary/Supporting roles, core/supplemental/quarantine disposition и fail-closed ledger. W12 Runtime contract зафиксирован commit `cbcb8085ecbcb5d1b0bc01ab788dd5a9adc5c668`: TaskPortfolioManifest, corrected 168/456 target и validator против duplicate/foreign/stale drift. Оба коммита прошли focused/full tests и остаются не запушенными.\n\nWorkspace pins уже указывают на эти SHAs. Lab route-action gate пока не принимается в release: его текущий dirty implementation проходит 12/12 сценариев, но canonical W12 evidence-файл отсутствует и затронут чужими незакоммиченными изменениями. Это отдельный исправляемый stop-the-line item, а не повод скрывать проблему или смешивать commits."
+      },
+      {
+        "id": "definitions",
+        "type": "markdown",
+        "body": "## Что измерено, а что является целевым нормативом\n\n**Факт на 27 августа 2026:** проверены live Brain и Runtime releases; 1 591 published/mapped cards, 1 100 short-answer/content-ready, 491 incomplete, 48 structured task records, 15 released TaskFamily и 19 runnable TaskRevision. Точные release IDs доступны через source panel отчёта.\n\n**Норматив, предложенный этим аудитом:** минимальное role-based покрытие capability и target matrix по paths. Это продуктовая политика, а не «средняя цифра индустрии». Она выбрана так, чтобы агент не создавал filler и не мог закрыть 191 Java-вопрос одной Rate Limiter revision.\n\nЕдиницы нельзя смешивать: QuestionCard ≠ learner-visible Question ≠ Lesson ≠ TaskFamily ≠ TaskRevision ≠ Activity ≠ Attempt. Card — переиспользуемый атом Brain. Lesson — самодостаточная тема. Primary Question виден в маршруте; Supporting Prompt раскрывается внутри Lesson. Task живёт отдельно и появляется как Run только при compatible released revision."
+      },
+      {
+        "id": "learner-contract-copy",
+        "type": "markdown",
+        "body": "## Карточки не являются маршрутом: learner проходит Lessons, вопросы и практику\n\nBrain хранит атомарные карточки и их localized revisions. Lab не должен выводить их сырым списком. Production path собирается как `TrackView → Module → Lesson → Primary Question → Supporting Prompts → Activity → Evidence → cold repeat`. Один shared Card может поддерживать Java, Go и .NET через reviewed placements, но в каждом пути learner видит контекстный вопрос, а не копию текста.\n\nНапример, Java-path обещает 32 Lessons, 224 самостоятельных вопроса, 96 follow-up/edge prompts, 70 практических activities и 7 checkpoints. Supporting prompts не раздувают длину списка. Task-like материал Brain обязан получить disposition: executable Runtime family/revision, design/incident/spoken/project activity, brief либо reject. Поэтому **все полезные вопросы и задачи Brain действительно входят в приложение**, но только после нормализации, placement review и runtime/evidence gate."
+      },
+      { "id": "learner-contract-table-block", "type": "table", "tableId": "learner-contract" },
+      {
+        "id": "corpus-copy",
+        "type": "markdown",
+        "body": "## Главный дефицит — структура покрытия, а не исходный объём\n\nВосемь core lanes содержат 1 574 raw cards, но только 1 088 из них content-ready; ещё 17 Python cards относятся к preview. Поля `lang` заполнены лишь у 613 карточек и описывают скорее stack, чем controlled language; `runtime` отсутствует у всех 1 591. Поэтому language compatibility нельзя выводить из Brain metadata — она принадлежит immutable TaskRevision.\n\nТолько 19 карточек (1,2%) имеют `capability_key`. 126 карточек называются Practical Tasks, но лишь 41 из них имеют structured task; 85 требуют disposition `structured|brief|converted|rejected`. Frontend разбит на Angular/React/RxJS и содержит ноль Vue-marked cards. System Design, наоборот, стал catch-all контейнером на 568 cards и должен быть разложен на reviewed shared modules."
+      },
+      {
+        "id": "ready-chart-copy",
+        "type": "markdown",
+        "body": "### Текущая content-ready глубина крайне неравномерна\n\nГрафик показывает только текущие ready cards, а не mastery и не runtime readiness. Особенно велики пробелы в Go, Behavioral и language-native .NET; высокий System Design count ещё не доказывает правильную capability structure."
+      },
+      { "id": "ready-chart-block", "type": "chart", "chartId": "current-ready" },
+      { "id": "coverage-table-block", "type": "table", "tableId": "coverage-targets" },
+      {
+        "id": "quota-copy",
+        "type": "markdown",
+        "body": "## «70» — хороший масштаб пути практики, но плохая квота атомарной темы\n\nДля technical capability целевой bundle содержит 7 primary roles и 3 supporting roles; Algorithms используют 5 primary и 3 supporting. Hard gates — mandatory roles по capability kind, locales, provenance, reviewed placement и evidence policy. Coverage score только помогает приоритизировать и не может компенсировать missing practice или provenance.\n\nПлановые 794 новых cards и итог 2 368 ready являются provisional до W04: 418 non-ready records уже относятся к обязательной core-нормализации, ещё 68 System Design records требуют reviewed disposition. После unique-card/placement manifest агент обязан пересчитать exact IDs; filler ради сохранения старой цифры запрещён."
+      },
+      {
+        "id": "shared-copy",
+        "type": "markdown",
+        "body": "## Shared knowledge переиспользуется; runtime mechanisms остаются native\n\nEffective path должен вычисляться как `native modules + approved shared modules + optional overlays`. Сейчас `/questions?pathKey=` делает strict equality по source path, поэтому Java получает 191 cards вместо потенциальных 726, Go — 130 вместо 665, .NET — 75 вместо 610, Node — 294 вместо 862. Эти потенциальные числа не являются автоматически одобренным curriculum: сначала shared catch-all нужно разложить на reviewed modules и убрать дубли.\n\nRate limiter, idempotent consumer, cache stampede, circuit breaker, validation и часть algorithms подходят для одной TaskFamily с отдельными JS/TS/Java/Go/C# revisions. Event loop, JVM/JMM, goroutine ownership, .NET TAP и Vue reactivity изучают разные механизмы — для них нужны отдельные native families."
+      },
+      {
+        "id": "runtime-copy",
+        "type": "markdown",
+        "body": "## Runtime foundation сильный, но coverage gate сейчас даёт false positive\n\nSandbox уже ограничивает network, capabilities, mounts, CPU, memory, PID и wall clock. Архитектура `TaskFamily → TaskRevision` правильная; Rate Limiter уже доказывает reuse пятью языковыми revisions. Проблема в отчётности: G12 считает domain покрытым при `>0` revision и может приписать Node auth revision Java path.\n\nТекущая база — 15 released families и 19 runnable revisions. Production-usable checkpoint остаётся 48/92. Конечный Big-Tech target после устранения скрытого конфликта Algorithms — **168 families / 456 revisions**: 60 algorithm families ×5 languages, 12 shared backend families ×5, 16 native families для каждого из пяти runtime/UI tracks и 16 PostgreSQL families. Provisional gap — +153 families / +437 revisions; exact IDs подтверждает TaskPortfolioManifest."
+      },
+      { "id": "runtime-chart-block", "type": "chart", "chartId": "runtime-current" },
+      { "id": "practice-table-block", "type": "table", "tableId": "practice-targets" },
+      {
+        "id": "sources-copy",
+        "type": "markdown",
+        "body": "## Research подтверждает модель concept graph + повторная практика\n\n[Exercism track model](https://exercism.org/docs/building/tracks) разделяет concepts, concept exercises и practice exercises; [practice guidance](https://exercism.org/docs/building/tracks/practice-exercises) рекомендует несколько (обычно 3–8) осмысленных упражнений на concept и явные prerequisites, а не сотни дублей. [Concept Map](https://exercism.org/docs/building/tracks/concept-map) строится как prerequisite graph с различимыми available/complete/mastered states.\n\nНативные packs должны опираться на официальные механизмы: [Node event loop/worker pool](https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop), [Go concurrency](https://go.dev/doc/effective_go#concurrency), [C# async/TAP](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/), [Vue testing](https://vuejs.org/guide/scaling-up/testing) и [PostgreSQL indexes](https://www.postgresql.org/docs/current/indexes.html). Источники задают outcomes и edge cases; тексты, starter и hidden tests остаются оригинальными и получают license/provenance record."
+      },
+      {
+        "id": "waves-copy",
+        "type": "markdown",
+        "body": "## Исполнение: 21 release-wave и восемь точных path packs\n\nПлан начинается с authority и reproducibility, затем выпускает canonical manifests и truthful projection compiler до массового authoring. После этого отдельные Track Leads закрывают Node, Java, Go, .NET, Vue, Algorithms, System Design и Behavioral по exact primary/support/activity/checkpoint denominators. Parallel authoring разрешён bounded batches; release promotion всегда сериализован.\n\nПолный исполняемый чек-лист — `agent-production-closure-plan.md`. Он содержит stop-the-line rules, 18-step transaction contract для каждой W00–W20, batch/canary/rollback protocol, path-specific gaps и обязательные commits. Найденный content gap превращается в owned research item; он не замораживает остальные независимые packs."
+      },
+      { "id": "waves-table-block", "type": "table", "tableId": "waves" },
+      {
+        "id": "plan-copy",
+        "type": "markdown",
+        "body": "## Plan 2026 нужно обновить, а не использовать как ограничитель продукта\n\nMOC всё ещё говорит о 1 143 cards, ~24 tasks, Angular и July Event Loop. Tier 1 требует sandbox для каждой capability, хотя продукт уже поддерживает spoken/design/incident/project/external evidence. Tier 2 глобально locked, хотя Project Books могут быть видны как preview и открывать отдельные checkpoints по prerequisite capabilities.\n\nНовая модель разделяет четыре результата: `Product-ready`, `Pilot-ready`, `Plan-2026-ready`, `Learner mastered`. Software release не ждёт личного прохождения Сергея, а личный mastery не объявляется по зелёному implementation test."
+      },
+      { "id": "plan-table-block", "type": "table", "tableId": "plan-changes" },
+      {
+        "id": "validation-copy",
+        "type": "markdown",
+        "body": "## Как доказать, что production действительно достигнут\n\nФинальный gate выполняется на clean clone: `pnpm dev → pnpm status → pnpm verify`, exact Brain↔Runtime↔Lab↔Vue joins, full RU/EN/light/dark desktop crawl, 100% advertised Run URLs, fail/pass всех profiles, dependency-offline matrix, restart/rollback, 20-run flakiness checks и отсутствие leaked containers/volumes/processes.\n\nОтдельные semantic, runtime/security и design/a11y reviewers должны дать PASS; P0/P1 = 0. Green gate не считается доказательством, если его контракт не покрывает исходный дефект."
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "body": "## Ограничения и уровень уверенности\n\nВысокая уверенность: live release IDs, 1 591 unique cards, lane/raw/ready counts, 48 structured records, 15 released families и 19 runnable revisions. Средняя уверенность: semantic quality free-text `group`, topic и level; System Design core membership; primary/support role split — всё это должен материализовать W04 manifest. Норматив 2 300/168/456 — versioned product policy и может меняться только явным reviewed decision, не ради зелёного отчёта.\n\nАудит не утверждает, что provisional 794 prompts или 437 revisions уже реализованы. Он задаёт learner-visible результат, точный factory model, commit/rollback boundaries и gates. Authoritative counts после W04 берутся только из unique manifests."
+      }
+    ],
+    "cards": [
+      { "id": "published", "description": "Опубликованные production QuestionCard текущего Brain release.", "dataset": "headline", "sourceId": "brain", "metrics": [{"label":"Published cards","field":"published","format":"number"}] },
+      { "id": "ready", "description": "Карточки с текущим content-ready short-answer состоянием; не mastery.", "dataset": "headline", "sourceId": "brain", "metrics": [{"label":"Content-ready","field":"ready","format":"number"}] },
+      { "id": "capability", "description": "Карточки с явным capability_key; текущий sequenced graph coverage.", "dataset": "headline", "sourceId": "brain", "metrics": [{"label":"Capability-bound","field":"capabilityBound","format":"number"}] },
+      { "id": "families", "description": "Released TaskFamily текущего Runtime manifest.", "dataset": "headline", "sourceId": "runtime", "metrics": [{"label":"Released families","field":"releasedFamilies","format":"number"}] },
+      { "id": "revisions", "description": "Действительно runnable immutable revisions.", "dataset": "headline", "sourceId": "runtime", "metrics": [{"label":"Runnable revisions","field":"runnableRevisions","format":"number"}] },
+      { "id": "target", "description": "Предлагаемый минимум ready core placements; норматив, не текущий факт.", "dataset": "headline", "sourceId": "policy", "metrics": [{"label":"Production core target","field":"targetCore","format":"number"}] }
+    ],
+    "charts": [
+      {
+        "id": "current-ready",
+        "title": "Content-ready карточки по направлениям",
+        "subtitle": "Текущий Brain release; Python preview исключён из production-core сравнения.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Где текущий corpus уже глубок, а где требуется основное enrichment?",
+        "rationale": "Горизонтальные столбцы позволяют сравнить длинные названия направлений и один однородный показатель.",
+        "type": "bar",
+        "dataset": "coverage",
+        "sourceId": "brain",
+        "encodings": {
+          "x": {"field":"path","type":"nominal","label":"Направление"},
+          "y": {"field":"ready","type":"quantitative","label":"Content-ready cards","format":"number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      },
+      {
+        "id": "runtime-current",
+        "title": "Runnable revisions по runtime profiles",
+        "subtitle": "19 текущих revisions; Java и Go имеют только по одной совместимой revision.",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "Насколько равномерно реальное executable coverage?",
+        "rationale": "Один показатель по пяти профилям показывает дисбаланс без ложной domain projection.",
+        "type": "bar",
+        "dataset": "runtimeProfiles",
+        "sourceId": "runtime",
+        "encodings": {
+          "x": {"field":"profile","type":"nominal","label":"Runtime profile"},
+          "y": {"field":"revisions","type":"quantitative","label":"Runnable revisions","format":"number"}
+        },
+        "valueFormat": "number",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "learner-contract",
+        "title": "Что learner реально проходит в каждом production path",
+        "subtitle": "Primary Questions видны в маршруте; Supporting Prompts раскрываются внутри Lessons и не раздувают длину пути.",
+        "showDescription": true,
+        "dataset": "learnerPathTargets",
+        "sourceId": "policy",
+        "defaultSort": {"field":"order","direction":"asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field":"order","label":"№","type":"number"},
+          {"field":"path","label":"Путь","type":"text"},
+          {"field":"modulesLessons","label":"Modules / Lessons","type":"text"},
+          {"field":"primary","label":"Primary Questions","type":"number"},
+          {"field":"supporting","label":"Supporting","type":"number"},
+          {"field":"activities","label":"Activities","type":"number"},
+          {"field":"checkpoints","label":"Checkpoints","type":"number"}
+        ]
+      },
+      {
+        "id": "coverage-targets",
+        "title": "Question coverage: факт и стартовый production-норматив",
+        "subtitle": "Core target основан на capability roles; new minimum не включает filler и не требует удаления supplemental cards.",
+        "showDescription": true,
+        "dataset": "coverage",
+        "sourceId": "policy",
+        "defaultSort": {"field":"target","direction":"desc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field":"path","label":"Направление","type":"text"},
+          {"field":"capabilities","label":"Capabilities","type":"number"},
+          {"field":"current","label":"Сейчас raw / ready","type":"text"},
+          {"field":"target","label":"Core target","type":"number"},
+          {"field":"work","label":"Обязательная работа","type":"text"}
+        ]
+      },
+      {
+        "id": "practice-targets",
+        "title": "Practice coverage: текущий release и конечная модель",
+        "subtitle": "Activities на path переиспользуют shared families; families и revisions считаются отдельно.",
+        "showDescription": true,
+        "dataset": "practiceTargets",
+        "sourceId": "policy",
+        "defaultSort": {"field":"targetActivities","direction":"desc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field":"scope","label":"Scope","type":"text"},
+          {"field":"currentCompatible","label":"Сейчас compatible","type":"number"},
+          {"field":"targetActivities","label":"Target activities","type":"number"},
+          {"field":"composition","label":"Как достигается","type":"text"}
+        ]
+      },
+      {
+        "id": "waves",
+        "title": "Production closure waves",
+        "subtitle": "Каждая волна завершается новым immutable release/evidence; baseline не останавливает authoring.",
+        "showDescription": true,
+        "dataset": "waves",
+        "sourceId": "policy",
+        "defaultSort": {"field":"order","direction":"asc"},
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {"field":"order","label":"№","type":"number"},
+          {"field":"wave","label":"Волна","type":"text"},
+          {"field":"result","label":"Обязательный результат","type":"text"},
+          {"field":"exitGate","label":"Exit gate","type":"text"}
+        ]
+      },
+      {
+        "id": "plan-changes",
+        "title": "Что обязательно изменить в Plan 2026",
+        "subtitle": "Документация должна описывать текущий Vue-продукт и typed evidence, не старую Angular-фазу.",
+        "showDescription": true,
+        "dataset": "planChanges",
+        "sourceId": "plans",
+        "defaultSort": {"field":"rank","direction":"asc"},
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {"field":"rank","label":"№","type":"number"},
+          {"field":"area","label":"Раздел","type":"text"},
+          {"field":"stale","label":"Сейчас","type":"text"},
+          {"field":"required","label":"Production contract","type":"text"}
+        ]
+      }
+    ],
+    "sources": [
+      {"id":"brain"}, {"id":"runtime"}, {"id":"lab"}, {"id":"plans"}, {"id":"policy"}, {"id":"exercism"}, {"id":"official-docs"}
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-27T22:08:21+02:00",
+    "status": "ready",
+    "datasets": {
+      "headline": [{"published":1591,"ready":1100,"capabilityBound":19,"releasedFamilies":15,"runnableRevisions":19,"targetCore":2300}],
+      "coverage": [
+        {"path":"Node.js + NestJS","capabilities":32,"raw":294,"ready":173,"current":"294 / 173","target":320,"newMinimum":26,"normalize":121,"work":"+26 новых; 121 нормализовать"},
+        {"path":"Java + Spring","capabilities":32,"raw":191,"ready":126,"current":"191 / 126","target":320,"newMinimum":129,"normalize":65,"work":"+129 новых; 65 нормализовать"},
+        {"path":"Go","capabilities":28,"raw":130,"ready":65,"current":"130 / 65","target":280,"newMinimum":150,"normalize":65,"work":"+150 новых; 65 нормализовать"},
+        {"path":".NET + C#","capabilities":28,"raw":75,"ready":73,"current":"75 / 73","target":280,"newMinimum":205,"normalize":2,"work":"+205 новых; 2 нормализовать"},
+        {"path":"Frontend + Vue","capabilities":36,"raw":161,"ready":153,"current":"161 / 153","target":360,"newMinimum":199,"normalize":8,"work":"+199 новых; 8 нормализовать"},
+        {"path":"Algorithms","capabilities":15,"raw":52,"ready":37,"current":"52 / 37","target":120,"newMinimum":68,"normalize":15,"work":"+68 новых; 15 нормализовать"},
+        {"path":"System Design/shared","capabilities":50,"raw":568,"ready":435,"current":"568 / 435","target":500,"newMinimum":0,"normalize":65,"work":"65 core нормализовать; 68 supplemental классифицировать"},
+        {"path":"Behavioral","capabilities":12,"raw":103,"ready":26,"current":"103 / 26","target":120,"newMinimum":17,"normalize":77,"work":"+17 новых; 77 нормализовать"}
+      ],
+      "runtimeProfiles": [
+        {"profile":"Node.js (JS+TS)","revisions":12},
+        {"profile":"PostgreSQL","revisions":3},
+        {"profile":".NET","revisions":2},
+        {"profile":"Java","revisions":1},
+        {"profile":"Go","revisions":1}
+      ],
+      "practiceTargets": [
+        {"scope":"Node.js path","currentCompatible":14,"targetActivities":70,"composition":"12 algorithms + 12 shared backend + 16 native + 16 SQL + 8 infra + 6 project"},
+        {"scope":"Java path","currentCompatible":4,"targetActivities":70,"composition":"12 algorithms + 12 shared backend + 16 native + 16 SQL + 8 infra + 6 project"},
+        {"scope":"Go path","currentCompatible":4,"targetActivities":70,"composition":"12 algorithms + 12 shared backend + 16 native + 16 SQL + 8 infra + 6 project"},
+        {"scope":".NET path","currentCompatible":5,"targetActivities":70,"composition":"12 algorithms + 12 shared backend + 16 native + 16 SQL + 8 infra + 6 project"},
+        {"scope":"Vue path","currentCompatible":0,"targetActivities":50,"composition":"12 algorithms + 20 Vue/browser + 8 Web/API + 4 investigations + 6 project"},
+        {"scope":"Algorithms","currentCompatible":0,"targetActivities":60,"composition":"60 distinct problem families; language revisions selected inside family"},
+        {"scope":"System Design","currentCompatible":0,"targetActivities":50,"composition":"32 defense cases + 12 infra labs + 6 project"}
+      ],
+      "learnerPathTargets": [
+        {"order":1,"path":"Node.js + NestJS","modulesLessons":"6 / 32","primary":224,"supporting":96,"activities":70,"checkpoints":7},
+        {"order":2,"path":"Java + Spring","modulesLessons":"6 / 32","primary":224,"supporting":96,"activities":70,"checkpoints":7},
+        {"order":3,"path":"Go","modulesLessons":"5 / 28","primary":196,"supporting":84,"activities":70,"checkpoints":6},
+        {"order":4,"path":".NET + C#","modulesLessons":"5 / 28","primary":196,"supporting":84,"activities":70,"checkpoints":6},
+        {"order":5,"path":"Vue + Web","modulesLessons":"6 / 36","primary":252,"supporting":108,"activities":50,"checkpoints":7},
+        {"order":6,"path":"Algorithms","modulesLessons":"5 / 15","primary":75,"supporting":45,"activities":60,"checkpoints":6},
+        {"order":7,"path":"System Design","modulesLessons":"6 / 50","primary":350,"supporting":150,"activities":50,"checkpoints":7},
+        {"order":8,"path":"Behavioral","modulesLessons":"4 / 12","primary":84,"supporting":36,"activities":24,"checkpoints":5}
+      ],
+      "waves": [
+        {"order":0,"wave":"W00–W03","result":"Authority, reproducible workspace, docs sync, immutable baseline","exitGate":"Clean clone + exact release tuple + no-freeze charter"},
+        {"order":1,"wave":"W04–W05","result":"CapabilityRegistry, CoverageManifest, LearningModules","exitGate":"Нет empty mandatory modules; controlled keys"},
+        {"order":2,"wave":"W06–W07","result":"1 591-card normalization и safe expansion pipeline","exitGate":"100% disposition/provenance; failure injection"},
+        {"order":3,"wave":"W08–W09","result":"9 TrackViews и prerequisite DAG","exitGate":"Нет foreign-native leakage/cycles/duplicates"},
+        {"order":4,"wave":"W10–W11","result":"2 300 core question matrix и typed activities","exitGate":"Role score ≥0.90; 126 task-like dispositioned"},
+        {"order":5,"wave":"W12–W14","result":"Authoring contract, 24 shared и 80 native families","exitGate":"Cross-language conformance; 20-run flakiness zero"},
+        {"order":6,"wave":"W15–W17","result":"PostgreSQL, Vue/browser, design, infra и Project Books","exitGate":"Typed evidence; no fake Run; checkpoint prerequisites"},
+        {"order":7,"wave":"W18–W20","result":"Truthful learner loop, operations и production sign-off","exitGate":"Full crawl, all profiles fail/pass, 3 independent PASS"}
+      ],
+      "planChanges": [
+        {"rank":1,"area":"Объём","stale":"1 143 cards / ~24 tasks","required":"1 591 current; target ≥2 300 core; families/revisions отдельно"},
+        {"rank":2,"area":"Frontend","stale":"Angular primary","required":"Vue/TS primary; Angular historical/contrast evidence"},
+        {"rank":3,"area":"Evidence","stale":"Каждая capability = executable sandbox","required":"Typed recall, code, debug, design, incident, spoken, project и external contract"},
+        {"rank":4,"area":"Tier 2","stale":"Global hard lock","required":"Preview visible; individual checkpoints prerequisite-gated"},
+        {"rank":5,"area":"Current action","stale":"July Event Loop hard-coded","required":"Server-owned resume action или явный owner reset"},
+        {"rank":6,"area":"Source of truth","stale":"Legacy CLAUDE.md и несколько active plans","required":"AGENTS + CONTEXT + один active execution plan"}
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id":"brain",
+      "label":"Question Brain live production release · 27 Aug 2026",
+      "href":"http://127.0.0.1:48127/v1/quality?workspace=fluent-interview",
+      "query":{"engine":"Question Brain HTTP","description":"Published corpus, layers, path/domain mapping and capability bindings.","executed_at":"2026-08-27T21:00:00+02:00","language":"http","filters":["workspace=fluent-interview","published production release"],"sql":"SELECT 1591 AS published, 1100 AS content_ready, 491 AS incomplete, 19 AS capability_bound, 48 AS structured_tasks;"}
+    },
+    {
+      "id":"runtime",
+      "label":"Task Runtime manifest and current release · 27 Aug 2026",
+      "href":"http://127.0.0.1:48227/v1/task-families",
+      "query":{"engine":"Task Runtime HTTP + manifest","description":"Released families, runnable immutable revisions and runtime profiles.","executed_at":"2026-08-27T21:00:00+02:00","language":"http","filters":["released families","runnable revisions"],"sql":"SELECT 15 AS released_families, 19 AS runnable_revisions, 1 AS multi_revision_families;"}
+    },
+    {
+      "id":"lab",
+      "label":"Fluent Lab path projections and G12 coverage gate",
+      "href":"http://127.0.0.1:47000/api/program/map",
+      "query":{"engine":"NestJS HTTP + repository gates","description":"Track composition, Questions strict path filter, practice and readiness projections.","executed_at":"2026-08-27T21:00:00+02:00","language":"http","filters":["current release tuple","all nine paths"],"sql":"SELECT 9 AS paths, 7 AS practice_gap_domains, 2 AS paths_with_isolation_rules;"}
+    },
+    {
+      "id":"plans",
+      "label":"Plan 2026 and active repository execution plans",
+      "query":{"engine":"Markdown document audit","description":"MOC, Tier 1/2, weekly system, English plan, active closure and two-audit plans.","executed_at":"2026-08-27T21:00:00+02:00","language":"markdown","filters":["active documents","stale counts and links"],"sql":"SELECT 1143 AS stale_card_literal, 1591 AS current_published_cards;"}
+    },
+    {
+      "id":"policy",
+      "label":"Production coverage policy proposed by this audit",
+      "query":{"engine":"Deterministic coverage model","description":"Capability-role targets and TaskFamily/TaskRevision production thresholds derived from current gaps.","executed_at":"2026-08-27T21:30:00+02:00","language":"calculation","filters":["eight core lanes","Python excluded as preview"],"sql":"SELECT 2300 AS core_target, 794 AS minimum_new_cards, 120 AS target_families, 216 AS target_revisions;"}
+    },
+    {"id":"exercism","label":"Exercism official track-building documentation","href":"https://exercism.org/docs/building/tracks"},
+    {"id":"official-docs","label":"Official Node, Go, Microsoft, Vue and PostgreSQL documentation","href":"https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop"}
+  ]
+}

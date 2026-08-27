@@ -1,0 +1,4 @@
+{"command":"pnpm --dir fluent-engineering-vue e2e","result":"pass; 76 scenarios across macbook-pro-16-light and studio-display-dark"}
+{"command":"pnpm --dir fluent-engineering-vue exec playwright test --grep \"restores route history\"","result":"pass; 2 scenarios prove Back/Forward, exact runtime identity and nested scroll/reload restoration"}
+{"command":"pnpm --dir fluent-engineering-vue check","result":"pass; typecheck, lint, Vitest and Vite build"}
+{"command":"pnpm release:verify:dev --out=docs/verification/two-audit-remediation/W03/release-verify-current.json","result":"pass; aggregate includes Vue E2E and desktop visual/regression checks"}

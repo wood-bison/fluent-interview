@@ -1,6 +1,6 @@
 # AGENTS.md — Fluent Interview workspace
 
-This directory is a workspace umbrella for four independent repositories. It
+This directory is a workspace umbrella for five independent repositories. It
 is not a source monorepo and it must not become a second owner of application
 code, databases, question content, or task execution.
 
@@ -20,6 +20,7 @@ fluent-engineering-lab/   Nest learner API, curriculum projection, progress
 fluent-engineering-vue/   only learner/operator web UI (Vue 3 + Vite)
 fluent-question-brain/    canonical questions, locales, graph, search, releases
 fluent-task-runtime/      task revisions, sandboxes, hidden tests, run traces
+fluent-question-vault/    Git history mirror of the Obsidian question cards
 workspace.yaml             repository pins, ports, readiness, launch contract
 package.json               short pnpm entrypoints for the workspace launcher
 scripts/up.sh              start dependencies and the Lab
@@ -27,13 +28,17 @@ scripts/down.sh            stop the workspace without deleting volumes
 scripts/status.sh          health, Compose, Git, and port report
 ```
 
-Each child directory retains its own `.git`, `main` branch, tests, release
+Each child directory retains its own `.git`, canonical branch, tests, release
 policy, and remote. The workspace scripts coordinate them but never bypass a
-service boundary.
+service boundary. A content mirror may temporarily be checked out on a
+review branch; that does not make it a second runtime source of truth.
 
 ## Ownership rules
 
 - Question Brain is the only question/content authority.
+- Question Vault is a history mirror for Obsidian cards, not a runtime content
+  authority. Edit the Obsidian source and refresh the mirror through the Lab
+  content workflow; never make learner APIs read it directly.
 - Task Runtime is the only learner-code execution authority.
 - Fluent Lab owns learner API, progress, evidence, and the released projection;
   the sibling Vue workspace owns all browser rendering.
@@ -52,6 +57,10 @@ service boundary.
   the Vue workspace is a local web repository served by the Lab launcher.
 - `fluent-interview` is the orchestrator, not a fourth Compose project; stack
   provenance must always point into this workspace checkout.
+- Every active repository used by this product lives directly below this
+  directory and keeps its own `.git`, history, branch policy, and remote. A
+  sibling `fluent-*` directory under `developer/` is considered stale until it
+  is explicitly classified in `docs/WORKSPACE-TOPOLOGY.md`.
 - Normal shutdown removes required services and any enabled Lab profiles while
   preserving named durable volumes. Do not leave an optional profile running
   by accident when it is not part of the current check.

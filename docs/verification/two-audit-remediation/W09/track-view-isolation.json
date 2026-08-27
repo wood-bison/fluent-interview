@@ -1,0 +1,33 @@
+{
+  "reportVersion": "track-view-isolation-gate.v1",
+  "generatedAt": "2026-08-27T20:15:53.964Z",
+  "learningApiUrl": "http://127.0.0.1:47000",
+  "brainApiUrl": "http://127.0.0.1:48127",
+  "programRelease": {
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "manifestVersion": "2026.08.02",
+    "status": "released"
+  },
+  "brainReleaseId": "question-release-d00a14931e607336",
+  "valid": true,
+  "summary": {
+    "pathCount": 9,
+    "domainCount": 9,
+    "brainQuestionCount": 1591,
+    "pathCounts": {
+      "path.algorithms": 52,
+      "path.behavioral": 103,
+      "path.dotnet-csharp": 75,
+      "path.frontend": 161,
+      "path.go": 130,
+      "path.java-spring": 191,
+      "path.nodejs-typescript": 294,
+      "path.python": 17,
+      "path.system-design": 568
+    },
+    "isolatedPathCount": 2
+  },
+  "violations": [],
+  "warnings": [],
+  "contentDigest": "bb82f5cee7f6f644461d69390e7ae02177e2232719a8b17fbe473eb3c070f4b8"
+}

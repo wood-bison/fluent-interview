@@ -1,0 +1,14 @@
+{
+  "wave": "W08",
+  "capturedAt": "2026-08-27T11:10:00Z",
+  "workspace": "fluent-interview",
+  "brainReleaseId": "question-release-d00a14931e607336",
+  "graphReleaseId": "question-graph-release-e3b0c44298fc1c14",
+  "publishedCards": 1591,
+  "previousModuleRelease": null,
+  "knownFamilies": 17,
+  "notes": [
+    "Before W08 there was a versioned placement contract in Lab but no generated release covering the live catalogue.",
+    "The baseline is read-only and does not copy Brain answer/private fields."
+  ]
+}
