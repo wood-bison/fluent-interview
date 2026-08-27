@@ -21,7 +21,7 @@ production-ready**.
 | Fluent Lab | `c8f73c37c642a65a42127b9696022f9fbd59e4d8` | final live evidence refresh after runtime/Jaeger operational repair |
 | Fluent Lab | `957e15ef5d58b9c2d6c809c714b330afac112e6e` | owner-boundary/glossary evidence refreshed during verifier parser repair |
 | Fluent Lab | `a82696b79ddd05116c71ca4d8f2efb1f28b6de7c` | deterministic verifier evidence captured after the final clean-child rehearsal |
-| Fluent Lab | `9ac8b11372cebe28ed9082469a796e893338e8a0` | joined capability binding release `question-capability-release-e7d6f9ad743d4f43`; path projection/backlog refreshed |
+| Fluent Lab | `a8dca51ef733c1c599cde7a4e93625c669ca8765` | joined capability binding release `question-capability-release-e7d6f9ad743d4f43`; path projection/backlog and post-release gate evidence refreshed |
 | Vue learner | `1ddcc83f2c6a920a3d3e49c9a2fdc4075a8f8cc4` | consolidated route/runtime parity, reusable UI runtime picker and E2E/visual matrix |
 | Question Brain | `0baa8ef5a3dcc0fcf848831833e585824ec57fcb` | domain-separated graph release, evidence guards, migrations and graph-release audit |
 | Question Brain | `d45c6966979f62a1cd9178a9543ff40d6ac2f53` | auditable integrity-remediation endpoint for revoking an invalid accepted capability proposal |
