@@ -263,8 +263,8 @@ if (dev) {
     cwd: root,
     env: {
       PATH_COMPLETION_MANIFEST: path.join(labRoot, 'docs/manifests/path-completion-development-2026-08-27.json'),
-      CAPABILITY_BINDING_MANIFEST: path.join(root, 'fluent-question-brain/docs/verification/G10-capability-binding-manifest-2026-08-28.json'),
-      CAPABILITY_BINDING_REPORT: path.join(root, 'fluent-question-brain/docs/verification/G10-capability-binding-release-2026-08-28.json'),
+      CAPABILITY_BINDING_MANIFEST: path.join(root, 'fluent-question-brain/docs/verification/G11-capability-binding-manifest-2026-08-28.json'),
+      CAPABILITY_BINDING_REPORT: path.join(root, 'fluent-question-brain/docs/verification/G11-capability-binding-release-2026-08-28.json'),
       QUESTION_COVERAGE_BACKLOG_JSON: path.join(root, 'docs/verification/two-audit-remediation/W13/question-coverage-authoring-backlog.json'),
       QUESTION_COVERAGE_BACKLOG_MD: path.join(root, 'docs/verification/two-audit-remediation/W13/question-coverage-authoring-backlog.md'),
     },
