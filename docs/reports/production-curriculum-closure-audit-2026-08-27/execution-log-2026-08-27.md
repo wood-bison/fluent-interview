@@ -1,7 +1,7 @@
 # Исполнительный журнал production-closure — 27 августа 2026
 
-Статус этого журнала: **обновлён после bounded wave; продукт ещё не
-production-ready**.
+Статус этого журнала: **обновлён после G8–G10 bounded waves; продукт ещё не
+production-ready**. Последнее обновление: 28 августа 2026.
 
 ## Что принято
 
@@ -28,9 +28,11 @@ production-ready**.
 | Question Brain | `79ffe30effb9fd0881921768991f87129e6b1cac` | event-loop binding wave evidence: ten reviewed placements and immutable release `e7d6f9ad743d4f43` |
 | Question Brain | `c5707d43964f6212d0f123fc0398ae75746056a4` | G8 streams/backpressure wave: eight reviewed Node candidates and immutable release `d4af7d903f948362` |
 | Fluent Lab | `a81c8742ad85c6f66e2b98759d99458d86cf4051` + `9b14b316af2a2f59ef63cd24acc73081aac54ef9` | consumed G8 binding release and refreshed the path-completion backlog |
+| Question Brain | `8d9daf054f480be583d1add4bcfe9fbc357e08c9` | G10 memory/concurrency wave: eleven valid Node supporting bindings; one path-mismatched proposal revoked through integrity API; immutable release `52e0e40e9fb286c1` |
+| Fluent Lab | `a22d8cecf6dac74e7036065e46c2604d8b695182` | consumed G10 binding release and refreshed path projection/backlog |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `d4af7d903f948362`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `52e0e40e9fb286c1`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -46,7 +48,7 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - graph release, learning-module release, TrackView isolation;
 - path completion и path-completion backlog;
 - Task Runtime portfolio backlog (`590` open items: `153` families + `437` revisions);
-- cross-repo Question Brain coverage backlog (`1563` exact path/card items,
+- cross-repo Question Brain coverage backlog (`1535` exact path/card items,
   16 bounded waves; all currently `theory_only` and intentionally unbound);
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
@@ -71,14 +73,15 @@ evidence. Строгий production-профиль по-прежнему отд�
 остаётся `productionReady=false`: опубликованный slice всё ещё не содержит
 lesson/checkpoint registry, а supporting/activity coverage не достигает
 learner contract 1601/699/464/51. Точные текущие IDs и blockers остаются в
-этом manifest; новая G8 волна закрыла только восемь reviewed supporting
-bindings, а не весь production gap.
+этом manifest; G8 и G10 волны закрыли только reviewed supporting bindings,
+а не весь production gap. Текущий manifest digest:
+`acc5cd3341b707ca4c26f52493fc160e2969af83e35f0bf807c64bd2c1967fae`.
 
 Новая очередь
 `fluent-engineering-lab/docs/manifests/path-completion-backlog-2026-08-27.json`
-содержит 3628 стабильных открытых items:
+содержит 3608 стабильных открытых items:
 
-- 1555 `capability-binding` review;
+- 1535 `capability-binding` review;
 - 699 `supporting-prompt` authoring;
 - 431 `activity` authoring/binding;
 - 334 missing `primary-question` slots;
@@ -97,7 +100,7 @@ filler-контент. Он адресует exact compatibility gaps у изв�
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
 
 Question coverage backlog (`docs/verification/two-audit-remediation/W13`) не
-пытается «угадать» capability по prompt. Он сверяет все 1555 unresolved IDs с
+пытается «угадать» capability по prompt. Он сверяет все 1535 unresolved IDs с
 Brain revision/hash и canonical binding report, объединяет capability/role
 issues в один path/card item и требует новый immutable Brain release перед
 пересборкой Lab projection. Десять event-loop items удалены из очереди только
@@ -109,16 +112,17 @@ items закрыты в G8 тем же способом.
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Финальный полный прогон от `2026-08-27T22:18:08.047Z` завершился `valid=true`:
+Финальный полный прогон от `2026-08-27T22:25:41.112Z` завершился `valid=true`:
 51/51 шагов (`lab-check`, `vue-check`, readiness, graph/path/content gates,
 runtime failure matrix, accessibility, desktop visual/regression и Vue E2E)
 прошли с новым Brain/Lab release tuple. `productionPromotable=false` является ожидаемым результатом режима
 `--dev`, а не ошибкой проверки.
 
-В этом прогоне использованы манифесты
-`fluent-question-brain/docs/verification/G8-capability-binding-manifest-2026-08-28.json`
-и `G8-capability-binding-release-2026-08-28.json`; release tuple теперь
-`question-capability-release-d4af7d903f948362`.
+В этом прогоне использовались манифесты G8. После него выпущен G10; его
+манифесты `fluent-question-brain/docs/verification/G10-capability-binding-manifest-2026-08-28.json`
+и `G10-capability-binding-release-2026-08-28.json` содержат текущий release
+tuple `question-capability-release-52e0e40e9fb286c1`; этот прогон прошёл уже
+после обновления root pins.
 
 ## Следующая волна
 

@@ -13,7 +13,7 @@ repositories:
     role: learning-api
     remote: git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
     branch: main
-    revision: 2fa398711f3625191455591c46c1eb5c0eae2fcd
+    revision: 11d16320cc73660ca8b208c44d3e7086f09796fe
   - id: fluent-engineering-vue
     path: fluent-engineering-vue
     role: learner-web
@@ -25,7 +25,7 @@ repositories:
     role: question-source-of-truth
     remote: git@github-woodbison:wood-bison/fluent-question-brain.git
     branch: main
-    revision: c5707d43964f6212d0f123fc0398ae75746056a4
+    revision: 8d9daf054f480be583d1add4bcfe9fbc357e08c9
   - id: fluent-task-runtime
     path: fluent-task-runtime
     role: task-execution-authority
