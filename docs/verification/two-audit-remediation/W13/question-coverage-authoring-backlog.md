@@ -2,18 +2,18 @@
 
 Status: **OPEN**; productionReady: **false**
 Question release: `question-release-d00a14931e607336`
-Capability binding release: `question-capability-release-e7d6f9ad743d4f43`
+Capability binding release: `question-capability-release-d4af7d903f948362`
 
 Это answer-free очередь редакторской работы. Она не создаёт capability, role, prompt или ответ и не меняет опубликованный Question Brain release.
 
-- Open items: **1563**; unique Brain questions: **1563**; repeated across paths: **0**.
+- Open items: **1555**; unique Brain questions: **1555**; repeated across paths: **0**.
 - Bounded waves: **16**; batch size: **100**; auto-binding: **нет**; filler: **запрещён**.
 
 ## По путям
 
 | Path | Capability review | Question-role review | Open items |
 | --- | ---: | ---: | ---: |
-| Node.js + TypeScript | 273 | 0 | 273 |
+| Node.js + TypeScript | 265 | 0 | 265 |
 | Java + Spring | 191 | 0 | 191 |
 | Go | 130 | 0 | 130 |
 | .NET + C# | 74 | 0 | 74 |
@@ -25,7 +25,7 @@ Capability binding release: `question-capability-release-e7d6f9ad743d4f43`
 
 ## Действия
 
-- `review-capability-binding`: **1563**
+- `review-capability-binding`: **1555**
 
 ## Правило закрытия
 
@@ -39,4 +39,4 @@ pnpm coverage:backlog
 pnpm coverage:backlog:check
 ```
 
-Stable content digest: `1171bf9c1514302b660d40070c462680ae763aa7c60952c807e41fed291886eb`
+Stable content digest: `a5d44638a5d721f6b8577c87a8e83e281160aa439ab3884d552aeea3bab6b659`

@@ -26,9 +26,11 @@ production-ready**.
 | Question Brain | `0baa8ef5a3dcc0fcf848831833e585824ec57fcb` | domain-separated graph release, evidence guards, migrations and graph-release audit |
 | Question Brain | `d45c6966979f62a1cd9178a9543ff40d6ac2f53` | auditable integrity-remediation endpoint for revoking an invalid accepted capability proposal |
 | Question Brain | `79ffe30effb9fd0881921768991f87129e6b1cac` | event-loop binding wave evidence: ten reviewed placements and immutable release `e7d6f9ad743d4f43` |
+| Question Brain | `c5707d43964f6212d0f123fc0398ae75746056a4` | G8 streams/backpressure wave: eight reviewed Node candidates and immutable release `d4af7d903f948362` |
+| Fluent Lab | `a81c8742ad85c6f66e2b98759d99458d86cf4051` + `9b14b316af2a2f59ef63cd24acc73081aac54ef9` | consumed G8 binding release and refreshed the path-completion backlog |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `e7d6f9ad743d4f43`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `d4af7d903f948362`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -66,16 +68,17 @@ evidence. Строгий production-профиль по-прежнему отд�
 ## Текущая projection и честный разрыв
 
 `fluent-engineering-lab/docs/manifests/path-completion-development-2026-08-27.json`
-остаётся `productionReady=false`, потому что опубликованный slice содержит
-1591 primary placement, 0 supporting prompts, 33 activities и 0 checkpoints,
-а learner contract требует 1601/699/464/51. Перечень разрывов по путям и
-точные question IDs остаются в этом manifest.
+остаётся `productionReady=false`: опубликованный slice всё ещё не содержит
+lesson/checkpoint registry, а supporting/activity coverage не достигает
+learner contract 1601/699/464/51. Точные текущие IDs и blockers остаются в
+этом manifest; новая G8 волна закрыла только восемь reviewed supporting
+bindings, а не весь production gap.
 
 Новая очередь
 `fluent-engineering-lab/docs/manifests/path-completion-backlog-2026-08-27.json`
-содержит 3636 стабильных открытых items:
+содержит 3628 стабильных открытых items:
 
-- 1563 `capability-binding` review;
+- 1555 `capability-binding` review;
 - 699 `supporting-prompt` authoring;
 - 431 `activity` authoring/binding;
 - 334 missing `primary-question` slots;
@@ -94,22 +97,28 @@ filler-контент. Он адресует exact compatibility gaps у изв�
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
 
 Question coverage backlog (`docs/verification/two-audit-remediation/W13`) не
-пытается «угадать» capability по prompt. Он сверяет все 1563 unresolved IDs с
+пытается «угадать» capability по prompt. Он сверяет все 1555 unresolved IDs с
 Brain revision/hash и canonical binding report, объединяет capability/role
 issues в один path/card item и требует новый immutable Brain release перед
 пересборкой Lab projection. Десять event-loop items удалены из очереди только
-после explicit accepted review и нового Brain release.
+после explicit accepted review и нового Brain release; ещё восемь stream
+items закрыты в G8 тем же способом.
 
 Дополнительный cross-repository fix устранил identity drift: Lab больше не
 вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Финальный прогон от `2026-08-27T22:07:17.174Z` завершился `valid=true`:
+Финальный полный прогон от `2026-08-27T22:18:08.047Z` завершился `valid=true`:
 51/51 шагов (`lab-check`, `vue-check`, readiness, graph/path/content gates,
 runtime failure matrix, accessibility, desktop visual/regression и Vue E2E)
 прошли с новым Brain/Lab release tuple. `productionPromotable=false` является ожидаемым результатом режима
 `--dev`, а не ошибкой проверки.
+
+В этом прогоне использованы манифесты
+`fluent-question-brain/docs/verification/G8-capability-binding-manifest-2026-08-28.json`
+и `G8-capability-binding-release-2026-08-28.json`; release tuple теперь
+`question-capability-release-d4af7d903f948362`.
 
 ## Следующая волна
 
