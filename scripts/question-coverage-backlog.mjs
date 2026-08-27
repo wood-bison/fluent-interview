@@ -21,11 +21,11 @@ const pathManifestPath = path.resolve(
 );
 const bindingManifestPath = path.resolve(
   process.env.CAPABILITY_BINDING_MANIFEST ??
-    path.join(root, 'fluent-question-brain/docs/verification/G7-capability-binding-manifest-2026-08-25.json'),
+    path.join(root, 'fluent-question-brain/docs/verification/G7-capability-binding-manifest-2026-08-27.json'),
 );
 const bindingReportPath = path.resolve(
   process.env.CAPABILITY_BINDING_REPORT ??
-    path.join(root, 'fluent-question-brain/docs/verification/G7-capability-binding-report-2026-08-25.json'),
+    path.join(root, 'fluent-question-brain/docs/verification/G7-capability-binding-release-2026-08-27.json'),
 );
 const outputPath = path.resolve(
   process.env.QUESTION_COVERAGE_BACKLOG_JSON ??
