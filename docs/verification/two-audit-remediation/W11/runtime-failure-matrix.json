@@ -1,6 +1,6 @@
 {
   "reportVersion": "runtime-failure-matrix-gate.v1",
-  "generatedAt": "2026-08-27T22:52:28.379Z",
+  "generatedAt": "2026-08-27T23:06:35.202Z",
   "runtimeUrl": "http://127.0.0.1:48227",
   "valid": true,
   "status": "pass",
@@ -16,9 +16,9 @@
     {
       "id": "pass",
       "status": "pass",
-      "detail": "HTTP 200, status=pass, duration=220ms",
+      "detail": "HTTP 200, status=pass, duration=206ms",
       "taskId": "node-rate-limiter-001",
-      "correlationId": "audit-failure-pass-mtc4apmt",
+      "correlationId": "audit-failure-pass-mtc4suup",
       "httpStatus": 200,
       "observedStatus": "pass",
       "expectedStatus": "pass",
@@ -26,14 +26,14 @@
       "noPrivateLeakage": true,
       "testCount": 4,
       "sourceDigest": "3722c0e5fd4d6e7007d39fc411f4e0923461277aba0df23e9573337bfc9d6ca3",
-      "durationMs": 220.395
+      "durationMs": 206.444
     },
     {
       "id": "go-pass",
       "status": "pass",
-      "detail": "HTTP 200, status=pass, duration=11632ms",
+      "detail": "HTTP 200, status=pass, duration=11809ms",
       "taskId": "go-rate-limiter-001",
-      "correlationId": "audit-failure-go-pass-mtc4aptn",
+      "correlationId": "audit-failure-go-pass-mtc4sv16",
       "httpStatus": 200,
       "observedStatus": "pass",
       "expectedStatus": "pass",
@@ -41,14 +41,14 @@
       "noPrivateLeakage": true,
       "testCount": 4,
       "sourceDigest": "5f106fe9492226f8090a72e9b7b8190eb1dc7aa3029200009a689758b37eb727",
-      "durationMs": 11632.267
+      "durationMs": 11809.055
     },
     {
       "id": "java-pass",
       "status": "pass",
-      "detail": "HTTP 200, status=pass, duration=635ms",
+      "detail": "HTTP 200, status=pass, duration=659ms",
       "taskId": "java-rate-limiter-001",
-      "correlationId": "audit-failure-java-pass-mtc4ayza",
+      "correlationId": "audit-failure-java-pass-mtc4t4bl",
       "httpStatus": 200,
       "observedStatus": "pass",
       "expectedStatus": "pass",
@@ -56,14 +56,14 @@
       "noPrivateLeakage": true,
       "testCount": 4,
       "sourceDigest": "f4bf0cd1e7d51967121266782e6f397625f24882f6faf03a81e71b801a33e01a",
-      "durationMs": 634.644
+      "durationMs": 659.128
     },
     {
       "id": "csharp-pass",
       "status": "pass",
-      "detail": "HTTP 200, status=pass, duration=1854ms",
+      "detail": "HTTP 200, status=pass, duration=1961ms",
       "taskId": "csharp-rate-limiter-001",
-      "correlationId": "audit-failure-csharp-pass-mtc4azhn",
+      "correlationId": "audit-failure-csharp-pass-mtc4t4ul",
       "httpStatus": 200,
       "observedStatus": "pass",
       "expectedStatus": "pass",
@@ -71,14 +71,14 @@
       "noPrivateLeakage": true,
       "testCount": 4,
       "sourceDigest": "2d75750c46ac976c0c4d29a4d0d465bbdd8f55b9f58966bd0ed7810aeb3713f5",
-      "durationMs": 1854.449
+      "durationMs": 1960.942
     },
     {
       "id": "postgres-pass",
       "status": "pass",
-      "detail": "HTTP 200, status=pass, duration=714ms",
+      "detail": "HTTP 200, status=pass, duration=730ms",
       "taskId": "pg-rate-limiter-001",
-      "correlationId": "audit-failure-postgres-pass-mtc4b0y4",
+      "correlationId": "audit-failure-postgres-pass-mtc4t6e1",
       "httpStatus": 200,
       "observedStatus": "pass",
       "expectedStatus": "pass",
@@ -86,14 +86,14 @@
       "noPrivateLeakage": true,
       "testCount": 4,
       "sourceDigest": "b15c5bed7504d70638741902b2c18673932280a188ac2e1fea9a57ef649c59e9",
-      "durationMs": 714.289
+      "durationMs": 730.069
     },
     {
       "id": "test-failure",
       "status": "pass",
-      "detail": "HTTP 200, status=fail, duration=210ms",
+      "detail": "HTTP 200, status=fail, duration=205ms",
       "taskId": "node-rate-limiter-001",
-      "correlationId": "audit-failure-test-failure-mtc4b1j2",
+      "correlationId": "audit-failure-test-failure-mtc4t6zd",
       "httpStatus": 200,
       "observedStatus": "fail",
       "expectedStatus": "fail",
@@ -101,14 +101,14 @@
       "noPrivateLeakage": true,
       "testCount": 4,
       "sourceDigest": "e530ed0505d1d6e565064141cf00af29edd700b294ce97ad4080064a241119f0",
-      "durationMs": 209.606
+      "durationMs": 204.629
     },
     {
       "id": "compile-failure",
       "status": "pass",
-      "detail": "HTTP 200, status=error, duration=208ms",
+      "detail": "HTTP 200, status=error, duration=201ms",
       "taskId": "node-rate-limiter-001",
-      "correlationId": "audit-failure-compile-failure-mtc4b1ps",
+      "correlationId": "audit-failure-compile-failure-mtc4t75y",
       "httpStatus": 200,
       "observedStatus": "error",
       "expectedStatus": "error",
@@ -116,14 +116,14 @@
       "noPrivateLeakage": true,
       "testCount": 0,
       "sourceDigest": "e3751f79b4d9918adcfe2f2a29fc0ec7763b39520fa88649bcaabd59d3b01d25",
-      "durationMs": 208.097
+      "durationMs": 201.191
     },
     {
       "id": "timeout",
       "status": "pass",
       "detail": "HTTP 504, status=timeout, duration=n/a",
       "taskId": "fluent-calculator",
-      "correlationId": "audit-failure-timeout-mtc4b1wr",
+      "correlationId": "audit-failure-timeout-mtc4t7ch",
       "httpStatus": 504,
       "observedStatus": "timeout",
       "expectedStatus": null,
@@ -136,9 +136,9 @@
     {
       "id": "trace-evidence-identity",
       "status": "pass",
-      "detail": "trace 1ee1e07a22905d67947946179edd850b contains task.run with correlation, task and revision identity",
-      "correlationId": "audit-failure-pass-mtc4apmt",
-      "traceId": "1ee1e07a22905d67947946179edd850b",
+      "detail": "trace 956611a2f9bdf0c83eab0b038afbd292 contains task.run with correlation, task and revision identity",
+      "correlationId": "audit-failure-pass-mtc4suup",
+      "traceId": "956611a2f9bdf0c83eab0b038afbd292",
       "spanCount": 2
     },
     {
