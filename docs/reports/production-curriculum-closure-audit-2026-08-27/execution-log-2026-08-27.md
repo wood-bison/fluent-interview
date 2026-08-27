@@ -117,7 +117,7 @@ G8–G10, а восемь deferred-execution items — в G11. Текущий W1
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Финальный полный прогон от `2026-08-27T22:32:16.978Z` завершился `valid=true`:
+Финальный полный прогон от `2026-08-27T22:35:34.423Z` завершился `valid=true`:
 51/51 шагов (`lab-check`, `vue-check`, readiness, graph/path/content gates,
 runtime failure matrix, accessibility, desktop visual/regression и Vue E2E)
 прошли с новым Brain/Lab release tuple. `productionPromotable=false` является ожидаемым результатом режима
