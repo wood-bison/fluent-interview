@@ -33,7 +33,7 @@ production-ready**. Последнее обновление: 28 августа 2
 | Question Brain | `8ca5f7aa8aa59c22b49418f10458e602ca51ef81` | G11 deferred-execution wave: eight reviewed Node async scheduling bindings; immutable release `c07677c65057b105` |
 | Fluent Lab | `69215a8710cd62c94c83da6129c637066be73df7` | consumed G11 binding release and refreshed path projection/backlog |
 | Question Brain | `d2e304b973c6f07228297f66ba11c25e12f4e4bb` | G12 async-depth wave: fifteen reviewed Node/runtime bindings; five stale cache path mismatches revoked; immutable release `1f6516006bbfd61d` |
-| Fluent Lab | `26dfc20824a11695bff4f26b8d5837fc8dbcac24` | consumed G12 binding release and refreshed path projection/backlog |
+| Fluent Lab | `7814f245818d43611ed19e182c54ddcf66cb5b12` | consumed G12 binding release and refreshed path projection/backlog plus final gate evidence |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
 | Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `1f6516006bbfd61d`; Vue/Runtime pins reconciled to exact HEAD SHAs |
@@ -120,13 +120,14 @@ digest: `54ed9fcd98f0556bdfb35aa4383153ff06354b1859eeb07d56d5d82cf821afcd`.
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Финальный полный прогон от `2026-08-27T22:49:14.381Z` завершился `valid=true`:
-51/51 шагов (`lab-check`, `vue-check`, readiness, graph/path/content gates,
+Финальный полный прогон от `2026-08-27T22:53:49.710Z` завершился `valid=true`:
+55/55 шагов (`lab-check`, `vue-check`, readiness, graph/path/content gates,
 runtime failure matrix, accessibility, desktop visual/regression и Vue E2E)
 прошли с новым Brain/Lab release tuple. `productionPromotable=false` является ожидаемым результатом режима
 `--dev`, а не ошибкой проверки.
 
-В этом прогоне использовались манифесты G8. После него выпущены G10, G11 и G12;
+В этом прогоне использовался актуальный G12 release tuple. До него были выпущены
+G8, G9, G10 и G11;
 манифесты `fluent-question-brain/docs/verification/G10-capability-binding-manifest-2026-08-28.json`,
 `G10-capability-binding-release-2026-08-28.json` и
 `G11-capability-binding-manifest-2026-08-28.json` вместе с
