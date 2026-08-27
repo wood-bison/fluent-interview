@@ -13,21 +13,31 @@ repositories:
     role: learning-api
     remote: git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
     branch: main
+    revision: 44cb5d1709257a8e8e2b64dd6cfd9884e913903d
   - id: fluent-engineering-vue
     path: fluent-engineering-vue
     role: learner-web
     remote: local-only
     branch: main
+    revision: 345bc186afbfb1e5124f84655a98ccebb209d62c
   - id: fluent-question-brain
     path: fluent-question-brain
     role: question-source-of-truth
     remote: git@github-woodbison:wood-bison/fluent-question-brain.git
     branch: main
+    revision: 060b834708bd04875ebd122401e4319812d2f976
   - id: fluent-task-runtime
     path: fluent-task-runtime
     role: task-execution-authority
     remote: git@github-woodbison:wood-bison/fluent-task-runtime.git
     branch: main
+    revision: cbcb8085ecbcb5d1b0bc01ab788dd5a9adc5c668
+  - id: fluent-question-vault
+    path: fluent-question-vault
+    role: card-history-mirror
+    remote: git@github.com:szhechko/fluent-question-vault.git
+    branch: main
+    revision: f4d46228cd366c218b29423323da8fe8bad796f1
 
 services:
   - id: question-brain
