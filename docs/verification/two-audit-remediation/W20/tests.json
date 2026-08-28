@@ -1,0 +1,21 @@
+{
+  "reportVersion": "w20-release-verification-tests.v1",
+  "valid": true,
+  "releaseVerifier": {
+    "report": "release-verify-dev.json",
+    "steps": 55,
+    "passed": 55,
+    "failed": 0,
+    "productionPromotable": false,
+    "note": "Development verifier is valid; productionPromotable remains false by design because Vue is local-only."
+  },
+  "checks": [
+    { "id": "vue-check", "status": "pass", "detail": "vue-tsc, eslint, 14 Vitest tests, Vite production build" },
+    { "id": "lab-check", "status": "pass", "detail": "curriculum drift plus lint/test/build for learning-api, lab-contracts, observability; 167 suites / 745 tests" },
+    { "id": "runtime-failure-matrix", "status": "pass", "detail": "pass, Go, timeout and contract-failure recovery cases" },
+    { "id": "content-and-path-gates", "status": "pass", "detail": "graph release, path completion, coverage backlog, catalog, locale funnels, route actions" },
+    { "id": "accessibility-and-visual", "status": "pass", "detail": "a11y smoke, desktop visual baseline and regression guard" },
+    { "id": "playwright-e2e", "status": "pass", "detail": "92/92 tests on macbook-pro-16-light and studio-display-dark" },
+    { "id": "package-ready", "status": "pass", "detail": "operation f011aabc-6bfd-4a37-9369-833957e815fa; all components ready; data preserved" }
+  ]
+}

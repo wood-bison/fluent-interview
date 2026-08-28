@@ -1,0 +1,37 @@
+{
+  "reportVersion": "w20-release-verification.v1",
+  "generatedAt": "2026-08-28T11:29:28.270Z",
+  "scope": "full development release verification after localized execution-label E2E remediation",
+  "sourceRevisions": {
+    "umbrellaBeforeEvidenceCommit": "c75bf1417e3975d3c202950a506a5f6d8c87c288",
+    "lab": "f4c775cad33a7b8a20cbc36643dd164e40a5d549",
+    "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
+    "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
+    "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
+    "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
+  },
+  "package": {
+    "operationId": "f011aabc-6bfd-4a37-9369-833957e815fa",
+    "state": "ready",
+    "web": "http://localhost:49300/onboarding",
+    "devWeb": "http://localhost:47350/",
+    "learningApi": "http://127.0.0.1:47000",
+    "runtime": "http://127.0.0.1:48227",
+    "questionBrain": "http://127.0.0.1:48127",
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "dataPreserved": true,
+    "backup": {
+      "artifactId": "learner-backup-20260828112341-95926202-347",
+      "path": "/tmp/fel-full-local-backup-20260828-1324.json",
+      "scope": "full-local",
+      "rows": 12251,
+      "bytes": 10367931,
+      "sha256": "5c4a52f81c1c90c89e8978334ad0740a4956188b88c7db9f76bb7dda3407de8f",
+      "payloadDigest": "6804c5b652218a8c377337ee85de2bf2bd4e8570dd6ec596bcc97275fe408c6c"
+    }
+  },
+  "fix": {
+    "vueCommit": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
+    "summary": "E2E assertions now follow the descriptive localized execution badge (Theory / puzzle; Теория / puzzle) instead of the raw theory enum."
+  }
+}
