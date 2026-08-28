@@ -1,6 +1,6 @@
 # Исполнительный журнал production-closure — 27 августа 2026
 
-Статус этого журнала: **обновлён после G8–G13D bounded waves; продукт ещё не
+Статус этого журнала: **обновлён после G8–G14 bounded waves; продукт ещё не
 production-ready**. Последнее обновление: 28 августа 2026.
 
 ## Что принято
@@ -48,9 +48,13 @@ production-ready**. Последнее обновление: 28 августа 2
 | Fluent Lab | `52511caee00e309b8084804fac92af4f50ba29a8` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after the initial G13D dev rehearsal |
 | Fluent Lab | `0e8d59d73f994931a1fcb8aa361a670430336a3f` | refreshed final G13D path-completion projection/backlog evidence after the extended Nest review |
 | Fluent Lab | `41323e53917a648e16f6f2b918625d475a5ef571` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after the clean 55-step G13D dev gate |
+| Question Brain | `5ceba81fee7c9401e67ccbd0ab366d77c3a18598` | G14 Node/Nest depth: fifteen accepted supporting bindings, five canonical-path mismatches revoked; immutable release `a58d8763d4f628a4` |
+| Fluent Lab | `19d971eb315028c5de8f29280a759a6745dbb880` | consumed G14 binding release, switched projection defaults, and refreshed path-completion backlog |
+| Fluent Lab | `a6fa4208461b118d08e18c5082985b3cdb2dabaf` | refreshed G14 release-gate evidence after the clean runtime-boundary and full development rehearsal |
+| Fluent Lab | `a779ebf2061367db7da97f8934b37ce96f8250cf` | captured final timestamped G14 evidence after the warning-free 55-step development gate |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain `b415dc3` / Lab `41323e5` pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4f78374bc4ccffc1`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain `5ceba81` / Lab `a779ebf` pins, G14 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-a58d8763d4f628a4`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -66,7 +70,7 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - graph release, learning-module release, TrackView isolation;
 - path completion и path-completion backlog;
 - Task Runtime portfolio backlog (`590` open items: `153` families + `437` revisions);
-- cross-repo Question Brain coverage backlog (`1499` exact path/card items,
+- cross-repo Question Brain coverage backlog (`1493` exact path/card items,
   15 bounded waves; all currently `theory_only` and intentionally unbound);
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
@@ -91,16 +95,16 @@ evidence. Строгий production-профиль по-прежнему отд�
 остаётся `productionReady=false`: опубликованный slice всё ещё не содержит
 lesson/checkpoint registry, а supporting/activity coverage не достигает
 learner contract 1601/699/464/51. Точные текущие IDs и blockers остаются в
-этом manifest; G8, G10, G11, G12, G13B, G13C и G13D волны закрыли только reviewed supporting bindings,
+этом manifest; G8, G10, G11, G12, G13B, G13C, G13D и G14 волны закрыли только reviewed supporting bindings,
 а не весь production gap. Текущий manifest digest:
-`85ad7a744f9178f37e2fa5b19d16d1cb1e7664bccf63d0116a2a3610e7323716`.
+`277fc3eff05eaa8c4e0e221be72b0fdbc9edf1660a95c2b8c82664ac640c65a5`.
 
 Новая очередь
 `fluent-engineering-lab/docs/manifests/path-completion-backlog-2026-08-27.json`
-содержит 3572 стабильных открытых item (digest
-`9d78dfffcbb56d9e9e3e8cb996d4be6aa37679f06e4e1bc681849ffd01390ba7`):
+содержит 3566 стабильных открытых item (digest
+`b3c9f6f39f550cef5beead4736dc1ddc5f2c6aaa59fbb4b20912c353fc341eb6`):
 
-- 1499 `capability-binding` review;
+- 1493 `capability-binding` review;
 - 699 `supporting-prompt` authoring;
 - 431 `activity` authoring/binding;
 - 334 missing `primary-question` slots;
@@ -119,7 +123,7 @@ filler-контент. Он адресует exact compatibility gaps у изв�
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
 
 Question coverage backlog (`docs/verification/two-audit-remediation/W13`) не
-пытается «угадать» capability по prompt. Он сверяет все 1499 unresolved IDs с
+пытается «угадать» capability по prompt. Он сверяет все 1493 unresolved IDs с
 Brain revision/hash и canonical binding report, объединяет capability/role
 issues в один path/card item и требует новый immutable Brain release перед
 пересборкой Lab projection. Десять event-loop items удалены из очереди только
@@ -134,19 +138,24 @@ G13C добавила пять новых bound cards (q1025, q359, q784, q800, 
 G13D initial/extended review добавила четырнадцать новых bound cards
 (q1019, q1022, q1024, q1027, q1029, q1030, q1031, q313, q042, q971, q993,
 q995, q998, q791) и отозвала path-mismatched q1072 до публикации; q768 и q770
-были дедуплицированы как уже выпущенные связи. Текущий W13 digest:
-`b1ae8d17093e39879af0489c9c4da882f5bb0d80d7eb1f657bca7445dc026700`;
-открыто 1499 exact path/card items.
+были дедуплицированы как уже выпущенные связи. G14 добавила пятнадцать новых
+binding rows (шесть новых bound cards), а пять auth-предложений с canonical
+`path.system-design` были отозваны вместо переклассификации в Node. Текущий
+W13 digest:
+`b71bfe5b5756be4cd5cba35a1cf97945f65bf14225d54da825815efbba12ebea`;
+открыто 1493 exact path/card items.
 
 Дополнительный cross-repository fix устранил identity drift: Lab больше не
 вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Полный development-прогон от `2026-08-27T23:59:45.439Z` завершился
+Полный development-прогон после G14 projection завершился
 `valid=true`: 55/55 шагов (`lab-check`, `vue-check`, readiness,
 graph/path/content gates, runtime failure matrix, accessibility, desktop
-visual/regression и Vue E2E) прошли на G13D Brain/Lab release tuple.
+visual/regression и Vue E2E) прошли на G14 Brain/Lab release tuple; точный
+артефакт — `docs/verification/release-verify-dev-2026-08-28.json`,
+`generatedAt=2026-08-28T00:22:43.495Z`.
 `productionPromotable=false` является ожидаемым результатом режима `--dev`, а
 не ошибкой проверки.
 
@@ -176,6 +185,13 @@ staging-derived manifest/report после дополнительного рев
 registry не изменились. В расширение вошли семь новых Nest/runtime карточек
 (`q313`, `q042`, `q971`, `q993`, `q995`, `q998`, `q791`); q1072 по-прежнему
 отозван guard-ом canonical path.
+G14 сохраняет все предыдущие артефакты и добавляет
+`G14-capability-binding-manifest-2026-08-28.json` и
+`G14-capability-binding-release-2026-08-28.json` с tuple
+`question-capability-release-a58d8763d4f628a4`. Из пятнадцати принятых
+proposal rows шесть дали новые card identities; остальные уже имели
+валидный crosswalk. Пять path-mismatched auth rows (q426, q427, q716, c040,
+c005) отозваны integrity guard-ом и в release не попали.
 
 ## Следующая волна
 
