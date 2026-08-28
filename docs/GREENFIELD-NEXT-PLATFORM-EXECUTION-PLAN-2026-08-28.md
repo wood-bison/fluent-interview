@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 executable slice PASS_WITH_LIMITATIONS; G7 submit/evidence slice PASS_WITH_LIMITATIONS; G8 в очереди выполнения**
+Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 executable slice PASS_WITH_LIMITATIONS; G7 submit/evidence slice PASS_WITH_LIMITATIONS; G8 progress slice PASS_WITH_LIMITATIONS; G8 project/observability slices в очереди**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -682,14 +682,14 @@ edges до переноса product code.
 
 ### G8.1. Progress/mastery model
 
-- [ ] `G8-001` Progress, completion, mastery и interview readiness остаются разными claims.
-- [ ] `G8-002` Mastery policy требует нужные evidence facets и versioned rubric.
-- [ ] `G8-003` Cold repeat назначается server-side через реальное окно времени.
-- [ ] `G8-004` Time travel/browser clock не закрывает repeat.
+- [x] `G8-001` Progress, completion, mastery и interview readiness остаются разными claims.
+- [x] `G8-002` Mastery policy требует нужные evidence facets и versioned rubric.
+- [x] `G8-003` Cold repeat назначается server-side через реальное окно времени.
+- [x] `G8-004` Time travel/browser clock не закрывает repeat.
 - [ ] `G8-005` Unseen transfer использует новую variant/context, не тот же fixture.
-- [ ] `G8-006` Hint/AI dependence сохраняется как AssistanceEvent и влияет на claim policy прозрачно.
-- [ ] `G8-007` Revision planner использует prerequisites, decay и failed concepts.
-- [ ] `G8-008` Learning history переживает telemetry deletion/restart.
+- [x] `G8-006` Hint/AI dependence сохраняется как AssistanceEvent и влияет на claim policy прозрачно.
+- [x] `G8-007` Revision planner использует prerequisites, decay и failed concepts.
+- [x] `G8-008` Learning history переживает telemetry deletion/restart.
 
 ### G8.2. Projects
 
@@ -710,6 +710,10 @@ edges до переноса product code.
 - [ ] `G8-020` Telemetry outage не отменяет deterministic assessment.
 
 ### Gate G8
+
+> Progress slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
+> at target `5ba0af1` (`PASS_WITH_LIMITATIONS`). Project evidence,
+> observability activities, backup/restore and the final G8 gate remain open.
 
 - [ ] `G8-021` Progress rebuild, cold-repeat timing, unseen transfer and hint-dependence tests PASS.
 - [ ] `G8-022` Project milestone evidence cannot be self-declared.
