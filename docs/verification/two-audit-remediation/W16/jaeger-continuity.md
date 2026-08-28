@@ -1,6 +1,6 @@
 # W16 — route → run → trace continuity
 
-Снимок: 2026-08-27T18:40:57.552Z
+Снимок: 2026-08-28T07:59:41.783Z
 Статус: **pass**
 
 | Proof | Result |

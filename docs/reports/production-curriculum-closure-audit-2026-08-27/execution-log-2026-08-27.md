@@ -236,6 +236,36 @@ G16 сохраняет этот immutable tuple и добавляет
 про `async` state machine и `ConfigureAwait(false)` приняты как прямые
 `.NET/C#` supporting bindings; invalid/stale/missing/extra entries равны нулю.
 
+## Повторный live-запуск и route smoke — 28 августа 2026 (исторический снимок)
+
+После остановки dev-профиля через обычный `pnpm down` стек повторно поднят
+штатной командой `pnpm dev` из корня workspace. Compose пересобрал образы из
+актуальных `main`-ревизий: Brain `4c4cac99490e2b565449e04883979f6d46d68e1f`
+и Runtime `6b097718fe4f6075a1f4baf1d55dc6d71dcbf137`. OCI labels и live
+Runtime `/v1/health/ready` подтвердили тот же Runtime SHA, поэтому прежний
+риск stale image больше не воспроизводится.
+
+`pnpm release:verify:dev`
+завершился `valid=true`: 55/55 шагов прошли (`lab-check`, `vue-check`, Brain и
+Runtime readiness, release joins, negative runtime matrix, curriculum/content
+gates, accessibility, desktop visual/regression и Vue E2E). Последний полный
+консольный прогон того снимка завершён в `2026-08-28T07:35:08.412Z`; режим development
+намеренно сообщает `productionPromotable=false`, потому что он не выполняет
+production package promotion.
+
+Дополнительный browser smoke прошёл по основным learner routes и 80
+внутренним route targets, собранным из реальных ссылок приложения: каждая
+страница отдала ожидаемый heading и не показала route/API error state. В одном
+уроке первоначальный простой текстовый detector сработал на цитату
+`Cannot read properties of undefined` внутри учебного материала; повторная
+проверка DOM и console logs подтвердила, что это контентный пример, а не сбой
+рендера.
+
+Это подтверждает готовность локального dev-цикла, но не закрывает content
+frontier: W13 по-прежнему содержит 1477 карточек, ожидающих reviewed
+capability binding, а strict production package остаётся честно
+непромотированным до выполнения W01/W03/W18.
+
 ## Следующая волна
 
 1. Взять максимум 100 items из очереди с owner/reviewer и wave-contract.
@@ -252,3 +282,37 @@ G16 сохраняет этот immutable tuple и добавляет
 До закрытия всех mandatory targets нельзя объявлять `big-tech-complete` или
 Learner mastered. Разработка не заморожена: каждый новый gap превращается в
 следующий bounded item с evidence.
+
+## Observability hardening и чистый повторный gate — 28 августа 2026
+
+Повторный запуск в `07:44:45Z` обнаружил настоящий эксплуатационный дефект
+локального профиля: Jaeger all-in-one с неограниченным in-memory backend
+достиг лимита контейнера 512 MiB, а `/api/traces` перестал отвечать в пределах
+таймаута. Это было исправлено в Brain commit
+`3bdd72d3088b8a11002db1154910bf19ba973520`: Compose задаёт bounded store
+`QB_JAEGER_MAX_TRACES` (по умолчанию 5 000), добавляет healthcheck
+`/api/services`, а runbook фиксирует операционный контракт. После пересоздания
+Jaeger сервис подтвердил `healthy`.
+
+Development evidence из Lab сначала был зафиксирован commit
+`b86c9fb97a9aadb916923d44768e5e85bb7cf9ad`, а после финального smoke обновлён
+коммитом `5293b3061f12876acf8020a430e30db690e39524`; root `workspace.yaml`
+указывает на последний Lab и Brain revision, поэтому package-provenance gate
+исполняемый и source-clean.
+
+Финальный canonical прогон
+`pnpm release:verify:dev -- --out=docs/verification/release-verify-dev-2026-08-28.json`
+завершён в `2026-08-28T07:56:23.303Z`: `valid=true`, **55/55 PASS**, без
+предупреждений (включая runtime failure matrix `38.9s`, trace identity,
+readiness, curriculum/content gates, accessibility, desktop visual/regression
+и Vue E2E). `productionPromotable=false` остаётся честным свойством
+development режима, а не ошибкой. Отчёт перезаписан этим результатом.
+
+После финального перезапуска браузерный crawl получил 137 внутренних URL-целей
+из реально отрендеренного DOM. Шесть question-detail страниц не успевали
+показать `h1` в искусственном 70 ms окне (это не было route error); повторный
+wait-based smoke дождался готового экрана для каждой, проверил `main` и console
+errors — все страницы загрузились, ошибок нет. Отдельный
+`observability:journey` также PASS: один shared trace связывает
+`learning-api` и `fluent-task-runtime`, содержит route/run/task spans, а
+synthetic profile остаётся неизменным.
