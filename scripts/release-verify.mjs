@@ -344,6 +344,15 @@ if (dev) {
     await httpReady('lab-package-web', 'http://127.0.0.1:49300/onboarding');
     await httpReady('lab-package-api', 'http://127.0.0.1:49301/api/practice/health');
     run('g14-hardening', 'pnpm', ['g14:hardening:check'], { cwd: labRoot, timeoutMs: 15 * 60 * 1000 });
+    // The immutable package is the production learner surface.  Re-run the
+    // same desktop route/runtime matrix against its port so strict promotion
+    // cannot pass with only a healthy HTTP shell while a packaged interaction
+    // is broken.  The package owner is responsible for starting this server;
+    // this verifier only observes it.
+    run('vue-e2e-package', 'pnpm', ['e2e:package'], {
+      cwd: vueRoot,
+      timeoutMs: 15 * 60 * 1000,
+    });
   }
 }
 

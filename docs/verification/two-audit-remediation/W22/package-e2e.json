@@ -1,0 +1,29 @@
+{
+  "reportVersion": "package-e2e.v1",
+  "generatedAt": "2026-08-28T12:38:06.181Z",
+  "status": "pass",
+  "command": "pnpm --dir fluent-engineering-vue e2e:package",
+  "baseURL": "http://localhost:49300",
+  "packageOperationId": "142e93c7-125a-4e47-8ba7-3875258b8bfe",
+  "packageSourceRevision": "5c6eef80edf3ae76bd827a3e6fc75529d9bf2fd3",
+  "vueSourceRevision": "ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d",
+  "profiles": [
+    "macbook-pro-16-light",
+    "studio-display-dark"
+  ],
+  "tests": {
+    "passed": 102,
+    "failed": 0,
+    "durationMs": 62799
+  },
+  "scope": [
+    "route matrix and canonical aliases",
+    "Question Brain list/detail and relation context",
+    "five rate-limiter language revisions",
+    "Event Loop runtime run and recovery",
+    "local AI context, outage and cancellation",
+    "RU/EN, light/dark, keyboard, scroll and 200% zoom",
+    "attempt/history persistence and browser console guards"
+  ],
+  "note": "The suite runs against the package web/API boundary without browser response mocks for the released learner and language-selection flows. Intentional failure fixtures remain isolated to their named resilience tests."
+}
