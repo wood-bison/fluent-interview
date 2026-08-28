@@ -693,12 +693,12 @@ edges до переноса product code.
 
 ### G8.2. Projects
 
-- [ ] `G8-009` Port project books/milestones/rubrics/evidence links.
-- [ ] `G8-010` Project milestone считается Activity только при persisted assessed evidence.
+- [x] `G8-009` Port project books/milestones/rubrics/evidence links.
+- [x] `G8-010` Project milestone считается Activity только при persisted assessed evidence.
 - [ ] `G8-011` Backend projects включают concurrency, data, messaging, resilience, deployment и observability.
 - [ ] `G8-012` Frontend project включает Next architecture, performance, a11y, security и design system.
 - [ ] `G8-013` System design project требует trade-off defense и failure drill.
-- [ ] `G8-014` Reference repo/project links versioned и не становятся hidden fallback.
+- [x] `G8-014` Reference repo/project links versioned и не становятся hidden fallback.
 
 ### G8.3. Observability как учебная поверхность
 
@@ -711,9 +711,9 @@ edges до переноса product code.
 
 ### Gate G8
 
-> Progress slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
-> at target `5ba0af1` (`PASS_WITH_LIMITATIONS`). Project evidence,
-> observability activities, backup/restore and the final G8 gate remain open.
+> Progress/project slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
+> at targets `5ba0af1` and `6f03b88` (`PASS_WITH_LIMITATIONS`). Backend project
+> breadth, observability activities, backup/restore and the final G8 gate remain open.
 
 - [ ] `G8-021` Progress rebuild, cold-repeat timing, unseen transfer and hint-dependence tests PASS.
 - [ ] `G8-022` Project milestone evidence cannot be self-declared.
