@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **READY FOR AGENT EXECUTION; реализация ещё не начата**
+Статус: **G0–G2 PASS; G3 в очереди выполнения**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -299,58 +299,58 @@ edges до переноса product code.
 
 ### G1.1. Repo bootstrap
 
-- [ ] `G1-001` Создать target directory только после G0 PASS.
-- [ ] `G1-002` `git init -b main`; проверить, что `.git` ровно один.
-- [ ] `G1-003` Создать выбранный remote как private по умолчанию, если owner не указал public.
-- [ ] `G1-004` Добавить `origin`; проверить fetch/push dry connectivity.
-- [ ] `G1-005` Создать README с product purpose, local-only boundary и status.
-- [ ] `G1-006` Добавить `CONTEXT.md`, ADR directory, security policy и contribution rules.
-- [ ] `G1-007` Добавить `AGENTS.md` с safety, gates и domain language.
-- [ ] `G1-008` Добавить `.editorconfig`, `.gitattributes`, `.gitignore`, secret patterns.
-- [ ] `G1-009` Запретить nested `.git`, extra lockfiles и generated evidence в Git.
+- [x] `G1-001` Создать target directory только после G0 PASS.
+- [x] `G1-002` `git init -b main`; проверить, что `.git` ровно один.
+- [x] `G1-003` Создать выбранный remote как private по умолчанию, если owner не указал public.
+- [x] `G1-004` Добавить `origin`; проверить fetch/push dry connectivity.
+- [x] `G1-005` Создать README с product purpose, local-only boundary и status.
+- [x] `G1-006` Добавить `CONTEXT.md`, ADR directory, security policy и contribution rules.
+- [x] `G1-007` Добавить `AGENTS.md` с safety, gates и domain language.
+- [x] `G1-008` Добавить `.editorconfig`, `.gitattributes`, `.gitignore`, secret patterns.
+- [x] `G1-009` Запретить nested `.git`, extra lockfiles и generated evidence в Git.
 
 ### G1.2. Exact toolchain
 
-- [ ] `G1-010` Сверить официальные releases на дату выполнения; не использовать плавающий `latest`.
-- [ ] `G1-011` Зафиксировать production Node LTS и отдельные learning runtime lanes.
-- [ ] `G1-012` Зафиксировать exact pnpm, Nx, Next, React, TypeScript, Nest, Go, Java/.NET/Kotlin toolchains.
-- [ ] `G1-013` Сохранить источник и дату каждого version decision в `toolchain.lock.json`.
-- [ ] `G1-014` Один risky major upgrade = отдельный commit/gate amendment.
-- [ ] `G1-015` Настроить Corepack/frozen lockfile.
-- [ ] `G1-016` Создать root `package.json`, `pnpm-workspace.yaml`, `nx.json`, `tsconfig.base.json`.
-- [ ] `G1-017` Создать Go workspace только для Go-owned projects, без TS dependency cycles.
+- [x] `G1-010` Сверить официальные releases на дату выполнения; не использовать плавающий `latest`.
+- [x] `G1-011` Зафиксировать production Node LTS и отдельные learning runtime lanes.
+- [x] `G1-012` Зафиксировать exact pnpm, Nx, Next, React, TypeScript, Nest, Go, Java/.NET/Kotlin toolchains.
+- [x] `G1-013` Сохранить источник и дату каждого version decision в `toolchain.lock.json`.
+- [x] `G1-014` Один risky major upgrade = отдельный commit/gate amendment.
+- [x] `G1-015` Настроить Corepack/frozen lockfile.
+- [x] `G1-016` Создать root `package.json`, `pnpm-workspace.yaml`, `nx.json`, `tsconfig.base.json`.
+- [x] `G1-017` Создать Go workspace только для Go-owned projects, без TS dependency cycles.
 
 ### G1.3. Target tree и boundaries
 
-- [ ] `G1-018` Создать `apps/web`, `apps/api`, `services/task-runtime` placeholders.
-- [ ] `G1-019` Создать `packages/contracts`, `clients`, `domain`, `data`, `ui`, `observability`, `testkit`.
-- [ ] `G1-020` Создать `content`, `infra`, `tools`, `docs` roots.
-- [ ] `G1-021` Ввести Nx tags `scope`, `type`, `owner`, `runtime`, `stability`.
-- [ ] `G1-022` Запретить domain→domain direct imports; orchestration только application layer.
-- [ ] `G1-023` Запретить UI→DB/Runtime internals.
-- [ ] `G1-024` Запретить contracts package содержать business policy/content.
-- [ ] `G1-025` Добавить intentionally failing fixtures и доказать, что boundary tests их ловят.
-- [ ] `G1-026` Добавить CODEOWNERS по bounded context.
+- [x] `G1-018` Создать `apps/web`, `apps/api`, `services/task-runtime` placeholders.
+- [x] `G1-019` Создать `packages/contracts`, `clients`, `domain`, `data`, `ui`, `observability`, `testkit`.
+- [x] `G1-020` Создать `content`, `infra`, `tools`, `docs` roots.
+- [x] `G1-021` Ввести Nx tags `scope`, `type`, `owner`, `runtime`, `stability`.
+- [x] `G1-022` Запретить domain→domain direct imports; orchestration только application layer.
+- [x] `G1-023` Запретить UI→DB/Runtime internals.
+- [x] `G1-024` Запретить contracts package содержать business policy/content.
+- [x] `G1-025` Добавить intentionally failing fixtures и доказать, что boundary tests их ловят.
+- [x] `G1-026` Добавить CODEOWNERS по bounded context.
 
 ### G1.4. CI bootstrap
 
-- [ ] `G1-027` Создать PR workflow: install, format, lint, typecheck, unit, boundary, secret scan.
-- [ ] `G1-028` Pin Actions к full commit SHA и минимальным permissions.
-- [ ] `G1-029` Добавить dependency review и CodeQL для relevant languages.
-- [ ] `G1-030` Добавить lock/generated drift checks.
-- [ ] `G1-031` Cache не содержит secrets, DB, hidden tests или browser recordings.
-- [ ] `G1-032` Remote cache не вводить без measured team need; local/Nx cache достаточно.
+- [x] `G1-027` Создать PR workflow: install, format, lint, typecheck, unit, boundary, secret scan.
+- [x] `G1-028` Pin Actions к full commit SHA и минимальным permissions.
+- [x] `G1-029` Добавить dependency review и CodeQL для relevant languages.
+- [x] `G1-030` Добавить lock/generated drift checks.
+- [x] `G1-031` Cache не содержит secrets, DB, hidden tests или browser recordings.
+- [x] `G1-032` Remote cache не вводить без measured team need; local/Nx cache достаточно.
 
 ### Gate G1
 
-- [ ] `G1-033` Fresh clone install проходит frozen.
-- [ ] `G1-034` Nx graph строится и не имеет forbidden cycles.
-- [ ] `G1-035` Policy negative fixtures PASS.
-- [ ] `G1-036` Один `.git`, один pnpm lockfile, zero nested sources.
-- [ ] `G1-037` CI на `main` зелёный.
-- [ ] `G1-038` Commits: `build(g1): bootstrap greenfield platform workspace`; `ci(g1): establish policy gates`.
-- [ ] `G1-039` `origin/main == HEAD`.
-- [ ] `G1-040` `gate.json.status = PASS`.
+- [x] `G1-033` Fresh clone install проходит frozen.
+- [x] `G1-034` Nx graph строится и не имеет forbidden cycles.
+- [x] `G1-035` Policy negative fixtures PASS.
+- [x] `G1-036` Один `.git`, один pnpm lockfile, zero nested sources.
+- [x] `G1-037` CI на `main` зелёный.
+- [x] `G1-038` Commits: `build(g1): bootstrap greenfield platform workspace`; `ci(g1): establish policy gates`.
+- [x] `G1-039` `origin/main == HEAD`.
+- [x] `G1-040` `gate.json.status = PASS`.
 
 ---
 
@@ -362,63 +362,63 @@ edges до переноса product code.
 
 ### G2.1. One Compose project
 
-- [ ] `G2-001` Создать один root `compose.yaml`.
-- [ ] `G2-002` `FLUENT_STACK_ID` уникален для checkout/worktree/CI.
-- [ ] `G2-003` Удалить `container_name` и explicit global volume names.
-- [ ] `G2-004` Core: web, api, runtime-control, PostgreSQL; optional profiles: observability, ai, labs, debug.
-- [ ] `G2-005` Web — единственный обязательный host port.
-- [ ] `G2-006` Healthchecks + `service_healthy`; приложения имеют retry/backoff.
-- [ ] `G2-007` Containers non-root, read-only root, tmpfs scratch, dropped capabilities и limits.
-- [ ] `G2-008` Durable/projection/cache/worker resources имеют owner/stack/kind/TTL labels.
-- [ ] `G2-009` Никакой core application service не получает Docker socket.
+- [x] `G2-001` Создать один root `compose.yaml`.
+- [x] `G2-002` `FLUENT_STACK_ID` уникален для checkout/worktree/CI.
+- [x] `G2-003` Удалить `container_name` и explicit global volume names.
+- [x] `G2-004` Core: web, api, runtime-control, PostgreSQL; optional profiles: observability, ai, labs, debug.
+- [x] `G2-005` Web — единственный обязательный host port.
+- [x] `G2-006` Healthchecks + `service_healthy`; приложения имеют retry/backoff.
+- [x] `G2-007` Containers non-root, read-only root, tmpfs scratch, dropped capabilities и limits.
+- [x] `G2-008` Durable/projection/cache/worker resources имеют owner/stack/kind/TTL labels.
+- [x] `G2-009` Никакой core application service не получает Docker socket.
 
 ### G2.2. Lifecycle CLI
 
-- [ ] `G2-010` `pnpm doctor --json` read-only проверяет toolchain/Docker/ports/env/resources.
-- [ ] `G2-011` `pnpm dev` выполняет doctor → build/up --wait --remove-orphans → summary → watch.
-- [ ] `G2-012` `pnpm status --json` показывает ровно один stack ID и expected/observed resources.
-- [ ] `G2-013` `pnpm down` не использует `-v` и сохраняет durable data.
-- [ ] `G2-014` `pnpm clean:ephemeral --dry-run` показывает exact allowlist.
-- [ ] `G2-015` `--apply` удаляет только previewed stack-labeled set.
-- [ ] `G2-016` `pnpm data:backup|restore|reset --confirm` versioned и scoped.
-- [ ] `G2-017` Никогда не вызывать global prune/builder prune.
-- [ ] `G2-018` Fresh clone cold target и warm restart target измеряются и записываются.
+- [x] `G2-010` `pnpm doctor --json` read-only проверяет toolchain/Docker/ports/env/resources.
+- [x] `G2-011` `pnpm dev` выполняет doctor → build/up --wait --remove-orphans → summary → watch.
+- [x] `G2-012` `pnpm status --json` показывает ровно один stack ID и expected/observed resources.
+- [x] `G2-013` `pnpm down` не использует `-v` и сохраняет durable data.
+- [x] `G2-014` `pnpm clean:ephemeral --dry-run` показывает exact allowlist.
+- [x] `G2-015` `--apply` удаляет только previewed stack-labeled set.
+- [x] `G2-016` `pnpm data:backup|restore|reset --confirm` versioned и scoped.
+- [x] `G2-017` Никогда не вызывать global prune/builder prune.
+- [x] `G2-018` Fresh clone cold target и warm restart target измеряются и записываются.
 
 ### G2.3. StackSession и incident history
 
-- [ ] `G2-019` Создать schema `StackSession.v1`.
-- [ ] `G2-020` Session начинается до Postgres/Collector preflight.
-- [ ] `G2-021` Сохранять source/release/toolchain/expected resources.
-- [ ] `G2-022` Сохранять observed health transitions, migration/cache/volume state.
-- [ ] `G2-023` Сохранять shutdown/failure/cleanup result.
-- [ ] `G2-024` Append-only state имеет 90-day/100 MiB policy.
-- [ ] `G2-025` `doctor` ловит orphan containers/volumes/networks, missing labels, expired workers и drift.
-- [ ] `G2-026` `pnpm incident:capture --session` создаёт redacted checksummed bundle.
-- [ ] `G2-027` Failed preflight и failed startup имеют отдельные tested scenarios.
+- [x] `G2-019` Создать schema `StackSession.v1`.
+- [x] `G2-020` Session начинается до Postgres/Collector preflight.
+- [x] `G2-021` Сохранять source/release/toolchain/expected resources.
+- [x] `G2-022` Сохранять observed health transitions, migration/cache/volume state.
+- [x] `G2-023` Сохранять shutdown/failure/cleanup result.
+- [x] `G2-024` Append-only state имеет 90-day/100 MiB policy.
+- [x] `G2-025` `doctor` ловит orphan containers/volumes/networks, missing labels, expired workers и drift.
+- [x] `G2-026` `pnpm incident:capture --session` создаёт redacted checksummed bundle.
+- [x] `G2-027` Failed preflight и failed startup имеют отдельные tested scenarios.
 
 ### G2.4. Technical telemetry
 
-- [ ] `G2-028` Создать vendor-neutral observability contract и forbidden-field list.
-- [ ] `G2-029` Использовать semantic service roles, не `prometheus|loki|jaeger` как domain enum.
-- [ ] `G2-030` Добавить один `grafana/otel-lgtm` observability profile с pinned digest и `/data` volume.
-- [ ] `G2-031` Promtail, отдельные Jaeger/Prometheus/Loki/Grafana не добавлять.
-- [ ] `G2-032` Alloy отсутствует до отдельного measured log-collection ADR.
-- [ ] `G2-033` Trace/metric exporter outage не влияет на readiness/verdict.
-- [ ] `G2-034` Structured stdout JSON имеет trace/span IDs и bounded Docker logging.
-- [ ] `G2-035` Next/Nest/Go skeleton trace проходит через OTLP.
-- [ ] `G2-036` Raw source/answers/prompts/hidden tests/secrets отсутствуют в telemetry.
-- [ ] `G2-037` Retention/disk budget проверяется `doctor`, общий target 6–8 GiB.
+- [x] `G2-028` Создать vendor-neutral observability contract и forbidden-field list.
+- [x] `G2-029` Использовать semantic service roles, не `prometheus|loki|jaeger` как domain enum.
+- [x] `G2-030` Добавить один `grafana/otel-lgtm` observability profile с pinned digest и `/data` volume.
+- [x] `G2-031` Promtail, отдельные Jaeger/Prometheus/Loki/Grafana не добавлять.
+- [x] `G2-032` Alloy отсутствует до отдельного measured log-collection ADR.
+- [x] `G2-033` Trace/metric exporter outage не влияет на readiness/verdict.
+- [x] `G2-034` Structured stdout JSON имеет trace/span IDs и bounded Docker logging.
+- [x] `G2-035` Next/Nest/Go skeleton trace проходит через OTLP.
+- [x] `G2-036` Raw source/answers/prompts/hidden tests/secrets отсутствуют в telemetry.
+- [x] `G2-037` Retention/disk budget проверяется `doctor`, общий target 6–8 GiB.
 
 ### Gate G2
 
-- [ ] `G2-038` Fresh clone `pnpm dev` PASS.
-- [ ] `G2-039` `status` не показывает одновременно противоречащие dev/package realities.
-- [ ] `G2-040` Start/stop/restart/failure sessions persisted.
-- [ ] `G2-041` Orphan/cache/schema/image drift negative tests PASS.
-- [ ] `G2-042` Telemetry off/on/outage journeys PASS.
-- [ ] `G2-043` Zero Fluent resources остаются после disposable stack test; durable test data сохранены где ожидается.
-- [ ] `G2-044` Commit: `feat(g2): establish deterministic local control and telemetry planes`.
-- [ ] `G2-045` `gate.json.status = PASS`.
+- [x] `G2-038` Fresh clone `pnpm dev` PASS.
+- [x] `G2-039` `status` не показывает одновременно противоречащие dev/package realities.
+- [x] `G2-040` Start/stop/restart/failure sessions persisted.
+- [x] `G2-041` Orphan/cache/schema/image drift negative tests PASS.
+- [x] `G2-042` Telemetry off/on/outage journeys PASS.
+- [x] `G2-043` Zero Fluent resources остаются после disposable stack test; durable test data сохранены где ожидается.
+- [x] `G2-044` Commit: `feat(g2): establish deterministic local control and telemetry planes`.
+- [x] `G2-045` `gate.json.status = PASS`.
 
 ---
 
