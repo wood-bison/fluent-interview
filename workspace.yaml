@@ -19,7 +19,7 @@ repositories:
     role: learner-web
     remote: local-only
     branch: main
-    revision: 25402de0c73226a7665d3415ba2b2b5c594c5f6e
+    revision: 2cc6ed6ea8fe71979f3d6f96909fb9dc3c5cd410
   - id: fluent-question-brain
     path: fluent-question-brain
     role: question-source-of-truth

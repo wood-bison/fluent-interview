@@ -1,0 +1,62 @@
+{
+  "wave": "W18",
+  "scope": "Questions catalog compact-shell and desktop UX remediation",
+  "observedAt": "2026-08-28T10:52:00Z",
+  "sourceRevisions": {
+    "umbrellaBefore": "c475e2ebea5addc3b4c6e0223f3147ede1284917",
+    "vueAfter": "2cc6ed6ea8fe71979f3d6f96909fb9dc3c5cd410",
+    "lab": "f4c775cad33a7b8a20cbc36643dd164e40a5d549",
+    "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
+    "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
+    "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
+  },
+  "package": {
+    "boundaryId": "0625e0bf-2c1b-4773-9d2e-74d9b987b7ff",
+    "backupArtifact": "learner-backup-20260828104745-38e3618f-1f6",
+    "backupSha256": "775139bd21aa5d0eec8cf873d58da96dc5948337f4394f76662b672b0b10efb8",
+    "rows": 12161,
+    "bytes": 10250325,
+    "state": "ready",
+    "web": "http://localhost:49300/questions",
+    "api": "http://127.0.0.1:49301/api/health/ready"
+  },
+  "before": {
+    "viewport": "390x844",
+    "advancedFilterHeight": 912,
+    "railExpandedAttribute": "true",
+    "contextRailRendered": true,
+    "firstQuestionApproxTop": 2262
+  },
+  "after": {
+    "desktop": {
+      "viewport": "1440x900",
+      "advancedExpanded": true,
+      "railExpandedAttribute": "true",
+      "railWidth": 268,
+      "mainClientHeight": 840,
+      "mainScrollHeight": 6319,
+      "horizontalOverflow": false,
+      "pageErrors": 0,
+      "consoleErrors": 0
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "advancedExpanded": false,
+      "advancedSummaryHeight": 214.625,
+      "railExpandedAttribute": "false",
+      "contextRailRendered": false,
+      "railWidth": 78.390625,
+      "mainClientHeight": 784,
+      "mainScrollHeight": 15568,
+      "firstQuestionTopAtScrollZero": 1607.828125,
+      "horizontalOverflow": false,
+      "pageErrors": 0,
+      "consoleErrors": 0
+    },
+    "searchDebounce": {
+      "requestsWithin80ms": 0,
+      "requestsAfter430ms": 1,
+      "request": "/api/questions/query?search=promise&limit=24&locale=ru"
+    }
+  }
+}

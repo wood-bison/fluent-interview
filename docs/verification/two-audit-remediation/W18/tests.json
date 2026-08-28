@@ -1,0 +1,19 @@
+{
+  "evidenceVersion": "ui-remediation-tests.v1",
+  "wave": "W18",
+  "status": "pass",
+  "tests": [
+    {"id":"vue-typecheck","status":"pass","detail":"vue-tsc --noEmit"},
+    {"id":"vue-lint","status":"pass","detail":"eslint with zero warnings"},
+    {"id":"vue-unit","status":"pass","detail":"14/14 Vitest tests"},
+    {"id":"vue-build","status":"pass","detail":"Vite production build"},
+    {"id":"compact-rail-semantics","status":"pass","detail":"390x844 rail aria-expanded=false and no contextual rail DOM"},
+    {"id":"desktop-rail-preservation","status":"pass","detail":"1440x900 rail expanded at 268px"},
+    {"id":"compact-filter-disclosure","status":"pass","detail":"advanced filters start collapsed on 390x844 and toggle restores visibility"},
+    {"id":"question-scroll","status":"pass","detail":"internal .fel-main scroll owner has 15,568px content at 390x844"},
+    {"id":"question-horizontal-overflow","status":"pass","detail":"document/body width equals viewport at both tested viewports"},
+    {"id":"search-debounce","status":"pass","detail":"one request after 240ms debounce; no request in first 80ms"},
+    {"id":"desktop-console","status":"pass","detail":"zero page/console errors on released package"},
+    {"id":"cross-service-routes","status":"pass","detail":"route validation matrix 43/43 routes, 16/16 API probes and 27/27 semantic checks"}
+  ]
+}
