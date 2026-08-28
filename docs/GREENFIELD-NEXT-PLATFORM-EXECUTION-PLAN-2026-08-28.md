@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G2 PASS; G3 в очереди выполнения**
+Статус: **G0–G3 PASS; G4 в очереди выполнения**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -430,48 +430,48 @@ edges до переноса product code.
 
 ### G3.1. Next architecture
 
-- [ ] `G3-001` Next App Router и Node runtime настроены exact versions.
-- [ ] `G3-002` Server Components default; Client boundary inventory reviewable.
-- [ ] `G3-003` Route groups разделяют learner, Studio и operator surfaces.
-- [ ] `G3-004` Session/auth boundary не полагается на browser-supplied authority.
-- [ ] `G3-005` Server actions используются только там, где ownership и retry semantics ясны.
-- [ ] `G3-006` I/O boundaries валидируются generated Zod decoders; domain internals не оборачиваются Zod повсеместно.
-- [ ] `G3-007` Error/loading/not-found/empty/offline/degraded states существуют до feature pages.
-- [ ] `G3-008` `instrumentation.ts` и `onRequestError` подключены без browser leakage.
+- [x] `G3-001` Next App Router и Node runtime настроены exact versions.
+- [x] `G3-002` Server Components default; Client boundary inventory reviewable.
+- [x] `G3-003` Route groups разделяют learner, Studio и operator surfaces.
+- [x] `G3-004` Session/auth boundary не полагается на browser-supplied authority.
+- [x] `G3-005` Server actions используются только там, где ownership и retry semantics ясны.
+- [x] `G3-006` I/O boundaries валидируются generated Zod decoders; domain internals не оборачиваются Zod повсеместно.
+- [x] `G3-007` Error/loading/not-found/empty/offline/degraded states существуют до feature pages.
+- [x] `G3-008` `instrumentation.ts` и `onRequestError` подключены без browser leakage.
 
 ### G3.2. Fluent design system
 
-- [ ] `G3-009` Перенести primitive/semantic/component/motion tokens через Port Ledger.
-- [ ] `G3-010` Создать packages `ui/tokens`, `ui/primitives`, `ui/learning`, `ui/icons`.
-- [ ] `G3-011` Tailwind theme генерируется из tokens, не дублирует значения вручную.
-- [ ] `G3-012` shadcn используется как audited source registry; copied code принадлежит repo.
-- [ ] `G3-013` Radix/headless primitives не форкаются без причины.
-- [ ] `G3-014` Variant API типизирован, component anatomy документирована.
-- [ ] `G3-015` Instrument Glass/Liquid Glass применяется иерархично, без blur-on-everything.
-- [ ] `G3-016` Contrast, forced-colors, reduced-motion и transparency fallback PASS.
-- [ ] `G3-017` Custom icons имеют единый grid/stroke/fill и accessible naming.
-- [ ] `G3-018` Storybook/state catalog покрывает interactive states и long RU/EN copy.
+- [x] `G3-009` Перенести primitive/semantic/component/motion tokens через Port Ledger.
+- [x] `G3-010` Создать packages `ui/tokens`, `ui/primitives`, `ui/learning`, `ui/icons`.
+- [x] `G3-011` Tailwind theme генерируется из tokens, не дублирует значения вручную.
+- [x] `G3-012` shadcn используется как audited source registry; copied code принадлежит repo.
+- [x] `G3-013` Radix/headless primitives не форкаются без причины.
+- [x] `G3-014` Variant API типизирован, component anatomy документирована.
+- [x] `G3-015` Instrument Glass/Liquid Glass применяется иерархично, без blur-on-everything.
+- [x] `G3-016` Contrast, forced-colors, reduced-motion и transparency fallback PASS.
+- [x] `G3-017` Custom icons имеют единый grid/stroke/fill и accessible naming.
+- [x] `G3-018` Storybook/state catalog покрывает interactive states и long RU/EN copy.
 
 ### G3.3. Shell/settings
 
-- [ ] `G3-019` Port header, collapsible navigation, profile/settings, search/command palette.
-- [ ] `G3-020` Port RU/EN и light/dark/system preferences server-safely.
-- [ ] `G3-021` Нет hydration flash или theme mismatch.
-- [ ] `G3-022` Profile menu/popover позиционируется у trigger, а не случайно в центре.
-- [ ] `G3-023` Focus management, escape, outside click и keyboard loop корректны.
-- [ ] `G3-024` Navigation fully collapsed освобождает layout, а не только уменьшает ширину.
-- [ ] `G3-025` Scroll ownership определён для shell и каждой workbench page; body-lock только у modal.
-- [ ] `G3-026` Control Center route показывает StackSession projection, не vendor iframe как authority.
+- [x] `G3-019` Port header, collapsible navigation, profile/settings, search/command palette.
+- [x] `G3-020` Port RU/EN и light/dark/system preferences server-safely.
+- [x] `G3-021` Нет hydration flash или theme mismatch.
+- [x] `G3-022` Profile menu/popover позиционируется у trigger, а не случайно в центре.
+- [x] `G3-023` Focus management, escape, outside click и keyboard loop корректны.
+- [x] `G3-024` Navigation fully collapsed освобождает layout, а не только уменьшает ширину.
+- [x] `G3-025` Scroll ownership определён для shell и каждой workbench page; body-lock только у modal.
+- [x] `G3-026` Control Center route показывает StackSession projection, не vendor iframe как authority.
 
 ### Gate G3
 
-- [ ] `G3-027` Story/unit/component/a11y checks PASS.
-- [ ] `G3-028` Visual matrix 1440×900, 1728×1117, 2560×1440, 390×844 × RU/EN × themes PASS.
-- [ ] `G3-029` Keyboard-only shell journey PASS.
-- [ ] `G3-030` No horizontal clipping/overlap/scroll trap in required viewports.
-- [ ] `G3-031` Visual deltas against reference classified and signed, не скрыты threshold.
-- [ ] `G3-032` Commits: `feat(g3): establish Next application shell`; `feat(g3): port Fluent design system`.
-- [ ] `G3-033` `gate.json.status = PASS`.
+- [x] `G3-027` Story/unit/component/a11y checks PASS.
+- [x] `G3-028` Visual matrix 1440×900, 1728×1117, 2560×1440, 390×844 × RU/EN × themes PASS.
+- [x] `G3-029` Keyboard-only shell journey PASS.
+- [x] `G3-030` No horizontal clipping/overlap/scroll trap in required viewports.
+- [x] `G3-031` Visual deltas against reference classified and signed, не скрыты threshold.
+- [x] `G3-032` Commits: `feat(g3): establish Next application shell`; `feat(g3): port Fluent design system`.
+- [x] `G3-033` `gate.json.status = PASS`.
 
 ---
 
