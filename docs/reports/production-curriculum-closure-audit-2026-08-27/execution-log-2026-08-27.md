@@ -46,9 +46,11 @@ production-ready**. Последнее обновление: 28 августа 2
 | Fluent Lab | `014a301f903c1b5e9d2e5189ad0b7627b8cbbd78` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after final G13D projection |
 | Fluent Lab | `7e3386748a02c3b087f7b1c66dda29f59b847d14` | refreshed timestamped evidence after the final 55-step G13D dev gate |
 | Fluent Lab | `52511caee00e309b8084804fac92af4f50ba29a8` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after the initial G13D dev rehearsal |
+| Fluent Lab | `0e8d59d73f994931a1fcb8aa361a670430336a3f` | refreshed final G13D path-completion projection/backlog evidence after the extended Nest review |
+| Fluent Lab | `41323e53917a648e16f6f2b918625d475a5ef571` | refreshed timestamped browser-owner, glossary-contract, and deviation-gate evidence after the clean 55-step G13D dev gate |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain/Lab pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4f78374bc4ccffc1`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain `b415dc3` / Lab `41323e5` pins, release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4f78374bc4ccffc1`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -64,8 +66,8 @@ Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Que
 - graph release, learning-module release, TrackView isolation;
 - path completion и path-completion backlog;
 - Task Runtime portfolio backlog (`590` open items: `153` families + `437` revisions);
-- cross-repo Question Brain coverage backlog (`1506` exact path/card items,
-  16 bounded waves; all currently `theory_only` and intentionally unbound);
+- cross-repo Question Brain coverage backlog (`1499` exact path/card items,
+  15 bounded waves; all currently `theory_only` and intentionally unbound);
 - activity corpus, runtime bindings, route actions и EN/RU funnels;
 - catalog integrity, accessibility, desktop visual/regression и Vue E2E;
 - runtime boundary negative test и failure matrix.
@@ -141,7 +143,7 @@ q995, q998, q791) и отозвала path-mismatched q1072 до публика�
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Полный development-прогон от `2026-08-27T23:50:38.957Z` завершился
+Полный development-прогон от `2026-08-27T23:59:45.439Z` завершился
 `valid=true`: 55/55 шагов (`lab-check`, `vue-check`, readiness,
 graph/path/content gates, runtime failure matrix, accessibility, desktop
 visual/regression и Vue E2E) прошли на G13D Brain/Lab release tuple.
@@ -170,8 +172,10 @@ G13D сохраняет все предыдущие артефакты и доб
 `question-capability-release-da343f56ed8db7bc`.
 Финальное расширение той же bounded G13D волны перезаписало только её
 staging-derived manifest/report после дополнительного ревью и выпустило tuple
-`question-capability-release-3798fba18a422181`; immutable question release и
-registry не изменились.
+`question-capability-release-4f78374bc4ccffc1`; immutable question release и
+registry не изменились. В расширение вошли семь новых Nest/runtime карточек
+(`q313`, `q042`, `q971`, `q993`, `q995`, `q998`, `q791`); q1072 по-прежнему
+отозван guard-ом canonical path.
 
 ## Следующая волна
 
