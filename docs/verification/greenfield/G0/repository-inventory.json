@@ -1,0 +1,85 @@
+{
+  "schemaVersion": "greenfield-g0-repository-inventory.v1",
+  "generatedAt": "2026-08-28T18:56:01Z",
+  "referenceRoot": "/Users/sergeyzhechko/developer/fluent-interview",
+  "repositories": [
+    {
+      "id": "fluent-interview",
+      "path": ".",
+      "head": "76419a5620ca3c6cf4a4742cb42d8258224e682f",
+      "branch": "main",
+      "commits": 185,
+      "dirtyPaths": 35,
+      "remote": "git@github-woodbison:wood-bison/fluent-interview.git",
+      "classification": "reference-orchestrator"
+    },
+    {
+      "id": "fluent-engineering-lab",
+      "path": "fluent-engineering-lab",
+      "head": "ba495d657b7576b04718e3f09b6f1767924dc7bc",
+      "branch": "main",
+      "commits": 811,
+      "dirtyPaths": 5,
+      "remote": "git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git",
+      "classification": "reference-learning-api"
+    },
+    {
+      "id": "fluent-engineering-vue",
+      "path": "fluent-engineering-vue",
+      "head": "41ac41da63526b84fa994c58f7d0012d24fe6d1b",
+      "branch": "main",
+      "commits": 10,
+      "dirtyPaths": 0,
+      "remote": "local-only",
+      "classification": "reference-learner-web"
+    },
+    {
+      "id": "fluent-question-brain",
+      "path": "fluent-question-brain",
+      "head": "9f02c92a15786a869801cd835015b723e0c6e0b1",
+      "branch": "main",
+      "commits": 132,
+      "dirtyPaths": 0,
+      "remote": "git@github-woodbison:wood-bison/fluent-question-brain.git",
+      "classification": "reference-question-authority"
+    },
+    {
+      "id": "fluent-task-runtime",
+      "path": "fluent-task-runtime",
+      "head": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
+      "branch": "main",
+      "commits": 45,
+      "dirtyPaths": 0,
+      "remote": "git@github-woodbison:wood-bison/fluent-task-runtime.git",
+      "classification": "reference-execution-authority"
+    },
+    {
+      "id": "fluent-question-vault",
+      "path": "fluent-question-vault",
+      "head": "f4d46228cd366c218b29423323da8fe8bad796f1",
+      "branch": "main",
+      "commits": 19,
+      "dirtyPaths": 0,
+      "remote": "git@github.com:szhechko/fluent-question-vault.git",
+      "classification": "reference-card-history-mirror"
+    }
+  ],
+  "target": {
+    "path": "/Users/sergeyzhechko/developer/fluent-interview-platform",
+    "existsAtBaseline": false,
+    "remoteCandidatesChecked": [
+      "git@github-woodbison:wood-bison/fluent-interview-platform.git",
+      "git@github.com:szhechko/fluent-interview-platform.git"
+    ],
+    "remoteCandidatesExist": false,
+    "decision": "use wood-bison owner because the canonical orchestrator and three product authorities use that owner; create only in G1 after G0 evidence commit"
+  },
+  "immutableTags": [
+    "greenfield-g0-2026-08-28-fluent-interview",
+    "greenfield-g0-2026-08-28-fluent-engineering-lab",
+    "greenfield-g0-2026-08-28-fluent-engineering-vue",
+    "greenfield-g0-2026-08-28-fluent-question-brain",
+    "greenfield-g0-2026-08-28-fluent-task-runtime",
+    "greenfield-g0-2026-08-28-fluent-question-vault"
+  ]
+}

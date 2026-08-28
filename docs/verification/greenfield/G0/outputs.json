@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "greenfield-gate-outputs.v1",
+  "gate": "G0",
+  "capturedAt": "2026-08-28T18:58:00Z",
+  "referenceTags": [
+    "greenfield-g0-2026-08-28-fluent-interview",
+    "greenfield-g0-2026-08-28-fluent-engineering-lab",
+    "greenfield-g0-2026-08-28-fluent-engineering-vue",
+    "greenfield-g0-2026-08-28-fluent-question-brain",
+    "greenfield-g0-2026-08-28-fluent-task-runtime",
+    "greenfield-g0-2026-08-28-fluent-question-vault"
+  ],
+  "backupDirectory": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/",
+  "checksums": "checksums.sha256 in backup directory",
+  "runtime": {
+    "devCommand": "pnpm dev",
+    "devUrl": "http://localhost:47350/",
+    "learningApi": "http://127.0.0.1:47000",
+    "questionBrain": "http://127.0.0.1:48127",
+    "taskRuntime": "http://127.0.0.1:48227",
+    "status": "healthy",
+    "releaseVerifyDev": "PASS"
+  },
+  "target": {
+    "created": false,
+    "reason": "G1 creates target only after this reference safety commit"
+  }
+}

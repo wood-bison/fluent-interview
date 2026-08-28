@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "greenfield-gate.v1",
+  "gate": "G0",
+  "status": "PASS",
+  "generatedAt": "2026-08-28T18:58:00Z",
+  "referenceSha": "76419a5620ca3c6cf4a4742cb42d8258224e682f",
+  "targetParentSha": null,
+  "targetSha": null,
+  "checks": {
+    "passed": 52,
+    "failed": 0,
+    "skipped": 0
+  },
+  "evidence": {
+    "repositoryInventory": "repository-inventory.json",
+    "dirtyState": "dirty-state.md",
+    "httpBaseline": "routes-and-api-baseline.json",
+    "visualBaseline": "visual-baseline.json",
+    "portLedger": "port-ledger.md",
+    "routeQuestionAttempt": "../../../../fluent-engineering-lab/docs/production/evidence/route-question-attempt-drill.json",
+    "releaseVerifyDev": "../../release-verify-dev-2026-08-28-audit.json",
+    "observabilityJourney": "../../two-audit-remediation/W16/jaeger-continuity.json",
+    "backupDirectory": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/",
+    "backupChecksums": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/checksums.sha256"
+  },
+  "reference": {
+    "repositories": 6,
+    "bundlesVerified": 6,
+    "fileManifests": 6,
+    "databaseBackups": 2,
+    "databaseRestores": 2,
+    "visualStates": 48,
+    "visualDiagnostics": 0,
+    "visualHorizontalOverflowPx": 0,
+    "httpLearnerRoutes": 9,
+    "httpApiProbes": 11,
+    "questionReleaseId": "question-release-d00a14931e607336",
+    "publishedQuestions": 1591,
+    "curriculumNodes": 828,
+    "curriculumEdges": 1125,
+    "runtimeReleaseId": "runtime-task-release-2026-08-28-qb-d00a1493-g17",
+    "goldenRun": { "valid": true, "taskId": "node-rate-limiter-001", "tests": "4/4", "profile": "disposable", "sergeyProgressUnchanged": true },
+    "traceContinuity": { "valid": true, "sharedTraceCount": 1, "routeSpanCount": 1, "runtimeSpanCount": 1 }
+  },
+  "limitations": [
+    "Go and .NET are not installed on this host; their exact target toolchains must be containerized or installed in G1.",
+    "The existing reference workspace intentionally remains five child Git roots; this is the input boundary for the new target, not a G0 failure.",
+    "Unrelated Docker resources outside the Fluent stack were observed and left untouched."
+  ],
+  "rollbackRehearsed": true,
+  "reviewer": "codex",
+  "nextGate": "G1"
+}

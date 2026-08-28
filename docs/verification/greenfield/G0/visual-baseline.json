@@ -1,0 +1,1599 @@
+{
+  "schemaVersion": "greenfield-g0-visual-baseline.v1",
+  "generatedAt": "2026-08-28T18:54:05.707Z",
+  "baseUrl": "http://localhost:47350",
+  "expectedStates": 48,
+  "states": [
+    {
+      "key": "macbook-pro-13-ru-light-program",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-ru-light-program.png",
+        "bytes": 273229,
+        "sha256": "5f6d402e5ad0ec919b1a58cb952ed55618e9a5d31f0d3451a671b23f749cf275"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-ru-light-atlas",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-ru-light-atlas.png",
+        "bytes": 243720,
+        "sha256": "3ca40757a1b246854e43f023b4fc3f2a5973a0ff6602cd1abc05750ec8cf528a"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-ru-light-progress",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-ru-light-progress.png",
+        "bytes": 323619,
+        "sha256": "ace91faed586c909e14cdcd552560198c30c96c5db351626dedaacec2808d98b"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-ru-dark-program",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-ru-dark-program.png",
+        "bytes": 285003,
+        "sha256": "dd95c9c6e4ec5d26c9bb677ee2e07442c65e8cb0ac0007b59d80e679c6238c5e"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-ru-dark-atlas",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-ru-dark-atlas.png",
+        "bytes": 263460,
+        "sha256": "c681d296edaf514f8787a7461997959159ff667341528cdd7383ae7529506655"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-ru-dark-progress",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-ru-dark-progress.png",
+        "bytes": 333577,
+        "sha256": "f693a16eccf26f579bb3032c8ed5c34fb605419ce55096790b177de2ecd14bd7"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-en-light-program",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-en-light-program.png",
+        "bytes": 273229,
+        "sha256": "5f6d402e5ad0ec919b1a58cb952ed55618e9a5d31f0d3451a671b23f749cf275"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-en-light-atlas",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-en-light-atlas.png",
+        "bytes": 243720,
+        "sha256": "3ca40757a1b246854e43f023b4fc3f2a5973a0ff6602cd1abc05750ec8cf528a"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-en-light-progress",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-en-light-progress.png",
+        "bytes": 323619,
+        "sha256": "ace91faed586c909e14cdcd552560198c30c96c5db351626dedaacec2808d98b"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-en-dark-program",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-en-dark-program.png",
+        "bytes": 285003,
+        "sha256": "dd95c9c6e4ec5d26c9bb677ee2e07442c65e8cb0ac0007b59d80e679c6238c5e"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-en-dark-atlas",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-en-dark-atlas.png",
+        "bytes": 263460,
+        "sha256": "c681d296edaf514f8787a7461997959159ff667341528cdd7383ae7529506655"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-13-en-dark-progress",
+      "viewport": {
+        "id": "macbook-pro-13",
+        "cssWidth": 1440,
+        "cssHeight": 900,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "dpr": 1,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "scrollHeight": 900,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-13-en-dark-progress.png",
+        "bytes": 333615,
+        "sha256": "47bbbf0b6968a181723fe23f68fa647926e3308d0c1299a26883f111bd996365"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-ru-light-program",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-ru-light-program.png",
+        "bytes": 331722,
+        "sha256": "76353236564f73712a31a2df91583f8d0c88dde1f04ad43541c10d22daea66de"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-ru-light-atlas",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-ru-light-atlas.png",
+        "bytes": 325684,
+        "sha256": "226e246b27a161850e2d00b7d9f654dd78837c48319b1e6a5004b09b5efce43d"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-ru-light-progress",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-ru-light-progress.png",
+        "bytes": 397209,
+        "sha256": "9a8a8b8d6278c3b53891a0385d458f66d85f56a4830da0cc77aaa1f9879d86b1"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-ru-dark-program",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-ru-dark-program.png",
+        "bytes": 349313,
+        "sha256": "58df2ba763f12f90a10ce672e02ad27dd1e9f36617cd6ea32ba6c60c64797fc3"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-ru-dark-atlas",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-ru-dark-atlas.png",
+        "bytes": 350835,
+        "sha256": "514959697e8041e840615faa05ee2a8370c68dcfe1fb8b8a507d2cd2467f28b7"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-ru-dark-progress",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-ru-dark-progress.png",
+        "bytes": 411994,
+        "sha256": "4e26063422ed72d4b282ad62faf9c6310021b22d2e90cac95425679eaccee691"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-en-light-program",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-en-light-program.png",
+        "bytes": 331722,
+        "sha256": "76353236564f73712a31a2df91583f8d0c88dde1f04ad43541c10d22daea66de"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-en-light-atlas",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-en-light-atlas.png",
+        "bytes": 325684,
+        "sha256": "226e246b27a161850e2d00b7d9f654dd78837c48319b1e6a5004b09b5efce43d"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-en-light-progress",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-en-light-progress.png",
+        "bytes": 397209,
+        "sha256": "9a8a8b8d6278c3b53891a0385d458f66d85f56a4830da0cc77aaa1f9879d86b1"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-en-dark-program",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-en-dark-program.png",
+        "bytes": 349323,
+        "sha256": "564f207bfb4685be4afa92bc38ef63c71b2b64502bf98f77fe626506c76708b4"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-en-dark-atlas",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-en-dark-atlas.png",
+        "bytes": 350746,
+        "sha256": "b6a27aa5eebd9e2466e5ecbcaa16188c5fb21c503420e570722564d8ea844a96"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "macbook-pro-16-en-dark-progress",
+      "viewport": {
+        "id": "macbook-pro-16",
+        "cssWidth": 1728,
+        "cssHeight": 1117,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 1728,
+      "innerHeight": 1117,
+      "dpr": 1,
+      "scrollWidth": 1728,
+      "clientWidth": 1728,
+      "scrollHeight": 1117,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/macbook-pro-16-en-dark-progress.png",
+        "bytes": 411998,
+        "sha256": "b407059c37474e0f5c867f6e9718adb1e0dea21caaa190cce5404d4933a3a5c2"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-ru-light-program",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-ru-light-program.png",
+        "bytes": 463108,
+        "sha256": "5415b271a70fc39d7269aec8b7c4c1271978b1a3f73c51cc6de79c6639b38b70"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-ru-light-atlas",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-ru-light-atlas.png",
+        "bytes": 456041,
+        "sha256": "9ca92f2a3485d378627e2d12ab6f0d786b714e19596a626088cd8d2a005b2e9c"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-ru-light-progress",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-ru-light-progress.png",
+        "bytes": 585129,
+        "sha256": "68d48913a7f1cb19495a94a1f5d27874f9ea3b53af1c177450ae4f34106df9de"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-ru-dark-program",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-ru-dark-program.png",
+        "bytes": 501922,
+        "sha256": "bcd73a5ed44e97240700f0e531e9fdc064518114c89cfd5f70572852fda39598"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-ru-dark-atlas",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-ru-dark-atlas.png",
+        "bytes": 497342,
+        "sha256": "2f29d435072fde1eafcc16bd61fae8d341b7378970bc0800fac7819740d85d5b"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-ru-dark-progress",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-ru-dark-progress.png",
+        "bytes": 621557,
+        "sha256": "ce7b38504813871959bb50c78e2b8103e302f9d28f169b94e51d21e696b34c98"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-en-light-program",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-en-light-program.png",
+        "bytes": 463108,
+        "sha256": "5415b271a70fc39d7269aec8b7c4c1271978b1a3f73c51cc6de79c6639b38b70"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-en-light-atlas",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-en-light-atlas.png",
+        "bytes": 456041,
+        "sha256": "9ca92f2a3485d378627e2d12ab6f0d786b714e19596a626088cd8d2a005b2e9c"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-en-light-progress",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-en-light-progress.png",
+        "bytes": 585129,
+        "sha256": "68d48913a7f1cb19495a94a1f5d27874f9ea3b53af1c177450ae4f34106df9de"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-en-dark-program",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-en-dark-program.png",
+        "bytes": 501937,
+        "sha256": "7237a05d56ef73686a33af5c9043de950dc3f3c16e68906cf63ec6e8fd5543b0"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-en-dark-atlas",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-en-dark-atlas.png",
+        "bytes": 497376,
+        "sha256": "5a7dbfe7ae8453281640d66ecc7b6acaddccca8c8442a07f53a933eb7cbcbafb"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "apple-studio-display-en-dark-progress",
+      "viewport": {
+        "id": "apple-studio-display",
+        "cssWidth": 2560,
+        "cssHeight": 1440,
+        "dpr": 1,
+        "class": "desktop"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 2560,
+      "innerHeight": 1440,
+      "dpr": 1,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "scrollHeight": 1440,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/apple-studio-display-en-dark-progress.png",
+        "bytes": 621559,
+        "sha256": "d4c2b9518d39f56a20dee5212ce767374ddadb966b2d09543b7ad5949f73c8d7"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-ru-light-program",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-ru-light-program.png",
+        "bytes": 93699,
+        "sha256": "893679d36e05f4ef39773356c66400876ec4326c4178d429e67b6ead7f04aafb"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-ru-light-atlas",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-ru-light-atlas.png",
+        "bytes": 90472,
+        "sha256": "3b4c310ed70c7887b0b7db39bb83d397eaf8a6c32a71faca5bfb031a1ae2c6a3"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-ru-light-progress",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "ru",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-ru-light-progress.png",
+        "bytes": 98938,
+        "sha256": "a66d4430489e1d305d3652d19f353989f2fc33f5c4102bc23e3998bd0f63c225"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-ru-dark-program",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-ru-dark-program.png",
+        "bytes": 97920,
+        "sha256": "c6310c77f3f0e7a50c9ea41588f785b423d879f9ec4456a80ed981ad04150139"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-ru-dark-atlas",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-ru-dark-atlas.png",
+        "bytes": 94966,
+        "sha256": "08555f30d734705223298268b6c8ebfa09dcf827ef8aea1114368554f6e1c155"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-ru-dark-progress",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "ru",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-ru-dark-progress.png",
+        "bytes": 105209,
+        "sha256": "1ea88c72473952e3e0e71dddd3cdb376594a9dc09446cd92ed1990876bfc045a"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-en-light-program",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-en-light-program.png",
+        "bytes": 93699,
+        "sha256": "893679d36e05f4ef39773356c66400876ec4326c4178d429e67b6ead7f04aafb"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-en-light-atlas",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-en-light-atlas.png",
+        "bytes": 90472,
+        "sha256": "3b4c310ed70c7887b0b7db39bb83d397eaf8a6c32a71faca5bfb031a1ae2c6a3"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-en-light-progress",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "en",
+      "theme": "light",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-en-light-progress.png",
+        "bytes": 98938,
+        "sha256": "a66d4430489e1d305d3652d19f353989f2fc33f5c4102bc23e3998bd0f63c225"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-en-dark-program",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "program",
+        "path": "/"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Одна очередь.Один следующий шаг.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-en-dark-program.png",
+        "bytes": 97920,
+        "sha256": "c6310c77f3f0e7a50c9ea41588f785b423d879f9ec4456a80ed981ad04150139"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-en-dark-atlas",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "atlas",
+        "path": "/learning-map"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Карта, которая объясняет порядок.",
+      "graphNodes": 81,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-en-dark-atlas.png",
+        "bytes": 94968,
+        "sha256": "30da434a0901fe8bb3261fc74fdd2544bec92625ad91773981d63d580f8310c9"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    },
+    {
+      "key": "narrow-non-regression-en-dark-progress",
+      "viewport": {
+        "id": "narrow-non-regression",
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "dpr": 1,
+        "class": "narrow"
+      },
+      "locale": "en",
+      "theme": "dark",
+      "route": {
+        "id": "progress",
+        "path": "/progress"
+      },
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "dpr": 1,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "scrollHeight": 844,
+      "heading": "Что уже доказано, а что ещё ждёт тебя.",
+      "graphNodes": 0,
+      "screenshot": {
+        "path": "/Users/sergeyzhechko/.codex/backups/fluent-interview-greenfield-2026-08-28/visual-baseline/narrow-non-regression-en-dark-progress.png",
+        "bytes": 105209,
+        "sha256": "0b10245045d370935bcad0b85b9ba42924b5f6d75cb1cc77900d70c67e5e1281"
+      },
+      "diagnostics": {
+        "errors": [],
+        "warnings": []
+      }
+    }
+  ],
+  "summary": {
+    "actualStates": 48,
+    "diagnostics": 0,
+    "maxHorizontalOverflowPx": 0,
+    "screenshots": 48,
+    "screenshotsPresent": true
+  }
+}

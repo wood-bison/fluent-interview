@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "greenfield-gate-inputs.v1",
+  "gate": "G0",
+  "referenceRoot": "/Users/sergeyzhechko/developer/fluent-interview",
+  "referenceHead": "76419a5620ca3c6cf4a4742cb42d8258224e682f",
+  "capturedAt": "2026-08-28T18:56:01Z",
+  "toolchain": {
+    "macOS": "26.6.2",
+    "dockerServer": "29.7.2",
+    "dockerCompose": "v5.4.0",
+    "node": "v26.7.0",
+    "pnpm": "11.20.0",
+    "go": null,
+    "java": "25.0.1 LTS",
+    "dotnet": null,
+    "gh": "2.97.0"
+  },
+  "referenceRepos": [
+    "fluent-interview",
+    "fluent-engineering-lab",
+    "fluent-engineering-vue",
+    "fluent-question-brain",
+    "fluent-task-runtime",
+    "fluent-question-vault"
+  ],
+  "targetPath": "/Users/sergeyzhechko/developer/fluent-interview-platform",
+  "remoteDecision": {
+    "owner": "wood-bison",
+    "url": "git@github-woodbison:wood-bison/fluent-interview-platform.git",
+    "reason": "canonical orchestrator and product authorities use wood-bison; both candidate remotes were verified absent before creation"
+  }
+}

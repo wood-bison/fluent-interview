@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "greenfield-g0-http-baseline.v1",
+  "generatedAt": "2026-08-28T18:54:49.313Z",
+  "baseUrls": {
+    "web": "http://localhost:47350",
+    "learningApi": "http://127.0.0.1:47000",
+    "questionBrain": "http://127.0.0.1:48127",
+    "taskRuntime": "http://127.0.0.1:48227"
+  },
+  "routes": [
+    { "id": "program", "path": "/", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "learning-map", "path": "/learning-map", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "practice", "path": "/practice", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "questions", "path": "/practice/questions", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "projects", "path": "/projects", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "progress", "path": "/progress", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "journal", "path": "/journal", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "settings", "path": "/settings", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" },
+    { "id": "studio", "path": "/studio", "status": 200, "bytes": 507, "sha256": "ed2126cbf9efc0395775a763ec73085f048c7fd65fc9effeeb674a0a039e8904" }
+  ],
+  "apis": [
+    { "id": "api-health", "path": "/api/health/ready", "status": 200, "bytes": 397, "sha256": "bacf6667d34a1dad97ce0105034d11d99992de4dbbe69c7893a94446db70598d" },
+    { "id": "brain-health", "path": "/health/ready", "status": 200, "bytes": 220, "sha256": "db7bb5fc8ac338452d9b9555449e797e4c09301398b158afeebd02889d073d3a" },
+    { "id": "runtime-health", "path": "/v1/health/ready", "status": 200, "bytes": 456, "sha256": "1ca0783a1e3dbb670d858b64b10474f4d4a1d3f39547554268a286a593a52a05" },
+    { "id": "api-curriculum", "path": "/api/curriculum/published", "status": 200, "bytes": 394408, "sha256": "ba043e330ba649506ff2312956e3b74ae10033dceabcf9e00f14d335e194c684" },
+    { "id": "api-program", "path": "/api/program/current", "status": 200, "bytes": 16218, "sha256": "fae166ca3111fcd9511032a2af294500c882c03036cf06831dd504baae291cbe" },
+    { "id": "api-practice", "path": "/api/practice/current", "status": 200, "bytes": 18077, "sha256": "246c8e3957755e25ffc13f3f1fcc8eaf3be212b244a05c1cb39b67c898ea881b" },
+    { "id": "api-progress", "path": "/api/progress", "status": 200, "bytes": 197730, "sha256": "d6d8e677ce10bd9050d71bfd4124943aa288e4cec9f43fc6098682e59c7e94d7" },
+    { "id": "brain-release", "path": "/v1/release", "status": 200, "bytes": 627664, "sha256": "0ea88d09141ade85cfc24f51fdea419b3cf658e989c63e16e61f876b0e68b2ab" },
+    { "id": "brain-catalog", "path": "/v1/catalog", "status": 200, "bytes": 118743, "sha256": "9572afd40804c146c5920c6c18058c17757a95bf82719a0b02807808c0ee468a" },
+    { "id": "runtime-profiles", "path": "/v1/profiles", "status": 200, "bytes": 1686, "sha256": "500354eb2040df32fcf857e4710644131fa938c3f8df6844f36b515d86723fa1" },
+    { "id": "runtime-tasks", "path": "/v1/tasks", "status": 200, "bytes": 23897, "sha256": "45dc9e92f120df708062f0008c3686c2ea4f5297aa7c6ce1c7b58cf80e592376" }
+  ],
+  "notes": [
+    "The reference web shell returns the same 507-byte SPA document for deep links; client route rendering is covered by visual and E2E evidence.",
+    "No OpenAPI document is exposed at /api/openapi.json; generated contract/schema tests are the current API surface authority."
+  ]
+}
