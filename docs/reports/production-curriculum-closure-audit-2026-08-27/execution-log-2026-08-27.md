@@ -1,6 +1,6 @@
 # Исполнительный журнал production-closure — 27 августа 2026
 
-Статус этого журнала: **обновлён после G8–G16 bounded waves; продукт ещё не
+Статус этого журнала: **обновлён после G8–G17 bounded waves; продукт ещё не
 production-ready**. Последнее обновление: 28 августа 2026.
 
 ## Что принято
@@ -58,6 +58,9 @@ production-ready**. Последнее обновление: 28 августа 2
 | Fluent Lab | `0465a7b47abdc1672742033b4cbda6435a7e0362` | consumed G16 binding release and refreshed path projection/backlog |
 | Fluent Lab | `448e7ee6195057389d9129a1b1aaae5340ad3a3e` | captured clean timestamped G16 evidence after the 55-step development gate |
 | Workspace | `0971c73` | recorded the clean G16 evidence, canonical Lab pin, and runtime launcher safeguard |
+| Fluent Lab | `c9c96cb4dde8856477c5352b0d8e3faae0f683b0` (+ `2ff842e9`, `bbeeab26`, `1835a1e7`) | release-aware Question Brain adapter, strict workspace/capability validation, fail-closed relation join, regression tests, and final G9/G12 evidence |
+| Task Runtime | `6b097718fe4f6075a1f4baf1d55dc6d71dcbf137` | G17 overlay manifest pins the current Brain capability-binding release; historical G10 manifest remains immutable |
+| Workspace | `working tree` | release join gate and Lab relation join now fail closed on source snapshot, capability binding, and capability registry drift |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
 | Workspace | current wave | Brain `4c4cac9` / Lab `448e7ee` pins, G16 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4c9a0a309536f892`; Vue/Runtime pins reconciled to exact HEAD SHAs |
@@ -89,6 +92,14 @@ Jaeger перезапущен, runtime пересобран с `59ee13f`. Пов
 завершилась `valid=true`: pass/fail/compile/timeout, redaction,
 resource-policy и `trace-evidence-identity` прошли; после неё namespace
 `fluent-runtime-task-*` пуст.
+
+После G16 была обнаружена release-join регрессия: Task Runtime summary всё ещё
+отдавал старый `question-capability-release-3c38b4c8c0fa7f47`, хотя Question
+Brain уже публиковал `question-capability-release-4c9a0a309536f892`. G17 создала
+новый immutable overlay `runtime-task-release-2026-08-28-qb-d00a1493-g17`,
+переключила launcher/Compose на него и добавила четыре fail-closed проверки
+идентичности. Это устраняет тихий дрейф capability-контекста при неизменных
+question bindings; старый G10 файл не редактировался.
 
 В финальном development-прогоне предупреждений нет: `package-provenance-plan`
 прошёл с `executable=true` и `sourceClean=true` после фиксации всех child

@@ -102,7 +102,7 @@ revision). Остальные
 Идентификаторы текущего согласованного среза: Question Brain
 `question-release-d00a14931e607336`, curriculum graph
 `2026.08.06-curriculum-graph.3`, Task Runtime
-`runtime-task-release-2026-08-26-qb-d00a1493-g10`. В API inventory все проверки
+`runtime-task-release-2026-08-28-qb-d00a1493-g17`. В API inventory все проверки
 reconciliation имеют значение `true`.
 
 Последняя bounded content wave — G15 (`question-capability-release-6aed990a298ef65b`):
@@ -114,6 +114,11 @@ reconciliation имеют значение `true`.
 После неё G16 (`question-capability-release-4c9a0a309536f892`) добавила ещё две
 прямые `.NET/C#` карточки про `await` state machine и `ConfigureAwait(false)`;
 сводка и projection всегда должны ссылаться на самый новый immutable tuple.
+G17 — это overlay без изменения task-кода: он перевыпустил Runtime manifest с
+актуальным Brain capability-binding release `question-capability-release-4c9a0a309536f892`.
+Теперь release gate и Lab relation join сравнивают не только question release,
+но также source snapshot, capability binding и capability registry; старый G10
+manifest остаётся неизменным rollback-артефактом.
 
 Карточка каждого пути теперь показывает два разных числа: `discoveryCount` —
 точный результат серверного поискового профиля в общей базе (например, `Go`), и

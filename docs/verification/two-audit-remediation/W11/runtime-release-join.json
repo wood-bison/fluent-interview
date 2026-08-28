@@ -1,13 +1,21 @@
 {
   "reportVersion": "runtime-release-join-gate.v1",
-  "generatedAt": "2026-08-28T00:52:11.670Z",
+  "generatedAt": "2026-08-28T07:21:03.516Z",
   "brainUrl": "http://127.0.0.1:48127",
   "runtimeUrl": "http://127.0.0.1:48227",
   "releaseTuple": {
     "questionReleaseId": "question-release-d00a14931e607336",
+    "sourceSnapshotId": "question-release-d00a14931e607336",
+    "capabilityBindingReleaseId": "question-capability-release-4c9a0a309536f892",
+    "capabilityRegistryReleaseId": "capability-registry-2026-08-25-v3",
     "catalogReleaseId": "question-release-d00a14931e607336",
     "runtimeQuestionReleaseId": "question-release-d00a14931e607336",
-    "runtimeReleaseId": "task-family-release-2026-08-26-g10"
+    "runtimeSourceSnapshotId": "question-release-d00a14931e607336",
+    "runtimeCapabilityBindingReleaseId": "question-capability-release-4c9a0a309536f892",
+    "runtimeCapabilityRegistryReleaseId": "capability-registry-2026-08-25-v3",
+    "runtimeReleaseId": "runtime-task-release-2026-08-28-qb-d00a1493-g17",
+    "runtimeSummaryReleaseId": "runtime-task-release-2026-08-28-qb-d00a1493-g17",
+    "taskFamilyReleaseId": "task-family-release-2026-08-26-g10"
   },
   "counts": {
     "brainCatalog": 1591,
@@ -47,6 +55,13 @@
       "httpStatus": 200
     },
     {
+      "id": "runtime-release-summary-readable",
+      "status": "pass",
+      "detail": "JSON projection available",
+      "url": "http://127.0.0.1:48227/v1/tasks/summary",
+      "httpStatus": 200
+    },
+    {
       "id": "brain-catalog-release-identity",
       "status": "pass",
       "detail": "question-release-d00a14931e607336 == question-release-d00a14931e607336",
@@ -59,6 +74,34 @@
       "detail": "question-release-d00a14931e607336 == question-release-d00a14931e607336",
       "brainReleaseId": "question-release-d00a14931e607336",
       "runtimeQuestionRelease": "question-release-d00a14931e607336"
+    },
+    {
+      "id": "runtime-source-snapshot-identity",
+      "status": "pass",
+      "detail": "question-release-d00a14931e607336 == question-release-d00a14931e607336",
+      "brainSourceSnapshotId": "question-release-d00a14931e607336",
+      "runtimeSourceSnapshotId": "question-release-d00a14931e607336"
+    },
+    {
+      "id": "runtime-capability-binding-release-identity",
+      "status": "pass",
+      "detail": "question-capability-release-4c9a0a309536f892 == question-capability-release-4c9a0a309536f892",
+      "brainCapabilityBindingReleaseId": "question-capability-release-4c9a0a309536f892",
+      "runtimeCapabilityBindingReleaseId": "question-capability-release-4c9a0a309536f892"
+    },
+    {
+      "id": "runtime-capability-registry-release-identity",
+      "status": "pass",
+      "detail": "capability-registry-2026-08-25-v3 == capability-registry-2026-08-25-v3",
+      "brainCapabilityRegistryReleaseId": "capability-registry-2026-08-25-v3",
+      "runtimeCapabilityRegistryReleaseId": "capability-registry-2026-08-25-v3"
+    },
+    {
+      "id": "runtime-task-family-release-identity",
+      "status": "pass",
+      "detail": "task-family-release-2026-08-26-g10 == task-family-release-2026-08-26-g10",
+      "runtimeTaskFamilyReleaseId": "task-family-release-2026-08-26-g10",
+      "runtimeSummaryTaskFamilyReleaseId": "task-family-release-2026-08-26-g10"
     },
     {
       "id": "brain-production-only",
@@ -76,8 +119,8 @@
     {
       "id": "runtime-release-id",
       "status": "pass",
-      "detail": "task-family-release-2026-08-26-g10",
-      "runtimeReleaseId": "task-family-release-2026-08-26-g10"
+      "detail": "runtime-task-release-2026-08-28-qb-d00a1493-g17",
+      "runtimeReleaseId": "runtime-task-release-2026-08-28-qb-d00a1493-g17"
     },
     {
       "id": "family:task-family.deferred:released",

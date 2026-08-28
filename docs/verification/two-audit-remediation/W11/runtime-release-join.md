@@ -1,10 +1,10 @@
 # Runtime release join gate
 
 - Status: **PASS**
-- Generated: 2026-08-28T00:52:11.670Z
+- Generated: 2026-08-28T07:21:03.516Z
 - Brain question release: `question-release-d00a14931e607336`
 - Runtime question release dependency: `question-release-d00a14931e607336`
-- Runtime task release: `task-family-release-2026-08-26-g10`
+- Runtime task release: `runtime-task-release-2026-08-28-qb-d00a1493-g17`
 - Catalog bindings checked: 22
 - Revisions checked: 20 (19 runnable, 1 deferred)
 
@@ -16,11 +16,16 @@ Every Runtime question binding matches the published Brain revision and content 
 - [x] brain-catalog-readable: JSON projection available
 - [x] runtime-readiness-readable: JSON projection available
 - [x] runtime-catalog-readable: JSON projection available
+- [x] runtime-release-summary-readable: JSON projection available
 - [x] brain-catalog-release-identity: question-release-d00a14931e607336 == question-release-d00a14931e607336
 - [x] runtime-question-release-identity: question-release-d00a14931e607336 == question-release-d00a14931e607336
+- [x] runtime-source-snapshot-identity: question-release-d00a14931e607336 == question-release-d00a14931e607336
+- [x] runtime-capability-binding-release-identity: question-capability-release-4c9a0a309536f892 == question-capability-release-4c9a0a309536f892
+- [x] runtime-capability-registry-release-identity: capability-registry-2026-08-25-v3 == capability-registry-2026-08-25-v3
+- [x] runtime-task-family-release-identity: task-family-release-2026-08-26-g10 == task-family-release-2026-08-26-g10
 - [x] brain-production-only: Question release excludes fixtures
 - [x] runtime-ready: Task Runtime reports ready
-- [x] runtime-release-id: task-family-release-2026-08-26-g10
+- [x] runtime-release-id: runtime-task-release-2026-08-28-qb-d00a1493-g17
 - [x] family:task-family.deferred:released: released
 - [x] family:task-family.dotnet-cancellation:released: released
 - [x] family:task-family.fluent-calculator:released: released

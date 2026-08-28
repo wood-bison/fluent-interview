@@ -1,7 +1,7 @@
 {
   "reportVersion": "validation-matrix.v1",
-  "generatedAt": "2026-08-28T00:52:08.366Z",
-  "startedAt": "2026-08-28T00:52:06.831Z",
+  "generatedAt": "2026-08-28T07:20:59.769Z",
+  "startedAt": "2026-08-28T07:20:58.222Z",
   "mode": "development-live",
   "webBase": "http://localhost:47350",
   "labBase": "http://127.0.0.1:47000",
@@ -10,11 +10,11 @@
   "routeCount": 43,
   "apiProbeCount": 16,
   "sourceRevisions": {
-    "umbrella": "2cfbdc5c5fff1d0f1996a98cc7b1e1bdecd5b20e",
-    "lab": "7924271f93a9b0d03869367fd084f7400735f2ce",
+    "umbrella": "9d34c96a1698082333bf48295871e2cee8fad1c6",
+    "lab": "2ff842e9c5f5ad29407f32d07ed1ca50d05687ad",
     "vue": "1ddcc83d581bd02a7c1645971a3c4f7b69d5c76b",
     "brain": "4c4cac99490e2b565449e04883979f6d46d68e1f",
-    "runtime": "e0a794a7371a5c4013236b1ce620d2d4fe2b29a6",
+    "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
     "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
   },
   "routeMatrix": [
@@ -1238,5 +1238,5 @@
     }
   },
   "valid": true,
-  "digest": "976dadd87983feea48eb9f1324be55ea0b62c85e7ff2dc10122512603c004559"
+  "digest": "524f56d885f00292dffca1098e4e37aacdf7c8a8bf387b060a0bae2b6af140ce"
 }

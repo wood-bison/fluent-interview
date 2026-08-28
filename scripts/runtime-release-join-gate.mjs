@@ -51,11 +51,20 @@ const brainRelease = await fetchJson('brain-release-readable', `${brainUrl}/v1/r
 const brainCatalog = await fetchJson('brain-catalog-readable', `${brainUrl}/v1/catalog?limit=2000`);
 const runtimeHealth = await fetchJson('runtime-readiness-readable', `${runtimeUrl}/v1/health/ready`);
 const runtimeFamilies = await fetchJson('runtime-catalog-readable', `${runtimeUrl}/v1/task-families`);
+const runtimeSummary = await fetchJson('runtime-release-summary-readable', `${runtimeUrl}/v1/tasks/summary`);
 
 const brainReleaseId = typeof brainRelease?.release_id === 'string' ? brainRelease.release_id : null;
+const brainSourceSnapshotId = typeof brainRelease?.source_snapshot_id === 'string' ? brainRelease.source_snapshot_id : null;
+const brainCapabilityBindingReleaseId = typeof brainRelease?.capability_binding_release_id === 'string' ? brainRelease.capability_binding_release_id : null;
+const brainCapabilityRegistryReleaseId = typeof brainRelease?.capability_registry_release_id === 'string' ? brainRelease.capability_registry_release_id : null;
 const catalogReleaseId = typeof brainCatalog?.release_id === 'string' ? brainCatalog.release_id : null;
 const runtimeQuestionRelease = runtimeHealth?.dependencies?.questionRelease ?? null;
-const runtimeReleaseId = typeof runtimeFamilies?.releaseId === 'string' ? runtimeFamilies.releaseId : null;
+const runtimeSummaryReleaseId = typeof runtimeSummary?.runtimeReleaseId === 'string' ? runtimeSummary.runtimeReleaseId : null;
+const runtimeReleaseId = runtimeSummaryReleaseId;
+const runtimeTaskFamilyReleaseId = typeof runtimeFamilies?.releaseId === 'string' ? runtimeFamilies.releaseId : null;
+const runtimeSourceSnapshotId = typeof runtimeSummary?.questionSourceSnapshotId === 'string' ? runtimeSummary.questionSourceSnapshotId : null;
+const runtimeCapabilityBindingReleaseId = typeof runtimeSummary?.capabilityBindingReleaseId === 'string' ? runtimeSummary.capabilityBindingReleaseId : null;
+const runtimeCapabilityRegistryReleaseId = typeof runtimeSummary?.capabilityRegistryReleaseId === 'string' ? runtimeSummary.capabilityRegistryReleaseId : null;
 
 record(
   'brain-catalog-release-identity',
@@ -68,6 +77,30 @@ record(
   Boolean(brainReleaseId && runtimeQuestionRelease && brainReleaseId === runtimeQuestionRelease),
   brainReleaseId && runtimeQuestionRelease ? `${brainReleaseId} == ${runtimeQuestionRelease}` : 'Runtime question release dependency is missing',
   { brainReleaseId, runtimeQuestionRelease },
+);
+record(
+  'runtime-source-snapshot-identity',
+  Boolean(brainSourceSnapshotId && runtimeSourceSnapshotId && brainSourceSnapshotId === runtimeSourceSnapshotId),
+  brainSourceSnapshotId && runtimeSourceSnapshotId ? `${brainSourceSnapshotId} == ${runtimeSourceSnapshotId}` : 'Brain or Runtime source snapshot ID is missing',
+  { brainSourceSnapshotId, runtimeSourceSnapshotId },
+);
+record(
+  'runtime-capability-binding-release-identity',
+  Boolean(brainCapabilityBindingReleaseId && runtimeCapabilityBindingReleaseId && brainCapabilityBindingReleaseId === runtimeCapabilityBindingReleaseId),
+  brainCapabilityBindingReleaseId && runtimeCapabilityBindingReleaseId ? `${brainCapabilityBindingReleaseId} == ${runtimeCapabilityBindingReleaseId}` : 'Brain or Runtime capability binding release ID is missing',
+  { brainCapabilityBindingReleaseId, runtimeCapabilityBindingReleaseId },
+);
+record(
+  'runtime-capability-registry-release-identity',
+  Boolean(brainCapabilityRegistryReleaseId && runtimeCapabilityRegistryReleaseId && brainCapabilityRegistryReleaseId === runtimeCapabilityRegistryReleaseId),
+  brainCapabilityRegistryReleaseId && runtimeCapabilityRegistryReleaseId ? `${brainCapabilityRegistryReleaseId} == ${runtimeCapabilityRegistryReleaseId}` : 'Brain or Runtime capability registry release ID is missing',
+  { brainCapabilityRegistryReleaseId, runtimeCapabilityRegistryReleaseId },
+);
+record(
+  'runtime-task-family-release-identity',
+  Boolean(runtimeSummary?.taskFamilyReleaseId && runtimeTaskFamilyReleaseId && runtimeSummary.taskFamilyReleaseId === runtimeTaskFamilyReleaseId),
+  runtimeSummary?.taskFamilyReleaseId && runtimeTaskFamilyReleaseId ? `${runtimeSummary.taskFamilyReleaseId} == ${runtimeTaskFamilyReleaseId}` : 'Runtime TaskFamily release ID is missing from task summary or family catalogue',
+  { runtimeTaskFamilyReleaseId, runtimeSummaryTaskFamilyReleaseId: runtimeSummary?.taskFamilyReleaseId ?? null },
 );
 record('brain-production-only', brainRelease?.include_fixtures === false && brainRelease?.checks?.fixtures === 0,
   'Question release excludes fixtures', { includeFixtures: brainRelease?.include_fixtures, fixtureCount: brainRelease?.checks?.fixtures });
@@ -130,9 +163,17 @@ const report = {
   runtimeUrl,
   releaseTuple: {
     questionReleaseId: brainReleaseId,
+    sourceSnapshotId: brainSourceSnapshotId,
+    capabilityBindingReleaseId: brainCapabilityBindingReleaseId,
+    capabilityRegistryReleaseId: brainCapabilityRegistryReleaseId,
     catalogReleaseId,
     runtimeQuestionReleaseId: runtimeQuestionRelease,
+    runtimeSourceSnapshotId,
+    runtimeCapabilityBindingReleaseId,
+    runtimeCapabilityRegistryReleaseId,
     runtimeReleaseId,
+    runtimeSummaryReleaseId,
+    taskFamilyReleaseId: runtimeTaskFamilyReleaseId,
   },
   counts: {
     brainCatalog: catalogItems.length,

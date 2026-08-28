@@ -1,6 +1,6 @@
 # W16 — observability gate
 
-Снимок: 2026-08-28T00:51:30.430Z
+Снимок: 2026-08-28T07:20:19.119Z
 Статус: **pass** (source only)
 
 | Area | Result |
