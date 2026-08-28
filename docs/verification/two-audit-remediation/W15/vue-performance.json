@@ -1,6 +1,6 @@
 {
   "reportVersion": "vue-performance.v1",
-  "generatedAt": "2026-08-28T10:52:52.347Z",
+  "generatedAt": "2026-08-28T11:06:12.178Z",
   "mode": "read-existing-dist",
   "valid": true,
   "status": "pass",
@@ -12,14 +12,14 @@
   },
   "entry": {
     "key": "index.html",
-    "file": "assets/index-BpS10OIs.js"
+    "file": "assets/index-B3vIzg3k.js"
   },
   "initial": {
     "js": [
       {
-        "file": "assets/index-BpS10OIs.js",
+        "file": "assets/index-B3vIzg3k.js",
         "rawBytes": 223732,
-        "gzipBytes": 62918
+        "gzipBytes": 62915
       },
       {
         "file": "assets/preferences-kzWIaMEu.js",
@@ -40,7 +40,7 @@
       }
     ],
     "jsRawBytes": 306583,
-    "jsGzipBytes": 95219,
+    "jsGzipBytes": 95216,
     "cssRawBytes": 48585,
     "cssGzipBytes": 9593
   },
@@ -78,9 +78,9 @@
       "gzipBytes": 16146
     },
     {
-      "file": "assets/EventLoopLabView-CwaQPkr8.js",
+      "file": "assets/EventLoopLabView-CViEd51P.js",
       "rawBytes": 37529,
-      "gzipBytes": 12181
+      "gzipBytes": 12180
     },
     {
       "file": "assets/dist-CfA7vebp.js",
@@ -88,19 +88,19 @@
       "gzipBytes": 12280
     },
     {
-      "file": "assets/WorkspaceLabView-C5Un1cca.js",
+      "file": "assets/QuestionsView-CI3xsE6S.js",
+      "rawBytes": 24691,
+      "gzipBytes": 8099
+    },
+    {
+      "file": "assets/WorkspaceLabView-PYcpbj_y.js",
       "rawBytes": 23330,
-      "gzipBytes": 7678
+      "gzipBytes": 7677
     },
     {
-      "file": "assets/QuestionsView-CZE54AN6.js",
-      "rawBytes": 22513,
-      "gzipBytes": 7292
-    },
-    {
-      "file": "assets/StudioBoundaryView-Bm8yrnGp.js",
+      "file": "assets/StudioBoundaryView-BHS1M1SJ.js",
       "rawBytes": 21858,
-      "gzipBytes": 7443
+      "gzipBytes": 7444
     }
   ],
   "pagination": {
