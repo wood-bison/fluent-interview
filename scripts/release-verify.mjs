@@ -175,6 +175,11 @@ if (dev) {
     },
     timeoutMs: 180_000,
   });
+  run('m5-curriculum-projection', process.execPath, ['scripts/m5-curriculum-projection-gate.mjs', '--out=docs/verification/two-audit-remediation/W22/m5-curriculum-projection.json'], {
+    cwd: root,
+    env: { LEARNING_API_URL: 'http://127.0.0.1:47000' },
+    timeoutMs: 180_000,
+  });
   run('runtime-boundary-negative', process.execPath, ['scripts/runtime-boundary-gate.mjs', '--check'], {
     cwd: root,
     env: {
@@ -400,6 +405,11 @@ if (dev) {
         M4_COUNTER_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/m4-counter-drilldown.json'),
         M4_COUNTER_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/m4-counter-drilldown.md'),
       },
+      timeoutMs: 180_000,
+    });
+    run('m5-curriculum-projection-package', process.execPath, ['scripts/m5-curriculum-projection-gate.mjs', '--out=docs/verification/two-audit-remediation/W22/m5-curriculum-projection-package.json'], {
+      cwd: root,
+      env: { LEARNING_API_URL: 'http://127.0.0.1:49301' },
       timeoutMs: 180_000,
     });
   }

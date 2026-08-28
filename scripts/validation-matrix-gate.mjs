@@ -101,6 +101,8 @@ const routeMatrix = [
   ['learning-map-legacy-alias', '/map'],
   ['paths-alias', '/paths'],
   ['path-node', '/paths/nodejs-typescript'],
+  ['domain-node-runtime', '/paths/nodejs-typescript/domains/node-runtime'],
+  ['capability-event-loop', '/capabilities/capability.event-loop-ordering'],
   ['progress', '/progress'],
   ['journal', '/journal'],
   ['projects', '/projects'],
