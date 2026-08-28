@@ -24,6 +24,7 @@ pnpm release:verify:dev -- \
 проверки. Машинный результат сохранён в
 [`release-verify-strict.json`](./release-verify-strict.json): `g14-hardening` и
 `vue-e2e-package` — PASS; затем package-language drill дал **6/6 PASS**.
+Отдельный route/question/runtime/attempt chain-drill также дал **PASS**.
 Итог strict `valid: false` содержит ровно один ожидаемый policy warning — Vue
 репозиторий объявлен `local-only`.
 
@@ -36,6 +37,7 @@ pnpm release:verify:dev -- \
 | Desktop profiles | MacBook Pro 16 light + Studio Display dark |
 | Package-mode browser E2E | **102/102 PASS** на `http://localhost:49300` |
 | Package-mode runtime language drill | **6/6 PASS**, 24/24 checks; Node, TypeScript, Go, Java, C#, PostgreSQL |
+| Route → question → family → revision → attempt | **PASS**: `question.q315` → `node-rate-limiter-001@1`; attempt persisted, Sergey hash unchanged |
 | Route/API validation | route matrix, canonical aliases, schema и live validation PASS |
 | Brain / Runtime | readiness HTTP 200; release join и negative boundary PASS |
 | Content/placement | graph release, curriculum shape, placement, coverage/backlog, task bindings PASS |
@@ -51,9 +53,9 @@ pnpm release:verify:dev -- \
   подменяет API: она проверяет тот же desktop matrix против порта immutable
   package `49300`.
 - Package boundary пересобран штатным lifecycle-владельцем и получил operation
-  `0892a6c8-780e-4d71-a8e4-e107cc44b095`; состояние `ready`, package-managed,
+  `a1555f49-6fb9-4aa2-85af-38249b7c1cf9`; состояние `ready`, package-managed,
   readiness всех пяти компонентов и verified backup — `true`.
-- `workspace.yaml` обновлён на фактические Lab `17d9d83b6ae4597b5c2aeebe7b5bf47dac4da03a`
+- `workspace.yaml` обновлён на фактические Lab `228d80bff050c704e7b7268385e1d089d80a846e`
   и Vue `ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d` commits, поэтому provenance
   больше не drift'ит. Подтверждённый stale lock предыдущей завершённой
   операции удалён;
@@ -66,6 +68,13 @@ pnpm release:verify:dev -- \
   progress hash профиля Сергея не изменился. Машинные hash-only evidence:
   [`package-language-drill.json`](./package-language-drill.json) и
   [`package-language-drill.md`](./package-language-drill.md).
+- `route-question-attempt-drill` одним вызовом проверяет server-owned join от
+  learner route через published Question Brain relation и точную
+  `TaskFamily/revision` до сохранённой попытки. `question.q315` корректно
+  связан с `node-rate-limiter-001`, попытка получает 4/4 PASS, а stable
+  progress hash Сергея остаётся неизменным. Evidence:
+  [`route-question-attempt.json`](./route-question-attempt.json) и
+  [`route-question-attempt.md`](./route-question-attempt.md).
 
 Отдельный `pnpm --dir fluent-engineering-vue e2e` также завершился **102/102
 PASS**. В набор входят scroll owner и 200% zoom, RU/EN × light/dark,
@@ -90,11 +99,11 @@ browser console guards.
 
 ## Репродуцируемость и чистота
 
-- Проверялись pinned `main`-коммиты: Lab `17d9d83`, Vue `ea2b0b7`, Runtime
+- Проверялись pinned `main`-коммиты: Lab `228d80b`, Vue `ea2b0b7`, Runtime
   `6b09771`, Brain `9f02c92`, Vault `f4d4622`.
-- Изменения этой волны ограничены package E2E/language-drill contracts,
-  release-gate wiring и provenance pin; Question Brain, Runtime и learner data
-  не менялись.
+- Изменения этой волны ограничены package E2E/language-drill и
+  route/question/attempt drill contracts, release-gate wiring и provenance
+  pin; Question Brain, Runtime и learner data не менялись.
 - Сгенерированные timestamped evidence-файлы от verifier не являются
   изменением поведения; W22 отчёты сохранены отдельно и проходят
   `git diff --check`.

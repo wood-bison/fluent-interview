@@ -1,11 +1,11 @@
 {
   "reportVersion": "package-e2e.v1",
-  "generatedAt": "2026-08-28T12:54:25.215Z",
+  "generatedAt": "2026-08-28T13:08:17.989Z",
   "status": "pass",
   "command": "pnpm --dir fluent-engineering-vue e2e:package",
   "baseURL": "http://localhost:49300",
-  "packageOperationId": "0892a6c8-780e-4d71-a8e4-e107cc44b095",
-  "packageSourceRevision": "17d9d83b6ae4597b5c2aeebe7b5bf47dac4da03a",
+  "packageOperationId": "a1555f49-6fb9-4aa2-85af-38249b7c1cf9",
+  "packageSourceRevision": "228d80bff050c704e7b7268385e1d089d80a846e",
   "vueSourceRevision": "ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d",
   "profiles": [
     "macbook-pro-16-light",

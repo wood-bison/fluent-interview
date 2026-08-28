@@ -13,7 +13,7 @@ repositories:
     role: learning-api
     remote: git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
     branch: main
-    revision: 17d9d83b6ae4597b5c2aeebe7b5bf47dac4da03a
+    revision: 228d80bff050c704e7b7268385e1d089d80a846e
   - id: fluent-engineering-vue
     path: fluent-engineering-vue
     role: learner-web

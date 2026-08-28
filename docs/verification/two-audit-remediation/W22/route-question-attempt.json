@@ -1,0 +1,46 @@
+{
+  "reportVersion": "route-question-attempt-drill.v1",
+  "generatedAt": "2026-08-28T13:12:21.864Z",
+  "startedAt": "2026-08-28T13:12:21.205Z",
+  "apiBaseUrl": "http://127.0.0.1:49301",
+  "syntheticProfile": "disposable",
+  "status": "pass",
+  "valid": true,
+  "chain": {
+    "route": "/practice/lab/node-rate-limiter-001?revision=1&taskFamily=task-family.rate-limiter",
+    "questionId": "question.q315",
+    "capabilityKey": "capability.distributed-systems.rate-limiter",
+    "taskId": "node-rate-limiter-001",
+    "taskFamilyKey": "task-family.rate-limiter",
+    "revision": 1,
+    "relationState": "ready",
+    "questionState": "published-metadata",
+    "routePhase": "predict",
+    "routeResource": {
+      "id": "node-rate-limiter-001",
+      "taskFamilyKey": "task-family.rate-limiter",
+      "revision": 1
+    },
+    "workspace": {
+      "revision": 1,
+      "profile": "node",
+      "language": "javascript",
+      "editableFileCount": 1
+    },
+    "attemptIdRecorded": true,
+    "attemptStatus": "pass",
+    "testCount": 4,
+    "persistedAttempt": true
+  },
+  "sergeyIsolation": {
+    "beforeHash": "dcc45b253b04b9b00805ec844c2d92273a92434c29ae7740eec22877ec715c60",
+    "afterHash": "dcc45b253b04b9b00805ec844c2d92273a92434c29ae7740eec22877ec715c60",
+    "unchanged": true
+  },
+  "failures": [],
+  "notes": [
+    "Route, Question Brain relation, exact TaskFamily/revision and attempt are joined through server-owned identities.",
+    "The synthetic profile is disposable; Sergey progress is represented by stable hashes only.",
+    "Question metadata and workspace projections are answer/test-free; runtime result is bounded to status and test counts."
+  ]
+}

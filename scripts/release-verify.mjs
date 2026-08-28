@@ -337,6 +337,15 @@ if (dev) {
   run('lab-desktop-visual', 'pnpm', ['desktop:visual:check'], { cwd: labRoot, env: { WEB_URL: 'http://localhost:47350' }, timeoutMs: 180_000 });
   run('lab-desktop-regression', 'pnpm', ['desktop:regression:guard'], { cwd: labRoot, env: { WEB_URL: 'http://localhost:47350' }, timeoutMs: 180_000 });
   run('vue-e2e', 'pnpm', ['e2e'], { cwd: path.join(root, 'fluent-engineering-vue'), timeoutMs: 15 * 60 * 1000 });
+  run('route-question-attempt', 'pnpm', ['route:question:attempt:drill:check'], {
+    cwd: labRoot,
+    env: {
+      LEARNING_API_URL: 'http://127.0.0.1:47000',
+      ROUTE_QUESTION_ATTEMPT_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/route-question-attempt.json'),
+      ROUTE_QUESTION_ATTEMPT_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/route-question-attempt.md'),
+    },
+    timeoutMs: 180_000,
+  });
 } else {
   if (!packageState.executable) {
     steps.push({ id: 'production-package-boundary', command: 'package:local:plan', status: 'fail', detail: 'clean five-root package boundary is required before production verification' });
@@ -365,6 +374,15 @@ if (dev) {
         PACKAGE_LANGUAGE_DRILL_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/package-language-drill.md'),
       },
       timeoutMs: 15 * 60 * 1000,
+    });
+    run('route-question-attempt-package', 'pnpm', ['route:question:attempt:drill:check'], {
+      cwd: labRoot,
+      env: {
+        PACKAGE_API_URL: 'http://127.0.0.1:49301',
+        ROUTE_QUESTION_ATTEMPT_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/route-question-attempt.json'),
+        ROUTE_QUESTION_ATTEMPT_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/route-question-attempt.md'),
+      },
+      timeoutMs: 180_000,
     });
   }
 }

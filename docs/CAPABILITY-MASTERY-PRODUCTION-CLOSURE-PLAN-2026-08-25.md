@@ -11,9 +11,10 @@
 Последняя техническая перепроверка **W22 (28 августа 2026)** сохранила эту
 границу: development release verifier дал `55/55 PASS`, а Vue E2E — `102/102
 PASS` на двух desktop-профилях. В этой волне добавлены такой же `102/102`
-package-mode прогон на immutable `49300` и полный package runtime drill
-`6/6 PASS` (Node.js, TypeScript, Go, Java, C#, PostgreSQL), package пересобран
-с актуальными provenance, а strict gate теперь включает оба прогона. Это
+package-mode прогон на immutable `49300`, полный package runtime drill
+`6/6 PASS` (Node.js, TypeScript, Go, Java, C#, PostgreSQL) и route → question →
+family → revision → attempt chain-drill, package пересобран с актуальными
+provenance, а strict gate теперь включает все три прогона. Это
 подтверждает исправность текущего технического среза, но не закрывает human
 M3, strict production remote или следующие curriculum gates. Полная запись:
 [`W22 gate`](verification/two-audit-remediation/W22/gate.md).
@@ -1835,6 +1836,12 @@ read → implement → run → break → measure → explain → defend
 | M11 | `TODO` | root/CI/docs | — | — | — | — |
 | M12 | `TODO` | independent verifier | — | — | — | — |
 | M13 | `TODO` | root + human | — | — | — | — |
+
+**Техническая запись W22 (28 августа 2026):** package browser matrix,
+шестиязычный runtime drill и server-owned chain-drill закрыты отдельными
+проверяемыми proof, но это не меняет статусы M3–M13. M3 по-прежнему ждёт
+человеческую сессию, а M4+ требуют своих exit criteria и не могут быть
+переведены в `DONE` одной E2E-проверкой.
 
 Правило обновления:
 
