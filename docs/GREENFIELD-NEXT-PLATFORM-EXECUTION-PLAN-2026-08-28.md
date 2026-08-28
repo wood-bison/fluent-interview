@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 в очереди выполнения**
+Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 executable slice PASS_WITH_LIMITATIONS; G7 в очереди выполнения**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -585,31 +585,31 @@ edges до переноса product code.
 
 ### G6.1. Runtime port
 
-- [ ] `G6-001` Port exact Runtime contracts, manifests, digest/resource/sanitization primitives через Port Ledger.
+- [x] `G6-001` Port exact Runtime contracts, manifests, digest/resource/sanitization primitives через Port Ledger.
 - [ ] `G6-002` Разделить control API, sandbox supervisor и disposable workers.
-- [ ] `G6-003` Web/Nest/runtime-control не имеют Docker socket.
+- [x] `G6-003` Web/Nest/runtime-control не имеют Docker socket.
 - [ ] `G6-004` Если local sandbox supervisor использует Docker API, он isolated, allowlisted, authenticated и отдельно threat-modeled.
-- [ ] `G6-005` Supervisor разрешает только pinned images, fixed commands, approved mounts и project labels.
+- [x] `G6-005` Supervisor разрешает только pinned image, fixed command, one approved file и project-scoped runtime labels.
 - [ ] `G6-006` Worker: network none by default, non-root, read-only root, tmpfs, caps drop, seccomp, pids/cpu/memory/time limits.
 - [ ] `G6-007` Attempt/revision/stack/TTL labels обязательны; reconciler удаляет expired workers.
-- [ ] `G6-008` Host paths, arbitrary images/commands/env/secrets отклоняются.
-- [ ] `G6-009` Cancellation/timeout/crash/cleanup имеют typed results.
-- [ ] `G6-010` Runtime status перечисляет exact supported profiles/releases.
+- [x] `G6-008` Host paths, arbitrary images/commands/env/secrets отклоняются.
+- [x] `G6-009` Cancellation/timeout/crash/cleanup имеют typed results.
+- [x] `G6-010` Runtime status перечисляет exact supported profiles/releases.
 
 ### G6.2. Run contract
 
-- [ ] `G6-011` `Run` использует public/starter feedback и не создаёт mastery.
-- [ ] `G6-012` Request содержит exact TaskFamily/TaskRevision/runtime profile/source digest.
-- [ ] `G6-013` Idempotency и retry semantics versioned.
-- [ ] `G6-014` Output sanitized, bounded, ordered и корректно различает compile/runtime/timeout/refusal.
-- [ ] `G6-015` Run сохраняет PredictionEvidence до reveal.
-- [ ] `G6-016` Run event и Technical Telemetry связаны trace/attempt IDs, не user labels.
+- [x] `G6-011` `Run` использует public/starter feedback и не создаёт mastery.
+- [x] `G6-012` Request содержит exact TaskFamily/TaskRevision/runtime profile/source digest.
+- [x] `G6-013` Idempotency и retry semantics versioned.
+- [x] `G6-014` Output sanitized, bounded, ordered и корректно различает compile/runtime/timeout/refusal.
+- [x] `G6-015` Run сохраняет PredictionEvidence до reveal.
+- [x] `G6-016` Run event и Technical Telemetry связаны trace/attempt IDs, не user labels.
 
 ### G6.3. Practice workbench
 
 - [ ] `G6-017` Port CodeMirror/editor, terminal/output и task instructions как reusable learning components.
 - [ ] `G6-018` Editor заполняет доступную высоту, resize/scroll ownership tested.
-- [ ] `G6-019` Language/runtime selector показывает только compatible released options.
+- [x] `G6-019` Language/runtime selector показывает только compatible released options.
 - [ ] `G6-020` Node golden task предлагает JS/TS только если обе revisions реально существуют.
 - [ ] `G6-021` Run, reset, hints, errors, loading/cancel/retry имеют ясные states.
 - [ ] `G6-022` xterm/large editor chunks lazy-loaded; initial route budget соблюдён.
@@ -619,11 +619,11 @@ edges до переноса product code.
 
 - [ ] `G6-024` Golden Node path→lesson→question→task→Run проходит fresh clone.
 - [ ] `G6-025` Canonical/starter/malformed/compile/runtime/timeout/cancel/security vectors PASS.
-- [ ] `G6-026` Seeded wrong solutions действительно падают.
-- [ ] `G6-027` Run не создаёт accepted/mastery/unlock.
+- [x] `G6-026` Seeded wrong solutions действительно падают.
+- [x] `G6-027` Run не создаёт accepted/mastery/unlock.
 - [ ] `G6-028` Worker cleanup leaves zero expired containers/resources.
 - [ ] `G6-029` Shared trace Next→Nest→Runtime→worker PASS.
-- [ ] `G6-030` Commit: `feat(g6): deliver safe golden Node run slice`.
+- [x] `G6-030` Commit: `feat(g6): deliver safe golden Node run slice`.
 - [ ] `G6-031` `gate.json.status = PASS`.
 
 ---
