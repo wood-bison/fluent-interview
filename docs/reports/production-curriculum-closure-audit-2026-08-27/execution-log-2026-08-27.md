@@ -316,3 +316,19 @@ errors — все страницы загрузились, ошибок нет. 
 `observability:journey` также PASS: один shared trace связывает
 `learning-api` и `fluent-task-runtime`, содержит route/run/task spans, а
 synthetic profile остаётся неизменным.
+
+## Lifecycle evidence после optional-профилей — 28 августа 2026
+
+Для закрытия development-части W04 были явно подняты broker и observability
+profiles Lab, после чего выполнен обычный `pnpm down`. Все пять optional
+containers исчезли, а шесть unrelated host containers (`clickhouse`,
+`kafka_broker`, `localstack_s3`, `mysql`, `redis`, `searxng-pi`) остались без
+изменений. Именованные durable volumes сохранились.
+
+Затем канонический `pnpm run dev` поднял web, Learning API, Brain, Runtime и
+Jaeger. Stable projection хеш server-owned профиля Sergey совпал до/после
+перезапуска (`502dbf32…bd6f85`, 81 capability rows); web, `/questions`, все
+readiness URLs и Trace Explorer вернули HTTP 200. Это evidence закрывает
+W04-019, W04-025 и W04-027 только для development lifecycle; package-mode
+persistence и exact-digest rollback остаются отдельными production items.
+Подробности: `docs/verification/two-audit-remediation/W04/lifecycle-2026-08-28.json`.

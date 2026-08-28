@@ -1,0 +1,73 @@
+{
+  "schema": "fluent-interview.w04-lifecycle-evidence.v1",
+  "wave": "W04",
+  "generatedAt": "2026-08-28T08:10:18.842Z",
+  "mode": "development",
+  "scenario": "optional-profiles-down-and-durable-restart",
+  "profileServicesBeforeDown": [
+    "fluent-engineering-lab-grafana",
+    "fluent-engineering-lab-kafka",
+    "fluent-engineering-lab-loki",
+    "fluent-engineering-lab-prometheus",
+    "fluent-engineering-lab-promtail"
+  ],
+  "profileServicesAfterDown": [],
+  "externalContainers": {
+    "before": [
+      "clickhouse",
+      "kafka_broker",
+      "localstack_s3",
+      "mysql",
+      "redis",
+      "searxng-pi"
+    ],
+    "after": [
+      "clickhouse",
+      "kafka_broker",
+      "localstack_s3",
+      "mysql",
+      "redis",
+      "searxng-pi"
+    ],
+    "unchanged": true
+  },
+  "durableVolumes": {
+    "required": [
+      "fluent-engineering-lab-grafana-data",
+      "fluent-engineering-lab-loki-data",
+      "fluent-engineering-lab-postgres-data",
+      "fluent-engineering-lab-prometheus-data",
+      "fluent-question-brain-postgres"
+    ],
+    "presentAfterDown": true,
+    "removed": []
+  },
+  "learnerProgress": {
+    "profile": "sergey",
+    "beforeHash": "502dbf32ac3eee92fe405b6b842c6ae296904a1e73a137b34d9dfe885bd6f85c",
+    "afterHash": "502dbf32ac3eee92fe405b6b842c6ae296904a1e73a137b34d9dfe885bd6f85c",
+    "capabilityCountBefore": 81,
+    "capabilityCountAfter": 81,
+    "unchanged": true
+  },
+  "postRestartReadiness": {
+    "web": { "url": "http://localhost:47350/", "status": 200 },
+    "questions": { "url": "http://localhost:47350/questions", "status": 200 },
+    "learningApi": { "url": "http://127.0.0.1:47000/api/health/ready", "status": 200 },
+    "questionBrain": { "url": "http://127.0.0.1:48127/health/ready", "status": 200 },
+    "taskRuntime": { "url": "http://127.0.0.1:48227/v1/health/ready", "status": 200 },
+    "traceExplorer": { "url": "http://localhost:56686/api/services", "status": 200 }
+  },
+  "checks": {
+    "optionalProfilesStoppedByNormalDown": true,
+    "durableVolumesPreserved": true,
+    "learnerProgressPreserved": true,
+    "cleanDevelopmentStartAfterDown": true,
+    "unrelatedContainersUntouched": true
+  },
+  "notCovered": [
+    "production-package restart",
+    "exact-digest rollback",
+    "signed SBOM/provenance attestation"
+  ]
+}

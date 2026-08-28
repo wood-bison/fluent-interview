@@ -31,8 +31,11 @@
   manifest (local development images intentionally remain locally built tags).
 - SBOM/provenance attestations and a tested exact-digest rollback are not yet
   part of the release artifact.
-- Normal-down/restart data-preservation and optional-profile stop need a fresh
-  lifecycle run after the clean package tuple exists.
+- A live development lifecycle run now proves normal-down optional-profile stop,
+  durable-volume preservation, unchanged Sergey progress and a clean canonical
+  restart. Evidence: `lifecycle-2026-08-28.json`/`.md`.
+- Package-mode persistence still needs its own run after a clean package tuple;
+  this development proof does not imply production-package readiness.
 - The current development restart proves the lock path; package-mode
   persistence and exact digest rollback remain intentionally deferred until a
   clean production package boundary exists.

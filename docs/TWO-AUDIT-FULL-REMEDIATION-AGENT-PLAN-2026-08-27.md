@@ -253,15 +253,19 @@
 - [x] W04-016 `status` должен non-zero при mandatory offline service.
 - [x] W04-017 `down` не должен скрывать Compose errors.
 - [x] W04-018 Normal down сохраняет durable volumes.
-- [ ] W04-019 Normal down останавливает optional profiles.
+- [x] W04-019 Normal down останавливает optional profiles. Live development
+  evidence: `W04/lifecycle-2026-08-28.json` — broker и observability services
+  исчезли после `pnpm down`, unrelated containers не изменились.
 - [x] W04-020 `prune --plan` показывает exact owned resources.
 - [x] W04-021 Prune использует labels, manifest и retention age.
 - [x] W04-022 Prune не затрагивает default/global builder.
 - [x] W04-023 Prune не затрагивает unrelated containers/images/volumes.
 - [ ] W04-024 Разобрать duplicate task image series без слепого удаления.
-- [ ] W04-025 Проверить restart preserving data.
+- [x] W04-025 Проверить restart preserving data. Stable server-owned Sergey
+  progress projection hash identical before/after (`W04/lifecycle-2026-08-28`).
 - [ ] W04-026 Проверить rollback exact digests.
-- [ ] W04-027 Проверить clean start после normal down.
+- [x] W04-027 Проверить clean start после normal down. Canonical `pnpm run dev`
+  повторно поднял web/API/Brain/Runtime/Jaeger с 200 readiness (`W04/lifecycle-2026-08-28`).
 - [x] W04-028 Проверить advertised Grafana/Jaeger URLs.
 
 **Gate W04:** release исполняет exact bytes; lifecycle безопасен; чужие Docker resources недостижимы cleanup-командами.

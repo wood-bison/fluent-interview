@@ -12,13 +12,16 @@
     "read-only prune plan with no unrelated resource mutation",
     "Brain and Runtime readiness after image recreation",
     "exclusive development/production mode lock and conflict rejection",
-    "fresh pnpm dev acquires lock and reports live learner endpoint"
+    "fresh pnpm dev acquires lock and reports live learner endpoint",
+    "normal pnpm down stops broker and observability profiles",
+    "development restart preserves durable volumes and Sergey projection",
+    "clean canonical development start after normal down"
   ],
   "open": [
     "clean production package tuple",
     "service image digest manifest in package mode",
     "SBOM/provenance attestation references",
-    "exact-digest rollback and durable-volume restart proof"
+    "exact-digest rollback and package-mode durable-volume restart proof"
   ],
   "negativeCases": [
     {
