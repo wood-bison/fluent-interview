@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G3 PASS; G4 в очереди выполнения**
+Статус: **G0–G4 PASS; G5 в очереди выполнения**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -483,41 +483,41 @@ edges до переноса product code.
 
 ### G4.1. Curriculum domain
 
-- [ ] `G4-001` Зафиксировать `TrackView`, `LearningModule`, `Lesson`, `QuestionPlacement`, `Activity`, readiness dimensions.
-- [ ] `G4-002` Создать provider-owned curriculum contracts и generated clients.
-- [ ] `G4-003` Route registry строится только из released curriculum projection.
-- [ ] `G4-004` Browser не выводит readiness по labels/title/task filenames.
-- [ ] `G4-005` Generic modules переиспользуются placement, а не copy/paste.
-- [ ] `G4-006` Path-specific forbidden-set policy предотвращает JVM в Node native, Node event loop в Java native и т.п.
-- [ ] `G4-007` Versioned prerequisites DAG валидируется на cycles/orphans/unreachable nodes.
+- [x] `G4-001` Зафиксировать `TrackView`, `LearningModule`, `Lesson`, `QuestionPlacement`, `Activity`, readiness dimensions.
+- [x] `G4-002` Создать provider-owned curriculum contracts и generated clients.
+- [x] `G4-003` Route registry строится только из released curriculum projection.
+- [x] `G4-004` Browser не выводит readiness по labels/title/task filenames.
+- [x] `G4-005` Generic modules переиспользуются placement, а не copy/paste.
+- [x] `G4-006` Path-specific forbidden-set policy предотвращает JVM в Node native, Node event loop в Java native и т.п.
+- [x] `G4-007` Versioned prerequisites DAG валидируется на cycles/orphans/unreachable nodes.
 
 ### G4.2. Learner surfaces
 
-- [ ] `G4-008` Port Program landing с честными path statuses и denominators.
-- [ ] `G4-009` Port TrackView modules/lessons/checkpoints/progress.
-- [ ] `G4-010` Port Atlas graph с zoom/pan/fit/reset/minimap по evidence необходимости.
-- [ ] `G4-011` Node hit areas, label collision, zoom text scale и connector routing tested.
-- [ ] `G4-012` Atlas имеет semantic list/tree fallback и keyboard navigation.
-- [ ] `G4-013` Selected/current/ready/locked/mastered states визуально и семантически различимы.
-- [ ] `G4-014` Graph selection синхронизирует detail panel и URL.
-- [ ] `G4-015` Empty/partial/degraded release states объясняют причину и next action.
+- [x] `G4-008` Port Program landing с честными path statuses и denominators.
+- [x] `G4-009` Port TrackView modules/lessons/checkpoints/progress.
+- [x] `G4-010` Port Atlas graph с zoom/pan/fit/reset/minimap по evidence необходимости.
+- [x] `G4-011` Node hit areas, label collision, zoom text scale и connector routing tested.
+- [x] `G4-012` Atlas имеет semantic list/tree fallback и keyboard navigation.
+- [x] `G4-013` Selected/current/ready/locked/mastered states визуально и семантически различимы.
+- [x] `G4-014` Graph selection синхронизирует detail panel и URL.
+- [x] `G4-015` Empty/partial/degraded release states объясняют причину и next action.
 
 ### G4.3. Reference parity
 
-- [ ] `G4-016` Frozen route manifest полностью классифицирован.
-- [ ] `G4-017` Каждый reference route имеет target URL/redirect/retired rationale.
-- [ ] `G4-018` 43-route baseline или его frozen successor reconciled 100%.
-- [ ] `G4-019` Deep links и browser back/forward PASS.
-- [ ] `G4-020` Program/Track/Atlas data parity сравнивается по IDs, не по тексту screenshot.
+- [x] `G4-016` Frozen route manifest полностью классифицирован.
+- [x] `G4-017` Каждый reference route имеет target URL/redirect/retired rationale.
+- [x] `G4-018` 43-route baseline или его frozen successor reconciled 100%.
+- [x] `G4-019` Deep links и browser back/forward PASS.
+- [x] `G4-020` Program/Track/Atlas data parity сравнивается по IDs, не по тексту screenshot.
 
 ### Gate G4
 
-- [ ] `G4-021` DAG/cycle/orphan/relevance policy tests PASS.
-- [ ] `G4-022` Route manifest unresolved = 0.
-- [ ] `G4-023` Atlas desktop/narrow visual and interaction journeys PASS.
-- [ ] `G4-024` Accessibility list fallback даёт все действия графа.
-- [ ] `G4-025` Commit: `feat(g4): port released curriculum navigation and Atlas`.
-- [ ] `G4-026` `gate.json.status = PASS`.
+- [x] `G4-021` DAG/cycle/orphan/relevance policy tests PASS.
+- [x] `G4-022` Route manifest unresolved = 0.
+- [x] `G4-023` Atlas desktop/narrow visual and interaction journeys PASS.
+- [x] `G4-024` Accessibility list fallback даёт все действия графа.
+- [x] `G4-025` Commits: `feat(g4): complete route registry and Atlas navigation`; `feat(g4): add provider-owned curriculum contracts`.
+- [x] `G4-026` `gate.json.status = PASS`.
 
 ---
 
