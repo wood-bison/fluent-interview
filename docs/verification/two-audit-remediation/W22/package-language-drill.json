@@ -1,0 +1,118 @@
+{
+  "reportVersion": "package-language-drill.v1",
+  "generatedAt": "2026-08-28T12:54:25.206Z",
+  "startedAt": "2026-08-28T12:54:07.191Z",
+  "packageApiUrl": "http://127.0.0.1:49301",
+  "syntheticProfile": "disposable",
+  "status": "pass",
+  "valid": true,
+  "drills": [
+    {
+      "taskId": "node-rate-limiter-001",
+      "language": "JavaScript",
+      "taskFamilyKey": "task-family.rate-limiter",
+      "revision": 1,
+      "status": "pass",
+      "httpStatus": 201,
+      "resultStatus": "pass",
+      "testCount": 4,
+      "passedTestCount": 4,
+      "correlationId": "w22-package-node-rate-limiter-001-109d7948-39f0-4e21-8808-b50d93f9dbd2",
+      "sourceDigest": "0ddd4fad782cf9a1f5475897cf329b58b904b07dee469370765718f7821c52d7",
+      "durationMs": null,
+      "privateLeakage": false
+    },
+    {
+      "taskId": "ts-rate-limiter-001",
+      "language": "TypeScript",
+      "taskFamilyKey": "task-family.rate-limiter",
+      "revision": 1,
+      "status": "pass",
+      "httpStatus": 201,
+      "resultStatus": "pass",
+      "testCount": 4,
+      "passedTestCount": 4,
+      "correlationId": "w22-package-ts-rate-limiter-001-4a2de7b0-61ba-46eb-be40-187e0aecb2b0",
+      "sourceDigest": "b77dbf4fbf2a098e75fa7e1482d3f7fc23929f5cf0de0dfa81d8f5f3c12dcae0",
+      "durationMs": null,
+      "privateLeakage": false
+    },
+    {
+      "taskId": "go-rate-limiter-001",
+      "language": "Go",
+      "taskFamilyKey": "task-family.rate-limiter",
+      "revision": 1,
+      "status": "pass",
+      "httpStatus": 201,
+      "resultStatus": "pass",
+      "testCount": 4,
+      "passedTestCount": 4,
+      "correlationId": "w22-package-go-rate-limiter-001-0ae24fe4-9bc3-4149-9157-08c57f9c0651",
+      "sourceDigest": "cd52d207f6c53264906e81148fcf87fa984a2f89aa0fbb62f70c1a0cb968a715",
+      "durationMs": null,
+      "privateLeakage": false
+    },
+    {
+      "taskId": "java-rate-limiter-001",
+      "language": "Java",
+      "taskFamilyKey": "task-family.rate-limiter",
+      "revision": 1,
+      "status": "pass",
+      "httpStatus": 201,
+      "resultStatus": "pass",
+      "testCount": 4,
+      "passedTestCount": 4,
+      "correlationId": "w22-package-java-rate-limiter-001-75a113eb-f2cc-498c-ab32-8fafa33061e6",
+      "sourceDigest": "3be157fe84604605bea5dc4b8942dcd7b2663a1bc69161406fd7be678713b2e4",
+      "durationMs": null,
+      "privateLeakage": false
+    },
+    {
+      "taskId": "csharp-rate-limiter-001",
+      "language": "C#",
+      "taskFamilyKey": "task-family.rate-limiter",
+      "revision": 1,
+      "status": "pass",
+      "httpStatus": 201,
+      "resultStatus": "pass",
+      "testCount": 4,
+      "passedTestCount": 4,
+      "correlationId": "w22-package-csharp-rate-limiter-001-b51de64a-6906-4137-bf70-48603996ccee",
+      "sourceDigest": "d15f3cde6108f20cf70421ca469a1c38aa0df72ac0d06658915dcc5c87ce641c",
+      "durationMs": null,
+      "privateLeakage": false
+    },
+    {
+      "taskId": "pg-rate-limiter-001",
+      "language": "SQL",
+      "taskFamilyKey": "task-family.postgresql-rate-limiting",
+      "revision": 1,
+      "status": "pass",
+      "httpStatus": 201,
+      "resultStatus": "pass",
+      "testCount": 4,
+      "passedTestCount": 4,
+      "correlationId": "w22-package-pg-rate-limiter-001-0ebe5186-4617-484c-9a6b-10af5cfd2f19",
+      "sourceDigest": "2d007228d592760348d09e7e6f447f4daeb23346532af3a6bd2d096fca57800f",
+      "durationMs": null,
+      "privateLeakage": false
+    }
+  ],
+  "totals": {
+    "expected": 6,
+    "completed": 6,
+    "passed": 6,
+    "failed": 0
+  },
+  "sergeyIsolation": {
+    "beforeHash": "502dbf32ac3eee92fe405b6b842c6ae296904a1e73a137b34d9dfe885bd6f85c",
+    "afterHash": "502dbf32ac3eee92fe405b6b842c6ae296904a1e73a137b34d9dfe885bd6f85c",
+    "unchanged": true
+  },
+  "failures": [],
+  "notes": [
+    "Runs use a disposable synthetic profile and the immutable package Learning API.",
+    "Source is represented by SHA-256 only; hidden tests, answers and submitted source are never persisted in evidence.",
+    "The five code revisions share task-family.rate-limiter; PostgreSQL remains the explicit task-family.postgresql-rate-limiting SQL boundary."
+  ]
+}

@@ -22,8 +22,8 @@ released API responses.
 | Ошибок | 0 |
 | Время | 62,8 с |
 
-Проверены route/catalogue/question/detail flows, пять rate-limiter language
-revisions, Event Loop run/recovery, AI context/error boundaries, RU/EN ×
+Проверены route/catalogue/question/detail flows, шесть rate-limiter language
+revisions (JavaScript, TypeScript, Go, Java, C#, SQL), Event Loop run/recovery, AI context/error boundaries, RU/EN ×
 light/dark, keyboard entry, scroll owner, 200% zoom, history persistence и
 browser-console guard. Фикстуры для намеренных outage/error-сценариев остаются
 изолированными внутри resilience tests и не подменяют обычный released путь.

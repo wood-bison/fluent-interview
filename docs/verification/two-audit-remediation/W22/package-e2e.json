@@ -1,11 +1,11 @@
 {
   "reportVersion": "package-e2e.v1",
-  "generatedAt": "2026-08-28T12:38:06.181Z",
+  "generatedAt": "2026-08-28T12:54:25.215Z",
   "status": "pass",
   "command": "pnpm --dir fluent-engineering-vue e2e:package",
   "baseURL": "http://localhost:49300",
-  "packageOperationId": "142e93c7-125a-4e47-8ba7-3875258b8bfe",
-  "packageSourceRevision": "5c6eef80edf3ae76bd827a3e6fc75529d9bf2fd3",
+  "packageOperationId": "0892a6c8-780e-4d71-a8e4-e107cc44b095",
+  "packageSourceRevision": "17d9d83b6ae4597b5c2aeebe7b5bf47dac4da03a",
   "vueSourceRevision": "ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d",
   "profiles": [
     "macbook-pro-16-light",
@@ -19,7 +19,7 @@
   "scope": [
     "route matrix and canonical aliases",
     "Question Brain list/detail and relation context",
-    "five rate-limiter language revisions",
+    "six rate-limiter language revisions (JavaScript, TypeScript, Go, Java, C#, SQL)",
     "Event Loop runtime run and recovery",
     "local AI context, outage and cancellation",
     "RU/EN, light/dark, keyboard, scroll and 200% zoom",

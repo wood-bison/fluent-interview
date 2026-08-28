@@ -353,6 +353,19 @@ if (dev) {
       cwd: vueRoot,
       timeoutMs: 15 * 60 * 1000,
     });
+    // Exercise every released rate-limiter revision through the packaged
+    // Learning API, not only the browser's language picker.  The Lab script
+    // uses a disposable profile and records hash-only evidence, so this is a
+    // real cross-language runtime proof without mutating Sergey progress.
+    run('package-language-drill', 'pnpm', ['package:language-drill:check'], {
+      cwd: labRoot,
+      env: {
+        PACKAGE_API_URL: 'http://127.0.0.1:49301',
+        PACKAGE_LANGUAGE_DRILL_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/package-language-drill.json'),
+        PACKAGE_LANGUAGE_DRILL_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/package-language-drill.md'),
+      },
+      timeoutMs: 15 * 60 * 1000,
+    });
   }
 }
 

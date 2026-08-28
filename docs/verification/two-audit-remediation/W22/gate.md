@@ -17,14 +17,15 @@ pnpm release:verify:dev -- \
 ```
 
 Первичный отчёт создан: `2026-08-28T12:23:02.266Z`; после package/provenance
-фикса финальный development отчёт обновлён в `2026-08-28T12:43:16.766Z`.
+фикса финальный development отчёт обновлён в `2026-08-28T12:59:09.731Z`.
 
 После этого package был пересобран штатной командой `pnpm package:local` с
 новым Vue provenance, а полный strict verifier завершил все исполнимые
 проверки. Машинный результат сохранён в
 [`release-verify-strict.json`](./release-verify-strict.json): `g14-hardening` и
-`vue-e2e-package` — PASS; итог strict `valid: false` содержит ровно один
-ожидаемый policy warning — Vue репозиторий объявлен `local-only`.
+`vue-e2e-package` — PASS; затем package-language drill дал **6/6 PASS**.
+Итог strict `valid: false` содержит ровно один ожидаемый policy warning — Vue
+репозиторий объявлен `local-only`.
 
 ## Что доказано
 
@@ -34,6 +35,7 @@ pnpm release:verify:dev -- \
 | Vue browser E2E | **102/102 PASS** |
 | Desktop profiles | MacBook Pro 16 light + Studio Display dark |
 | Package-mode browser E2E | **102/102 PASS** на `http://localhost:49300` |
+| Package-mode runtime language drill | **6/6 PASS**, 24/24 checks; Node, TypeScript, Go, Java, C#, PostgreSQL |
 | Route/API validation | route matrix, canonical aliases, schema и live validation PASS |
 | Brain / Runtime | readiness HTTP 200; release join и negative boundary PASS |
 | Content/placement | graph release, curriculum shape, placement, coverage/backlog, task bindings PASS |
@@ -49,14 +51,21 @@ pnpm release:verify:dev -- \
   подменяет API: она проверяет тот же desktop matrix против порта immutable
   package `49300`.
 - Package boundary пересобран штатным lifecycle-владельцем и получил operation
-  `142e93c7-125a-4e47-8ba7-3875258b8bfe`; состояние `ready`, package-managed,
+  `0892a6c8-780e-4d71-a8e4-e107cc44b095`; состояние `ready`, package-managed,
   readiness всех пяти компонентов и verified backup — `true`.
-- `workspace.yaml` обновлён на фактический Vue commit
-  `ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d`, поэтому provenance больше не
-  drift'ит. Подтверждённый stale lock предыдущей завершённой операции удалён;
+- `workspace.yaml` обновлён на фактические Lab `17d9d83b6ae4597b5c2aeebe7b5bf47dac4da03a`
+  и Vue `ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d` commits, поэтому provenance
+  больше не drift'ит. Подтверждённый stale lock предыдущей завершённой
+  операции удалён;
   данные и контейнерные volumes не удалялись.
 - Strict release verifier теперь включает `vue-e2e-package` после G14. Это
   постоянный release guard, а не одноразовый ручной прогон.
+- `package-language-drill` выполняет все пять кодовых ревизий общего
+  `task-family.rate-limiter` и отдельную PostgreSQL SQL-ревизию через package
+  Learning API. Все шесть ответов получили HTTP 201 и 4/4 теста; stable
+  progress hash профиля Сергея не изменился. Машинные hash-only evidence:
+  [`package-language-drill.json`](./package-language-drill.json) и
+  [`package-language-drill.md`](./package-language-drill.md).
 
 Отдельный `pnpm --dir fluent-engineering-vue e2e` также завершился **102/102
 PASS**. В набор входят scroll owner и 200% zoom, RU/EN × light/dark,
@@ -75,15 +84,17 @@ browser console guards.
 2. M3 остаётся `ACTIVE / WAITING_HUMAN`: нужны реальный ответ Сергея,
    spoken explanation, reflection и cold repeat через 48–72 часа.
 3. M4 и последующие gates не переводятся в `DONE` только на основании E2E;
-   counter drill-down, package-mode multi-language drills, Vue-native syllabus
-   и human screenshot sign-off остаются в очереди closure plan.
+   counter drill-down, Vue-native syllabus и human screenshot sign-off
+   остаются в очереди closure plan. Package-mode multi-language runtime drill
+   закрыт технически в W22, но не заменяет curriculum/task-portfolio closure.
 
 ## Репродуцируемость и чистота
 
-- Проверялись pinned `main`-коммиты: Lab `5c6eef8`, Vue `ea2b0b7`, Runtime
+- Проверялись pinned `main`-коммиты: Lab `17d9d83`, Vue `ea2b0b7`, Runtime
   `6b09771`, Brain `9f02c92`, Vault `f4d4622`.
-- Изменения этой волны ограничены package E2E contract, release-gate wiring и
-  provenance pin; Question Brain, Runtime и learner data не менялись.
+- Изменения этой волны ограничены package E2E/language-drill contracts,
+  release-gate wiring и provenance pin; Question Brain, Runtime и learner data
+  не менялись.
 - Сгенерированные timestamped evidence-файлы от verifier не являются
   изменением поведения; W22 отчёты сохранены отдельно и проходят
   `git diff --check`.

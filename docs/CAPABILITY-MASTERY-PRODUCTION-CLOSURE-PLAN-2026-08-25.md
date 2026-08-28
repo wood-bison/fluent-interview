@@ -10,11 +10,12 @@
 
 Последняя техническая перепроверка **W22 (28 августа 2026)** сохранила эту
 границу: development release verifier дал `55/55 PASS`, а Vue E2E — `102/102
-PASS` на двух desktop-профилях. В этой волне добавлен такой же `102/102`
-package-mode прогон на immutable `49300`, package пересобран с актуальным Vue
-provenance, а strict gate теперь включает этот прогон. Это подтверждает
-исправность текущего технического среза, но не закрывает human M3, strict
-production remote или следующие curriculum gates. Полная запись:
+PASS` на двух desktop-профилях. В этой волне добавлены такой же `102/102`
+package-mode прогон на immutable `49300` и полный package runtime drill
+`6/6 PASS` (Node.js, TypeScript, Go, Java, C#, PostgreSQL), package пересобран
+с актуальными provenance, а strict gate теперь включает оба прогона. Это
+подтверждает исправность текущего технического среза, но не закрывает human
+M3, strict production remote или следующие curriculum gates. Полная запись:
 [`W22 gate`](verification/two-audit-remediation/W22/gate.md).
 Правила дальнейшей Vue-разработки и выбора UI-инструментов собраны в
 [`Vue production playbook`](frontend/VUE-PRODUCTION-PLAYBOOK-2026.md).
@@ -475,7 +476,7 @@ gate задним числом.
 | M4 | один readiness compiler и честные routes/counters | `TODO` |
 | M5 | Program → Path → Domain → Capability UX | `TODO` |
 | M6 | все 1 591 карточка классифицированы и локализованы честно | `TODO` |
-| M7 | текущий Runtime hardened; task gaps закрываются осмысленно | `TODO` — package browser matrix закрыт W22, полный multi-language runtime drill остаётся |
+| M7 | текущий Runtime hardened; task gaps закрываются осмысленно | `TODO` — package browser и 6-язычный runtime drill закрыты технически в W22; task-portfolio gaps остаются |
 | M8 | 12 acceptance areas product-ready | `TODO` |
 | M9 | i18n, design, a11y и performance production gates | `TODO` |
 | M10 | recovery, observability и Docker lifecycle | `TODO` |
