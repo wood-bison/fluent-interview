@@ -1,0 +1,260 @@
+{
+  "reportVersion": "validation-matrix.v1",
+  "generatedAt": "2026-08-28T11:37:50.838Z",
+  "startedAt": "2026-08-28T11:37:50.836Z",
+  "mode": "static",
+  "webBase": "http://localhost:47350",
+  "labBase": "http://127.0.0.1:47000",
+  "runtimeBase": "http://127.0.0.1:48227",
+  "brainBase": "http://127.0.0.1:48127",
+  "routeCount": 43,
+  "apiProbeCount": 16,
+  "sourceRevisions": {
+    "umbrella": "15b06190ec311542c32c82f6fae7e87685df7d43",
+    "lab": "12f0de0d2b49797dd34a442ee5f186296b6c0c66",
+    "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
+    "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
+    "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
+    "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
+  },
+  "routeMatrix": [
+    {
+      "id": "program",
+      "route": "/"
+    },
+    {
+      "id": "program-legacy-alias",
+      "route": "/program"
+    },
+    {
+      "id": "practice",
+      "route": "/practice"
+    },
+    {
+      "id": "questions",
+      "route": "/questions"
+    },
+    {
+      "id": "questions-alias",
+      "route": "/practice/questions"
+    },
+    {
+      "id": "question-detail",
+      "route": "/questions/question.q334"
+    },
+    {
+      "id": "question-unpublished",
+      "route": "/questions/QB-G4-CMS5"
+    },
+    {
+      "id": "learning-map",
+      "route": "/learning-map"
+    },
+    {
+      "id": "learning-map-legacy-alias",
+      "route": "/map"
+    },
+    {
+      "id": "paths-alias",
+      "route": "/paths"
+    },
+    {
+      "id": "path-node",
+      "route": "/paths/nodejs-typescript"
+    },
+    {
+      "id": "progress",
+      "route": "/progress"
+    },
+    {
+      "id": "journal",
+      "route": "/journal"
+    },
+    {
+      "id": "projects",
+      "route": "/projects"
+    },
+    {
+      "id": "project-preview",
+      "route": "/projects/project-book-engine-fixture/preview"
+    },
+    {
+      "id": "project-reader",
+      "route": "/projects/project-book-engine-fixture/reader"
+    },
+    {
+      "id": "project-checkpoint",
+      "route": "/projects/project-book-engine-fixture/chapter-boundary/checkpoint-boundary"
+    },
+    {
+      "id": "project-cache",
+      "route": "/projects/content-delivery-platform/cache-learning"
+    },
+    {
+      "id": "project-events",
+      "route": "/projects/content-delivery-platform/event-learning"
+    },
+    {
+      "id": "project-deployment",
+      "route": "/projects/content-delivery-platform/deployment-learning"
+    },
+    {
+      "id": "project-deployment-workspace",
+      "route": "/projects/content-delivery-platform/deployment-workspace"
+    },
+    {
+      "id": "project-defense",
+      "route": "/projects/content-delivery-platform/defense"
+    },
+    {
+      "id": "failure-states",
+      "route": "/failure-states"
+    },
+    {
+      "id": "studio",
+      "route": "/studio"
+    },
+    {
+      "id": "studio-content",
+      "route": "/studio/content"
+    },
+    {
+      "id": "studio-graph",
+      "route": "/studio/graph"
+    },
+    {
+      "id": "studio-review",
+      "route": "/studio/review"
+    },
+    {
+      "id": "studio-system",
+      "route": "/studio/system"
+    },
+    {
+      "id": "studio-observability",
+      "route": "/studio/observability"
+    },
+    {
+      "id": "studio-recovery",
+      "route": "/studio/system/recovery"
+    },
+    {
+      "id": "studio-recovery-alias",
+      "route": "/studio/recovery"
+    },
+    {
+      "id": "onboarding",
+      "route": "/onboarding"
+    },
+    {
+      "id": "lesson",
+      "route": "/practice/lesson/promise-machinery"
+    },
+    {
+      "id": "lesson-missing",
+      "route": "/practice/lesson/syscalls-and-kernel-objects"
+    },
+    {
+      "id": "task-family",
+      "route": "/practice/task-family/task-family.event-loop-ordering"
+    },
+    {
+      "id": "task-family-missing",
+      "route": "/practice/task-family/missing?preview=1#mechanics"
+    },
+    {
+      "id": "event-loop",
+      "route": "/lab/node-event-loop-001"
+    },
+    {
+      "id": "event-loop-alias",
+      "route": "/practice/lab/node-event-loop-001"
+    },
+    {
+      "id": "workspace-node",
+      "route": "/lab/node-cpu-bound-002"
+    },
+    {
+      "id": "workspace-deferred",
+      "route": "/lab/deferred"
+    },
+    {
+      "id": "ordering",
+      "route": "/lab/ordering-docker-build-cache"
+    },
+    {
+      "id": "ordering-alias",
+      "route": "/practice/lab/ordering-docker-build-cache"
+    },
+    {
+      "id": "route-recovery",
+      "route": "/this-route-is-intentionally-not-published"
+    }
+  ],
+  "checks": [
+    {
+      "id": "router-route-records",
+      "status": "pass",
+      "detail": "35 route records discovered",
+      "count": 35
+    },
+    {
+      "id": "router-route-path-unique",
+      "status": "pass",
+      "detail": "route record paths are unique"
+    },
+    {
+      "id": "router-has-recovery",
+      "status": "pass",
+      "detail": "catch-all recovery route is declared"
+    },
+    {
+      "id": "router-has-canonical-question-alias",
+      "status": "pass",
+      "detail": "question alias is declared"
+    },
+    {
+      "id": "router-has-canonical-lab-alias",
+      "status": "pass",
+      "detail": "lab alias is declared"
+    },
+    {
+      "id": "router-has-canonical-studio-alias",
+      "status": "pass",
+      "detail": "Studio recovery alias is declared"
+    },
+    {
+      "id": "router-uses-history",
+      "status": "pass",
+      "detail": "history mode is explicit"
+    },
+    {
+      "id": "router-has-scroll-policy",
+      "status": "pass",
+      "detail": "router scroll policy is explicit"
+    },
+    {
+      "id": "router-lazy-loads-views",
+      "status": "pass",
+      "detail": "learner views use lazy imports"
+    },
+    {
+      "id": "router-no-external-navigation",
+      "status": "pass",
+      "detail": "router has no uncontrolled external navigation"
+    },
+    {
+      "id": "router-route-record-coverage",
+      "status": "pass",
+      "detail": "35 records have a concrete browser sample",
+      "routeRecordCount": 35,
+      "uncovered": []
+    }
+  ],
+  "findings": [],
+  "openGaps": [],
+  "webResults": [],
+  "apiSummary": null,
+  "valid": true,
+  "digest": "8ff56bdfabe0282c591b068b6be9a870695ace83991e2f953d0471508f895aa8"
+}

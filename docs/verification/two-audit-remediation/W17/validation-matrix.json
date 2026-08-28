@@ -1,8 +1,8 @@
 {
   "reportVersion": "validation-matrix.v1",
-  "generatedAt": "2026-08-28T11:34:33.417Z",
-  "startedAt": "2026-08-28T11:34:33.414Z",
-  "mode": "static",
+  "generatedAt": "2026-08-28T11:37:30.507Z",
+  "startedAt": "2026-08-28T11:37:28.985Z",
+  "mode": "development-live",
   "webBase": "http://localhost:47350",
   "labBase": "http://127.0.0.1:47000",
   "runtimeBase": "http://127.0.0.1:48227",
@@ -10,8 +10,8 @@
   "routeCount": 43,
   "apiProbeCount": 16,
   "sourceRevisions": {
-    "umbrella": "9eac2420b0b9ebcfd7128ca75d00a65baa542d65",
-    "lab": "f4c775cad33a7b8a20cbc36643dd164e40a5d549",
+    "umbrella": "15b06190ec311542c32c82f6fae7e87685df7d43",
+    "lab": "12f0de0d2b49797dd34a442ee5f186296b6c0c66",
     "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
     "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
     "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
@@ -249,12 +249,994 @@
       "detail": "35 records have a concrete browser sample",
       "routeRecordCount": 35,
       "uncovered": []
+    },
+    {
+      "id": "web-route:program",
+      "status": "pass",
+      "detail": "/ → 200",
+      "route": "/",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:program-legacy-alias",
+      "status": "pass",
+      "detail": "/program → 200",
+      "route": "/program",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:practice",
+      "status": "pass",
+      "detail": "/practice → 200",
+      "route": "/practice",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:questions",
+      "status": "pass",
+      "detail": "/questions → 200",
+      "route": "/questions",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:questions-alias",
+      "status": "pass",
+      "detail": "/practice/questions → 200",
+      "route": "/practice/questions",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:question-detail",
+      "status": "pass",
+      "detail": "/questions/question.q334 → 200",
+      "route": "/questions/question.q334",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:question-unpublished",
+      "status": "pass",
+      "detail": "/questions/QB-G4-CMS5 → 200",
+      "route": "/questions/QB-G4-CMS5",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:learning-map",
+      "status": "pass",
+      "detail": "/learning-map → 200",
+      "route": "/learning-map",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:learning-map-legacy-alias",
+      "status": "pass",
+      "detail": "/map → 200",
+      "route": "/map",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:paths-alias",
+      "status": "pass",
+      "detail": "/paths → 200",
+      "route": "/paths",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:path-node",
+      "status": "pass",
+      "detail": "/paths/nodejs-typescript → 200",
+      "route": "/paths/nodejs-typescript",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:progress",
+      "status": "pass",
+      "detail": "/progress → 200",
+      "route": "/progress",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:journal",
+      "status": "pass",
+      "detail": "/journal → 200",
+      "route": "/journal",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:projects",
+      "status": "pass",
+      "detail": "/projects → 200",
+      "route": "/projects",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-preview",
+      "status": "pass",
+      "detail": "/projects/project-book-engine-fixture/preview → 200",
+      "route": "/projects/project-book-engine-fixture/preview",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-reader",
+      "status": "pass",
+      "detail": "/projects/project-book-engine-fixture/reader → 200",
+      "route": "/projects/project-book-engine-fixture/reader",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-checkpoint",
+      "status": "pass",
+      "detail": "/projects/project-book-engine-fixture/chapter-boundary/checkpoint-boundary → 200",
+      "route": "/projects/project-book-engine-fixture/chapter-boundary/checkpoint-boundary",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-cache",
+      "status": "pass",
+      "detail": "/projects/content-delivery-platform/cache-learning → 200",
+      "route": "/projects/content-delivery-platform/cache-learning",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-events",
+      "status": "pass",
+      "detail": "/projects/content-delivery-platform/event-learning → 200",
+      "route": "/projects/content-delivery-platform/event-learning",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-deployment",
+      "status": "pass",
+      "detail": "/projects/content-delivery-platform/deployment-learning → 200",
+      "route": "/projects/content-delivery-platform/deployment-learning",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-deployment-workspace",
+      "status": "pass",
+      "detail": "/projects/content-delivery-platform/deployment-workspace → 200",
+      "route": "/projects/content-delivery-platform/deployment-workspace",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:project-defense",
+      "status": "pass",
+      "detail": "/projects/content-delivery-platform/defense → 200",
+      "route": "/projects/content-delivery-platform/defense",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:failure-states",
+      "status": "pass",
+      "detail": "/failure-states → 200",
+      "route": "/failure-states",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio",
+      "status": "pass",
+      "detail": "/studio → 200",
+      "route": "/studio",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-content",
+      "status": "pass",
+      "detail": "/studio/content → 200",
+      "route": "/studio/content",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-graph",
+      "status": "pass",
+      "detail": "/studio/graph → 200",
+      "route": "/studio/graph",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-review",
+      "status": "pass",
+      "detail": "/studio/review → 200",
+      "route": "/studio/review",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-system",
+      "status": "pass",
+      "detail": "/studio/system → 200",
+      "route": "/studio/system",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-observability",
+      "status": "pass",
+      "detail": "/studio/observability → 200",
+      "route": "/studio/observability",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-recovery",
+      "status": "pass",
+      "detail": "/studio/system/recovery → 200",
+      "route": "/studio/system/recovery",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:studio-recovery-alias",
+      "status": "pass",
+      "detail": "/studio/recovery → 200",
+      "route": "/studio/recovery",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:onboarding",
+      "status": "pass",
+      "detail": "/onboarding → 200",
+      "route": "/onboarding",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:lesson",
+      "status": "pass",
+      "detail": "/practice/lesson/promise-machinery → 200",
+      "route": "/practice/lesson/promise-machinery",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:lesson-missing",
+      "status": "pass",
+      "detail": "/practice/lesson/syscalls-and-kernel-objects → 200",
+      "route": "/practice/lesson/syscalls-and-kernel-objects",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:task-family",
+      "status": "pass",
+      "detail": "/practice/task-family/task-family.event-loop-ordering → 200",
+      "route": "/practice/task-family/task-family.event-loop-ordering",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:task-family-missing",
+      "status": "pass",
+      "detail": "/practice/task-family/missing?preview=1#mechanics → 200",
+      "route": "/practice/task-family/missing?preview=1#mechanics",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:event-loop",
+      "status": "pass",
+      "detail": "/lab/node-event-loop-001 → 200",
+      "route": "/lab/node-event-loop-001",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:event-loop-alias",
+      "status": "pass",
+      "detail": "/practice/lab/node-event-loop-001 → 200",
+      "route": "/practice/lab/node-event-loop-001",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:workspace-node",
+      "status": "pass",
+      "detail": "/lab/node-cpu-bound-002 → 200",
+      "route": "/lab/node-cpu-bound-002",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:workspace-deferred",
+      "status": "pass",
+      "detail": "/lab/deferred → 200",
+      "route": "/lab/deferred",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:ordering",
+      "status": "pass",
+      "detail": "/lab/ordering-docker-build-cache → 200",
+      "route": "/lab/ordering-docker-build-cache",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:ordering-alias",
+      "status": "pass",
+      "detail": "/practice/lab/ordering-docker-build-cache → 200",
+      "route": "/practice/lab/ordering-docker-build-cache",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:route-recovery",
+      "status": "pass",
+      "detail": "/this-route-is-intentionally-not-published → 200",
+      "route": "/this-route-is-intentionally-not-published",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-readiness",
+      "status": "pass",
+      "detail": "/api/health/ready → 200",
+      "endpoint": "/api/health/ready",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-program-map",
+      "status": "pass",
+      "detail": "/api/program/map → 200",
+      "endpoint": "/api/program/map",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-program-inventory",
+      "status": "pass",
+      "detail": "/api/program/inventory → 200",
+      "endpoint": "/api/program/inventory",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-practice",
+      "status": "pass",
+      "detail": "/api/practice/current → 200",
+      "endpoint": "/api/practice/current",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-progress",
+      "status": "pass",
+      "detail": "/api/progress → 200",
+      "endpoint": "/api/progress",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-next",
+      "status": "pass",
+      "detail": "/api/next → 200",
+      "endpoint": "/api/next",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-question-summary",
+      "status": "pass",
+      "detail": "/api/questions/summary?locale=en → 200",
+      "endpoint": "/api/questions/summary?locale=en",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-question-query",
+      "status": "pass",
+      "detail": "/api/questions/query?limit=24&locale=en → 200",
+      "endpoint": "/api/questions/query?limit=24&locale=en",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:lab-route-context",
+      "status": "pass",
+      "detail": "/api/learner/route-context?path=%2Fpractice%2Ftask-family%2Ftask-family.event-loop-ordering → 200",
+      "endpoint": "/api/learner/route-context?path=%2Fpractice%2Ftask-family%2Ftask-family.event-loop-ordering",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:runtime-readiness",
+      "status": "pass",
+      "detail": "/v1/health/ready → 200",
+      "endpoint": "/v1/health/ready",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:runtime-profiles",
+      "status": "pass",
+      "detail": "/v1/profiles → 200",
+      "endpoint": "/v1/profiles",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:runtime-task-families",
+      "status": "pass",
+      "detail": "/v1/task-families → 200",
+      "endpoint": "/v1/task-families",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:brain-readiness",
+      "status": "pass",
+      "detail": "/health/ready → 200",
+      "endpoint": "/health/ready",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:brain-release",
+      "status": "pass",
+      "detail": "/v1/release → 200",
+      "endpoint": "/v1/release",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:brain-catalog",
+      "status": "pass",
+      "detail": "/v1/catalog → 200",
+      "endpoint": "/v1/catalog",
+      "httpStatus": 200
+    },
+    {
+      "id": "api:brain-quality-studio",
+      "status": "pass",
+      "detail": "/v1/quality → 200",
+      "endpoint": "/v1/quality",
+      "httpStatus": 200
+    },
+    {
+      "id": "identity:program-map",
+      "status": "pass",
+      "detail": "Program map exposes program/release identity",
+      "graphRelease": "2026.08.06-curriculum-graph.3",
+      "manifestVersion": "2026.08.02"
+    },
+    {
+      "id": "identity:inventory",
+      "status": "pass",
+      "detail": "inventory uses the same release tuple"
+    },
+    {
+      "id": "identity:practice",
+      "status": "pass",
+      "detail": "practice uses the same release tuple"
+    },
+    {
+      "id": "identity:progress",
+      "status": "pass",
+      "detail": "progress uses the same release tuple"
+    },
+    {
+      "id": "identity:next",
+      "status": "pass",
+      "detail": "next action returns a canonical internal route"
+    },
+    {
+      "id": "question:bounded-page",
+      "status": "pass",
+      "detail": "question query is bounded and cursor-aware"
+    },
+    {
+      "id": "question:published-count",
+      "status": "pass",
+      "detail": "Brain/Lab published card counts agree at 1,591"
+    },
+    {
+      "id": "runtime:families-release",
+      "status": "pass",
+      "detail": "Runtime exposes a released family catalogue"
+    },
+    {
+      "id": "runtime:language-family-isolation",
+      "status": "pass",
+      "detail": "code and PostgreSQL rate-limit families remain separate"
+    },
+    {
+      "id": "brain:release-published",
+      "status": "pass",
+      "detail": "Brain catalog and release share a fixture-free release"
+    },
+    {
+      "id": "semantic:path-count:path.nodejs-typescript",
+      "status": "pass",
+      "detail": "path.nodejs-typescript returns 294 accepted cards",
+      "pathKey": "path.nodejs-typescript",
+      "expected": 294,
+      "actual": 294
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.nodejs-typescript",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.nodejs-typescript",
+      "violations": []
+    },
+    {
+      "id": "semantic:native-isolation:path.nodejs-typescript",
+      "status": "pass",
+      "detail": "no foreign native topic markers",
+      "pathKey": "path.nodejs-typescript",
+      "violations": []
+    },
+    {
+      "id": "semantic:path-count:path.java-spring",
+      "status": "pass",
+      "detail": "path.java-spring returns 191 accepted cards",
+      "pathKey": "path.java-spring",
+      "expected": 191,
+      "actual": 191
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.java-spring",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.java-spring",
+      "violations": []
+    },
+    {
+      "id": "semantic:native-isolation:path.java-spring",
+      "status": "pass",
+      "detail": "no foreign native topic markers",
+      "pathKey": "path.java-spring",
+      "violations": []
+    },
+    {
+      "id": "semantic:path-count:path.dotnet-csharp",
+      "status": "pass",
+      "detail": "path.dotnet-csharp returns 75 accepted cards",
+      "pathKey": "path.dotnet-csharp",
+      "expected": 75,
+      "actual": 75
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.dotnet-csharp",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.dotnet-csharp",
+      "violations": []
+    },
+    {
+      "id": "semantic:native-isolation:path.dotnet-csharp",
+      "status": "pass",
+      "detail": "no foreign native topic markers",
+      "pathKey": "path.dotnet-csharp",
+      "violations": []
+    },
+    {
+      "id": "semantic:path-count:path.go",
+      "status": "pass",
+      "detail": "path.go returns 130 accepted cards",
+      "pathKey": "path.go",
+      "expected": 130,
+      "actual": 130
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.go",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.go",
+      "violations": []
+    },
+    {
+      "id": "semantic:native-isolation:path.go",
+      "status": "pass",
+      "detail": "no foreign native topic markers",
+      "pathKey": "path.go",
+      "violations": []
+    },
+    {
+      "id": "semantic:path-count:path.frontend",
+      "status": "pass",
+      "detail": "path.frontend returns 161 accepted cards",
+      "pathKey": "path.frontend",
+      "expected": 161,
+      "actual": 161
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.frontend",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.frontend",
+      "violations": []
+    },
+    {
+      "id": "semantic:frontend-lane",
+      "status": "pass",
+      "detail": "frontend path keeps frontend-native lane/runtime",
+      "itemCount": 161
+    },
+    {
+      "id": "semantic:path-count:path.system-design",
+      "status": "pass",
+      "detail": "path.system-design returns 568 accepted cards",
+      "pathKey": "path.system-design",
+      "expected": 568,
+      "actual": 568
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.system-design",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.system-design",
+      "violations": []
+    },
+    {
+      "id": "semantic:system-design-domain",
+      "status": "pass",
+      "detail": "319 design-oriented topic cards",
+      "designTopicCount": 319
+    },
+    {
+      "id": "semantic:path-count:path.algorithms",
+      "status": "pass",
+      "detail": "path.algorithms returns 52 accepted cards",
+      "pathKey": "path.algorithms",
+      "expected": 52,
+      "actual": 52
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.algorithms",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.algorithms",
+      "violations": []
+    },
+    {
+      "id": "semantic:algorithms-domain",
+      "status": "pass",
+      "detail": "Algorithms path is language-neutral and isolated",
+      "itemCount": 52
+    },
+    {
+      "id": "semantic:path-count:path.behavioral",
+      "status": "pass",
+      "detail": "path.behavioral returns 103 accepted cards",
+      "pathKey": "path.behavioral",
+      "expected": 103,
+      "actual": 103
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.behavioral",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.behavioral",
+      "violations": []
+    },
+    {
+      "id": "semantic:behavioral-domain",
+      "status": "pass",
+      "detail": "no testing-domain topic leakage",
+      "testingTopics": []
+    },
+    {
+      "id": "semantic:path-count:path.python",
+      "status": "pass",
+      "detail": "path.python returns 17 accepted cards",
+      "pathKey": "path.python",
+      "expected": 17,
+      "actual": 17
+    },
+    {
+      "id": "semantic:path-placement-boundary:path.python",
+      "status": "pass",
+      "detail": "every path card exposes accepted native placement metadata",
+      "pathKey": "path.python",
+      "violations": []
+    },
+    {
+      "id": "semantic:python-no-fake-runtime",
+      "status": "pass",
+      "detail": "Python path is theory-only until a released Python profile exists",
+      "runnableModes": 0,
+      "foreignRuntime": 0
     }
   ],
   "findings": [],
-  "openGaps": [],
-  "webResults": [],
-  "apiSummary": null,
+  "openGaps": [
+    {
+      "id": "W17-026",
+      "detail": "released Frontend path has no Vue-native topic yet; current cards are React/Angular/frontend shared content"
+    }
+  ],
+  "webResults": [
+    {
+      "id": "program",
+      "route": "/",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "program-legacy-alias",
+      "route": "/program",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "practice",
+      "route": "/practice",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "questions",
+      "route": "/questions",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "questions-alias",
+      "route": "/practice/questions",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "question-detail",
+      "route": "/questions/question.q334",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "question-unpublished",
+      "route": "/questions/QB-G4-CMS5",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "learning-map",
+      "route": "/learning-map",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "learning-map-legacy-alias",
+      "route": "/map",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "paths-alias",
+      "route": "/paths",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "path-node",
+      "route": "/paths/nodejs-typescript",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "progress",
+      "route": "/progress",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "journal",
+      "route": "/journal",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "projects",
+      "route": "/projects",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-preview",
+      "route": "/projects/project-book-engine-fixture/preview",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-reader",
+      "route": "/projects/project-book-engine-fixture/reader",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-checkpoint",
+      "route": "/projects/project-book-engine-fixture/chapter-boundary/checkpoint-boundary",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-cache",
+      "route": "/projects/content-delivery-platform/cache-learning",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-events",
+      "route": "/projects/content-delivery-platform/event-learning",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-deployment",
+      "route": "/projects/content-delivery-platform/deployment-learning",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-deployment-workspace",
+      "route": "/projects/content-delivery-platform/deployment-workspace",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "project-defense",
+      "route": "/projects/content-delivery-platform/defense",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "failure-states",
+      "route": "/failure-states",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio",
+      "route": "/studio",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-content",
+      "route": "/studio/content",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-graph",
+      "route": "/studio/graph",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-review",
+      "route": "/studio/review",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-system",
+      "route": "/studio/system",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-observability",
+      "route": "/studio/observability",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-recovery",
+      "route": "/studio/system/recovery",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "studio-recovery-alias",
+      "route": "/studio/recovery",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "onboarding",
+      "route": "/onboarding",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "lesson",
+      "route": "/practice/lesson/promise-machinery",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "lesson-missing",
+      "route": "/practice/lesson/syscalls-and-kernel-objects",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "task-family",
+      "route": "/practice/task-family/task-family.event-loop-ordering",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "task-family-missing",
+      "route": "/practice/task-family/missing?preview=1#mechanics",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "event-loop",
+      "route": "/lab/node-event-loop-001",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "event-loop-alias",
+      "route": "/practice/lab/node-event-loop-001",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "workspace-node",
+      "route": "/lab/node-cpu-bound-002",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "workspace-deferred",
+      "route": "/lab/deferred",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "ordering",
+      "route": "/lab/ordering-docker-build-cache",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "ordering-alias",
+      "route": "/practice/lab/ordering-docker-build-cache",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "route-recovery",
+      "route": "/this-route-is-intentionally-not-published",
+      "status": "pass",
+      "httpStatus": 200
+    }
+  ],
+  "apiSummary": {
+    "graphRelease": "2026.08.06-curriculum-graph.3",
+    "manifestVersion": "2026.08.02",
+    "pathQueries": {
+      "path.nodejs-typescript": {
+        "expected": 294,
+        "actual": 294,
+        "fetched": 294,
+        "error": null
+      },
+      "path.java-spring": {
+        "expected": 191,
+        "actual": 191,
+        "fetched": 191,
+        "error": null
+      },
+      "path.dotnet-csharp": {
+        "expected": 75,
+        "actual": 75,
+        "fetched": 75,
+        "error": null
+      },
+      "path.go": {
+        "expected": 130,
+        "actual": 130,
+        "fetched": 130,
+        "error": null
+      },
+      "path.frontend": {
+        "expected": 161,
+        "actual": 161,
+        "fetched": 161,
+        "error": null
+      },
+      "path.system-design": {
+        "expected": 568,
+        "actual": 568,
+        "fetched": 568,
+        "error": null
+      },
+      "path.algorithms": {
+        "expected": 52,
+        "actual": 52,
+        "fetched": 52,
+        "error": null
+      },
+      "path.behavioral": {
+        "expected": 103,
+        "actual": 103,
+        "fetched": 103,
+        "error": null
+      },
+      "path.python": {
+        "expected": 17,
+        "actual": 17,
+        "fetched": 17,
+        "error": null
+      }
+    }
+  },
   "valid": true,
-  "digest": "a27c3404e8c8f49d5adb1da150e8ee57f2ecb868d2c4395ee4f50c83f5720950"
+  "digest": "bb0af9839229188763af4d289dbbd0b5e440d944abf98e2ac9cef21bcd66dfcb"
 }

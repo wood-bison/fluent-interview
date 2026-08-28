@@ -107,7 +107,11 @@ const staticSteps = [
   ['design-tokens', process.execPath, ['scripts/design-token-audit.mjs', '--check']],
   ['vue-performance', process.execPath, ['scripts/vue-performance-gate.mjs', '--check']],
   ['observability', process.execPath, ['scripts/observability-gate.mjs', '--check']],
-  ['validation-matrix-static', process.execPath, ['scripts/validation-matrix-gate.mjs', '--static', '--check']],
+  // Keep the static source contract separate from the live matrix.  The gate
+  // writes its report even in --check mode; pointing it at a dedicated file
+  // prevents a strict/development release run from replacing the canonical
+  // live route/API evidence with a 35-record static snapshot.
+  ['validation-matrix-static', process.execPath, ['scripts/validation-matrix-gate.mjs', '--static', '--check', '--out=docs/verification/two-audit-remediation/W17/validation-matrix-static.json']],
   ['canonical-routes', process.execPath, ['scripts/canonical-route-gate.mjs']],
   ['schema-compatibility', process.execPath, ['scripts/schema-compatibility-gate.mjs']],
   ['layout', 'bash', ['scripts/layout-check.sh']],
