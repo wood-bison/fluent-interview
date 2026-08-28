@@ -159,7 +159,7 @@ entries, и публикует canonical `question-capability-release-…`.
 graph/path/content gates, runtime failure matrix, accessibility, desktop
 visual/regression и Vue E2E) прошли на G15 Brain/Lab release tuple; точный
 артефакт — `docs/verification/release-verify-dev-2026-08-28.json`,
-`generatedAt=2026-08-28T00:22:43.495Z`.
+`generatedAt=2026-08-28T00:35:36.945Z`.
 `productionPromotable=false` является ожидаемым результатом режима `--dev`, а
 не ошибкой проверки.
 
