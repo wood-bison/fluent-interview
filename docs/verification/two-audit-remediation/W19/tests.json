@@ -1,0 +1,19 @@
+{
+  "reportVersion": "w19-live-ui-tests.v1",
+  "valid": true,
+  "tests": [
+    { "id": "vue-check", "status": "pass", "detail": "typecheck, lint, 14 unit tests and production build" },
+    { "id": "package-ready", "status": "pass", "detail": "operation 43c4b6c8-9874-431d-b9b8-6098942a6449; all five package components ready" },
+    { "id": "route-matrix", "status": "pass", "detail": "43/43 web routes and 16/16 API probes returned 200" },
+    { "id": "semantic-paths", "status": "pass", "detail": "27/27 path, placement and language-isolation checks" },
+    { "id": "dom-links", "status": "pass", "detail": "205/205 discovered same-origin links; no unexpected recovery" },
+    { "id": "desktop-scroll", "status": "pass", "detail": "1440x900 main scroll owner has 6344px content and no horizontal overflow" },
+    { "id": "compact-scroll", "status": "pass", "detail": "390x844 `.fel-main` moved by 650px with no horizontal overflow" },
+    { "id": "compact-rail", "status": "pass", "detail": "78.4px semantic collapsed rail; contextual card omitted" },
+    { "id": "advanced-filter-disclosure", "status": "pass", "detail": "desktop expanded and compact collapsed defaults round-trip through aria-expanded" },
+    { "id": "path-runtime-picker", "status": "pass", "detail": "Node.js + TypeScript path rendered 81 stations and 3 language pickers without overlap" },
+    { "id": "locale-copy", "status": "pass", "detail": "RU/EN next-action, mode and level labels are not cross-locale" },
+    { "id": "ai-dock", "status": "pass", "detail": "Navigator opens as a 416px dock without centering over learner content" },
+    { "id": "theme-switch", "status": "pass", "detail": "dark and light tokens applied with no alert errors" }
+  ]
+}

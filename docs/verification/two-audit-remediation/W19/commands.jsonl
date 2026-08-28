@@ -1,0 +1,10 @@
+{"command":"pnpm check","cwd":"fluent-engineering-vue","result":"pass: vue-tsc, eslint, 14 Vitest tests, Vite build"}
+{"command":"DATABASE_URL=postgresql://fel:fel@127.0.0.1:49302/fluent_lab pnpm g8:02:backup -- --full-local --output /tmp/fel-vue-locale-backup-20260828.json","cwd":"fluent-engineering-lab","result":"pass: 12161 rows, sha256 7e6555d1057d021e8f67429d61a823e6389498fda408379256022c4bef25376f"}
+{"command":"pnpm package:local:upgrade -- --artifact /tmp/fel-vue-locale-backup-20260828.json","cwd":"fluent-engineering-lab","result":"pass: operation 43c4b6c8-9874-431d-b9b8-6098942a6449, package ready"}
+{"command":"pnpm package:local:status","cwd":"fluent-engineering-lab","result":"pass: learner-web, learning-api, Postgres, Redis and Task Runtime ready; data preserved"}
+{"command":"WEB_URL=http://localhost:49300 LEARNING_API_URL=http://127.0.0.1:49301 pnpm verify:routes:check","cwd":"fluent-interview","result":"pass: 43 web routes, 16 API probes, 27 semantic path checks; digest 63aed381bcfebd1f4c422c8a4c5db3b31898db3164a9464705a44fff717403e8"}
+{"command":"browser route matrix sweep","cwd":"http://localhost:49300","result":"pass: 43/43 route entries; 0 hard failures; 0 console errors"}
+{"command":"browser DOM link sweep","cwd":"http://localhost:49300","result":"pass: 205/205 discovered links; 8 expected canonical redirects; 0 unexpected recovery; 0 hard failures"}
+{"command":"browser desktop UI smoke","cwd":"http://localhost:49300","result":"pass: 1440x900; no overflow; advanced toggle; Navigator dock 416px; light/dark"}
+{"command":"browser compact UI smoke","cwd":"http://localhost:49300","result":"pass: 390x844; rail 78.4px collapsed; filters closed; scroll delta 650; no overflow"}
+{"command":"browser locale smoke","cwd":"http://localhost:49300","result":"pass: RU and EN next-action/mode labels remain locale-consistent"}

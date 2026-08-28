@@ -1,0 +1,74 @@
+{
+  "reportVersion": "w19-live-ui-boundary.v1",
+  "generatedAt": "2026-08-28T11:05:00.000Z",
+  "scope": "production package live browser sweep after compact-shell and locale-consistency remediation",
+  "package": {
+    "operationId": "43c4b6c8-9874-431d-b9b8-6098942a6449",
+    "web": "http://localhost:49300",
+    "api": "http://127.0.0.1:49301",
+    "state": "ready",
+    "dataPreserved": true,
+    "graphReleaseId": "2026.08.06-curriculum-graph.3",
+    "backup": {
+      "artifactId": "learner-backup-20260828110204-3840de45-56f",
+      "scope": "full-local",
+      "rows": 12161,
+      "bytes": 10250325,
+      "sha256": "7e6555d1057d021e8f67429d61a823e6389498fda408379256022c4bef25376f",
+      "payloadDigest": "17470a02353b103d188e6a18ec25fbfedb41a98bdeef08e9685392247c7a4d3a"
+    }
+  },
+  "sourceRevisions": {
+    "umbrellaBeforeEvidenceCommit": "1e53daa0b10e4f1616391254c699df0a5cbf8fef",
+    "lab": "f4c775cad33a7b8a20cbc36643dd164e40a5d549",
+    "vue": "31b63569f11c5e824b8b9741a0de083f3f78dea6",
+    "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
+    "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
+    "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
+  },
+  "browserSweep": {
+    "routeMatrix": { "checked": 43, "http200": 43, "hardFailures": 0 },
+    "discoveredLinks": { "checked": 205, "unexpectedRecovery": 0, "hardFailures": 0 },
+    "desktop": {
+      "viewport": "1440x900",
+      "mainClient": "1161x840",
+      "mainScrollHeight": 6344,
+      "horizontalOverflow": false,
+      "advancedFilters": { "defaultExpanded": true, "toggleRoundTrip": true },
+      "aiDock": { "width": 416, "height": 840, "placement": "dock" },
+      "themes": ["dark", "light"],
+      "consoleErrors": 0
+    },
+    "compact": {
+      "viewport": "390x844",
+      "railWidth": 78.4,
+      "railCollapsed": true,
+      "contextRailRendered": false,
+      "advancedFilters": { "defaultExpanded": false, "toggleMinHeight": 44 },
+      "mainClient": "301x784",
+      "mainScrollHeight": 13465,
+      "scrollDelta": 650,
+      "horizontalOverflow": false,
+      "consoleErrors": 0
+    },
+    "pathCompact": {
+      "route": "/paths/nodejs-typescript",
+      "stations": 81,
+      "runtimePickers": 3,
+      "overlapCandidates": 0,
+      "horizontalOverflow": false
+    },
+    "localeConsistency": {
+      "ruNextAction": "Ответь своими словами, затем сверься с эталоном и follow-up.",
+      "enNextAction": "Answer in your own words, then compare with the reference and follow-ups.",
+      "detailModeRu": "Теория / puzzle",
+      "detailModeEn": "Theory / puzzle",
+      "consoleErrors": 0
+    }
+  },
+  "routeGate": {
+    "generatedAt": "2026-08-28T11:04:34.711Z",
+    "valid": true,
+    "digest": "63aed381bcfebd1f4c422c8a4c5db3b31898db3164a9464705a44fff717403e8"
+  }
+}

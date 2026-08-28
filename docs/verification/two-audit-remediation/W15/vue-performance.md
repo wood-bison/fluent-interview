@@ -1,12 +1,12 @@
 # W15 — Vue performance gate
 
-Снимок: 2026-08-28T10:35:44.519Z
+Снимок: 2026-08-28T10:52:52.347Z
 Статус: **pass**
 
 | Boundary | Result |
 | --- | --- |
-| Initial JS | 299.1 KiB raw / 92.8 KiB gzip (budget 342 KiB) |
-| Initial CSS | 47.3 KiB raw / 9.3 KiB gzip |
+| Initial JS | 299.4 KiB raw / 93.0 KiB gzip (budget 342 KiB) |
+| Initial CSS | 47.4 KiB raw / 9.4 KiB gzip |
 | xterm | 323.5 KiB lazy; initial=not loaded |
 | Question list | bounded cursor pagination |
 
