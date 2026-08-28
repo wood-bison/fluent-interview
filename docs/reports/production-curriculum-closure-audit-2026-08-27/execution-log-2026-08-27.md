@@ -60,10 +60,10 @@ production-ready**. Последнее обновление: 28 августа 2
 | Workspace | `0971c73` | recorded the clean G16 evidence, canonical Lab pin, and runtime launcher safeguard |
 | Fluent Lab | `c9c96cb4dde8856477c5352b0d8e3faae0f683b0` (+ `2ff842e9`, `bbeeab26`, `1835a1e7`) | release-aware Question Brain adapter, strict workspace/capability validation, fail-closed relation join, regression tests, and final G9/G12 evidence |
 | Task Runtime | `6b097718fe4f6075a1f4baf1d55dc6d71dcbf137` | G17 overlay manifest pins the current Brain capability-binding release; historical G10 manifest remains immutable |
-| Workspace | `working tree` | release join gate and Lab relation join now fail closed on source snapshot, capability binding, and capability registry drift |
+| Workspace | `67501ac` + `7e813e0` | release join gate and Lab relation join now fail closed on source snapshot, capability binding, capability registry, and TaskFamily release drift |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain `4c4cac9` / Lab `448e7ee` pins, G16 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4c9a0a309536f892`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain `4c4cac9` / Lab `c9c96cb` / Runtime `6b09771` pins, G17 release-join defaults, and W11/G12 evidence point to the reconciled immutable tuple; Vue/Vault pins remain exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -171,12 +171,14 @@ canonical path/capability guard.
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Полный development-прогон после G16 projection завершился
+Полный development-прогон после G17 release-join hardening завершился
 `valid=true`: 55/55 шагов без предупреждений (`lab-check`, `vue-check`, readiness,
 graph/path/content gates, runtime failure matrix, accessibility, desktop
-visual/regression и Vue E2E) прошли на G16 Brain/Lab release tuple; точный
-артефакт — `docs/verification/release-verify-dev-2026-08-28.json`,
-`generatedAt=2026-08-28T00:54:10.777Z`.
+visual/regression и Vue E2E) прошли на Brain
+`question-release-d00a14931e607336`, Lab `c9c96cb` и Runtime
+`runtime-task-release-2026-08-28-qb-d00a1493-g17`; точный артефакт —
+`docs/verification/release-verify-dev-2026-08-28.json`,
+`generatedAt=2026-08-28T07:23:07.796Z`.
 `productionPromotable=false` является ожидаемым результатом режима `--dev`, а
 не ошибкой проверки.
 
