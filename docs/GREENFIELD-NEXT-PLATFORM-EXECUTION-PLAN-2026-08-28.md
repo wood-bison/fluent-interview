@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 executable slice PASS_WITH_LIMITATIONS; G7 в очереди выполнения**
+Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 executable slice PASS_WITH_LIMITATIONS; G7 submit/evidence slice PASS_WITH_LIMITATIONS; G8 в очереди выполнения**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -636,32 +636,32 @@ edges до переноса product code.
 
 ### G7.1. Submit contract
 
-- [ ] `G7-001` `Submit` — отдельный endpoint/command/schema/operation.
+- [x] `G7-001` `Submit` — отдельный endpoint/command/schema/operation.
 - [ ] `G7-002` Hidden suite хранится вне learner-readable image/mount/source tree.
 - [ ] `G7-003` Runtime получает sealed suite только в execution trust zone.
-- [ ] `G7-004` Verdict связывает task/revision/profile/image/suite/rubric/source digests.
-- [ ] `G7-005` Result types: pass, fail, error, timeout, refused; learner fail ≠ platform error.
-- [ ] `G7-006` Retry/idempotency/replay policy не создаёт duplicate Evidence.
+- [x] `G7-004` Verdict связывает task/revision/profile/image/suite/rubric/source digests.
+- [x] `G7-005` Result types: pass, fail, error, timeout, refused; learner fail ≠ platform error.
+- [x] `G7-006` Retry/idempotency/replay policy не создаёт duplicate Evidence.
 - [ ] `G7-007` Hidden suite canary ищется во всех API/log/trace/stdout/stderr/artifacts.
 - [ ] `G7-008` Browser tampering/self-grade/LLM text не меняют verdict.
 
 ### G7.2. Evidence chain
 
 - [ ] `G7-009` Prediction, Run, Submit, Explanation, Defense, Reflection и Repeat имеют отдельные evidence kinds.
-- [ ] `G7-010` Evidence references immutable revisions и evaluator policy.
-- [ ] `G7-011` Accepted executable evidence создаётся только из pass verdict.
+- [x] `G7-010` Evidence references immutable revisions и evaluator policy.
+- [x] `G7-011` Accepted executable evidence создаётся только из pass verdict.
 - [ ] `G7-012` Explanation/defense требуют rubric/evaluator и не наследуют pass автоматически.
 - [ ] `G7-013` Progress projection rebuildable из canonical events/evidence.
-- [ ] `G7-014` Replay не раскрывает forbidden content.
+- [x] `G7-014` Replay не раскрывает forbidden content.
 - [ ] `G7-015` Backup/restore сохраняет chain и hashes.
 
 ### G7.3. Learner UX
 
-- [ ] `G7-016` Run и Submit визуально различимы по intent/effect.
-- [ ] `G7-017` До Submit UI не обещает mastery.
-- [ ] `G7-018` Public feedback объясняет next action без hidden-test hints.
+- [x] `G7-016` Run и Submit визуально различимы по intent/effect.
+- [x] `G7-017` До Submit UI не обещает mastery.
+- [x] `G7-018` Public feedback объясняет next action без hidden-test hints.
 - [ ] `G7-019` Evidence drawer/journal показывает источник verdict и exact revision.
-- [ ] `G7-020` Failure recovery не теряет source/prediction.
+- [x] `G7-020` Failure recovery не теряет source/prediction.
 
 ### Gate G7
 
@@ -669,8 +669,8 @@ edges до переноса product code.
 - [ ] `G7-022` Submit adversarial/concurrency/idempotency matrix PASS.
 - [ ] `G7-023` Evidence rebuild + backup/restore PASS.
 - [ ] `G7-024` Browser authority forgery tests PASS.
-- [ ] `G7-025` Commit: `feat(g7): add authoritative submit verdict and evidence chain`.
-- [ ] `G7-026` `gate.json.status = PASS`.
+- [x] `G7-025` Commit: `feat(g7): add authoritative submit verdict and evidence chain`.
+- [ ] `G7-026` `gate.json.status = PASS` (остаётся `PASS_WITH_LIMITATIONS`: отдельная evaluator trust zone и полноценная evidence/rebuild цепочка впереди).
 
 ---
 
