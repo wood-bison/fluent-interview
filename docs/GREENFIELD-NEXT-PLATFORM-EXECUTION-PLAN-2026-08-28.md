@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G4 PASS; G5 в очереди выполнения**
+Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 в очереди выполнения**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -529,46 +529,51 @@ edges до переноса product code.
 
 ### G5.1. Canonical content model
 
-- [ ] `G5-001` Определить schemas QuestionCard, semantic revision, translation, provenance, placement и review.
-- [ ] `G5-002` Question Catalog реализовать как Nest module за `QuestionCatalogPort`.
-- [ ] `G5-003` Не копировать Brain service boundary автоматически.
-- [ ] `G5-004` PostgreSQL migrations имеют expand/contract и rollback/recovery plan.
-- [ ] `G5-005` RU/EN — revisions одного semantic card, не разные learner items.
-- [ ] `G5-006` Primary Question отделён от Supporting Prompt и raw Brain row.
-- [ ] `G5-007` Theory card не рекламирует Open Lab без assessed Activity.
-- [ ] `G5-008` Answer layers: concise, understanding, mechanism, traps, follow-ups, evidence, sources.
-- [ ] `G5-009` Citation/provenance/license обязательны для publish.
-- [ ] `G5-010` Graph edges typed, reviewed, versioned и не выводятся из embedding автоматически.
+- [x] `G5-001` Определить schemas QuestionCard, semantic revision, translation, provenance, placement и review.
+- [x] `G5-002` Question Catalog реализовать как Nest module за `QuestionCatalogPort`.
+- [x] `G5-003` Не копировать Brain service boundary автоматически.
+- [x] `G5-004` PostgreSQL migrations имеют expand/contract и rollback/recovery plan.
+- [x] `G5-005` RU/EN — revisions одного semantic card, не разные learner items.
+- [x] `G5-006` Primary Question отделён от Supporting Prompt и raw Brain row.
+- [x] `G5-007` Theory card не рекламирует Open Lab без assessed Activity.
+- [x] `G5-008` Answer layers: concise, understanding, mechanism, traps, follow-ups, evidence, sources.
+- [x] `G5-009` Citation/provenance/license обязательны для publish.
+- [x] `G5-010` Graph edges typed, reviewed, versioned и не выводятся из embedding автоматически.
 
 ### G5.2. Import и deterministic release
 
-- [ ] `G5-011` Создать read-only legacy importer по frozen release IDs.
-- [ ] `G5-012` Import идемпотентен и пишет quarantine вместо silent fallback.
+- [x] `G5-011` Создать read-only legacy importer по frozen release IDs.
+- [x] `G5-012` Import идемпотентен и пишет quarantine вместо silent fallback.
 - [ ] `G5-013` Reconcile all reference cards/revisions/placements/edges: imported|merged|quarantined|retired(reason).
 - [ ] `G5-014` Duplicate resolution сохраняет provenance и supersession chain.
-- [ ] `G5-015` Release bundle использует canonical JSON, stable sort, sharded JSONL.zst, checksums и attestation.
-- [ ] `G5-016` Двойная сборка одного release даёт одинаковые logical hashes.
-- [ ] `G5-017` Большие media/sealed artifacts идут через `ArtifactStorePort`; local adapter project-scoped, S3 adapter optional.
-- [ ] `G5-018` Developer checkout materializes ignored Markdown; он не становится second authority.
+- [x] `G5-015` Release bundle использует canonical JSON, stable sort, sharded JSONL.zst, checksums и attestation.
+- [x] `G5-016` Двойная сборка одного release даёт одинаковые logical hashes.
+- [x] `G5-017` Большие media/sealed artifacts идут через `ArtifactStorePort`; local adapter project-scoped, S3 adapter optional.
+- [x] `G5-018` Developer checkout materializes ignored Markdown; он не становится second authority.
 
 ### G5.3. Learner Lesson UI
 
-- [ ] `G5-019` Lesson показывает route context, primary question, supporting prompts и assessed activities.
-- [ ] `G5-020` Long RU/EN headings, code, tables, citations и callouts не ломают layout.
-- [ ] `G5-021` Конспект, practice, evidence и related graph имеют ясные отдельные actions.
-- [ ] `G5-022` Reveal/hint события persisted как Assistance Events, не mastery.
-- [ ] `G5-023` Search/filter results сохраняют path placement context.
-- [ ] `G5-024` Direct question URL не теряет Lesson/Track navigation.
+- [x] `G5-019` Lesson показывает route context, primary question, supporting prompts и assessed activities.
+- [x] `G5-020` Long RU/EN headings, code, tables, citations и callouts не ломают layout.
+- [x] `G5-021` Конспект, practice, evidence и related graph имеют ясные отдельные actions.
+- [x] `G5-022` Reveal/hint события persisted как Assistance Events, не mastery.
+- [x] `G5-023` Search/filter results сохраняют path placement context.
+- [x] `G5-024` Direct question URL не теряет Lesson/Track navigation.
 
 ### Gate G5
 
 - [ ] `G5-025` Frozen content counts/hashes reconciled 100%; unexplained delta = 0.
-- [ ] `G5-026` Migration rollback + restore PASS.
-- [ ] `G5-027` Release double-build determinism PASS.
-- [ ] `G5-028` No raw prompt/answer/hidden content in telemetry.
-- [ ] `G5-029` Question/Lesson/search/graph browser journeys PASS RU/EN/themes.
-- [ ] `G5-030` Commit: `feat(g5): port governed question catalog and lesson releases`.
-- [ ] `G5-031` `gate.json.status = PASS`.
+- [x] `G5-026` Migration rollback + restore PASS.
+- [x] `G5-027` Release double-build determinism PASS.
+- [x] `G5-028` No raw prompt/answer/hidden content in telemetry.
+- [x] `G5-029` Question/Lesson/search/graph browser journeys PASS RU/EN/themes.
+- [x] `G5-030` Commit: `feat(g5): port governed question catalog and lesson releases`.
+- [ ] `G5-031` `gate.json.status = PASS` — seed release gate is `PASS_WITH_LIMITATIONS`; full corpus reconciliation is G11.
+
+> G5 note: the greenfield repository has a fully verified five-card seed slice.
+> `G5-013`, `G5-014`, `G5-025` and the final `G5-031` remain open until the
+> complete Brain/Vault corpus is reconciled with explicit supersession and zero
+> unexplained delta. See `fluent-interview-platform/docs/verification/greenfield/G5/`.
 
 ---
 
