@@ -72,7 +72,7 @@ running Brain/Runtime/Lab/Vue stack, route projection, semantic placement,
 accessibility, desktop visual budgets and the two target Chromium profiles. It
 does not promote a package. `release:verify` is intentionally stricter: it
 requires a clean, immutable five-repository provenance tuple and a ready
-packaged Lab before it will run G14 hardening. A dirty or locally-only checkout
+packaged Lab before it will run the current hardening gate. A dirty or locally-only checkout
 therefore produces an explicit release blocker instead of a false green.
 
 ## Как читать текущий release
@@ -104,6 +104,12 @@ revision). Остальные
 `2026.08.06-curriculum-graph.3`, Task Runtime
 `runtime-task-release-2026-08-26-qb-d00a1493-g10`. В API inventory все проверки
 reconciliation имеют значение `true`.
+
+Последняя bounded content wave — G15 (`question-capability-release-6aed990a298ef65b`):
+четырнадцать reviewed supporting bindings для `.NET/C#` async и cancellation
+на canonical `path.dotnet-csharp`. Это обновляет crosswalk и projection, но не
+маскирует незакрытые lesson/checkpoint/activity targets; текущий release
+остаётся development slice (`productionReady=false`).
 
 Карточка каждого пути теперь показывает два разных числа: `discoveryCount` —
 точный результат серверного поискового профиля в общей базе (например, `Go`), и
