@@ -332,3 +332,17 @@ readiness URLs и Trace Explorer вернули HTTP 200. Это evidence зак
 W04-019, W04-025 и W04-027 только для development lifecycle; package-mode
 persistence и exact-digest rollback остаются отдельными production items.
 Подробности: `docs/verification/two-audit-remediation/W04/lifecycle-2026-08-28.json`.
+
+## Повторный полный development gate — 28 августа 2026, 08:16Z
+
+После lifecycle-проверки выполнен свежий
+`pnpm release:verify:dev -- --out=docs/verification/release-verify-dev-2026-08-28.json`.
+Результат: `valid=true`, **55/55 PASS**, `productionPromotable=false` по
+контракту development-режима. В набор вошли Brain/Runtime readiness, release
+join, negative runtime failure matrix, curriculum и Question Brain integrity,
+route/semantic placement, accessibility, desktop visual/regression и Vue E2E.
+
+Gate обновил только timestamped machine evidence; Lab evidence зафиксирован
+коммитом `2dd5dcf8d2d89b5ba38d0cc9b47ec841b14b2dfd`, а root `workspace.yaml`
+указывает на этот clean child revision. Итоговый JSON: `docs/verification/
+release-verify-dev-2026-08-28.json` (55 steps, failures/warnings отсутствуют).

@@ -1,6 +1,6 @@
 {
   "reportVersion": "design-token-audit.v1",
-  "generatedAt": "2026-08-28T07:53:31.219Z",
+  "generatedAt": "2026-08-28T08:13:15.229Z",
   "tokenFile": "fluent-engineering-vue/packages/design-tokens/tokens.css",
   "policyFile": "docs/design-system/fluent-design-tokens.v1.md",
   "valid": true,
