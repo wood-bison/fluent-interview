@@ -1,0 +1,54 @@
+{
+  "reportVersion": "w21-release-boundary.v1",
+  "generatedAt": "2026-08-28T11:56:01.300Z",
+  "scope": "final live package and cross-repository release verification",
+  "developmentGate": {
+    "report": "docs/verification/two-audit-remediation/W21/release-verify-dev-final.json",
+    "generatedAt": "2026-08-28T11:49:21.500Z",
+    "valid": true,
+    "stepCount": 55,
+    "passed": 55,
+    "failed": 0,
+    "e2e": "92/92"
+  },
+  "strictGate": {
+    "report": "docs/verification/two-audit-remediation/W21/release-verify-strict-final.json",
+    "generatedAt": "2026-08-28T11:54:49.578Z",
+    "valid": false,
+    "productionPromotable": false,
+    "functionalFailures": 0,
+    "governanceWarning": "fluent-engineering-vue remote=local-only"
+  },
+  "sourceRevisions": {
+    "umbrellaBeforeW21EvidenceCommit": "95a2ef516f28eafff905f5335ee86a81260411e9",
+    "lab": "5c6eef80edf3ae76bd827a3e6fc75529d9bf2fd3",
+    "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
+    "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
+    "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
+    "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
+  },
+  "package": {
+    "operationId": "6991e187-f4eb-4af3-9161-70992366a0da",
+    "state": "ready",
+    "packageManaged": true,
+    "web": "http://localhost:49300/onboarding",
+    "api": "http://127.0.0.1:49301",
+    "dataPreserved": true,
+    "backup": {
+      "artifactId": "learner-backup-20260828115051-a3e94f82-5f6",
+      "path": "/tmp/fel-full-local-backup-20260828-1152.json",
+      "scope": "full-local",
+      "rows": 12341,
+      "bytes": 10485537,
+      "sha256": "31e6417eca98fd46cee1b7c95e08a1dc32b2a6a7f50056e132adab463b27e142",
+      "payloadDigest": "4584e6d2d5b1c3ecfea9bacfbb44dd63840a359818e77dcadf0591f3f0f83a72"
+    }
+  },
+  "g14": {
+    "valid": true,
+    "benchmarkCount": 13,
+    "healthCount": 5,
+    "failures": 0,
+    "warnings": 0
+  }
+}

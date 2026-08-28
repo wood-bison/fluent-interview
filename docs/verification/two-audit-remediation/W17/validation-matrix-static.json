@@ -1,7 +1,7 @@
 {
   "reportVersion": "validation-matrix.v1",
-  "generatedAt": "2026-08-28T11:37:50.838Z",
-  "startedAt": "2026-08-28T11:37:50.836Z",
+  "generatedAt": "2026-08-28T11:54:04.867Z",
+  "startedAt": "2026-08-28T11:54:04.865Z",
   "mode": "static",
   "webBase": "http://localhost:47350",
   "labBase": "http://127.0.0.1:47000",
@@ -10,8 +10,8 @@
   "routeCount": 43,
   "apiProbeCount": 16,
   "sourceRevisions": {
-    "umbrella": "15b06190ec311542c32c82f6fae7e87685df7d43",
-    "lab": "12f0de0d2b49797dd34a442ee5f186296b6c0c66",
+    "umbrella": "95a2ef516f28eafff905f5335ee86a81260411e9",
+    "lab": "5c6eef80edf3ae76bd827a3e6fc75529d9bf2fd3",
     "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
     "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
     "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
@@ -256,5 +256,5 @@
   "webResults": [],
   "apiSummary": null,
   "valid": true,
-  "digest": "8ff56bdfabe0282c591b068b6be9a870695ace83991e2f953d0471508f895aa8"
+  "digest": "521f8f769342a3f019b7e4cc637bcf8615e5d63627edd70374924a271e23b570"
 }
