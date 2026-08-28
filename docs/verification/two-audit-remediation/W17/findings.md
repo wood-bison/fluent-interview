@@ -60,9 +60,9 @@
   question release and Runtime dependency share the same ID, 22 task bindings
   match revision/content hashes, and 19 runnable plus one explicitly deferred
   revision carry immutable hashes.
-- The latest aggregate development verifier passes 50/51 steps. The only
-  non-pass is the explicit `package-provenance-plan` warning caused by dirty or
-  unpinned source roots; no production promotion was attempted.
+- The latest aggregate development verifier passes 55/55 steps with no warning:
+  `package-provenance-plan` is executable and all five child roots are clean and
+  pinned; no production promotion was attempted.
 - A concurrent cold-load probe initially reproduced a real Question Brain
   quality instability: four Postgres-backed `/v1/quality` projections could
   compete for the local pool, while Lab's 1.2s client budget expired before a

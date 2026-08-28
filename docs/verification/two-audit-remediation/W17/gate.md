@@ -36,9 +36,9 @@ visual/state matrix adds eight executions
 covering RU/EN × light/dark, keyboard entry, reduced motion/transparency and
 200% zoom. This is not a production promotion.
 
-The aggregate development verifier now passes 50/51 steps, with one explicit
-  package-provenance warning; the warning is expected while source roots remain
-  dirty and is not treated as production promotion. The remaining rows are
+The aggregate development verifier now passes 55/55 steps with no warning:
+`package-provenance-plan` is executable and all five child roots are clean and
+pinned. This is still development verification, not production promotion. The remaining rows are
   explicit: Vue-native syllabus, independent screenshot sign-off and package-mode
   multi-language runtime drills. W17-040 is closed by the isolated real PostgreSQL 17 run
 recorded in `postgresql-concurrency-run.json`; W17-041 and W17-042 are closed

@@ -56,9 +56,10 @@ production-ready**. Последнее обновление: 28 августа 2
 | Fluent Lab | `26ec18032e0391bf18874390b876a01ebfc6d51b` | consumed G15 binding release, refreshed path projection/backlog defaults, and verified .NET path isolation |
 | Question Brain | `4c4cac99490e2b565449e04883979f6d46d68e1f` | G16 .NET/C# await mechanics wave: two additional canonical supporting bindings; immutable release `4c9a0a309536f892` |
 | Fluent Lab | `0465a7b47abdc1672742033b4cbda6435a7e0362` | consumed G16 binding release and refreshed path projection/backlog |
+| Fluent Lab | `448e7ee6195057389d9129a1b1aaae5340ad3a3e` | captured clean timestamped G16 evidence after the 55-step development gate |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain `4c4cac9` / Lab `0465a7b` pins, G16 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4c9a0a309536f892`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain `4c4cac9` / Lab `448e7ee` pins, G16 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4c9a0a309536f892`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -158,14 +159,21 @@ canonical path/capability guard.
 подписанный Brain verification report, сверяет question release и число
 entries, и публикует canonical `question-capability-release-…`.
 
-Полный development-прогон после G15 projection завершился
-`valid=true`: 55/55 шагов (`lab-check`, `vue-check`, readiness,
+Полный development-прогон после G16 projection завершился
+`valid=true`: 55/55 шагов без предупреждений (`lab-check`, `vue-check`, readiness,
 graph/path/content gates, runtime failure matrix, accessibility, desktop
-visual/regression и Vue E2E) прошли на G15 Brain/Lab release tuple; точный
+visual/regression и Vue E2E) прошли на G16 Brain/Lab release tuple; точный
 артефакт — `docs/verification/release-verify-dev-2026-08-28.json`,
-`generatedAt=2026-08-28T00:35:36.945Z`.
+`generatedAt=2026-08-28T00:54:10.777Z`.
 `productionPromotable=false` является ожидаемым результатом режима `--dev`, а
 не ошибкой проверки.
+
+В ходе повторной проверки была устранена операционная причина предыдущего
+красного прогона: launcher теперь создаёт канонический
+`fluent-task-runtime/.runtime-work` до Compose-up. Это предотвращает stale
+bind-mount после очистки пустой директории; после пересоздания контейнера
+failure matrix снова доказала pass/fail/error/timeout, redaction, trace
+identity и resource policy.
 
 В предыдущем прогоне использовался первоначальный G13D release tuple. До него были выпущены
 G8, G9, G10 и G11;
