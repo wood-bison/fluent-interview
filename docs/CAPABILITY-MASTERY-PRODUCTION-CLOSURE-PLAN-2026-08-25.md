@@ -8,6 +8,14 @@
 **Текущий результат:** `NOT RELEASED`  
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
+Последняя техническая перепроверка **W22 (28 августа 2026)** сохранила эту
+границу: development release verifier дал `55/55 PASS`, а Vue E2E — `102/102
+PASS` на двух desktop-профилях. Это подтверждает исправность текущего
+технического среза, но не закрывает human M3, strict production remote или
+следующие curriculum gates. Полная запись: [`W22 gate`](verification/two-audit-remediation/W22/gate.md).
+Правила дальнейшей Vue-разработки и выбора UI-инструментов собраны в
+[`Vue production playbook`](frontend/VUE-PRODUCTION-PLAYBOOK-2026.md).
+
 ### Scope expansion v3 — 27 августа 2026
 
 Пользователь явно расширил цель: этот план больше не ограничивается пилотным
