@@ -343,6 +343,6 @@ join, negative runtime failure matrix, curriculum и Question Brain integrity,
 route/semantic placement, accessibility, desktop visual/regression и Vue E2E.
 
 Gate обновил только timestamped machine evidence; Lab evidence зафиксирован
-коммитом `2dd5dcf8d2d89b5ba38d0cc9b47ec841b14b2dfd`, а root `workspace.yaml`
+коммитом `2dd5dcf2f2d8bb3e95c67b03d127cc9a1f7d6835`, а root `workspace.yaml`
 указывает на этот clean child revision. Итоговый JSON: `docs/verification/
 release-verify-dev-2026-08-28.json` (55 steps, failures/warnings отсутствуют).
