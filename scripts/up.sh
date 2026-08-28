@@ -184,7 +184,17 @@ echo 'Applying explicit Question Brain → Lab curriculum crosswalk'
   -approve >/dev/null
 
 echo '2/2  Task Runtime'
-RUNTIME_HOST_WORK_ROOT="$TASK_RUNTIME/.runtime-work" \
+# Docker bind mounts keep the inode that existed when the container was
+# created.  If a previous gate removed the empty work root while Compose was
+# still running, recreating the directory on disk is not enough: the running
+# container keeps a stale mount and every run fails with `sandbox_setup_failed`.
+# Ensure the host path exists before each `up` so a fresh/recreated container
+# always receives a live disposable workspace.  The launcher deliberately
+# keeps one canonical path; standalone Compose users can still override it in
+# their own invocation as documented by Task Runtime.
+runtime_work_root="$TASK_RUNTIME/.runtime-work"
+mkdir -p "$runtime_work_root"
+RUNTIME_HOST_WORK_ROOT="$runtime_work_root" \
 RUNTIME_RELEASE_MANIFEST="/opt/releases/$RUNTIME_RELEASE_FILE" \
   "${compose_task_runtime[@]}" up -d --remove-orphans "${build_args[@]}"
 wait_for 'Task Runtime' "$WS_RUNTIME_READY_URL"
