@@ -54,9 +54,11 @@ production-ready**. Последнее обновление: 28 августа 2
 | Fluent Lab | `a779ebf2061367db7da97f8934b37ce96f8250cf` | captured final timestamped G14 evidence after the warning-free 55-step development gate |
 | Question Brain | `1c31b69d93d3a303de40e1a2eaadf8d28b7f1fc2` | G15 .NET/C# async and cancellation wave: fourteen canonical `path.dotnet-csharp` supporting bindings; stale v2 rows revoked before the v3 release `6aed990a298ef65b` |
 | Fluent Lab | `26ec18032e0391bf18874390b876a01ebfc6d51b` | consumed G15 binding release, refreshed path projection/backlog defaults, and verified .NET path isolation |
+| Question Brain | `4c4cac99490e2b565449e04883979f6d46d68e1f` | G16 .NET/C# await mechanics wave: two additional canonical supporting bindings; immutable release `4c9a0a309536f892` |
+| Fluent Lab | `0465a7b47abdc1672742033b4cbda6435a7e0362` | consumed G16 binding release and refreshed path projection/backlog |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
-| Workspace | current wave | Brain `1c31b69` / Lab `26ec180` pins, G15 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-6aed990a298ef65b`; Vue/Runtime pins reconciled to exact HEAD SHAs |
+| Workspace | current wave | Brain `4c4cac9` / Lab `0465a7b` pins, G16 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4c9a0a309536f892`; Vue/Runtime pins reconciled to exact HEAD SHAs |
 
 Root `workspace.yaml` закрепляет текущие child SHAs; Vue и Question Vault
 остаются на своих проверенных revision. Remote push намеренно не выполнялся:
@@ -97,16 +99,16 @@ evidence. Строгий production-профиль по-прежнему отд�
 остаётся `productionReady=false`: опубликованный slice всё ещё не содержит
 lesson/checkpoint registry, а supporting/activity coverage не достигает
 learner contract 1601/699/464/51. Точные текущие IDs и blockers остаются в
-этом manifest; G8, G10, G11, G12, G13B, G13C, G13D, G14 и G15 волны закрыли только reviewed supporting bindings,
+этом manifest; G8, G10, G11, G12, G13B, G13C, G13D, G14, G15 и G16 волны закрыли только reviewed supporting bindings,
 а не весь production gap. Текущий manifest digest:
-`87d76b0401f03423de177a89ccb55902ab386158b01bf7146f481d1b71332130`.
+`374fbbb3048232c8219fcf63aa5cdcf0edb70942a5871e62f77b6522e98c1a5a`.
 
 Новая очередь
 `fluent-engineering-lab/docs/manifests/path-completion-backlog-2026-08-27.json`
-содержит 3552 стабильных открытых item (digest
-`41c22377870379adde1852a5ca9648abe46313917875e329876fe2c135d205da`):
+содержит 3550 стабильных открытых item (digest
+`1de731f58d11aa2cd1406f68989501e8766277d74f18de4a298ad8d3ad28f8a8`):
 
-- 1479 `capability-binding` review;
+- 1477 `capability-binding` review;
 - 699 `supporting-prompt` authoring;
 - 431 `activity` authoring/binding;
 - 334 missing `primary-question` slots;
@@ -125,7 +127,7 @@ filler-контент. Он адресует exact compatibility gaps у изв�
 starter/hidden-test/hash и deterministic pass/fail/error evidence.
 
 Question coverage backlog (`docs/verification/two-audit-remediation/W13`) не
-пытается «угадать» capability по prompt. Он сверяет все 1479 unresolved IDs с
+пытается «угадать» capability по prompt. Он сверяет все 1477 unresolved IDs с
 Brain revision/hash и canonical binding report, объединяет capability/role
 issues в один path/card item и требует новый immutable Brain release перед
 пересборкой Lab projection. Десять event-loop items удалены из очереди только
@@ -144,10 +146,12 @@ q995, q998, q791) и отозвала path-mismatched q1072 до публика�
 binding rows (шесть новых bound cards), а пять auth-предложений с canonical
 `path.system-design` были отозваны вместо переклассификации в Node. Текущий
 W13 digest:
-`7254dd72163d99fcd3bab00b7788a4d9433e5b70317719b318011bd65e8b7f0c`;
-открыто 1479 exact path/card items. G15 добавила четырнадцать .NET/C#
+`30ff6d62df5edca25f82ea08a707e3ff6b70f9392d21949e08f925dea9647d4d`;
+открыто 1477 exact path/card items. G15 добавила четырнадцать .NET/C#
 supporting bindings к `capability.dotnet.cancellation-boundary`; старые v2
 дубли были отозваны до публикации v3 и не попали в release.
+G16 добавила ещё две прямые `.NET/C#` async-карточки и сохранила тот же
+canonical path/capability guard.
 
 Дополнительный cross-repository fix устранил identity drift: Lab больше не
 вычисляет `binding-manifest:<file-digest>` как release ID. Он проверяет

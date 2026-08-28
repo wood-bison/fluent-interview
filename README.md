@@ -111,6 +111,10 @@ reconciliation имеют значение `true`.
 маскирует незакрытые lesson/checkpoint/activity targets; текущий release
 остаётся development slice (`productionReady=false`).
 
+После неё G16 (`question-capability-release-4c9a0a309536f892`) добавила ещё две
+прямые `.NET/C#` карточки про `await` state machine и `ConfigureAwait(false)`;
+сводка и projection всегда должны ссылаться на самый новый immutable tuple.
+
 Карточка каждого пути теперь показывает два разных числа: `discoveryCount` —
 точный результат серверного поискового профиля в общей базе (например, `Go`), и
 `linked cards` — только принятые placement-связи со станциями Lab. Discovery не
