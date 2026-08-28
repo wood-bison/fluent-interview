@@ -9,13 +9,15 @@
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
 Последняя техническая перепроверка **W22 (28 августа 2026)** сохранила эту
-границу: development release verifier дал `56/56 PASS`, а Vue E2E — `102/102
-PASS` на двух desktop-профилях. В этой волне добавлены такой же `102/102`
+границу: development release verifier дал `58/58 PASS`, а Vue E2E — `106/106
+PASS` на двух desktop-профилях. В этой волне добавлены такой же `106/106`
 package-mode прогон на immutable `49300`, полный package runtime drill
 `6/6 PASS` (Node.js, TypeScript, Go, Java, C#, PostgreSQL) и route → question →
 family → revision → attempt chain-drill и 12/12 counter provenance/drill-down
-проверок, package пересобран с актуальными provenance (Lab `ba495d6`, package
-operation `0de98ee2`), а strict gate теперь включает все эти прогоны. Это
+проверок. Добавлен независимый Path → Domain → Capability projection gate
+(`237/237 PASS` в dev и package), package пересобран с актуальными provenance
+(Lab `ba495d6`, Vue `41ac41d`, operation `5ad558ba`), а strict gate теперь
+включает все эти прогоны. Это
 подтверждает исправность текущего технического среза, но не закрывает human
 M3, strict production remote или следующие curriculum gates. Полная запись:
 [`W22 gate`](verification/two-audit-remediation/W22/gate.md).
@@ -476,7 +478,7 @@ gate задним числом.
 | M2 | `capability-mastery.v2`, ledger и миграции | `DONE — independent review PASS` |
 | M3 | rate limiter проходит полный human golden slice | `ACTIVE` |
 | M4 | один readiness compiler и честные routes/counters | `TODO` |
-| M5 | Program → Path → Domain → Capability UX | `TODO` |
+| M5 | Program → Path → Domain → Capability UX | `TODO` — technical projection slice implemented in Vue (`41ac41d`) and guarded by 237/237 live checks in W22; formal gate still awaits reviewer/sign-off |
 | M6 | все 1 591 карточка классифицированы и локализованы честно | `TODO` |
 | M7 | текущий Runtime hardened; task gaps закрываются осмысленно | `TODO` — package browser и 6-язычный runtime drill закрыты технически в W22; task-portfolio gaps остаются |
 | M8 | 12 acceptance areas product-ready | `TODO` |
@@ -1012,6 +1014,24 @@ Path
 
 Ученик понимает, где находится, что доступно, почему рекомендован следующий
 шаг и какое доказательство отсутствует.
+
+### Technical slice — W22 (2026-08-28)
+
+Vue получил server-owned projection views для канонических
+`/paths/:pathKey/domains/:domainKey` и `/capabilities/:capabilityKey`.
+Маршруты не создают связи на клиенте: домен допускается только если он входит
+в `curriculumAreaIds` выбранного Path, а capability key вычисляется
+детерминированным NFKD-slug из опубликованной capability label. В release
+verifier добавлен `m5-curriculum-projection-gate.mjs`; он проверяет все 9 путей,
+15 доменов, 81 станцию, 47 capability keys, допустимые learner destinations и
+отсутствие коллизий. Dev и immutable package дали `237/237 PASS` каждый.
+Evidence: [`W22/m5-curriculum-projection.json`](verification/two-audit-remediation/W22/m5-curriculum-projection.json),
+[`W22/m5-curriculum-projection-package.json`](verification/two-audit-remediation/W22/m5-curriculum-projection-package.json).
+Malformed capability deep links теперь проходят через безопасный decoder и
+завершаются typed not-found вместо падения router; этот edge-case входит в
+финальный 106/106 package E2E.
+Это закрывает технический projection slice, но не подменяет independent
+reviewer, human screenshot sign-off и полноценное curriculum closure M5.
 
 ### Canonical routes
 

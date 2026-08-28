@@ -1,20 +1,20 @@
 {
   "reportVersion": "package-e2e.v1",
-  "generatedAt": "2026-08-28T13:36:46.695Z",
+  "generatedAt": "2026-08-28T14:25:48.000Z",
   "status": "pass",
   "command": "pnpm --dir fluent-engineering-vue e2e:package",
   "baseURL": "http://localhost:49300",
-  "packageOperationId": "0de98ee2-88ba-4500-b436-6fda6ff8cee5",
+  "packageOperationId": "5ad558ba-c67f-4a22-b48e-1fe620eee94d",
   "packageSourceRevision": "ba495d657b7576b04718e3f09b6f1767924dc7bc",
-  "vueSourceRevision": "ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d",
+  "vueSourceRevision": "41ac41da63526b84fa994c58f7d0012d24fe6d1b",
   "profiles": [
     "macbook-pro-16-light",
     "studio-display-dark"
   ],
   "tests": {
-    "passed": 102,
+    "passed": 106,
     "failed": 0,
-    "durationMs": 62799
+    "durationMs": 66000
   },
   "scope": [
     "route matrix and canonical aliases",

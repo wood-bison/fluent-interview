@@ -1,0 +1,1194 @@
+{
+  "reportVersion": "m5-curriculum-projection-gate.v1",
+  "generatedAt": "2026-08-28T14:10:25.279Z",
+  "apiBase": "http://127.0.0.1:47000",
+  "valid": true,
+  "checks": [
+    {
+      "id": "map-http",
+      "status": "pass",
+      "detail": "GET /api/program/map returned 200"
+    },
+    {
+      "id": "release-status",
+      "status": "pass",
+      "detail": "graph release status is released"
+    },
+    {
+      "id": "paths-present",
+      "status": "pass",
+      "detail": "9 published paths"
+    },
+    {
+      "id": "domains-present",
+      "status": "pass",
+      "detail": "15 published domains"
+    },
+    {
+      "id": "path-keys-unique",
+      "status": "pass",
+      "detail": "path keys are unique"
+    },
+    {
+      "id": "path-entry-routes-unique",
+      "status": "pass",
+      "detail": "path entry routes are unique"
+    },
+    {
+      "id": "domain-ids-unique",
+      "status": "pass",
+      "detail": "domain ids are unique"
+    },
+    {
+      "id": "path-route:path.nodejs-typescript",
+      "status": "pass",
+      "detail": "entryRoute=/paths/nodejs-typescript expected=/paths/nodejs-typescript"
+    },
+    {
+      "id": "path-domains:path.nodejs-typescript",
+      "status": "pass",
+      "detail": "15 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.java-spring",
+      "status": "pass",
+      "detail": "entryRoute=/paths/java-spring expected=/paths/java-spring"
+    },
+    {
+      "id": "path-domains:path.java-spring",
+      "status": "pass",
+      "detail": "7 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.dotnet-csharp",
+      "status": "pass",
+      "detail": "entryRoute=/paths/dotnet-csharp expected=/paths/dotnet-csharp"
+    },
+    {
+      "id": "path-domains:path.dotnet-csharp",
+      "status": "pass",
+      "detail": "7 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.go",
+      "status": "pass",
+      "detail": "entryRoute=/paths/go expected=/paths/go"
+    },
+    {
+      "id": "path-domains:path.go",
+      "status": "pass",
+      "detail": "7 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.frontend",
+      "status": "pass",
+      "detail": "entryRoute=/paths/frontend expected=/paths/frontend"
+    },
+    {
+      "id": "path-domains:path.frontend",
+      "status": "pass",
+      "detail": "5 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.system-design",
+      "status": "pass",
+      "detail": "entryRoute=/paths/system-design expected=/paths/system-design"
+    },
+    {
+      "id": "path-domains:path.system-design",
+      "status": "pass",
+      "detail": "6 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.algorithms",
+      "status": "pass",
+      "detail": "entryRoute=/paths/algorithms expected=/paths/algorithms"
+    },
+    {
+      "id": "path-domains:path.algorithms",
+      "status": "pass",
+      "detail": "7 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.behavioral",
+      "status": "pass",
+      "detail": "entryRoute=/paths/behavioral expected=/paths/behavioral"
+    },
+    {
+      "id": "path-domains:path.behavioral",
+      "status": "pass",
+      "detail": "3 domain references resolve uniquely"
+    },
+    {
+      "id": "path-route:path.python",
+      "status": "pass",
+      "detail": "entryRoute=/paths/python expected=/paths/python"
+    },
+    {
+      "id": "path-domains:path.python",
+      "status": "pass",
+      "detail": "4 domain references resolve uniquely"
+    },
+    {
+      "id": "station-route:javascript:js-prediction",
+      "status": "pass",
+      "detail": "route=/practice/lesson/js-prediction"
+    },
+    {
+      "id": "station-capability:javascript:js-prediction",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:javascript:promise-machinery",
+      "status": "pass",
+      "detail": "route=/practice/lesson/promise-machinery"
+    },
+    {
+      "id": "station-capability:javascript:promise-machinery",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:javascript:fluent-calculator",
+      "status": "pass",
+      "detail": "route=/practice/lesson/fluent-calculator"
+    },
+    {
+      "id": "station-capability:javascript:fluent-calculator",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:javascript:deferred",
+      "status": "pass",
+      "detail": "route=/practice/lesson/deferred"
+    },
+    {
+      "id": "station-capability:javascript:deferred",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:node-runtime:node-event-loop-001",
+      "status": "pass",
+      "detail": "route=/practice/lab/node-event-loop-001"
+    },
+    {
+      "id": "station-capability:node-runtime:node-event-loop-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:node-runtime:node-cpu-bound-002",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-cpu-bound-002"
+    },
+    {
+      "id": "station-capability:node-runtime:node-cpu-bound-002",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:node-runtime:node-streams-003",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-streams-003"
+    },
+    {
+      "id": "station-capability:node-runtime:node-streams-003",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:node-runtime:node-memory-004",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-memory-004"
+    },
+    {
+      "id": "station-capability:node-runtime:node-memory-004",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:node-runtime:node-concurrency-012",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-concurrency-012"
+    },
+    {
+      "id": "station-capability:node-runtime:node-concurrency-012",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:node-runtime:node-rate-limiter-001",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-rate-limiter-001"
+    },
+    {
+      "id": "station-capability:node-runtime:node-rate-limiter-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:dotnet:dotnet-cancellation-001",
+      "status": "pass",
+      "detail": "route=/practice/lesson/dotnet-cancellation-001"
+    },
+    {
+      "id": "station-capability:dotnet:dotnet-cancellation-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:go:go-rate-limiter-001",
+      "status": "pass",
+      "detail": "route=/practice/lesson/go-rate-limiter-001"
+    },
+    {
+      "id": "station-capability:go:go-rate-limiter-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:java:java-rate-limiter-001",
+      "status": "pass",
+      "detail": "route=/practice/lesson/java-rate-limiter-001"
+    },
+    {
+      "id": "station-capability:java:java-rate-limiter-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:nest:nest-di-005",
+      "status": "pass",
+      "detail": "route=/practice/lesson/nest-di-005"
+    },
+    {
+      "id": "station-capability:nest:nest-di-005",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:nest:nest-pipeline-006",
+      "status": "pass",
+      "detail": "route=/practice/lesson/nest-pipeline-006"
+    },
+    {
+      "id": "station-capability:nest:nest-pipeline-006",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:http-idempotency-007",
+      "status": "pass",
+      "detail": "route=/practice/lesson/http-idempotency-007"
+    },
+    {
+      "id": "station-capability:http-security:http-idempotency-007",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:node-auth-015",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-auth-015"
+    },
+    {
+      "id": "station-capability:http-security:node-auth-015",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-contract-first-api-design",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-contract-first-api-design"
+    },
+    {
+      "id": "station-capability:http-security:ordering-contract-first-api-design",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-ipv6-path-selection",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-ipv6-path-selection"
+    },
+    {
+      "id": "station-capability:http-security:ordering-ipv6-path-selection",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-packet-diagnosis-on-the-wire",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-packet-diagnosis-on-the-wire"
+    },
+    {
+      "id": "station-capability:http-security:ordering-packet-diagnosis-on-the-wire",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-path-mtu-black-holes",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-path-mtu-black-holes"
+    },
+    {
+      "id": "station-capability:http-security:ordering-path-mtu-black-holes",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-socket-write-to-ethernet-frame",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-socket-write-to-ethernet-frame"
+    },
+    {
+      "id": "station-capability:http-security:ordering-socket-write-to-ethernet-frame",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-tcp-congestion",
+      "status": "pass",
+      "detail": "route=/practice/lesson/ordering-tcp-congestion"
+    },
+    {
+      "id": "station-capability:http-security:ordering-tcp-congestion",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-tcp-congestion-three-eras",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-tcp-congestion-three-eras"
+    },
+    {
+      "id": "station-capability:http-security:ordering-tcp-congestion-three-eras",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-tcp-state-machine-and-timers",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-tcp-state-machine-and-timers"
+    },
+    {
+      "id": "station-capability:http-security:ordering-tcp-state-machine-and-timers",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:http-security:ordering-tls-tokens",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-tls-tokens"
+    },
+    {
+      "id": "station-capability:http-security:ordering-tls-tokens",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:pg-explain-001",
+      "status": "pass",
+      "detail": "route=/practice/lesson/pg-explain-001"
+    },
+    {
+      "id": "station-capability:postgres:pg-explain-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:pg-indexes-008",
+      "status": "pass",
+      "detail": "route=/practice/lesson/pg-indexes-008"
+    },
+    {
+      "id": "station-capability:postgres:pg-indexes-008",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:pg-wallet-009",
+      "status": "pass",
+      "detail": "route=/practice/lesson/pg-wallet-009"
+    },
+    {
+      "id": "station-capability:postgres:pg-wallet-009",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:pg-locks-016",
+      "status": "pass",
+      "detail": "route=/practice/lesson/pg-locks-016"
+    },
+    {
+      "id": "station-capability:postgres:pg-locks-016",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:pg-rate-limiter-001",
+      "status": "pass",
+      "detail": "route=/practice/lesson/pg-rate-limiter-001"
+    },
+    {
+      "id": "station-capability:postgres:pg-rate-limiter-001",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:ordering-knowledge-graph-from-text",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-knowledge-graph-from-text"
+    },
+    {
+      "id": "station-capability:postgres:ordering-knowledge-graph-from-text",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:ordering-querying-a-graph-instead-of-joining-tables",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-querying-a-graph-instead-of-joining-tables"
+    },
+    {
+      "id": "station-capability:postgres:ordering-querying-a-graph-instead-of-joining-tables",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:postgres:ordering-storage-engines-rows",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-storage-engines-rows"
+    },
+    {
+      "id": "station-capability:postgres:ordering-storage-engines-rows",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:distributed:broker-decision-010",
+      "status": "pass",
+      "detail": "route=/practice/lesson/broker-decision-010"
+    },
+    {
+      "id": "station-capability:distributed:broker-decision-010",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:distributed:circuit-breaker-004",
+      "status": "pass",
+      "detail": "route=/practice/lesson/circuit-breaker-004"
+    },
+    {
+      "id": "station-capability:distributed:circuit-breaker-004",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:distributed:node-idempotency-013",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-idempotency-013"
+    },
+    {
+      "id": "station-capability:distributed:node-idempotency-013",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:distributed:ordering-streaming-integration-and-decomposition",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-streaming-integration-and-decomposition"
+    },
+    {
+      "id": "station-capability:distributed:ordering-streaming-integration-and-decomposition",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:syscalls-and-kernel-objects",
+      "status": "pass",
+      "detail": "route=/practice/lesson/syscalls-and-kernel-objects"
+    },
+    {
+      "id": "station-capability:machine-os:syscalls-and-kernel-objects",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:machine-anatomy",
+      "status": "pass",
+      "detail": "route=/practice/lesson/machine-anatomy"
+    },
+    {
+      "id": "station-capability:machine-os:machine-anatomy",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:ordering-cpu-chipset-memory-path",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-cpu-chipset-memory-path"
+    },
+    {
+      "id": "station-capability:machine-os:ordering-cpu-chipset-memory-path",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:ordering-file-descriptors-and-their-syscalls",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-file-descriptors-and-their-syscalls"
+    },
+    {
+      "id": "station-capability:machine-os:ordering-file-descriptors-and-their-syscalls",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:ordering-heat-airflow-cooling",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-heat-airflow-cooling"
+    },
+    {
+      "id": "station-capability:machine-os:ordering-heat-airflow-cooling",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:ordering-machine-to-data-centre",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-machine-to-data-centre"
+    },
+    {
+      "id": "station-capability:machine-os:ordering-machine-to-data-centre",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:ordering-psu-rails-ratings-headroom",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-psu-rails-ratings-headroom"
+    },
+    {
+      "id": "station-capability:machine-os:ordering-psu-rails-ratings-headroom",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:machine-os:ordering-storage-gpu-memory-expansion",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-storage-gpu-memory-expansion"
+    },
+    {
+      "id": "station-capability:machine-os:ordering-storage-gpu-memory-expansion",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:patterns-and-responsibilities",
+      "status": "pass",
+      "detail": "route=/practice/lesson/patterns-and-responsibilities"
+    },
+    {
+      "id": "station-capability:engineering-craft:patterns-and-responsibilities",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:domain-modelling",
+      "status": "pass",
+      "detail": "route=/practice/lesson/domain-modelling"
+    },
+    {
+      "id": "station-capability:engineering-craft:domain-modelling",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:requirements-and-process",
+      "status": "pass",
+      "detail": "route=/practice/lesson/requirements-and-process"
+    },
+    {
+      "id": "station-capability:engineering-craft:requirements-and-process",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:test-automation-craft",
+      "status": "pass",
+      "detail": "route=/practice/lesson/test-automation-craft"
+    },
+    {
+      "id": "station-capability:engineering-craft:test-automation-craft",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:ordering-a-ui-suite-that-does-not-rot",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-a-ui-suite-that-does-not-rot"
+    },
+    {
+      "id": "station-capability:engineering-craft:ordering-a-ui-suite-that-does-not-rot",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:ordering-bpmn-diagram-reading",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-bpmn-diagram-reading"
+    },
+    {
+      "id": "station-capability:engineering-craft:ordering-bpmn-diagram-reading",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:ordering-event-sourcing-ddd",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-event-sourcing-ddd"
+    },
+    {
+      "id": "station-capability:engineering-craft:ordering-event-sourcing-ddd",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:ordering-patterns-responsibilities",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-patterns-responsibilities"
+    },
+    {
+      "id": "station-capability:engineering-craft:ordering-patterns-responsibilities",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:engineering-craft:ordering-vague-ask-to-specification",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-vague-ask-to-specification"
+    },
+    {
+      "id": "station-capability:engineering-craft:ordering-vague-ask-to-specification",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:java-for-interviews",
+      "status": "pass",
+      "detail": "route=/practice/lesson/java-for-interviews"
+    },
+    {
+      "id": "station-capability:other-runtimes:java-for-interviews",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:python-for-interviews",
+      "status": "pass",
+      "detail": "route=/practice/lesson/python-for-interviews"
+    },
+    {
+      "id": "station-capability:other-runtimes:python-for-interviews",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:systems-languages",
+      "status": "pass",
+      "detail": "route=/practice/lesson/systems-languages"
+    },
+    {
+      "id": "station-capability:other-runtimes:systems-languages",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:ordering-java-concurrency-primitives",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-java-concurrency-primitives"
+    },
+    {
+      "id": "station-capability:other-runtimes:ordering-java-concurrency-primitives",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:ordering-jvm-memory-and-object-layout",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-jvm-memory-and-object-layout"
+    },
+    {
+      "id": "station-capability:other-runtimes:ordering-jvm-memory-and-object-layout",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:ordering-python-constructs-no-node-equivalent",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-python-constructs-no-node-equivalent"
+    },
+    {
+      "id": "station-capability:other-runtimes:ordering-python-constructs-no-node-equivalent",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:ordering-python-runtime-for-node-engineers",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-python-runtime-for-node-engineers"
+    },
+    {
+      "id": "station-capability:other-runtimes:ordering-python-runtime-for-node-engineers",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:ordering-rust-ownership-borrowing-traits",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-rust-ownership-borrowing-traits"
+    },
+    {
+      "id": "station-capability:other-runtimes:ordering-rust-ownership-borrowing-traits",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:other-runtimes:ordering-wasm-edge-runtime",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-wasm-edge-runtime"
+    },
+    {
+      "id": "station-capability:other-runtimes:ordering-wasm-edge-runtime",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:frontend-depth:rendering-and-performance",
+      "status": "pass",
+      "detail": "route=/practice/lesson/rendering-and-performance"
+    },
+    {
+      "id": "station-capability:frontend-depth:rendering-and-performance",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:frontend-depth:ordering-why-this-component-rerendered",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-why-this-component-rerendered"
+    },
+    {
+      "id": "station-capability:frontend-depth:ordering-why-this-component-rerendered",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:ai-native:model-behaviour",
+      "status": "pass",
+      "detail": "route=/practice/lesson/model-behaviour"
+    },
+    {
+      "id": "station-capability:ai-native:model-behaviour",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:ai-native:retrieval-and-grounding",
+      "status": "pass",
+      "detail": "route=/practice/lesson/retrieval-and-grounding"
+    },
+    {
+      "id": "station-capability:ai-native:retrieval-and-grounding",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:ai-native:ordering-model-behaviour-limits",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-model-behaviour-limits"
+    },
+    {
+      "id": "station-capability:ai-native:ordering-model-behaviour-limits",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:ai-native:ordering-when-retrieval-helps-and-when-it-lies",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-when-retrieval-helps-and-when-it-lies"
+    },
+    {
+      "id": "station-capability:ai-native:ordering-when-retrieval-helps-and-when-it-lies",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:k8s-ops-011",
+      "status": "pass",
+      "detail": "route=/practice/lesson/k8s-ops-011"
+    },
+    {
+      "id": "station-capability:production:k8s-ops-011",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:resilience-circuit-breaker",
+      "status": "pass",
+      "detail": "route=/practice/lesson/resilience-circuit-breaker"
+    },
+    {
+      "id": "station-capability:production:resilience-circuit-breaker",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:node-cache-014",
+      "status": "pass",
+      "detail": "route=/practice/lesson/node-cache-014"
+    },
+    {
+      "id": "station-capability:production:node-cache-014",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-branching-and-deployment-strategies",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-branching-and-deployment-strategies"
+    },
+    {
+      "id": "station-capability:production:ordering-branching-and-deployment-strategies",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-build-artifacts-caching-quality-gates",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-build-artifacts-caching-quality-gates"
+    },
+    {
+      "id": "station-capability:production:ordering-build-artifacts-caching-quality-gates",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-cicd-fundamentals",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-cicd-fundamentals"
+    },
+    {
+      "id": "station-capability:production:ordering-cicd-fundamentals",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-cluster-rbac-telemetry",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-cluster-rbac-telemetry"
+    },
+    {
+      "id": "station-capability:production:ordering-cluster-rbac-telemetry",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-docker-build-cache",
+      "status": "pass",
+      "detail": "route=/practice/lesson/ordering-docker-build-cache"
+    },
+    {
+      "id": "station-capability:production:ordering-docker-build-cache",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-docker-image-layers-and-build-cache",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-docker-image-layers-and-build-cache"
+    },
+    {
+      "id": "station-capability:production:ordering-docker-image-layers-and-build-cache",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-docker-storage-network",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-docker-storage-network"
+    },
+    {
+      "id": "station-capability:production:ordering-docker-storage-network",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "station-route:production:ordering-gitops-pull-delivery-with-flux",
+      "status": "pass",
+      "detail": "route=/practice/lab/ordering-gitops-pull-delivery-with-flux"
+    },
+    {
+      "id": "station-capability:production:ordering-gitops-pull-delivery-with-flux",
+      "status": "pass",
+      "detail": "capability label is present"
+    },
+    {
+      "id": "stations-present",
+      "status": "pass",
+      "detail": "81 published stations"
+    },
+    {
+      "id": "station-ids-unique",
+      "status": "pass",
+      "detail": "station ids are unique across the published graph"
+    },
+    {
+      "id": "capability-keys-collision-free",
+      "status": "pass",
+      "detail": "47 deterministic capability keys"
+    },
+    {
+      "id": "capability-key:capability.javascript-diagnostic",
+      "status": "pass",
+      "detail": "labels=JavaScript diagnostic"
+    },
+    {
+      "id": "capability-key:capability.promise-mechanics",
+      "status": "pass",
+      "detail": "labels=Promise mechanics"
+    },
+    {
+      "id": "capability-key:capability.stateful-api-design",
+      "status": "pass",
+      "detail": "labels=Stateful API design"
+    },
+    {
+      "id": "capability-key:capability.promise-resolution",
+      "status": "pass",
+      "detail": "labels=Promise resolution"
+    },
+    {
+      "id": "capability-key:capability.event-loop-ordering",
+      "status": "pass",
+      "detail": "labels=Event loop ordering"
+    },
+    {
+      "id": "capability-key:capability.cpu-offload",
+      "status": "pass",
+      "detail": "labels=CPU offload"
+    },
+    {
+      "id": "capability-key:capability.streams-and-backpressure",
+      "status": "pass",
+      "detail": "labels=Streams and backpressure"
+    },
+    {
+      "id": "capability-key:capability.memory-and-garbage-collection",
+      "status": "pass",
+      "detail": "labels=Memory and garbage collection"
+    },
+    {
+      "id": "capability-key:capability.rate-limiting-and-bounded-state",
+      "status": "pass",
+      "detail": "labels=Rate limiting and bounded state"
+    },
+    {
+      "id": "capability-key:capability.cancellation-and-ownership",
+      "status": "pass",
+      "detail": "labels=Cancellation and ownership"
+    },
+    {
+      "id": "capability-key:capability.concurrency-and-resilience",
+      "status": "pass",
+      "detail": "labels=Concurrency and resilience"
+    },
+    {
+      "id": "capability-key:capability.dependency-injection",
+      "status": "pass",
+      "detail": "labels=Dependency injection"
+    },
+    {
+      "id": "capability-key:capability.request-lifecycle",
+      "status": "pass",
+      "detail": "labels=Request lifecycle"
+    },
+    {
+      "id": "capability-key:capability.idempotent-api-contracts",
+      "status": "pass",
+      "detail": "labels=Idempotent API contracts"
+    },
+    {
+      "id": "capability-key:capability.authz",
+      "status": "pass",
+      "detail": "labels=AuthZ"
+    },
+    {
+      "id": "capability-key:capability.api-contracts-and-docs",
+      "status": "pass",
+      "detail": "labels=API contracts and docs"
+    },
+    {
+      "id": "capability-key:capability.network-path-and-diagnostics",
+      "status": "pass",
+      "detail": "labels=Network path and diagnostics"
+    },
+    {
+      "id": "capability-key:capability.tokens-and-transport-security",
+      "status": "pass",
+      "detail": "labels=Tokens and transport security"
+    },
+    {
+      "id": "capability-key:capability.query-plan-reading",
+      "status": "pass",
+      "detail": "labels=Query plan reading"
+    },
+    {
+      "id": "capability-key:capability.query-planning",
+      "status": "pass",
+      "detail": "labels=Query planning"
+    },
+    {
+      "id": "capability-key:capability.transactions-and-locks",
+      "status": "pass",
+      "detail": "labels=Transactions and locks"
+    },
+    {
+      "id": "capability-key:capability.locks",
+      "status": "pass",
+      "detail": "labels=Locks"
+    },
+    {
+      "id": "capability-key:capability.rate-limiting-and-concurrency",
+      "status": "pass",
+      "detail": "labels=Rate limiting and concurrency"
+    },
+    {
+      "id": "capability-key:capability.graph-data-and-traversal",
+      "status": "pass",
+      "detail": "labels=Graph data and traversal"
+    },
+    {
+      "id": "capability-key:capability.storage-engines-and-workloads",
+      "status": "pass",
+      "detail": "labels=Storage engines and workloads"
+    },
+    {
+      "id": "capability-key:capability.message-delivery-semantics",
+      "status": "pass",
+      "detail": "labels=Message delivery semantics"
+    },
+    {
+      "id": "capability-key:capability.failure-containment",
+      "status": "pass",
+      "detail": "labels=Failure containment"
+    },
+    {
+      "id": "capability-key:capability.outbox",
+      "status": "pass",
+      "detail": "labels=Outbox"
+    },
+    {
+      "id": "capability-key:capability.streaming-integration-and-decomposition",
+      "status": "pass",
+      "detail": "labels=Streaming integration and decomposition"
+    },
+    {
+      "id": "capability-key:capability.syscalls-and-kernel-objects",
+      "status": "pass",
+      "detail": "labels=Syscalls and kernel objects"
+    },
+    {
+      "id": "capability-key:capability.machine-anatomy",
+      "status": "pass",
+      "detail": "labels=Machine anatomy"
+    },
+    {
+      "id": "capability-key:capability.patterns-and-responsibilities",
+      "status": "pass",
+      "detail": "labels=Patterns and responsibilities"
+    },
+    {
+      "id": "capability-key:capability.domain-modelling",
+      "status": "pass",
+      "detail": "labels=Domain modelling"
+    },
+    {
+      "id": "capability-key:capability.requirements-and-process-modelling",
+      "status": "pass",
+      "detail": "labels=Requirements and process modelling"
+    },
+    {
+      "id": "capability-key:capability.test-automation",
+      "status": "pass",
+      "detail": "labels=Test automation"
+    },
+    {
+      "id": "capability-key:capability.java-for-interviews",
+      "status": "pass",
+      "detail": "labels=Java for interviews"
+    },
+    {
+      "id": "capability-key:capability.python-for-interviews",
+      "status": "pass",
+      "detail": "labels=Python for interviews"
+    },
+    {
+      "id": "capability-key:capability.rust-and-systems-languages",
+      "status": "pass",
+      "detail": "labels=Rust and systems languages"
+    },
+    {
+      "id": "capability-key:capability.webassembly-and-edge",
+      "status": "pass",
+      "detail": "labels=WebAssembly and edge"
+    },
+    {
+      "id": "capability-key:capability.rendering-and-performance",
+      "status": "pass",
+      "detail": "labels=Rendering and performance"
+    },
+    {
+      "id": "capability-key:capability.model-behaviour-and-limits",
+      "status": "pass",
+      "detail": "labels=Model behaviour and limits"
+    },
+    {
+      "id": "capability-key:capability.retrieval-and-grounding",
+      "status": "pass",
+      "detail": "labels=Retrieval and grounding"
+    },
+    {
+      "id": "capability-key:capability.deployment-and-rollback",
+      "status": "pass",
+      "detail": "labels=Deployment and rollback"
+    },
+    {
+      "id": "capability-key:capability.telemetry-pipeline",
+      "status": "pass",
+      "detail": "labels=Telemetry pipeline"
+    },
+    {
+      "id": "capability-key:capability.delivery-pipeline",
+      "status": "pass",
+      "detail": "labels=Delivery pipeline"
+    },
+    {
+      "id": "capability-key:capability.cluster-operations-and-telemetry-pipeline",
+      "status": "pass",
+      "detail": "labels=Cluster operations and Telemetry pipeline"
+    },
+    {
+      "id": "capability-key:capability.images-and-containers",
+      "status": "pass",
+      "detail": "labels=Images and containers"
+    }
+  ],
+  "failures": []
+}

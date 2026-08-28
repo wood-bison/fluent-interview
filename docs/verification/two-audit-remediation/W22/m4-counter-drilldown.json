@@ -1,7 +1,7 @@
 {
   "reportVersion": "m4-counter-drilldown.v1",
-  "generatedAt": "2026-08-28T13:40:08.374Z",
-  "apiBaseUrl": "http://127.0.0.1:47000",
+  "generatedAt": "2026-08-28T14:22:40.137Z",
+  "apiBaseUrl": "http://127.0.0.1:49301",
   "status": "pass",
   "valid": true,
   "counterCount": 12,

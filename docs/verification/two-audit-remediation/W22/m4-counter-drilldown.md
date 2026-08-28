@@ -1,7 +1,7 @@
 # M4 counter drill-down gate
 
 - Status: **PASS**
-- API: `http://127.0.0.1:47000`
+- API: `http://127.0.0.1:49301`
 - Counters checked: **12/12**
 - Policy: every counter has an owner, formula, release/snapshot provenance and a reachable public drill-down route.
 
