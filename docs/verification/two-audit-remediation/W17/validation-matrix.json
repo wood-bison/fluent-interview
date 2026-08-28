@@ -1,7 +1,7 @@
 {
   "reportVersion": "validation-matrix.v1",
-  "generatedAt": "2026-08-28T09:43:41.801Z",
-  "startedAt": "2026-08-28T09:43:40.179Z",
+  "generatedAt": "2026-08-28T09:49:50.105Z",
+  "startedAt": "2026-08-28T09:49:48.459Z",
   "mode": "development-live",
   "webBase": "http://localhost:49300",
   "labBase": "http://127.0.0.1:49301",
@@ -10,8 +10,8 @@
   "routeCount": 43,
   "apiProbeCount": 16,
   "sourceRevisions": {
-    "umbrella": "0c721cd680b5d7c852a18919d03d2b5393f05f15",
-    "lab": "28c85e1ff08aba9fc85f80b84da4ca33323d801b",
+    "umbrella": "a079d0cf2f8323cec71ba0a82761e1cc418c93bb",
+    "lab": "6a06d2802bef6aca672958c5b50f9a5c8fded661",
     "vue": "1ddcc83d581bd02a7c1645971a3c4f7b69d5c76b",
     "brain": "a2319cff56a84a40b7041f84e9291d7455f46da5",
     "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
@@ -1238,5 +1238,5 @@
     }
   },
   "valid": true,
-  "digest": "e3c99d831c52479a4679de15d7ad2c81381b4541774043e9731fca86e01b36e7"
+  "digest": "e5493cf5ea95a3a013e7d4fb52ed8b22bff5d8506c0fdc4e29fc23448b87b8ee"
 }
