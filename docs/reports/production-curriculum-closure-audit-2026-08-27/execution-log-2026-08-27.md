@@ -346,3 +346,15 @@ Gate обновил только timestamped machine evidence; Lab evidence за
 коммитом `2dd5dcf2f2d8bb3e95c67b03d127cc9a1f7d6835`, а root `workspace.yaml`
 указывает на этот clean child revision. Итоговый JSON: `docs/verification/
 release-verify-dev-2026-08-28.json` (55 steps, failures/warnings отсутствуют).
+
+## Исправление owner-команды curriculum shape — 28 августа 2026
+
+Отдельная проверка обнаружила false-negative вне umbrella gate: прямой
+`pnpm --dir fluent-engineering-lab question:curriculum:shape:check` падал с
+`ENOENT`, потому что default path скрипта остался в удалённой директории
+`docs/production/evidence`. Default JSON/Markdown paths перенесены в reviewed
+W05 ledger (Lab commit
+`8e76a6764d7195a55ec580c3bfe8c1e359038013`). Повторный owner gate дал
+`valid=true`, 1 591 карточку, 0 нарушений и 978 честных generic-language
+предупреждений; полный `pnpm check` Lab завершился без ошибок. Root pin укажет
+на новый Lab SHA в следующем integration commit.
