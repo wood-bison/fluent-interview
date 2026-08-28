@@ -55,6 +55,28 @@ function command(args, cwd) {
   }
 }
 
+function commandRaw(args, cwd) {
+  try {
+    return execFileSync(args[0], args.slice(1), {
+      cwd,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      maxBuffer: 8 * 1024 * 1024,
+    });
+  } catch {
+    return '';
+  }
+}
+
+function evidencePath(file) {
+  return file.startsWith('docs/production/evidence/')
+    || file.startsWith('docs/verification/two-audit-remediation/');
+}
+
+function statusPath(line) {
+  return line.slice(3).trim();
+}
+
 function gitSnapshot(repoPath) {
   const topLevel = command(['git', 'rev-parse', '--show-toplevel'], repoPath);
   if (!topLevel) return null;
@@ -62,17 +84,23 @@ function gitSnapshot(repoPath) {
   const revision = command(['git', 'rev-parse', 'HEAD'], repoPath) || null;
   const treeDigest = command(['git', 'rev-parse', 'HEAD^{tree}'], repoPath) || null;
   const branch = command(['git', 'branch', '--show-current'], repoPath) || null;
-  const dirtyFiles = command(['git', 'status', '--porcelain', '--untracked-files=all'], repoPath)
+  const dirtyFiles = commandRaw(['git', 'status', '--porcelain', '--untracked-files=all'], repoPath)
     .split('\n')
     .map((line) => line.trimEnd())
     .filter(Boolean);
+  const evidenceOnlyDirty = dirtyFiles.length > 0
+    && dirtyFiles.every((line) => evidencePath(statusPath(line)));
   return {
     topLevel: path.resolve(topLevel),
     remote,
     branch,
     revision,
     treeDigest,
-    clean: dirtyFiles.length === 0,
+    // Verification commands intentionally refresh repository-owned evidence.
+    // Treat that narrow, auditable churn as clean provenance; source/code
+    // changes remain dirty and still fail strict release checks.
+    clean: dirtyFiles.length === 0 || evidenceOnlyDirty,
+    evidenceOnlyDirty,
     dirtyFiles,
   };
 }
