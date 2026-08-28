@@ -1,6 +1,6 @@
 # Исполнительный журнал production-closure — 27 августа 2026
 
-Статус этого журнала: **обновлён после G8–G15 bounded waves; продукт ещё не
+Статус этого журнала: **обновлён после G8–G16 bounded waves; продукт ещё не
 production-ready**. Последнее обновление: 28 августа 2026.
 
 ## Что принято
@@ -57,6 +57,7 @@ production-ready**. Последнее обновление: 28 августа 2
 | Question Brain | `4c4cac99490e2b565449e04883979f6d46d68e1f` | G16 .NET/C# await mechanics wave: two additional canonical supporting bindings; immutable release `4c9a0a309536f892` |
 | Fluent Lab | `0465a7b47abdc1672742033b4cbda6435a7e0362` | consumed G16 binding release and refreshed path projection/backlog |
 | Fluent Lab | `448e7ee6195057389d9129a1b1aaae5340ad3a3e` | captured clean timestamped G16 evidence after the 55-step development gate |
+| Workspace | `0971c73` | recorded the clean G16 evidence, canonical Lab pin, and runtime launcher safeguard |
 | Workspace | `f7ff0a3` + current wave | pin Lab/Runtime revisions и deterministic release verifier с path/backlog gates |
 | Workspace | `c2238894ac5ac7c8ea7476758f602b7a66fd64da` | cross-repo Question Brain authoring queue: 1572 exact path/card items, canonical release joins |
 | Workspace | current wave | Brain `4c4cac9` / Lab `448e7ee` pins, G16 release-verifier defaults, and W13 coverage evidence now point to immutable release `question-capability-release-4c9a0a309536f892`; Vue/Runtime pins reconciled to exact HEAD SHAs |
@@ -215,6 +216,12 @@ G15 сохраняет все предыдущие артефакты и доб�
 async/cancellation proposals приняты под canonical `path.dotnet-csharp`;
 дубли старого registry-v2 были отозваны до компиляции v3 и в новый release не
 попали.
+G16 сохраняет этот immutable tuple и добавляет
+`G16-capability-binding-manifest-2026-08-28.json`,
+`G16-capability-binding-release-2026-08-28.json` и wave note с tuple
+`question-capability-release-4c9a0a309536f892`. Две дополнительные карточки
+про `async` state machine и `ConfigureAwait(false)` приняты как прямые
+`.NET/C#` supporting bindings; invalid/stale/missing/extra entries равны нулю.
 
 ## Следующая волна
 
