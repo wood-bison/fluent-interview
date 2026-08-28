@@ -1,0 +1,19 @@
+{
+  "reportVersion": "question-curriculum-funnel-gate.v1",
+  "generatedAt": "2026-08-28T10:03:40.624Z",
+  "learningApiUrl": "http://127.0.0.1:49301",
+  "locale": "en",
+  "releaseId": "question-release-d00a14931e607336",
+  "valid": true,
+  "summary": {
+    "total": 1591,
+    "contentReady": 1100,
+    "guided": 491,
+    "incomplete": 491,
+    "editorialQueueTotal": 491,
+    "returnedQueueItems": 100,
+    "layerCount": 8
+  },
+  "violations": [],
+  "contentDigest": "b1b6af995809a0ee45c9302cf92575cb4fb4be0af1ab4e485eafc95be5cfc68f"
+}

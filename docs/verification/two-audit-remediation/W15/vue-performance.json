@@ -1,6 +1,6 @@
 {
   "reportVersion": "vue-performance.v1",
-  "generatedAt": "2026-08-28T09:24:08.010Z",
+  "generatedAt": "2026-08-28T10:35:44.519Z",
   "mode": "read-existing-dist",
   "valid": true,
   "status": "pass",
@@ -12,14 +12,14 @@
   },
   "entry": {
     "key": "index.html",
-    "file": "assets/index-BEZGpvNX.js"
+    "file": "assets/index-DvWD2HcL.js"
   },
   "initial": {
     "js": [
       {
-        "file": "assets/index-BEZGpvNX.js",
+        "file": "assets/index-DvWD2HcL.js",
         "rawBytes": 223459,
-        "gzipBytes": 62768
+        "gzipBytes": 62769
       },
       {
         "file": "assets/preferences-kzWIaMEu.js",
@@ -40,7 +40,7 @@
       }
     ],
     "jsRawBytes": 306310,
-    "jsGzipBytes": 95069,
+    "jsGzipBytes": 95070,
     "cssRawBytes": 48423,
     "cssGzipBytes": 9573
   },
@@ -78,7 +78,7 @@
       "gzipBytes": 16146
     },
     {
-      "file": "assets/EventLoopLabView-Wq1uYw-D.js",
+      "file": "assets/EventLoopLabView-CjbqGMdj.js",
       "rawBytes": 37529,
       "gzipBytes": 12182
     },
@@ -88,19 +88,19 @@
       "gzipBytes": 12280
     },
     {
-      "file": "assets/WorkspaceLabView-Df8Qk_bC.js",
+      "file": "assets/WorkspaceLabView-DnbmGBrA.js",
       "rawBytes": 23330,
-      "gzipBytes": 7679
+      "gzipBytes": 7678
     },
     {
-      "file": "assets/StudioBoundaryView-DhwWXlF7.js",
+      "file": "assets/StudioBoundaryView-C4Ncmw-l.js",
       "rawBytes": 21858,
       "gzipBytes": 7444
     },
     {
-      "file": "assets/PathProjectionView-DwBBlcpm.js",
-      "rawBytes": 21439,
-      "gzipBytes": 7016
+      "file": "assets/QuestionsView-BuJXXxHM.js",
+      "rawBytes": 21713,
+      "gzipBytes": 7078
     }
   ],
   "pagination": {
