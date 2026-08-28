@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус: **G0–G4 PASS; G5 seed slice PASS_WITH_LIMITATIONS; G6 executable slice PASS_WITH_LIMITATIONS; G7 submit/evidence slice PASS_WITH_LIMITATIONS; G8 progress slice PASS_WITH_LIMITATIONS; G8 project/observability slices в очереди**
+Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 release candidate не закрыт**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -22,6 +22,29 @@ Default branch: **`main`**
 - [`reports/production-curriculum-closure-audit-2026-08-27/agent-production-closure-plan.md`](reports/production-curriculum-closure-audit-2026-08-27/agent-production-closure-plan.md);
 - [`CONTEXT.md`](../CONTEXT.md);
 - [`WISHLIST.md`](WISHLIST.md).
+
+### Execution update — 29 августа 2026
+
+Реализация target уже прошла следующие commit-gated срезы и опубликована в
+`origin/main`:
+
+- `77c0a56` — G9 Navigator live evidence;
+- `71c9013` — G10 Studio lifecycle evidence;
+- `1d24738` — G11 explicit curriculum coverage evidence.
+
+Полные machine-readable материалы находятся в
+`fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
+Дополнительно исправлены реальные live-дефекты: Docker игнорировал исходный
+`/api/curriculum/coverage` route (`5f33982`), Studio review proxy отправлял
+literal `${candidateId}` (`37b84ad`), command idempotency протекала в immutable
+review (`c4de6e3`), а CoveragePanel теперь декодирует серверный manifest
+(`544e40b`).
+
+Это не объявляет продукт готовым: seed catalog содержит 5 cards/6 activities,
+а production target matrix требует 224/96/70 на Node и Java, 196/84/70 на Go;
+остальные lanes остаются preview. G12 может подготовить RC только с
+`AWAITING_INDEPENDENT_REVIEW`, пока corpus, runtime conformance, outbox и
+human learning sign-off не закрыты.
 
 ---
 
@@ -730,41 +753,46 @@ edges до переноса product code.
 
 Перенести локального AI-помощника как contextual action engine, а не глобальный чат.
 
+> G9 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G9/`
+> at target `77c0a56` (with follow-up hardening `5f33982`, `37b84ad`, `c4de6e3`,
+> `544e40b`). The gate remains `PASS_WITH_LIMITATIONS` because streaming/cancel,
+> real-provider availability and durable conversation projection are deferred.
+
 ### G9.1. Provider/settings
 
-- [ ] `G9-001` Settings поддерживает LM Studio/OpenAI-compatible local endpoint и model discovery.
-- [ ] `G9-002` Connection test проверяет endpoint/model/capabilities без сохранения secret в logs.
-- [ ] `G9-003` Active model/provider config versioned и имеет explicit unavailable state.
-- [ ] `G9-004` AI optional: core learning работает без модели.
+- [x] `G9-001` Settings поддерживает LM Studio/OpenAI-compatible local endpoint и model discovery.
+- [x] `G9-002` Connection test проверяет endpoint/model/capabilities без сохранения secret в logs.
+- [x] `G9-003` Active model/provider config versioned и имеет explicit unavailable state.
+- [x] `G9-004` AI optional: core learning работает без модели.
 - [ ] `G9-005` Spinner/stream/cancel/timeout/retry states честные.
 
 ### G9.2. Context and actions
 
-- [ ] `G9-006` Каждый turn получает immutable server-owned ContextRevision.
-- [ ] `G9-007` Context references exact track/lesson/question/task/attempt/evidence/rubric revisions.
-- [ ] `G9-008` Browser summary не является authority.
-- [ ] `G9-009` Actions typed: Socratic hint, misconception check, trace explainer, route planner, spoken coach, authoring proposal.
-- [ ] `G9-010` Hint ladder раскрывает минимально необходимое и фиксирует reveal level.
-- [ ] `G9-011` Ответы имеют citations/provenance на разрешённые sources.
-- [ ] `G9-012` Navigator никогда не вызывает submit/verdict/mastery/unlock/publish напрямую.
-- [ ] `G9-013` Tool allowlist, budgets и timeouts versioned.
+- [x] `G9-006` Каждый turn получает immutable server-owned ContextRevision.
+- [x] `G9-007` Context references exact track/lesson/question/task/attempt/evidence/rubric revisions.
+- [x] `G9-008` Browser summary не является authority.
+- [x] `G9-009` Actions typed: Socratic hint, misconception check, trace explainer, route planner, spoken coach, authoring proposal.
+- [x] `G9-010` Hint ladder раскрывает минимально необходимое и фиксирует reveal level.
+- [x] `G9-011` Ответы имеют citations/provenance на разрешённые sources.
+- [x] `G9-012` Navigator никогда не вызывает submit/verdict/mastery/unlock/publish напрямую.
+- [x] `G9-013` Tool allowlist, budgets и timeouts versioned.
 
 ### G9.3. Privacy/evals/observability
 
-- [ ] `G9-014` Prompts/outputs/source/answers не экспортируются в OTel.
-- [ ] `G9-015` Telemetry содержит provider/model/prompt-template hash/context hash/latency/tokens/status.
-- [ ] `G9-016` Conversation retention и deletion policy explicit.
-- [ ] `G9-017` Eval corpus покрывает helpfulness, grounding, leakage, over-reveal, authority refusal и RU/EN.
+- [x] `G9-014` Prompts/outputs/source/answers не экспортируются в OTel.
+- [x] `G9-015` Telemetry содержит provider/model/prompt-template hash/context hash/latency/tokens/status.
+- [x] `G9-016` Conversation retention и deletion policy explicit.
+- [x] `G9-017` Eval corpus покрывает helpfulness, grounding, leakage, over-reveal, authority refusal и RU/EN.
 - [ ] `G9-018` Regression eval запускается при model/prompt/tool change.
-- [ ] `G9-019` AI failure не меняет learner evidence.
+- [x] `G9-019` AI failure не меняет learner evidence.
 
 ### Gate G9
 
-- [ ] `G9-020` Settings→connect→select→contextual help journey PASS.
-- [ ] `G9-021` Stale/forged context rejected.
+- [x] `G9-020` Settings→connect→select→contextual help journey PASS.
+- [x] `G9-021` Stale/forged context rejected.
 - [ ] `G9-022` Authority escalation/leakage evals PASS.
 - [ ] `G9-023` No-model/offline/timeout UX PASS.
-- [ ] `G9-024` Commit: `feat(g9): port contextual advisory Navigator`.
+- [x] `G9-024` Commit: `feat(g9): port contextual advisory Navigator`.
 - [ ] `G9-025` `gate.json.status = PASS`.
 
 ---
@@ -775,25 +803,30 @@ edges до переноса product code.
 
 Закрыть author→review→publish→release→readback без обязательного Payload.
 
+> G10 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G10/`
+> at target `71c9013`. The local Studio lifecycle is verified; PostgreSQL
+> outbox/projection rebuild, batch ingestion and durable review receipts remain
+> explicitly open.
+
 ### G10.1. Studio workflow
 
-- [ ] `G10-001` Protected Next Studio работает через Nest application commands.
-- [ ] `G10-002` Roles: author, reviewer, publisher; single-user local mode всё равно сохраняет явные decisions.
-- [ ] `G10-003` Draft/version/review comments/localization/provenance modeled.
-- [ ] `G10-004` Publish создаёт immutable revision, но learner видит только released placement bundle.
-- [ ] `G10-005` Two-person rule configurable для external/high-risk content.
-- [ ] `G10-006` Readback проверяет exact released IDs/hashes.
-- [ ] `G10-007` Payload adapter отсутствует, пока не доказаны multi-editor/scheduling/autosave needs.
+- [x] `G10-001` Protected Next Studio работает через Nest application commands.
+- [x] `G10-002` Roles: author, reviewer, publisher; single-user local mode всё равно сохраняет явные decisions.
+- [x] `G10-003` Draft/version/review comments/localization/provenance modeled.
+- [x] `G10-004` Publish создаёт immutable revision, но learner видит только released placement bundle.
+- [x] `G10-005` Two-person rule configurable для external/high-risk content.
+- [x] `G10-006` Readback проверяет exact released IDs/hashes.
+- [x] `G10-007` Payload adapter отсутствует, пока не доказаны multi-editor/scheduling/autosave needs.
 
 ### G10.2. External ingestion
 
-- [ ] `G10-008` Source snapshot, rights/license, acquisition date и reviewer обязательны.
+- [x] `G10-008` Source snapshot, rights/license, acquisition date и reviewer обязательны.
 - [ ] `G10-009` Paid portals используются для product-pattern research, не bulk copying без разрешения.
-- [ ] `G10-010` Candidate проходит exact/fuzzy/semantic dedupe, но auto-merge запрещён.
-- [ ] `G10-011` Import сохраняет source wording hash и transformed-original distinction.
+- [x] `G10-010` Candidate проходит exact/fuzzy/semantic dedupe, но auto-merge запрещён.
+- [x] `G10-011` Import сохраняет source wording hash и transformed-original distinction.
 - [ ] `G10-012` Research brief создаёт оригинальный high-signal content, а не close paraphrase.
-- [ ] `G10-013` TaskCandidate должен стать typed Activity/TaskFamily или rejected(reason).
-- [ ] `G10-014` Quarantine не считается production coverage.
+- [x] `G10-013` TaskCandidate должен стать typed Activity/TaskFamily или rejected(reason).
+- [x] `G10-014` Quarantine не считается production coverage.
 - [ ] `G10-015` Agent import batches имеют bounded size и reviewer samples.
 
 ### G10.3. Release operations
@@ -806,11 +839,11 @@ edges до переноса product code.
 
 ### Gate G10
 
-- [ ] `G10-021` Real author→review→publish→release→readback journey PASS.
-- [ ] `G10-022` Unauthorized publish/forged provenance/quarantine leakage tests PASS.
+- [x] `G10-021` Real author→review→publish→release→readback journey PASS.
+- [x] `G10-022` Unauthorized publish/forged provenance/quarantine leakage tests PASS.
 - [ ] `G10-023` Release deterministic double-build PASS.
 - [ ] `G10-024` Rebuild projections from authority PASS.
-- [ ] `G10-025` Commit: `feat(g10): deliver governed authoring and release pipeline`.
+- [x] `G10-025` Commit: `feat(g10): deliver governed authoring and release pipeline`.
 - [ ] `G10-026` `gate.json.status = PASS`.
 
 ---
@@ -822,6 +855,10 @@ edges до переноса product code.
 Перенести весь Brain/Vault knowledge и довести пути до versioned production SLA,
 не подменяя качество количеством.
 
+> G11 policy/report evidence: `fluent-interview-platform/docs/verification/greenfield/G11/`
+> at target `1d24738`. The endpoint is live and strict, but its non-zero gap
+> ledger is intentional: the seed release is not yet production-eligible.
+
 ### G11.0. Coverage policy
 
 - [ ] `G11-001` Для technical core capability использовать role SLA: diagnostic, mechanism-basic, mechanism-advanced, predict/trace, edge, debug, trade-off, apply/design, evidence, defense.
@@ -829,11 +866,11 @@ edges до переноса product code.
 - [ ] `G11-003` 70 карточек на атомарную тему запрещены; quota относится к module/path coverage.
 - [ ] `G11-004` Hard gates: mandatory roles, depth, locale, provenance, placement, practice, no quarantine.
 - [ ] `G11-005` Core capability score ≥0.90 после hard gates; filler ради count запрещён.
-- [ ] `G11-006` Shared cards переиспользуются placements; unique canonical count и path placement count публикуются отдельно.
-- [ ] `G11-007` Primary Questions и Supporting Prompts считаются отдельно.
-- [ ] `G11-008` PathCompletionManifest содержит exact IDs, release, denominator и policy version.
-- [ ] `G11-009` Изменение quota требует versioned decision/migration note.
-- [ ] `G11-010` Python/Kotlin/любая новая lane остаётся preview до полного собственного manifest.
+- [x] `G11-006` Shared cards переиспользуются placements; unique canonical count и path placement count публикуются отдельно.
+- [x] `G11-007` Primary Questions и Supporting Prompts считаются отдельно.
+- [x] `G11-008` PathCompletionManifest содержит exact IDs, release, denominator и policy version.
+- [x] `G11-009` Изменение quota требует versioned decision/migration note.
+- [x] `G11-010` Python/Kotlin/любая новая lane остаётся preview до полного собственного manifest.
 
 ### G11.1. Production target matrix
 
@@ -854,8 +891,8 @@ edges до переноса product code.
 QuestionCards. Shared generic cards могут иметь reviewed placements в нескольких
 paths; denominators и stable IDs обязаны объяснять переиспользование.
 
-- [ ] `G11-011` Выпустить versioned policy, подтверждающий/корректирующий таблицу после exact G0/G5 inventory.
-- [ ] `G11-012` Любая корректировка сохраняет минимум role/depth/practice SLA и owner rationale.
+- [x] `G11-011` Выпустить versioned policy, подтверждающий/корректирующий таблицу после exact G0/G5 inventory.
+- [x] `G11-012` Любая корректировка сохраняет минимум role/depth/practice SLA и owner rationale.
 
 ### G11.2. Corpus reconciliation
 
@@ -920,12 +957,12 @@ paths; denominators и stable IDs обязаны объяснять переис
 ### Gate G11
 
 - [ ] `G11-037` Every production path manifest reaches approved targets with exact IDs.
-- [ ] `G11-038` Every preview path is labeled preview with exact gaps.
+- [x] `G11-038` Every preview path is labeled preview with exact gaps.
 - [ ] `G11-039` Unresolved corpus records = 0; quarantine remains explicit.
 - [ ] `G11-040` Multi-language Runtime conformance PASS.
 - [ ] `G11-041` Path relevance/forbidden-set matrix PASS.
 - [ ] `G11-042` Full learner route→question→activity→evidence journey PASS per path.
-- [ ] `G11-043` Commits are path/release scoped; no mega content dump without manifests/reviews.
+- [x] `G11-043` Commits are path/release scoped; no mega content dump without manifests/reviews.
 - [ ] `G11-044` Final commit: `feat(g11): publish production curriculum and practice portfolio`.
 - [ ] `G11-045` `gate.json.status = PASS`.
 
