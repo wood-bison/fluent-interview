@@ -1,0 +1,95 @@
+{
+  "reportVersion": "m4-counter-drilldown.v1",
+  "generatedAt": "2026-08-28T13:40:08.374Z",
+  "apiBaseUrl": "http://127.0.0.1:47000",
+  "status": "pass",
+  "valid": true,
+  "counterCount": 12,
+  "rows": [
+    {
+      "key": "programCount",
+      "value": 1,
+      "owner": "inventory-compiler",
+      "route": "/api/program/current",
+      "status": "pass"
+    },
+    {
+      "key": "pathCount",
+      "value": 9,
+      "owner": "program-map",
+      "route": "/api/program/map",
+      "status": "pass"
+    },
+    {
+      "key": "areaCount",
+      "value": 15,
+      "owner": "program-map",
+      "route": "/api/program/map",
+      "status": "pass"
+    },
+    {
+      "key": "stationCount",
+      "value": 81,
+      "owner": "program-map",
+      "route": "/api/program/map",
+      "status": "pass"
+    },
+    {
+      "key": "questionCardCount",
+      "value": 1591,
+      "owner": "question-brain",
+      "route": "/api/questions/summary",
+      "status": "pass"
+    },
+    {
+      "key": "topicGroupCount",
+      "value": 135,
+      "owner": "question-brain",
+      "route": "/api/questions/summary",
+      "status": "pass"
+    },
+    {
+      "key": "capabilityCount",
+      "value": 68,
+      "owner": "program-map",
+      "route": "/api/program/map",
+      "status": "pass"
+    },
+    {
+      "key": "taskFamilyCount",
+      "value": 15,
+      "owner": "task-runtime",
+      "route": "/api/runtime/task-families",
+      "status": "pass"
+    },
+    {
+      "key": "taskRevisionCount",
+      "value": 19,
+      "owner": "task-runtime",
+      "route": "/api/runtime/task-families",
+      "status": "pass"
+    },
+    {
+      "key": "runnableStationCount",
+      "value": 27,
+      "owner": "learner-progress",
+      "route": "/api/progress",
+      "status": "pass"
+    },
+    {
+      "key": "stationBoundCardCount",
+      "value": 6,
+      "owner": "question-brain",
+      "route": "/api/program/coverage",
+      "status": "pass"
+    },
+    {
+      "key": "evidenceCount",
+      "value": 0,
+      "owner": "learner-progress",
+      "route": "/api/curriculum/progress",
+      "status": "pass"
+    }
+  ],
+  "failures": []
+}

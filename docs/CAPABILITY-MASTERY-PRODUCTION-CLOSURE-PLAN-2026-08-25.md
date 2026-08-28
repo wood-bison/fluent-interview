@@ -9,12 +9,13 @@
 **Основание:** [`pre-release-product-audit-2026-08-25/report.html`](reports/pre-release-product-audit-2026-08-25/report.html)
 
 Последняя техническая перепроверка **W22 (28 августа 2026)** сохранила эту
-границу: development release verifier дал `55/55 PASS`, а Vue E2E — `102/102
+границу: development release verifier дал `56/56 PASS`, а Vue E2E — `102/102
 PASS` на двух desktop-профилях. В этой волне добавлены такой же `102/102`
 package-mode прогон на immutable `49300`, полный package runtime drill
 `6/6 PASS` (Node.js, TypeScript, Go, Java, C#, PostgreSQL) и route → question →
-family → revision → attempt chain-drill, package пересобран с актуальными
-provenance, а strict gate теперь включает все три прогона. Это
+family → revision → attempt chain-drill и 12/12 counter provenance/drill-down
+проверок, package пересобран с актуальными provenance (Lab `ba495d6`, package
+operation `0de98ee2`), а strict gate теперь включает все эти прогоны. Это
 подтверждает исправность текущего технического среза, но не закрывает human
 M3, strict production remote или следующие curriculum gates. Полная запись:
 [`W22 gate`](verification/two-audit-remediation/W22/gate.md).
@@ -878,6 +879,15 @@ Question Brain: summary и quality release/счётчики сверяются �
 ещё должны пройти acceptance.
 Capability-only `project-book-boundary-001` намеренно
 остаётся в operator release, но не выдаётся ученику.
+
+В Lab `ba495d6` Product Inventory получил обязательный `counterCatalog` для
+всех 12 счётчиков. Каждое определение фиксирует owner, стабильную formula,
+точный `releaseId`/`snapshotAt` и публичный drill-down route. Независимый
+`m4-counter-drilldown-gate` пересчитывает значения через Map, Question Brain,
+Runtime, Coverage и Curriculum Progress API, проверяет HTTP 200 маршрутов и
+release provenance; package и development режимы дали **12/12 PASS**. Это
+закрывает технический counter-ownership/drill-down slice, но M4 остаётся
+`TODO` до human M3 acceptance и полного curriculum closure.
 
 Live evidence этого среза зафиксировано в
 [`M4/baseline.json`](verification/capability-closure/M4/baseline.json) и
@@ -1826,7 +1836,7 @@ read → implement → run → break → measure → explain → defend
 | M1 | `DONE` | all/contracts | 2026-08-25 | Brain `e698fc2`, Runtime `45c4519`, Lab `401ee9f`, root `4cb6ce7` | [`M1/baseline.json`](verification/capability-closure/M1/baseline.json), [`M1/review.md`](verification/capability-closure/M1/review.md) | independent review PASS |
 | M2 | `DONE` | Lab | 2026-08-25 | Lab `00460fa`, root close proof | [`M2/baseline.json`](verification/capability-closure/M2/baseline.json), [`M2/review.md`](verification/capability-closure/M2/review.md) | independent review PASS |
 | M3 | `ACTIVE` | all/golden slice | 2026-08-25 | Lab `e3dcf50` + `4e895cf` + `4443bc8` + `2f19db4` + `98177b4` + `2e2a54b` + `7f4c9b6` | [`M3/baseline.json`](verification/capability-closure/M3/baseline.json), [`M3/technical-slice.md`](verification/capability-closure/M3/technical-slice.md) | technical slice PASS; human acceptance WAITING |
-| M4 | `TODO` | Lab/compiler | — | — | — | — |
+| M4 | `TODO` | Lab/compiler | 2026-08-28 (technical slice) | Lab `ba495d6` | [`W22/m4-counter-drilldown.json`](verification/two-audit-remediation/W22/m4-counter-drilldown.json) — 12/12 PASS; strict package gate PASS | technical slice PASS; formal activation waits for M3 human acceptance |
 | M5 | `TODO` | Lab/UI | — | — | — | — |
 | M6 | `TODO` | Brain/editorial | — | — | — | — |
 | M7 | `TODO` | Runtime | — | — | — | — |
@@ -1838,8 +1848,9 @@ read → implement → run → break → measure → explain → defend
 | M13 | `TODO` | root + human | — | — | — | — |
 
 **Техническая запись W22 (28 августа 2026):** package browser matrix,
-шестиязычный runtime drill и server-owned chain-drill закрыты отдельными
-проверяемыми proof, но это не меняет статусы M3–M13. M3 по-прежнему ждёт
+шестиязычный runtime drill, server-owned chain-drill и counter
+provenance/drill-down закрыты отдельными проверяемыми proof, но это не меняет
+статусы M3–M13. M3 по-прежнему ждёт
 человеческую сессию, а M4+ требуют своих exit criteria и не могут быть
 переведены в `DONE` одной E2E-проверкой.
 

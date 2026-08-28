@@ -7,7 +7,7 @@
 
 Волна повторно проверила текущие `main`-состояния пяти репозиториев, живой
 Vue-клиент и immutable local production package. Development release verifier
-завершился `valid: true`: **55/55 шагов PASS, 0 предупреждений, 0 ошибок**.
+завершился `valid: true`: **56/56 шагов PASS, 0 предупреждений, 0 ошибок**.
 Машинный отчёт сохранён в
 [`release-verify-dev.json`](./release-verify-dev.json).
 
@@ -17,14 +17,14 @@ pnpm release:verify:dev -- \
 ```
 
 Первичный отчёт создан: `2026-08-28T12:23:02.266Z`; после package/provenance
-фикса финальный development отчёт обновлён в `2026-08-28T12:59:09.731Z`.
+фикса финальный development отчёт обновлён в `2026-08-28T13:40:08.382Z`.
 
 После этого package был пересобран штатной командой `pnpm package:local` с
 новым Vue provenance, а полный strict verifier завершил все исполнимые
 проверки. Машинный результат сохранён в
-[`release-verify-strict.json`](./release-verify-strict.json): `g14-hardening` и
-`vue-e2e-package` — PASS; затем package-language drill дал **6/6 PASS**.
-Отдельный route/question/runtime/attempt chain-drill также дал **PASS**.
+[`release-verify-strict.json`](./release-verify-strict.json): `g14-hardening`,
+`vue-e2e-package`, `package-language-drill`,
+`route-question-attempt-package` и `m4-counter-drilldown-package` — PASS.
 Итог strict `valid: false` содержит ровно один ожидаемый policy warning — Vue
 репозиторий объявлен `local-only`.
 
@@ -38,6 +38,7 @@ pnpm release:verify:dev -- \
 | Package-mode browser E2E | **102/102 PASS** на `http://localhost:49300` |
 | Package-mode runtime language drill | **6/6 PASS**, 24/24 checks; Node, TypeScript, Go, Java, C#, PostgreSQL |
 | Route → question → family → revision → attempt | **PASS**: `question.q315` → `node-rate-limiter-001@1`; attempt persisted, Sergey hash unchanged |
+| Counter provenance / drill-down | **12/12 PASS**: owner, formula, release/snapshot id и публичный API маршрут; значения пересчитаны по API |
 | Route/API validation | route matrix, canonical aliases, schema и live validation PASS |
 | Brain / Runtime | readiness HTTP 200; release join и negative boundary PASS |
 | Content/placement | graph release, curriculum shape, placement, coverage/backlog, task bindings PASS |
@@ -53,9 +54,9 @@ pnpm release:verify:dev -- \
   подменяет API: она проверяет тот же desktop matrix против порта immutable
   package `49300`.
 - Package boundary пересобран штатным lifecycle-владельцем и получил operation
-  `a1555f49-6fb9-4aa2-85af-38249b7c1cf9`; состояние `ready`, package-managed,
+  `0de98ee2-88ba-4500-b436-6fda6ff8cee5`; состояние `ready`, package-managed,
   readiness всех пяти компонентов и verified backup — `true`.
-- `workspace.yaml` обновлён на фактические Lab `228d80bff050c704e7b7268385e1d089d80a846e`
+- `workspace.yaml` обновлён на фактический Lab `ba495d657b7576b04718e3f09b6f1767924dc7bc`
   и Vue `ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d` commits, поэтому provenance
   больше не drift'ит. Подтверждённый stale lock предыдущей завершённой
   операции удалён;
@@ -75,6 +76,12 @@ pnpm release:verify:dev -- \
   progress hash Сергея остаётся неизменным. Evidence:
   [`route-question-attempt.json`](./route-question-attempt.json) и
   [`route-question-attempt.md`](./route-question-attempt.md).
+- `m4-counter-drilldown-gate` проверяет все 12 счётчиков Product Inventory:
+  owner/formula/release provenance не расходятся, каждый drill-down отвечает
+  HTTP 200, а значение совпадает с независимой агрегацией публичного map,
+  Question Brain, Runtime, Coverage и Curriculum Progress API. Evidence:
+  [`m4-counter-drilldown.json`](./m4-counter-drilldown.json) и
+  [`m4-counter-drilldown.md`](./m4-counter-drilldown.md).
 
 Отдельный `pnpm --dir fluent-engineering-vue e2e` также завершился **102/102
 PASS**. В набор входят scroll owner и 200% zoom, RU/EN × light/dark,
@@ -92,14 +99,15 @@ browser console guards.
    push'нуть `ea2b0b7` и повторить strict verifier.
 2. M3 остаётся `ACTIVE / WAITING_HUMAN`: нужны реальный ответ Сергея,
    spoken explanation, reflection и cold repeat через 48–72 часа.
-3. M4 и последующие gates не переводятся в `DONE` только на основании E2E;
-   counter drill-down, Vue-native syllabus и human screenshot sign-off
-   остаются в очереди closure plan. Package-mode multi-language runtime drill
-   закрыт технически в W22, но не заменяет curriculum/task-portfolio closure.
+3. M4 и последующие gates не переводятся в `DONE` только на основании E2E.
+   Counter drill-down теперь закрыт технически в W22; Vue-native syllabus,
+   human screenshot sign-off и полная curriculum/task-portfolio closure
+   остаются в очереди. Package-mode multi-language runtime drill закрыт
+   технически, но не заменяет эту curriculum closure.
 
 ## Репродуцируемость и чистота
 
-- Проверялись pinned `main`-коммиты: Lab `228d80b`, Vue `ea2b0b7`, Runtime
+- Проверялись pinned `main`-коммиты: Lab `ba495d6`, Vue `ea2b0b7`, Runtime
   `6b09771`, Brain `9f02c92`, Vault `f4d4622`.
 - Изменения этой волны ограничены package E2E/language-drill и
   route/question/attempt drill contracts, release-gate wiring и provenance

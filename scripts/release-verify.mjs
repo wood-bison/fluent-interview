@@ -346,6 +346,15 @@ if (dev) {
     },
     timeoutMs: 180_000,
   });
+  run('m4-counter-drilldown', 'pnpm', ['m4:counter-drilldown:check'], {
+    cwd: labRoot,
+    env: {
+      M4_COUNTER_API_URL: 'http://127.0.0.1:47000',
+      M4_COUNTER_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/m4-counter-drilldown.json'),
+      M4_COUNTER_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/m4-counter-drilldown.md'),
+    },
+    timeoutMs: 180_000,
+  });
 } else {
   if (!packageState.executable) {
     steps.push({ id: 'production-package-boundary', command: 'package:local:plan', status: 'fail', detail: 'clean five-root package boundary is required before production verification' });
@@ -381,6 +390,15 @@ if (dev) {
         PACKAGE_API_URL: 'http://127.0.0.1:49301',
         ROUTE_QUESTION_ATTEMPT_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/route-question-attempt.json'),
         ROUTE_QUESTION_ATTEMPT_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/route-question-attempt.md'),
+      },
+      timeoutMs: 180_000,
+    });
+    run('m4-counter-drilldown-package', 'pnpm', ['m4:counter-drilldown:check'], {
+      cwd: labRoot,
+      env: {
+        M4_COUNTER_API_URL: 'http://127.0.0.1:49301',
+        M4_COUNTER_JSON: path.join(root, 'docs/verification/two-audit-remediation/W22/m4-counter-drilldown.json'),
+        M4_COUNTER_MD: path.join(root, 'docs/verification/two-audit-remediation/W22/m4-counter-drilldown.md'),
       },
       timeoutMs: 180_000,
     });

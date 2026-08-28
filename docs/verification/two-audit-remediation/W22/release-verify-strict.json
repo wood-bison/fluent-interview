@@ -1,6 +1,6 @@
 {
   "reportVersion": "release-verify.v1",
-  "generatedAt": "2026-08-28T13:08:17.989Z",
+  "generatedAt": "2026-08-28T13:34:55.456Z",
   "mode": "strict-production",
   "valid": false,
   "productionPromotable": false,
@@ -9,44 +9,44 @@
       "id": "workspace-git",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/workspace-git-check.mjs",
       "status": "fail",
-      "durationMs": 417,
-      "detail": "luent-engineering-lab\",\n      \"path\": \"fluent-engineering-lab\",\n      \"remote\": \"git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git\",\n      \"branch\": \"main\",\n      \"revision\": \"228d80bff050c704e7b7268385e1d089d80a846e\",\n      \"resolvedPath\": \"fluent-engineering-lab\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-lab\",\n        \"remote\": \"git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git\",\n        \"branch\": \"main\",\n        \"revision\": \"228d80bff050c704e7b7268385e1d089d80a846e\",\n        \"treeDigest\": \"0f2b288d9b33c8d828254ebb47b99f9336d74397\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    },\n    {\n      \"id\": \"fluent-engineering-vue\",\n      \"path\": \"fluent-engineering-vue\",\n      \"remote\": \"local-only\",\n      \"branch\": \"main\",\n      \"revision\": \"ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d\",\n      \"resolvedPath\": \"fluent-engineering-vue\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-vue\",\n        \"remote\": null,\n        \"branch\": \"main\",\n        \"revision\": \"ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d\",\n        \"treeDigest\": \"b33bf3c00b678c9f6c168eccd47055b1c16e1d41\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": [\n        {\n          \"code\": \"remote-unavailable\",\n          \"detail\": \"local-only\"\n        }\n      ]\n    },\n    {\n      \"id\": \"fluent-question-brain\",\n      \"path\": \"fluent-question-brain\",\n      \"remote\": \"git@github-woodbison:wood-bison/fluent-question-brain.git\",\n      \"branch\": \"main\",\n      \"revision\": \"9f02c92a15786a869801cd835015b723e0c6e0b1\",\n      \"resolvedPath\": \"fluent-question-brain\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-question-brain\",\n        \"remote\": \"git@github-woodbison:wood-bison/fluent-question-brain.git\",\n        \"branch\": \"main\",\n        \"revision\": \"9f02c92a15786a869801cd835015b723e0c6e0b1\",\n        \"treeDigest\": \"c2c9931be8e4127c89510f51b57dec0e4fd2661c\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    },\n    {\n      \"id\": \"fluent-task-runtime\",\n      \"path\": \"fluent-task-runtime\",\n      \"remote\": \"git@github-woodbison:wood-bison/fluent-task-runtime.git\",\n      \"branch\": \"main\",\n      \"revision\": \"6b097718fe4f6075a1f4baf1d55dc6d71dcbf137\",\n      \"resolvedPath\": \"fluent-task-runtime\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-task-runtime\",\n        \"remote\": \"git@github-woodbison:wood-bison/fluent-task-runtime.git\",\n        \"branch\": \"main\",\n        \"revision\": \"6b097718fe4f6075a1f4baf1d55dc6d71dcbf137\",\n        \"treeDigest\": \"8dc921f3d9b67f289f66e52017fbc913ff585ccd\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    },\n    {\n      \"id\": \"fluent-question-vault\",\n      \"path\": \"fluent-question-vault\",\n      \"remote\": \"git@github.com:szhechko/fluent-question-vault.git\",\n      \"branch\": \"main\",\n      \"revision\": \"f4d46228cd366c218b29423323da8fe8bad796f1\",\n      \"resolvedPath\": \"fluent-question-vault\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-question-vault\",\n        \"remote\": \"git@github.com:szhechko/fluent-question-vault.git\",\n        \"branch\": \"main\",\n        \"revision\": \"f4d46228cd366c218b29423323da8fe8bad796f1\",\n        \"treeDigest\": \"eb800aecd34d36eb30cd62c8861ecdc83320ea79\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    }\n  ]\n}"
+      "durationMs": 391,
+      "detail": "yzhechko/developer/fluent-interview/fluent-engineering-lab\",\n        \"remote\": \"git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git\",\n        \"branch\": \"main\",\n        \"revision\": \"ba495d657b7576b04718e3f09b6f1767924dc7bc\",\n        \"treeDigest\": \"ffb929ee6025942c3eec5c0ce58bbfbaa3fc0112\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": true,\n        \"dirtyFiles\": [\n          \" M docs/verification/two-audit-remediation/W02/browser-owner-boundary.json\",\n          \" M docs/verification/two-audit-remediation/W02/browser-owner-boundary.md\",\n          \" M docs/verification/two-audit-remediation/W02/glossary-code-contract.json\",\n          \" M docs/verification/two-audit-remediation/W02/glossary-code-contract.md\"\n        ]\n      },\n      \"failures\": [],\n      \"warnings\": []\n    },\n    {\n      \"id\": \"fluent-engineering-vue\",\n      \"path\": \"fluent-engineering-vue\",\n      \"remote\": \"local-only\",\n      \"branch\": \"main\",\n      \"revision\": \"ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d\",\n      \"resolvedPath\": \"fluent-engineering-vue\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-vue\",\n        \"remote\": null,\n        \"branch\": \"main\",\n        \"revision\": \"ea2b0b7108a22a7e4d13130eb5ac4b2f5bc89e0d\",\n        \"treeDigest\": \"b33bf3c00b678c9f6c168eccd47055b1c16e1d41\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": [\n        {\n          \"code\": \"remote-unavailable\",\n          \"detail\": \"local-only\"\n        }\n      ]\n    },\n    {\n      \"id\": \"fluent-question-brain\",\n      \"path\": \"fluent-question-brain\",\n      \"remote\": \"git@github-woodbison:wood-bison/fluent-question-brain.git\",\n      \"branch\": \"main\",\n      \"revision\": \"9f02c92a15786a869801cd835015b723e0c6e0b1\",\n      \"resolvedPath\": \"fluent-question-brain\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-question-brain\",\n        \"remote\": \"git@github-woodbison:wood-bison/fluent-question-brain.git\",\n        \"branch\": \"main\",\n        \"revision\": \"9f02c92a15786a869801cd835015b723e0c6e0b1\",\n        \"treeDigest\": \"c2c9931be8e4127c89510f51b57dec0e4fd2661c\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    },\n    {\n      \"id\": \"fluent-task-runtime\",\n      \"path\": \"fluent-task-runtime\",\n      \"remote\": \"git@github-woodbison:wood-bison/fluent-task-runtime.git\",\n      \"branch\": \"main\",\n      \"revision\": \"6b097718fe4f6075a1f4baf1d55dc6d71dcbf137\",\n      \"resolvedPath\": \"fluent-task-runtime\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-task-runtime\",\n        \"remote\": \"git@github-woodbison:wood-bison/fluent-task-runtime.git\",\n        \"branch\": \"main\",\n        \"revision\": \"6b097718fe4f6075a1f4baf1d55dc6d71dcbf137\",\n        \"treeDigest\": \"8dc921f3d9b67f289f66e52017fbc913ff585ccd\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    },\n    {\n      \"id\": \"fluent-question-vault\",\n      \"path\": \"fluent-question-vault\",\n      \"remote\": \"git@github.com:szhechko/fluent-question-vault.git\",\n      \"branch\": \"main\",\n      \"revision\": \"f4d46228cd366c218b29423323da8fe8bad796f1\",\n      \"resolvedPath\": \"fluent-question-vault\",\n      \"present\": true,\n      \"snapshot\": {\n        \"topLevel\": \"/Users/sergeyzhechko/developer/fluent-interview/fluent-question-vault\",\n        \"remote\": \"git@github.com:szhechko/fluent-question-vault.git\",\n        \"branch\": \"main\",\n        \"revision\": \"f4d46228cd366c218b29423323da8fe8bad796f1\",\n        \"treeDigest\": \"eb800aecd34d36eb30cd62c8861ecdc83320ea79\",\n        \"clean\": true,\n        \"evidenceOnlyDirty\": false,\n        \"dirtyFiles\": []\n      },\n      \"failures\": [],\n      \"warnings\": []\n    }\n  ]\n}"
     },
     {
       "id": "workspace-contract",
       "command": "bash scripts/workspace-contract.sh check",
       "status": "pass",
-      "durationMs": 95
+      "durationMs": 164
     },
     {
       "id": "ci-inventory",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/ci-inventory.mjs --check",
       "status": "pass",
-      "durationMs": 31
+      "durationMs": 34
     },
     {
       "id": "design-tokens",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/design-token-audit.mjs --check",
       "status": "pass",
-      "durationMs": 36
+      "durationMs": 45
     },
     {
       "id": "vue-performance",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/vue-performance-gate.mjs --check",
       "status": "pass",
-      "durationMs": 62
+      "durationMs": 68
     },
     {
       "id": "observability",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/observability-gate.mjs --check",
       "status": "pass",
-      "durationMs": 39
+      "durationMs": 42
     },
     {
       "id": "validation-matrix-static",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/validation-matrix-gate.mjs --static --check --out=docs/verification/two-audit-remediation/W17/validation-matrix-static.json",
       "status": "pass",
-      "durationMs": 111
+      "durationMs": 117
     },
     {
       "id": "canonical-routes",
@@ -58,37 +58,37 @@
       "id": "schema-compatibility",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/schema-compatibility-gate.mjs",
       "status": "pass",
-      "durationMs": 610
+      "durationMs": 622
     },
     {
       "id": "layout",
       "command": "bash scripts/layout-check.sh",
       "status": "pass",
-      "durationMs": 17
+      "durationMs": 18
     },
     {
       "id": "ports",
       "command": "bash scripts/ports.sh",
       "status": "pass",
-      "durationMs": 102
+      "durationMs": 105
     },
     {
       "id": "mode-guard",
       "command": "bash scripts/mode-guard.sh check",
       "status": "pass",
-      "durationMs": 118
+      "durationMs": 119
     },
     {
       "id": "runtime-image-manifest",
       "command": "bash fluent-task-runtime/scripts/image-manifest-check.sh --static",
       "status": "pass",
-      "durationMs": 184
+      "durationMs": 105
     },
     {
       "id": "docker-provenance",
       "command": "/opt/homebrew/Cellar/node/26.7.0/bin/node scripts/docker-provenance-check.mjs",
       "status": "pass",
-      "durationMs": 35
+      "durationMs": 33
     },
     {
       "id": "package-provenance-plan",
@@ -101,99 +101,105 @@
       "id": "lab-glossary-code-contract",
       "command": "pnpm glossary:code:contract:check",
       "status": "pass",
-      "durationMs": 263
+      "durationMs": 245
     },
     {
       "id": "lab-browser-owner-boundary",
       "command": "pnpm browser:owner-boundary:check",
       "status": "pass",
-      "durationMs": 324
+      "durationMs": 266
     },
     {
       "id": "diff-check:fluent-engineering-lab",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 32
+      "durationMs": 24
     },
     {
       "id": "diff-check:fluent-engineering-vue",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 25
+      "durationMs": 18
     },
     {
       "id": "diff-check:fluent-task-runtime",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 22
+      "durationMs": 16
     },
     {
       "id": "diff-check:fluent-question-brain",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 24
+      "durationMs": 16
     },
     {
       "id": "diff-check:fluent-question-vault",
       "command": "git diff --check",
       "status": "pass",
-      "durationMs": 25
+      "durationMs": 17
     },
     {
       "id": "runtime-task-portfolio-backlog",
       "command": "docker run --rm -v /Users/sergeyzhechko/developer/fluent-interview/fluent-task-runtime:/src -w /src golang:1.24 go run ./cmd/portfolio-backlog --check",
       "status": "pass",
-      "durationMs": 2117
+      "durationMs": 2142
     },
     {
       "id": "lab-check",
       "command": "pnpm check",
       "status": "pass",
-      "durationMs": 28947
+      "durationMs": 27144
     },
     {
       "id": "vue-check",
       "command": "pnpm check",
       "status": "pass",
-      "durationMs": 5916
+      "durationMs": 5905
     },
     {
       "id": "lab-package-web",
       "command": "GET http://127.0.0.1:49300/onboarding",
       "status": "pass",
-      "durationMs": 18,
+      "durationMs": 20,
       "httpStatus": 200
     },
     {
       "id": "lab-package-api",
       "command": "GET http://127.0.0.1:49301/api/practice/health",
       "status": "pass",
-      "durationMs": 3,
+      "durationMs": 4,
       "httpStatus": 200
     },
     {
       "id": "g14-hardening",
       "command": "pnpm g14:hardening:check",
       "status": "pass",
-      "durationMs": 7225
+      "durationMs": 6766
     },
     {
       "id": "vue-e2e-package",
       "command": "pnpm e2e:package",
       "status": "pass",
-      "durationMs": 64315
+      "durationMs": 56222
     },
     {
       "id": "package-language-drill",
       "command": "pnpm package:language-drill:check",
       "status": "pass",
-      "durationMs": 18631
+      "durationMs": 17764
     },
     {
       "id": "route-question-attempt-package",
       "command": "pnpm route:question:attempt:drill:check",
       "status": "pass",
-      "durationMs": 695
+      "durationMs": 665
+    },
+    {
+      "id": "m4-counter-drilldown-package",
+      "command": "pnpm m4:counter-drilldown:check",
+      "status": "pass",
+      "durationMs": 847
     }
   ]
 }
