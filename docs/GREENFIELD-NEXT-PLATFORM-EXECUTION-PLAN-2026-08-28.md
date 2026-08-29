@@ -653,8 +653,9 @@ Node event-loop остаётся единственным `released` сцена�
 storm, cache stampede, queue replay и GC/memory pressure остаются явным
 `preview` до выпуска профилей runtime, trace/log/metric generator и evaluator.
 Поэтому `G8-015`, `G8-018`, `G8-023` и `G8-026` не получают ложных галочек;
-target `origin/main == 4f30da1`, а документация target зафиксирована отдельным
-`7e358ca`.
+реализационный target commit — `4f30da1`, текущий `origin/main == 4e780e8`
+(код плюс evidence/index commits), а документация target зафиксирована
+отдельными `7e358ca` и `4e780e8`.
 
 ---
 
