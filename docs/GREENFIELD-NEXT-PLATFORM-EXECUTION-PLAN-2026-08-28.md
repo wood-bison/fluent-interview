@@ -444,6 +444,27 @@ promotion gates.
 Target `origin/main == 0bd417a`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
 не перемещён.
 
+### Execution update — G10 bounded review/projection recovery — 29 августа 2026
+
+Следующая проверка G10 повторно прогнала только воспроизводимые локальные
+границы и не выдала их за внешний production ingestion:
+
+- `4b48590` фиксирует bounded reviewer batch (pending/quarantined, limit 1–100,
+  deterministic sample, metadata-only, auto-promotion=false), JsonlOutbox
+  idempotency/reconcile, public-only search projection, Studio/release/progress
+  projection rebuild и allowlisted backup/restore.
+- `pnpm test:studio` — **5/5**, `pnpm test:content` — **30/30**,
+  `pnpm test:projections` — **2/2**, `pnpm test:stack` — **12/12**;
+  `pnpm evidence:validate` — **12/12 gate envelopes**.
+- G10 evidence и checksums находятся в
+  `fluent-interview-platform/docs/verification/greenfield/G10/`; target
+  `origin/main == 4b48590`.
+
+Таким образом, `G10-015..019` и `G10-023..024` закрыты только для локального
+JSONL/rebuild scope. Paid-portal licensing/import, PostgreSQL authority/outbox,
+Kafka/Redis benchmark и внешний load/rollback остаются promotion gates; статус
+G10 сохраняется `PASS_WITH_LIMITATIONS`, а RC tag не перемещён.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1240,22 +1261,28 @@ edges до переноса product code.
 - [ ] `G10-012` Research brief создаёт оригинальный high-signal content, а не close paraphrase.
 - [x] `G10-013` TaskCandidate должен стать typed Activity/TaskFamily или rejected(reason).
 - [x] `G10-014` Quarantine не считается production coverage.
-- [ ] `G10-015` Agent import batches имеют bounded size и reviewer samples.
+- [x] `G10-015` Agent import batches имеют bounded size и reviewer samples
+      (metadata-only local batch; promotion всё ещё reviewer-gated).
 
 ### G10.3. Release operations
 
-- [ ] `G10-016` Outbox обеспечивает reliable projection без Kafka по умолчанию.
-- [ ] `G10-017` Search/index/release projections rebuildable.
-- [ ] `G10-018` Backup/restore включает revisions, provenance, placements, outbox и artifacts manifest.
-- [ ] `G10-019` Rollback release не удаляет authored history.
+- [x] `G10-016` Outbox обеспечивает reliable projection без Kafka по умолчанию
+      (append-only JSONL, idempotent retry/reconcile; PostgreSQL promotion open).
+- [x] `G10-017` Search/index/release projections rebuildable из authority
+      (локальный deterministic rebuild manifest).
+- [x] `G10-018` Backup/restore включает revisions, provenance, placements, outbox
+      и artifacts manifest в allowlisted scoped bundle.
+- [x] `G10-019` Rollback release не удаляет authored history; pointer transition
+      append-only и проверен stale/unknown guards.
 - [ ] `G10-020` Redis/Kafka подключаются только после benchmark/ADR.
 
 ### Gate G10
 
 - [x] `G10-021` Real author→review→publish→release→readback journey PASS.
 - [x] `G10-022` Unauthorized publish/forged provenance/quarantine leakage tests PASS.
-- [ ] `G10-023` Release deterministic double-build PASS.
-- [ ] `G10-024` Rebuild projections from authority PASS.
+- [x] `G10-023` Release deterministic double-build PASS.
+- [x] `G10-024` Rebuild projections from authority PASS (локальный scope; внешний
+      PostgreSQL projection остаётся открытым).
 - [x] `G10-025` Commit: `feat(g10): deliver governed authoring and release pipeline`.
 - [ ] `G10-026` `gate.json.status = PASS`.
 
