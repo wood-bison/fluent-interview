@@ -334,6 +334,17 @@ Target `origin/main == cf3cf1e`; immutable RC tag не перемещён. CodeM
 lazy-loading, реальный TypeScript revision, per-attempt Docker supervisor и
 OS-level network namespace остаются честно открытыми.
 
+После browser smoke следующий небольшой G6 hardening batch:
+
+- `7f5bf32` добавляет один reduced-motion-safe spinner для Submit и очищает
+  старый verdict до нового запроса, чтобы pending state не показывал устаревший
+  результат.
+- `3b52100` обновляет G6 evidence/checksums; Web typecheck, smoke **20/20** и
+  production build PASS. Это уточнение доступной UI-части G6-021/G6-023, не
+  закрытие deferred supervisor/TypeScript/OS-network пунктов.
+
+Target `origin/main == 3b52100`; immutable RC tag не перемещён.
+
 ### Execution update — Navigator prompt/tool surface regression — 29 августа 2026
 
 G9-018 закрыт отдельным deterministic regression gate после изменения
