@@ -37,6 +37,8 @@ Default branch: **`main`**
   cleanup; `23a1470` — gate index synchronized with the pushed target head.
 - `5090343` — G10 command/checksum alignment; `3389157` — target gate index
   synchronized with that evidence commit.
+- `a06c7e8` — durable PostgreSQL Studio command receipts; `0bf50a1` — G10
+  receipt live evidence/checksums; `115c9d9` — target index synchronized.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
