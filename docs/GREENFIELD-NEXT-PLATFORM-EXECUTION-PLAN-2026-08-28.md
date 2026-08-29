@@ -76,8 +76,8 @@ incident capture и scoped Docker shutdown прошли. Evidence и checksums �
 - `174174b` — submit idempotency вынесена в durable project-scoped
   `submit-idempotency.v1` журнал; exact verdict replay и conflict переживают
   API/runtime restart и выход за окно learner projection `recent(500)`.
-- `6653d92` — target G12 follow-up, known limitation и индекс синхронизированы
-  с `origin/main == 6653d92`; external reviewer finding и re-check записаны в
+- `6653d92` — target G12 follow-up, known limitation и индекс синхронизированы;
+  `ae49f65` обновляет индекс до текущего target head. External reviewer finding и re-check записаны в
   `fluent-interview-platform/docs/verification/greenfield/G12/independent-review.md`.
 
 Проверены `pnpm check` (lint/typecheck, API 12/12, Web 16/16, stack 8/8,
