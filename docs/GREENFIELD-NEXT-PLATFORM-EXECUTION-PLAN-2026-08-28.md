@@ -115,6 +115,20 @@ health → Runtime info, а `GET /api/runtime/info` и `POST /api/runtime/run`
 per-attempt Docker labels и production isolation остаются отдельными
 promotion gates и не объявляются выполненными этим smoke.
 
+### Execution update — G7 evidence-chain contract slice — 29 августа 2026
+
+Повторная проверка target `main` после G6-029 подтверждает доступную часть
+evidence chain: `pnpm --filter @fluent/api test` — 38/38, projection rebuild —
+2/2, Web smoke — 21/21, typecheck/lint/build — PASS. В G7 уже опубликованы
+канонические семь learning-фаз (`prediction`, `run`, `submit`, `explanation`,
+`defense`, `reflection`, `repeat`), строгие `evidenceId`/`rubricRevision` для
+explanation/defense, deterministic rebuild прогресс- и revision-projection и
+bounded exact-revision Evidence Journal (`eba5dce` и предшествующие G7
+коммиты). Поэтому в чек-листе отмечены `G7-009`, `G7-013` и `G7-019`.
+Evaluator-backed spoken review, полноценный canonical event ledger и
+backup/restore остаются открытыми (`G7-012`, `G7-015`, `G7-023`); статус G7 не
+повышается до production `PASS`.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1166,11 +1180,11 @@ edges до переноса product code.
 
 ### G7.2. Evidence chain
 
-- [ ] `G7-009` Prediction, Run, Submit, Explanation, Defense, Reflection и Repeat имеют отдельные evidence kinds.
+- [x] `G7-009` Prediction, Run, Submit, Explanation, Defense, Reflection и Repeat имеют отдельные evidence kinds; canonical mapping и mismatch guards зафиксированы в G7 evidence contract.
 - [x] `G7-010` Evidence references immutable revisions и evaluator policy.
 - [x] `G7-011` Accepted executable evidence создаётся только из pass verdict.
 - [ ] `G7-012` Explanation/defense требуют rubric/evaluator и не наследуют pass автоматически.
-- [ ] `G7-013` Progress projection rebuildable из canonical events/evidence.
+- [x] `G7-013` Progress projection rebuildable из canonical events/evidence; deterministic rebuild test PASS.
 - [x] `G7-014` Replay не раскрывает forbidden content.
 - [ ] `G7-015` Backup/restore сохраняет chain и hashes.
 
@@ -1179,7 +1193,7 @@ edges до переноса product code.
 - [x] `G7-016` Run и Submit визуально различимы по intent/effect.
 - [x] `G7-017` До Submit UI не обещает mastery.
 - [x] `G7-018` Public feedback объясняет next action без hidden-test hints.
-- [ ] `G7-019` Evidence drawer/journal показывает источник verdict и exact revision.
+- [x] `G7-019` Evidence drawer/journal показывает источник verdict и exact revision; bounded Next proxy и empty/error/retry states проверены.
 - [x] `G7-020` Failure recovery не теряет source/prediction.
 
 ### Gate G7
