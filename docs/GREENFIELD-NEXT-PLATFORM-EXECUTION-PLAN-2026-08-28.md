@@ -33,6 +33,8 @@ Default branch: **`main`**
 - `1d24738` — G11 explicit curriculum coverage evidence.
 - `85ea1c0` — project-scoped PostgreSQL Studio outbox projection with live
   idempotent author→review→publish replay and restart recovery.
+- `87cdff5` — G10 PostgreSQL outbox live evidence and disposable-stack
+  cleanup; `23a1470` — gate index synchronized with the pushed target head.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
