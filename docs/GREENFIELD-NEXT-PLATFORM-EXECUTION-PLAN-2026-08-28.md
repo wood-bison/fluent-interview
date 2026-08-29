@@ -321,6 +321,19 @@ multi-host DR и human sign-off остаются отдельными promotion 
 `G7-008/G7-021/G7-024` (live browser authority/leak journey), secret-manager,
 cross-service ledger и human promotion gates открытыми.
 
+Следом закрыта доступная UI-часть G6 без расширения runtime claim:
+
+- `cc72957` добавляет focus handoff в `Runtime evidence` после Run/Submit и
+  после error/cancel, `aria-live`/`aria-busy`, явный accessible name, retry
+  action и submit progress status.
+- `cf3cf1e` фиксирует G6 evidence/checksums. Web typecheck/lint, smoke **20/20**
+  и format PASS; G6-018/G6-021/G6-023 отмечены закрытыми для текущего
+  controlled workbench.
+
+Target `origin/main == cf3cf1e`; immutable RC tag не перемещён. CodeMirror/xterm
+lazy-loading, реальный TypeScript revision, per-attempt Docker supervisor и
+OS-level network namespace остаются честно открытыми.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -906,12 +919,12 @@ edges до переноса product code.
 ### G6.3. Practice workbench
 
 - [ ] `G6-017` Port CodeMirror/editor, terminal/output и task instructions как reusable learning components.
-- [ ] `G6-018` Editor заполняет доступную высоту, resize/scroll ownership tested.
+- [x] `G6-018` Editor заполняет доступную высоту, resize/scroll ownership tested.
 - [x] `G6-019` Language/runtime selector показывает только compatible released options.
 - [ ] `G6-020` Node golden task предлагает JS/TS только если обе revisions реально существуют.
-- [ ] `G6-021` Run, reset, hints, errors, loading/cancel/retry имеют ясные states.
+- [x] `G6-021` Run, reset, hints, errors, loading/cancel/retry имеют ясные states.
 - [ ] `G6-022` xterm/large editor chunks lazy-loaded; initial route budget соблюдён.
-- [ ] `G6-023` Keyboard, screen-reader labels, focus after run и terminal fallback PASS.
+- [x] `G6-023` Keyboard, screen-reader labels, focus after run и terminal fallback PASS.
 
 ### Gate G6
 
