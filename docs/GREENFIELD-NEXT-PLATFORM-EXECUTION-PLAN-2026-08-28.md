@@ -79,6 +79,12 @@ incident capture и scoped Docker shutdown прошли. Evidence и checksums �
 - `6653d92` — target G12 follow-up, known limitation и индекс синхронизированы;
   `ae49f65` обновляет индекс до текущего target head. External reviewer finding и re-check записаны в
   `fluent-interview-platform/docs/verification/greenfield/G12/independent-review.md`.
+- `f9a4eca` — legacy aliases из route manifest получили явные Next.js
+  non-permanent redirects (включая `/lab`, `/learning-map`, `/concept/:id`,
+  `/next`, `/journal`, `/graph-guide`, `/migration-plan`); Web smoke фиксирует
+  полный source→destination mapping.
+- `059666e` — G12 index, diff summary и independent-review follow-up выровнены
+  с фактическим target head после route remediation.
 
 Проверены `pnpm check` (lint/typecheck, API 12/12, Web 16/16, stack 8/8,
 curriculum 5/5, content 3/3, Navigator 2/2, Studio 3/3, Next build), format,
