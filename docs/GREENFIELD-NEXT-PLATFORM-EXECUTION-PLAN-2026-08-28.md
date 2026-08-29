@@ -65,6 +65,31 @@ incident capture и scoped Docker shutdown прошли. Evidence и checksums �
 `gate.json.status` оставлен `AWAITING_INDEPENDENT_REVIEW`: 57 curriculum gaps,
 только Node runtime, connected-LM/human visual/security/CI gates ещё не закрыты.
 
+### Execution update — post-RC audit remediation — 29 августа 2026
+
+После live route crawl и adversarial review в target `main` опубликованы два
+атомарных исправления и отдельная evidence-запись:
+
+- `3ccdd27` — Program теперь ведёт каждый lesson в `/practice/lesson/<id>`;
+  preview-урок явно сообщает, что released question/activity ещё не издана,
+  вместо ложного executable slug и «station not published».
+- `174174b` — submit idempotency вынесена в durable project-scoped
+  `submit-idempotency.v1` журнал; exact verdict replay и conflict переживают
+  API/runtime restart и выход за окно learner projection `recent(500)`.
+- `6653d92` — target G12 follow-up, known limitation и индекс синхронизированы
+  с `origin/main == 6653d92`; external reviewer finding и re-check записаны в
+  `fluent-interview-platform/docs/verification/greenfield/G12/independent-review.md`.
+
+Проверены `pnpm check` (lint/typecheck, API 12/12, Web 16/16, stack 8/8,
+curriculum 5/5, content 3/3, Navigator 2/2, Studio 3/3, Next build), format,
+boundary, drift, toolchain, content и evidence guards. На свежесобранном
+`fluent-platform-g12-fullcheck` выполнены browser lesson preview, golden
+Run/Submit, exact replay после `docker compose restart api` и `409` для
+изменённого payload под прежним key. G12 по-прежнему
+`AWAITING_INDEPENDENT_REVIEW`: это remediation evidence, а не production claim;
+57 curriculum gaps, only-Node runtime, full corpus/multi-language, connected AI,
+visual/a11y, CI/SBOM и human sign-off остаются открытыми по `known-limitations`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
