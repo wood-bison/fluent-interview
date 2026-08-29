@@ -382,6 +382,27 @@ Target `origin/main == 9d99b16`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
 не перемещён. Следующие G9 promotion gates — connected-model/offline UX,
 authority/leakage evals и durable PostgreSQL conversation projection.
 
+### Execution update — G6 control/worker boundary и G8 live bundle — 29 августа 2026
+
+Следующий implementation batch закрыл две узкие, проверяемые границы:
+
+- `1b6fa9b` отделяет control API runtime от `WorkerSupervisor`; текущий
+  `ProcessWorkerSupervisor` сохраняет Node policy, а будущий Docker/namespace
+  backend подключается через интерфейс. Go delegation test передаёт ровно
+  провалидированный request.
+- `8510ce3` фиксирует G6 evidence/checksums и отмечает `G6-002` закрытым только
+  для структурного разделения. Per-attempt Docker labels/TTL и OS network
+  namespace остаются открытыми.
+- `a6df0e8` добавляет opt-in `pnpm observability:live`: released catalog,
+  четыре synthetic evidence facet, idempotent replay и metadata-only bundle
+  через публичную Next boundary.
+- `eeab2ef` фиксирует G8 live-bundle evidence/checksums; target `main` и
+  `origin/main` указывают на `eeab2ef`.
+
+Эта волна не меняет production claim: corpus promotion, multi-language runtime,
+OTLP/load/human observability drills и G8/G11/G12 final gates остаются явно
+открытыми.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -945,7 +966,10 @@ edges до переноса product code.
 ### G6.1. Runtime port
 
 - [x] `G6-001` Port exact Runtime contracts, manifests, digest/resource/sanitization primitives через Port Ledger.
-- [ ] `G6-002` Разделить control API, sandbox supervisor и disposable workers.
+- [x] `G6-002` Разделить control API, sandbox supervisor и disposable workers:
+      `WorkerSupervisor` boundary отделяет control plane от process-backed
+      disposable worker; Docker/namespace implementation остаётся отдельным
+      hardening scope.
 - [x] `G6-003` Web/Nest/runtime-control не имеют Docker socket.
 - [ ] `G6-004` Если local sandbox supervisor использует Docker API, он isolated, allowlisted, authenticated и отдельно threat-modeled.
 - [x] `G6-005` Supervisor разрешает только pinned image, fixed command, one approved file и project-scoped runtime labels.
