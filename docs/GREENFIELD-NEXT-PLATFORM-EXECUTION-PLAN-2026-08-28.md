@@ -221,6 +221,27 @@ backup/restore, G8 durable outbox/mastery/project/observability, G9 connected
 model/human gates, G11 curriculum corpus и G12 independent review остаются
 явно открытыми и не получают галочек от этого evidence.
 
+### Execution update — unseen-transfer event authority — 29 августа 2026
+
+Следующая G8-005 волна закрыла API-side gap между server-issued issuer и
+append-only progress ledger:
+
+- `50e4a5a` усиливает `progress-event.v1`: unseen transfer обязан содержать
+  точные `track/module/lesson/question` placement и UUID idempotency key;
+  `ProgressService.append()` повторно вычисляет released variant/context через
+  тот же server-owned issuer и отклоняет forged identity до persistence.
+- Тесты покрывают exact retry, новый ключ с новым server-issued вариантом,
+  изменение placement identity и forged opaque IDs; ledger после отклонения
+  остаётся пустым.
+- `49e435a` фиксирует G8 evidence, checksums и known limitations. В target
+  `docs/verification/greenfield/G8/` сохранены точные команды и граница:
+  prompt-specific unseen suites для всех языков и человеческие/load/PG drills
+  ещё не считаются закрытыми.
+
+Target `main` и `origin/main` теперь указывают на `49e435a`; immutable RC tag
+`rc-2026.08.29.1 → 476aa01` намеренно не перемещён. Проверены API **32/32**,
+progress **4/4**, contracts/domain builds и G8 checksums.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -884,7 +905,10 @@ edges до переноса product code.
 - [x] `G8-002` Mastery policy требует нужные evidence facets и versioned rubric.
 - [x] `G8-003` Cold repeat назначается server-side через реальное окно времени.
 - [x] `G8-004` Time travel/browser clock не закрывает repeat.
-- [ ] `G8-005` Unseen transfer использует новую variant/context, не тот же fixture.
+- [x] `G8-005` Unseen transfer использует новую server-issued variant/context,
+  привязанную к released placement и UUID idempotency key; forged IDs не
+  попадают в ledger. Prompt-specific evaluator families остаются отдельным
+  promotion scope.
 - [x] `G8-006` Hint/AI dependence сохраняется как AssistanceEvent и влияет на claim policy прозрачно.
 - [x] `G8-007` Revision planner использует prerequisites, decay и failed concepts.
 - [x] `G8-008` Learning history переживает telemetry deletion/restart.
