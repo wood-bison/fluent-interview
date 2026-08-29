@@ -465,6 +465,20 @@ JSONL/rebuild scope. Paid-portal licensing/import, PostgreSQL authority/outbox,
 Kafka/Redis benchmark и внешний load/rollback остаются promotion gates; статус
 G10 сохраняется `PASS_WITH_LIMITATIONS`, а RC tag не перемещён.
 
+### Execution update — G6 reusable runtime learning components — 29 августа 2026
+
+`d32ba2f` выделяет из `RuntimeWorkbench` три typed reusable surface:
+`RuntimeEditor`, `RuntimeActionBar` и `RuntimeEvidencePanel`. Orchestration,
+API boundary, cancellation и authority остаются в одном owner; labels,
+`aria-live`, focus handoff, Run/Submit distinction и retry/cancel states
+сохранены без копирования разметки для будущих runtime profiles.
+
+`9d10e96` фиксирует G6 evidence/checksums. Повторены web typecheck/lint/build и
+smoke **20/20**, checksum verification и `git diff --check` — PASS. Это закрывает
+`G6-017` как reusable React surface; CodeMirror/xterm, настоящая TypeScript
+revision и OS-level worker network namespace остаются отдельными promotion
+пунктами (`G6-020`, `G6-022`, `G6-004/006/007`). Target `origin/main == 9d10e96`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1052,7 +1066,10 @@ edges до переноса product code.
 
 ### G6.3. Practice workbench
 
-- [ ] `G6-017` Port CodeMirror/editor, terminal/output и task instructions как reusable learning components.
+- [x] `G6-017` Port editor, terminal/output и task instructions как reusable
+      learning components (`RuntimeEditor`, `RuntimeActionBar`,
+      `RuntimeEvidencePanel`; CodeMirror/xterm остаются optional до измеренной
+      необходимости).
 - [x] `G6-018` Editor заполняет доступную высоту, resize/scroll ownership tested.
 - [x] `G6-019` Language/runtime selector показывает только compatible released options.
 - [ ] `G6-020` Node golden task предлагает JS/TS только если обе revisions реально существуют.
