@@ -205,7 +205,8 @@ production gate остаются открытыми.
 
 ### Execution update — G7 backup integrity rehearsal — 29 августа 2026
 
-Target `main` публикует `c63dcb4` и `78beb18`: `pnpm data:backup -- --confirm`
+Target `main` публикует `c63dcb4`, `78beb18`, `2369aa2` и `51835dd`:
+`pnpm data:backup -- --confirm`
 создал project-scoped PostgreSQL dump, allowlisted ledger archive (включая
 `learning-assessments.jsonl`) и 12-file release-artifact manifest с SHA-256.
 Новый `pnpm data:restore -- --dry-run --input <backup>` проверяет все hashes,
@@ -213,10 +214,14 @@ tar listing и artifact allowlist, возвращая `valid=true`, `exitCode=0`
 `sideEffects="none"`. Это безопасно воспроизводимо на живом Compose stack и
 не трогает пользовательские volumes.
 
-Полноценный destructive restore не объявляется выполненным: для закрытия
-`G7-015`/`G7-023` нужен отдельный disposable volume/Compose project, реальное
-восстановление всех ledgers, проверка post-restore hashes и rebuild
-progress/evidence projections. Поэтому gate остаётся `PASS_WITH_LIMITATIONS`.
+Полноценный destructive restore теперь также проверен в отдельном disposable
+Compose project: restore/readiness завершились с `0`, assessment readback
+вернул исходный passing record, progress snapshot сохранил `completed=1/20`, а
+временные volumes/networks/containers удалены scoped `compose down --volumes`.
+Это закрывает `G7-015` для текущего single-project ledger slice. Полный
+production/multi-tenant event-ledger matrix, rebuild всех projections и
+human/semantic review остаются открытыми, поэтому gate остаётся
+`PASS_WITH_LIMITATIONS`.
 
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
@@ -1275,7 +1280,7 @@ edges до переноса product code.
 - [x] `G7-012` Explanation/defense требуют versioned rubric/evaluator, точный placement и не наследуют pass автоматически; deterministic Node slice PASS, human/semantic review остаётся отдельным promotion gate.
 - [x] `G7-013` Progress projection rebuildable из canonical events/evidence; deterministic rebuild test PASS.
 - [x] `G7-014` Replay не раскрывает forbidden content.
-- [ ] `G7-015` Backup/restore сохраняет chain и hashes.
+- [x] `G7-015` Backup/restore сохраняет chain и hashes для текущего single-project ledger slice; disposable restore/readback/restart PASS, полный multi-tenant matrix остаётся promotion gate.
 
 ### G7.3. Learner UX
 
