@@ -826,6 +826,29 @@ chunks `1,045,641` при `1,200,000`; heavy editor packages не найдены
 interaction latency, code-splitting/lazy-loading UX, visual diff и
 accessibility human review остаются открытыми.
 
+### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
+
+На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
+вызывал `content:validate` до сборки `@fluent/contracts`, поэтому локальный
+кэш скрывал отсутствующий `packages/contracts/dist/index.js`. Коммит
+`190959f` сделал root `content:validate` self-sufficient: он сначала собирает
+contracts, затем запускает валидаторы. Regression guard в
+`tools/dev/test/ci-policy.test.mjs` фиксирует этот порядок.
+
+После исправления на текущем `main`
+(`190959f8174e2ae52130ce7f3ba3dfd28172fa38`) завершились зелёными реальные
+remote workflow runs: `Fluent Interview Platform CI` run `33246832116`
+(`Verify platform` и `Production dependency audit`) и `security-policy` run
+`33246833382` (`codeql` и `dependency-review`). Документ и job IDs записаны в
+target [G12 CI evidence](../fluent-interview-platform/docs/verification/greenfield/G12/ci-verification-2026-08-29.md),
+а `d19d1cc` синхронизирует target index и checksums.
+
+Это подтверждает текущий `main`, но не exact immutable RC SHA
+`rc-2026.08.29.1` (`476aa01`). `G12-024` остаётся открытым до проверки
+required checks именно на RC; `upload:false`/`continue-on-error` в CodeQL также
+не заменяют SBOM/provenance/signature attestation. Curriculum, language
+conformance, visual/accessibility и owner/human gates не изменились.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
