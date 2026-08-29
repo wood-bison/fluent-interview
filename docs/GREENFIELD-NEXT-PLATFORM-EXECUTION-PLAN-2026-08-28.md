@@ -51,9 +51,10 @@ human learning sign-off не закрыты.
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
 `/private/tmp/fluent-platform-rc-bLxvWh` из `origin/main`. Release commit:
 `476aa01` (`release(g12): prepare Fluent Interview Platform release candidate`),
-handoff metadata: `6cec7bb` (`docs(g12): finalize RC manifest and independent handoff`)
-и `e58d9f5` (индекс выровнен с pushed head). Все коммиты опубликованы в `main`;
-immutable tag `rc-2026.08.29.1` указывает на `476aa01`, а `origin/main == e58d9f5`.
+handoff metadata: `6cec7bb` (`docs(g12): finalize RC manifest and independent handoff`),
+`e58d9f5` (индекс выровнен с pushed head) и `57a54a5` (счётчик evidence
+commands выровнен с NDJSON). Все коммиты опубликованы в `main`; immutable tag
+`rc-2026.08.29.1` указывает на `476aa01`, а `origin/main == 57a54a5`.
 
 Локальные quality/build/repository guards, 12 learner routes, Playwright
 theme/locale/keyboard/overflow smoke, Node Run/Submit/Replay, Navigator
