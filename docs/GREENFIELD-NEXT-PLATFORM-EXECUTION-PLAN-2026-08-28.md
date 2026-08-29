@@ -96,6 +96,35 @@ Run/Submit, exact replay после `docker compose restart api` и `409` для
 57 curriculum gaps, only-Node runtime, full corpus/multi-language, connected AI,
 visual/a11y, CI/SBOM и human sign-off остаются открытыми по `known-limitations`.
 
+### Execution update — intake/reconciliation and cancellation hardening — 29 августа 2026
+
+После этой проверки target `main` продолжил исполняться небольшими
+воспроизводимыми batches, не переписывая RC tag и не подменяя открытые
+production-gates:
+
+- `85f7474` добавляет `content:inventory`: metadata-only детерминированный
+  snapshot reference Vault и Brain mapping (1597 Markdown records, 1594 stable
+  IDs, 1591 accepted mappings, 6 unmapped; source wording/answers не попадают в
+  evidence).
+- `be04326` добавляет `content:reconcile` и поштучный
+  `vault-reconciliation.v1` ledger. Все 1597 records имеют target state и
+  review requirement; 1591 остаются `pending` до canonical promotion, 6
+  получают явный `quarantined` с причиной. `released=0` честно показывает,
+  что seed catalog из пяти authored cards не является импортом Vault.
+- `6fd8a49` делает AbortController для Run/Submit в Workbench настоящим,
+  `156e4a8` исправляет Navigator loading/retry states, а `4408366` передаёт
+  client abort через Next Navigator/runtime proxies. Эти hardening commits
+  закрывают пользовательские recovery defects, но не заявляют G6/G9 как
+  production `PASS`.
+
+Evidence и инструкции находятся в target
+`docs/verification/greenfield/G5/vault-inventory-2026-08-29.md`,
+`G5/vault-reconciliation-2026-08-29.md` и обновлённом `G5` index. Фактический
+target head после этого batch: `be04326`; immutable RC
+`rc-2026.08.29.1 → 476aa01` не изменён. Следующий content шаг — reviewer-led
+disposition/promotion и role/depth/forbidden-set ledgers; следующий runtime
+шаг — isolated supervisor/worker evidence, а не фиктивное расширение counts.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
