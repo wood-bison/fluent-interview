@@ -50,6 +50,13 @@ Default branch: **`main`**
 - `1338644` — deterministic `vault-authoring-queue.v1` over the full
   Brain/Vault quality inventory; `6e46da3` — G11 queue evidence/checksums;
   `b37bd65` — target gate index synced.
+- `f9cb6e9` — Studio command transitions now append as complete batches through
+  one PostgreSQL `BEGIN`/`COMMIT` (with rollback on failure), while JSONL and
+  minimal test doubles retain a compatible sequential fallback;
+  `ae225bb` — G10 atomicity evidence/checksums; `17aadca` — target gate index
+  synchronized with that evidence commit. This closes only the local authority
+  atomic-append slice; managed distributed transactions and external consumers
+  remain open.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -1576,6 +1583,10 @@ edges до переноса product code.
       и artifacts manifest в allowlisted scoped bundle.
 - [x] `G10-019` Rollback release не удаляет authored history; pointer transition
       append-only и проверен stale/unknown guards.
+- [x] `G10-019a` Studio create/review/publish transitions are assembled before
+      authority append and are atomic on the PostgreSQL ledger; deterministic
+      `BEGIN → COMMIT`/rollback proof and live replay/restart evidence are
+      recorded in target G10.
 - [ ] `G10-020` Redis/Kafka подключаются только после benchmark/ADR.
 
 ### Gate G10
