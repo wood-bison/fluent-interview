@@ -302,6 +302,25 @@ Target `origin/main == 4967f1b`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
 не перемещён. Зашифрованное off-host хранение, key rotation, retention policy,
 multi-host DR и human sign-off остаются отдельными promotion gates.
 
+### Execution update — production artifact-wide canary — 29 августа 2026
+
+Следующий узкий G7 batch закрыл canary gap только в пределах явно объявленного
+локального production artifact set:
+
+- `fb7e589` добавляет manifest `G7/artifact-canary-manifest.json` с четырьмя
+  корнями: Next standalone/static, API dist и local projections. Сканер
+  ограничен 10 000 файлами и 128 MiB на файл, не следует symlink-ам и ищет
+  конкретные private evaluator/runtime маркеры без generic `/output` false
+  positive.
+- `c6f8385` фиксирует G7 evidence, gate target/checksums и CI policy. После
+  production build проверено **1 832 файла, 0 findings**; security **5/5**,
+  CI policy **1/1**, build и evidence envelope PASS.
+
+В target `origin/main == c6f8385`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
+не перемещён. Это закрывает `G7-007` для declared artifact roots и оставляет
+`G7-008/G7-021/G7-024` (live browser authority/leak journey), secret-manager,
+cross-service ledger и human promotion gates открытыми.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -921,7 +940,7 @@ edges до переноса product code.
 - [x] `G7-004` Verdict связывает task/revision/profile/image/suite/rubric/source digests.
 - [x] `G7-005` Result types: pass, fail, error, timeout, refused; learner fail ≠ platform error.
 - [x] `G7-006` Retry/idempotency/replay policy не создаёт duplicate Evidence.
-- [ ] `G7-007` Hidden suite canary ищется во всех API/log/trace/stdout/stderr/artifacts.
+- [x] `G7-007` Hidden suite canary ищется во всех объявленных API/log/trace/stdout/stderr/artifact surfaces; production artifact manifest scan PASS.
 - [ ] `G7-008` Browser tampering/self-grade/LLM text не меняют verdict.
 
 ### G7.2. Evidence chain
