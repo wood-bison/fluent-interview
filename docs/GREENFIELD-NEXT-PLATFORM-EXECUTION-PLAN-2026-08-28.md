@@ -180,6 +180,29 @@ release: 1 591 остаются `pending`, 6 — `quarantined`, все 1 597 т�
 license, answer layers, typed placements, assessed activities и promotion в
 canonical release остаются открытыми. G11 не повышается до `PASS`.
 
+### Execution update — G7 explanation/defense evaluator — 29 августа 2026
+
+Target `main` публикует `c319fbf` и `085fbd6` с versioned
+`learning-assessment.v1` и двумя Node event-loop rubric scenarios
+(`explanation` и `defense`). Сервер проверяет точный placement
+`track/module/lesson/question`, `activityId`, `scenarioId` и `rubricRevision`,
+выдаёт metadata-only pass/fail assessment с idempotent replay и сохраняет
+только digest/result в append-only ledger; raw responses не пишутся. Progress
+принимает `explanation_recorded`/`defense_recorded` только при совпадении
+persisted passing assessment, поэтому executable Submit больше не наследуется
+автоматически.
+
+На scoped Compose live vector дал rubric `200`, assessment `201` с
+`status=pass`/`score=1`, повтор вернул тот же `assessmentId`, а matching
+progress event дал `201` без изменения mastery/unlock. Контрактные, API, web,
+stack и content checks прошли; checksums и команды воспроизведения записаны в
+`fluent-interview-platform/docs/verification/greenfield/G7/`.
+
+Это закрывает deterministic часть `G7-012`, но не human/semantic quality:
+минимальная длина ответа не доказывает правильность объяснения. Expert/mock
+review, полная multi-language rubric matrix, backup/restore и итоговый G7
+production gate остаются открытыми.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1234,7 +1257,7 @@ edges до переноса product code.
 - [x] `G7-009` Prediction, Run, Submit, Explanation, Defense, Reflection и Repeat имеют отдельные evidence kinds; canonical mapping и mismatch guards зафиксированы в G7 evidence contract.
 - [x] `G7-010` Evidence references immutable revisions и evaluator policy.
 - [x] `G7-011` Accepted executable evidence создаётся только из pass verdict.
-- [ ] `G7-012` Explanation/defense требуют rubric/evaluator и не наследуют pass автоматически.
+- [x] `G7-012` Explanation/defense требуют versioned rubric/evaluator, точный placement и не наследуют pass автоматически; deterministic Node slice PASS, human/semantic review остаётся отдельным promotion gate.
 - [x] `G7-013` Progress projection rebuildable из canonical events/evidence; deterministic rebuild test PASS.
 - [x] `G7-014` Replay не раскрывает forbidden content.
 - [ ] `G7-015` Backup/restore сохраняет chain и hashes.
