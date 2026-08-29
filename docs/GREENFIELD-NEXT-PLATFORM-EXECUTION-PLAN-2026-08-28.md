@@ -798,6 +798,21 @@ target и не перемещает immutable `rc-2026.08.29.1`. CodeQL, SBOM/pr
 signature, полная threat-model проверка, CI на exact RC SHA, visual/a11y и
 owner/human learning sign-off остаются обязательными открытыми gates.
 
+### Execution update — G12 supply-chain guard — 29 августа 2026
+
+Target `main` добавил `77c6b26` с fail-closed командой
+`pnpm security:supply-chain`, которая собирает CycloneDX-compatible
+production inventory из frozen pnpm graph, проверяет immutable action pins и
+запрещённый `pull_request_target`, затем запускает `pnpm audit --prod
+--audit-level high`. На срезе `0266138` inventory содержит 175 компонентов,
+11 workflow actions pinned на SHA, high/critical advisories равны нулю.
+`64ea491` синхронизирует gate index, а G12 evidence хранит только
+counts/hashes.
+
+Это закрывает machine-only dependency/lockfile/action-pin slice G12-019, но
+не весь пункт: CodeQL, registry provenance, image signatures и независимый
+review по-прежнему обязательны и не помечены production PASS.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
