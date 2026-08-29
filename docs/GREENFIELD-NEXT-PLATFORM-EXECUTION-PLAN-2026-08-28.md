@@ -280,6 +280,28 @@ Target `origin/main == e728a41`; immutable RC tag не перемещён. Эт�
 server-side correlation surface, но OTLP collector/export, outage/cardinality
 drill и human incident walkthrough остаются promotion scope.
 
+### Execution update — exact backup/restore and cache boundary — 29 августа 2026
+
+G8-024 теперь закрыт для локального single-host recovery scope отдельным
+commit-gated drill:
+
+- `ae8026b` добавляет к `data:restore` обязательную application restart boundary
+  после успешной integrity-проверки. Перезапускаются `api`, `runtime-control`,
+  `task-evaluator` и `web`; затем Compose должен вернуть readiness для всех
+  сервисов, иначе операция завершается с ошибкой.
+- `4967f1b` фиксирует evidence в
+  `fluent-interview-platform/docs/verification/greenfield/G8/backup-restore-full-chain-2026-08-29.md`.
+  На disposable project `fluent-g8-restore` backup manifest проверил SHA-256
+  PostgreSQL/ledger/artifact inputs, restore удалил post-backup submit,
+  progress, project и observability sentinels и вернул baseline line counts.
+- Adversarial same-key probe отправил изменённый source payload после restore:
+  вместо stale `409 idempotency_conflict` получен свежий `200/pass` с новым
+  verdict digest. Это доказывает очистку in-memory caches, а не только файлов.
+
+Target `origin/main == 4967f1b`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
+не перемещён. Зашифрованное off-host хранение, key rotation, retention policy,
+multi-host DR и human sign-off остаются отдельными promotion gates.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -944,9 +966,9 @@ edges до переноса product code.
 - [x] `G8-003` Cold repeat назначается server-side через реальное окно времени.
 - [x] `G8-004` Time travel/browser clock не закрывает repeat.
 - [x] `G8-005` Unseen transfer использует новую server-issued variant/context,
-  привязанную к released placement и UUID idempotency key; forged IDs не
-  попадают в ledger. Prompt-specific evaluator families остаются отдельным
-  promotion scope.
+      привязанную к released placement и UUID idempotency key; forged IDs не
+      попадают в ledger. Prompt-specific evaluator families остаются отдельным
+      promotion scope.
 - [x] `G8-006` Hint/AI dependence сохраняется как AssistanceEvent и влияет на claim policy прозрачно.
 - [x] `G8-007` Revision planner использует prerequisites, decay и failed concepts.
 - [x] `G8-008` Learning history переживает telemetry deletion/restart.
@@ -971,15 +993,16 @@ edges до переноса product code.
 
 ### Gate G8
 
-> Progress/project slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
-> at targets `5ba0af1` and `6f03b88` (`PASS_WITH_LIMITATIONS`). Backend project
-> breadth, observability activities, backup/restore and the final G8 gate remain open.
+> Progress/project/recovery slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
+> at target `4967f1b` (`PASS_WITH_LIMITATIONS`). Backend project breadth,
+> non-Node observability activities, off-host recovery and the final G8 gate
+> remain open.
 
-- [ ] `G8-021` Progress rebuild, cold-repeat timing, unseen transfer and hint-dependence tests PASS.
-- [ ] `G8-022` Project milestone evidence cannot be self-declared.
-- [ ] `G8-023` Observability lab trace/log/metric correlation PASS.
-- [ ] `G8-024` Data backup/restore сохраняет progress/mastery/revision/projects.
-- [ ] `G8-025` Commit: `feat(g8): deliver durable mastery progress and project evidence`.
+- [x] `G8-021` Progress rebuild, cold-repeat timing, unseen transfer and hint-dependence tests PASS.
+- [x] `G8-022` Project milestone evidence cannot be self-declared.
+- [x] `G8-023` Observability lab trace/log/metric correlation PASS (local server bundle; OTLP/outage/load promotion remains).
+- [x] `G8-024` Data backup/restore сохраняет progress/mastery/revision/projects (scoped local drill with exact ledger restore and cache restart boundary).
+- [x] `G8-025` Atomic G8 commits: `136ed7e`, `66dd331`, `ae8026b`, `4967f1b`.
 - [ ] `G8-026` `gate.json.status = PASS`.
 
 ---
@@ -1111,18 +1134,18 @@ edges до переноса product code.
 
 ### G11.1. Production target matrix
 
-| Path | Capabilities / core placements | Primary / support | Activities | Projects / checkpoints |
-| --- | ---: | ---: | ---: | ---: |
-| Node.js + NestJS | 32 / 320 | 224 / 96 | 70 | 6 / 7 |
-| Java + Spring | 32 / 320 | 224 / 96 | 70 | 6 / 7 |
-| Go | 28 / 280 | 196 / 84 | 70 | 6 / 6 |
-| .NET + C# | 28 / 280 | 196 / 84 | 70 | 6 / 6 |
-| Kotlin + JVM | 28 / 280 | 196 / 84 | 70 | 6 / 6 |
-| Python backend | 28 / 280 | 196 / 84 | 70 | 6 / 6 |
-| React + Next.js + Web | 36 / 360 | 252 / 108 | 50 | 6 / 7 |
-| Algorithms overlay | 15 families / 120 | 75 / 45 | 60 | 4 / 6 |
-| System Design overlay | 50 / 500 | 350 / 150 | 50 | 6 / 7 |
-| Behavioral overlay | 12 / 120 | 84 / 36 | 24 spoken | 6 / 5 |
+| Path                  | Capabilities / core placements | Primary / support | Activities | Projects / checkpoints |
+| --------------------- | -----------------------------: | ----------------: | ---------: | ---------------------: |
+| Node.js + NestJS      |                       32 / 320 |          224 / 96 |         70 |                  6 / 7 |
+| Java + Spring         |                       32 / 320 |          224 / 96 |         70 |                  6 / 7 |
+| Go                    |                       28 / 280 |          196 / 84 |         70 |                  6 / 6 |
+| .NET + C#             |                       28 / 280 |          196 / 84 |         70 |                  6 / 6 |
+| Kotlin + JVM          |                       28 / 280 |          196 / 84 |         70 |                  6 / 6 |
+| Python backend        |                       28 / 280 |          196 / 84 |         70 |                  6 / 6 |
+| React + Next.js + Web |                       36 / 360 |         252 / 108 |         50 |                  6 / 7 |
+| Algorithms overlay    |              15 families / 120 |           75 / 45 |         60 |                  4 / 6 |
+| System Design overlay |                       50 / 500 |         350 / 150 |         50 |                  6 / 7 |
+| Behavioral overlay    |                       12 / 120 |           84 / 36 |  24 spoken |                  6 / 5 |
 
 Это **target placements**, а не требование написать 2 860 уникальных похожих
 QuestionCards. Shared generic cards могут иметь reviewed placements в нескольких
