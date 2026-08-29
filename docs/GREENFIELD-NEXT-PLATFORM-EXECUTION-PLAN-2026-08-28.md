@@ -65,6 +65,28 @@ incident capture и scoped Docker shutdown прошли. Evidence и checksums �
 `gate.json.status` оставлен `AWAITING_INDEPENDENT_REVIEW`: 57 curriculum gaps,
 только Node runtime, connected-LM/human visual/security/CI gates ещё не закрыты.
 
+### Execution update — G6 golden learner journey — 29 августа 2026
+
+В target `main` опубликованы два атомарных коммита для закрытия доступной
+части `G6-024`:
+
+- `92f7e5f` добавляет `tools/runtime/golden-journey.mjs` и команду
+  `pnpm runtime:journey`; journey требует чистый checkout по флагу
+  `FLUENT_GOLDEN_REQUIRE_CLEAN=1` и проверяет цепочку
+  `program → practice → lesson/node-event-loop → released question →
+  runnable task → Run`;
+- `ee08541` добавляет G6 evidence, machine-readable outputs и checksums.
+
+Live-прогон из свежего локального clone target commit `ee08541` на
+`http://127.0.0.1:47360` дал пять HTTP 200
+маршрутов, опубликованный `node-26-commonjs`, `runStatus=passed`, пять строк
+stdout, восемь trace events, `predictionMatch=true`, cleanup и неизменённые
+`mastery/unlock/accepted=false`. Response content не попадает в evidence.
+Команды web smoke/typecheck/lint/build также PASS. Это закрывает только
+маршрутный golden-path smoke; G6 network namespace, Docker supervisor,
+TypeScript revision, lazy chunks и финальный production/human gates остаются
+явно открытыми.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1079,7 +1101,9 @@ edges до переноса product code.
 
 ### Gate G6
 
-- [ ] `G6-024` Golden Node path→lesson→question→task→Run проходит fresh clone.
+- [x] `G6-024` Golden Node path→lesson→question→task→Run проходит fresh clone;
+      clean-checkout journey `92f7e5f`/`ee08541`, 5 HTTP 200 routes и live Run
+      evidence записаны в target G6.
 - [ ] `G6-025` Canonical/starter/malformed/compile/runtime/timeout/cancel/security vectors PASS.
 - [x] `G6-026` Seeded wrong solutions действительно падают.
 - [x] `G6-027` Run не создаёт accepted/mastery/unlock.
