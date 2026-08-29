@@ -150,6 +150,36 @@ Navigator contract **2/2** тестов. Evidence target находится в
 multi-language conformance, PostgreSQL outbox/projections, connected-model и
 human/visual/CI release gates.
 
+### Execution update — promotion guard and bounded runtime capacity — 29 августа 2026
+
+Следующий batch продолжил план без фиктивного закрытия production gaps:
+
+- `dee7a6f` добавляет metadata-only `content:reconcile-validate`. Guard требует
+  уникальные source IDs/paths и SHA-256, final reviewer disposition,
+  `targetId` для `imported/merged`, reason для `quarantined/retired`, совпадающий
+  summary и отсутствие supersession cycles. На актуальном ledger он возвращает
+  `BLOCKED` (exit 1): 1591 pending, 6 quarantined, 0 imported/merged/retired,
+  1597 records требуют review. Это механический стопор, а не скрытая
+  классификация контента.
+- `dee7a6f` также делает `merged` и `retired` явными counters в
+  reconciliation summary; исходные тексты и ответы по-прежнему не попадают в
+  evidence.
+- `ef87ffc` фиксирует content integrity evidence: seed release — 5 cards,
+  `en`/`ru`, logical hash
+  `fd89426ba8bd566634e103d171b4d9fba0d010c7ac61fb478affa2cc416c0b9b`,
+  route manifest 43/43, content suite 13/13 PASS. Полный Vault hash
+  `8a65ab5551df5f09afae2e02ad5918c27f9c6c9510d608f41eefa23d30f9261e`
+  остаётся отдельным reconciliation source hash.
+- Уже опубликованный `6ddbea3` ограничивает runtime четырьмя активными
+  workers и возвращает typed `503 worker_capacity` только для валидного нового
+  запроса; malformed/replay semantics остаются deterministic. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G6/follow-up-2026-08-29.md`.
+
+Актуальный target head: `ef87ffc`, `origin/main == ef87ffc`; immutable RC
+`rc-2026.08.29.1 → 476aa01` намеренно не перемещён. Следующими остаются
+reviewer-led promotion/supersession decisions, isolated runtime supervisor и
+multi-language conformance, а также G7/G8/G10/G11/G12 production gates.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
