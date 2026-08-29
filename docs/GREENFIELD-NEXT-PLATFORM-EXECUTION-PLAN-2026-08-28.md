@@ -1,7 +1,7 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
 Дата: **28 августа 2026**
-Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 release candidate не закрыт**
+Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
 Владелец продукта: **Sergey**
 Reference workspace: `/Users/sergeyzhechko/developer/fluent-interview`
 Предлагаемый target workspace: `/Users/sergeyzhechko/developer/fluent-interview-platform`
@@ -45,6 +45,24 @@ review (`c4de6e3`), а CoveragePanel теперь декодирует серв�
 остальные lanes остаются preview. G12 может подготовить RC только с
 `AWAITING_INDEPENDENT_REVIEW`, пока corpus, runtime conformance, outbox и
 human learning sign-off не закрыты.
+
+### Execution update — G12 RC rehearsal — 29 августа 2026
+
+G12 выполнен как clean-room release-candidate rehearsal на новом clone
+`/private/tmp/fluent-platform-rc-bLxvWh` из `origin/main`. Release commit:
+`476aa01` (`release(g12): prepare Fluent Interview Platform release candidate`),
+handoff metadata: `6cec7bb` (`docs(g12): finalize RC manifest and independent handoff`).
+Оба коммита опубликованы в `main`; immutable tag `rc-2026.08.29.1` указывает
+на `476aa01`, а `origin/main == 6cec7bb`.
+
+Локальные quality/build/repository guards, 12 learner routes, Playwright
+theme/locale/keyboard/overflow smoke, Node Run/Submit/Replay, Navigator
+offline boundary, progress/evidence, Studio lifecycle, backup/restore,
+incident capture и scoped Docker shutdown прошли. Evidence и checksums находятся
+в [target G12 handoff](../fluent-interview-platform/docs/verification/greenfield/G12/gate.md)
+и [target gate index](../fluent-interview-platform/docs/verification/greenfield/INDEX.md).
+`gate.json.status` оставлен `AWAITING_INDEPENDENT_REVIEW`: 57 curriculum gaps,
+только Node runtime, connected-LM/human visual/security/CI gates ещё не закрыты.
 
 ---
 
@@ -977,10 +995,10 @@ paths; denominators и stable IDs обязаны объяснять переис
 
 ### G12.1. Full clean-room verification
 
-- [ ] `G12-001` Создать brand-new clone из `origin/main` в disposable explicit path.
-- [ ] `G12-002` Проверить exact toolchain/bootstrap instructions.
-- [ ] `G12-003` Запустить только `pnpm dev`.
-- [ ] `G12-004` Проверить `doctor/status` до/во время/после startup.
+- [x] `G12-001` Создать brand-new clone из `origin/main` в disposable explicit path.
+- [x] `G12-002` Проверить exact toolchain/bootstrap instructions.
+- [x] `G12-003` Запустить только `pnpm dev`.
+- [x] `G12-004` Проверить `doctor/status` до/во время/после startup.
 - [ ] `G12-005` Прокликать все routes/links/buttons/menus/dialogs/settings/deep links.
 - [ ] `G12-006` Проверить every route RU/EN, light/dark/system, keyboard, required viewports.
 - [ ] `G12-007` Проверить all API endpoints against generated contract.
@@ -990,11 +1008,11 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G12-011` Проверить AI absent/offline/connected/stream/cancel/timeout states.
 - [ ] `G12-012` Проверить observability off/on/outage и incident bundle.
 - [ ] `G12-013` Проверить stop/restart/backup/restore/data persistence.
-- [ ] `G12-014` Проверить clean shutdown и zero orphan resources.
+- [x] `G12-014` Проверить clean shutdown и zero orphan resources.
 
 ### G12.2. Quality/security/supply chain
 
-- [ ] `G12-015` Full format/lint/type/unit/component/contract/integration/browser suite PASS.
+- [x] `G12-015` Full format/lint/type/unit/component/contract/integration/browser suite PASS.
 - [ ] `G12-016` Runtime adversarial/conformance matrix PASS.
 - [ ] `G12-017` Hidden canary leak scan PASS.
 - [ ] `G12-018` Auth/session/CSRF/XSS/SSRF/path traversal/command injection/secrets checks PASS.
@@ -1008,29 +1026,35 @@ paths; denominators и stable IDs обязаны объяснять переис
 ### G12.3. Reconciliation and rollback
 
 - [ ] `G12-025` Port Ledger entries all `ported|adapted|dropped(reason)`; planned/unresolved = 0.
-- [ ] `G12-026` Route reconciliation unresolved = 0.
+- [x] `G12-026` Route reconciliation unresolved = 0.
 - [ ] `G12-027` Data/content/task/project/progress reconciliation unexplained delta = 0.
-- [ ] `G12-028` Target backup restored in disposable stack and reverified.
+- [x] `G12-028` Target backup restored in disposable stack and reverified.
 - [ ] `G12-029` Target startup failure followed by Reference Product restart rehearsed.
 - [ ] `G12-030` Reference Product needs no target service/data to run.
 - [ ] `G12-031` Target needs no reference service/path/symlink to run.
-- [ ] `G12-032` No legacy repo is deleted/archived by this gate.
+- [x] `G12-032` No legacy repo is deleted/archived by this gate.
 
 ### G12.4. Handoff package
 
-- [ ] `G12-033` Создать RC manifest: repo URL, branch, HEAD SHA, image digests, schema/content/task releases.
-- [ ] `G12-034` Создать final gate index G0–G12 with hashes and links.
-- [ ] `G12-035` Список known limitations пуст либо каждое ограничение блокирует production claim.
-- [ ] `G12-036` Создать reviewer runbook с одной командой и expected outputs.
-- [ ] `G12-037` Создать owner visual/learning sign-off checklist.
+- [x] `G12-033` Создать RC manifest: repo URL, branch, HEAD SHA, image digests, schema/content/task releases.
+- [x] `G12-034` Создать final gate index G0–G12 with hashes and links.
+- [x] `G12-035` Список known limitations пуст либо каждое ограничение блокирует production claim.
+- [x] `G12-036` Создать reviewer runbook с одной командой и expected outputs.
+- [x] `G12-037` Создать owner visual/learning sign-off checklist.
 
 ### Gate G12
 
-- [ ] `G12-038` Commit: `release(g12): prepare Fluent Interview Platform release candidate`.
-- [ ] `G12-039` Push `main`; verify `origin/main == HEAD`.
-- [ ] `G12-040` Создать immutable **RC tag**, не final production tag.
-- [ ] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
-- [ ] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
+- [x] `G12-038` Commit: `release(g12): prepare Fluent Interview Platform release candidate`.
+- [x] `G12-039` Push `main`; verify `origin/main == HEAD`.
+- [x] `G12-040` Создать immutable **RC tag**, не final production tag.
+- [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
+- [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
+
+`G12-005..013` и `G12-016..024` намеренно остаются без галочек там, где
+репетиция покрыла только автоматический subset (например, route crawl без
+полной ручной визуальной вычитки, offline Navigator без connected streaming,
+Node runtime без multi-language conformance). Точные границы и ожидаемые
+следующие доказательства перечислены в target `G12/known-limitations.md`.
 
 ### Что агенту запрещено писать после G12
 
