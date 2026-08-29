@@ -129,6 +129,18 @@ Evaluator-backed spoken review, полноценный canonical event ledger и
 backup/restore остаются открытыми (`G7-012`, `G7-015`, `G7-023`); статус G7 не
 повышается до production `PASS`.
 
+### Execution update — G8 project breadth release — 29 августа 2026
+
+Target `main` публикует `c678e5c` с catalog release
+`2026.08.29-projects.2`: Node, Java и Go books расширены до шести milestones,
+а `next-production-frontend` и `system-design-resilient-platform` добавлены
+как отдельные six-milestone lanes с dedicated rubrics и provenance links.
+Contract/catalog tests — 4/4, `pnpm projects:coverage` — 30/30 entries met,
+`openCount=0`; evidence и checksum ledger — `7057348`.
+Это закрывает catalog/project-scope `G8-011` и `G8-012`. Для `G8-013` книга и
+trade-off/failure-drill milestones опубликованы, но evaluator-backed defense
+activity ещё не выпущена, поэтому итоговый G8 остаётся `PASS_WITH_LIMITATIONS`.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1231,8 +1243,8 @@ edges до переноса product code.
 
 - [x] `G8-009` Port project books/milestones/rubrics/evidence links.
 - [x] `G8-010` Project milestone считается Activity только при persisted assessed evidence.
-- [ ] `G8-011` Backend projects включают concurrency, data, messaging, resilience, deployment и observability.
-- [ ] `G8-012` Frontend project включает Next architecture, performance, a11y, security и design system.
+- [x] `G8-011` Backend projects включают concurrency, data, messaging, resilience, deployment и observability; Node/Java/Go books имеют по 6 milestones, coverage 30/30 met.
+- [x] `G8-012` Frontend project включает Next architecture, performance, a11y, security и design system; `next-production-frontend` опубликован отдельной lane.
 - [ ] `G8-013` System design project требует trade-off defense и failure drill.
 - [x] `G8-014` Reference repo/project links versioned и не становятся hidden fallback.
 
@@ -1252,16 +1264,16 @@ edges до переноса product code.
 ### Gate G8
 
 > Progress/project/recovery slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
-> at target `eeab2ef` (`PASS_WITH_LIMITATIONS`). Backend project breadth,
-> non-Node observability activities, off-host recovery and the final G8 gate
-> remain open.
+> at target `7057348` (`PASS_WITH_LIMITATIONS`). Project catalog breadth for
+> backend and Next.js is closed; system-design evaluator activities, non-Node
+> observability activities, off-host recovery and the final G8 gate remain open.
 
 - [x] `G8-021` Progress rebuild, cold-repeat timing, unseen transfer and hint-dependence tests PASS.
 - [x] `G8-022` Project milestone evidence cannot be self-declared.
 - [x] `G8-023` Observability lab trace/log/metric correlation PASS (local server bundle; OTLP/outage/load promotion remains).
 - [x] `G8-024` Data backup/restore сохраняет progress/mastery/revision/projects (scoped local drill with exact ledger restore and cache restart boundary).
 - [x] `G8-025` Atomic G8 commits: `136ed7e`, `66dd331`, `ae8026b`, `4967f1b`,
-      `a6df0e8`, `eeab2ef`.
+      `a6df0e8`, `eeab2ef`, `c678e5c`, `7057348`.
 - [ ] `G8-026` `gate.json.status = PASS`.
 
 ---
