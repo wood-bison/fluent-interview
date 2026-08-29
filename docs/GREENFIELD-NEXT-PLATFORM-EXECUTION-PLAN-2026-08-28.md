@@ -180,6 +180,47 @@ human/visual/CI release gates.
 reviewer-led promotion/supersession decisions, isolated runtime supervisor и
 multi-language conformance, а также G7/G8/G10/G11/G12 production gates.
 
+### Execution update — evaluator conformance и trust-zone network — 29 августа 2026
+
+После этого batch target продолжил закрывать только проверяемые trust-boundary
+дефекты:
+
+- `00eb171` стабилизирует desktop runtime workbench: content-sized grid tracks,
+  предсказуемая высота editor и отдельный bounded evidence scroll; browser smoke
+  защищает layout contract.
+- `ed472dc` добавляет G6 evidence-документ с точными командами и ограничениями.
+- `a568e35` выносит hidden evaluator в отдельный Go image/service без host-порта
+  и с sealed bearer-authenticated handoff; evaluator больше не находится в
+  learner runtime image.
+- `8067011` выравнивает строгий evaluator response contract по release
+  digests/check IDs/trailing JSON, а `9c8dd65` ограничивает body до 128 KiB до
+  декодирования; malformed/oversized/drift vectors fail-closed.
+- `f25f44d` добавляет outage/recovery regression: reservation освобождается
+  после evaluator failure, следующий submit проходит и не оставляет active key.
+- `86c0dff` делает StackSession expected services производным от Compose,
+  включая `task-evaluator`, вместо устаревшего hardcoded списка.
+- `a0c08a3` исправляет реальный live contract regression: evaluator принимал
+  `RunResponse` только после добавления `durationMs`; HTTP conformance test и
+  Docker Submit теперь возвращают `200/pass/accepted=true`.
+- `1996931` добавляет internal `runtime-evaluator` network: evaluator виден
+  только runtime-control, API DNS probe изолирован, network `Internal=true`.
+- `ca19e40` и `c55aa4c` фиксируют G7 contract/network evidence, checksums и
+  known limitations; target `main` fast-forward запушен.
+
+Фактический target head: `c55aa4c`, `origin/main == c55aa4c`; immutable RC
+`rc-2026.08.29.1 → 476aa01` не перемещён. Canonical `pnpm run dev --
+--detached` возвращает `ready`; scoped Compose поднимает six declared services
+(пять long-lived + `api-data-init`) healthy. Browser route/link crawl проверил
+12 ключевых routes и 30 внутренних href без failed entries; Node Run → Submit
+после network isolation дал `passed`, authoritative hidden verdict и пять
+checks на повторных запусках.
+
+Это не закрывает production claim: G5 content promotion, G6 real isolated
+supervisor/worker lifecycle, G7 secret-manager/rotation, artifact-wide canary и
+backup/restore, G8 durable outbox/mastery/project/observability, G9 connected
+model/human gates, G11 curriculum corpus и G12 independent review остаются
+явно открытыми и не получают галочек от этого evidence.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -794,8 +835,8 @@ edges до переноса product code.
 ### G7.1. Submit contract
 
 - [x] `G7-001` `Submit` — отдельный endpoint/command/schema/operation.
-- [ ] `G7-002` Hidden suite хранится вне learner-readable image/mount/source tree.
-- [ ] `G7-003` Runtime получает sealed suite только в execution trust zone.
+- [x] `G7-002` Hidden suite хранится вне learner-readable image/mount/source tree.
+- [x] `G7-003` Runtime получает sealed suite только в execution trust zone.
 - [x] `G7-004` Verdict связывает task/revision/profile/image/suite/rubric/source digests.
 - [x] `G7-005` Result types: pass, fail, error, timeout, refused; learner fail ≠ platform error.
 - [x] `G7-006` Retry/idempotency/replay policy не создаёт duplicate Evidence.
