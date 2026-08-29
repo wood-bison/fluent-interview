@@ -260,6 +260,26 @@ G7 hardening продолжена отдельным atomic batch:
 Target `origin/main == 90b50e6`; immutable RC tag не перемещён. API **34/34**
 и typecheck проходят.
 
+### Execution update — attempt observability bundle — 29 августа 2026
+
+G8 observability surface получила ещё один server-owned слой:
+
+- `136ed7e` добавляет Nest `GET /api/observability/evidence/bundle` и Next
+  proxy. Bundle читает полный evidence authority, а не bounded `recent()`;
+  фильтрует profile/scenario/attempt, требует released scenario и
+  trace+log+metric на одном trace ID, сортирует refs и отдаёт только SHA-256
+  payload hashes.
+- Missing/cross-trace telemetry закрывается fail-closed; envelope всегда
+  имеет `deterministicAssessmentUnaffected: true` и не содержит raw summary,
+  logs, prompts или operator fields. Web boundary не получает прямого доступа
+  к runtime/DB.
+- `e728a41` обновляет G8 gate/checksums/limitations и сохраняет доказательства
+  API **36/36** и Web **20/20**.
+
+Target `origin/main == e728a41`; immutable RC tag не перемещён. Это закрывает
+server-side correlation surface, но OTLP collector/export, outage/cardinality
+drill и human incident walkthrough остаются promotion scope.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
