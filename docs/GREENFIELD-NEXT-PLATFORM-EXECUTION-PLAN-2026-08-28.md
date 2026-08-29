@@ -35,6 +35,8 @@ Default branch: **`main`**
   idempotent author→review→publish replay and restart recovery.
 - `87cdff5` — G10 PostgreSQL outbox live evidence and disposable-stack
   cleanup; `23a1470` — gate index synchronized with the pushed target head.
+- `5090343` — G10 command/checksum alignment; `3389157` — target gate index
+  synchronized with that evidence commit.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
