@@ -345,6 +345,24 @@ OS-level network namespace остаются честно открытыми.
 
 Target `origin/main == 3b52100`; immutable RC tag не перемещён.
 
+### Execution update — live Submit authority journey — 29 августа 2026
+
+G7-008 и G7-024 закрыты для browser-facing public boundary отдельным
+non-persisting journey:
+
+- `eba5dce` добавляет `pnpm security:authority`. На живом Next stack семь
+  learner-owned полей (`accepted`, `status`, `verdictId`, `evidenceId`,
+  `masteryChanged`, `unlockChanged`, `llmDecision`) получают `400`, release
+  digest drift получает `400`, тело больше 256 KiB — `413`; валидный Submit и
+  evidence ledger в этом journey не запускаются.
+- `fa051bd` фиксирует G7 evidence/checksums. Browser smoke отдельно выполнил
+  released starter через UI (`Run` → `Prediction matched`, `Submit` →
+  `Authoritative assessment passed`); contract/security suites PASS.
+- Это закрывает строгую public request/verdict boundary, но не заменяет
+  independent browser-extension review или connected-provider quality.
+
+Target `origin/main == fa051bd`; immutable RC tag не перемещён.
+
 ### Execution update — Navigator prompt/tool surface regression — 29 августа 2026
 
 G9-018 закрыт отдельным deterministic regression gate после изменения
@@ -984,7 +1002,7 @@ edges до переноса product code.
 - [x] `G7-005` Result types: pass, fail, error, timeout, refused; learner fail ≠ platform error.
 - [x] `G7-006` Retry/idempotency/replay policy не создаёт duplicate Evidence.
 - [x] `G7-007` Hidden suite canary ищется во всех объявленных API/log/trace/stdout/stderr/artifact surfaces; production artifact manifest scan PASS.
-- [ ] `G7-008` Browser tampering/self-grade/LLM text не меняют verdict.
+- [x] `G7-008` Browser tampering/self-grade/LLM text не меняют verdict.
 
 ### G7.2. Evidence chain
 
@@ -1009,7 +1027,7 @@ edges до переноса product code.
 - [ ] `G7-021` Hidden canary leakage = 0 по всем surfaces.
 - [ ] `G7-022` Submit adversarial/concurrency/idempotency matrix PASS.
 - [ ] `G7-023` Evidence rebuild + backup/restore PASS.
-- [ ] `G7-024` Browser authority forgery tests PASS.
+- [x] `G7-024` Browser authority forgery tests PASS.
 - [x] `G7-025` Commit: `feat(g7): add authoritative submit verdict and evidence chain`.
 - [ ] `G7-026` `gate.json.status = PASS` (остаётся `PASS_WITH_LIMITATIONS`: отдельная evaluator trust zone и полноценная evidence/rebuild цепочка впереди).
 
