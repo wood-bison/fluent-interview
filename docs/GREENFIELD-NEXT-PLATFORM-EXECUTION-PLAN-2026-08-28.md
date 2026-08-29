@@ -423,6 +423,27 @@ PostgreSQL conversation projection остаются promotion gates.
 Target `origin/main == fe66f33`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
 не перемещён.
 
+### Execution update — G9 no-model/offline/timeout UX — 29 августа 2026
+
+`582b383` добавляет явное browser state machine поведение Navigator:
+
+- no-model остаётся `unavailable` с Settings link;
+- browser offline останавливает turn preflight до `fetch`, показывает
+  локализованный alert и Retry, а `online` event возвращает panel в `idle`;
+- server/client timeout и learner cancellation различаются от provider error;
+- `sending` показывает spinner и честное non-streaming сообщение, без имитации
+  token streaming; `data-navigator-state` позволяет e2e проверять семантику.
+
+`0bd417a` фиксирует evidence/checksums: web smoke **20/20**, TypeScript/ESLint
+PASS, live `/practice/node-event-loop-001` подтвердил no-model и forced offline
+без сетевого запроса, с Retry/alert и online recovery. `G9-005` и `G9-023`
+закрыты в deterministic/browser scope; физический network outage, connected
+LM Studio streaming/backpressure и human screen-reader review остаются G12
+promotion gates.
+
+Target `origin/main == 0bd417a`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
+не перемещён.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1153,7 +1174,8 @@ edges до переноса product code.
 - [x] `G9-002` Connection test проверяет endpoint/model/capabilities без сохранения secret в logs.
 - [x] `G9-003` Active model/provider config versioned и имеет explicit unavailable state.
 - [x] `G9-004` AI optional: core learning работает без модели.
-- [ ] `G9-005` Spinner/stream/cancel/timeout/retry states честные.
+- [x] `G9-005` Spinner/stream/cancel/timeout/retry states честные (request/
+  response contract; token streaming deferred).
 
 ### G9.2. Context and actions
 
@@ -1181,7 +1203,8 @@ edges до переноса product code.
 - [x] `G9-021` Stale/forged context rejected.
 - [x] `G9-022` Authority escalation/leakage evals PASS (deterministic output
   guard; connected-provider semantic red-team remains open).
-- [ ] `G9-023` No-model/offline/timeout UX PASS.
+- [x] `G9-023` No-model/offline/timeout UX PASS (deterministic + live browser
+  no-model/offline scope; real provider outage remains G12).
 - [x] `G9-024` Commit: `feat(g9): port contextual advisory Navigator`.
 - [ ] `G9-025` `gate.json.status = PASS`.
 
