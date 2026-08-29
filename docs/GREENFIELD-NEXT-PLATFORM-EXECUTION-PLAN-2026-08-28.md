@@ -1065,16 +1065,20 @@ edges до переноса product code.
 ### G8.3. Observability как учебная поверхность
 
 - [ ] `G8-015` Deep lab поддерживает Predict→Run→Observe→Explain→Defend→Repeat.
-- [ ] `G8-016` Trace/log/metric evidence scoped по attempt и redacted.
+- [x] `G8-016` Trace/log/metric evidence scoped по attempt и redacted в
+      server/local bundle boundary; OTLP export и load/cardinality promotion
+      остаются частью G8-023.
 - [ ] `G8-017` Создать incident activities: event loop, DB lock, retry storm, cache stampede, queue replay, GC/memory.
 - [ ] `G8-018` Создать Go/Kotlin/JVM/.NET diagnostic scenarios по мере runtime availability.
-- [ ] `G8-019` Learner не получает доступ к operator secrets/global logs.
-- [ ] `G8-020` Telemetry outage не отменяет deterministic assessment.
+- [x] `G8-019` Learner не получает доступ к operator secrets/global logs: strict
+      contract и metadata-only Next/Nest bundle отвергают raw fields.
+- [x] `G8-020` Telemetry outage не отменяет deterministic assessment в Next
+      observability write boundary; collector outage drill остаётся открытым.
 
 ### Gate G8
 
 > Progress/project/recovery slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
-> at target `4967f1b` (`PASS_WITH_LIMITATIONS`). Backend project breadth,
+> at target `eeab2ef` (`PASS_WITH_LIMITATIONS`). Backend project breadth,
 > non-Node observability activities, off-host recovery and the final G8 gate
 > remain open.
 
@@ -1082,7 +1086,8 @@ edges до переноса product code.
 - [x] `G8-022` Project milestone evidence cannot be self-declared.
 - [x] `G8-023` Observability lab trace/log/metric correlation PASS (local server bundle; OTLP/outage/load promotion remains).
 - [x] `G8-024` Data backup/restore сохраняет progress/mastery/revision/projects (scoped local drill with exact ledger restore and cache restart boundary).
-- [x] `G8-025` Atomic G8 commits: `136ed7e`, `66dd331`, `ae8026b`, `4967f1b`.
+- [x] `G8-025` Atomic G8 commits: `136ed7e`, `66dd331`, `ae8026b`, `4967f1b`,
+      `a6df0e8`, `eeab2ef`.
 - [ ] `G8-026` `gate.json.status = PASS`.
 
 ---
