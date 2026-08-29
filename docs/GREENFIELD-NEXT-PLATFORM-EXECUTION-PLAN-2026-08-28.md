@@ -203,6 +203,21 @@ stack и content checks прошли; checksums и команды воспрои
 review, полная multi-language rubric matrix, backup/restore и итоговый G7
 production gate остаются открытыми.
 
+### Execution update — G7 backup integrity rehearsal — 29 августа 2026
+
+Target `main` публикует `c63dcb4` и `78beb18`: `pnpm data:backup -- --confirm`
+создал project-scoped PostgreSQL dump, allowlisted ledger archive (включая
+`learning-assessments.jsonl`) и 12-file release-artifact manifest с SHA-256.
+Новый `pnpm data:restore -- --dry-run --input <backup>` проверяет все hashes,
+tar listing и artifact allowlist, возвращая `valid=true`, `exitCode=0` и
+`sideEffects="none"`. Это безопасно воспроизводимо на живом Compose stack и
+не трогает пользовательские volumes.
+
+Полноценный destructive restore не объявляется выполненным: для закрытия
+`G7-015`/`G7-023` нужен отдельный disposable volume/Compose project, реальное
+восстановление всех ledgers, проверка post-restore hashes и rebuild
+progress/evidence projections. Поэтому gate остаётся `PASS_WITH_LIMITATIONS`.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
