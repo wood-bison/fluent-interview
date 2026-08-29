@@ -849,6 +849,22 @@ required checks именно на RC; `upload:false`/`continue-on-error` в Code
 не заменяют SBOM/provenance/signature attestation. Curriculum, language
 conformance, visual/accessibility и owner/human gates не изменились.
 
+### Execution update — G12 reproducible CycloneDX SBOM — 29 августа 2026
+
+Коммит `6c2399d` расширяет `security:supply-chain`: кроме краткого
+machine-readable audit report команда принимает второй output path и
+сохраняет полный CycloneDX 1.5 BOM (175 external components, 2 workspace
+packages, стабильный serial number). CI теперь генерирует оба файла в runner;
+`tools/security/test/supply-chain.test.mjs` и `tools/dev/test/ci-policy.test.mjs`
+проверяют формат, serial и контракт workflow. Target evidence добавляет
+`supply-chain-sbom-2026-08-29.json` и обновляет checksums.
+
+Это закрывает только воспроизводимую SBOM machine slice внутри G12-019. BOM не
+подписан, а registry provenance, image signatures, CodeQL attestation и
+independent review остаются обязательными. Exact RC workflow должен быть
+перезапущен после этой правки; зелёные результаты для текущего `main` не
+перемещают RC tag и не меняют G12 status.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
