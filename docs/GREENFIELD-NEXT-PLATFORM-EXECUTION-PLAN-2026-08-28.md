@@ -160,6 +160,26 @@ assessment, а accepted evidence `201` содержит
 production incident runtime остаются отдельными promotion gates. Поэтому
 `G8` всё ещё `PASS_WITH_LIMITATIONS`, а `G8-026` не закрывается.
 
+Evidence и checksum ledger для этого среза опубликованы отдельным commit
+`fcccf9b` в `fluent-interview-platform/docs/verification/greenfield/G8/`.
+
+### Execution update — G11 Brain/Vault source inventory — 29 августа 2026
+
+Target `main` публикует `56fe493` с воспроизводимым metadata-only intake
+срезом для внешних Brain/Vault источников. Инвентаризация насчитала 1 597
+Markdown records (1 594 со стабильным ID и RU/EN вопросом), 1 591 accepted
+mapping entries и 6 unmapped records. Ни одна запись не совпала с target
+release: 1 591 остаются `pending`, 6 — `quarantined`, все 1 597 требуют
+явного reviewer decision. Path distribution и source/reconciliation hashes
+записаны в
+`fluent-interview-platform/docs/verification/greenfield/G11/source-inventory-2026-08-29.md`.
+
+Собран bounded review batch (25 из 1 597, metadata-only, без auto-promotion),
+чтобы проверить границу intake и воспроизводимость. Это закрывает измерение
+источника, но не corpus closure: semantic duplicate review, provenance/
+license, answer layers, typed placements, assessed activities и promotion в
+canonical release остаются открытыми. G11 не повышается до `PASS`.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1297,7 +1317,7 @@ edges до переноса product code.
 - [x] `G8-023` Observability lab trace/log/metric correlation PASS (local server bundle; OTLP/outage/load promotion remains).
 - [x] `G8-024` Data backup/restore сохраняет progress/mastery/revision/projects (scoped local drill with exact ledger restore and cache restart boundary).
 - [x] `G8-025` Atomic G8 commits: `136ed7e`, `66dd331`, `ae8026b`, `4967f1b`,
-      `a6df0e8`, `eeab2ef`, `c678e5c`, `7057348`, `dc60b63`.
+      `a6df0e8`, `eeab2ef`, `c678e5c`, `7057348`, `dc60b63`, `fcccf9b`.
 - [ ] `G8-026` `gate.json.status = PASS`.
 
 ---
