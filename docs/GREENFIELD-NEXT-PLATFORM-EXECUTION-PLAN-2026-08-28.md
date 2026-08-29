@@ -813,6 +813,19 @@ counts/hashes.
 не весь пункт: CodeQL, registry provenance, image signatures и независимый
 review по-прежнему обязательны и не помечены production PASS.
 
+### Execution update — G12 performance budget — 29 августа 2026
+
+Target `main` добавил `5a4f73e` с версионированным `performance:check`,
+который запускается после production build в CI и fail-closed проверяет route
+first-load, largest/total chunks и запрещённые тяжёлые editor packages.
+Evidence `9291c48` зафиксировал 13 routes: максимум first-load `910,958`
+bytes при budget `1,000,000`, largest chunk `413,245` при `450,000`, total
+chunks `1,045,641` при `1,200,000`; heavy editor packages не найдены.
+
+Это закрывает только machine bundle-budget slice G12-020. Web Vitals,
+interaction latency, code-splitting/lazy-loading UX, visual diff и
+accessibility human review остаются открытыми.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
