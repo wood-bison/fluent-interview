@@ -783,6 +783,21 @@ Redis/Kafka не добавлены без доказанной потребно
 зафиксирован в ADR. Это не concurrency/load/partition proof и не повышает G10
 статус выше `PASS_WITH_LIMITATIONS`.
 
+### Execution update — G12 post-RC security boundary — 29 августа 2026
+
+После выравнивания assessment-файлов с Prettier (`18ae0d1`) target повторил
+production build и security boundary на `main`. `c431bc3` добавляет
+machine-readable G12 evidence: declared canary scan обработал 2 файла, а
+artifact-wide scan — 1 879 файлов; оба дали **0 findings**. `pnpm
+security:authority` отклонил семь learner-owned verdict fields с `400`,
+release-digest drift с `400` и oversized body с `413`, не записав evidence.
+`305a446` синхронизирует target index с этим срезом.
+
+Это закрывает только машинный hidden-canary slice `G12-017` для текущего
+target и не перемещает immutable `rc-2026.08.29.1`. CodeQL, SBOM/provenance/
+signature, полная threat-model проверка, CI на exact RC SHA, visual/a11y и
+owner/human learning sign-off остаются обязательными открытыми gates.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1792,7 +1807,9 @@ paths; denominators и stable IDs обязаны объяснять переис
 
 - [x] `G12-015` Full format/lint/type/unit/component/contract/integration/browser suite PASS.
 - [ ] `G12-016` Runtime adversarial/conformance matrix PASS.
-- [ ] `G12-017` Hidden canary leak scan PASS.
+- [x] `G12-017` Hidden canary leak scan PASS для текущего post-RC target;
+  evidence `c431bc3` сканирует declared и artifact-wide roots с 0 findings.
+  Это не является независимым production sign-off.
 - [ ] `G12-018` Auth/session/CSRF/XSS/SSRF/path traversal/command injection/secrets checks PASS.
 - [ ] `G12-019` Dependency audit/CodeQL/SBOM/provenance/signature checks PASS.
 - [ ] `G12-020` Performance budgets PASS per route; editor/xterm lazy loading confirmed.
