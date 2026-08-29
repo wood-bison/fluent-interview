@@ -141,6 +141,25 @@ Contract/catalog tests — 4/4, `pnpm projects:coverage` — 30/30 entries met,
 trade-off/failure-drill milestones опубликованы, но evaluator-backed defense
 activity ещё не выпущена, поэтому итоговый G8 остаётся `PASS_WITH_LIMITATIONS`.
 
+### Execution update — G8 evaluator-backed system-design activities — 29 августа 2026
+
+Target `main` публикует `dc60b63` с versioned rubric/evaluator boundary для
+двух system-design activities: `defense` (trade-off defense) и
+`failure_drill` (incident recovery). Контракты строго проверяют project,
+milestone, scenario и rubric revision; deterministic evaluator требует ответы
+по каждой rubric dimension, считает score/pass-fail и не сохраняет raw
+responses. Accepted project evidence теперь индексируется по kind, поэтому
+milestones с `defense`/`failure_drill` нельзя закрыть одним submit verdict или
+самодекларацией. Через learner-facing Next boundary live proof подтвердил:
+rubric `200`, pass `201`, повтор с тем же idempotency key возвращает тот же
+assessment, а accepted evidence `201` содержит
+`milestoneSelfDeclared=false`.
+
+Это закрывает доступную deterministic часть `G8-013`, но не экспертную оценку
+качества архитектуры: human/mock defense, adversarial scenario depth и
+production incident runtime остаются отдельными promotion gates. Поэтому
+`G8` всё ещё `PASS_WITH_LIMITATIONS`, а `G8-026` не закрывается.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1245,7 +1264,11 @@ edges до переноса product code.
 - [x] `G8-010` Project milestone считается Activity только при persisted assessed evidence.
 - [x] `G8-011` Backend projects включают concurrency, data, messaging, resilience, deployment и observability; Node/Java/Go books имеют по 6 milestones, coverage 30/30 met.
 - [x] `G8-012` Frontend project включает Next architecture, performance, a11y, security и design system; `next-production-frontend` опубликован отдельной lane.
-- [ ] `G8-013` System design project требует trade-off defense и failure drill.
+- [x] `G8-013` System design project требует trade-off defense и failure drill;
+      versioned rubrics и deterministic evaluator отклоняют неполные ответы,
+      принимают только passing assessment evidence и не сохраняют raw
+      responses. Human/mock semantic sign-off и production failure runtime
+      остаются открытыми.
 - [x] `G8-014` Reference repo/project links versioned и не становятся hidden fallback.
 
 ### G8.3. Observability как учебная поверхность
@@ -1264,16 +1287,17 @@ edges до переноса product code.
 ### Gate G8
 
 > Progress/project/recovery slice evidence: `fluent-interview-platform/docs/verification/greenfield/G8/`
-> at target `7057348` (`PASS_WITH_LIMITATIONS`). Project catalog breadth for
-> backend and Next.js is closed; system-design evaluator activities, non-Node
-> observability activities, off-host recovery and the final G8 gate remain open.
+> at target `dc60b63` (`PASS_WITH_LIMITATIONS`). Project catalog breadth for
+> backend and Next.js plus deterministic system-design evaluator activities is
+> closed; non-Node observability activities, off-host recovery, semantic
+> defense review and the final G8 gate remain open.
 
 - [x] `G8-021` Progress rebuild, cold-repeat timing, unseen transfer and hint-dependence tests PASS.
 - [x] `G8-022` Project milestone evidence cannot be self-declared.
 - [x] `G8-023` Observability lab trace/log/metric correlation PASS (local server bundle; OTLP/outage/load promotion remains).
 - [x] `G8-024` Data backup/restore сохраняет progress/mastery/revision/projects (scoped local drill with exact ledger restore and cache restart boundary).
 - [x] `G8-025` Atomic G8 commits: `136ed7e`, `66dd331`, `ae8026b`, `4967f1b`,
-      `a6df0e8`, `eeab2ef`, `c678e5c`, `7057348`.
+      `a6df0e8`, `eeab2ef`, `c678e5c`, `7057348`, `dc60b63`.
 - [ ] `G8-026` `gate.json.status = PASS`.
 
 ---
