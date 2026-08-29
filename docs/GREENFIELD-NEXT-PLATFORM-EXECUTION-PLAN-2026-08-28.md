@@ -657,6 +657,29 @@ storm, cache stampede, queue replay и GC/memory pressure остаются яв�
 (код плюс evidence/index commits), а документация target зафиксирована
 отдельными `7e358ca` и `4e780e8`.
 
+### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
+
+Следующий deterministic batch довёл durable history до локального PostgreSQL
+контура, не меняя advisory-only authority Navigator:
+
+- `ca61d10` добавляет `NavigatorTurnStorePort`, PostgreSQL adapter с
+  versioned migration `0003_navigator_history_projection.sql`, partial unique
+  idempotency key, profile/recent indexes и явный JSONL fallback. Compose по
+  умолчанию использует PostgreSQL, а выбор backend остаётся конфигурируемым.
+- `223f01d` фиксирует G9 evidence/checksums. API suite — **47/47**, web/stack
+  checks и production build — PASS. Live scoped Compose подтвердил создание
+  `navigator_turns`, сохранение turn и replay с тем же `turnId` без утечки
+  внутреннего `message`; повторный ключ оставляет ровно одну строку.
+- Во время live-проверки исправлен regression strict Next boundary: replay
+  теперь декодируется как публичный `navigator-turn.v1`, а внутренний learner
+  message не возвращается клиенту.
+
+Это закрывает deterministic durable-history projection в локальном backup/restore
+scope. Retention compaction/deletion, cross-device sync, connected-provider
+streaming/backpressure и semantic/human review по-прежнему не закрыты; G9
+остаётся `PASS_WITH_LIMITATIONS`, G9-025 не получает ложную галочку.
+Текущий target `origin/main == 223f01d`; immutable RC tag не перемещён.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1392,9 +1415,11 @@ edges до переноса product code.
 Перенести локального AI-помощника как contextual action engine, а не глобальный чат.
 
 > G9 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G9/`
-> at target `77c0a56` (with follow-up hardening `5f33982`, `37b84ad`, `c4de6e3`,
-> `544e40b`). The gate remains `PASS_WITH_LIMITATIONS` because streaming/cancel,
-> real-provider availability and durable conversation projection are deferred.
+> at target `ca61d10` (with follow-up hardening `5f33982`, `37b84ad`, `c4de6e3`,
+> `544e40b`, and PostgreSQL projection). The gate remains
+> `PASS_WITH_LIMITATIONS` because retention compaction, cross-device sync,
+> streaming/backpressure, real-provider availability and semantic review are
+> deferred.
 
 ### G9.1. Provider/settings
 
