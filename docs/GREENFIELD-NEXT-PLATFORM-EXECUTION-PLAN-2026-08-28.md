@@ -242,6 +242,24 @@ Target `main` и `origin/main` теперь указывают на `49e435a`; i
 `rc-2026.08.29.1 → 476aa01` намеренно не перемещён. Проверены API **32/32**,
 progress **4/4**, contracts/domain builds и G8 checksums.
 
+### Execution update — verdict/request authority binding — 29 августа 2026
+
+G7 hardening продолжена отдельным atomic batch:
+
+- `3201481` проверяет на API boundary, что decoded runtime verdict относится к
+  тому же task family/revision/attempt/source/runtime profile и pinned
+  image/rubric digests, что и submit request. Несовпадение fail-closed до
+  записи evidence, включая idempotent replay.
+- Strict `runtime.submit.v1` request дополнительно отклоняет client-owned
+  `accepted/status/verdictId/evidenceId/masteryChanged/unlockChanged` и
+  произвольный `llmDecision`; добавлены adversarial tests для forged fields и
+  well-shaped verdict из другой attempt.
+- `90b50e6` обновляет G7 gate evidence/checksums и явно оставляет live browser
+  authority-forgery journey и artifact-wide canary открытыми.
+
+Target `origin/main == 90b50e6`; immutable RC tag не перемещён. API **34/34**
+и typecheck проходят.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
