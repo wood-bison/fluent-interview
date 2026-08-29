@@ -87,6 +87,19 @@ stdout, восемь trace events, `predictionMatch=true`, cleanup и неизм
 TypeScript revision, lazy chunks и финальный production/human gates остаются
 явно открытыми.
 
+### Execution update — G6 runtime contract vectors — 29 августа 2026
+
+Live-прогон target после пересборки Compose выявил и исправил nullable
+`predictionEvidence.observed` в ошибочных ответах (`1305f6f`): теперь Go
+supervisor сериализует пустой массив, совместимый с Zod browser contract.
+Коммит `8ed3fcb` добавляет `pnpm runtime:vectors`, а `9bfd00c` фиксирует
+evidence/checksums. Восемь векторов через Next boundary прошли: canonical,
+malformed `400`, compile/runtime errors, network/filesystem `sandbox_refused`,
+server timeout и client cancellation; post-cancel recovery также `passed`.
+Завершившиеся workers очищены, `noMasteryMutation=true`. Это закрывает
+`G6-025` для текущего Node profile; Docker/namespace promotion, TypeScript
+revision и остальные production gates не расширяются этим результатом.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1104,7 +1117,9 @@ edges до переноса product code.
 - [x] `G6-024` Golden Node path→lesson→question→task→Run проходит fresh clone;
       clean-checkout journey `92f7e5f`/`ee08541`, 5 HTTP 200 routes и live Run
       evidence записаны в target G6.
-- [ ] `G6-025` Canonical/starter/malformed/compile/runtime/timeout/cancel/security vectors PASS.
+- [x] `G6-025` Canonical/starter/malformed/compile/runtime/timeout/cancel/security vectors PASS;
+      `1305f6f`/`8ed3fcb`/`9bfd00c`, live `runtime:vectors`, 8 vectors и
+      post-cancel recovery evidence.
 - [x] `G6-026` Seeded wrong solutions действительно падают.
 - [x] `G6-027` Run не создаёт accepted/mastery/unlock.
 - [ ] `G6-028` Worker cleanup leaves zero expired containers/resources.
