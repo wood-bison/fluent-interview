@@ -403,6 +403,26 @@ authority/leakage evals и durable PostgreSQL conversation projection.
 OTLP/load/human observability drills и G8/G11/G12 final gates остаются явно
 открытыми.
 
+### Execution update — G9 deterministic response guard — 29 августа 2026
+
+Следующий G9 implementation batch закрывает authority/leakage boundary до
+persistence:
+
+- `8a00a99` добавляет `guardNavigatorResponse` в Nest service. Affirmative
+  claims о mastery/progress/evidence/verdict/release и disclosure
+  hidden/private/secret material превращаются в typed policy error; исходный
+  provider text не сохраняется в JSONL history.
+- `fe66f33` фиксирует G9 evidence, обновляет surface baseline до
+  `e76b7902…a20a3efe` и добавляет EN/RU adversarial tests. API suite — **38/38**,
+  `pnpm navigator:eval` — **6/6**.
+
+`G9-022` закрыт только в deterministic provider-output scope. Connected
+LM Studio prompt-injection red-team, prose quality/human review, streaming и
+PostgreSQL conversation projection остаются promotion gates.
+
+Target `origin/main == fe66f33`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
+не перемещён.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1159,7 +1179,8 @@ edges до переноса product code.
 
 - [x] `G9-020` Settings→connect→select→contextual help journey PASS.
 - [x] `G9-021` Stale/forged context rejected.
-- [ ] `G9-022` Authority escalation/leakage evals PASS.
+- [x] `G9-022` Authority escalation/leakage evals PASS (deterministic output
+  guard; connected-provider semantic red-team remains open).
 - [ ] `G9-023` No-model/offline/timeout UX PASS.
 - [x] `G9-024` Commit: `feat(g9): port contextual advisory Navigator`.
 - [ ] `G9-025` `gate.json.status = PASS`.
