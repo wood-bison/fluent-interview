@@ -334,6 +334,25 @@ Target `origin/main == cf3cf1e`; immutable RC tag не перемещён. CodeM
 lazy-loading, реальный TypeScript revision, per-attempt Docker supervisor и
 OS-level network namespace остаются честно открытыми.
 
+### Execution update — Navigator prompt/tool surface regression — 29 августа 2026
+
+G9-018 закрыт отдельным deterministic regression gate после изменения
+Navigator surface:
+
+- `64a0141` вычисляет стабильный `surfaceHash` для явного allowlist из
+  `apps/api/src/navigator.service.ts`, `packages/contracts/src/navigator.ts` и
+  `content/navigator/eval-corpus.v1.json`; baseline теперь отклоняет prompt/tool
+  drift до connected-provider review.
+- `9d99b16` записывает G9 evidence, checksums и limitation boundary. Команда
+  `pnpm navigator:eval` прошла **6/6** cases (`en=3`, `ru=3`), corpus release и
+  surface hash совпали с baseline; `pnpm test:navigator` — **6/6**.
+- Gate остаётся `PASS_WITH_LIMITATIONS`: surface contract не утверждает prose
+  quality, real LM Studio availability, streaming/cancel или human sign-off.
+
+Target `origin/main == 9d99b16`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
+не перемещён. Следующие G9 promotion gates — connected-model/offline UX,
+authority/leakage evals и durable PostgreSQL conversation projection.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1075,7 +1094,7 @@ edges до переноса product code.
 - [x] `G9-015` Telemetry содержит provider/model/prompt-template hash/context hash/latency/tokens/status.
 - [x] `G9-016` Conversation retention и deletion policy explicit.
 - [x] `G9-017` Eval corpus покрывает helpfulness, grounding, leakage, over-reveal, authority refusal и RU/EN.
-- [ ] `G9-018` Regression eval запускается при model/prompt/tool change.
+- [x] `G9-018` Regression eval запускается при model/prompt/tool change.
 - [x] `G9-019` AI failure не меняет learner evidence.
 
 ### Gate G9
