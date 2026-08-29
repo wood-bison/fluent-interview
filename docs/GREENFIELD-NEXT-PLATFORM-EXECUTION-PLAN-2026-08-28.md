@@ -125,6 +125,31 @@ target head после этого batch: `be04326`; immutable RC
 disposition/promotion и role/depth/forbidden-set ledgers; следующий runtime
 шаг — isolated supervisor/worker evidence, а не фиктивное расширение counts.
 
+### Execution update — authority durability and deterministic release — 29 августа 2026
+
+После intake batch target продолжил закрывать только воспроизводимые
+инженерные gaps, не подменяя их curriculum coverage:
+
+- `132dd54` переводит progress, project, submission, assistance и observability
+  stores на явный `all()` authority read. Learner-facing `recent()` остаётся
+  bounded projection, но dedupe, milestone lookup и revision/snapshot paths
+  больше не теряют записи за пределами окна.
+- `40a1f10` добавляет реальный release double-build test: два запуска
+  `buildRelease()` в независимые temporary directories обязаны дать одинаковые
+  release ID, logical hash и байты canonical `release.json`.
+- `476c5f4` делает Navigator history authority-read и idempotency lookup по
+  полному profile ledger; после 501 записей старый turn всё ещё replayable, а
+  повтор не создаёт строку. Исправлен также дублирующий Nest decorator.
+
+Повторены API **16/16**, content **10/10**, Studio rebuild **2/2** и
+Navigator contract **2/2** тестов. Evidence target находится в
+`fluent-interview-platform/docs/verification/greenfield/G8/`, `G9/` и `G10/`;
+актуальный target head — `476c5f4`, опубликован fast-forward в `origin/main`.
+Исторический RC tag `rc-2026.08.29.1 → 476aa01` не изменён. Открытыми
+остаются reviewer-led promotion 1591 pending records, runtime supervisor и
+multi-language conformance, PostgreSQL outbox/projections, connected-model и
+human/visual/CI release gates.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
