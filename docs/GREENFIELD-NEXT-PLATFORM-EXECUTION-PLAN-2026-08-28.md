@@ -57,6 +57,13 @@ Default branch: **`main`**
   synchronized with that evidence commit. This closes only the local authority
   atomic-append slice; managed distributed transactions and external consumers
   remain open.
+- `b487793` — G9 Navigator получает server-clocked 90-day profile-scoped prune
+  для PostgreSQL и JSONL history adapters, строгий `navigator-history-prune.v1`,
+  Next proxy validation и explicit Settings confirmation; `e4abb67` — G9
+  evidence/checksums, `e184912` — target index synchronized. Live disposable
+  Compose подтвердил public proxy `200`, invalid profile `400` и отсутствие
+  затронутого пользовательского volume; automatic scheduler, sync и privacy
+  review остаются открытыми.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -1490,11 +1497,11 @@ edges до переноса product code.
 Перенести локального AI-помощника как contextual action engine, а не глобальный чат.
 
 > G9 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G9/`
-> at target `ca61d10` (with follow-up hardening `5f33982`, `37b84ad`, `c4de6e3`,
-> `544e40b`, and PostgreSQL projection). The gate remains
-> `PASS_WITH_LIMITATIONS` because retention compaction, cross-device sync,
-> streaming/backpressure, real-provider availability and semantic review are
-> deferred.
+> at target `b487793` (evidence/index `e4abb67`/`e184912`; follow-up hardening
+> includes `5f33982`, `37b84ad`, `c4de6e3`, `544e40b`, and PostgreSQL projection).
+> The gate remains `PASS_WITH_LIMITATIONS` because automatic retention
+> scheduling, cross-device sync, streaming/backpressure, real-provider
+> availability and semantic review are deferred.
 
 ### G9.1. Provider/settings
 
@@ -1521,6 +1528,9 @@ edges до переноса product code.
 - [x] `G9-014` Prompts/outputs/source/answers не экспортируются в OTel.
 - [x] `G9-015` Telemetry содержит provider/model/prompt-template hash/context hash/latency/tokens/status.
 - [x] `G9-016` Conversation retention и deletion policy explicit.
+- [x] `G9-016a` Explicit user-confirmed 90-day profile prune is server-clocked,
+  contract-validated and covered by JSONL/PostgreSQL adapter tests plus live
+  disposable Compose evidence; automatic scheduling remains deferred.
 - [x] `G9-017` Eval corpus покрывает helpfulness, grounding, leakage, over-reveal, authority refusal и RU/EN.
 - [x] `G9-018` Regression eval запускается при model/prompt/tool change.
 - [x] `G9-019` AI failure не меняет learner evidence.
@@ -1534,6 +1544,8 @@ edges до переноса product code.
 - [x] `G9-023` No-model/offline/timeout UX PASS (deterministic + live browser
   no-model/offline scope; real provider outage remains G12).
 - [x] `G9-024` Commit: `feat(g9): port contextual advisory Navigator`.
+- [x] `G9-024a` Commit `b487793` + evidence `e4abb67` + index `e184912`:
+  explicit Navigator retention prune, checksum ledger and live proxy proof.
 - [ ] `G9-025` `gate.json.status = PASS`.
 
 ---
