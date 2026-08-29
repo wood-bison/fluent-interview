@@ -637,6 +637,25 @@ smoke **20/20**, checksum verification и `git diff --check` — PASS. Это з
 revision и OS-level worker network namespace остаются отдельными promotion
 пунктами (`G6-020`, `G6-022`, `G6-004/006/007`). Target `origin/main == 9d10e96`.
 
+### Execution update — G8 incident activity packs — 29 августа 2026
+
+Target `main` публикует `4f30da1` с contract-validated activity packs для всех
+шести observability-сценариев: каждый сценарий имеет ровно шесть learner-facing
+activities в порядке `Predict → Run → Observe → Explain → Defend → Repeat`.
+Итого опубликовано **6 × 6 = 36** стабильных activities с objective и
+allowlisted evidence facets. Practice UI раскрывает packs через native
+`details/summary`, а responsive grid не создаёт horizontal overflow в live
+browser smoke. `pnpm test:observability` — **5/5**, web smoke — **23/23**,
+typecheck/lint и checksum ledger — PASS.
+
+Это закрывает структурную/content часть `G8-017`, но не подменяет runtime:
+Node event-loop остаётся единственным `released` сценарием, а DB lock, retry
+storm, cache stampede, queue replay и GC/memory pressure остаются явным
+`preview` до выпуска профилей runtime, trace/log/metric generator и evaluator.
+Поэтому `G8-015`, `G8-018`, `G8-023` и `G8-026` не получают ложных галочек;
+target `origin/main == 4f30da1`, а документация target зафиксирована отдельным
+`7e358ca`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -1340,7 +1359,7 @@ edges до переноса product code.
 - [x] `G8-016` Trace/log/metric evidence scoped по attempt и redacted в
       server/local bundle boundary; OTLP export и load/cardinality promotion
       остаются частью G8-023.
-- [ ] `G8-017` Создать incident activities: event loop, DB lock, retry storm, cache stampede, queue replay, GC/memory.
+- [x] `G8-017` Создать incident activities: event loop, DB lock, retry storm, cache stampede, queue replay, GC/memory. Структурный six-stage activity-pack/UI slice закрыт; runnable non-Node scenarios остаются promotion scope `G8-018`/`G8-023`.
 - [ ] `G8-018` Создать Go/Kotlin/JVM/.NET diagnostic scenarios по мере runtime availability.
 - [x] `G8-019` Learner не получает доступ к operator secrets/global logs: strict
       contract и metadata-only Next/Nest bundle отвергают raw fields.
