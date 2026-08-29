@@ -100,6 +100,21 @@ server timeout и client cancellation; post-cancel recovery также `passed`.
 `G6-025` для текущего Node profile; Docker/namespace promotion, TypeScript
 revision и остальные production gates не расширяются этим результатом.
 
+### Execution update — G6 trace continuity — 29 августа 2026
+
+Live journey `pnpm runtime:trace` теперь закрепляет W3C trace context через
+обе публичные поверхности target: `GET /api/trace-probe` проходит Next → Nest
+health → Runtime info, а `GET /api/runtime/info` и `POST /api/runtime/run`
+прокидывают тот же `traceparent` до runtime control и disposable worker.
+Коммиты `2815afa` (Go извлекает trace ID из валидного `traceparent`) и
+`3261ea9` (Next runtime-info proxy forwarding) исправили реальные разрывы
+контекста; `d4f255c` добавил machine-readable evidence и checksum ledger.
+Ответ Run сохраняет фиксированный trace ID, response headers валидны, worker
+очищен, `mastery/unlock/accepted` не изменяются. Это закрывает `G6-029` для
+текущего локального process-backed стека. Внешний OTLP collector/Jaeger,
+per-attempt Docker labels и production isolation остаются отдельными
+promotion gates и не объявляются выполненными этим smoke.
+
 ### Execution update — post-RC audit remediation — 29 августа 2026
 
 После live route crawl и adversarial review в target `main` опубликованы два
@@ -1123,7 +1138,10 @@ edges до переноса product code.
 - [x] `G6-026` Seeded wrong solutions действительно падают.
 - [x] `G6-027` Run не создаёт accepted/mastery/unlock.
 - [ ] `G6-028` Worker cleanup leaves zero expired containers/resources.
-- [ ] `G6-029` Shared trace Next→Nest→Runtime→worker PASS.
+- [x] `G6-029` Shared trace Next→Nest→Runtime→worker PASS; `2815afa`/`3261ea9`/`d4f255c`,
+      live `pnpm runtime:trace` сохраняет W3C trace ID в probe/info/Run и
+      подтверждает cleanup без learner-state mutation. Внешний collector и
+      isolated production worker остаются в promotion scope.
 - [x] `G6-030` Commit: `feat(g6): deliver safe golden Node run slice`.
 - [ ] `G6-031` `gate.json.status = PASS`.
 
