@@ -39,6 +39,9 @@ Default branch: **`main`**
   synchronized with that evidence commit.
 - `a06c7e8` — durable PostgreSQL Studio command receipts; `0bf50a1` — G10
   receipt live evidence/checksums; `115c9d9` — target index synchronized.
+- `eaae89b` — deterministic `vault-quality-inventory.v1` preflight for all
+  1,597 Brain/Vault records; `7e1be05` — G11 gate/outputs/checksums; `12c049c`
+  — target index synchronized with the quality-inventory head.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -187,6 +190,22 @@ release: 1 591 остаются `pending`, 6 — `quarantined`, все 1 597 т�
 источника, но не corpus closure: semantic duplicate review, provenance/
 license, answer layers, typed placements, assessed activities и promotion в
 canonical release остаются открытыми. G11 не повышается до `PASS`.
+
+### Execution update — G11 source-quality preflight — 29 августа 2026
+
+Target `main` публикует `eaae89b` с командой `pnpm content:quality` и
+`7e1be05` с обновлённым G11 evidence. Детерминированный
+`vault-quality-inventory.v1` повторно проверил все 1 597 Markdown records и
+сохранил только hashes, mapping metadata и section-presence flags. Срез
+насчитал 227 явных Task sections, 56 Answer/Solution headings, 903 follow-ups
+и **0** строгих кандидатов для editorial review: accepted mappings всё ещё
+нуждаются в original mechanism/answer/source/activity слоях. `12c049c`
+синхронизирует gate index с этой головой.
+
+Это закрывает source-quality preflight как воспроизводимый инструмент, но не
+создаёт и не публикует карточки. Reviewer decisions, provenance/license,
+semantic dedupe, typed placements, assessed activities и release promotion
+остаются обязательными шагами G11.
 
 ### Execution update — G7 explanation/defense evaluator — 29 августа 2026
 
@@ -1479,9 +1498,9 @@ edges до переноса product code.
 Закрыть author→review→publish→release→readback без обязательного Payload.
 
 > G10 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G10/`
-> at target `85ea1c0`. The local Studio lifecycle and project-scoped PostgreSQL
-> outbox projection are verified; authority ownership, batch ingestion and
-> durable review receipts remain explicitly open.
+> at target `a06c7e8`. The local Studio lifecycle, PostgreSQL outbox projection
+> and durable command-receipt projection are verified; authority ownership,
+> managed transactions, batch ingestion and external consumers remain open.
 
 ### G10.1. Studio workflow
 
@@ -1538,8 +1557,9 @@ edges до переноса product code.
 не подменяя качество количеством.
 
 > G11 policy/report evidence: `fluent-interview-platform/docs/verification/greenfield/G11/`
-> at target `1d24738`. The endpoint is live and strict, but its non-zero gap
-> ledger is intentional: the seed release is not yet production-eligible.
+> at target `7e1be05`. The endpoint and source-quality preflight are live and
+> strict, but their non-zero gap ledger is intentional: the seed release is not
+> yet production-eligible.
 
 ### G11.0. Coverage policy
 
@@ -1579,10 +1599,10 @@ paths; denominators и stable IDs обязаны объяснять переис
 ### G11.2. Corpus reconciliation
 
 - [ ] `G11-013` Все Brain/Vault records классифицированы по canonical ID, capability, role, locale, provenance и disposition.
-- [ ] `G11-014` Unmapped/unreviewed/quarantined counts публикуются, не исчезают.
+- [x] `G11-014` Unmapped/unreviewed/quarantined counts публикуются, не исчезают.
 - [ ] `G11-015` Generic content помещается в shared modules и получает path-specific prerequisites.
 - [ ] `G11-016` Language-native content проходит forbidden-set tests.
-- [ ] `G11-017` Missing-role ledger генерируется по stable IDs.
+- [x] `G11-017` Missing-role ledger генерируется по stable IDs.
 - [ ] `G11-018` Research/authoring packs закрывают gaps официальными sources и original explanations.
 - [ ] `G11-019` Expert sample review по capability cluster обязателен.
 - [ ] `G11-020` No production release по total count без role matrix.
