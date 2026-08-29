@@ -64,6 +64,13 @@ Default branch: **`main`**
   Compose подтвердил public proxy `200`, invalid profile `400` и отсутствие
   затронутого пользовательского volume; automatic scheduler, sync и privacy
   review остаются открытыми.
+- `d36ae64` — добавлена bounded `studio:outbox-benchmark` команда, которая
+  сравнивает одинаковый public command path на JSONL и PostgreSQL без вывода
+  контента; `caa61b3` — G10 benchmark evidence/checksums и ADR. В 50-command
+  sample PostgreSQL показал `p50=39.096 ms / p95=48.671 ms`, JSONL —
+  `p50=52.580 ms / p95=80.009 ms`; Redis/Kafka не подключаются до явного
+  измеримого trigger. Это закрывает только deterministic decision slice
+  `G10-020`, а не broker/load/partition production gate.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -761,6 +768,20 @@ scope. Retention compaction/deletion, cross-device sync, connected-provider
 streaming/backpressure и semantic/human review по-прежнему не закрыты; G9
 остаётся `PASS_WITH_LIMITATIONS`, G9-025 не получает ложную галочку.
 Текущий target `origin/main == 223f01d`; immutable RC tag не перемещён.
+
+### Execution update — G10 outbox benchmark decision — 29 августа 2026
+
+Target `main` публикует `d36ae64` с bounded benchmark-командой и `caa61b3` с
+machine-readable результатом, checksums и ADR `G10-020`. Два disposable
+Compose-проекта прогнали по пять warm-up и 50 последовательных synthetic
+`POST /api/studio/candidates` через public Next boundary. PostgreSQL оказался
+быстрее JSONL в этом локальном срезе (`p95=48.671 ms` против `80.009 ms`), обе
+проекции дали 176/176 уникальных metadata events и были удалены scoped cleanup.
+Локальный Compose поэтому остаётся PostgreSQL-first, JSONL — explicit fallback;
+Redis/Kafka не добавлены без доказанной потребности. Порог пересмотра (200
+команд, `p95 > 100 ms`, backlog > 10 000 или multi-host partition ownership)
+зафиксирован в ADR. Это не concurrency/load/partition proof и не повышает G10
+статус выше `PASS_WITH_LIMITATIONS`.
 
 ---
 
@@ -1557,9 +1578,10 @@ edges до переноса product code.
 Закрыть author→review→publish→release→readback без обязательного Payload.
 
 > G10 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G10/`
-> at target `f3d3b4e`. The local Studio lifecycle, PostgreSQL authority, outbox
-> projection and durable command-receipt projection are verified; managed
-> transactions, batch ingestion and external consumers remain open.
+> at target `caa61b3`. The local Studio lifecycle, PostgreSQL authority, outbox
+> projection, durable command-receipt projection and bounded JSONL/PostgreSQL
+> benchmark are verified; managed transactions, batch ingestion and external
+> consumers remain open.
 
 ### G10.1. Studio workflow
 
@@ -1599,7 +1621,10 @@ edges до переноса product code.
       authority append and are atomic on the PostgreSQL ledger; deterministic
       `BEGIN → COMMIT`/rollback proof and live replay/restart evidence are
       recorded in target G10.
-- [ ] `G10-020` Redis/Kafka подключаются только после benchmark/ADR.
+- [x] `G10-020` Redis/Kafka подключаются только после benchmark/ADR. The
+      50-command disposable JSONL/PostgreSQL benchmark and explicit ADR select
+      PostgreSQL locally; Redis/Kafka remain deferred until the documented
+      `p95 > 100 ms`/backlog/multi-host triggers are met.
 
 ### Gate G10
 
@@ -1610,6 +1635,9 @@ edges до переноса product code.
       PostgreSQL authority/outbox projection проверены в disposable live
       stack).
 - [x] `G10-025` Commit: `feat(g10): deliver governed authoring and release pipeline`.
+- [x] `G10-025a` Commits `d36ae64` + `caa61b3`: bounded outbox benchmark,
+      G10-020 ADR, machine-readable evidence and checksums; temporary stacks
+      were scoped and removed.
 - [ ] `G10-026` `gate.json.status = PASS`.
 
 ---
