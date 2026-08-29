@@ -42,6 +42,11 @@ Default branch: **`main`**
 - `eaae89b` — deterministic `vault-quality-inventory.v1` preflight for all
   1,597 Brain/Vault records; `7e1be05` — G11 gate/outputs/checksums; `12c049c`
   — target index synchronized with the quality-inventory head.
+- `f45fe20` — selectable PostgreSQL authority for the validated Studio ledger;
+  JSONL remains an explicit fallback.
+- `d2242cd` — bounded public-boundary Studio authority journey with
+  create/review/publish/readback replay and API restart recovery;
+  `44b92db` — G10 evidence/checksums; `f3d3b4e` — target gate index synced.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -206,6 +211,23 @@ Target `main` публикует `eaae89b` с командой `pnpm content:qua
 создаёт и не публикует карточки. Reviewer decisions, provenance/license,
 semantic dedupe, typed placements, assessed activities и release promotion
 остаются обязательными шагами G11.
+
+### Execution update — G10 PostgreSQL Studio authority journey — 29 августа 2026
+
+Target `main` публикует `f45fe20` с `PostgresStudioLedger`: при явном
+`FLUENT_STUDIO_LEDGER_BACKEND=postgres` валидированные Studio snapshots
+становятся append-only authority в `studio_ledger_records`; JSONL сохраняется
+как обратимый fallback. `d2242cd` добавляет воспроизводимый
+`pnpm studio:postgres-journey`, а `44b92db` фиксирует evidence и checksums.
+
+На живом `fluent-interview-platform-dev` journey прошёл через public Next
+boundary: candidate/review/release/readback получили ожидаемые HTTP 201/200,
+идемпотентные повторы вернули те же IDs, API restart сохранил counts
+`audit=3, candidate=3, receipt=3, release=1, review=1`, `rawContentPersisted`
+остался `false`. Это закрывает локальный deterministic authority/replay slice,
+но не managed transaction/consumer, retention, external load/partition,
+licensed ingestion или human/semantic review; поэтому `G10` остаётся
+`PASS_WITH_LIMITATIONS`.
 
 ### Execution update — G7 explanation/defense evaluator — 29 августа 2026
 
@@ -1498,9 +1520,9 @@ edges до переноса product code.
 Закрыть author→review→publish→release→readback без обязательного Payload.
 
 > G10 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G10/`
-> at target `a06c7e8`. The local Studio lifecycle, PostgreSQL outbox projection
-> and durable command-receipt projection are verified; authority ownership,
-> managed transactions, batch ingestion and external consumers remain open.
+> at target `f3d3b4e`. The local Studio lifecycle, PostgreSQL authority, outbox
+> projection and durable command-receipt projection are verified; managed
+> transactions, batch ingestion and external consumers remain open.
 
 ### G10.1. Studio workflow
 
@@ -1527,8 +1549,9 @@ edges до переноса product code.
 ### G10.3. Release operations
 
 - [x] `G10-016` Outbox обеспечивает reliable projection без Kafka по умолчанию
-      (append-only JSONL authority, PostgreSQL metadata projection, idempotent
-      retry/reconcile; managed external consumer remains open).
+      (append-only PostgreSQL authority в выбранном режиме, JSONL fallback,
+      metadata outbox projection и idempotent retry/reconcile; managed external
+      consumer remains open).
 - [x] `G10-017` Search/index/release projections rebuildable из authority
       (локальный deterministic rebuild manifest).
 - [x] `G10-018` Backup/restore включает revisions, provenance, placements, outbox
@@ -1542,8 +1565,9 @@ edges до переноса product code.
 - [x] `G10-021` Real author→review→publish→release→readback journey PASS.
 - [x] `G10-022` Unauthorized publish/forged provenance/quarantine leakage tests PASS.
 - [x] `G10-023` Release deterministic double-build PASS.
-- [x] `G10-024` Rebuild projections from authority PASS (JSONL authority и
-      PostgreSQL outbox projection проверены в disposable live stack).
+- [x] `G10-024` Rebuild projections from authority PASS (JSONL fallback и
+      PostgreSQL authority/outbox projection проверены в disposable live
+      stack).
 - [x] `G10-025` Commit: `feat(g10): deliver governed authoring and release pipeline`.
 - [ ] `G10-026` `gate.json.status = PASS`.
 
