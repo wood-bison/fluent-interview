@@ -865,6 +865,30 @@ independent review остаются обязательными. Exact RC workflo
 перезапущен после этой правки; зелёные результаты для текущего `main` не
 перемещают RC tag и не меняют G12 status.
 
+### Execution update — G12 CORS boundary and candidate/main remote verification — 29 августа 2026
+
+Коммиты `8aaf8a5` и `79b29f7` ужесточают Nest CORS: API отражает только
+явно перечисленные локальные web origins (`127.0.0.1:47360` и
+`localhost:47360`), отклоняет wildcard-конфигурацию и не включает credentials.
+Scoped default Compose stack был пересобран на `79b29f7`; live probe подтвердил
+allowlist для обоих локальных origins и отсутствие `Access-Control-Allow-Origin`
+для `https://evil.example`. Evidence и checksums зафиксированы в target
+`G12/cors-policy-2026-08-29.*` и `7df43ce`.
+
+Для проверки clean-clone/quality/security после SBOM и CORS были выполнены
+реальные remote workflow на отдельном immutable candidate tag
+`rc-2026.08.29.3 → 79b29f7`: verify run `33247719798` и security run
+`33247721043` завершились `success`. Те же workflow на текущем `main`
+`7df43ce` также завершились `success`: verify `33247943904` и security
+`33247944675`. Target evidence обновлено коммитом `2accdbe`; исходный
+immutable RC `rc-2026.08.29.1 → 476aa01` не перемещался и не выдаётся за
+проверенный.
+
+Это закрывает только machine slices для CORS и remote workflow на candidate и
+текущем `main`. `G12-018` в части auth/session/CSRF/XSS/SSRF, signed
+attestation/provenance, `G12-024` для исходного RC SHA, visual/accessibility,
+content/runtime-language и independent owner review остаются открытыми.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
