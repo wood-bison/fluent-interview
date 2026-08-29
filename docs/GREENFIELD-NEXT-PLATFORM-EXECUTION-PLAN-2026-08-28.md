@@ -31,6 +31,8 @@ Default branch: **`main`**
 - `77c0a56` — G9 Navigator live evidence;
 - `71c9013` — G10 Studio lifecycle evidence;
 - `1d24738` — G11 explicit curriculum coverage evidence.
+- `85ea1c0` — project-scoped PostgreSQL Studio outbox projection with live
+  idempotent author→review→publish replay and restart recovery.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -618,10 +620,11 @@ Target `origin/main == 0bd417a`; immutable RC tag `rc-2026.08.29.1 → 476aa01`
   `fluent-interview-platform/docs/verification/greenfield/G10/`; target
   `origin/main == 4b48590`.
 
-Таким образом, `G10-015..019` и `G10-023..024` закрыты только для локального
-JSONL/rebuild scope. Paid-portal licensing/import, PostgreSQL authority/outbox,
-Kafka/Redis benchmark и внешний load/rollback остаются promotion gates; статус
-G10 сохраняется `PASS_WITH_LIMITATIONS`, а RC tag не перемещён.
+Таким образом, `G10-015..019` и `G10-023..024` закрыты для локального
+JSONL + PostgreSQL projection/rebuild scope. Paid-portal licensing/import,
+PostgreSQL ownership authority, managed outbox consumer, Kafka/Redis benchmark
+и внешний load/rollback остаются promotion gates; статус G10 сохраняется
+`PASS_WITH_LIMITATIONS`, а RC tag не перемещён.
 
 ### Execution update — G6 reusable runtime learning components — 29 августа 2026
 
@@ -1470,9 +1473,9 @@ edges до переноса product code.
 Закрыть author→review→publish→release→readback без обязательного Payload.
 
 > G10 implementation and live evidence: `fluent-interview-platform/docs/verification/greenfield/G10/`
-> at target `71c9013`. The local Studio lifecycle is verified; PostgreSQL
-> outbox/projection rebuild, batch ingestion and durable review receipts remain
-> explicitly open.
+> at target `85ea1c0`. The local Studio lifecycle and project-scoped PostgreSQL
+> outbox projection are verified; authority ownership, batch ingestion and
+> durable review receipts remain explicitly open.
 
 ### G10.1. Studio workflow
 
@@ -1499,7 +1502,8 @@ edges до переноса product code.
 ### G10.3. Release operations
 
 - [x] `G10-016` Outbox обеспечивает reliable projection без Kafka по умолчанию
-      (append-only JSONL, idempotent retry/reconcile; PostgreSQL promotion open).
+      (append-only JSONL authority, PostgreSQL metadata projection, idempotent
+      retry/reconcile; managed external consumer remains open).
 - [x] `G10-017` Search/index/release projections rebuildable из authority
       (локальный deterministic rebuild manifest).
 - [x] `G10-018` Backup/restore включает revisions, provenance, placements, outbox
@@ -1513,8 +1517,8 @@ edges до переноса product code.
 - [x] `G10-021` Real author→review→publish→release→readback journey PASS.
 - [x] `G10-022` Unauthorized publish/forged provenance/quarantine leakage tests PASS.
 - [x] `G10-023` Release deterministic double-build PASS.
-- [x] `G10-024` Rebuild projections from authority PASS (локальный scope; внешний
-      PostgreSQL projection остаётся открытым).
+- [x] `G10-024` Rebuild projections from authority PASS (JSONL authority и
+      PostgreSQL outbox projection проверены в disposable live stack).
 - [x] `G10-025` Commit: `feat(g10): deliver governed authoring and release pipeline`.
 - [ ] `G10-026` `gate.json.status = PASS`.
 
