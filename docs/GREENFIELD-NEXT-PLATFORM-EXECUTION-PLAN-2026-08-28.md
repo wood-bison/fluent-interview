@@ -47,6 +47,9 @@ Default branch: **`main`**
 - `d2242cd` — bounded public-boundary Studio authority journey with
   create/review/publish/readback replay and API restart recovery;
   `44b92db` — G10 evidence/checksums; `f3d3b4e` — target gate index synced.
+- `1338644` — deterministic `vault-authoring-queue.v1` over the full
+  Brain/Vault quality inventory; `6e46da3` — G11 queue evidence/checksums;
+  `b37bd65` — target gate index synced.
 
 Полные machine-readable материалы находятся в
 `fluent-interview-platform/docs/verification/greenfield/G9/`, `G10/` и `G11/`.
@@ -211,6 +214,21 @@ Target `main` публикует `eaae89b` с командой `pnpm content:qua
 создаёт и не публикует карточки. Reviewer decisions, provenance/license,
 semantic dedupe, typed placements, assessed activities и release promotion
 остаются обязательными шагами G11.
+
+### Execution update — G11 deterministic authoring queue — 29 августа 2026
+
+Target `main` публикует `1338644` с `vault-authoring-queue.v1`. Скрипт
+принимает только metadata-only `vault-quality-inventory.v1`, сортирует записи по
+явному состоянию и missing facets, ограничивает выдачу batch размером 100 и
+никогда не копирует prompt/answer/code/source wording и не меняет release.
+`6e46da3` записывает реальный batch из 1 597 записей: `authoring=1 591`,
+`mapping-review=6`, `queueHash=e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`.
+CLI guard дополнительно проверен с обычным `pnpm ... -- args`.
+
+Это закрывает только воспроизводимую orchestration часть G11: mapping review,
+original authoring, licensing, semantic correctness, typed placements,
+assessed activities и promotion по-прежнему требуют решений автора и
+ревьюера. `G11` остаётся `PASS_WITH_LIMITATIONS`.
 
 ### Execution update — G10 PostgreSQL Studio authority journey — 29 августа 2026
 
@@ -1581,7 +1599,8 @@ edges до переноса product code.
 не подменяя качество количеством.
 
 > G11 policy/report evidence: `fluent-interview-platform/docs/verification/greenfield/G11/`
-> at target `7e1be05`. The endpoint and source-quality preflight are live and
+> at target `b37bd65`. The endpoint, source-quality preflight and bounded
+> authoring queue are live and
 > strict, but their non-zero gap ledger is intentional: the seed release is not
 > yet production-eligible.
 
