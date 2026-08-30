@@ -2160,10 +2160,10 @@ edges до переноса product code.
 
 ### G11.0. Coverage policy
 
-- [ ] `G11-001` Для technical core capability использовать role SLA: diagnostic, mechanism-basic, mechanism-advanced, predict/trace, edge, debug, trade-off, apply/design, evidence, defense.
-- [ ] `G11-002` Для algorithms использовать concept, baseline, easy, medium, hard, proof, complexity, edge-test.
-- [ ] `G11-003` 70 карточек на атомарную тему запрещены; quota относится к module/path coverage.
-- [ ] `G11-004` Hard gates: mandatory roles, depth, locale, provenance, placement, practice, no quarantine.
+- [x] `G11-001` Для technical core capability использовать role SLA: diagnostic, mechanism-basic, mechanism-advanced, predict/trace, edge, debug, trade-off, apply/design, evidence, defense. Машинный audit `coverage-policy-audit.v1` подтверждает полный technical-core set без дублей.
+- [x] `G11-002` Для algorithms использовать concept, baseline, easy, medium, hard, proof, complexity, edge-test. Машинный audit подтверждает полный algorithms set без дублей.
+- [x] `G11-003` 70 карточек на атомарную тему запрещены; quota относится к module/path coverage. Два versioned policy principles и policy guard это проверяют.
+- [x] `G11-004` Hard gates: mandatory roles, depth, locale, provenance, placement, practice, no quarantine. Release-path audit проверяет locale/provenance/placement/no-quarantine и отделяет score/practice gap.
 - [ ] `G11-005` Core capability score ≥0.90 после hard gates; filler ради count запрещён.
 - [x] `G11-006` Shared cards переиспользуются placements; unique canonical count и path placement count публикуются отдельно.
 - [x] `G11-007` Primary Questions и Supporting Prompts считаются отдельно.
@@ -2264,6 +2264,21 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G11-043` Commits are path/release scoped; no mega content dump without manifests/reviews.
 - [ ] `G11-044` Final commit: `feat(g11): publish production curriculum and practice portfolio`.
 - [ ] `G11-045` `gate.json.status = PASS`.
+
+### Execution update — G11.0 coverage policy audit — 30 августа 2026
+
+Target `main` (`c0f3e86`, evidence `3ab6354`) добавил
+`tools/content-compiler/coverage-policy-audit.mjs` и `pnpm content:policy`.
+Инструмент независимо проверяет exact path set, technical-core/algorithms role
+SLA, запрет duplicate-card filler quotas и hard-gate contract
+(`released`, `localeComplete`, `provenanceComplete`, `noQuarantine`,
+`placementComplete`). Три негативных fixture-теста подтверждают fail-closed
+поведение. Поэтому `G11-001..004` закрыты машинным evidence.
+
+`G11-005` не закрыт: production score seed-релиза равен `0.00` для Node/Java/Go
+и ни один путь не eligible. Это честный content-authoring gap; tool не меняет
+карточки и не повышает score вручную. Полный отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G11/coverage-policy-audit-2026-08-30.{json,md}`.
 
 ---
 
