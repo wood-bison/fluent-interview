@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 618 пунктов из 1 134.**
+**Осталось: 617 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 516 |
-| Осталось (`[ ]`) | 618 |
+| Закрыто (`[x]`) | 517 |
+| Осталось (`[ ]`) | 617 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.5% |
+| Формальное выполнение | 45.59% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -117,8 +117,18 @@ license/disposition metadata и note hash, без текста и bodies, дет
 boundary/toolchain checks, architecture test ladder, evidence validation и
 checksum validation.
 
-Следующий implementation slice: `G10S-105` — provenance хранит source, method,
-acquiredAt/importedAt, reviewer, disposition, rights и redistributable flag.
+Последний implementation slice: target `16c62996747a49a79e65518c5d6603f7f560d9e7`
+(evidence `bf7187a2e89ded9a92374ee6043feaf02526e4fc`) закрыл `G10S-105`.
+Provenance record теперь требует `source`, bounded `method`,
+`acquiredAt`/`importedAt`, `reviewer`, `disposition`, `rights` и
+`redistributable`; chronology и public-rights guards отклоняют недостоверные
+records. Rehearsal принял 2 из 5 metadata records, отклонил три intentional
+negative fixtures, подтвердил заполненность обязательных полей, deterministic
+metadata-only projection (`f1749b8c…80418`) и отсутствие bodies. Vocabulary
+методов пока намеренно остаётся bounded key и закрывается следующим пунктом.
+
+Следующий implementation slice: `G10S-106` — versioned provenance method
+vocabulary и fail-closed quarantine неизвестных методов.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
