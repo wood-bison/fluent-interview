@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 631 пункт из 1 134.**
+**Осталось: 630 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 503 |
-| Осталось (`[ ]`) | 631 |
+| Закрыто (`[x]`) | 504 |
+| Осталось (`[ ]`) | 630 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.36% |
+| Формальное выполнение | 44.44% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -21,25 +21,23 @@ policy/evidence/independent-review пункты, поэтому он намер�
 closure и независимая финальная проверка. Формальный счётчик не является
 оценкой оставшихся часов и не подменяет evidence каждого гейта.
 
-Предыдущий implementation slice: target `c018ed2` (evidence `51d24d4`) добавил
-backup-completeness rehearsal для G10S-086. Disposable database после всех
-восьми миграций содержит Strata authoring и public serving records; custom-format
-dump включает обязательные таблицы, а `roles-grants.json` фиксирует 4
-least-privilege роли, 6 schema grants, 271 object grants и 0 memberships без
-credentials (`credentialsDetected=false`). Временная база и dump удалены;
-`G10S-086` закрыт только после зелёного `pnpm check`, post-commit ladder,
-checksum validation и evidence validation.
+Предыдущий implementation slice: target `2b8a20d` (evidence `4abd375`) закрыл
+G10S-091. Disposable database после всех восьми миграций подтвердил точную
+identity constraint `UNIQUE (kc_code, aspect, stack)`: `generic` и `node`
+варианты приняты, duplicate triple отклонён, `band/scope` в identity нет.
+Гейт закрыт только после зелёного `pnpm check`, post-commit ladder, checksum
+validation и evidence validation.
 
-Последний implementation slice: target `74c3242` (evidence `f1cb582`) закрыл
-G10S-087. Custom dump из migrated source восстановлен во вторую disposable
-database; после replay allowlisted grants source/restored/target logical hash
-совпал (`4f528310…70f5cc`), role metadata совпала (4 роли, 6 schema grants,
-271 object grants, 0 memberships), а `g10s_role_checks.sql` подтвердил 12/12.
-Обе временные базы и dump удалены. Gate закрыт после полного `pnpm check`,
-архитектурного тестового набора и evidence/checksum validation.
+Последний implementation slice: target `a6e9fed` (evidence `108e8ef`) закрыл
+G10S-092. Metadata-only collision report нормализует strict identity, группирует
+двух кандидатов в `REVIEW_REQUIRED`, отклоняет malformed metadata и оставляет
+даже одиночный кандидат без implicit promotion. `autoMergedRecords=0`; source
+wording и answers не копируются. Гейт закрыт после полного `pnpm check`,
+архитектурного test ladder и evidence/checksum validation.
 
-Следующий implementation slice: `G10S-092` — создать deterministic migration
-rejection report для source collisions; auto-merge вопросов запрещён.
+Следующий implementation slice: `G10S-093` — сохранить dynamic language table
+и ISO/BCP-47 normalization policy; closed enum RU/EN не использовать в
+authoring.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
