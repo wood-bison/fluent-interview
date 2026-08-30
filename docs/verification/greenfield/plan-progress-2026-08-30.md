@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 629 пунктов из 1 134.**
+**Осталось: 628 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 505 |
-| Осталось (`[ ]`) | 629 |
+| Закрыто (`[x]`) | 506 |
+| Осталось (`[ ]`) | 628 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.53% |
+| Формальное выполнение | 44.62% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -43,9 +43,15 @@ G10S-093. Dynamic `strata.language` table принимает новые BCP-47 t
 полного `pnpm check`, language/architecture test ladder и evidence/checksum
 validation.
 
-Следующий implementation slice: `G10S-094` — сохранить layer kinds и
-versioned layers; edit создаёт новую version/preferred transition, а не
-destructive overwrite.
+Последний implementation slice: target `e9c1f8f` (evidence `401c0b4`) закрыл
+G10S-094. Rehearsal сохранил все 14 canonical layer kinds, отклонил in-place
+body update, оставил две версии с разными hashes и атомарно перевёл v1 в
+`deprecated`, а v2 в единственный `preferred` на координате. Гейт закрыт после
+полного `pnpm check`, architecture test ladder и evidence/checksum validation.
+
+Следующий implementation slice: `G10S-095` — canonical prompt uniqueness
+действует на `(question, layer_key=prompt, lang, depth)` независимо от
+`ord/version`.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
