@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 617 пунктов из 1 134.**
+**Осталось: 616 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 517 |
-| Осталось (`[ ]`) | 617 |
+| Закрыто (`[x]`) | 518 |
+| Осталось (`[ ]`) | 616 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.59% |
+| Формальное выполнение | 45.68% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -129,6 +129,16 @@ metadata-only projection (`f1749b8c…80418`) и отсутствие bodies. Vo
 
 Следующий implementation slice: `G10S-106` — versioned provenance method
 vocabulary и fail-closed quarantine неизвестных методов.
+
+Последний implementation slice: target `7815ed07d09150ef220a4f6e97d9479501153d10`
+(evidence `c98873d64fd02f767cd9a9326e95bd9c6cc6e491`) закрыл `G10S-106`.
+Release boundary закрепляет `provenance-method.v1` с пятью методами:
+`human`, `translation`, `mt_reviewed`, `generated`, `imported`. Rehearsal
+принял 3 из 5 records и поместил два неизвестных ключа в `QUARANTINED`; missing
+method также quarantine-only, автоматическое сопоставление запрещено,
+projection metadata-only и детерминирован (`c3e3b583…c85fd`). Следующий
+implementation slice: `G10S-107` — explicit distributable grant для
+company-linked и paid sources перед public disposition.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
