@@ -1207,6 +1207,24 @@ rasterisation/target среде.
 human owner visual sign-off намеренно остаются promotion gates; evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/visual-contract-2026-08-30.{json,md}`.
 
+### Execution update — G12 telemetry budget and pressure guard — 30 августа 2026
+
+Target `main` (`85161cf`, evidence index `5cfaf18`) добавил bounded telemetry
+contract и `pnpm observability:budget`. Guard проверяет разрешённые поля и
+recursive privacy rejection, нормализацию UUID/числовых route segments,
+размер события/пакета, cardinality, retention и fail-closed поведение при
+disk-pressure. Deterministic corpus: `10 000` safe events, `0` unsafe accepted,
+`60/128` dimension tuples, `284/2048 B` max event, `2 700 793/4 194 304 B`
+batch, retention `10 100 → 7 575` (purged `2 525`), pressure cap `16 KiB` с
+отказом записи после cap; observability suite `8/8` и API typecheck/lint
+зелёные.
+
+Это закрывает local machine slice `G12-023` со статусом
+`PASS_WITH_LIMITATIONS`. Внешний collector, exporter backpressure,
+долгосрочный retention и multi-host disk-failure drills не имитируются и
+остаются promotion gates; evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/telemetry-budget-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -2265,7 +2283,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-021` Repeatable WCAG machine baseline PASS_WITH_LIMITATIONS: 23 curated routes, 739/739 named controls, landmarks/heading/alt/focus guards и 27/27 token contrast checks. Human VoiceOver/NVDA smoke и full browser/AT matrix остаются owner gates. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/accessibility-audit-2026-08-30.json`.
 - [x] `G12-022` Machine visual contract PASS_WITH_LIMITATIONS: 12 surfaces × 3 desktop profiles × light/dark (`72/72`), zero page overflow/clipped visible controls/unexplained P0/P1 geometry defects, and `.app-scroll-region` owns vertical scroll in every case. D3 raster deltas are explicitly classified `INFORMATIONAL_BASELINE_DELTA`; exact pixel/owner sign-off remains open. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/visual-contract-2026-08-30.json`.
-- [ ] `G12-023` Telemetry cardinality/privacy/retention/load/disk-pressure tests PASS.
+- [x] `G12-023` Local telemetry budget PASS_WITH_LIMITATIONS: recursive privacy/unknown-field guards, normalized dynamic routes, `10,000` synthetic events, `60/128` bounded dimension tuples, `2,700,793/4,194,304` batch bytes, 90-day retention purge and fail-closed `16 KiB` disk-pressure rehearsal. External collector, long-duration retention and multi-host drills remain open. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/telemetry-budget-2026-08-30.json`.
 - [ ] `G12-024` CI required checks green on exact RC SHA.
 
 ### G12.3. Reconciliation and rollback
