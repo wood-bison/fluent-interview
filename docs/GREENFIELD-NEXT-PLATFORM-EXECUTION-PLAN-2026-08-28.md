@@ -840,6 +840,20 @@ machine-readable output, commands и checksums.
 источников, Brain/Vault/portal batch importer и reviewer-gated promotion всё ещё
 остаются отдельными открытыми пунктами.
 
+### Execution update — G6 runtime profile availability guard — 30 августа 2026
+
+Target `72cc77c` выносит совместимость профилей в общий
+`releasedProfilesForTask()` из `@fluent/contracts`; UI больше не дублирует
+язык/revision literals. На текущем release доступен только реальный
+`javascript@revision-1/node-26-commonjs`. TypeScript не показывается, пока в
+том же `runtime/info` нет released `typescript@revision-2`; TS-only и wrong
+revision payloads fail closed. Три contract cases и web smoke 45/45 PASS,
+evidence/checksums зафиксированы в `4cacf9c`.
+
+Это закрывает guard часть `G6-020`. Реальный TS executor/evaluator, hidden
+suite и conformance остаются отдельной будущей runtime revision и не выдаются
+за существующие.
+
 ### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
 
 Следующий deterministic batch довёл durable history до локального PostgreSQL
@@ -1576,7 +1590,7 @@ edges до переноса product code.
       необходимости).
 - [x] `G6-018` Editor заполняет доступную высоту, resize/scroll ownership tested.
 - [x] `G6-019` Language/runtime selector показывает только compatible released options.
-- [ ] `G6-020` Node golden task предлагает JS/TS только если обе revisions реально существуют.
+- [x] `G6-020` Node golden task предлагает JS/TS только если обе revisions реально существуют. Shared `releasedProfilesForTask()` показывает JS-only при текущем release и разрешает TS только с released revision 2; target `72cc77c`/`4cacf9c`.
 - [x] `G6-021` Run, reset, hints, errors, loading/cancel/retry имеют ясные states.
 - [x] `G6-022` xterm/large editor chunks lazy-loaded; initial route budget соблюдён. Для текущего source-owned textarea heavy editor отсутствует (N/A); измеренный route/chunk budget PASS, при добавлении пакета пункт reopen.
 - [x] `G6-023` Keyboard, screen-reader labels, focus after run и terminal fallback PASS.
