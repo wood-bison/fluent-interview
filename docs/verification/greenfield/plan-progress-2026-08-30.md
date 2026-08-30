@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 620 пунктов из 1 134.**
+**Осталось: 619 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 514 |
-| Осталось (`[ ]`) | 620 |
+| Закрыто (`[x]`) | 515 |
+| Осталось (`[ ]`) | 619 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.33% |
+| Формальное выполнение | 45.41% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -97,8 +97,17 @@ metadata-only Question joins содержат только `questionId`, `trackI
 эмитируются. Гейт закрыт после полного `pnpm check`, boundary/toolchain checks,
 architecture test ladder, evidence validation и checksum validation.
 
-Следующий implementation slice: `G10S-103` — Activity/TaskRevision хранит
-execution/time budget отдельно; learner analytics не смешивает оба budget.
+Последний implementation slice: target `7410f33` (evidence `5a41338`) закрыл
+`G10S-103`. Контракты теперь разделяют `TaskRevision.executionBudgetSec`
+(`1..3600` секунд), `LearnerActivityObservation.observedDurationMs`
+(`0..86400000` миллисекунд) и Question `responseBudgetMin` (`1..120` минут).
+Crossed fields, mismatched family/revision coordinates и нулевой execution
+budget блокируются; projection детерминирован и metadata-only. Гейт закрыт
+после полного `pnpm check`, boundary/toolchain checks, architecture test
+ladder, evidence validation и checksum validation.
+
+Следующий implementation slice: `G10S-104` — `source_grant` является
+prerequisite provenance; cited source без grant rejected.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
