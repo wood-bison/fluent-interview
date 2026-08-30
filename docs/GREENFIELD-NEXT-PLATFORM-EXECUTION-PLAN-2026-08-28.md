@@ -2381,6 +2381,8 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-038` Проверить ADR links и vocabulary consistency; `check:links` должен иметь негативный fixture для broken relative ADR link. Evidence: `architecture:links` 6 files valid plus negative fixture test (target `816de78`).
 - [x] `G10S-039` Commit: `docs(g10s): lock authoring authority and migration decisions`. Evidence: target commit `07fb21b`; `pnpm check`, `boundary:check`, `toolchain:check` green; no push.
 
+### G10S.2. Monorepo project и toolchain integration
+
 - [x] `G10S-040` Выбрать и документировать Nx project layout без generic dump folders: domain package, authoring CLI/tool, content assets и PostgreSQL migrations имеют отдельных owners. Evidence: `docs/architecture/monorepo-project-layout.md`, `nx show projects --json`, commits `e114cf5`/`85d951f`.
 - [x] `G10S-041` Создать `packages/content-model` либо эквивалентный named package для framework-neutral schemas/types; не помещать DB/process code в contract package. Evidence: `packages/content-model`, strict Zod tests, commit `e114cf5`.
 - [x] `G10S-042` Создать `tools/content-authoring` либо эквивалентный Nx project для CLI commands, gates и bundle export. Evidence: `tools/content-authoring/project.json`, integration output, commit `e114cf5`.
