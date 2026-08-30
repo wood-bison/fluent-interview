@@ -1,5 +1,13 @@
 # Fluent Interview Platform — greenfield Next.js execution plan
 
+## Progress reporting
+
+После каждого локального коммита запускай `pnpm plan:progress`. Команда только
+читает этот план и печатает `checked / remaining / total`, процент выполнения и
+разбивку по разделам; она не ставит галочки автоматически и не превращает
+чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
+[`plan-progress-2026-08-30.md`](verification/greenfield/plan-progress-2026-08-30.md).
+
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
 Владелец продукта: **Sergey**

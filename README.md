@@ -62,6 +62,7 @@ pnpm runtime:images:check      # verify immutable task image refs + daemon
 pnpm down                      # stop services without deleting volumes
 pnpm prune:workspace           # remove only known stale workspace Docker artefacts
 pnpm ports                     # verify the workspace port registry has no duplicates
+pnpm plan:progress             # show checked/remaining items in the active plan
 ```
 
 The underlying `scripts/*.sh` commands remain available for automation and

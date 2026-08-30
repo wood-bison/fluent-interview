@@ -12,6 +12,8 @@
   "mode:check": "bash scripts/mode-guard.sh check",
   "mode:guard:test": "node --test scripts/mode-guard.spec.mjs",
     "layout:check": "bash scripts/layout-check.sh",
+    "plan:progress": "node scripts/plan-progress.mjs",
+    "plan:progress:json": "node scripts/plan-progress.mjs --json",
     "runtime:images:check": "bash fluent-task-runtime/scripts/image-manifest-check.sh",
     "runtime:images:check:static": "bash fluent-task-runtime/scripts/image-manifest-check.sh --static",
     "docker:provenance:check": "node scripts/docker-provenance-check.mjs --live",
