@@ -1,18 +1,18 @@
 {
   "reportVersion": "validation-matrix.v1",
-  "generatedAt": "2026-08-28T11:56:20.601Z",
-  "startedAt": "2026-08-28T11:56:19.067Z",
+  "generatedAt": "2026-08-28T18:48:37.822Z",
+  "startedAt": "2026-08-28T18:48:36.146Z",
   "mode": "development-live",
   "webBase": "http://localhost:47350",
   "labBase": "http://127.0.0.1:47000",
   "runtimeBase": "http://127.0.0.1:48227",
   "brainBase": "http://127.0.0.1:48127",
-  "routeCount": 43,
+  "routeCount": 45,
   "apiProbeCount": 16,
   "sourceRevisions": {
-    "umbrella": "95a2ef516f28eafff905f5335ee86a81260411e9",
-    "lab": "5c6eef80edf3ae76bd827a3e6fc75529d9bf2fd3",
-    "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
+    "umbrella": "76419a5620ca3c6cf4a4742cb42d8258224e682f",
+    "lab": "ba495d657b7576b04718e3f09b6f1767924dc7bc",
+    "vue": "41ac41da63526b84fa994c58f7d0012d24fe6d1b",
     "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
     "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
     "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
@@ -61,6 +61,14 @@
     {
       "id": "path-node",
       "route": "/paths/nodejs-typescript"
+    },
+    {
+      "id": "domain-node-runtime",
+      "route": "/paths/nodejs-typescript/domains/node-runtime"
+    },
+    {
+      "id": "capability-event-loop",
+      "route": "/capabilities/capability.event-loop-ordering"
     },
     {
       "id": "progress",
@@ -195,8 +203,8 @@
     {
       "id": "router-route-records",
       "status": "pass",
-      "detail": "35 route records discovered",
-      "count": 35
+      "detail": "37 route records discovered",
+      "count": 37
     },
     {
       "id": "router-route-path-unique",
@@ -246,8 +254,8 @@
     {
       "id": "router-route-record-coverage",
       "status": "pass",
-      "detail": "35 records have a concrete browser sample",
-      "routeRecordCount": 35,
+      "detail": "37 records have a concrete browser sample",
+      "routeRecordCount": 37,
       "uncovered": []
     },
     {
@@ -325,6 +333,20 @@
       "status": "pass",
       "detail": "/paths/nodejs-typescript → 200",
       "route": "/paths/nodejs-typescript",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:domain-node-runtime",
+      "status": "pass",
+      "detail": "/paths/nodejs-typescript/domains/node-runtime → 200",
+      "route": "/paths/nodejs-typescript/domains/node-runtime",
+      "httpStatus": 200
+    },
+    {
+      "id": "web-route:capability-event-loop",
+      "status": "pass",
+      "detail": "/capabilities/capability.event-loop-ordering → 200",
+      "route": "/capabilities/capability.event-loop-ordering",
       "httpStatus": 200
     },
     {
@@ -985,6 +1007,18 @@
       "httpStatus": 200
     },
     {
+      "id": "domain-node-runtime",
+      "route": "/paths/nodejs-typescript/domains/node-runtime",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "id": "capability-event-loop",
+      "route": "/capabilities/capability.event-loop-ordering",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
       "id": "progress",
       "route": "/progress",
       "status": "pass",
@@ -1238,5 +1272,5 @@
     }
   },
   "valid": true,
-  "digest": "d0c2c319fc011c13f42f809ddfe6b864cccf8bd825344d10ce1555ec31a16ae1"
+  "digest": "995474c3c8cdce6d4f7478cf8d5083a71c1cade4bc3a14de303f828fd012e1be"
 }

@@ -25,6 +25,16 @@ revisions, sandbox runs, hidden-test verdicts, and run result envelopes.
 **Product readiness** states whether a named learner flow can currently accept
 and complete its required work.
 
+**Learning Product Maturity** is the ordered strength of the product claim:
+operational, curriculum-published, practice-executable, mastery-proven, and
+interview-benchmarked. _Avoid_: treating container health or content volume as
+proof of interview readiness.
+
+**Interview Readiness** is a learner-level claim supported by retained skill,
+unseen transfer, timed coding, system design, incident response, spoken defense,
+and external human evaluation. It is not a product health state or completion
+badge.
+
 ## Resource health
 
 **Resource health** states whether one process, container, or dependency is
@@ -41,18 +51,36 @@ changes backend resource health.
 An **optional capability** enhances the product without blocking its core
 learning flows. The local AI companion is an optional capability.
 
+## Operational and learning evidence
+
+**Stack Session** is one bounded lifecycle of a Fluent Interview stack, from
+preflight through startup and health transitions to shutdown or failure. It
+remains identifiable even when telemetry or product databases never start.
+
+**Technical Telemetry** is redacted diagnostic evidence about the behavior and
+performance of running product resources. It may explain an incident but never
+creates learner progress, mastery, or unlocks. _Avoid_: Learning Evidence.
+
+**Learning Evidence** is durable product evidence that a learner performed,
+explained, defended, or later repeated assessed work against exact revisions.
+It may support a mastery claim but is never inferred from infrastructure
+metrics, traces, or logs. _Avoid_: telemetry, analytics event.
+
 ## Control Center
 
-**Control Center** is the product label for the live Aspire resource dashboard.
+**Control Center** is the operator-facing Fluent surface for expected and
+observed stack resources, Stack Sessions, health transitions, cleanup state,
+and incident handoff. _Avoid_: Aspire dashboard, Grafana.
 
 ## Trace Explorer
 
-**Trace Explorer** is the product label for the central Jaeger trace interface.
+**Trace Explorer** is the product label for the distributed-trace diagnostic
+surface, independent of its storage vendor. _Avoid_: Jaeger UI, Tempo UI.
 
 ## Metrics & Logs
 
-**Metrics & Logs** is the product label for persistent Grafana dashboards and
-alerts backed by Prometheus and Loki.
+**Metrics & Logs** is the product label for the bounded technical-signal surface,
+independent of its dashboard and storage implementation. _Avoid_: Grafana.
 
 ## Durable volume
 
@@ -107,3 +135,66 @@ Readiness has four deliberately separate dimensions:
   learner evidence.
 
 An unqualified `ready` field is not a valid cross-service claim.
+
+## Source and product surfaces
+
+A **Source Monorepo** is the single canonical Git history for the Fluent
+Interview product family. It changes source coordination, but does not merge
+bounded contexts, data ownership, or authority.
+
+The **Learner Web** is the learner-facing web surface. It presents released
+curriculum, practice, progress, evidence, and advisory assistance. It owns no
+canonical content, execution verdict, or mastery decision.
+
+The **Content Studio** is the editorial surface for drafts, review, provenance,
+localization, and publication proposals. A Studio publish action does not
+itself make a draft canonical; Question Brain accepts and releases canonical
+content.
+
+## Assessment and assistance
+
+An **Assessment Policy** declares, for one Activity kind, which authority may
+evaluate it, which evidence is required, whether that evidence may unlock
+progress, and which versioned rubric or evaluator applies.
+
+A **Deterministic Verdict** is the authoritative result of a pinned executable
+revision and assessment suite. It is produced by Task Runtime, not by a
+browser, learner self-grade, or language model.
+
+**Advisory Guidance** helps a learner understand a task, inspect evidence,
+form a hypothesis, or choose an allowed next step. It may create an Assistance
+Event, but never a Deterministic Verdict, Mastery Claim, release, or unlock.
+
+A **Context Revision** is the server-owned, immutable context used for one
+advisory turn. It references exact curriculum, content, task, attempt, evidence,
+and rubric revisions instead of trusting browser-supplied summaries.
+
+## Content governance
+
+**Content Provenance** records where candidate material came from, under which
+rights it may be used, which snapshot was reviewed, and which editorial
+decision allowed it into a release.
+
+A **Curriculum Placement Release** is an immutable mapping from accepted
+capability bindings to learner-visible lessons, stations, roles, order, and
+visibility. It is distinct from Question Brain's semantic graph release.
+
+## Greenfield migration language
+
+A **Reference Product** is an immutable, runnable snapshot of the previous
+Fluent Interview system used to compare behavior, data, visuals, and contracts.
+It is never a write target, runtime dependency, or production authority for the
+new product.
+
+A **Capability Port** recreates one coherent learner or authoring capability in
+the new platform. It carries exact source provenance, explicit disposition
+(`rewrite`, `adapt`, `copy`, or `drop`), parity evidence, deliberate differences,
+and a rollback boundary. A Capability Port is not a repository copy.
+
+A **Port Ledger** is the reviewable inventory of Capability Ports. It connects
+an immutable source repository and revision to the new target paths and proofs,
+so a clean Git history does not erase architectural provenance.
+
+A **Content Release Bundle** is an immutable, deterministic projection of
+reviewed content revisions, placements, assets, provenance, checksums, and
+attestation. It is a deployment/export artifact, not an authoring source.

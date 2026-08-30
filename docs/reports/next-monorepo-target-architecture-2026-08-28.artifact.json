@@ -1,0 +1,413 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Fluent Interview: целевая Next.js-монорепо архитектура",
+    "description": "Утверждённая целевая архитектура после полного рефакторинга Fluent Interview: Next.js, единый source-monorepo, Content Studio, Question Brain, Task Runtime, curriculum closure и Tutor Orchestrator.",
+    "generatedAt": "2026-08-28T18:00:00+02:00",
+    "cards": [
+      {
+        "id": "target_card",
+        "description": "Подтверждённая топология source и learner UI.",
+        "dataset": "target_summary",
+        "sourceId": "target_summary_query",
+        "metrics": [
+          { "label": "Source repos сейчас", "field": "repos_before", "format": "number" },
+          { "label": "Source repos после", "field": "repos_after", "format": "number" },
+          { "label": "Learner UI после", "field": "next_target", "format": "number" }
+        ]
+      },
+      {
+        "id": "content_card",
+        "description": "Inventory и learner projection — разные уровни готовности.",
+        "dataset": "target_summary",
+        "sourceId": "content_summary_query",
+        "metrics": [
+          { "label": "Brain cards", "field": "brain_cards", "format": "number" },
+          { "label": "Station-bound", "field": "station_bound", "format": "number" },
+          { "label": "Runnable revisions", "field": "runnable_revisions", "format": "number" }
+        ]
+      },
+      {
+        "id": "runtime_card",
+        "description": "Текущий и целевой объём исполняемой практики.",
+        "dataset": "runtime_summary",
+        "sourceId": "runtime_summary_query",
+        "metrics": [
+          { "label": "Released families", "field": "released_families", "format": "number" },
+          { "label": "Target families", "field": "target_families", "format": "number" },
+          { "label": "Target revisions", "field": "target_revisions", "format": "number" }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "release_gates_chart",
+        "title": "Зелёные проверки доказывают связность, но не полноту продукта",
+        "subtitle": "Доли пройденных проверок; знаменатели различаются и указаны в подсказках.",
+        "type": "bar",
+        "dataset": "release_gates",
+        "sourceId": "release_gates_query",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": { "field": "gate", "type": "nominal", "label": "Проверка" },
+          "y": { "field": "rate", "type": "quantitative", "label": "Доля PASS" },
+          "tooltip": [
+            { "field": "passed", "type": "quantitative", "label": "PASS", "format": "number" },
+            { "field": "total", "type": "quantitative", "label": "Всего", "format": "number" }
+          ]
+        }
+      },
+      {
+        "id": "coverage_chart",
+        "title": "Главные разрывы inventory → placement → practice",
+        "subtitle": "Каждый столбец имеет собственный явно подписанный denominator; это не одна воронка.",
+        "type": "bar",
+        "dataset": "coverage_rates",
+        "sourceId": "coverage_rates_query",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": { "field": "metric", "type": "nominal", "label": "Граница" },
+          "y": { "field": "rate", "type": "quantitative", "label": "Покрытие" },
+          "tooltip": [
+            { "field": "numerator", "type": "quantitative", "label": "Числитель", "format": "number" },
+            { "field": "denominator", "type": "quantitative", "label": "Знаменатель", "format": "number" }
+          ]
+        }
+      },
+      {
+        "id": "code_chart",
+        "title": "Текущий объём исходников по продуктовым частям",
+        "subtitle": "Source lines показывают цену миграции и место главного structural debt, но не качество кода.",
+        "type": "bar",
+        "dataset": "source_lines",
+        "sourceId": "source_lines_query",
+        "valueFormat": "number",
+        "encodings": {
+          "x": { "field": "component", "type": "nominal", "label": "Компонент" },
+          "y": { "field": "lines", "type": "quantitative", "label": "Строк исходников" },
+          "tooltip": [
+            { "field": "files", "type": "quantitative", "label": "Файлов", "format": "number" }
+          ]
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "version_table",
+        "title": "Целевая version policy на 28 августа 2026",
+        "subtitle": "Production runtime, service toolchain и learner exercise profile — разные понятия.",
+        "dataset": "versions",
+        "sourceId": "versions_query",
+        "defaultSort": { "field": "layer", "direction": "asc" },
+        "columns": [
+          { "field": "layer", "label": "Слой", "type": "text" },
+          { "field": "current", "label": "Сейчас", "type": "text" },
+          { "field": "target", "label": "Цель", "type": "text" },
+          { "field": "policy", "label": "Решение", "type": "text" }
+        ]
+      },
+      {
+        "id": "authority_table",
+        "title": "Владельцы данных и решений после объединения Git",
+        "subtitle": "Один репозиторий не отменяет bounded contexts.",
+        "dataset": "authorities",
+        "sourceId": "authority_query",
+        "defaultSort": { "field": "context", "direction": "asc" },
+        "columns": [
+          { "field": "context", "label": "Контекст", "type": "text" },
+          { "field": "owns", "label": "Владеет", "type": "text" },
+          { "field": "must_not", "label": "Не имеет права", "type": "text" }
+        ]
+      },
+      {
+        "id": "risks_table",
+        "title": "Главные P0/P1 до начала миграции",
+        "subtitle": "Каждый риск имеет конкретный hard gate.",
+        "dataset": "risks",
+        "sourceId": "risks_query",
+        "defaultSort": { "field": "priority", "direction": "asc" },
+        "columns": [
+          { "field": "priority", "label": "Приоритет", "type": "text" },
+          { "field": "risk", "label": "Риск", "type": "text" },
+          { "field": "gate", "label": "Hard gate", "type": "text" }
+        ]
+      },
+      {
+        "id": "waves_table",
+        "title": "Безопасная последовательность cutover",
+        "subtitle": "Подробные подпункты и commit gates находятся в MD-плане.",
+        "dataset": "waves",
+        "sourceId": "waves_query",
+        "defaultSort": { "field": "order", "direction": "asc" },
+        "columns": [
+          { "field": "order", "label": "№", "format": "number" },
+          { "field": "wave", "label": "Волна", "type": "text" },
+          { "field": "outcome", "label": "Результат", "type": "text" },
+          { "field": "rollback", "label": "Rollback", "type": "text" }
+        ]
+      }
+    ],
+    "sources": [
+      { "id": "target_summary_query", "label": "Derived target summary", "query": { "engine": "inline", "sql": "SELECT 5 AS repos_before, 1 AS repos_after, 1 AS next_target, 1591 AS brain_cards, 6 AS station_bound, 19 AS runnable_revisions", "description": "Owner decisions joined to W22 counters.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "content_summary_query", "label": "Derived learner content summary", "query": { "engine": "inline", "sql": "SELECT 1591 AS brain_cards, 6 AS station_bound, 19 AS runnable_revisions", "description": "W22 learner counters.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "runtime_summary_query", "label": "Derived runtime portfolio summary", "query": { "engine": "inline", "sql": "SELECT 15 AS released_families, 168 AS target_families, 456 AS target_revisions", "description": "Released learner projection compared with target task portfolio.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "release_gates_query", "label": "Derived release gate rates", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES ('Dev release',58,58,1.0),('Strict production',32,33,0.9697),('Curriculum projection',237,237,1.0)) AS t(gate,passed,total,rate)", "description": "Stored W22 pass counts normalized to rates.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "coverage_rates_query", "label": "Derived curriculum/runtime coverage rates", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES ('Bindings consumed by Lab',31,149,0.2081),('Cards visible via station',6,1591,0.0038),('Runnable stations',27,81,0.3333),('Released task families',15,168,0.0893),('Released task revisions',19,456,0.0417)) AS t(metric,numerator,denominator,rate)", "description": "Distinct coverage boundaries with explicit denominators.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "source_lines_query", "label": "Derived source line inventory", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES ('Learning Lab',141277,1026),('Vue learner',20446,60),('Question Brain',19482,100),('Task Runtime',4741,31)) AS t(component,lines,files)", "description": "Repository source line inventory from baseline audit.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "versions_query", "label": "Derived version policy matrix", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES ('Next.js','CMS 16.3.2; learner absent','16.3.3 Active LTS'),('React','CMS 19.2.8','19.2.8'),('Node platform','Lab 26.7 Current','24.20 LTS production'),('TypeScript','6.0.3 / CMS 7.0.2','7.0.2'),('Nest','11','12.0.1'),('Nx','23.1.0 Lab','23.1.2'),('pnpm','11.20','11.24'),('Go','Brain 1.23; Runtime 1.24','1.27.0'),('PostgreSQL','17/18 mixed','18.6 platform'),('Payload','3.88.0','3.88.0')) AS t(layer,current,target)", "description": "Current manifests compared with official release sources.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "authority_query", "label": "Derived bounded-context authority matrix", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES ('Learner Web','Presentation/browser state','No verdict/mastery'),('Learning API','Attempts/evidence/mastery','No canonical content'),('Question Brain','Questions/graph/releases','No learner progress'),('Task Runtime','Tasks/execution/verdict','No curriculum placement'),('Content Studio','Draft/review/proposal','No canonical direct writes'),('Tutor Orchestrator','Advisory actions','No pass/unlock')) AS t(context,owns,must_not)", "description": "Domain glossary authority boundaries.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "risks_query", "label": "Derived risk register", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES ('P0','Vue has no durable remote','bundle and remote before import'),('P0','31/149 bindings consumed','versioned placement release'),('P0','Hidden tests readable','isolated worker and canary'),('P1','CMS workflow incomplete','real publish readback E2E'),('P1','Frozen AI context','fresh ContextRevision'),('P1','Browser-heavy test zoo','test pyramid migration')) AS t(priority,risk,gate)", "description": "Highest-priority findings from repository audits.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "waves_query", "label": "Derived migration wave summary", "query": { "engine": "inline", "sql": "SELECT * FROM (VALUES (0,'Decision/evidence freeze'),(1,'Git/DB backups'),(2,'Root Nx/CI skeleton'),(3,'History-preserving imports'),(4,'Contracts/domain split'),(5,'Content/Runtime hardening'),(6,'Next foundation/design system'),(7,'Route strangler'),(8,'Next cutover'),(9,'Curriculum/portfolio/AI closure'),(10,'Production sign-off')) AS t(order,wave)", "description": "High-level sequence from detailed implementation plan.", "executed_at": "2026-08-28T18:00:00+02:00" } },
+      { "id": "baseline_audit", "label": "Baseline architecture audit", "path": "docs/reports/architecture-audit-2026-08-28.html" },
+      { "id": "wishlist", "label": "Owner decisions", "path": "docs/WISHLIST.md" },
+      { "id": "context_glossary", "label": "Domain glossary", "path": "CONTEXT.md" },
+      { "id": "implementation_plan", "label": "Agent implementation plan", "path": "docs/NEXT-MONOREPO-PRODUCT-REFACTORING-PLAN-2026-08-28.md" },
+      { "id": "workspace", "label": "Current workspace topology", "path": "workspace.yaml" },
+      { "id": "w22_counters", "label": "W22 learner counter drilldown", "path": "docs/verification/two-audit-remediation/W22/m4-counter-drilldown.json" },
+      { "id": "w22_gate", "label": "W22 release gate", "path": "docs/verification/two-audit-remediation/W22/gate.md" },
+      { "id": "g16_bindings", "label": "Brain G16 capability binding release", "path": "fluent-question-brain/docs/verification/G16-capability-binding-release-2026-08-28.json" },
+      { "id": "runtime_manifest", "label": "Current task family manifest", "path": "fluent-task-runtime/task-families/manifest.json" },
+      { "id": "runtime_portfolio", "label": "Target task portfolio", "path": "fluent-task-runtime/task-portfolio/manifest.json" },
+      { "id": "cms_readme", "label": "Current Payload workflow", "path": "fluent-question-brain/apps/cms/README.md" },
+      { "id": "next_blog", "label": "Next.js releases", "path": "https://nextjs.org/blog" },
+      { "id": "next_production", "label": "Next.js production checklist", "path": "https://nextjs.org/docs/app/guides/production-checklist" },
+      { "id": "next_testing", "label": "Next.js testing guide", "path": "https://nextjs.org/docs/app/guides/testing" },
+      { "id": "nx_boundaries", "label": "Nx module boundaries", "path": "https://nx.dev/docs/features/enforce-module-boundaries" },
+      { "id": "payload_drafts", "label": "Payload versions and drafts", "path": "https://payloadcms.com/docs/versions/overview" },
+      { "id": "playwright_practices", "label": "Playwright best practices", "path": "https://playwright.dev/docs/best-practices" },
+      { "id": "typescript7", "label": "TypeScript 7.0 release", "path": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/" },
+      { "id": "solvit_terms", "label": "Solvit terms of usage", "path": "https://solvit.space/terms-of-usage" },
+      { "id": "lmstudio", "label": "LM Studio developer API", "path": "https://lmstudio.ai/docs/developer" }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# Fluent Interview: целевая Next.js-монорепо архитектура\n\n**Решение владельца зафиксировано.** Финальный learner UI будет на Next.js, а пять source-репозиториев будут объединены в один `fluent-interview`. Этот документ не спорит с решением и не предлагает заморозку. Он показывает безопасный способ выполнить его без потери уже созданного продукта, контента, Git-истории и authority boundaries.\n\nДата среза: **28 августа 2026**. Язык: русский. Статус: target architecture + программа перехода."
+      },
+      {
+        "id": "executive",
+        "type": "markdown",
+        "sourceId": "baseline_audit",
+        "body": "## Техническое резюме\n\nГлавный вывод: переход **реализуем**, но это два независимых cutover, а не один большой rewrite.\n\n1. Сначала объединяются Git histories, root CI, Compose и contracts **без изменения поведения**.\n2. Затем Vue постранично заменяется Next.js через parity gates и временный rollback.\n3. Question Brain, Learning API и Task Runtime остаются самостоятельными владельцами данных даже внутри одного Git.\n4. Content Studio превращается из почти декоративной Payload-поверхности в настоящий author→review→publish→release workflow.\n5. Runtime усиливается отдельными `Run` и `Submit`, isolated workers и hidden-test non-disclosure.\n6. Штурман становится typed Tutor Orchestrator, но никогда не получает право выдать pass/mastery/unlock.\n\n**Что останется от старого продукта:** все программы, пути, Atlas, вопросы, практика, runtime picker, editor/terminal, evidence, projects, settings, RU/EN, light/dark и AI — не исчезают. Они получают Next-реализацию и более строгие контракты."
+      },
+      { "id": "summary_metrics", "type": "metric-strip", "cardIds": ["target_card", "content_card", "runtime_card"] },
+      {
+        "id": "not_freeze",
+        "type": "markdown",
+        "body": "## Это не план заморозки\n\nЗелёные W22-проверки доказывают, что уже существует рабочая сквозная цепочка `route → question → capability → task family → revision → attempt`. Они не доказывают полноту всех путей. Поэтому найденные пробелы становятся backlog с владельцем и gate, а не основанием остановить продукт.\n\nФинальная цель — не «переписать UI», а получить production baseline, где любой видимый вопрос, язык, задача и статус имеют объяснимый источник истины и реальный следующий шаг."
+      },
+      { "id": "release_chart_block", "type": "chart", "chartId": "release_gates_chart" },
+      {
+        "id": "release_explanation",
+        "type": "markdown",
+        "sourceId": "w22_gate",
+        "body": "Технические gates сильны: dev release 58/58, strict production 32/33 и curriculum projection 237/237. Единственный strict failure — Vue без remote. Но formal curriculum ledger M3+ и human sign-off остаются отдельными обязательствами; архитектурная миграция не имеет права автоматически поставить им `DONE`."
+      },
+      {
+        "id": "facts",
+        "type": "markdown",
+        "body": "## Что аудит установил точно\n\n- Сейчас root координирует пять независимых source repos; Vue вообще не имеет durable remote.\n- Lab содержит около 141 тысяч строк TS/CSS/SQL, Vue — 20 тысяч, Brain — 19 тысяч, Runtime — 4,7 тысячи.\n- `lab-contracts` разросся до 84 722 строк и хранит не только wire contracts, но контент, policy и fixtures.\n- Brain публикует 1 591 карточку, но accepted capability binding есть у 114 карточек; 1 477 остаются `theory_only`.\n- Текущий Lab hard-coded crosswalk потребляет лишь 31 из 149 bindings и показывает 6 station-bound cards.\n- Runtime имеет 16 families/20 revisions total, learner release — 15/19; target portfolio — 168/456.\n- Payload CMS реальна, но в ней лишь 2 редакторских документа против 6 012 canonical questions; её smoke обходит реальный publish hook.\n- В Runtime хорошие digest/resource controls, но hidden tests readable внутри learner container, а control plane владеет host Docker socket.\n- В Lab 257 gate scripts; Vue имеет 53 Playwright tests и один Vitest spec — browser automation используется вместо тестовой пирамиды.\n- Штурман уже правильно advisory-only, но его conversation context устаревает, question revision hard-coded, а Ollama получает дублированную историю."
+      },
+      { "id": "coverage_chart_block", "type": "chart", "chartId": "coverage_chart" },
+      {
+        "id": "coverage_explanation",
+        "type": "markdown",
+        "sourceId": "g16_bindings",
+        "body": "### Почему 1 591 карточка не означает готовый путь\n\nНужно различать четыре уровня: inventory, accepted binding, learner placement и executable practice. Самый срочный P0 — не переписывание карточек, а исправление сломанного capability→station join. Цель первого content release: все 149 bindings детерминированно разделены на `placed` или `library_only(reason)`, unresolved = 0."
+      },
+      { "id": "code_chart_block", "type": "chart", "chartId": "code_chart" },
+      {
+        "id": "code_explanation",
+        "type": "markdown",
+        "body": "Большой объём Lab объясняет, почему нельзя одновременно импортировать истории, разрезать домены, обновлять Nest/TypeScript и переписывать UI. Сначала topology parity, затем contracts/decomposition, затем UI cutover. Иначе причина любого дефекта станет недиагностируемой."
+      },
+      {
+        "id": "before_heading",
+        "type": "markdown",
+        "body": "## Архитектура ДО\n\nФункциональные границы в целом разумны, но source/CI/versions раздроблены, learner projection теряет большую часть bindings, Content Studio не является полноценным workflow, а тесты распределены не по правильным слоям."
+      },
+      {
+        "id": "before_diagram",
+        "type": "html",
+        "body": "<figure aria-labelledby=\"before-title\"><svg viewBox=\"0 0 1040 410\" role=\"img\" aria-labelledby=\"before-title before-desc\" style=\"width:100%;height:auto\"><title id=\"before-title\">Текущая полирепо архитектура</title><desc id=\"before-desc\">Пять отдельных Git репозиториев соединены HTTP контрактами и orchestration scripts.</desc><defs><marker id=\"a1\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#5b72ff\"/></marker></defs><rect x=\"30\" y=\"30\" width=\"190\" height=\"90\" rx=\"18\" fill=\"#eef1ff\" stroke=\"#5b72ff\"/><text x=\"125\" y=\"66\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Vue learner UI</text><text x=\"125\" y=\"94\" text-anchor=\"middle\" font-size=\"13\">repo без remote</text><rect x=\"310\" y=\"30\" width=\"210\" height=\"90\" rx=\"18\" fill=\"#f5f7fb\" stroke=\"#8090a8\"/><text x=\"415\" y=\"66\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Learning API</text><text x=\"415\" y=\"94\" text-anchor=\"middle\" font-size=\"13\">Nest + огромный lab-contracts</text><rect x=\"640\" y=\"30\" width=\"180\" height=\"90\" rx=\"18\" fill=\"#eefbf5\" stroke=\"#38a676\"/><text x=\"730\" y=\"66\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Question Brain</text><text x=\"730\" y=\"94\" text-anchor=\"middle\" font-size=\"13\">Go authority</text><rect x=\"840\" y=\"30\" width=\"170\" height=\"90\" rx=\"18\" fill=\"#fff6e8\" stroke=\"#d18a27\"/><text x=\"925\" y=\"66\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Task Runtime</text><text x=\"925\" y=\"94\" text-anchor=\"middle\" font-size=\"13\">Go + Docker socket</text><rect x=\"640\" y=\"220\" width=\"180\" height=\"90\" rx=\"18\" fill=\"#fff1f5\" stroke=\"#cf5d86\"/><text x=\"730\" y=\"256\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Payload CMS</text><text x=\"730\" y=\"284\" text-anchor=\"middle\" font-size=\"13\">2 docs; sync hook</text><rect x=\"30\" y=\"220\" width=\"190\" height=\"90\" rx=\"18\" fill=\"#f4f1ff\" stroke=\"#8267c7\"/><text x=\"125\" y=\"256\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Question Vault</text><text x=\"125\" y=\"284\" text-anchor=\"middle\" font-size=\"13\">mirror/history repo</text><path d=\"M220 75 H310\" stroke=\"#5b72ff\" stroke-width=\"3\" marker-end=\"url(#a1)\"/><path d=\"M520 75 H640\" stroke=\"#5b72ff\" stroke-width=\"3\" marker-end=\"url(#a1)\"/><path d=\"M520 92 C590 150 800 150 840 92\" fill=\"none\" stroke=\"#5b72ff\" stroke-width=\"3\" marker-end=\"url(#a1)\"/><path d=\"M730 220 V120\" stroke=\"#cf5d86\" stroke-width=\"3\" marker-end=\"url(#a1)\"/><path d=\"M220 265 C400 360 570 330 640 280\" fill=\"none\" stroke=\"#8267c7\" stroke-width=\"2\" stroke-dasharray=\"8 8\" marker-end=\"url(#a1)\"/><text x=\"520\" y=\"380\" text-anchor=\"middle\" font-size=\"14\">5 Git histories · 4 CI definitions · 3 Compose projects · duplicated contracts</text></svg></figure>"
+      },
+      {
+        "id": "after_heading",
+        "type": "markdown",
+        "body": "## Архитектура ПОСЛЕ\n\nОдин Git, один CI и один release manifest. Но authority chain остаётся сетевой и проверяемой: learner web обращается к Learning API; Learning API оркестрирует Brain и Runtime; sandbox worker изолирован; Content Studio создаёт только reviewed publication proposals."
+      },
+      {
+        "id": "after_diagram",
+        "type": "html",
+        "body": "<figure aria-labelledby=\"after-title\"><svg viewBox=\"0 0 1040 500\" role=\"img\" aria-labelledby=\"after-title after-desc\" style=\"width:100%;height:auto\"><title id=\"after-title\">Целевая Next monorepo архитектура</title><desc id=\"after-desc\">Next learner web через Learning API обращается к отдельным Question Brain и Task Runtime. Payload является Content Studio. Все части находятся в одном source monorepo.</desc><defs><marker id=\"a2\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto-start-reverse\"><path d=\"M 0 0 L 10 5 L 0 10 z\" fill=\"#315efb\"/></marker></defs><rect x=\"20\" y=\"18\" width=\"1000\" height=\"454\" rx=\"28\" fill=\"#f8faff\" stroke=\"#bdc8e8\" stroke-width=\"2\"/><text x=\"50\" y=\"54\" font-size=\"15\" font-weight=\"700\" fill=\"#315efb\">ONE SOURCE MONOREPO · Nx project graph · one CI · one release manifest</text><rect x=\"55\" y=\"95\" width=\"210\" height=\"92\" rx=\"20\" fill=\"#e9eeff\" stroke=\"#315efb\"/><text x=\"160\" y=\"132\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\">Next learner-web</text><text x=\"160\" y=\"160\" text-anchor=\"middle\" font-size=\"13\">RSC default · client islands</text><rect x=\"335\" y=\"95\" width=\"220\" height=\"92\" rx=\"20\" fill=\"#f1f4fb\" stroke=\"#72819c\"/><text x=\"445\" y=\"132\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\">Learning API</text><text x=\"445\" y=\"160\" text-anchor=\"middle\" font-size=\"13\">attempt · evidence · mastery</text><rect x=\"650\" y=\"78\" width=\"170\" height=\"92\" rx=\"20\" fill=\"#e9faf3\" stroke=\"#2d9d70\"/><text x=\"735\" y=\"116\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Question Brain</text><text x=\"735\" y=\"144\" text-anchor=\"middle\" font-size=\"13\">content/graph releases</text><rect x=\"850\" y=\"78\" width=\"150\" height=\"92\" rx=\"20\" fill=\"#fff5e7\" stroke=\"#c47f1e\"/><text x=\"925\" y=\"116\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Runtime API</text><text x=\"925\" y=\"144\" text-anchor=\"middle\" font-size=\"13\">Run / Submit</text><rect x=\"650\" y=\"245\" width=\"170\" height=\"92\" rx=\"20\" fill=\"#fff0f5\" stroke=\"#c95680\"/><text x=\"735\" y=\"282\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Content Studio</text><text x=\"735\" y=\"310\" text-anchor=\"middle\" font-size=\"13\">draft/review/propose</text><rect x=\"850\" y=\"245\" width=\"150\" height=\"92\" rx=\"20\" fill=\"#f3edff\" stroke=\"#785ab8\"/><text x=\"925\" y=\"282\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Worker pool</text><text x=\"925\" y=\"310\" text-anchor=\"middle\" font-size=\"13\">isolated verdict</text><rect x=\"335\" y=\"265\" width=\"220\" height=\"92\" rx=\"20\" fill=\"#ecf7ff\" stroke=\"#397fa9\"/><text x=\"445\" y=\"302\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\">Tutor Orchestrator</text><text x=\"445\" y=\"330\" text-anchor=\"middle\" font-size=\"13\">typed advisory actions</text><path d=\"M265 141 H335\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#a2)\"/><path d=\"M555 123 H650\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#a2)\"/><path d=\"M555 155 C670 210 790 205 850 145\" fill=\"none\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#a2)\"/><path d=\"M735 245 V170\" stroke=\"#c95680\" stroke-width=\"3\" marker-end=\"url(#a2)\"/><path d=\"M925 170 V245\" stroke=\"#785ab8\" stroke-width=\"3\" marker-end=\"url(#a2)\"/><path d=\"M850 290 C700 410 570 375 555 330\" fill=\"none\" stroke=\"#397fa9\" stroke-width=\"2\" stroke-dasharray=\"7 7\" marker-end=\"url(#a2)\"/><path d=\"M445 265 V187\" stroke=\"#397fa9\" stroke-width=\"2\" stroke-dasharray=\"7 7\" marker-end=\"url(#a2)\"/><text x=\"520\" y=\"435\" text-anchor=\"middle\" font-size=\"14\">OpenAPI/JSON Schema · generated TS/Zod/Go · versioned releases · no shared DB</text></svg></figure>"
+      },
+      { "id": "authority_table_block", "type": "table", "tableId": "authority_table" },
+      {
+        "id": "monorepo",
+        "type": "markdown",
+        "sourceId": "nx_boundaries",
+        "body": "## Почему Nx, а не Turborepo\n\nВыбор — **Nx 23.1.2**. Lab уже использует Nx; нам нужны rich project graph, tags, affected, generators, history-preserving imports и polyglot run targets. Turborepo прекрасен как лёгкий JS task/cache orchestrator, но его boundaries ещё не заменяют архитектурный контроль двух Go services. Turbopack внутри Next не требует Turborepo.\n\nNx ESLint boundaries защищают только JS/TS. Для Go нужен отдельный `go list -deps`/allowlist gate или language-agnostic conformance. Мы не будем делать вид, что один ESLint rule защищает весь polyglot repo."
+      },
+      {
+        "id": "target_tree",
+        "type": "markdown",
+        "body": "### Целевая структура\n\n```text\nfluent-interview/\n├─ apps/\n│  ├─ learner-web/             # Next App Router\n│  └─ content-studio/          # Payload editorial surface\n├─ services/\n│  ├─ learning-api/            # Nest orchestration/evidence\n│  ├─ question-brain/          # Go canonical content/graph\n│  └─ task-runtime/            # Go control plane + worker boundary\n├─ packages/\n│  ├─ design-system/{tokens,react,icons}\n│  ├─ domains/{curriculum,practice,progress,evidence,projects,navigator}\n│  ├─ contracts/{learning-api,question-brain,task-runtime,events}\n│  ├─ clients/{learning-api,question-brain,task-runtime}\n│  └─ testing/{fixtures,contract,component,browser}\n├─ content/question-vault/     # provenance/history, never runtime authority\n├─ tools/{orchestrator,content-import,release}\n└─ infra/{compose,observability,deployment}\n```\n\nДва Go service сохраняют собственные `go.mod`; root `go.work` допустим только как dev aggregator. Один pnpm lockfile обслуживает весь JS/TS."
+      },
+      {
+        "id": "next_architecture",
+        "type": "markdown",
+        "sourceId": "next_production",
+        "body": "## Next.js: как писать именно релевантный production код\n\n- App Router и Server Components по умолчанию.\n- Client islands только там, где реально нужен browser state: CodeMirror, xterm, Canvas/WebGL Atlas, AI panel, resize/drag.\n- Server Components читают Learning API напрямую; не делают лишний loop через собственный Route Handler.\n- Route Handlers используются для session/token isolation, SSE, uploads и webhooks, но не дублируют бизнес-логику Nest.\n- URL хранит shareable navigation/filter state; TanStack Query — только live client/server state; Zustand — только ephemeral UI state.\n- Zod валидирует внешние/form boundaries; межъязыковой source of truth — OpenAPI 3.1/JSON Schema.\n- Design tokens переносятся 1:1, а shadcn используется как source-code registry: primitives адаптируются в собственный Fluent React design system.\n\nVue не удаляется в начале. Он остаётся feature-flagged rollback target до 100% route, visual, a11y, locale и behavior parity. Финальный продукт — Next-only."
+      },
+      {
+        "id": "cms",
+        "type": "markdown",
+        "sourceId": "cms_readme",
+        "body": "## Question Brain и Content Studio\n\nPayload не является мёртвым кодом: drafts, autosave, versions и promotion hook существуют. Но текущее использование не соответствует production authoring: 2 CMS documents против 6 012 canonical questions, любой authenticated user имеет слишком широкие права, publish синхронно вызывает Brain, smoke проверяет прямой Go API вместо реального hook.\n\nЦелевой workflow:\n\n`ContentSource → SourceSnapshot → CandidateRevision → normalize/dedupe → author review → independent binding review → lesson placement proposal → immutable graph/placement release → learner projection`\n\nРоли: author, reviewer, release-manager. Один человек не принимает собственный binding/release. Promotion становится idempotent outbox/reconcile flow. Cross-schema published SQL view — только transitional adapter; финальная Studio projection приходит через Brain admin API/ETag."
+      },
+      {
+        "id": "content",
+        "type": "markdown",
+        "body": "## Curriculum closure: что именно надо дополнять\n\nBrain binding release сейчас почти полностью Node/.NET/System Design; Java, Go, Vue, Algorithms, Behavioral и Python имеют ноль accepted bindings, несмотря на наличие сырых карточек. Поэтому generic content надо хранить один раз и размещать в нескольких путях, а native content — жёстко исключать из чужих путей.\n\nПорядок закрытия: исправить join → обработать 1 477 theory-only волнами ≤100 → выпустить accepted path manifests → расширить Runtime 15/19 до 168/456 → провести package-mode drills. Planning targets не становятся production counters до immutable release."
+      },
+      {
+        "id": "runtime",
+        "type": "markdown",
+        "sourceId": "runtime_manifest",
+        "body": "## Task Runtime и новая стратегия проверки\n\nТекущий Runtime уже силён: exact OCI digest, network none, CPU/memory/PID bounds, cap-drop, read-only root, no-new-privileges, timeout/cleanup и typed result. Но это ещё не adversarial judge.\n\n### Обязательные изменения\n\n- `Run`: public/sample tests, подробный feedback, никакого mastery.\n- `Submit`: immutable revision + hidden/adversarial suite, restricted diagnostics, authoritative evidence.\n- Async lifecycle, idempotency key, cancellation, exact verdict envelope.\n- Control plane без host Docker socket; dedicated worker queue/pool.\n- Hidden suite не видна learner process; уникальный canary не должен появиться нигде.\n- Reproducible images, SBOM, provenance, source→digest attestation и per-revision conformance.\n\nSolvit публично показывает удачный product contract Run/Submit и async solution ID, но не раскрывает isolation/comparator/hidden-test internals. Мы перенимаем наблюдаемый паттерн, а не придумываем факты об их backend."
+      },
+      {
+        "id": "testing",
+        "type": "markdown",
+        "sourceId": "next_testing",
+        "body": "## Тестовая пирамида вместо Playwright-зоопарка\n\n1. **Unit/policy/schema** — самый большой слой, каждый PR, без Docker/browser.\n2. **React component** — Vitest + Testing Library, user-visible queries.\n3. **Storybook state tests** — theme/locale/viewport/a11y/visual states.\n4. **Consumer/provider contracts** — Next↔Nest↔Brain/Runtime.\n5. **Integration** — Nest/Postgres/Redis, migrations/idempotency, Go HTTP/fake executor.\n6. **Runtime conformance** — реальные sandbox images и adversarial vectors.\n7. **8–15 golden E2E journeys** — только критические пользовательские цепочки.\n8. **Scheduled non-functional** — visual, performance, security, load, restore/rollback.\n\nRoute reachability проверяется registry/API, а не 44 browser visits. UI state matrix живёт в Storybook, а не в custom `.mjs` scripts. Playwright остаётся важным, но перестаёт быть универсальным языком QA."
+      },
+      {
+        "id": "navigator",
+        "type": "markdown",
+        "sourceId": "lmstudio",
+        "body": "## Штурман beyond chat\n\nСильная текущая граница сохраняется: browser context не может прислать verdict/mastery/provenance, telemetry ограничена, а модель advisory-only. Цель — не ещё один чат, а typed action engine:\n\n- `explain_task`;\n- `socratic_probe`;\n- `hint(level 0..4)` с явной лестницей;\n- `interpret_trace` / `explain_mismatch` с точными citations;\n- `misconception_hypothesis` + следующий диагностический вопрос;\n- `route_recommendation`, где deterministic engine сначала задаёт allowed candidates;\n- spoken interview coach;\n- authoring proposal-only.\n\nКаждый turn получает свежий server-owned ContextRevision: exact path/lesson/question revision/releases/task revision/attempt/run/trace/rubric. Нужны schema validation, golden/adversarial evals, provider parity, prompt/version hashes, metadata-only OTel, opt-in transcripts с TTL/delete/export. Invalid output даёт deterministic fallback."
+      },
+      {
+        "id": "solvit",
+        "type": "markdown",
+        "sourceId": "solvit_terms",
+        "body": "## Solvit: что можно и нельзя использовать\n\nМожно вручную изучить taxonomy, UX, Run/Submit, multi-language starters, SQL dataset presentation, self-assessment и публичные gap signals. Нельзя массово scrape/download/rephrase платный корпус, solutions, hidden tests или videos: подписка даёт персональный доступ, а не лицензию на republication.\n\nIngestion policy: `owned | public-domain | permissive-open | licensed | restricted-reference`. Для restricted reference сохраняется только gap note и публичная metadata; собственный контент создаётся clean-room по официальным/open источникам. Bulk reuse возможен только после письменной API/export/content licence."
+      },
+      { "id": "version_table_block", "type": "table", "tableId": "version_table" },
+      {
+        "id": "version_notes",
+        "type": "markdown",
+        "sourceId": "typescript7",
+        "body": "### Важное про «самое последнее»\n\nNext 16.3.3 — Active LTS security release от 25 августа 2026. TypeScript 7.0.2 уже доступен и заметно быстрее, но stable programmatic API ожидается в 7.1; часть embedded/tooling может временно требовать `@typescript/typescript6`. Node 26.8.1 — Current, а production policy Node рекомендует LTS: поэтому серверная платформа использует Node 24 LTS, а Node 26 остаётся compatibility/learning lane до LTS. Nest 12.0.1 вышел буквально 27 августа: его upgrade проводится отдельным spike после декомпозиции, не внутри topology cutover."
+      },
+      { "id": "risks_table_block", "type": "table", "tableId": "risks_table" },
+      {
+        "id": "migration",
+        "type": "markdown",
+        "body": "## Как перейти без потери продукта\n\nСначала меняется способ хранения source и CI, затем contracts/domain boundaries, затем learner UI. Старые remotes архивируются только после финального sign-off. Vue без remote получает bundle и durable remote раньше любых перемещений. Каждый импорт проверяется `git fsck`, file hashes и `git log --follow`."
+      },
+      { "id": "waves_table_block", "type": "table", "tableId": "waves_table" },
+      {
+        "id": "after_product",
+        "type": "markdown",
+        "body": "## Что будет после выполнения плана\n\nПользователь клонирует один repo, одной командой поднимает profiles, открывает Next-приложение и видит те же сильные Fluent-сценарии без потерь. Каждый path показывает только релевантные native и generic questions. Любая видимая runnable task имеет language/revision/runtime identity. Run объясняет, Submit доказывает. Content Studio позволяет безопасно добавлять тысячи оригинальных/лицензированных материалов. Штурман помогает понять, исследовать trace, найти misconception и выбрать следующий разрешённый шаг, но не притворяется экзаменатором.\n\nКоманда получает один affected CI, единые versions/contracts/tokens и воспроизводимый release manifest. При этом Go services и Nest остаются самостоятельными доменами, а не превращаются в общий ORM."
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "body": "## Методология и ограничения\n\nАудит объединил read-only анализ root и пяти child repos, package/version manifests, W22/G16/runtime releases, текущий CMS/AI/Runtime код, stored verification evidence и официальные документы Next, Nx, Payload, Playwright, TypeScript, Node, Go, PostgreSQL, LM Studio и публичные страницы Solvit.\n\nОграничения: закрытый backend Solvit не исследовался и не описывается как известный; host Go toolchain не был доступен для независимого `go test ./...`; live human M3 и финальный screenshot sign-off не заменяются stored evidence. Version matrix — срез на 28 августа 2026 и должна контролироваться автоматической policy, а не копироваться навсегда."
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "sourceId": "implementation_plan",
+        "body": "## Следующий шаг\n\nНачинать с **W00–W01**, а не с генерации Next страниц: сначала устранить конфликт инструкций, зафиксировать ADR, очистить root, создать tags/bundles/remotes/DB backups и доказать restore. Только затем W02–W08 объединяют source и CI без изменения поведения.\n\nПолный агентский чеклист с commit gates, rollback и самопроверкой находится в `docs/NEXT-MONOREPO-PRODUCT-REFACTORING-PLAN-2026-08-28.md`."
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-28T18:00:00+02:00",
+    "status": "ready",
+    "datasets": {
+      "target_summary": [
+        { "repos_before": 5, "repos_after": 1, "next_target": 1, "brain_cards": 1591, "station_bound": 6, "runnable_revisions": 19 }
+      ],
+      "runtime_summary": [
+        { "released_families": 15, "target_families": 168, "target_revisions": 456 }
+      ],
+      "release_gates": [
+        { "gate": "Dev release", "passed": 58, "total": 58, "rate": 1 },
+        { "gate": "Strict production", "passed": 32, "total": 33, "rate": 0.9697 },
+        { "gate": "Curriculum projection", "passed": 237, "total": 237, "rate": 1 }
+      ],
+      "coverage_rates": [
+        { "metric": "Bindings consumed by Lab", "numerator": 31, "denominator": 149, "rate": 0.2081 },
+        { "metric": "Cards visible via station", "numerator": 6, "denominator": 1591, "rate": 0.0038 },
+        { "metric": "Runnable stations", "numerator": 27, "denominator": 81, "rate": 0.3333 },
+        { "metric": "Released task families", "numerator": 15, "denominator": 168, "rate": 0.0893 },
+        { "metric": "Released task revisions", "numerator": 19, "denominator": 456, "rate": 0.0417 }
+      ],
+      "source_lines": [
+        { "component": "Learning Lab", "lines": 141277, "files": 1026 },
+        { "component": "Vue learner", "lines": 20446, "files": 60 },
+        { "component": "Question Brain", "lines": 19482, "files": 100 },
+        { "component": "Task Runtime", "lines": 4741, "files": 31 }
+      ],
+      "versions": [
+        { "layer": "Next.js", "current": "CMS 16.3.2; learner отсутствует", "target": "16.3.3 Active LTS", "policy": "Security patch first; real App Router server" },
+        { "layer": "React", "current": "CMS 19.2.8", "target": "19.2.8", "policy": "Единая root version" },
+        { "layer": "Node platform", "current": "Lab 26.7 Current", "target": "24.20 LTS production", "policy": "Node 26.8 compatibility/learning lane" },
+        { "layer": "TypeScript", "current": "6.0.3 / CMS 7.0.2", "target": "7.0.2", "policy": "TS6 tooling alias до stable API 7.1" },
+        { "layer": "Nest", "current": "11", "target": "12.0.1", "policy": "Отдельный spike после decomposition" },
+        { "layer": "Nx", "current": "23.1.0 Lab", "target": "23.1.2", "policy": "Root project graph/affected/boundaries" },
+        { "layer": "pnpm", "current": "11.20", "target": "11.24", "policy": "Один root lockfile" },
+        { "layer": "Go", "current": "Brain 1.23; Runtime 1.24", "target": "1.27.0", "policy": "По service, отдельные commits" },
+        { "layer": "PostgreSQL", "current": "17/18 mixed", "target": "18.6 platform", "policy": "Backup/restore/reindex; exercise profiles versioned" },
+        { "layer": "Payload", "current": "3.88.0", "target": "3.88.0", "policy": "Проверить Next 16.3.3 compatibility" }
+      ],
+      "authorities": [
+        { "context": "Learner Web", "owns": "Presentation, browser state, accessible interaction", "must_not": "Verdict, mastery, canonical content, direct service DB" },
+        { "context": "Learning API", "owns": "Sessions, attempts, evidence, progress, mastery orchestration", "must_not": "Canonical question/task definitions" },
+        { "context": "Question Brain", "owns": "Questions, revisions, bindings, semantic graph, content releases", "must_not": "Learner progress or execution verdict" },
+        { "context": "Task Runtime", "owns": "Families, revisions, sandbox execution, deterministic verdict", "must_not": "Curriculum placement or learner mastery policy" },
+        { "context": "Content Studio", "owns": "Drafts, review workflow, provenance, publish proposals", "must_not": "Write canonical published tables directly" },
+        { "context": "Tutor Orchestrator", "owns": "Advisory actions and AssistanceEvent", "must_not": "PASS/FAIL, unlock, mastery, release" }
+      ],
+      "risks": [
+        { "priority": "P0", "risk": "Vue history has no durable remote", "gate": "tag + bundle + remote + file/hash/history verification before import" },
+        { "priority": "P0", "risk": "AGENTS.md contradicts confirmed monorepo decision", "gate": "ADR and instruction update before any agent migration" },
+        { "priority": "P0", "risk": "31/149 Brain bindings consumed by Lab", "gate": "versioned placement release; 149=placed+library_only; unresolved=0" },
+        { "priority": "P0", "risk": "Hidden tests readable by learner container", "gate": "dedicated worker/suite isolation + canary non-disclosure" },
+        { "priority": "P0", "risk": "Control plane owns host Docker socket", "gate": "queue + sandbox worker pool; no production socket" },
+        { "priority": "P1", "risk": "CMS limbo and smoke bypasses real hook", "gate": "real draft→review→publish→Brain readback E2E" },
+        { "priority": "P1", "risk": "84k-line lab-contracts hides domain policy/content", "gate": "contract/domain/content split + architecture tests" },
+        { "priority": "P1", "risk": "Frozen AI context and provider prompt divergence", "gate": "fresh ContextRevision + revision/citation/provider parity eval" },
+        { "priority": "P1", "risk": "257 custom gate scripts replace test pyramid", "gate": "KEEP/MIGRATE/DELETE inventory and replacement parity" },
+        { "priority": "P1", "risk": "Big-bang topology + UI + major upgrades", "gate": "independent commits, soak and rollback per wave" }
+      ],
+      "waves": [
+        { "order": 0, "wave": "Decision/evidence freeze", "outcome": "ADR, clean root, versions and baselines", "rollback": "No destructive change" },
+        { "order": 1, "wave": "Git/DB backups", "outcome": "Tags, bundles, manifests, restore proof", "rollback": "Restore bundle/DB backup" },
+        { "order": 2, "wave": "Root Nx/CI skeleton", "outcome": "One graph and policy gates", "rollback": "Keep child CI authoritative" },
+        { "order": 3, "wave": "History-preserving imports", "outcome": "Vault→Runtime→Brain→Vue→Lab inside root", "rollback": "Pre-import tag/bundle" },
+        { "order": 4, "wave": "Contracts/domain split", "outcome": "OpenAPI/Schema, generated clients, clean domains", "rollback": "N/N-1 adapters" },
+        { "order": 5, "wave": "Content/Runtime hardening", "outcome": "Placement release, Studio workflow, Run/Submit workers", "rollback": "Release pointers/images N-1" },
+        { "order": 6, "wave": "Next foundation/design system", "outcome": "RSC shell and React Fluent components", "rollback": "Vue remains active" },
+        { "order": 7, "wave": "Route strangler", "outcome": "Route-by-route parity", "rollback": "Feature flag per route" },
+        { "order": 8, "wave": "Next cutover", "outcome": "Next-only learner UI", "rollback": "Vue blue/green artifact" },
+        { "order": 9, "wave": "Curriculum/portfolio/AI closure", "outcome": "Placed content, 168/456 target, typed Tutor", "rollback": "Immutable release pointers" },
+        { "order": 10, "wave": "Production sign-off", "outcome": "Restore/rollback/human audit and archive", "rollback": "Signed release runbooks" }
+      ]
+    }
+  },
+  "sources": [],
+  "package_info": {
+    "originUrl": "artifact://fluent-interview-next-monorepo-target-architecture-2026-08-28",
+    "controls": { "edit": false, "refresh": false }
+  }
+}

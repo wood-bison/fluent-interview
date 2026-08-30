@@ -1,6 +1,6 @@
 {
   "reportVersion": "vue-performance.v1",
-  "generatedAt": "2026-08-28T11:54:04.794Z",
+  "generatedAt": "2026-08-28T18:47:55.627Z",
   "mode": "read-existing-dist",
   "valid": true,
   "status": "pass",
@@ -12,14 +12,14 @@
   },
   "entry": {
     "key": "index.html",
-    "file": "assets/index-B3vIzg3k.js"
+    "file": "assets/index-DI62VBBP.js"
   },
   "initial": {
     "js": [
       {
-        "file": "assets/index-B3vIzg3k.js",
-        "rawBytes": 223732,
-        "gzipBytes": 62915
+        "file": "assets/index-DI62VBBP.js",
+        "rawBytes": 224329,
+        "gzipBytes": 63081
       },
       {
         "file": "assets/preferences-kzWIaMEu.js",
@@ -39,8 +39,8 @@
         "gzipBytes": 1746
       }
     ],
-    "jsRawBytes": 306583,
-    "jsGzipBytes": 95216,
+    "jsRawBytes": 307180,
+    "jsGzipBytes": 95382,
     "cssRawBytes": 48585,
     "cssGzipBytes": 9593
   },
@@ -50,7 +50,7 @@
     "gzipBytes": 82437
   },
   "initialHasXterm": false,
-  "dynamicEntryCount": 31,
+  "dynamicEntryCount": 33,
   "largestDynamicAssets": [
     {
       "file": "assets/xterm-C3BHN0de.js",
@@ -78,9 +78,9 @@
       "gzipBytes": 16146
     },
     {
-      "file": "assets/EventLoopLabView-CViEd51P.js",
+      "file": "assets/EventLoopLabView-BatYKBAR.js",
       "rawBytes": 37529,
-      "gzipBytes": 12180
+      "gzipBytes": 12182
     },
     {
       "file": "assets/dist-CfA7vebp.js",
@@ -88,17 +88,17 @@
       "gzipBytes": 12280
     },
     {
-      "file": "assets/QuestionsView-CI3xsE6S.js",
+      "file": "assets/QuestionsView-D-5HiK6_.js",
       "rawBytes": 24691,
-      "gzipBytes": 8099
+      "gzipBytes": 8097
     },
     {
-      "file": "assets/WorkspaceLabView-PYcpbj_y.js",
+      "file": "assets/WorkspaceLabView-B7aB60wh.js",
       "rawBytes": 23330,
-      "gzipBytes": 7677
+      "gzipBytes": 7680
     },
     {
-      "file": "assets/StudioBoundaryView-BHS1M1SJ.js",
+      "file": "assets/StudioBoundaryView-DQF8z3tP.js",
       "rawBytes": 21858,
       "gzipBytes": 7444
     }

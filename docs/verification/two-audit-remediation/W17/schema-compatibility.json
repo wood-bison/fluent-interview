@@ -1,11 +1,11 @@
 {
   "reportVersion": "schema-compatibility-gate.v1",
-  "generatedAt": "2026-08-28T11:54:05.570Z",
+  "generatedAt": "2026-08-28T18:47:56.468Z",
   "owner": "fluent-engineering-vue",
   "currentCurrent": true,
   "previousCurrent": true,
   "testFile": "apps/web/src/contracts.spec.ts",
   "command": "pnpm exec vitest run apps/web/src/contracts.spec.ts --reporter=dot",
   "status": "pass",
-  "outputTail": "\n RUN  v4.1.11 /Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-vue\n\n··············\n\n Test Files  1 passed (1)\n      Tests  14 passed (14)\n   Start at  13:54:05\n   Duration  167ms (transform 42ms, setup 0ms, import 82ms, tests 14ms, environment 0ms)\n\n"
+  "outputTail": "\n RUN  v4.1.11 /Users/sergeyzhechko/developer/fluent-interview/fluent-engineering-vue\n\n··············\n\n Test Files  1 passed (1)\n      Tests  14 passed (14)\n   Start at  20:47:56\n   Duration  184ms (transform 44ms, setup 0ms, import 95ms, tests 13ms, environment 0ms)\n\n"
 }

@@ -1,7 +1,7 @@
 # Runtime failure matrix
 
 - Status: **PASS**
-- Generated: 2026-08-28T11:47:48.873Z
+- Generated: 2026-08-28T18:49:21.153Z
 - Runtime: http://127.0.0.1:48227
 
 The matrix submits only disposable runtime runs. It does not write Lab progress, and source is recorded as a digest.
@@ -9,15 +9,15 @@ The matrix submits only disposable runtime runs. It does not write Lab progress,
 ## Cases
 
 - [x] missing-revision-rejected: HTTP 400 revision_required for node-rate-limiter-001
-- [x] pass: HTTP 200, status=pass, duration=351ms
-- [x] go-pass: HTTP 200, status=pass, duration=11944ms
-- [x] java-pass: HTTP 200, status=pass, duration=920ms
-- [x] csharp-pass: HTTP 200, status=pass, duration=2818ms
-- [x] postgres-pass: HTTP 200, status=pass, duration=883ms
-- [x] test-failure: HTTP 200, status=fail, duration=221ms
-- [x] compile-failure: HTTP 200, status=error, duration=369ms
+- [x] pass: HTTP 200, status=pass, duration=278ms
+- [x] go-pass: HTTP 200, status=pass, duration=12042ms
+- [x] java-pass: HTTP 200, status=pass, duration=731ms
+- [x] csharp-pass: HTTP 200, status=pass, duration=2100ms
+- [x] postgres-pass: HTTP 200, status=pass, duration=786ms
+- [x] test-failure: HTTP 200, status=fail, duration=206ms
+- [x] compile-failure: HTTP 200, status=error, duration=196ms
 - [x] timeout: HTTP 504, status=timeout, duration=n/a
-- [x] trace-evidence-identity: trace 1234822c8b4f43e2163b57073e1fd4d7 contains task.run with correlation, task and revision identity
+- [x] trace-evidence-identity: trace da5c3829dffa82d9e68a41dd295f5a45 contains task.run with correlation, task and revision identity
 - [x] resource-and-isolation-policy: memory/cpu/PID/network/read-only policy assertions pass
 
 All exact-revision, cross-profile verdict, timeout, trace identity, redaction, and resource policy checks passed.

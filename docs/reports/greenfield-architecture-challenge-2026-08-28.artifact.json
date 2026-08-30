@@ -1,0 +1,731 @@
+{
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Fluent Interview Greenfield Challenge: строить ли новый репозиторий с нуля?",
+    "description": "Архитектурный follow-up к Next.js-аудиту: новый чистый репозиторий, immutable reference, capability ports, один Compose stack, контент, локальная observability и честная модель готовности к интервью.",
+    "generatedAt": "2026-08-28T19:18:50+02:00",
+    "cards": [
+      {
+        "id": "decision_card",
+        "description": "Рекомендуемая стратегия и размер core topology.",
+        "dataset": "summary",
+        "sourceId": "summary_query",
+        "metrics": [
+          {"label": "Git histories сейчас", "field": "histories_now", "format": "number"},
+          {"label": "Новая история", "field": "histories_target", "format": "number"},
+          {"label": "Core deployables", "field": "core_deployables", "format": "number"}
+        ]
+      },
+      {
+        "id": "storage_card",
+        "description": "Размер Markdown-корпуса и главного Git-bloat источника.",
+        "dataset": "summary",
+        "sourceId": "summary_query",
+        "metrics": [
+          {"label": "Vault Markdown, MiB", "field": "vault_markdown_mib", "format": "number"},
+          {"label": "Lab tracked, MiB", "field": "lab_tracked_mib", "format": "number"},
+          {"label": "Core profiles", "field": "core_profiles", "format": "number"}
+        ]
+      },
+      {
+        "id": "migration_card",
+        "description": "Greenfield остаётся инкрементальным, а не big-bang rewrite.",
+        "dataset": "summary",
+        "sourceId": "summary_query",
+        "metrics": [
+          {"label": "Capability gates", "field": "capability_gates", "format": "number"},
+          {"label": "Default Compose projects", "field": "compose_projects", "format": "number"},
+          {"label": "Runtime trust zones", "field": "runtime_trust_zones", "format": "number"}
+        ]
+      },
+      {
+        "id": "observability_current_card",
+        "description": "Фактическая сложность и lifecycle debt текущего telemetry stack.",
+        "dataset": "observability_summary",
+        "sourceId": "observability_summary_query",
+        "metrics": [
+          {"label": "Telemetry products сейчас", "field": "current_products", "format": "number"},
+          {"label": "Compose projects сейчас", "field": "current_compose_projects", "format": "number"},
+          {"label": "Stale Fluent resources", "field": "stale_resources", "format": "number"}
+        ]
+      },
+      {
+        "id": "observability_live_card",
+        "description": "Текущий stack действительно собирает и связывает сигналы.",
+        "dataset": "observability_summary",
+        "sourceId": "observability_summary_query",
+        "metrics": [
+          {"label": "Healthy Prometheus targets", "field": "healthy_targets", "format": "number"},
+          {"label": "W16 static checks", "field": "w16_static_checks", "format": "number"},
+          {"label": "Shared trace journey", "field": "shared_trace_journeys", "format": "number"}
+        ]
+      },
+      {
+        "id": "learning_readiness_card",
+        "description": "Observability не подменяет доказательство обучения.",
+        "dataset": "observability_summary",
+        "sourceId": "observability_summary_query",
+        "metrics": [
+          {"label": "Authority planes", "field": "authority_planes", "format": "number"},
+          {"label": "Readiness states", "field": "readiness_states", "format": "number"},
+          {"label": "Target telemetry containers", "field": "target_products", "format": "number"}
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "strategy_chart",
+        "title": "Hybrid greenfield лучше сохраняет чистоту и обратимость",
+        "subtitle": "Взвешенная архитектурная оценка, не измеренная production-метрика; веса и допущения описаны рядом.",
+        "type": "bar",
+        "dataset": "strategy_scores",
+        "sourceId": "strategy_scores_query",
+        "valueFormat": "number",
+        "encodings": {
+          "x": {"field": "strategy", "type": "nominal", "label": "Стратегия"},
+          "y": {"field": "score", "type": "quantitative", "label": "Оценка / 100"},
+          "tooltip": [
+            {"field": "cleanliness", "type": "quantitative", "label": "Чистота"},
+            {"field": "regression_safety", "type": "quantitative", "label": "Безопасность регрессий"},
+            {"field": "provenance", "type": "quantitative", "label": "Provenance"},
+            {"field": "reversibility", "type": "quantitative", "label": "Обратимость"}
+          ]
+        }
+      },
+      {
+        "id": "size_chart",
+        "title": "Git-bloat находится не в Markdown-корпусе",
+        "subtitle": "Tracked working-tree size по частям текущего workspace, MiB; это не размер .git и не runtime footprint.",
+        "type": "bar",
+        "dataset": "tracked_sizes",
+        "sourceId": "tracked_sizes_query",
+        "valueFormat": "number",
+        "encodings": {
+          "x": {"field": "component", "type": "nominal", "label": "Часть workspace"},
+          "y": {"field": "mib", "type": "quantitative", "label": "Tracked MiB"},
+          "tooltip": [{"field": "files", "type": "quantitative", "label": "Tracked files", "format": "number"}]
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "topology_table",
+        "title": "Три варианта core topology",
+        "subtitle": "Рекомендация C минимизирует deployables, не ослабляя trust boundary Runtime.",
+        "dataset": "topology_options",
+        "sourceId": "topology_options_query",
+        "defaultSort": {"field": "option", "direction": "asc"},
+        "columns": [
+          {"field": "option", "label": "Вариант", "type": "text"},
+          {"field": "shape", "label": "Состав", "type": "text"},
+          {"field": "benefit", "label": "Сильная сторона", "type": "text"},
+          {"field": "cost", "label": "Цена", "type": "text"},
+          {"field": "verdict", "label": "Вердикт", "type": "text"}
+        ]
+      },
+      {
+        "id": "port_table",
+        "title": "Что переносить, переписывать и оставлять в reference",
+        "subtitle": "Greenfield переносит capabilities и доказательства, а не репозитории целиком.",
+        "dataset": "port_disposition",
+        "sourceId": "port_disposition_query",
+        "defaultSort": {"field": "asset", "direction": "asc"},
+        "columns": [
+          {"field": "asset", "label": "Актив", "type": "text"},
+          {"field": "disposition", "label": "Решение", "type": "text"},
+          {"field": "reason", "label": "Почему", "type": "text"},
+          {"field": "proof", "label": "Доказательство", "type": "text"}
+        ]
+      },
+      {
+        "id": "commands_table",
+        "title": "Контракт локального lifecycle",
+        "subtitle": "Одна команда запуска; ни одна команда не трогает чужие Docker resources.",
+        "dataset": "dev_commands",
+        "sourceId": "dev_commands_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "command", "label": "Команда", "type": "text"},
+          {"field": "contract", "label": "Что гарантирует", "type": "text"},
+          {"field": "safety", "label": "Safety boundary", "type": "text"}
+        ]
+      },
+      {
+        "id": "storage_table",
+        "title": "Content ownership по типу данных",
+        "subtitle": "Git, PostgreSQL, object storage и release bundle решают разные задачи.",
+        "dataset": "storage_layers",
+        "sourceId": "storage_layers_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "layer", "label": "Слой", "type": "text"},
+          {"field": "authority", "label": "Authority", "type": "text"},
+          {"field": "contains", "label": "Содержимое", "type": "text"},
+          {"field": "not_for", "label": "Не использовать для", "type": "text"}
+        ]
+      },
+      {
+        "id": "waves_table",
+        "title": "Greenfield-гейты до cutover",
+        "subtitle": "Каждый gate закрывается доказательствами и отдельной rollback boundary.",
+        "dataset": "waves",
+        "sourceId": "waves_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "gate", "label": "Gate", "type": "text"},
+          {"field": "capability", "label": "Результат", "type": "text"},
+          {"field": "proof", "label": "Hard proof", "type": "text"}
+        ]
+      },
+      {
+        "id": "observability_inventory_table",
+        "title": "Что найдено в живом observability stack",
+        "subtitle": "Сильный semantic contract уже существует, но topology, версии и lifecycle требуют замены в greenfield.",
+        "dataset": "observability_inventory",
+        "sourceId": "observability_inventory_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "area", "label": "Область", "type": "text"},
+          {"field": "evidence", "label": "Факт", "type": "text"},
+          {"field": "assessment", "label": "Оценка", "type": "text"},
+          {"field": "target", "label": "Greenfield-решение", "type": "text"}
+        ]
+      },
+      {
+        "id": "observability_stack_table",
+        "title": "Выбор бесплатного локального backend",
+        "subtitle": "Рекомендация оптимизирована для одного пользователя и local-only продукта, а не публичного SaaS.",
+        "dataset": "observability_stack_options",
+        "sourceId": "observability_stack_options_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "option", "label": "Вариант", "type": "text"},
+          {"field": "shape", "label": "Форма", "type": "text"},
+          {"field": "history", "label": "История", "type": "text"},
+          {"field": "cost", "label": "Цена сопровождения", "type": "text"},
+          {"field": "verdict", "label": "Вердикт", "type": "text"}
+        ]
+      },
+      {
+        "id": "instrumentation_table",
+        "title": "Instrumentation contract по runtime",
+        "subtitle": "Выбор учитывает официальный maturity status OpenTelemetry на 28 августа 2026.",
+        "dataset": "instrumentation_matrix",
+        "sourceId": "instrumentation_matrix_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "runtime", "label": "Runtime", "type": "text"},
+          {"field": "default", "label": "Default", "type": "text"},
+          {"field": "maturity", "label": "Maturity / ограничение", "type": "text"},
+          {"field": "guard", "label": "Guard", "type": "text"}
+        ]
+      },
+      {
+        "id": "retention_table",
+        "title": "Начальный retention и project-scoped budget",
+        "subtitle": "Это target policy для проверки нагрузкой и recovery, а не уже применённая конфигурация.",
+        "dataset": "retention_policy",
+        "sourceId": "retention_policy_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "№", "format": "number"},
+          {"field": "signal", "label": "Сигнал", "type": "text"},
+          {"field": "window", "label": "Окно", "type": "text"},
+          {"field": "budget", "label": "Budget", "type": "text"},
+          {"field": "authority", "label": "Authority", "type": "text"}
+        ]
+      },
+      {
+        "id": "readiness_table",
+        "title": "Пять честных уровней готовности",
+        "subtitle": "Нельзя переходить от «контейнеры поднялись» сразу к «готов к Big Tech интервью».",
+        "dataset": "readiness_model",
+        "sourceId": "readiness_model_query",
+        "defaultSort": {"field": "order", "direction": "asc"},
+        "columns": [
+          {"field": "order", "label": "Уровень", "format": "number"},
+          {"field": "state", "label": "Состояние", "type": "text"},
+          {"field": "question", "label": "На какой вопрос отвечает", "type": "text"},
+          {"field": "proof", "label": "Hard proof", "type": "text"},
+          {"field": "not_enough", "label": "Чего недостаточно", "type": "text"}
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "summary_query",
+        "label": "Derived greenfield summary",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT 6 AS histories_now, 1 AS histories_target, 3 AS core_deployables, 19.96 AS vault_markdown_mib, 469.73 AS lab_tracked_mib, 4 AS core_profiles, 13 AS capability_gates, 1 AS compose_projects, 1 AS runtime_trust_zones",
+          "description": "Current workspace inventory joined to proposed greenfield topology.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "strategy_scores_query",
+        "label": "Architectural strategy score model",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES ('Import histories into current root',67,55,80,95,85,70),('Pure blank rewrite without ledger',50,95,35,20,60,30),('Hybrid greenfield + reference + ledger',91,95,95,95,75,95)) AS t(strategy,score,cleanliness,regression_safety,provenance,speed,reversibility)",
+          "description": "Judgement model: cleanliness 20%, regression safety 25%, provenance 15%, speed 15%, DX 15%, reversibility 10%; rounded score.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "tracked_sizes_query",
+        "label": "Tracked working-tree sizes",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES ('Root',10.85,356),('Learning Lab',469.73,4424),('Vue learner',1.08,78),('Question Brain',14.97,288),('Task Runtime',0.91,168),('Question Vault',19.96,1598)) AS t(component,mib,files)",
+          "description": "Read-only tracked file inventory collected from current repositories; sizes rounded to MiB.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "topology_options_query",
+        "label": "Derived topology options",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES ('A','Next full-stack + Go Runtime','Минимум сервисов','Policy срастается с UI','Не рекомендуется'),('B','Next + Nest + Go Brain + Go Runtime','Сохраняет текущие boundaries','Лишний lifecycle и hop без доказанного SLA','Допустимый conservative вариант'),('C','Next + Nest Question Catalog + Go Runtime','Три deployables и сохранённая trust boundary','Нужен аккуратный Brain migration','Рекомендуется')) AS t(option,shape,benefit,cost,verdict)",
+          "description": "Architecture challenge comparison.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "port_disposition_query",
+        "label": "Derived port disposition inventory",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES ('Design tokens/icons','ADAPT','Framework-neutral product value','Token/theme/story snapshots'),('Vue/Angular pages','REWRITE','Next architecture is the learning goal','Route/behavior/visual/a11y parity'),('Question content/provenance','NORMALIZE+IMPORT','Preserve knowledge, remove dual authority','Counts/hashes/license reconciliation'),('Runtime security primitives','ADAPT','Digest/resource/sanitization value','Adversarial conformance suite'),('Brain Go deployable','DO NOT AUTO-PORT','Independent boundary unproven','QuestionCatalogPort + measured extraction trigger'),('lab-contracts mega-package','DROP AS SHAPE','Mixes contract/policy/content','Domain and ownership tests'),('Generated traces in Git','ARCHIVE OUTSIDE SOURCE','Main Git-bloat source','Artifact retention policy'),('Payload/Redis/Kafka','OPTIONAL','No measured core need','ADR and activation gate')) AS t(asset,disposition,reason,proof)",
+          "description": "Capability-oriented migration decisions.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "dev_commands_query",
+        "label": "Derived developer lifecycle contract",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'pnpm dev','doctor, compose up --wait, health summary, watch','Один stack ID; no global names'),(2,'pnpm dev:full','Core plus observability/labs/ai profiles','Optional services remain explicit'),(3,'pnpm down','Remove current containers/networks/orphans','Never -v; preserve durable data'),(4,'pnpm clean:ephemeral --dry-run','Show scoped allowlisted cache/build resources','No mutation'),(5,'pnpm clean:ephemeral --apply','Delete exactly reviewed ephemeral set','Project labels + allowlist'),(6,'pnpm data:backup|restore','Versioned backup manifest and restore drill','No implicit reset')) AS t(order,command,contract,safety)",
+          "description": "Proposed one-command Docker lifecycle.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "storage_layers_query",
+        "label": "Derived content storage ownership",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'Source Git','Git','Schemas, taxonomy, migrations, manifests, curated fixtures','Full editorial corpus or generated evidence'),(2,'Editorial domain','PostgreSQL','Semantic revisions, translations, provenance, placements, review, outbox','Large binaries or sealed tests'),(3,'Large and sealed','S3-compatible storage','Media, datasets, hidden suites, traces, recordings, backups','Queryable editorial relations'),(4,'Release','Deterministic bundle','Sharded content, placements, checksums, attestation','Authoring source'),(5,'Developer view','Ignored materialized Markdown','Readable checkout and proposed edits','Second source of truth')) AS t(order,layer,authority,contains,not_for)",
+          "description": "Recommended multi-plane content architecture.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "waves_query",
+        "label": "Derived greenfield gate sequence",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (0,'G0 Reference safety','Freeze old product','Tags, bundles, DB restore, old launch'),(1,'G1 Bootstrap','New remote and boundaries','One .git/lockfile, graph, forbidden-edge test'),(2,'G2 Dev contract','One-command stack','Fresh clone, scoped lifecycle, timing targets'),(3,'G3 Shell/settings','Next foundation','RU/EN, themes, auth, a11y'),(4,'G4 Program/path/Atlas','Curriculum navigation','Route and graph parity'),(5,'G5 Question/lesson','Content projection','Release/citation/placement parity'),(6,'G6 Run','Public feedback','Exact profile/revision, no mastery'),(7,'G7 Submit/evidence','Authoritative verdict','Hidden canary, progress evidence'),(8,'G8 Progress/projects','Mastery chain','Data reconciliation'),(9,'G9 Navigator','Typed assistance','Fresh context and eval corpus'),(10,'G10 Authoring/import','Governed content','License/provenance/review/readback'),(11,'G11 Remaining paths','Portfolio closure','Language/generic relevance matrix'),(12,'G12 Cutover','Production switch','Human sign-off and rollback rehearsal')) AS t(order,gate,capability,proof)",
+          "description": "Capability-by-capability migration gates.",
+          "executed_at": "2026-08-28T23:15:00+02:00"
+        }
+      },
+      {
+        "id": "observability_summary_query",
+        "label": "Live observability and target summary",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT 5 AS current_products, 3 AS current_compose_projects, 2 AS stale_resources, 4 AS healthy_targets, 23 AS w16_static_checks, 1 AS shared_trace_journeys, 3 AS authority_planes, 5 AS readiness_states, 1 AS target_products",
+          "description": "Read-only Docker/status/Prometheus/Jaeger inspection joined to the proposed local greenfield architecture.",
+          "executed_at": "2026-08-28T19:18:50+02:00"
+        }
+      },
+      {
+        "id": "observability_inventory_query",
+        "label": "Current observability inventory",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'Live signals','Grafana, Prometheus, Loki, Jaeger return 200; 4/4 Prometheus targets healthy','KEEP SEMANTICS','Port correlation, redaction, cardinality and journeys'),(2,'Static contract','W16 source gate passes 23/23 checks','KEEP','Make live signal journey a promotion gate'),(3,'Topology','5 telemetry products split across 3 Compose projects','REPLACE','One project-scoped observability profile'),(4,'Promtail','3.3.2; EOL since 2026-03-02','REMOVE','Alloy only when log collection is proven necessary'),(5,'Versions','Prometheus 3.1.0, Grafana 11.5.1, Loki 3.3.2','STALE','Build new pinned topology instead of chained in-place upgrades'),(6,'Status truth','Dev endpoints offline while package endpoints return 200','DEFECT','One StackSession and one status contract'),(7,'Lifecycle leakage','Exited recovery container and unlabeled recovery volume remain','DEFECT','Labels, TTL, orphan detector and scoped reconciler')) AS t(order,area,evidence,assessment,target)",
+          "description": "Facts collected from current Compose manifests, live Docker resources, pnpm status, Prometheus targets and W16 evidence.",
+          "executed_at": "2026-08-28T19:18:50+02:00"
+        }
+      },
+      {
+        "id": "observability_stack_options_query",
+        "label": "Local observability stack comparison",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'Current fragmented stack','Grafana + Loki + Prometheus + Promtail + Jaeger','Partial persistence; Jaeger memory','Five products and split ownership','Remove topology, preserve semantic contract'),(2,'Grafana docker-otel-lgtm','One image: Collector + Grafana + Loki + Mimir + Tempo','Persistent /data volume','One profile/container; dev-test scope','Recommended local default'),(3,'Aspire standalone','One dashboard and OTLP receiver','In-memory; lost on restart','Excellent short diagnostics and agent query','Optional debug only, not authority'),(4,'SigNoz self-host','Unified product with ClickHouse and Foundry','Persistent','At least 4 GiB plus heavier lifecycle','Valid alternative, overkill for one user'),(5,'Separate upstream LGTM','Independent Grafana/Loki/Mimir/Tempo/Collector','Persistent and tunable','More upgrades, configs and failure modes','Only after measured need')) AS t(order,option,shape,history,cost,verdict)",
+          "description": "Architecture comparison based on official product documentation and the local-only single-user constraint.",
+          "executed_at": "2026-08-28T19:18:50+02:00"
+        }
+      },
+      {
+        "id": "instrumentation_matrix_query",
+        "label": "OpenTelemetry language maturity matrix",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'Next.js','instrumentation.ts + Node-only OTLP import + onRequestError','JavaScript traces/metrics Stable; logs Development','No learner code, answers or prompts from browser'),(2,'Nest/Node','Node OTel SDK + Pino JSON with trace/span IDs','Logs SDK Development','Exporter outage never blocks readiness/verdict'),(3,'Go Runtime','Go SDK traces/metrics + slog JSON','Traces/metrics Stable; logs Beta','OTLP logs behind adapter flag; stdout fallback'),(4,'Kotlin/JVM','Java agent / zero-code autoconfigure + SLF4J correlation','Java signals Stable; native Kotlin SDK Development','No production dependency on Kotlin native SDK'),(5,'Sandbox worker','Bounded lifecycle spans and metrics only','Trust boundary','Never export source, hidden tests or raw output')) AS t(order,runtime,default,maturity,guard)",
+          "description": "Target language-by-language instrumentation contract using official OpenTelemetry status and Next.js instrumentation guidance.",
+          "executed_at": "2026-08-28T19:18:50+02:00"
+        }
+      },
+      {
+        "id": "retention_policy_query",
+        "label": "Proposed bounded retention policy",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'Stack sessions','90 days','100 MiB','Append-only project state'),(2,'Metrics','30 days','1 GiB','LGTM profile'),(3,'Redacted traces','7 days','2 GiB','LGTM profile'),(4,'Aggregated logs','7 days','2 GiB','LGTM after log pipeline promotion'),(5,'Incident bundles','30 days','1 GiB','Project artifact storage'),(6,'Profiles','Off by default; 3 days after ADR','1 GiB','Optional profile'),(7,'Learning evidence','Product/data policy','Not telemetry budget','PostgreSQL + backup')) AS t(order,signal,window,budget,authority)",
+          "description": "Initial product policy to validate with load, recovery and disk-pressure tests; total telemetry/artifact target 6-8 GiB.",
+          "executed_at": "2026-08-28T19:18:50+02:00"
+        }
+      },
+      {
+        "id": "readiness_model_query",
+        "label": "Derived learning-product readiness model",
+        "query": {
+          "engine": "inline",
+          "sql": "SELECT * FROM (VALUES (1,'Operational','Запускается ли продукт воспроизводимо?','StackSession, health, release join, cleanup','Docker ps или один green test'),(2,'Curriculum published','Полон и релевантен ли путь роли?','Versioned coverage/relevance release','Большое число карточек'),(3,'Practice executable','Можно ли реально тренировать skill?','Run/Submit, hidden suites, variants, recovery','Конспект или статический quiz'),(4,'Mastery proven','Сохранился ли навык и переносится ли он?','Explanation, cold repeat, unseen transfer','Один accepted run'),(5,'Interview benchmarked','Готов ли человек защищать решения под давлением?','Timed coding, system design, incident response, English defense, human mock','Телеметрия, self-rating или completion badge')) AS t(order,state,question,proof,not_enough)",
+          "description": "Product-fitness model separating operability, content, executable practice, mastery and external interview evidence.",
+          "executed_at": "2026-08-28T19:18:50+02:00"
+        }
+      },
+      {"id": "challenge_memo", "label": "Greenfield challenge memo", "path": "docs/GREENFIELD-ARCHITECTURE-CHALLENGE-2026-08-28.md"},
+      {"id": "previous_target", "label": "Previous target architecture", "path": "docs/reports/next-monorepo-target-architecture-2026-08-28.html"},
+      {"id": "previous_plan", "label": "Previous Option A implementation plan", "path": "docs/NEXT-MONOREPO-PRODUCT-REFACTORING-PLAN-2026-08-28.md"},
+      {"id": "wishlist", "label": "Owner decisions and open proposals", "path": "docs/WISHLIST.md"},
+      {"id": "context", "label": "Domain glossary", "path": "CONTEXT.md"},
+      {"id": "workspace", "label": "Current workspace topology", "path": "workspace.yaml"},
+      {"id": "github_limits", "label": "GitHub repository limits", "path": "https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits"},
+      {"id": "github_lfs", "label": "Git Large File Storage", "path": "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage"},
+      {"id": "compose_project", "label": "Docker Compose project isolation", "path": "https://docs.docker.com/compose/how-tos/project-name/"},
+      {"id": "compose_profiles", "label": "Docker Compose profiles", "path": "https://docs.docker.com/compose/how-tos/profiles/"},
+      {"id": "compose_watch", "label": "Docker Compose Watch", "path": "https://docs.docker.com/compose/how-tos/file-watch/"},
+      {"id": "compose_down", "label": "Docker Compose down semantics", "path": "https://docs.docker.com/reference/cli/docker/compose/down/"},
+      {"id": "nx_boundaries", "label": "Nx module boundaries", "path": "https://nx.dev/docs/features/enforce-module-boundaries"},
+      {"id": "nx_folders", "label": "Nx folder structure guidance", "path": "https://nx.dev/docs/kb/folder-structure"},
+      {"id": "next_app", "label": "Next.js App Router", "path": "https://nextjs.org/docs/app"},
+      {"id": "next_instrumentation", "label": "Next.js instrumentation", "path": "https://nextjs.org/docs/app/guides/instrumentation"},
+      {"id": "otel_collector", "label": "OpenTelemetry Collector", "path": "https://opentelemetry.io/docs/collector/"},
+      {"id": "otel_languages", "label": "OpenTelemetry language maturity", "path": "https://opentelemetry.io/docs/languages/"},
+      {"id": "otel_java_config", "label": "OpenTelemetry Java autoconfigure", "path": "https://opentelemetry.io/docs/languages/java/configuration/"},
+      {"id": "otel_go", "label": "OpenTelemetry Go status", "path": "https://opentelemetry.io/docs/languages/go/"},
+      {"id": "grafana_otel_lgtm", "label": "Grafana Docker OpenTelemetry LGTM", "path": "https://grafana.com/docs/opentelemetry/docker-lgtm/"},
+      {"id": "grafana_alloy", "label": "Grafana Alloy architecture", "path": "https://grafana.com/docs/alloy/latest/introduction/how-alloy-works/"},
+      {"id": "promtail_eol", "label": "Promtail EOL and Alloy migration", "path": "https://grafana.com/docs/grafana-cloud/observe-and-act/send-data/alloy/set-up/migrate/from-promtail/"},
+      {"id": "prometheus_download", "label": "Prometheus current releases", "path": "https://prometheus.io/download/"},
+      {"id": "grafana_upgrade", "label": "Grafana release schedule", "path": "https://grafana.com/docs/grafana/latest/upgrade-guide/when-to-upgrade/"},
+      {"id": "loki_release", "label": "Loki 3.7 release notes", "path": "https://grafana.com/docs/loki/latest/release-notes/v3-7/"},
+      {"id": "jaeger_download", "label": "Jaeger v2 downloads and v1 EOL", "path": "https://www.jaegertracing.io/download/"},
+      {"id": "aspire_standalone", "label": "Aspire standalone dashboard limitations", "path": "https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/dashboard/standalone"},
+      {"id": "signoz_docker", "label": "SigNoz Docker self-host requirements", "path": "https://signoz.io/docs/install/docker/"},
+      {"id": "retrieval_practice", "label": "Repeated retrieval and long-term retention", "path": "https://doi.org/10.1016/j.jml.2006.09.004"},
+      {"id": "interleaving_retrieval", "label": "Interleaving retrieval practice", "path": "https://doi.org/10.1177/09567976211057507"},
+      {"id": "faded_examples", "label": "Fading worked solution steps", "path": "https://doi.org/10.1023/B:TRUC.0000021815.74806.F6"},
+      {"id": "self_explanation_programming", "label": "Self-explanation in programming learning", "path": "https://doi.org/10.62273/GMIV1698"},
+      {"id": "current_lab_compose", "label": "Current Lab Compose stack", "path": "fluent-engineering-lab/docker-compose.yml"},
+      {"id": "current_observability_contract", "label": "Current observability contract", "path": "fluent-engineering-lab/libs/observability/src/lib/observability-contract.ts"},
+      {"id": "w16_observability", "label": "W16 observability source gate", "path": "docs/verification/two-audit-remediation/W16/observability.json"},
+      {"id": "w16_trace", "label": "W16 live shared trace journey", "path": "docs/verification/two-audit-remediation/W16/jaeger-continuity.json"},
+      {"id": "postgres_backup", "label": "PostgreSQL backup and restore", "path": "https://www.postgresql.org/docs/current/backup.html"},
+      {"id": "s3_object_lock", "label": "Amazon S3 Object Lock", "path": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html"},
+      {"id": "jcs", "label": "RFC 8785 JSON Canonicalization Scheme", "path": "https://www.rfc-editor.org/rfc/rfc8785"},
+      {"id": "slsa", "label": "SLSA provenance", "path": "https://slsa.dev/spec/v1.1/provenance"}
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# Fluent Interview Greenfield Challenge: строить ли новый репозиторий с нуля?\n\n**Вердикт:** да — но как hybrid greenfield: новый remote и новая история, старый продукт как immutable runnable reference, перенос только вертикальными capabilities с provenance и parity proof. Это не разрешение немедленно удалить или архивировать текущие repos.\n\nДата среза: **28 августа 2026**. Язык: русский. Статус: challenge-аудит и рекомендуемое решение, не implementation start."
+      },
+      {
+        "id": "executive",
+        "type": "markdown",
+        "sourceId": "challenge_memo",
+        "body": "## Ответ опытной архитектурной команды\n\nПредыдущая target architecture была безопасной, но слишком консервативной: она предполагала импорт пяти histories и автоматическое сохранение всех deployables. Greenfield позволяет убрать accumulated topology debt. Мы рекомендуем новый product-neutral repo — рабочее имя `fluent-interview-platform` — и три core deployables: Next web, Nest platform API и отдельный Go Runtime.\n\n**Не делаем blank rewrite.** Каждая capability имеет source SHA, port strategy, tests, data/visual/API parity и deliberate deltas. Legacy не вызывается новым продуктом, но остаётся запускаемым oracle до cutover."
+      },
+      {"id": "summary_metrics", "type": "metric-strip", "cardIds": ["decision_card", "storage_card", "migration_card"]},
+      {
+        "id": "strategy_intro",
+        "type": "markdown",
+        "body": "## Сравнение стратегий\n\nОценка ниже — прозрачная архитектурная модель, а не telemetry. Веса: cleanliness 20%, regression safety 25%, provenance 15%, speed 15%, developer experience 15%, reversibility 10%. Результат полезен для обсуждения trade-offs; он не заменяет owner decision. Hybrid выигрывает, потому что сочетает чистую новую topology с проверяемой связью на старое поведение."
+      },
+      {"id": "strategy_chart_block", "type": "chart", "chartId": "strategy_chart"},
+      {
+        "id": "strategy_after",
+        "type": "markdown",
+        "body": "Чистый blank rewrite выглядит самым аккуратным, но хуже всего сохраняет provenance и быстро превращается в second-system effect. Import histories лучше защищает историю, зато закрепляет старую структуру и тащит generated debt. Hybrid greenfield требует дисциплины port ledger, зато остаётся и чистым, и обратимым."
+      },
+      {
+        "id": "dual_track",
+        "type": "html",
+        "body": "<figure aria-labelledby=\"dual-title\"><svg viewBox=\"0 0 1080 430\" role=\"img\" aria-labelledby=\"dual-title dual-desc\" style=\"width:100%;height:auto\"><title id=\"dual-title\">Reference и greenfield развиваются как две разные линии</title><desc id=\"dual-desc\">Старый продукт заморожен и используется только для сравнения. Новый продукт получает capabilities через ledger и parity gates, а затем принимает production cutover.</desc><defs><marker id=\"dg-a\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0 0L10 5L0 10Z\" fill=\"#315efb\"/></marker></defs><rect x=\"18\" y=\"24\" width=\"1044\" height=\"380\" rx=\"30\" fill=\"#f8faff\" stroke=\"#c7d1ea\"/><text x=\"54\" y=\"68\" font-size=\"15\" font-weight=\"700\" fill=\"#53627d\">TWO TRACKS · NO RUNTIME COUPLING</text><rect x=\"55\" y=\"105\" width=\"250\" height=\"102\" rx=\"22\" fill=\"#f3f4f7\" stroke=\"#78849a\"/><text x=\"180\" y=\"145\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\">Reference Product</text><text x=\"180\" y=\"175\" text-anchor=\"middle\" font-size=\"13\">tags · bundles · DB dumps · fixtures</text><rect x=\"395\" y=\"105\" width=\"280\" height=\"102\" rx=\"22\" fill=\"#edf2ff\" stroke=\"#315efb\"/><text x=\"535\" y=\"145\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\">Port Ledger</text><text x=\"535\" y=\"175\" text-anchor=\"middle\" font-size=\"13\">SHA · strategy · parity · deliberate delta</text><rect x=\"765\" y=\"105\" width=\"250\" height=\"102\" rx=\"22\" fill=\"#e9faf3\" stroke=\"#278968\"/><text x=\"890\" y=\"145\" text-anchor=\"middle\" font-size=\"20\" font-weight=\"700\">Greenfield Product</text><text x=\"890\" y=\"175\" text-anchor=\"middle\" font-size=\"13\">new history · new topology · new releases</text><path d=\"M305 156H395\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#dg-a)\"/><path d=\"M675 156H765\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#dg-a)\"/><path d=\"M180 207V290H890V207\" fill=\"none\" stroke=\"#7b879d\" stroke-width=\"2\" stroke-dasharray=\"8 7\"/><rect x=\"370\" y=\"278\" width=\"330\" height=\"82\" rx=\"20\" fill=\"#fff6e7\" stroke=\"#c98221\"/><text x=\"535\" y=\"311\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"700\">Cutover gate</text><text x=\"535\" y=\"338\" text-anchor=\"middle\" font-size=\"13\">data reconcile · human sign-off · rollback rehearsal</text></svg></figure>"
+      },
+      {
+        "id": "size_intro",
+        "type": "markdown",
+        "sourceId": "github_limits",
+        "body": "## Git и content: проблема не там, где кажется\n\nQuestion Vault содержит примерно 1 597 Markdown-файлов и 19.96 MiB текста — это не повод архивировать Markdown в ZIP или переносить его в LFS. Learning Lab содержит около 469.73 MiB tracked data, где крупнейшие файлы — Playwright trace ZIPs. GitHub рекомендует generated files хранить вне source; именно evidence retention нужно исправлять первым."
+      },
+      {"id": "size_chart_block", "type": "chart", "chartId": "size_chart"},
+      {
+        "id": "size_after",
+        "type": "markdown",
+        "body": "Столбцы показывают working-tree tracked bytes, а не `.git` pack. Вывод всё равно устойчив: текстовый банк невелик, а Lab доминирует из-за generated artifacts. Новый repo должен хранить schemas/manifests/curated fixtures в Git, editorial revisions в PostgreSQL и тяжёлые/закрытые артефакты в managed S3-compatible storage."
+      },
+      {
+        "id": "topology",
+        "type": "markdown",
+        "sourceId": "nx_boundaries",
+        "body": "## Не переносим микросервисы по инерции\n\nОтдельный service оправдан security boundary, independent scaling/SLA или ownership — не тем, что в старом workspace была отдельная папка. Runtime исполняет недоверенный код и остаётся отдельной trust zone. Question Brain сначала становится изолированным Nest module за `QuestionCatalogPort`; extraction остаётся возможным и проверяемым."
+      },
+      {"id": "topology_table_block", "type": "table", "tableId": "topology_table"},
+      {
+        "id": "target_diagram",
+        "type": "html",
+        "body": "<figure aria-labelledby=\"target-title\"><svg viewBox=\"0 0 1080 520\" role=\"img\" aria-labelledby=\"target-title target-desc\" style=\"width:100%;height:auto\"><title id=\"target-title\">Рекомендуемая greenfield topology</title><desc id=\"target-desc\">Next web обращается к Nest Platform API. Внутри Nest находятся изолированные доменные модули. Только Task Runtime является отдельной Go trust zone. PostgreSQL и OTel Collector обслуживают платформу, тяжёлые возможности включаются профилями.</desc><defs><marker id=\"gt-a\" viewBox=\"0 0 10 10\" refX=\"9\" refY=\"5\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0 0L10 5L0 10Z\" fill=\"#315efb\"/></marker></defs><rect x=\"18\" y=\"18\" width=\"1044\" height=\"482\" rx=\"30\" fill=\"#f8faff\" stroke=\"#c7d1ea\"/><text x=\"52\" y=\"58\" font-size=\"15\" font-weight=\"700\" fill=\"#53627d\">ONE REPO · ONE COMPOSE PROJECT · THREE CORE DEPLOYABLES</text><rect x=\"55\" y=\"100\" width=\"220\" height=\"104\" rx=\"22\" fill=\"#e9eeff\" stroke=\"#315efb\"/><text x=\"165\" y=\"141\" text-anchor=\"middle\" font-size=\"21\" font-weight=\"700\">Next web</text><text x=\"165\" y=\"171\" text-anchor=\"middle\" font-size=\"13\">RSC · BFF · learner · Studio</text><rect x=\"360\" y=\"78\" width=\"360\" height=\"282\" rx=\"26\" fill=\"#eef8ff\" stroke=\"#397fa9\"/><text x=\"540\" y=\"116\" text-anchor=\"middle\" font-size=\"22\" font-weight=\"700\">Nest Platform API</text><rect x=\"390\" y=\"142\" width=\"140\" height=\"58\" rx=\"14\" fill=\"#ffffff\" stroke=\"#9bb7ce\"/><text x=\"460\" y=\"177\" text-anchor=\"middle\" font-size=\"14\">Curriculum</text><rect x=\"550\" y=\"142\" width=\"140\" height=\"58\" rx=\"14\" fill=\"#ffffff\" stroke=\"#9bb7ce\"/><text x=\"620\" y=\"177\" text-anchor=\"middle\" font-size=\"14\">Questions</text><rect x=\"390\" y=\"216\" width=\"140\" height=\"58\" rx=\"14\" fill=\"#ffffff\" stroke=\"#9bb7ce\"/><text x=\"460\" y=\"251\" text-anchor=\"middle\" font-size=\"14\">Progress/Evidence</text><rect x=\"550\" y=\"216\" width=\"140\" height=\"58\" rx=\"14\" fill=\"#ffffff\" stroke=\"#9bb7ce\"/><text x=\"620\" y=\"251\" text-anchor=\"middle\" font-size=\"14\">Projects/Navigator</text><rect x=\"470\" y=\"290\" width=\"140\" height=\"48\" rx=\"14\" fill=\"#fff6e7\" stroke=\"#c98221\"/><text x=\"540\" y=\"320\" text-anchor=\"middle\" font-size=\"13\">Postgres outbox</text><rect x=\"805\" y=\"100\" width=\"220\" height=\"104\" rx=\"22\" fill=\"#f2edff\" stroke=\"#7658b6\"/><text x=\"915\" y=\"141\" text-anchor=\"middle\" font-size=\"21\" font-weight=\"700\">Go Task Runtime</text><text x=\"915\" y=\"171\" text-anchor=\"middle\" font-size=\"13\">control · isolated workers</text><path d=\"M275 152H360\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#gt-a)\"/><path d=\"M720 152H805\" stroke=\"#315efb\" stroke-width=\"3\" marker-end=\"url(#gt-a)\"/><rect x=\"205\" y=\"410\" width=\"210\" height=\"58\" rx=\"16\" fill=\"#e9faf3\" stroke=\"#278968\"/><text x=\"310\" y=\"445\" text-anchor=\"middle\" font-size=\"15\">PostgreSQL authority</text><rect x=\"435\" y=\"410\" width=\"210\" height=\"58\" rx=\"16\" fill=\"#e9faf3\" stroke=\"#278968\"/><text x=\"540\" y=\"445\" text-anchor=\"middle\" font-size=\"15\">OTel Collector</text><rect x=\"665\" y=\"410\" width=\"210\" height=\"58\" rx=\"16\" fill=\"#fff5e7\" stroke=\"#c98221\"/><text x=\"770\" y=\"445\" text-anchor=\"middle\" font-size=\"15\">Optional profiles</text><path d=\"M540 360V410\" stroke=\"#278968\" stroke-width=\"2\" marker-end=\"url(#gt-a)\"/><path d=\"M915 204C915 340 650 365 620 410\" fill=\"none\" stroke=\"#7658b6\" stroke-width=\"2\" stroke-dasharray=\"7 7\"/></svg></figure>"
+      },
+      {
+        "id": "port_intro",
+        "type": "markdown",
+        "sourceId": "challenge_memo",
+        "body": "## Capability port, а не copy/paste\n\nСильные части сохраняются: design tokens, content, domain glossary, releases, Runtime digest/resource/sanitization primitives и golden fixtures. Формы старой связанности не сохраняются: mega-contract package, hard-coded crosswalk, gate zoo, generated traces, nested Compose и duplicate schemas."
+      },
+      {"id": "port_table_block", "type": "table", "tableId": "port_table"},
+      {
+        "id": "dev_intro",
+        "type": "markdown",
+        "sourceId": "compose_project",
+        "body": "## `pnpm dev` — продуктовый контракт\n\nОдин root Compose project получает уникальный `FLUENT_STACK_ID` для checkout/worktree/CI. Не используются `container_name`, глобальные volume names или global prune. Core services не имеют profiles; `observability`, `labs`, `ai` и `debug` включаются явно. Compose Watch синхронизирует source и перестраивает сервис при изменении manifests, не копируя host `node_modules`."
+      },
+      {"id": "commands_table_block", "type": "table", "tableId": "commands_table"},
+      {
+        "id": "docker_safety",
+        "type": "markdown",
+        "sourceId": "compose_down",
+        "body": "### Cleanup safety\n\n`down` сохраняет durable volumes. `clean:ephemeral` сначала строит план по project labels и allowlist, затем удаляет ровно его. Никаких `docker system prune`, глобального builder prune или удаления volumes по wildcard. Worker containers получают stack/attempt/revision/TTL labels и reconciler. Control plane не монтирует host Docker socket."
+      },
+      {
+        "id": "storage_intro",
+        "type": "markdown",
+        "sourceId": "postgres_backup",
+        "body": "## Контент: четыре authority plane вместо одного архива\n\nGit остаётся reviewable source для schemas, policies, manifests и небольших fixtures. PostgreSQL владеет queryable editorial revisions, translations, provenance, placements и review. Managed S3-compatible storage владеет большими, sealed и retention-managed artifacts. Deterministic bundle является immutable release projection. Разработчик при этом может materialize release в ignored Markdown worktree."
+      },
+      {"id": "storage_table_block", "type": "table", "tableId": "storage_table"},
+      {
+        "id": "bundle",
+        "type": "markdown",
+        "sourceId": "jcs",
+        "body": "### Deterministic release bundle\n\n`manifest.jcs.json`, sharded `questions/{locale}/{0-f}.jsonl.zst`, `tasks/{runtime}/{0-f}.jsonl.zst`, placements, assets by SHA-256, provenance, checksums и attestation. Stable sort, UTF-8 NFC, canonical JSON, pinned compiler/compressor, никаких absolute paths или uncontrolled timestamps. Две сборки одного logical release обязаны дать одинаковые logical hashes.\n\nExecutable MDX не используется для imported corpus: содержимое хранится как typed block AST с sanitized Markdown leaves. Git LFS не решает editorial workflow и нужен только редким большим бинарникам; чаще их место в object storage."
+      },
+      {
+        "id": "shared",
+        "type": "markdown",
+        "sourceId": "nx_folders",
+        "body": "## Shared без свалки\n\nРазрешены узкие packages: `ui/tokens`, `ui/primitives`, `ui/learning`, `icons`, provider-owned `contracts-*`, generated `clients-*`, observability и test kits. Domain packages не импортируют друг друга напрямую; orchestration находится в Nest application layer. Package становится shared только со второго consumer или для стабильного cross-process contract. `shared/common/utils/types` и umbrella barrel запрещены architecture test."
+      },
+      {
+        "id": "observability",
+        "type": "markdown",
+        "sourceId": "challenge_memo",
+        "body": "## Observability: текущая система работает, но устроена слишком сложно\n\nLive-аудит подтвердил реальные healthy metrics targets и сквозные traces. Сохраняем semantic contract, redaction, correlation, bounded cardinality и проверенные journeys. Не переносим текущую форму: пять telemetry products распределены между тремя Compose projects, Promtail уже EOL, версии Grafana/Prometheus/Loki заметно отстали, а status смешивает dev/package truth. Это не повод выбросить observability — это повод разделить authority и упростить topology."
+      },
+      {"id": "observability_metrics", "type": "metric-strip", "cardIds": ["observability_current_card", "observability_live_card", "learning_readiness_card"]},
+      {"id": "observability_inventory_block", "type": "table", "tableId": "observability_inventory_table"},
+      {
+        "id": "observability_planes",
+        "type": "html",
+        "body": "<figure style=\"margin:0;padding:16px;border-radius:20px;background:linear-gradient(135deg,#f8fbff,#f7f3ff);border:1px solid #d8e0ee;overflow:auto\"><svg viewBox=\"0 0 1120 360\" role=\"img\" aria-labelledby=\"obs-title obs-desc\" style=\"width:100%;min-width:760px;height:auto;font-family:Inter,system-ui,sans-serif\"><title id=\"obs-title\">Три независимых authority plane</title><desc id=\"obs-desc\">Stack Control сообщает, что запущено; Technical Telemetry объясняет сбои; Learning Evidence доказывает обучение.</desc><defs><marker id=\"obs-a\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"5\" orient=\"auto\"><path d=\"M0,0 L10,5 L0,10 z\" fill=\"#4869d8\"/></marker></defs><text x=\"40\" y=\"40\" font-size=\"15\" fill=\"#5f6c84\" font-weight=\"700\">НЕ ОДИН OBSERVABILITY-МЕШОК, А ТРИ ИСТОЧНИКА ИСТИНЫ</text><rect x=\"40\" y=\"80\" width=\"300\" height=\"190\" rx=\"26\" fill=\"#eaf2ff\" stroke=\"#5b7ee5\" stroke-width=\"2\"/><text x=\"70\" y=\"125\" font-size=\"23\" font-weight=\"750\" fill=\"#18356f\">1 · Stack Control</text><text x=\"70\" y=\"160\" font-size=\"15\" fill=\"#304667\">doctor · status · session · clean</text><text x=\"70\" y=\"196\" font-size=\"14\" fill=\"#50627c\">containers · health · schema</text><text x=\"70\" y=\"222\" font-size=\"14\" fill=\"#50627c\">cache · orphan · exit reason</text><rect x=\"410\" y=\"80\" width=\"300\" height=\"190\" rx=\"26\" fill=\"#f1edff\" stroke=\"#8263c9\" stroke-width=\"2\"/><text x=\"440\" y=\"125\" font-size=\"23\" font-weight=\"750\" fill=\"#41256f\">2 · Technical Telemetry</text><text x=\"440\" y=\"160\" font-size=\"15\" fill=\"#554373\">traces · metrics · logs</text><text x=\"440\" y=\"196\" font-size=\"14\" fill=\"#665a78\">OTLP · redaction · bounded labels</text><text x=\"440\" y=\"222\" font-size=\"14\" fill=\"#665a78\">incident bundle · Grafana links</text><rect x=\"780\" y=\"80\" width=\"300\" height=\"190\" rx=\"26\" fill=\"#e9faf3\" stroke=\"#2f9a75\" stroke-width=\"2\"/><text x=\"810\" y=\"125\" font-size=\"23\" font-weight=\"750\" fill=\"#155b48\">3 · Learning Evidence</text><text x=\"810\" y=\"160\" font-size=\"15\" fill=\"#2d6557\">attempt · mastery · revision</text><text x=\"810\" y=\"196\" font-size=\"14\" fill=\"#477568\">cold repeat · defense · transfer</text><text x=\"810\" y=\"222\" font-size=\"14\" fill=\"#477568\">PostgreSQL product authority</text><path d=\"M350 176H400\" stroke=\"#4869d8\" stroke-width=\"3\" marker-end=\"url(#obs-a)\"/><path d=\"M720 176H770\" stroke=\"#4869d8\" stroke-width=\"3\" marker-end=\"url(#obs-a)\"/><text x=\"560\" y=\"320\" text-anchor=\"middle\" font-size=\"14\" fill=\"#526078\">Связь только через bounded stack · release · trace · attempt IDs; authority не смешиваются.</text></svg></figure>"
+      },
+      {
+        "id": "observability_target",
+        "type": "markdown",
+        "sourceId": "grafana_otel_lgtm",
+        "body": "## Целевой local stack: один `grafana/otel-lgtm` profile\n\nОфициальный dev/test image объединяет Collector, Grafana, Loki, Mimir и Tempo и сохраняет данные через `/data`. Для персонального local-only продукта это правильный размер: один container и один UI вместо пяти products. OTLP остаётся provider-neutral seam. Backend можно выключить без потери learning evidence. Это не рекомендация для публичного SaaS: там topology выбирается заново по нагрузке и SLO."
+      },
+      {"id": "observability_stack_block", "type": "table", "tableId": "observability_stack_table"},
+      {
+        "id": "observability_collector_decision",
+        "type": "markdown",
+        "sourceId": "promtail_eol",
+        "body": "### Что удаляем и что оставляем optional\n\nPromtail удаляется обязательно: EOL наступил 2 марта 2026. Отдельный Jaeger, Prometheus, Loki и Grafana не переносятся, потому что их роли уже находятся внутри выбранного LGTM image. Alloy не ставится вторым Collector на всякий случай; он появляется только после ADR, если доказана постоянная потребность собирать container/file logs. Aspire standalone остаётся возможным debug-инструментом для краткой agent-assisted диагностики, но не хранит telemetry после restart и потому не является incident authority. SigNoz — полноценная бесплатная альтернатива, однако минимум 4 GiB и ClickHouse/Foundry lifecycle избыточны для одного локального пользователя."
+      },
+      {"id": "instrumentation_block", "type": "table", "tableId": "instrumentation_table"},
+      {
+        "id": "stack_history",
+        "type": "markdown",
+        "sourceId": "current_observability_contract",
+        "body": "## История запусков существует вне telemetry backend\n\nКаждый `pnpm dev` создаёт append-only `StackSession`: stack/release/source revision, toolchain, expected и observed services, health timeline, migration state, cache/volume summary, exit и cleanup result. Это пишется до запуска PostgreSQL/Collector, поэтому даже preflight failure остаётся объяснимым. `doctor/status --json` читают ровно один `FLUENT_STACK_ID`; promotion блокируется при orphan resources, missing labels, duplicate stack ID, expired workers, schema/image drift и unbounded cache.\n\n`pnpm incident:capture --session <id>` собирает redacted bundle с bounded Compose logs, trace links, digests, migrations, health timeline и checksums. Никаких global prune или wildcard-delete."
+      },
+      {"id": "retention_block", "type": "table", "tableId": "retention_table"},
+      {
+        "id": "learning_product_fit",
+        "type": "markdown",
+        "sourceId": "retrieval_practice",
+        "body": "## Observability помогает учиться, но не доказывает готовность к интервью\n\nСильные стороны продукта уже есть: deterministic Runtime, evidence boundary, deep topics, multi-language direction, provenance и contextual AI. Но `all services green` не означает `сильный архитектор`. Для каждой deep lab telemetry становится учебной поверхностью: `Predict → Run → Observe trace/log/metric → Explain → Defend → Repeat`. Navigator объясняет evidence и даёт Socratic hints, но не выдаёт verdict и не открывает mastery."
+      },
+      {"id": "readiness_block", "type": "table", "tableId": "readiness_table"},
+      {
+        "id": "learning_science",
+        "type": "markdown",
+        "sourceId": "interleaving_retrieval",
+        "body": "### Как продукт действительно растит навык\n\nПуть адаптируется от worked example к faded steps, затем к самостоятельному решению, self-explanation, interleaved retrieval и позднему cold repeat. Исследования поддерживают repeated retrieval, spacing/interleaving, self-explanation и fading, но наш production claim требует собственных longitudinal данных: retention через 7/30 дней, unseen variant success, hint dependence, time-to-solve, system-design rubric, incident diagnosis, English defense и внешний human mock. Только пятый readiness state даёт право писать «interview ready»."
+      },
+      {
+        "id": "waves_intro",
+        "type": "markdown",
+        "sourceId": "previous_plan",
+        "body": "## Greenfield всё равно идёт волнами\n\nНовый repo не означает год тишины и финальный big-bang. Сначала фиксируется reference и lifecycle. Затем переносится один полный Node slice `path → lesson → question → Run → Submit → verdict → evidence → progress`. Только после его parity масштабируются другие paths, content и authoring."
+      },
+      {"id": "waves_table_block", "type": "table", "tableId": "waves_table"},
+      {
+        "id": "previous_plan_delta",
+        "type": "markdown",
+        "body": "## Что происходит с предыдущим 690-пунктным планом\n\nОн не выбрасывается. Domain decomposition, contracts, content governance, Runtime hardening, Next parity, Navigator и production gates полезны обеим стратегиям. Но W03–W08 `import histories into current root` теперь помечены как **Option A / architecture hold**. При принятии greenfield появится новый implementation plan, где эти волны заменены Reference Safety, Bootstrap и Capability Ports."
+      },
+      {
+        "id": "hard_questions",
+        "type": "markdown",
+        "body": "## Неудобные вопросы до старта\n\n1. Почему Question Brain обязан остаться отдельным Go service без independent SLA/security boundary?\n2. Почему Payload нужен до реального multi-editor workflow?\n3. Где заканчивается Next BFF и начинается Nest policy authority?\n4. Что именно является canonical: authored revision, placement release, bundle или DB projection?\n5. Где физически лежат hidden tests и кто имеет read access?\n6. Что означает parity: API, persisted evidence, visual state, accessibility — или всё сразу?\n7. Как не перенести старый coupling через `shared` packages?\n8. Как agents добавляют тысячи вопросов, не обходя provenance/license/editorial review?\n9. Готовы ли мы считать all-container `pnpm dev` каноническим, а host mode — только opt-in?\n10. Какой измеренный threshold разрешает extraction нового service или подключение Redis/Kafka/Payload?"
+      },
+      {
+        "id": "decisions",
+        "type": "markdown",
+        "sourceId": "wishlist",
+        "body": "## Что нужно подтвердить владельцу\n\n- принять hybrid greenfield и отменить import-all-histories программу;\n- выбрать имя и owner нового remote; рабочее имя — `fluent-interview-platform`;\n- выбрать topology C (три core deployables) или conservative B;\n- принять all-container one-command development contract;\n- согласиться, что S3 provider выбирается позже за provider-neutral boundary;\n- принять три authority plane и один `grafana/otel-lgtm` local profile;\n- принять пятиступенчатую learning-product maturity и отдельный interview benchmark;\n- оставить Payload, Redis, Kafka, Alloy и profiling optional until proven.\n\nДо подтверждения мы **не создаём remote, не архивируем repos и не начинаем rewrite**. Эти пункты добавлены в WISHLIST как `open`, а не выданы за уже утверждённый ADR."
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "body": "## Методология и ограничения\n\nТри независимые read-only волны проверили service topology/shared boundaries, content/storage/backup/release и greenfield DevEx/Compose/CI. Дополнительная observability-волна проверила live Docker resources, `pnpm status`, Prometheus targets, Jaeger services, W16 contract/journey, текущие dependency versions и официальный maturity status Next.js/OpenTelemetry/Grafana/Prometheus/Loki/Jaeger/Aspire/SigNoz. Learning-product выводы сверены с исследованиями retrieval, interleaving, fading и self-explanation.\n\nЧисловая strategy score — архитектурное суждение, не production telemetry. Retention/disk budget — target policy до load/recovery validation. Новый repo не создавался; код продукта, Docker resources и remotes не изменялись. Точный S3 provider, remote owner и окончательная service topology остаются owner decisions."
+      },
+      {
+        "id": "next_step",
+        "type": "markdown",
+        "sourceId": "challenge_memo",
+        "body": "## Следующий шаг\n\nЕсли решение greenfield подтверждено, следующий документ — отдельный commit-gated implementation plan G0–G12. Его первая операция: tags, bundles, manifests, DB/object backups и restore old product. Вторая: создать новый remote/skeleton. Третья: реализовать один golden Node vertical slice. Массовый перенос страниц и content начинается только после этого доказательства."
+      }
+    ]
+  },
+  "package_info": {
+    "originUrl": "artifact://fluent-interview-greenfield-architecture-challenge-2026-08-28",
+    "controls": {"edit": false, "refresh": false}
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-28T19:18:50+02:00",
+    "status": "ready",
+    "datasets": {
+      "summary": [{"histories_now": 6, "histories_target": 1, "core_deployables": 3, "vault_markdown_mib": 19.96, "lab_tracked_mib": 469.73, "core_profiles": 4, "capability_gates": 13, "compose_projects": 1, "runtime_trust_zones": 1}],
+      "observability_summary": [{"current_products": 5, "current_compose_projects": 3, "stale_resources": 2, "healthy_targets": 4, "w16_static_checks": 23, "shared_trace_journeys": 1, "authority_planes": 3, "readiness_states": 5, "target_products": 1}],
+      "strategy_scores": [
+        {"strategy": "Import histories into current root", "score": 67, "cleanliness": 55, "regression_safety": 80, "provenance": 95, "speed": 85, "reversibility": 70},
+        {"strategy": "Pure blank rewrite without ledger", "score": 50, "cleanliness": 95, "regression_safety": 35, "provenance": 20, "speed": 60, "reversibility": 30},
+        {"strategy": "Hybrid greenfield + reference + ledger", "score": 91, "cleanliness": 95, "regression_safety": 95, "provenance": 95, "speed": 75, "reversibility": 95}
+      ],
+      "tracked_sizes": [
+        {"component": "Root", "mib": 10.85, "files": 356},
+        {"component": "Learning Lab", "mib": 469.73, "files": 4424},
+        {"component": "Vue learner", "mib": 1.08, "files": 78},
+        {"component": "Question Brain", "mib": 14.97, "files": 288},
+        {"component": "Task Runtime", "mib": 0.91, "files": 168},
+        {"component": "Question Vault", "mib": 19.96, "files": 1598}
+      ],
+      "topology_options": [
+        {"option": "A", "shape": "Next full-stack + Go Runtime", "benefit": "Минимум сервисов", "cost": "Policy срастается с UI", "verdict": "Не рекомендуется"},
+        {"option": "B", "shape": "Next + Nest + Go Brain + Go Runtime", "benefit": "Сохраняет текущие boundaries", "cost": "Лишний lifecycle и hop без доказанного SLA", "verdict": "Допустимый conservative вариант"},
+        {"option": "C", "shape": "Next + Nest Question Catalog + Go Runtime", "benefit": "Три deployables и сохранённая trust boundary", "cost": "Нужен аккуратный Brain migration", "verdict": "Рекомендуется"}
+      ],
+      "port_disposition": [
+        {"asset": "Design tokens/icons", "disposition": "ADAPT", "reason": "Framework-neutral product value", "proof": "Token/theme/story snapshots"},
+        {"asset": "Vue/Angular pages", "disposition": "REWRITE", "reason": "Next architecture is the learning goal", "proof": "Route/behavior/visual/a11y parity"},
+        {"asset": "Question content/provenance", "disposition": "NORMALIZE+IMPORT", "reason": "Preserve knowledge, remove dual authority", "proof": "Counts/hashes/license reconciliation"},
+        {"asset": "Runtime security primitives", "disposition": "ADAPT", "reason": "Digest/resource/sanitization value", "proof": "Adversarial conformance suite"},
+        {"asset": "Brain Go deployable", "disposition": "DO NOT AUTO-PORT", "reason": "Independent boundary unproven", "proof": "QuestionCatalogPort + extraction trigger"},
+        {"asset": "lab-contracts mega-package", "disposition": "DROP AS SHAPE", "reason": "Mixes contract/policy/content", "proof": "Domain and ownership tests"},
+        {"asset": "Generated traces in Git", "disposition": "ARCHIVE OUTSIDE SOURCE", "reason": "Main Git-bloat source", "proof": "Artifact retention policy"},
+        {"asset": "Payload/Redis/Kafka", "disposition": "OPTIONAL", "reason": "No measured core need", "proof": "ADR and activation gate"}
+      ],
+      "dev_commands": [
+        {"order": 1, "command": "pnpm dev", "contract": "doctor, compose up --wait, health summary, watch", "safety": "Один stack ID; no global names"},
+        {"order": 2, "command": "pnpm dev:full", "contract": "Core plus observability/labs/ai profiles", "safety": "Optional services remain explicit"},
+        {"order": 3, "command": "pnpm down", "contract": "Remove current containers/networks/orphans", "safety": "Never -v; preserve durable data"},
+        {"order": 4, "command": "pnpm clean:ephemeral --dry-run", "contract": "Show scoped allowlisted cache/build resources", "safety": "No mutation"},
+        {"order": 5, "command": "pnpm clean:ephemeral --apply", "contract": "Delete exactly reviewed ephemeral set", "safety": "Project labels + allowlist"},
+        {"order": 6, "command": "pnpm data:backup|restore", "contract": "Versioned backup manifest and restore drill", "safety": "No implicit reset"}
+      ],
+      "storage_layers": [
+        {"order": 1, "layer": "Source Git", "authority": "Git", "contains": "Schemas, taxonomy, migrations, manifests, curated fixtures", "not_for": "Full editorial corpus or generated evidence"},
+        {"order": 2, "layer": "Editorial domain", "authority": "PostgreSQL", "contains": "Semantic revisions, translations, provenance, placements, review, outbox", "not_for": "Large binaries or sealed tests"},
+        {"order": 3, "layer": "Large and sealed", "authority": "S3-compatible storage", "contains": "Media, datasets, hidden suites, traces, recordings, backups", "not_for": "Queryable editorial relations"},
+        {"order": 4, "layer": "Release", "authority": "Deterministic bundle", "contains": "Sharded content, placements, checksums, attestation", "not_for": "Authoring source"},
+        {"order": 5, "layer": "Developer view", "authority": "Ignored materialized Markdown", "contains": "Readable checkout and proposed edits", "not_for": "Second source of truth"}
+      ],
+      "waves": [
+        {"order": 0, "gate": "G0 Reference safety", "capability": "Freeze old product", "proof": "Tags, bundles, DB restore, old launch"},
+        {"order": 1, "gate": "G1 Bootstrap", "capability": "New remote and boundaries", "proof": "One .git/lockfile, graph, forbidden-edge test"},
+        {"order": 2, "gate": "G2 Dev contract", "capability": "One-command stack", "proof": "Fresh clone, scoped lifecycle, timing targets"},
+        {"order": 3, "gate": "G3 Shell/settings", "capability": "Next foundation", "proof": "RU/EN, themes, auth, a11y"},
+        {"order": 4, "gate": "G4 Program/path/Atlas", "capability": "Curriculum navigation", "proof": "Route and graph parity"},
+        {"order": 5, "gate": "G5 Question/lesson", "capability": "Content projection", "proof": "Release/citation/placement parity"},
+        {"order": 6, "gate": "G6 Run", "capability": "Public feedback", "proof": "Exact profile/revision, no mastery"},
+        {"order": 7, "gate": "G7 Submit/evidence", "capability": "Authoritative verdict", "proof": "Hidden canary, progress evidence"},
+        {"order": 8, "gate": "G8 Progress/projects", "capability": "Mastery chain", "proof": "Data reconciliation"},
+        {"order": 9, "gate": "G9 Navigator", "capability": "Typed assistance", "proof": "Fresh context and eval corpus"},
+        {"order": 10, "gate": "G10 Authoring/import", "capability": "Governed content", "proof": "License/provenance/review/readback"},
+        {"order": 11, "gate": "G11 Remaining paths", "capability": "Portfolio closure", "proof": "Language/generic relevance matrix"},
+        {"order": 12, "gate": "G12 Cutover", "capability": "Production switch", "proof": "Human sign-off and rollback rehearsal"}
+      ],
+      "observability_inventory": [
+        {"order": 1, "area": "Live signals", "evidence": "Grafana, Prometheus, Loki, Jaeger return 200; 4/4 Prometheus targets healthy", "assessment": "KEEP SEMANTICS", "target": "Port correlation, redaction, cardinality and journeys"},
+        {"order": 2, "area": "Static contract", "evidence": "W16 source gate passes 23/23 checks", "assessment": "KEEP", "target": "Make live signal journey a promotion gate"},
+        {"order": 3, "area": "Topology", "evidence": "5 telemetry products split across 3 Compose projects", "assessment": "REPLACE", "target": "One project-scoped observability profile"},
+        {"order": 4, "area": "Promtail", "evidence": "3.3.2; EOL since 2026-03-02", "assessment": "REMOVE", "target": "Alloy only when log collection is proven necessary"},
+        {"order": 5, "area": "Versions", "evidence": "Prometheus 3.1.0, Grafana 11.5.1, Loki 3.3.2", "assessment": "STALE", "target": "Build new pinned topology instead of chained in-place upgrades"},
+        {"order": 6, "area": "Status truth", "evidence": "Dev endpoints offline while package endpoints return 200", "assessment": "DEFECT", "target": "One StackSession and one status contract"},
+        {"order": 7, "area": "Lifecycle leakage", "evidence": "Exited recovery container and unlabeled recovery volume remain", "assessment": "DEFECT", "target": "Labels, TTL, orphan detector and scoped reconciler"}
+      ],
+      "observability_stack_options": [
+        {"order": 1, "option": "Current fragmented stack", "shape": "Grafana + Loki + Prometheus + Promtail + Jaeger", "history": "Partial persistence; Jaeger memory", "cost": "Five products and split ownership", "verdict": "Remove topology, preserve semantic contract"},
+        {"order": 2, "option": "Grafana docker-otel-lgtm", "shape": "One image: Collector + Grafana + Loki + Mimir + Tempo", "history": "Persistent /data volume", "cost": "One profile/container; dev-test scope", "verdict": "Recommended local default"},
+        {"order": 3, "option": "Aspire standalone", "shape": "One dashboard and OTLP receiver", "history": "In-memory; lost on restart", "cost": "Excellent short diagnostics and agent query", "verdict": "Optional debug only, not authority"},
+        {"order": 4, "option": "SigNoz self-host", "shape": "Unified product with ClickHouse and Foundry", "history": "Persistent", "cost": "At least 4 GiB plus heavier lifecycle", "verdict": "Valid alternative, overkill for one user"},
+        {"order": 5, "option": "Separate upstream LGTM", "shape": "Independent Grafana/Loki/Mimir/Tempo/Collector", "history": "Persistent and tunable", "cost": "More upgrades, configs and failure modes", "verdict": "Only after measured need"}
+      ],
+      "instrumentation_matrix": [
+        {"order": 1, "runtime": "Next.js", "default": "instrumentation.ts + Node-only OTLP import + onRequestError", "maturity": "JavaScript traces/metrics Stable; logs Development", "guard": "No learner code, answers or prompts from browser"},
+        {"order": 2, "runtime": "Nest/Node", "default": "Node OTel SDK + Pino JSON with trace/span IDs", "maturity": "Logs SDK Development", "guard": "Exporter outage never blocks readiness/verdict"},
+        {"order": 3, "runtime": "Go Runtime", "default": "Go SDK traces/metrics + slog JSON", "maturity": "Traces/metrics Stable; logs Beta", "guard": "OTLP logs behind adapter flag; stdout fallback"},
+        {"order": 4, "runtime": "Kotlin/JVM", "default": "Java agent / zero-code autoconfigure + SLF4J correlation", "maturity": "Java signals Stable; native Kotlin SDK Development", "guard": "No production dependency on Kotlin native SDK"},
+        {"order": 5, "runtime": "Sandbox worker", "default": "Bounded lifecycle spans and metrics only", "maturity": "Trust boundary", "guard": "Never export source, hidden tests or raw output"}
+      ],
+      "retention_policy": [
+        {"order": 1, "signal": "Stack sessions", "window": "90 days", "budget": "100 MiB", "authority": "Append-only project state"},
+        {"order": 2, "signal": "Metrics", "window": "30 days", "budget": "1 GiB", "authority": "LGTM profile"},
+        {"order": 3, "signal": "Redacted traces", "window": "7 days", "budget": "2 GiB", "authority": "LGTM profile"},
+        {"order": 4, "signal": "Aggregated logs", "window": "7 days", "budget": "2 GiB", "authority": "LGTM after log pipeline promotion"},
+        {"order": 5, "signal": "Incident bundles", "window": "30 days", "budget": "1 GiB", "authority": "Project artifact storage"},
+        {"order": 6, "signal": "Profiles", "window": "Off by default; 3 days after ADR", "budget": "1 GiB", "authority": "Optional profile"},
+        {"order": 7, "signal": "Learning evidence", "window": "Product/data policy", "budget": "Not telemetry budget", "authority": "PostgreSQL + backup"}
+      ],
+      "readiness_model": [
+        {"order": 1, "state": "Operational", "question": "Запускается ли продукт воспроизводимо?", "proof": "StackSession, health, release join, cleanup", "not_enough": "Docker ps или один green test"},
+        {"order": 2, "state": "Curriculum published", "question": "Полон и релевантен ли путь роли?", "proof": "Versioned coverage/relevance release", "not_enough": "Большое число карточек"},
+        {"order": 3, "state": "Practice executable", "question": "Можно ли реально тренировать skill?", "proof": "Run/Submit, hidden suites, variants, recovery", "not_enough": "Конспект или статический quiz"},
+        {"order": 4, "state": "Mastery proven", "question": "Сохранился ли навык и переносится ли он?", "proof": "Explanation, cold repeat, unseen transfer", "not_enough": "Один accepted run"},
+        {"order": 5, "state": "Interview benchmarked", "question": "Готов ли человек защищать решения под давлением?", "proof": "Timed coding, system design, incident response, English defense, human mock", "not_enough": "Телеметрия, self-rating или completion badge"}
+      ]
+    }
+  },
+  "sources": [],
+  "surface": "report"
+}

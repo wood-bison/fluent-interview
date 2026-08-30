@@ -1,18 +1,18 @@
 {
   "reportVersion": "validation-matrix.v1",
-  "generatedAt": "2026-08-28T11:54:04.867Z",
-  "startedAt": "2026-08-28T11:54:04.865Z",
+  "generatedAt": "2026-08-28T18:47:55.712Z",
+  "startedAt": "2026-08-28T18:47:55.710Z",
   "mode": "static",
   "webBase": "http://localhost:47350",
   "labBase": "http://127.0.0.1:47000",
   "runtimeBase": "http://127.0.0.1:48227",
   "brainBase": "http://127.0.0.1:48127",
-  "routeCount": 43,
+  "routeCount": 45,
   "apiProbeCount": 16,
   "sourceRevisions": {
-    "umbrella": "95a2ef516f28eafff905f5335ee86a81260411e9",
-    "lab": "5c6eef80edf3ae76bd827a3e6fc75529d9bf2fd3",
-    "vue": "667f462d0e905a4fd525d672e2ed7d4ae2b913f5",
+    "umbrella": "76419a5620ca3c6cf4a4742cb42d8258224e682f",
+    "lab": "ba495d657b7576b04718e3f09b6f1767924dc7bc",
+    "vue": "41ac41da63526b84fa994c58f7d0012d24fe6d1b",
     "brain": "9f02c92a15786a869801cd835015b723e0c6e0b1",
     "runtime": "6b097718fe4f6075a1f4baf1d55dc6d71dcbf137",
     "vault": "f4d46228cd366c218b29423323da8fe8bad796f1"
@@ -61,6 +61,14 @@
     {
       "id": "path-node",
       "route": "/paths/nodejs-typescript"
+    },
+    {
+      "id": "domain-node-runtime",
+      "route": "/paths/nodejs-typescript/domains/node-runtime"
+    },
+    {
+      "id": "capability-event-loop",
+      "route": "/capabilities/capability.event-loop-ordering"
     },
     {
       "id": "progress",
@@ -195,8 +203,8 @@
     {
       "id": "router-route-records",
       "status": "pass",
-      "detail": "35 route records discovered",
-      "count": 35
+      "detail": "37 route records discovered",
+      "count": 37
     },
     {
       "id": "router-route-path-unique",
@@ -246,8 +254,8 @@
     {
       "id": "router-route-record-coverage",
       "status": "pass",
-      "detail": "35 records have a concrete browser sample",
-      "routeRecordCount": 35,
+      "detail": "37 records have a concrete browser sample",
+      "routeRecordCount": 37,
       "uncovered": []
     }
   ],
@@ -256,5 +264,5 @@
   "webResults": [],
   "apiSummary": null,
   "valid": true,
-  "digest": "521f8f769342a3f019b7e4cc637bcf8615e5d63627edd70374924a271e23b570"
+  "digest": "d7fb65d5bf373a143b7533432333acf0fbbf0752882ffd61930745d082e90d2e"
 }

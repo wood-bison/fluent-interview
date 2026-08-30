@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluent Interview — глубокий аудит архитектуры, валидации знаний и план рефакторинга (28.08.2026)</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page:        #f9f9f7;
+    --surface:     #fcfcfb;
+    --surface-2:   #f2f1ed;
+    --ink:         #0b0b0b;
+    --ink-2:       #52514e;
+    --muted:       #898781;
+    --grid:        #e1e0d9;
+    --axis:        #c3c2b7;
+    --border:      rgba(11,11,11,0.10);
+    --s1: #2a78d6;  /* TS / Node */
+    --s2: #eb6834;  /* Go */
+    --s3: #1baf7a;  /* web / UI */
+    --s4: #eda100;  /* данные / контент */
+    --good:     #0ca30c;
+    --warning:  #fab219;
+    --serious:  #ec835a;
+    --critical: #d03b3b;
+    --good-ink: #006300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222221;
+      --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+      --good-ink: #0ca30c;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --surface-2: #222221;
+    --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+    --good-ink: #0ca30c;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font: 16px/1.62 system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 32px 24px 96px; }
+
+  header.doc { padding: 24px 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+  header.doc h1 { font-size: 30px; line-height: 1.22; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .sub { color: var(--ink-2); font-size: 15px; margin: 0; }
+  .toprow { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+
+  button.theme {
+    font: inherit; font-size: 13px; padding: 7px 13px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--ink-2); cursor: pointer;
+  }
+  button.theme:hover { background: var(--surface-2); }
+
+  nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin: 0 0 40px; }
+  nav.toc ol { margin: 0; padding-left: 22px; columns: 2; column-gap: 36px; font-size: 14.5px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; }
+  nav.toc a { color: var(--s1); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  section { margin: 0 0 56px; scroll-margin-top: 16px; }
+  h2 { font-size: 23px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  h2 .num { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 10px; font-weight: 600; }
+  h3 { font-size: 17px; margin: 30px 0 8px; }
+  h4 { font-size: 15px; margin: 22px 0 6px; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.05em; }
+  p { margin: 10px 0; }
+  .lede { color: var(--ink-2); font-size: 16.5px; margin: 0 0 20px; max-width: 88ch; }
+
+  code, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em;
+    background: var(--surface-2); padding: 1.5px 5px; border-radius: 4px; }
+  pre { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; overflow-x: auto; font-size: 13px; line-height: 1.55; }
+  pre code { background: none; padding: 0; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin: 18px 0; }
+  .figure { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 12px; margin: 20px 0; overflow-x: auto; }
+  .figure > figcaption { color: var(--ink-2); font-size: 13.5px; margin: 0 0 14px; }
+  .figure > figcaption b { color: var(--ink); font-weight: 650; }
+  .fignote { color: var(--muted); font-size: 12.5px; margin: 10px 2px 2px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); gap: 12px; margin: 20px 0; }
+  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 15px 16px; }
+  .tile .v { font-size: 27px; font-weight: 660; letter-spacing: -0.02em; line-height: 1.1; }
+  .tile .k { color: var(--ink-2); font-size: 13px; margin-top: 5px; }
+  .tile .n { color: var(--muted); font-size: 11.5px; margin-top: 3px; }
+  .tile.bad .v { color: var(--critical); }
+  .tile.ok  .v { color: var(--good-ink); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 14px 0; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  th { color: var(--ink-2); font-weight: 620; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:hover { background: var(--surface-2); }
+  .tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px 16px 8px; overflow-x: auto; }
+
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 640; padding: 2px 8px; border-radius: 999px;
+    border: 1px solid var(--border); white-space: nowrap; }
+  .pill.major   { color: #fff; background: var(--critical); border-color: transparent; }
+  .pill.minor   { color: #4a3200; background: var(--warning); border-color: transparent; }
+  .pill.ok      { color: #fff; background: var(--good); border-color: transparent; }
+  .pill.owner   { color: #fff; background: var(--s1); border-color: transparent; }
+  .pill.proof   { color: var(--good-ink); background: transparent; }
+
+  ul.checks { list-style: none; padding: 0; margin: 12px 0; }
+  ul.checks li { padding: 7px 0 7px 30px; position: relative; border-bottom: 1px solid var(--grid); font-size: 14.5px; }
+  ul.checks li:last-child { border-bottom: 0; }
+  ul.checks li::before { position: absolute; left: 2px; top: 7px; font-weight: 700; }
+  ul.checks li.y::before { content: "✓"; color: var(--good-ink); }
+  ul.checks li.n::before { content: "✕"; color: var(--critical); }
+  ul.checks li.w::before { content: "!"; color: var(--serious); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } nav.toc ol { columns: 1; } }
+
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .bar rect:hover { filter: brightness(1.08); }
+  .quote { border-left: 3px solid var(--s1); padding: 4px 0 4px 16px; margin: 16px 0; color: var(--ink-2); font-style: italic; }
+  footer.doc { border-top: 1px solid var(--border); padding-top: 20px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <div class="toprow">
+    <div>
+      <h1>Fluent Interview — глубокий аудит архитектуры,<br>валидации знаний и план рефакторинга</h1>
+      <p class="sub">28 августа 2026 · корень <code>/Users/sergeyzhechko/developer/fluent-interview</code> · 5 Git-репозиториев · 3 языка · код продукта не изменялся</p>
+    </div>
+    <button class="theme" id="themeBtn" type="button">Тёмная / светлая тема</button>
+  </div>
+</header>
+
+<nav class="toc">
+  <ol>
+    <li><a href="#scope">Область работы и допущения</a></li>
+    <li><a href="#summary">Резюме: цифры и вердикт</a></li>
+    <li><a href="#before">Граф «ДО»: как связано приложение сейчас</a></li>
+    <li><a href="#inside">Что внутри learning-api</a></li>
+    <li><a href="#coupling">Связанность: находки и метрики</a></li>
+    <li><a href="#after">Граф «ПОСЛЕ»: условный monorepo-сценарий</a></li>
+    <li><a href="#deps">Зависимости: что устарело</a></li>
+    <li><a href="#ts7">TypeScript 7: что проверено эмпирически</a></li>
+    <li><a href="#nest">Nest 12, Node, инструментарий</a></li>
+    <li><a href="#go">Go-сервисы</a></li>
+    <li><a href="#langs">Языки исполнения и образы задач</a></li>
+    <li><a href="#next">Vue → Next.js 16</a></li>
+    <li><a href="#mono">Монорепозиторий: механика переноса</a></li>
+    <li><a href="#roadmap">Роадмап по фазам</a></li>
+    <li><a href="#risks">Риски и что может пойти не так</a></li>
+    <li><a href="#solvit">Solvit.space: разбор конкурента и что забирать</a></li>
+    <li><a href="#decomp2">Декомпозиция второго уровня</a></li>
+    <li><a href="#sync">Оповещение фронтенда и генерация DTO</a></li>
+    <li><a href="#repro">Приложение: как воспроизвести аудит</a></li>
+  </ol>
+</nav>
+
+<!-- ============================================================ 1 -->
+<section id="scope">
+  <h2><span class="num">01</span>Область работы и допущения</h2>
+  <p class="lede">Аудит без правок кода: ни одна строка исходников в пяти дочерних репозиториях не изменена. Цифры ниже привязаны к коммиту umbrella <code>76419a5</code> и артефактам W07/W22; команды воспроизведения — в разделе 19. <b>Одна честная оговорка:</b> ранее запущенные гейты workspace перезаписали поля <code>generatedAt</code> в собственных файлах-доказательствах — это побочный эффект проверки, а не изменение продукта.</p>
+
+  <div class="card">
+    <h4 style="margin-top:0">Явные допущения</h4>
+    <ul class="checks">
+      <li class="y"><b>CRUD-Only.</b> Рассматривается только существующая CRUD/чтение-поверхность. Новая продуктовая функциональность в план не входит — это ваше ограничение: «пока это всё только CRUD-Only».</li>
+      <li class="w"><b>Vue → Next.js — исторически записанное решение владельца, но не вывод аудита.</b> Текущий learner UI, пакет контрактов, Playwright-матрица и действующие инструкции репозитория являются Vue-native. До повторного явного подтверждения этот пункт считается <b>стратегическим decision gate</b>, а не разрешением удалить Vue.</li>
+      <li class="w"><b>Монорепо — второй decision gate.</b> <code>AGENTS.md</code> прямо говорит: «This directory is a workspace umbrella for five independent repositories. It is <i>not</i> a source monorepo». Поэтому безопасный план сначала исправляет внутреннюю связанность и кросс-репозиторные контракты, а физическое слияние remote-историй выполняется только после отдельного подтверждения владельца.</li>
+      <li class="y"><b>Оценки трудозатрат</b> — порядок величины для одного разработчика, не коммитмент.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Как читать утверждения в этом отчёте</h4>
+    <div class="tbl-wrap" style="border:0;padding:0">
+      <table>
+        <thead><tr><th>Класс</th><th>Что означает</th><th>Можно ли сразу превращать в работу</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pill proof">Факт</span></td><td>Подтверждён кодом, git-состоянием, машинным артефактом или публичным интерфейсом/API с датой проверки.</td><td>Да, если действие обратимо и не меняет архитектурную стратегию.</td></tr>
+          <tr><td><span class="pill minor">Вывод</span></td><td>Инженерная интерпретация фактов. Для закрытого backend Solvit это всегда именно вывод, а не знание их внутренней схемы.</td><td>После spike/контрактного теста.</td></tr>
+          <tr><td><span class="pill owner">Решение</span></td><td>Выбор владельца с необратимой ценой: Vue/Next, polyrepo/monorepo, модель доставки, владелец remote.</td><td><b>Нет</b>, пока решение не подтверждено в актуальном контексте.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="quote">«…сделать аудит, у нас есть несколько языков программирования, нужно посмотреть, как поддержка всех обновлений… нарисовать граф, как наше приложение связано… подумать, как его рефакторить, чтобы избавиться от сильной связанности».</div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="summary">
+  <h2><span class="num">02</span>Резюме: цифры и вердикт</h2>
+  <p class="lede">Платформа в существенно лучшем состоянии, чем можно ожидать от кодовой базы такого объёма: типизация строгая, гейты зелёные, границы сервисов не протекают. Главная проблема — не версии зависимостей, а <b>внутренняя структура learning-api</b>.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">5</div><div class="k">Git-репозитория</div><div class="n">3 разных remote-владельца</div></div>
+    <div class="tile"><div class="v">~220 000</div><div class="k">строк кода платформы</div><div class="n">TS/JS 199 681 · Go 20 431</div></div>
+    <div class="tile"><div class="v">101</div><div class="k">HTTP-эндпоинт learner API</div><div class="n">81 GET · 20 POST · 0 PUT/PATCH/DELETE</div></div>
+    <div class="tile bad"><div class="v">45</div><div class="k">контроллеров learner API</div><div class="n">зарегистрированы одним AppModule</div></div>
+    <div class="tile bad"><div class="v">106 / 242</div><div class="k">import-деклараций / строк AppModule</div><div class="n">точка сборки знает обо всём приложении</div></div>
+    <div class="tile"><div class="v">1 591</div><div class="k">карточка в текущем Brain release</div><div class="n">W22 · 135 topic groups</div></div>
+    <div class="tile bad"><div class="v">15 / 19</div><div class="k">TaskFamily / TaskRevision</div><div class="n">не «20 задач»: разные единицы учёта</div></div>
+    <div class="tile bad"><div class="v">27 / 6</div><div class="k">runnable stations / station-bound cards</div><div class="n">главный разрыв между каталогом и путём</div></div>
+    <div class="tile"><div class="v">14</div><div class="k">major-отставания npm</div><div class="n">из 124 объявлений</div></div>
+    <div class="tile ok"><div class="v">58 / 58</div><div class="k">шагов <code>release:verify:dev</code></div><div class="n">все зелёные, 2,9 мин</div></div>
+    <div class="tile ok"><div class="v">0</div><div class="k">ошибок типов на TypeScript 7</div><div class="n">1 613 файлов, включая <code>--strict</code></div></div>
+    <div class="tile ok"><div class="v">8,5×</div><div class="k">ускорение typecheck на TS 7</div><div class="n">2,14 с → 0,25 с</div></div>
+  </div>
+
+  <h3>Вердикт по вопросам, которые вы задали</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:26%">Вопрос</th><th style="width:12%">Ответ</th><th>Обоснование (измерено)</th></tr></thead>
+    <tbody>
+      <tr><td>Можно ли перейти на TypeScript последней версии?</td><td><span class="pill ok">Да</span></td><td>TS 7.0.2 (нативный компилятор). Полный typecheck learning-api: <b>0 ошибок</b>, те же 1 613 файлов, что и на TS 6.0.3.</td></tr>
+      <tr><td>Есть ли Nest, живущий с TS 7?</td><td><span class="pill ok">Да</span></td><td>Nest 12.0.1. Критичное условие — <code>emitDecoratorMetadata</code> для DI — проверено побайтово: <b>209 записей <code>design:paramtypes</code> в 108 файлах, 0 расхождений</b> между TS 6 и TS 7.</td></tr>
+      <tr><td>Next.js последней версии с TS 7?</td><td><span class="pill ok">Уже в проекте</span></td><td><code>fluent-question-brain/apps/cms</code> уже собран на Next 16.3.2 + React 19.2.8 + TS 7.0.2. Прецедент покрывает <i>инструментарий</i>, но не слой стилей (Payload везёт свой admin UI, Tailwind там нет).</td></tr>
+      <tr><td>Поддержка обновлений во всех языках?</td><td><span class="pill minor">Частично</span></td><td>Go в Question Brain отстал: <code>go 1.23</code> при доступном 1.27, otel 1.37 при 1.46. Node/TS сторона — 14 major-отставаний, все с прямым путём обновления. Отдельно и хуже всего — <b>пять песочниц исполнения учебного кода</b> (Node 24 при 26, Java 21 при LTS 25, Go 1.24 при 1.27, Postgres 17 при 18; .NET 10 актуален) и образы наблюдаемости (Grafana 11.5 при 13.2). См. <a href="#langs">раздел 11</a>.</td></tr>
+      <tr><td>Сильная связанность?</td><td><span class="pill major">Да, локально</span></td><td><i>Между</i> сервисами связанность корректная (только HTTP, БД не делятся). <i>Внутри</i> learning-api — God Module и 14 почти одинаковых контроллеров (раздел 05).</td></tr>
+      <tr><td>Стоит ли сводить в монорепо?</td><td><span class="pill owner">Нужна сверка</span></td><td>Технически выполнимо с сохранением истории, но не является лечением God Module и сейчас противоречит <code>AGENTS.md</code>. Сначала можно получить единый CI и контрактные гейты в polyrepo; физическое слияние — отдельное решение.</td></tr>
+      <tr><td>Как фронтенд узнает об изменениях?</td><td><span class="pill minor">Половина есть</span></td><td>Transactional outbox в Question Brain работает: <b>10 841 событие</b>, 5 типов, все вычитаны. Не хватает транспорта до браузера: ETag не используется <b>ни разу</b>, SSE есть только для стриминга ИИ. Схема из четырёх слоёв — <a href="#sync">раздел 18</a>.</td></tr>
+      <tr><td>Как генерировать DTO?</td><td><span class="pill major">Нужен источник</span></td><td>Одна правда описана руками <b>четырежды</b> (TS 84 722 стр. + zod 1 869 + Go 698 + JSON Schema), а OpenAPI-документа нет вообще. Рекомендация — zod-first: фронт уже на zod 4.4.3. <a href="#sync">Раздел 18</a>.</td></tr>
+      <tr><td>Что забрать у Solvit?</td><td><span class="pill minor">Паттерны, не контент</span></td><td>Run/Submit, server-owned verdict, typed content blocks, schema preview, task metrics с явной формулой, company taxonomy, progress analytics. Не копировать платный контент и не выдавать самооценку за mastery. <a href="#solvit">Раздел 16</a>.</td></tr>
+      <tr><td>Перенос дизайн-системы во Next «правильно»?</td><td><span class="pill ok">Дёшево</span></td><td><code>tokens.css</code> — 297 строк чистых CSS-переменных, 116 токенов, 0 raw-цветов. Переносится без изменений; гейт <code>design:tokens:check</code> продолжает работать.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="before">
+  <h2><span class="num">03</span>Граф «ДО»: как связано приложение сейчас</h2>
+  <p class="lede">Пять независимых Git-корней, три независимых Compose-проекта, шесть CI-workflow — и ни одной проверки, которая видит систему целиком.</p>
+
+  <figure class="figure">
+    <figcaption><b>Рис. 1.</b> Текущая топология. Сплошная стрелка — HTTP-вызов в рантайме (подписан портом). Пунктир — не-рантаймовый поток (контент, наблюдаемость). Пунктирная рамка — отдельный Git-корень со своим remote.</figcaption>
+    <svg viewBox="0 0 1180 830" width="100%" role="img" aria-labelledby="fig1t">
+      <title id="fig1t">Граф текущей топологии Fluent Interview: пять Git-репозиториев, HTTP-связи и хранилища</title>
+
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/>
+        </marker>
+        <marker id="arb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--s1)"/>
+        </marker>
+      </defs>
+
+      <!-- git root frames -->
+      <g fill="none" stroke="var(--axis)" stroke-dasharray="5 4" stroke-width="1.5">
+        <rect x="18"  y="96"  width="286" height="196" rx="12"/>
+        <rect x="336" y="96"  width="404" height="290" rx="12"/>
+        <rect x="772" y="96"  width="390" height="336" rx="12"/>
+        <rect x="772" y="456" width="390" height="150" rx="12"/>
+        <rect x="18"  y="640" width="286" height="140" rx="12"/>
+      </g>
+      <g font-size="11" fill="var(--muted)" font-weight="600">
+        <text x="30"  y="112">git root · remote НЕ настроен</text>
+        <text x="348" y="112">git root · ai-fluent-engineering-lab.git</text>
+        <text x="784" y="112">git root · fluent-question-brain.git</text>
+        <text x="784" y="472">git root · fluent-task-runtime.git</text>
+        <text x="30"  y="656">git root · szhechko/fluent-question-vault.git</text>
+      </g>
+
+      <!-- browser -->
+      <g>
+        <rect x="18" y="24" width="286" height="52" rx="9" fill="var(--surface-2)" stroke="var(--border)"/>
+        <text x="34" y="46" font-size="13.5" font-weight="650" fill="var(--ink)">Браузер учащегося / оператора</text>
+        <text x="34" y="64" font-size="11.5" fill="var(--ink-2)">dev :47350 · packaged :49300</text>
+      </g>
+
+      <!-- VUE -->
+      <g>
+        <rect x="34" y="124" width="254" height="152" rx="10" fill="var(--s3)" opacity="0.13"/>
+        <rect x="34" y="124" width="254" height="152" rx="10" fill="none" stroke="var(--s3)" stroke-width="2"/>
+        <text x="48" y="148" font-size="14" font-weight="700" fill="var(--ink)">fluent-engineering-vue</text>
+        <text x="48" y="166" font-size="11.5" fill="var(--ink-2)">learner-web · Vite SPA (нет SSR)</text>
+        <line x1="48" y1="176" x2="274" y2="176" stroke="var(--s3)" stroke-opacity="0.4"/>
+        <text x="48" y="194" font-size="11.5" fill="var(--ink-2)">Vue 3.5.41 · vue-router 5 · Pinia 4</text>
+        <text x="48" y="211" font-size="11.5" fill="var(--ink-2)">TS 6.0.3 (<tspan font-weight="650">strict: true</tspan>) · Vite 8 · Tailwind 4</text>
+        <text x="48" y="228" font-size="11.5" fill="var(--ink-2)">37 маршрутов · 24 view · 38 .vue</text>
+        <text x="48" y="245" font-size="11.5" fill="var(--ink-2)">20 006 LOC · 116 design-токенов</text>
+        <text x="48" y="266" font-size="11.5" fill="var(--good-ink)" font-weight="650">54 e2e-теста Playwright · 38 маршрутов</text>
+      </g>
+
+      <!-- LAB -->
+      <g>
+        <rect x="352" y="124" width="372" height="246" rx="10" fill="var(--s1)" opacity="0.13"/>
+        <rect x="352" y="124" width="372" height="246" rx="10" fill="none" stroke="var(--s1)" stroke-width="2"/>
+        <text x="366" y="148" font-size="14" font-weight="700" fill="var(--ink)">fluent-engineering-lab / learning-api</text>
+        <text x="366" y="166" font-size="11.5" fill="var(--ink-2)">Nest 11 · Node 26 · TS 6.0.3 · Nx 23.1.0</text>
+        <line x1="366" y1="176" x2="710" y2="176" stroke="var(--s1)" stroke-opacity="0.4"/>
+        <text x="366" y="194" font-size="11.5" fill="var(--ink-2)">405 файлов · 52 839 LOC · 664 теста</text>
+        <text x="366" y="211" font-size="11.5" fill="var(--ink-2)">101 эндпоинт: 81 GET · 20 POST</text>
+
+        <rect x="366" y="222" width="344" height="52" rx="8" fill="var(--critical)" opacity="0.12"/>
+        <rect x="366" y="222" width="344" height="52" rx="8" fill="none" stroke="var(--critical)" stroke-width="1.5"/>
+        <text x="378" y="241" font-size="11.5" font-weight="700" fill="var(--ink)">app.module.ts — единственный модуль</text>
+        <text x="378" y="259" font-size="11.5" fill="var(--ink-2)">106 import · 99 provider · 45 контроллеров</text>
+
+        <text x="366" y="296" font-size="11.5" fill="var(--ink-2)">Nx-граф репозитория: <tspan font-weight="650">всего 4 проекта</tspan></text>
+        <g font-size="11" fill="var(--ink-2)">
+          <rect x="366" y="304" width="120" height="26" rx="6" fill="var(--surface)" stroke="var(--s1)" stroke-width="1.5"/>
+          <text x="376" y="321">learning-api</text>
+          <rect x="494" y="304" width="104" height="26" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+          <text x="504" y="321">lab-contracts</text>
+          <rect x="606" y="304" width="104" height="26" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+          <text x="616" y="321">observability</text>
+        </g>
+        <text x="366" y="344" font-size="11.5" fill="var(--serious)" font-weight="650">3 мёртвые браузерные зависимости в prod:</text>
+        <text x="366" y="361" font-size="11.5" fill="var(--serious)" font-weight="650">codemirror · @xterm/xterm · @xterm/addon-fit</text>
+      </g>
+
+      <!-- BRAIN -->
+      <g>
+        <rect x="788" y="124" width="358" height="118" rx="10" fill="var(--s2)" opacity="0.13"/>
+        <rect x="788" y="124" width="358" height="118" rx="10" fill="none" stroke="var(--s2)" stroke-width="2"/>
+        <text x="802" y="148" font-size="14" font-weight="700" fill="var(--ink)">fluent-question-brain</text>
+        <text x="802" y="166" font-size="11.5" fill="var(--ink-2)">источник истины по вопросам · Go</text>
+        <line x1="802" y1="176" x2="1132" y2="176" stroke="var(--s2)" stroke-opacity="0.4"/>
+        <text x="802" y="194" font-size="11.5" fill="var(--critical)" font-weight="650">go 1.23.0 · otel 1.37 · pgx 5.7.6</text>
+        <text x="802" y="211" font-size="11.5" fill="var(--ink-2)">58 файлов · 15 809 LOC · API :48127</text>
+        <text x="802" y="231" font-size="11.5" fill="var(--ink-2)">HTTP-контракт: released projection only</text>
+      </g>
+
+      <!-- CMS inside brain -->
+      <g>
+        <rect x="788" y="258" width="358" height="86" rx="10" fill="var(--s4)" opacity="0.13"/>
+        <rect x="788" y="258" width="358" height="86" rx="10" fill="none" stroke="var(--s4)" stroke-width="2"/>
+        <text x="802" y="280" font-size="13" font-weight="700" fill="var(--ink)">apps/cms — Payload 3.88 (:48128)</text>
+        <text x="802" y="299" font-size="11.5" fill="var(--good-ink)" font-weight="650">Next 16.3.2 · React 19.2.8 · TS 7.0.2</text>
+        <text x="802" y="317" font-size="11.5" fill="var(--ink-2)">свой package-lock.json (npm, не pnpm)</text>
+        <text x="802" y="335" font-size="11.5" fill="var(--ink-2)">Tailwind не используется — только admin UI</text>
+      </g>
+      <text x="1000" y="395" font-size="11" fill="var(--muted)">:55437 — не делится ни с кем</text>
+      <rect x="788" y="378" width="200" height="26" rx="6" fill="var(--surface)" stroke="var(--s4)" stroke-width="1.5"/>
+      <text x="798" y="395" font-size="11" fill="var(--ink-2)">PostgreSQL · brain</text>
+
+      <!-- RUNTIME -->
+      <g>
+        <rect x="788" y="486" width="358" height="104" rx="10" fill="var(--s2)" opacity="0.13"/>
+        <rect x="788" y="486" width="358" height="104" rx="10" fill="none" stroke="var(--s2)" stroke-width="2"/>
+        <text x="802" y="510" font-size="14" font-weight="700" fill="var(--ink)">fluent-task-runtime</text>
+        <text x="802" y="528" font-size="11.5" fill="var(--ink-2)">единственная власть исполнять код · API :48227</text>
+        <line x1="802" y1="538" x2="1132" y2="538" stroke="var(--s2)" stroke-opacity="0.4"/>
+        <text x="802" y="556" font-size="11.5" fill="var(--good-ink)" font-weight="650">go 1.24.13 · otel 1.41 · grpc 1.79</text>
+        <text x="802" y="574" font-size="11.5" fill="var(--ink-2)">22 файла · 4 622 LOC · sandbox + hidden tests</text>
+      </g>
+
+      <!-- VAULT -->
+      <g>
+        <rect x="34" y="668" width="254" height="96" rx="10" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1.5"/>
+        <text x="48" y="692" font-size="13.5" font-weight="700" fill="var(--ink)">fluent-question-vault</text>
+        <text x="48" y="710" font-size="11.5" fill="var(--ink-2)">зеркало истории Obsidian-карточек</text>
+        <text x="48" y="728" font-size="11.5" fill="var(--ink-2)">не рантайм-источник · 0 CI-workflow</text>
+        <text x="48" y="748" font-size="11.5" fill="var(--serious)" font-weight="650">личный аккаунт, не организация</text>
+      </g>
+
+      <!-- LAB stores -->
+      <g>
+        <rect x="352" y="404" width="170" height="26" rx="6" fill="var(--surface)" stroke="var(--s4)" stroke-width="1.5"/>
+        <text x="362" y="421" font-size="11" fill="var(--ink-2)">PostgreSQL :49302</text>
+        <rect x="534" y="404" width="120" height="26" rx="6" fill="var(--surface)" stroke="var(--s4)" stroke-width="1.5"/>
+        <text x="544" y="421" font-size="11" fill="var(--ink-2)">Redis :49303</text>
+      </g>
+      <g>
+        <rect x="352" y="444" width="302" height="26" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="362" y="461" font-size="11" fill="var(--ink-2)">Локальные LLM: Ollama :11434 · LM Studio :1234</text>
+      </g>
+      <g>
+        <rect x="352" y="484" width="302" height="26" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="362" y="501" font-size="11" fill="var(--ink-2)">Grafana :49304 · Prometheus :49305 · Loki :49306</text>
+      </g>
+      <g>
+        <rect x="352" y="524" width="302" height="26" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+        <text x="362" y="541" font-size="11" fill="var(--ink-2)">Jaeger Trace Explorer :56686 · OTLP :54317/:54318</text>
+      </g>
+
+      <!-- edges -->
+      <g stroke="var(--s1)" stroke-width="2" fill="none" marker-end="url(#arb)">
+        <path d="M240,76 L240,124"/>
+        <path d="M288,190 L352,190"/>
+        <path d="M724,180 L788,180"/>
+        <path d="M724,300 C756,380 748,460 788,506"/>
+      </g>
+      <g stroke="var(--axis)" stroke-width="1.6" fill="none" marker-end="url(#ar)">
+        <path d="M420,370 L420,404"/>
+        <path d="M560,370 L575,404"/>
+        <path d="M470,430 L470,444"/>
+        <path d="M480,470 L480,484"/>
+        <path d="M490,510 L490,524"/>
+      </g>
+      <g stroke="var(--axis)" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#ar)">
+        <path d="M161,668 C161,600 250,560 352,540"/>
+      </g>
+
+      <g font-size="10.5" fill="var(--muted)" font-weight="640">
+        <text x="250" y="106">HTTP</text>
+        <text x="296" y="182">→ /api</text>
+        <text x="726" y="172">:48127</text>
+        <text x="700" y="442">:48227</text>
+        <text x="166" y="600">контент через workflow Lab</text>
+      </g>
+
+      <!-- CI note -->
+      <g>
+        <rect x="18" y="310" width="286" height="112" rx="10" fill="var(--surface)" stroke="var(--critical)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="32" y="332" font-size="12.5" font-weight="700" fill="var(--ink)">CI: 6 workflow в 4 репозиториях</text>
+        <text x="32" y="352" font-size="11.5" fill="var(--ink-2)">lab: ci.yml + quality.yml</text>
+        <text x="32" y="369" font-size="11.5" fill="var(--ink-2)">vue: quality.yml · brain/runtime: verify.yml</text>
+        <text x="32" y="386" font-size="11.5" fill="var(--ink-2)">vault: 0 (осознанно)</text>
+        <text x="32" y="408" font-size="11.5" font-weight="650" fill="var(--critical)">ни один не видит систему целиком</text>
+      </g>
+    </svg>
+    <p class="fignote">Что здесь правильно и не должно быть сломано рефакторингом: браузер разговаривает <b>только</b> с Lab через <code>/api</code>; Lab — единственный, кто вызывает Brain и Runtime; ни одна БД не делится между сервисами; Vault не подключён к learner API. Эти четыре свойства — работающие границы, а не случайность.</p>
+  </figure>
+
+  <h3>Три Compose-проекта и оркестратор</h3>
+  <p><code>fluent-interview</code> — не четвёртый Compose-проект, а оркестратор: <code>scripts/up.sh</code> / <code>down.sh</code> / <code>status.sh</code> поднимают три независимо остановимых стека и Vue-дев-сервер. Порты жёстко закреплены в <code>workspace.yaml</code> (политика <code>dedicated-high-host-ports</code>) — это одна из немногих вещей, которую монорепо-слияние вообще не затрагивает.</p>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="inside">
+  <h2><span class="num">04</span>Что внутри learning-api</h2>
+  <p class="lede">52 839 строк, 405 файлов, 45 контроллеров, 101 эндпоинт — и один Nest-модуль на всё. Nx-граф репозитория состоит из четырёх проектов, то есть Nx здесь ничего не разграничивает: 96 % кода лежит в одном узле графа.</p>
+
+  <div class="grid2">
+    <figure class="figure">
+      <figcaption><b>Рис. 2.</b> Объём кода по модулям, строк. Показаны четыре главных рантайм-модуля; вне графика — <code>libs/lab-contracts</code> (84 722 строки, см. <a href="#decomp2">раздел 17</a>), <code>libs/observability</code> (2 471) и 39 643 строки скриптов-гейтов на <code>.mjs</code>.</figcaption>
+      <svg viewBox="0 0 560 210" width="100%" role="img" aria-label="Объём кода: learning-api 52839, learner-web 20006, question-brain 15809, task-runtime 4622">
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="150" y1="14" x2="150" y2="176"/>
+        </g>
+        <g class="bar">
+          <rect x="150" y="22"  width="300" height="24" rx="4" fill="var(--s1)"><title>learning-api (Nest/TS): 52 839 строк</title></rect>
+          <rect x="150" y="60"  width="114" height="24" rx="4" fill="var(--s3)"><title>learner-web (Vue/TS): 20 006 строк</title></rect>
+          <rect x="150" y="98"  width="90"  height="24" rx="4" fill="var(--s2)"><title>question-brain (Go): 15 809 строк</title></rect>
+          <rect x="150" y="136" width="26"  height="24" rx="4" fill="var(--s2)"><title>task-runtime (Go): 4 622 строки</title></rect>
+        </g>
+        <g font-size="12" fill="var(--ink-2)" text-anchor="end">
+          <text x="140" y="39">learning-api · Nest</text>
+          <text x="140" y="77">learner-web · Vue</text>
+          <text x="140" y="115">question-brain · Go</text>
+          <text x="140" y="153">task-runtime · Go</text>
+        </g>
+        <g font-size="12" font-weight="650" fill="var(--ink)" font-variant-numeric="tabular-nums">
+          <text x="458" y="39">52 839</text>
+          <text x="272" y="77">20 006</text>
+          <text x="248" y="115">15 809</text>
+          <text x="184" y="153">4 622</text>
+        </g>
+        <line x1="150" y1="176" x2="450" y2="176" stroke="var(--axis)"/>
+        <text x="150" y="196" font-size="11" fill="var(--muted)">0</text>
+        <text x="450" y="196" font-size="11" fill="var(--muted)" text-anchor="middle">53 тыс. строк</text>
+      </svg>
+    </figure>
+
+    <figure class="figure">
+      <figcaption><b>Рис. 3.</b> HTTP-поверхность learner API по методам. Нули показаны подписью — мутирующих ресурсных методов нет вообще.</figcaption>
+      <svg viewBox="0 0 560 210" width="100%" role="img" aria-label="HTTP-методы: GET 81, POST 20, PUT 0, PATCH 0, DELETE 0">
+        <line x1="110" y1="14" x2="110" y2="176" stroke="var(--grid)"/>
+        <g class="bar">
+          <rect x="110" y="20"  width="320" height="22" rx="4" fill="var(--s1)"><title>GET: 81 эндпоинт</title></rect>
+          <rect x="110" y="52"  width="79"  height="22" rx="4" fill="var(--s1)"><title>POST: 20 эндпоинтов (команды, не создание ресурсов)</title></rect>
+        </g>
+        <g font-size="12" fill="var(--ink-2)" text-anchor="end">
+          <text x="100" y="36">GET</text><text x="100" y="68">POST</text>
+          <text x="100" y="100">PUT</text><text x="100" y="132">PATCH</text><text x="100" y="164">DELETE</text>
+        </g>
+        <g font-size="12" font-weight="650" font-variant-numeric="tabular-nums">
+          <text x="438" y="36" fill="var(--ink)">81</text>
+          <text x="197" y="68" fill="var(--ink)">20</text>
+          <text x="118" y="100" fill="var(--muted)">0</text>
+          <text x="118" y="132" fill="var(--muted)">0</text>
+          <text x="118" y="164" fill="var(--muted)">0</text>
+        </g>
+        <line x1="110" y1="176" x2="470" y2="176" stroke="var(--axis)"/>
+      </svg>
+      <p class="fignote">Формулировка важна: 20 POST — это <i>команды</i> (попытка, сабмит, коммит), а не «C» из CRUD. Ресурсной мутирующей поверхности (PUT/PATCH/DELETE) у API нет ни одной на 45 контроллеров. Это осознанно read-dominated дизайн, и именно поэтому «CRUD-Only» здесь означает «read + команды».</p>
+    </figure>
+  </div>
+
+  <h3>Матрица <code>project-book</code>: 14 клеток, которые должны быть одним модулем</h3>
+  <p>Каталог <code>app/project-book/</code> — 92 файла, 48 без тестов, 4 289 строк, <b>20 контроллеров</b>. Четырнадцать из них устроены абсолютно одинаково: <code>@Controller('project-books')</code> + ровно один <code>@Get(':bookId/&lt;клетка&gt;')</code> + свой сервис.</p>
+
+  <figure class="figure">
+    <figcaption><b>Рис. 4.</b> Клетки «глава × аспект». Закрашенная клетка = отдельная пара контроллер + сервис в коде. Пустая = такого эндпоинта нет.</figcaption>
+    <svg viewBox="0 0 900 250" width="100%" role="img" aria-label="Матрица project-book: 14 из 18 клеток реализованы отдельными парами контроллер-сервис">
+      <g font-size="11.5" fill="var(--ink-2)" text-anchor="middle">
+        <text x="290" y="34">learning</text><text x="400" y="34">workspace</text><text x="510" y="34">failure</text>
+        <text x="620" y="34">observability</text><text x="730" y="34">drills</text><text x="840" y="34">consistency</text>
+      </g>
+      <g font-size="12.5" fill="var(--ink)" text-anchor="end" font-weight="620">
+        <text x="220" y="72">cache</text><text x="220" y="132">event</text><text x="220" y="192">deployment</text>
+      </g>
+      <!-- cells: filled -->
+      <g>
+        <!-- cache: learning, workspace, failure, consistency -->
+        <rect x="240" y="50" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>cache-learning: контроллер + сервис (81 строка)</title></rect>
+        <rect x="350" y="50" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>cache-workspace: контроллер + сервис (114 строк)</title></rect>
+        <rect x="460" y="50" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>cache-failure: контроллер + сервис (77 строк)</title></rect>
+        <rect x="570" y="50" width="100" height="34" rx="6" fill="none" stroke="var(--grid)" stroke-width="1.5"/>
+        <rect x="680" y="50" width="100" height="34" rx="6" fill="none" stroke="var(--grid)" stroke-width="1.5"/>
+        <rect x="790" y="50" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>cache-consistency: контроллер + сервис (85 строк)</title></rect>
+        <!-- event -->
+        <rect x="240" y="110" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>event-learning: контроллер + сервис (39 строк)</title></rect>
+        <rect x="350" y="110" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>event-workspace</title></rect>
+        <rect x="460" y="110" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>event-failure</title></rect>
+        <rect x="570" y="110" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>event-observability</title></rect>
+        <rect x="680" y="110" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>event-drills</title></rect>
+        <rect x="790" y="110" width="100" height="34" rx="6" fill="none" stroke="var(--grid)" stroke-width="1.5"/>
+        <!-- deployment -->
+        <rect x="240" y="170" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>deployment-learning: контроллер + сервис (27 строк)</title></rect>
+        <rect x="350" y="170" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>deployment-workspace</title></rect>
+        <rect x="460" y="170" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>deployment-failure</title></rect>
+        <rect x="570" y="170" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>deployment-observability</title></rect>
+        <rect x="680" y="170" width="100" height="34" rx="6" fill="var(--s1)" opacity="0.85"><title>deployment-drills</title></rect>
+        <rect x="790" y="170" width="100" height="34" rx="6" fill="none" stroke="var(--grid)" stroke-width="1.5"/>
+      </g>
+      <text x="240" y="234" font-size="12.5" fill="var(--ink-2)">
+        <tspan font-weight="700" fill="var(--ink)">14 заполненных клеток</tspan> = 14 контроллеров + 14 сервисов + 14 spec-файлов в бэкенде.
+      </text>
+    </svg>
+    <p class="fignote">Асимметрия, которая ставит диагноз: <b>фронтенд эту матрицу уже обобщил</b>. Во Vue-роутере все главы обслуживает один <code>ProjectChapterView.vue</code>, а вид главы приходит параметром <code>meta.chapterKind</code>. Бэкенд для того же самого держит 14 классов. Это классическая shotgun surgery: добавление аспекта «observability» к главе «cache» сегодня требует нового контроллера, сервиса, spec-файла и правки AppModule.</p>
+  </figure>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="coupling">
+  <h2><span class="num">05</span>Связанность: находки и метрики</h2>
+  <p class="lede">Разделяю честно: <b>межсервисные</b> границы в порядке, <b>внутримодульная</b> структура learning-api — нет. Ниже только то, что измерено, с указанием принципа, который нарушен.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:4%">#</th><th style="width:24%">Находка</th><th style="width:10%">Уровень</th><th style="width:14%">Принцип</th><th>Измерение и следствие</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td>
+        <td><b>God Module</b>: один <code>AppModule</code> на всё приложение</td>
+        <td><span class="pill major">высокий</span></td>
+        <td>SRP · Common Closure</td>
+        <td><code>app/app.module.ts</code>: 242 строки, <b>106 import-деклараций, 99 провайдеров, 45 контроллеров</b>. Любая новая фича трогает этот файл → он вечный конфликт при merge и единственная точка, где видно всё приложение. Nest-модули по домену не выделены вообще.</td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td><b>Nx-граф пустой по смыслу</b>: 4 проекта, 96 % кода в одном</td>
+        <td><span class="pill major">высокий</span></td>
+        <td>Модульность</td>
+        <td>Проекты: <code>learning-api</code>, <code>lab-contracts</code>, <code>observability</code>, <code>learning-api-e2e</code>. Правила <code>@nx/enforce-module-boundaries</code> <i>настроены хорошо</i> (теги <code>type:app</code>, <code>type:util</code>, <code>boundary:pure</code>) — но применять их почти не к чему: внутри 52 839 строк одного проекта Nx не видит ни одной границы.</td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td><b>14 почти одинаковых контроллеров</b> в <code>project-book</code></td>
+        <td><span class="pill major">высокий</span></td>
+        <td>DRY · OCP</td>
+        <td>Матрица {cache, event, deployment} × {learning, workspace, failure, observability, drills, consistency}. Все 14 — <code>@Controller('project-books')</code> + один <code>@Get(':bookId/&lt;клетка&gt;')</code>. Целевая форма: один <code>@Get(':bookId/chapters/:chapterKind/:facet')</code> + стратегия на аспект. Экономия оценочно ~2 000 строк из 4 289.</td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td><b>Мёртвые браузерные зависимости в prod-манифесте API</b></td>
+        <td><span class="pill minor">средний</span></td>
+        <td>Гигиена</td>
+        <td><code>codemirror</code>, <code>@xterm/xterm</code>, <code>@xterm/addon-fit</code> объявлены в <code>dependencies</code> Nest-сервера при <b>0 использованиях</b> в <code>apps/</code> и <code>libs/</code>. Едут в production-образ и в поверхность аудита безопасности зря.</td>
+      </tr>
+      <tr>
+        <td class="num">5</td>
+        <td><b>Мёртвая зависимость и phantom dependency во Vue</b></td>
+        <td><span class="pill minor">средний</span></td>
+        <td>Гигиена</td>
+        <td><code>reka-ui@2.10.4</code> объявлена в <code>packages/ui</code> — <b>0 использований</b> во всём репозитории. <code>@xterm/*</code> объявлены в <i>корневых</i> devDependencies, а потребляет их <code>apps/web</code> — работает только за счёт hoisting.</td>
+      </tr>
+      <tr>
+        <td class="num">6</td>
+        <td><b>Ни одного CI, который видит систему целиком</b></td>
+        <td><span class="pill major">высокий</span></td>
+        <td>Проверяемость</td>
+        <td>6 workflow в 4 репозиториях, каждый проверяет свой кусок. Контрактные гейты (<code>verify:schema</code>, <code>validation:matrix</code>, <code>release:verify</code>) живут в <i>umbrella</i> и запускаются вручную. Регресс кросс-сервисного контракта не ловится ни в одном PR.</td>
+      </tr>
+      <tr>
+        <td class="num">7</td>
+        <td><b>Vue-репозиторий без remote</b></td>
+        <td><span class="pill major">высокий</span></td>
+        <td>Воспроизводимость</td>
+        <td><code>remote: local-only</code> в <code>workspace.yaml</code>. 20 006 строк UI существуют в одной копии на одной машине. Строгий <code>pnpm release:verify</code> из-за этого fail-closed — и это правильное поведение гейта, а не его баг.</td>
+      </tr>
+      <tr>
+        <td class="num">8</td>
+        <td><b>Компонентных тестов нет, при живом e2e-наборе</b></td>
+        <td><span class="pill minor">низкий</span></td>
+        <td>Проверяемость</td>
+        <td>Уточнение к первой версии этого аудита: e2e-набор <b>существует и работает</b> — 4 спека Playwright в <code>apps/web/tests/</code>, 1 462 строки, <b>54 теста</b>, покрывают ~38 маршрутов (включая route-matrix и visual-state-matrix); в <code>release:verify:dev</code> шаг <code>vue-e2e</code> проходит за 64 с. Что действительно отсутствует: <b>компонентных тестов ноль</b> на 38 <code>.vue</code> (в vitest попадает только <code>contracts.spec.ts</code>, 14 проверок), плюс в корне репозитория лежит пустой каталог <code>tests/</code> — мусор, который путает.</td>
+      </tr>
+      <tr>
+        <td class="num">9</td>
+        <td><b>Крупные сервисы-«агрегаторы»</b></td>
+        <td><span class="pill minor">средний</span></td>
+        <td>SRP</td>
+        <td><code>learner-route-context.service.ts</code> 1 088 строк, <code>attempt.coordinator.ts</code> 902, <code>local-ai.service.ts</code> 877, <code>question-brain.library.ts</code> 853. На фронте — <code>api-client/src/index.ts</code> 889 строк одним файлом и <code>contracts/src/index.ts</code> 1 684. Это следующий слой после декомпозиции модулей, не первый.</td>
+      </tr>
+      <tr>
+        <td class="num">10</td>
+        <td><b>Рассинхрон версий внутри одной платформы</b></td>
+        <td><span class="pill minor">средний</span></td>
+        <td>Гигиена</td>
+        <td><code>@types/node ^22</code> в Lab при <code>engines.node = 26.7.0</code>; Vue на <code>@types/node 24.3.0</code>; CMS на <code>26.2.0</code>. Go: 1.23 в Brain против 1.24.13 в Runtime, otel 1.37 против 1.41. Один и тот же продукт типизирован под три разные версии Node.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top:18px"><b>Ещё две находки того же класса, найденные при доуточнении измерений, разобраны отдельно:</b>
+  <a href="#decomp2">№11 — <code>libs/lab-contracts</code> на 84 722 строки, из них 63 534 в одном плоском каталоге, с учебным контентом внутри</a> и
+  <a href="#sync">№12 — одна правда о форме данных, описанная руками четырежды, при полном отсутствии OpenAPI</a>.</p>
+
+  <h3>Что <b>не</b> является проблемой (и должно уцелеть)</h3>
+  <ul class="checks">
+    <li class="y"><b>Межсервисная связанность корректная.</b> Только HTTP; общих ORM, таблиц и fallback-каталогов нет. Проверено: Lab обращается ровно к <code>:48127</code> (Brain), <code>:48227</code> (Runtime) и локальным LLM; Brain держит свой Postgres <code>:55437</code>, Lab — свой <code>:49302</code>.</li>
+    <li class="y"><b>Фронт не обходит Lab.</b> <code>api-client</code> имеет ровно один <code>baseUrl</code>, по умолчанию <code>/api</code>. Ни одного прямого вызова Brain или Runtime из браузера.</li>
+    <li class="y"><b>Типизация уже строгая там, где это важно.</b> Vue: <code>strict: true</code>. Lab: <code>strict: false</code> в конфиге, но фактический код проходит <code>--strict</code> с <b>0 ошибок</b> — долг только в тестах (12 ошибок в 3 spec-файлах, все <code>TS18047/18048</code>).</li>
+    <li class="y"><b>Дизайн-система дисциплинирована.</b> 116 токенов, 49 обязательных ролей на месте, 0 raw-цветов вне token-файла, light/dark/system + <code>prefers-reduced-transparency</code> и <code>prefers-reduced-motion</code> — всё покрыто исполняемым гейтом.</li>
+    <li class="y"><b>Приёмочная сетка для изменения UI уже есть.</b> 54 e2e-теста на ~38 маршрутов — это готовая поведенческая спецификация Vue и страховка для любого будущего редизайна или смены фреймворка. Именно поэтому Ф4 — «расширить», а не «создать».</li>
+    <li class="y"><b>Nx-правила границ написаны грамотно</b> — включая <code>checkNestedExternalImports</code> и отдельный тег <code>boundary:pure</code>. Это готовый механизм, которому просто не дали объектов для охраны.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="after">
+  <h2><span class="num">06</span>Граф «ПОСЛЕ»: условный monorepo-сценарий</h2>
+  <p class="lede"><span class="pill owner">не текущая команда</span> Диаграмма ниже отвечает только на вопрос «как сохранить границы, <i>если</i> владелец подтвердит source monorepo». Рекомендуемая ближайшая цель сохраняет пять Git-репозиториев, но использует ту же логическую декомпозицию Lab, версионированные contracts и единый orchestration CI. Физическое расположение кода не должно блокировать это лечение.</p>
+
+  <figure class="figure">
+    <figcaption><b>Рис. 5.</b> Условная структура после подтверждения monorepo. Стрелка вниз — разрешённая зависимость. Красный крест — зависимость, запрещённая правилом линтера, а не договорённостью.</figcaption>
+    <svg viewBox="0 0 1180 860" width="100%" role="img" aria-labelledby="fig5t">
+      <title id="fig5t">Целевая архитектура: единый Nx-монорепозиторий с приложениями и доменными библиотеками</title>
+      <defs>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/>
+        </marker>
+      </defs>
+
+      <rect x="14" y="14" width="1152" height="768" rx="14" fill="none" stroke="var(--s1)" stroke-width="2"/>
+      <text x="34" y="42" font-size="14.5" font-weight="700" fill="var(--ink)">fluent-interview/ — один Git-репозиторий · один pnpm-workspace · Nx 23 · один CI с <tspan font-family="ui-monospace, Menlo, monospace">nx affected</tspan></text>
+
+      <!-- apps row -->
+      <text x="34" y="76" font-size="12" font-weight="700" fill="var(--muted)">apps/ — раздельно деплоимые сервисы</text>
+      <g>
+        <rect x="34" y="88" width="212" height="96" rx="10" fill="var(--s3)" opacity="0.14"/>
+        <rect x="34" y="88" width="212" height="96" rx="10" fill="none" stroke="var(--s3)" stroke-width="2"/>
+        <text x="48" y="110" font-size="13" font-weight="700" fill="var(--ink)">learner-web</text>
+        <text x="48" y="128" font-size="11" fill="var(--ink-2)">Next 16.3.3 · React 19.2.8</text>
+        <text x="48" y="145" font-size="11" fill="var(--ink-2)">TS 7 · Tailwind 4 (postcss)</text>
+        <text x="48" y="162" font-size="11" fill="var(--ink-2)">37 маршрутов → App Router</text>
+        <text x="48" y="178" font-size="10.5" fill="var(--muted)">теги: type:app, scope:web</text>
+
+        <rect x="262" y="88" width="212" height="96" rx="10" fill="var(--s1)" opacity="0.14"/>
+        <rect x="262" y="88" width="212" height="96" rx="10" fill="none" stroke="var(--s1)" stroke-width="2"/>
+        <text x="276" y="110" font-size="13" font-weight="700" fill="var(--ink)">learning-api</text>
+        <text x="276" y="128" font-size="11" fill="var(--ink-2)">Nest 12.0.1 · Node 26 · TS 7</text>
+        <text x="276" y="145" font-size="11" fill="var(--ink-2)">тонкая HTTP-оболочка:</text>
+        <text x="276" y="162" font-size="11" fill="var(--ink-2)">AppModule ≈ 8 импортов</text>
+        <text x="276" y="178" font-size="10.5" fill="var(--muted)">теги: type:app, scope:backend</text>
+
+        <rect x="490" y="88" width="196" height="96" rx="10" fill="var(--s2)" opacity="0.14"/>
+        <rect x="490" y="88" width="196" height="96" rx="10" fill="none" stroke="var(--s2)" stroke-width="2"/>
+        <text x="504" y="110" font-size="13" font-weight="700" fill="var(--ink)">question-brain</text>
+        <text x="504" y="128" font-size="11" fill="var(--ink-2)">Go 1.27 · otel 1.46</text>
+        <text x="504" y="145" font-size="11" fill="var(--ink-2)">pgx 5.10 · свой Postgres</text>
+        <text x="504" y="162" font-size="11" fill="var(--ink-2)">nx: run-commands + cache</text>
+        <text x="504" y="178" font-size="10.5" fill="var(--muted)">теги: type:app, scope:content</text>
+
+        <rect x="702" y="88" width="196" height="96" rx="10" fill="var(--s2)" opacity="0.14"/>
+        <rect x="702" y="88" width="196" height="96" rx="10" fill="none" stroke="var(--s2)" stroke-width="2"/>
+        <text x="716" y="110" font-size="13" font-weight="700" fill="var(--ink)">task-runtime</text>
+        <text x="716" y="128" font-size="11" fill="var(--ink-2)">Go 1.27 · otel 1.46</text>
+        <text x="716" y="145" font-size="11" fill="var(--ink-2)">sandbox + hidden tests</text>
+        <text x="716" y="162" font-size="11" fill="var(--ink-2)">nx: run-commands + cache</text>
+        <text x="716" y="178" font-size="10.5" fill="var(--muted)">теги: type:app, scope:runtime</text>
+
+        <rect x="914" y="88" width="212" height="96" rx="10" fill="var(--s4)" opacity="0.14"/>
+        <rect x="914" y="88" width="212" height="96" rx="10" fill="none" stroke="var(--s4)" stroke-width="2"/>
+        <text x="928" y="110" font-size="13" font-weight="700" fill="var(--ink)">question-cms</text>
+        <text x="928" y="128" font-size="11" fill="var(--ink-2)">Payload 3.88 · Next 16 · TS 7</text>
+        <text x="928" y="145" font-size="11" fill="var(--ink-2)">переезд npm → pnpm</text>
+        <text x="928" y="162" font-size="11" fill="var(--ink-2)">редакторская поверхность</text>
+        <text x="928" y="178" font-size="10.5" fill="var(--muted)">теги: type:app, scope:content</text>
+      </g>
+
+      <!-- allowed edges apps->libs -->
+      <g stroke="var(--axis)" stroke-width="1.6" fill="none" marker-end="url(#ar2)">
+        <path d="M140,184 L140,236"/>
+        <path d="M368,184 L368,236"/>
+        <path d="M588,184 C588,210 588,220 588,236"/>
+        <path d="M800,184 C800,210 800,220 800,236"/>
+        <path d="M1020,184 L1020,236"/>
+      </g>
+
+      <!-- contracts band -->
+      <text x="34" y="228" font-size="12" font-weight="700" fill="var(--muted)">libs/contracts/ — единственный разрешённый канал между доменами и между сервисами</text>
+      <g>
+        <rect x="34" y="240" width="1092" height="72" rx="10" fill="var(--surface-2)" stroke="var(--s1)" stroke-width="2"/>
+        <text x="48" y="262" font-size="12.5" font-weight="700" fill="var(--ink)">contracts/http-learner · contracts/question-brain.v1 · contracts/task-runtime.v1 · contracts/capability-mastery.v1</text>
+        <text x="48" y="281" font-size="11.5" fill="var(--ink-2)">zod-схемы + сгенерированные типы; сегодня то же самое разъехалось по <tspan font-family="ui-monospace, Menlo, monospace">libs/lab-contracts</tspan> (Lab), <tspan font-family="ui-monospace, Menlo, monospace">packages/contracts</tspan> (Vue, 1 684 строки) и <tspan font-family="ui-monospace, Menlo, monospace">docs/contracts/*.schema.json</tspan></text>
+        <text x="48" y="300" font-size="11" fill="var(--muted)">теги: type:util, boundary:pure — внешних импортов ноль, поэтому контракт не может утащить за собой рантайм</text>
+      </g>
+
+      <!-- domain libs -->
+      <text x="34" y="340" font-size="12" font-weight="700" fill="var(--muted)">libs/domain/ — то, что сегодня лежит в одном AppModule</text>
+      <g font-size="11.5">
+        <rect x="34" y="352" width="176" height="84" rx="9" fill="var(--s1)" opacity="0.10"/>
+        <rect x="34" y="352" width="176" height="84" rx="9" fill="none" stroke="var(--s1)" stroke-width="1.5"/>
+        <text x="46" y="373" font-weight="700" fill="var(--ink)">curriculum</text>
+        <text x="46" y="391" fill="var(--ink-2)">curriculum-graph, program,</text>
+        <text x="46" y="407" fill="var(--ink-2)">published-projection</text>
+        <text x="46" y="426" fill="var(--muted)" font-size="10.5">domain:curriculum</text>
+
+        <rect x="222" y="352" width="176" height="84" rx="9" fill="var(--s1)" opacity="0.10"/>
+        <rect x="222" y="352" width="176" height="84" rx="9" fill="none" stroke="var(--s1)" stroke-width="1.5"/>
+        <text x="234" y="373" font-weight="700" fill="var(--ink)">practice</text>
+        <text x="234" y="391" fill="var(--ink-2)">practice, capability-session,</text>
+        <text x="234" y="407" fill="var(--ink-2)">domains/* (7 ассессоров)</text>
+        <text x="234" y="426" fill="var(--muted)" font-size="10.5">domain:practice</text>
+
+        <rect x="410" y="352" width="176" height="84" rx="9" fill="var(--s1)" opacity="0.10"/>
+        <rect x="410" y="352" width="176" height="84" rx="9" fill="none" stroke="var(--s1)" stroke-width="1.5"/>
+        <text x="422" y="373" font-weight="700" fill="var(--ink)">project-book</text>
+        <text x="422" y="391" fill="var(--good-ink)" font-weight="650">14 клеток → 1 модуль</text>
+        <text x="422" y="407" fill="var(--ink-2)">kind × facet — параметры</text>
+        <text x="422" y="426" fill="var(--muted)" font-size="10.5">domain:project-book</text>
+
+        <rect x="598" y="352" width="176" height="84" rx="9" fill="var(--s1)" opacity="0.10"/>
+        <rect x="598" y="352" width="176" height="84" rx="9" fill="none" stroke="var(--s1)" stroke-width="1.5"/>
+        <text x="610" y="373" font-weight="700" fill="var(--ink)">progress</text>
+        <text x="610" y="391" fill="var(--ink-2)">progress, recall, readiness,</text>
+        <text x="610" y="407" fill="var(--ink-2)">evidence, tier1-final</text>
+        <text x="610" y="426" fill="var(--muted)" font-size="10.5">domain:progress</text>
+
+        <rect x="786" y="352" width="164" height="84" rx="9" fill="var(--s1)" opacity="0.10"/>
+        <rect x="786" y="352" width="164" height="84" rx="9" fill="none" stroke="var(--s1)" stroke-width="1.5"/>
+        <text x="798" y="373" font-weight="700" fill="var(--ink)">ai</text>
+        <text x="798" y="391" fill="var(--ink-2)">ai-companion, local-ai,</text>
+        <text x="798" y="407" fill="var(--ink-2)">ai-telemetry</text>
+        <text x="798" y="426" fill="var(--muted)" font-size="10.5">domain:ai</text>
+
+        <rect x="962" y="352" width="164" height="84" rx="9" fill="var(--s1)" opacity="0.10"/>
+        <rect x="962" y="352" width="164" height="84" rx="9" fill="none" stroke="var(--s1)" stroke-width="1.5"/>
+        <text x="974" y="373" font-weight="700" fill="var(--ink)">onboarding</text>
+        <text x="974" y="391" fill="var(--ink-2)">first-run, session,</text>
+        <text x="974" y="407" fill="var(--ink-2)">learner-route-context</text>
+        <text x="974" y="426" fill="var(--muted)" font-size="10.5">domain:onboarding</text>
+      </g>
+
+      <!-- forbidden edge -->
+      <g>
+        <path d="M210,394 L222,394" stroke="var(--critical)" stroke-width="2.5"/>
+        <path d="M398,394 L410,394" stroke="var(--critical)" stroke-width="2.5"/>
+        <path d="M586,394 L598,394" stroke="var(--critical)" stroke-width="2.5"/>
+        <g stroke="var(--critical)" stroke-width="2.5">
+          <path d="M212,388 L220,400"/><path d="M220,388 L212,400"/>
+          <path d="M400,388 L408,400"/><path d="M408,388 L400,400"/>
+          <path d="M588,388 L596,400"/><path d="M596,388 L588,400"/>
+        </g>
+        <text x="34" y="458" font-size="11.5" fill="var(--critical)" font-weight="650">✕ домен → домен запрещён правилом линтера. Общее — только через libs/contracts или libs/platform.</text>
+      </g>
+
+      <!-- integration + platform -->
+      <text x="34" y="492" font-size="12" font-weight="700" fill="var(--muted)">libs/integration/ и libs/platform/</text>
+      <g font-size="11.5">
+        <rect x="34" y="504" width="264" height="76" rx="9" fill="var(--s2)" opacity="0.10"/>
+        <rect x="34" y="504" width="264" height="76" rx="9" fill="none" stroke="var(--s2)" stroke-width="1.5"/>
+        <text x="46" y="525" font-weight="700" fill="var(--ink)">integration/question-brain</text>
+        <text x="46" y="543" fill="var(--ink-2)">HTTP-клиент + маппер к released projection</text>
+        <text x="46" y="560" fill="var(--ink-2)">единственный, кто знает про :48127</text>
+        <text x="46" y="576" fill="var(--muted)" font-size="10.5">integration:brain</text>
+
+        <rect x="310" y="504" width="264" height="76" rx="9" fill="var(--s2)" opacity="0.10"/>
+        <rect x="310" y="504" width="264" height="76" rx="9" fill="none" stroke="var(--s2)" stroke-width="1.5"/>
+        <text x="322" y="525" font-weight="700" fill="var(--ink)">integration/task-runtime</text>
+        <text x="322" y="543" fill="var(--ink-2)">версионированный runtime-контракт</text>
+        <text x="322" y="560" fill="var(--ink-2)">единственный, кто знает про :48227</text>
+        <text x="322" y="576" fill="var(--muted)" font-size="10.5">integration:runtime</text>
+
+        <rect x="586" y="504" width="172" height="76" rx="9" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1.5"/>
+        <text x="598" y="525" font-weight="700" fill="var(--ink)">platform/persistence</text>
+        <text x="598" y="543" fill="var(--ink-2)">pg-пул, токены, миграции</text>
+        <text x="598" y="560" fill="var(--ink-2)">репозитории по домену</text>
+        <text x="598" y="576" fill="var(--muted)" font-size="10.5">type:util</text>
+
+        <rect x="770" y="504" width="172" height="76" rx="9" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1.5"/>
+        <text x="782" y="525" font-weight="700" fill="var(--ink)">platform/observability</text>
+        <text x="782" y="543" fill="var(--ink-2)">otel, pino, prom-client</text>
+        <text x="782" y="560" fill="var(--ink-2)">уже есть, без изменений</text>
+        <text x="782" y="576" fill="var(--muted)" font-size="10.5">type:util</text>
+
+        <rect x="954" y="504" width="172" height="76" rx="9" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1.5"/>
+        <text x="966" y="525" font-weight="700" fill="var(--ink)">platform/kernel</text>
+        <text x="966" y="543" fill="var(--ink-2)">lab-registry, port-conform.,</text>
+        <text x="966" y="560" fill="var(--ink-2)">policies, error-taxonomy</text>
+        <text x="966" y="576" fill="var(--muted)" font-size="10.5">type:util</text>
+      </g>
+
+      <!-- ui libs -->
+      <text x="34" y="614" font-size="12" font-weight="700" fill="var(--muted)">libs/ui/ — единственный владелец визуального слоя</text>
+      <g font-size="11.5">
+        <rect x="34" y="626" width="264" height="76" rx="9" fill="var(--s3)" opacity="0.12"/>
+        <rect x="34" y="626" width="264" height="76" rx="9" fill="none" stroke="var(--s3)" stroke-width="1.5"/>
+        <text x="46" y="647" font-weight="700" fill="var(--ink)">ui/design-tokens</text>
+        <text x="46" y="665" fill="var(--good-ink)" font-weight="650">tokens.css переносится 1:1</text>
+        <text x="46" y="682" fill="var(--ink-2)">116 токенов · 0 правок · гейт остаётся</text>
+        <text x="46" y="698" fill="var(--muted)" font-size="10.5">type:util, boundary:pure</text>
+
+        <rect x="310" y="626" width="264" height="76" rx="9" fill="var(--s3)" opacity="0.12"/>
+        <rect x="310" y="626" width="264" height="76" rx="9" fill="none" stroke="var(--s3)" stroke-width="1.5"/>
+        <text x="322" y="647" font-weight="700" fill="var(--ink)">ui/kit</text>
+        <text x="322" y="665" fill="var(--ink-2)">6 примитивов: Badge, Button, Card,</text>
+        <text x="322" y="682" fill="var(--ink-2)">Dialog, Icon, RuntimePicker → React</text>
+        <text x="322" y="698" fill="var(--muted)" font-size="10.5">type:ui</text>
+
+        <rect x="586" y="626" width="264" height="76" rx="9" fill="var(--s3)" opacity="0.12"/>
+        <rect x="586" y="626" width="264" height="76" rx="9" fill="none" stroke="var(--s3)" stroke-width="1.5"/>
+        <text x="598" y="647" font-weight="700" fill="var(--ink)">ui/client-only</text>
+        <text x="598" y="665" fill="var(--serious)" font-weight="650">CodeMirror · xterm · canvas-графы</text>
+        <text x="598" y="682" fill="var(--ink-2)">обёртки dynamic(ssr:false) в одном месте</text>
+        <text x="598" y="698" fill="var(--muted)" font-size="10.5">type:ui</text>
+
+        <rect x="862" y="626" width="264" height="76" rx="9" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1.5"/>
+        <text x="874" y="647" font-weight="700" fill="var(--ink)">ui/api-client</text>
+        <text x="874" y="665" fill="var(--ink-2)">889 строк одного файла →</text>
+        <text x="874" y="682" fill="var(--ink-2)">срезы по домену, поверх contracts</text>
+        <text x="874" y="698" fill="var(--muted)" font-size="10.5">type:util</text>
+      </g>
+
+      <!-- content mirror -->
+      <g>
+        <rect x="34" y="718" width="540" height="50" rx="9" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="46" y="738" font-size="12" font-weight="700" fill="var(--ink)">content/question-vault/ — зеркало Obsidian, отдельная папка, не проект Nx</text>
+        <text x="46" y="756" font-size="11" fill="var(--ink-2)">«learner API не читает vault напрямую» становится правилом границ, а не договорённостью</text>
+      </g>
+      <g>
+        <rect x="586" y="718" width="540" height="50" rx="9" fill="var(--surface)" stroke="var(--good)" stroke-width="1.5"/>
+        <text x="598" y="738" font-size="12" font-weight="700" fill="var(--ink)">один CI: nx affected -t lint test build + контрактные гейты umbrella</text>
+        <text x="598" y="756" font-size="11" fill="var(--ink-2)">то, чего нет ни в одном из шести workflow: проверка системы целиком в каждом PR</text>
+      </g>
+
+      <text x="34" y="806" font-size="11.5" fill="var(--ink-2)">Что <tspan font-weight="700">не</tspan> меняется: пять раздельно деплоимых процессов, три Compose-проекта, порты из <tspan font-family="ui-monospace, Menlo, monospace">workspace.yaml</tspan>, «ни одна БД не делится», Vault — не рантайм.</text>
+      <text x="34" y="828" font-size="11.5" fill="var(--ink-2)">Что меняется: механизм принуждения. Сегодня границу держит <tspan font-weight="700">отдельный remote</tspan>. После слияния — <tspan font-weight="700">теги Nx + линтер в CI</tspan>. Без второго первое исчезает.</text>
+    </svg>
+  </figure>
+
+  <div class="card">
+    <h4 style="margin-top:0">Ключевой обмен, который нужно принять осознанно</h4>
+    <p>Сегодня фраза из <code>AGENTS.md</code> «Do not share PostgreSQL tables, ORM entities, local catalogues, or fallback data between repositories» защищена <b>физически</b>: чтобы нарушить её, нужно опубликовать пакет. После слияния нарушить её можно одной строкой <code>import</code>. Поэтому монорепо без <b>работающего в CI</b> <code>@nx/enforce-module-boundaries</code> — это шаг назад.</p>
+    <p style="margin-bottom:0">Хорошая новость: правила уже написаны и работают в Lab. Задача — не изобрести их, а распространить: раздать теги всем новым проектам, добавить <code>depConstraints</code> для <code>domain:*</code> и <code>integration:*</code>, и сделать <code>nx affected -t lint</code> обязательной проверкой PR.</p>
+  </div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="deps">
+  <h2><span class="num">07</span>Зависимости: что устарело</h2>
+  <p class="lede">124 объявления зависимостей, 95 уникальных пакетов, сверены с npm-реестром 28.08.2026. Плюс два Go-модуля, сверенные с <code>proxy.golang.org</code>.</p>
+
+  <figure class="figure">
+    <figcaption><b>Рис. 6.</b> Свежесть npm-зависимостей по объявлениям (<code>dependencies</code> + <code>devDependencies</code> во всех девяти манифестах).</figcaption>
+    <svg viewBox="0 0 620 170" width="100%" role="img" aria-label="Свежесть зависимостей: 72 актуальны, 38 отстают на minor или patch, 14 отстают на major">
+      <line x1="230" y1="10" x2="230" y2="130" stroke="var(--grid)"/>
+      <g class="bar">
+        <rect x="230" y="18" width="290" height="26" rx="4" fill="var(--good)"><title>72 объявления на актуальной версии</title></rect>
+        <rect x="230" y="58" width="153" height="26" rx="4" fill="var(--warning)"><title>38 объявлений отстают на minor или patch</title></rect>
+        <rect x="230" y="98" width="56"  height="26" rx="4" fill="var(--critical)"><title>14 объявлений отстают на major (12 уникальных пакетов)</title></rect>
+      </g>
+      <g font-size="12.5" fill="var(--ink-2)" text-anchor="end">
+        <text x="220" y="36">на актуальной версии</text>
+        <text x="220" y="76">отстают на minor / patch</text>
+        <text x="220" y="116">отстают на major</text>
+      </g>
+      <g font-size="13" font-weight="660" font-variant-numeric="tabular-nums">
+        <text x="528" y="37" fill="var(--ink)">72</text>
+        <text x="391" y="77" fill="var(--ink)">38</text>
+        <text x="294" y="117" fill="var(--ink)">14</text>
+      </g>
+      <line x1="230" y1="130" x2="520" y2="130" stroke="var(--axis)"/>
+      <text x="230" y="150" font-size="11" fill="var(--muted)">0 объявлений</text>
+      <text x="520" y="150" font-size="11" fill="var(--muted)" text-anchor="end">124 всего</text>
+    </svg>
+    <p class="fignote">58 % объявлений уже на последней версии — для платформы этого размера это хороший результат. Ни одно из 14 major-отставаний не является тупиком.</p>
+  </figure>
+
+  <h3>Все major-отставания, с решением по каждому</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:22%">Пакет</th><th style="width:9%">Где</th><th class="num" style="width:9%">Сейчас</th><th class="num" style="width:9%">Последняя</th><th>Что делать</th></tr></thead>
+    <tbody>
+      <tr><td><code>typescript</code></td><td>lab</td><td class="num">~6.0.3</td><td class="num"><b>7.0.2</b></td><td>Обновить. Проверено эмпирически: 0 ошибок, DI-метаданные совпадают побайтово. См. <a href="#ts7">раздел 08</a>.</td></tr>
+      <tr><td><code>typescript</code></td><td>vue</td><td class="num">6.0.3</td><td class="num"><b>7.0.2</b></td><td>Отложить до перевода на Next: сейчас typecheck идёт через <code>vue-tsc 3.3.11</code>, а он потребляет TS Compiler API, который в 7.x переехал в <code>typescript/unstable/*</code>. Заявленный peer — <code>&gt;=5.0.0</code>, но это не проверено спайком. После перехода на Next <code>vue-tsc</code> исчезает вместе с проблемой.</td></tr>
+      <tr><td><code>@nestjs/common</code>, <code>core</code>, <code>platform-express</code>, <code>testing</code></td><td>lab</td><td class="num">^11</td><td class="num"><b>12.0.1</b></td><td>Обновить все четыре одним шагом. <code>engines: node &gt;= 20</code> (у нас 26), peer <code>rxjs ^7.1</code> (у нас 7.8), <code>reflect-metadata ^0.2</code> — всё сходится. Перед мержем прочитать CHANGELOG 11→12 на breaking changes: список не проверялся в этом аудите.</td></tr>
+      <tr><td><code>eslint</code> + <code>@eslint/js</code></td><td>lab</td><td class="num">^9.8</td><td class="num"><b>10.9.1</b></td><td>Обновить. Vue-репозиторий уже на ESLint 10.9.1 — можно взять его конфиг как образец, это внутренний прецедент.</td></tr>
+      <tr><td><code>@types/node</code></td><td>lab</td><td class="num">^22</td><td class="num"><b>26.4.0</b></td><td>Обновить обязательно: <code>engines.node = 26.7.0</code>, а типы описывают Node 22. Расхождение на 4 мажора.</td></tr>
+      <tr><td><code>@types/node</code></td><td>vue</td><td class="num">24.3.0</td><td class="num"><b>26.4.0</b></td><td>Выровнять на 26.x во всех трёх местах (lab, vue, cms) — одна версия на платформу.</td></tr>
+      <tr><td><code>webpack-dev-server</code></td><td>lab</td><td class="num">^5.2.1</td><td class="num"><b>6.0.0</b></td><td>Низкий приоритет: dev-сервер Nest не используется в продакшене. Обновить вместе с Nx.</td></tr>
+      <tr><td><code>jsdom</code></td><td>lab</td><td class="num">^27.1</td><td class="num"><b>30.0.1</b></td><td>Только тесты. Обновить и прогнать 664 теста.</td></tr>
+      <tr><td><code>eslint-plugin-playwright</code></td><td>lab</td><td class="num">^1.6.2</td><td class="num"><b>2.11.0</b></td><td>Обновить вместе с ESLint 10.</td></tr>
+      <tr><td><code>jsonc-eslint-parser</code></td><td>lab</td><td class="num">^2.1</td><td class="num"><b>3.3.0</b></td><td>Обновить вместе с ESLint 10.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Go-модули</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:24%">Что</th><th class="num" style="width:14%">Question Brain</th><th class="num" style="width:14%">Task Runtime</th><th class="num" style="width:12%">Доступно</th><th>Комментарий</th></tr></thead>
+    <tbody>
+      <tr><td>Go</td><td class="num"><span class="pill major">1.23.0</span></td><td class="num">1.24.13</td><td class="num"><b>1.27.0</b></td><td>Brain отстал на 4 минорных релиза языка. Toolchain-директивы в Brain нет вообще.</td></tr>
+      <tr><td><code>go.opentelemetry.io/otel</code></td><td class="num"><span class="pill major">1.37.0</span></td><td class="num">1.41.0</td><td class="num"><b>1.46.0</b></td><td>Две части одной платформы шлют трейсы в один Jaeger с SDK, разошедшимися на 9 релизов.</td></tr>
+      <tr><td><code>jackc/pgx/v5</code></td><td class="num">5.7.6</td><td class="num">—</td><td class="num"><b>5.10.0</b></td><td>Минорное обновление, без смены мажора.</td></tr>
+      <tr><td><code>google.golang.org/grpc</code></td><td class="num">1.73.0</td><td class="num">1.79.1</td><td class="num"><b>1.83.2</b></td><td>Транзитивная, через otlp-экспортёр. Подтянется вместе с otel.</td></tr>
+      <tr><td><code>google.golang.org/protobuf</code></td><td class="num">1.36.6</td><td class="num">1.36.11</td><td class="num"><b>1.36.12</b></td><td>Транзитивная.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><b>Отдельная находка:</b> Go на машине не установлен вообще (<code>command not found: go</code>). Значит оба Go-сервиса сегодня можно собрать и прогнать только через Docker, и локальный <code>go vet</code> / <code>go test</code> недоступен. Для обновления до 1.27 это первый шаг.</p>
+
+  <h3>Ещё три вещи, которые стоит починить одним коммитом</h3>
+  <ul class="checks">
+    <li class="n"><b>Удалить мёртвое:</b> <code>codemirror</code>, <code>@xterm/xterm</code>, <code>@xterm/addon-fit</code> из <code>dependencies</code> Nest-сервера (0 использований) и <code>reka-ui</code> из <code>packages/ui</code> Vue (0 использований).</li>
+    <li class="w"><b>Починить phantom dependency:</b> <code>@xterm/*</code> объявлены в корне Vue-репозитория, а используются в <code>apps/web</code> — перенести объявление туда, где импорт.</li>
+    <li class="w"><b>Выровнять Nx:</b> девять пакетов <code>@nx/*</code> + <code>nx</code> закреплены на <code>23.1.0</code> при доступной <code>23.1.2</code> — обновлять только все вместе.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 8 -->
+<section id="ts7">
+  <h2><span class="num">08</span>TypeScript 7: что проверено эмпирически</h2>
+  <p class="lede">Это единственный раздел, где я не рассуждаю, а показываю результаты запусков. Главный риск перехода на TS 7 для Nest — не типы, а <b>эмиссия метаданных декораторов</b>: без <code>design:paramtypes</code> DI молча получает <code>undefined</code>, и это не ловится компилятором.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">Что такое TypeScript 7</h4>
+      <p>Нативный компилятор: пакет <code>typescript@7.0.2</code> весит 3,5 МБ и состоит из загрузчика плюс 21 платформенный бинарник (<code>@typescript/typescript-darwin-arm64</code> и т. д.). Программный API переехал в <code>typescript/unstable/*</code> — <b>это и есть источник всех рисков совместимости с инструментами</b>, а не сам язык.</p>
+      <p style="margin-bottom:0">CLI <code>tsc</code> при этом остался на месте и понимает существующие <code>tsconfig.json</code> без правок.</p>
+    </div>
+    <figure class="figure" style="margin:18px 0">
+      <figcaption><b>Рис. 7.</b> Полный typecheck learning-api (1 613 файлов), лучшее из двух прогонов, одна машина.</figcaption>
+      <svg viewBox="0 0 520 130" width="100%" role="img" aria-label="Typecheck: TypeScript 6.0.3 — 2,14 секунды; TypeScript 7.0.2 — 0,25 секунды">
+        <line x1="150" y1="10" x2="150" y2="92" stroke="var(--grid)"/>
+        <g class="bar">
+          <rect x="150" y="18" width="290" height="26" rx="4" fill="var(--s2)"><title>TypeScript 6.0.3: 2,14 с</title></rect>
+          <rect x="150" y="58" width="34"  height="26" rx="4" fill="var(--s1)"><title>TypeScript 7.0.2: 0,25 с</title></rect>
+        </g>
+        <g font-size="12.5" fill="var(--ink-2)" text-anchor="end">
+          <text x="140" y="36">TS 6.0.3</text>
+          <text x="140" y="76">TS 7.0.2</text>
+        </g>
+        <g font-size="13" font-weight="660" fill="var(--ink)" font-variant-numeric="tabular-nums">
+          <text x="448" y="37">2,14 с</text>
+          <text x="192" y="77">0,25 с</text>
+        </g>
+        <line x1="150" y1="92" x2="440" y2="92" stroke="var(--axis)"/>
+        <text x="150" y="112" font-size="11" fill="var(--muted)">0</text>
+        <text x="440" y="112" font-size="11" fill="var(--muted)" text-anchor="middle">ускорение 8,5×</text>
+      </svg>
+    </figure>
+  </div>
+
+  <h3>Четыре проведённых проверки</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:24%">Проверка</th><th style="width:16%">Результат</th><th>Как получено</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>1.</b> Эмиссия метаданных декораторов вообще работает</td>
+        <td><span class="pill ok">Да</span></td>
+        <td>Изолированный проект, <code>experimentalDecorators + emitDecoratorMetadata</code>. В выводе присутствует <code>__metadata("design:paramtypes", [Dep])</code> — то есть базовый механизм Nest DI на TS 7 жив.</td>
+      </tr>
+      <tr>
+        <td><b>2.</b> Реальный код проходит проверку типов</td>
+        <td><span class="pill ok">0 ошибок</span></td>
+        <td><code>tsc -p apps/learning-api/tsconfig.app.json --noEmit</code>. Одинаковый набор файлов у обоих компиляторов — <b>1 613</b> (сверено через <code>--listFiles</code>). Проверено, что компилятор не «молчит»: внедрённая ошибка <code>const x: number = "s"</code> корректно поймана как <code>TS2322</code>.</td>
+      </tr>
+      <tr>
+        <td><b>3.</b> DI-метаданные <i>идентичны</i> метаданным TS 6</td>
+        <td><span class="pill ok">0 расхождений</span></td>
+        <td>Реальная эмиссия обоими компиляторами в разные каталоги (по <b>569</b> <code>.js</code>-файлов), нормализация пробелов, сравнение всех вхождений <code>design:paramtypes</code>: <b>209 записей в 108 файлах, различий 0</b>. Число записей с <code>Object</code> тоже совпадает (26 и 26) — то есть TS 7 не привносит новых потерь типов. Это и был главный риск; он снят.</td>
+      </tr>
+      <tr>
+        <td><b>4.</b> Сколько стоит включить <code>strict: true</code></td>
+        <td><span class="pill minor">12 ошибок</span></td>
+        <td>Важная поправка к цифре «0 ошибок»: она получена при <code>strict: false</code> из <code>tsconfig.base.json</code>. С принудительным <code>--strict</code> прод-код даёт <b>тоже 0</b> ошибок (на обоих компиляторах), а <b>12</b> ошибок появляются только в тестовом проекте — в 3 spec-файлах, все вида <code>TS18047/18048</code> («possibly null/undefined»). То есть <code>strict: true</code> здесь не миграция, а полдня работы.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Единственный незакрытый вопрос по TS 7 — сборка, а не проверка</h4>
+    <p>Lab собирается через <code>@nx/webpack</code> с опцией <code>compiler: 'tsc'</code>, то есть плагин использует <b>программный API</b> TypeScript, который в 7.x переехал. Все четыре проверки выше сделаны через CLI и на webpack не переносятся.</p>
+    <p>Порядок действий, а не гадание:</p>
+    <ol style="margin:8px 0 0">
+      <li>Сначала перевести на TS 7 <b>только typecheck</b> (<code>tsc --noEmit</code> в CI и в редакторе) — это уже даёт 8,5× и ничего не ломает в сборке.</li>
+      <li>Сборку оставить на TS 6, пока <code>@nx/webpack</code> не подтвердит поддержку.</li>
+      <li>Кандидат на замену — <code>compiler: 'swc'</code> (опция поддерживается: в типах плагина значится <code>'babel' | 'swc' | 'tsc'</code>, а <code>@swc/helpers</code> уже в зависимостях). Но <b>swc реализует <code>decoratorMetadata</code> сам</b>, со своими краевыми случаями элизии типов. Поэтому это кандидат <i>с гейтом</i>, а не безопасная замена: перед переключением прогнать то же сравнение <code>design:paramtypes</code> против вывода swc и требовать 0 расхождений на 209 записях.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================================ 9 -->
+<section id="nest">
+  <h2><span class="num">09</span>Nest 12, Node и инструментарий</h2>
+  <p class="lede">Вопрос «есть ли Nest, который живёт с TypeScript 7» имеет ответ «да», и совместимость не упирается в Nest — она упирается в webpack-плагин Nx (см. выше).</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:26%">Компонент</th><th class="num" style="width:12%">Сейчас</th><th class="num" style="width:12%">Цель</th><th>Что проверено</th></tr></thead>
+    <tbody>
+      <tr><td>NestJS</td><td class="num">11.x</td><td class="num">12.0.1</td><td>Peer-зависимости 12.0.1 совместимы с текущим стеком: <code>rxjs ^7.1.0</code> (есть 7.8), <code>reflect-metadata ^0.1.12 || ^0.2.0</code> (есть 0.2), <code>engines: node &gt;= 20</code> (есть 26). <code>@nestjs/cli</code> тоже 12.0.0.</td></tr>
+      <tr><td>Node.js</td><td class="num">26.7.0</td><td class="num">26.7.0</td><td>Уже актуален и зафиксирован в <code>engines</code>. Next 16 требует <code>&gt;=20.9.0</code>, Nest 12 — <code>&gt;=20</code>: обе цели ниже текущей планки.</td></tr>
+      <tr><td>pnpm</td><td class="num">11.20.0</td><td class="num">11.20.0</td><td>Одинаков в umbrella, Lab и Vue. При слиянии станет единственным package manager'ом — CMS придётся снять с <code>package-lock.json</code>.</td></tr>
+      <tr><td>Nx</td><td class="num">23.1.0</td><td class="num">23.1.2</td><td>Патч. Важнее версии то, что граф после слияния наполнится проектами: сейчас их 4.</td></tr>
+      <tr><td>Jest / Vitest</td><td class="num">30.3 / 4.0.8</td><td class="num">30.5 / 4.1.11</td><td>Патчи. В Lab одновременно объявлены и Jest, и Vitest — стоит решить, кто из них здесь основной, а не держать оба.</td></tr>
+      <tr><td>Playwright</td><td class="num">1.37 (lab) / 1.62.1 (vue)</td><td class="num">1.62.1</td><td>Lab отстал на 25 минорных версий. Выровнять на версию Vue.</td></tr>
+      <tr><td>tsconfig <code>target</code></td><td class="num">es2015 / es2021</td><td class="num">es2023+</td><td><code>tsconfig.base.json</code> заявляет <code>es2015</code>, разрешённый конфиг приложения даёт <code>es2021</code> — на Node 26 это заведомо заниженная планка, лишний даунлевелинг в каждом файле.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============================================================ 10 -->
+<section id="go">
+  <h2><span class="num">10</span>Go-сервисы</h2>
+  <p class="lede">Здесь всё просто: Task Runtime ухожен, Question Brain отстал, и разрыв между ними важнее абсолютного отставания.</p>
+  <ul class="checks">
+    <li class="n"><b>Question Brain:</b> <code>go 1.23.0</code> без директивы <code>toolchain</code>, otel 1.37, pgx 5.7.6, grpc 1.73. Обновить до <code>go 1.27</code> + <code>toolchain go1.27.0</code>, otel 1.46, pgx 5.10.</li>
+    <li class="w"><b>Task Runtime:</b> <code>go 1.24.13</code>, otel 1.41 — тоже обновить до 1.27 / 1.46, но это уже гигиена, а не долг.</li>
+    <li class="n"><b>Разные версии otel SDK в одной трассе.</b> Оба сервиса пишут в один Jaeger (<code>:56686</code>) через один коллектор (<code>:54317/:54318</code>) с SDK, разошедшимися на 9 релизов. Выровнять — условие достоверности сквозных трейсов.</li>
+    <li class="w"><b>Go не установлен на машине.</b> Локально доступен только Docker-путь; <code>go vet</code>, <code>go test</code>, <code>gofmt</code> из CI-workflow локально не воспроизводимы. Установка Go 1.27 — нулевой шаг этой фазы.</li>
+    <li class="y"><b>Зависимостей мало и они правильные.</b> В обоих модулях прямых зависимостей 4–5: otel + pgx. Никакого веб-фреймворка, никакого ORM — то есть обновление здесь дёшево по определению.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 11 -->
+<section id="langs">
+  <h2><span class="num">11</span>Языки исполнения и образы задач</h2>
+  <p class="lede">Вы спросили про «несколько языков программирования». Кроме двух языков самой платформы (TypeScript и Go) продукт <b>исполняет учебный код в пяти рантаймах</b> внутри песочниц Task Runtime. Это отдельная поверхность зависимостей, и она отстаёт сильнее, чем сама платформа.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:14%">Песочница</th><th style="width:21%">Базовый образ сейчас</th><th style="width:16%">Актуальный</th><th style="width:11%">Отставание</th><th>Комментарий</th></tr></thead>
+    <tbody>
+      <tr><td><b>Node.js</b></td><td><code>node:24-slim</code></td><td><code>node:26-slim</code></td><td><span class="pill major">2 мажора</span></td><td>Самое важное расхождение: платформа объявляет <code>engines.node = 26.7.0</code>, а учащийся пишет и запускает код на Node 24. Node-задач больше всех.</td></tr>
+      <tr><td><b>Go</b></td><td><code>golang:1.24-bookworm</code></td><td><code>golang:1.27-bookworm</code></td><td><span class="pill minor">3 минора</span></td><td>Ровно та же версия, что и в самом Task Runtime — обновлять их вместе в Ф3.</td></tr>
+      <tr><td><b>Java</b></td><td><code>eclipse-temurin:21-jdk</code></td><td><code>eclipse-temurin:25-jdk</code></td><td><span class="pill major">1 LTS</span></td><td>21 — предыдущий LTS. По данным Adoptium актуальный LTS — 25 (доступные: 8, 11, 17, 21, 25).</td></tr>
+      <tr><td><b>.NET</b></td><td><code>dotnet/sdk:10.0</code></td><td><code>10.0</code></td><td><span class="pill ok">актуален</span></td><td>По <code>releases-index.json</code> канал 10.0 — <code>active</code> / <code>lts</code>, а 11.0 пока <code>preview</code>. Здесь делать нечего.</td></tr>
+      <tr><td><b>PostgreSQL</b> (задачи)</td><td><code>postgres:17</code></td><td><code>postgres:18</code></td><td><span class="pill minor">1 мажор</span></td><td>SQL-задач в дескрипторах много (~20 упоминаний). Обновлять вместе с расхождением по БД ниже.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <ul class="checks">
+    <li class="y"><b>Дисциплина образов образцовая.</b> Все пять песочниц закреплены по <b>digest</b> в <code>task-images/manifest.json</code>, а не по тегу, и это проверяется гейтом: <code>pnpm runtime:images:check:static</code> → «5 immutable references verified (20 task descriptors)». Обновление версий здесь — управляемая операция, а не сюрприз.</li>
+    <li class="n"><b>Расхождение по PostgreSQL внутри одной платформы.</b> Lab работает на <code>pgvector/pgvector:pg17</code>, Question Brain — на <code>pgvector/pgvector:0.8.6-pg18</code>, песочница задач — на <code>postgres:17</code>. <b>Два мажора Postgres в одном продукте</b> плюс третий образ для задач.</li>
+    <li class="n"><b>Образы наблюдаемости отстали заметнее всего.</b> Grafana <code>11.5.1</code> при актуальной <code>13.2.0</code> (<b>два мажора</b>), Prometheus <code>v3.1.0</code> при <code>v3.14.0</code>, Loki и Promtail <code>3.3.2</code> при <code>3.7.7</code>. Все digest-pinned, то есть обновление предсказуемо. Redis <code>7-alpine</code>, Kafka <code>4.1.0</code>, Jaeger <code>2.20.0</code> — в этом аудите не сверялись.</li>
+    <li class="w"><b>Асимметрия редактора и песочниц.</b> Редактор подключает подсветку <b>шести</b> языков: <code>@codemirror/lang-cpp</code>, <code>lang-go</code>, <code>lang-java</code>, <code>lang-javascript</code>, <code>lang-sql</code>, <code>@replit/codemirror-lang-csharp</code>. Песочниц пять, и <b>C++ среди них нет</b> (в дескрипторах задач 0 упоминаний C++, как и Python). Подсветка C++ есть, исполнить C++ нельзя. Это не баг, а незакрытая ветка: либо убрать <code>lang-cpp</code> из бандла (он всё равно едет в initial bundle учащегося), либо добавить шестую песочницу.</li>
+    <li class="y"><b>Что делать:</b> песочницы — в Ф3, вместе с Go. Образы наблюдаемости — в Ф0, отдельным коммитом. Выравнивание Postgres на один мажор — отдельная задача с миграцией данных, а не «bump тега».</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 12 -->
+<section id="next">
+  <h2><span class="num">12</span>Vue → Next.js 16</h2>
+  <p class="lede"><span class="pill owner">decision gate · не исполнять автоматически</span> Эта глава сохраняет ранее сформулированный сценарий и его цену, но не является текущей рекомендацией аудита. Технической необходимости нет: Vue-стек — самый здоровый участок платформы (<code>strict: true</code>, Vite 8, ESLint 10, дисциплинированные токены). До повторного подтверждения владельца целевая платформа остаётся Vue.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">Дёшево (и это прямой ответ на «скопировать правильно»)</h4>
+      <ul class="checks">
+        <li class="y"><code>packages/design-tokens/tokens.css</code> — <b>297 строк чистых CSS custom properties</b>, 116 токенов, 49 обязательных ролей, 0 raw-цветов. Переносится <b>без единой правки</b>: React читает те же <code>var(--fel-*)</code>. Гейт <code>pnpm design:tokens:check</code> продолжает работать после смены пути в скрипте.</li>
+        <li class="y">Tailwind 4 остаётся Tailwind 4: меняется только адаптер — <code>@tailwindcss/vite</code> → <code>@tailwindcss/postcss</code>. Директива <code>@import "tailwindcss"</code> и блок <code>@theme inline</code> внутри <code>tokens.css</code> не меняются.</li>
+        <li class="y">Глобальные стили — <code>apps/web/src/styles.css</code>, <b>30 строк</b>. <code>App.vue</code> — <b>10 строк</b>. Оболочка приложения фактически пуста, вся структура в <code>FelShell.vue</code>.</li>
+        <li class="y">Состояние: <b>один</b> Pinia-store (<code>preferences.ts</code>). Данные идут через <code>@tanstack/vue-query</code> → замена на <code>@tanstack/react-query</code> той же мажорной линии 5.x, API запросов совпадает.</li>
+        <li class="y">Контракты и клиент — <b>уже фреймворк-независимые</b>: <code>packages/contracts</code> (zod 4.4.3) и <code>packages/api-client</code> (fetch, один <code>baseUrl</code>) переносятся как есть. Это ~2 570 строк, которые не нужно переписывать.</li>
+        <li class="y"><code>reka-ui</code> заявлена, но <b>не используется ни разу</b> — то есть проблемы «нет React-аналога Vue-примитивов» не существует. 6 компонентов <code>packages/ui</code> написаны вручную и переписываются вручную.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">Дорого (и об этом лучше знать заранее)</h4>
+      <ul class="checks">
+        <li class="n"><b>DOM-only библиотеки — это архитектурное изменение, а не перенос шаблона.</b> 8 пакетов <code>@codemirror/*</code> + <code>codemirror</code> + <code>@xterm/xterm</code> + <code>@xterm/addon-fit</code> не работают при SSR. Потребители — <code>FelCodeEditor.vue</code>, <code>FelTerminal.vue</code>, <code>FelTraceCanvas.vue</code>, <code>FelRouteGraph.vue</code>. Каждый требует <code>'use client'</code> + <code>dynamic(..., { ssr: false })</code>. Правильное место — одна библиотека <code>libs/ui/client-only</code>, а не четыре разрозненных обёртки.</li>
+        <li class="n"><b>Крупные view придётся именно переписывать.</b> <code>EventLoopLabView.vue</code> — 1 336 строк, <code>FelAtlasInspector.vue</code> — 945, <code>FelShell.vue</code> — 912, <code>WorkspaceLabView.vue</code> — 865. Это не разметка, это интерактивные лаборатории; автоматического пути нет.</li>
+        <li class="w"><b>Сетка безопасности есть, но её надо доработать.</b> 54 e2e-теста Playwright на ~38 маршрутов — готовая приёмка Next-версии. Но они написаны против <code>baseURL: http://localhost:47350</code> и местами против конкретной разметки Vue, поэтому часть селекторов придётся переписать. Чего не хватает совсем — компонентных тестов: 0 на 38 <code>.vue</code>, то есть при переписывании 24 view поведение отдельного компонента проверять нечем.</li>
+        <li class="w"><b>Решение о модели доставки — на уровне workspace, а не фронтенда.</b> Сегодня это Vite SPA, которую отдаёт лаунчер Lab (dev <code>:47350</code>, packaged <code>:49300</code>). Варианты: (а) <code>output: 'export'</code> — статика, текущая модель доставки цела, но и половина смысла Next теряется; (б) отдельный Node-процесс Next — появляется новый порт, запись в <code>workspace.yaml</code>, правки в <code>scripts/up.sh</code>, <code>status.sh</code>, <code>ports.sh</code> и в <code>layout:check</code>. Выбрать до начала работ.</li>
+        <li class="w"><b>Прецедент CMS покрывает инструментарий, но не стили.</b> <code>apps/cms</code> действительно уже на Next 16.3.2 + React 19.2.8 + TS 7.0.2 — но это админка Payload: Tailwind там не используется, собственного UI-слоя нет. Значит проверенным считается только тулчейн-путь.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Карта переноса маршрутов</h3>
+  <p>37 записей роутера: 24 view-компонента, 7 редиректов, 1 catch-all восстановления, остальные — параметризованные варианты. Ложится на App Router почти механически, потому что структура уже иерархическая:</p>
+  <pre><code>apps/web/src/views/ProgramView.vue          →  app/(learner)/page.tsx
+apps/web/src/views/PracticeView.vue         →  app/(learner)/practice/page.tsx
+apps/web/src/views/QuestionsView.vue        →  app/(learner)/questions/page.tsx
+apps/web/src/views/QuestionDetailView.vue   →  app/(learner)/questions/[id]/page.tsx
+apps/web/src/views/LessonView.vue           →  app/(learner)/practice/lesson/[id]/page.tsx
+apps/web/src/views/WorkspaceLabView.vue     →  app/(learner)/lab/[labId]/page.tsx        + client-only
+apps/web/src/views/EventLoopLabView.vue     →  app/(learner)/lab/node-event-loop-001/…   + client-only
+apps/web/src/views/PathProjectionView.vue   →  app/(learner)/paths/[pathKey]/page.tsx
+apps/web/src/views/DomainProjectionView.vue →  app/(learner)/paths/[pathKey]/domains/[domainKey]/page.tsx
+apps/web/src/views/ProjectChapterView.vue   →  app/(learner)/projects/[bookId]/[chapter]/page.tsx
+apps/web/src/views/StudioBoundaryView.vue   →  app/(operator)/studio/[[...surface]]/page.tsx
+apps/web/src/views/RouteRecoveryView.vue    →  app/not-found.tsx
+7 редиректов (vue-router)                   →  redirects() в next.config.mjs — без кода</code></pre>
+  <p><b>Важное следствие для бэкенда:</b> <code>ProjectChapterView.vue</code> обслуживает все главы проекта одним компонентом через параметр <code>meta.chapterKind</code>. То есть фронтенд уже доказал, что 14 бэкендных клеток из <a href="#inside">раздела 04</a> — это одна параметризованная сущность. Порядок работ отсюда очевиден: <b>сначала обобщить бэкенд, потом переносить фронтенд</b>, иначе новый клиент унаследует 14 URL там, где нужен один.</p>
+</section>
+
+<!-- ============================================================ 12 -->
+<section id="mono">
+  <h2><span class="num">13</span>Монорепозиторий: механика переноса</h2>
+  <p class="lede"><span class="pill owner">decision gate · не исполнять автоматически</span> Слияние выполнимо с сохранением истории, но оно не требуется для декомпозиции Lab и сейчас противоречит действующему <code>AGENTS.md</code>. Ниже сохранён технический сценарий на случай явного подтверждения; безопасная базовая линия — пять independent repositories + единый orchestration CI.</p>
+
+  <h3>Четыре реальные развилки</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:26%">Развилка</th><th>Суть и решение</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Две несовместимые модели линковки внутри репозиториев</b></td>
+        <td>Lab: <code>pnpm-workspace.yaml</code> <b>без ключа <code>packages:</code></b> — его <code>@workspace/*</code> библиотеки резолвятся через <code>paths</code> в <code>tsconfig.base.json</code>. Vue: настоящие pnpm-workspaces (<code>apps/*</code>, <code>packages/*</code>, <code>workspace:*</code>). Слияние заставляет выбрать одну модель. Правильная — pnpm-workspaces (её же требует Nx для новых библиотек), значит библиотеки Lab превращаются в реальные пакеты, а это правка <b>каждого</b> path-алиаса (их в базовом конфиге около десятка, включая подпути вида <code>@workspace/lab-contracts/testing</code>). Отдельная задача роадмапа, а не побочный эффект.</td>
+      </tr>
+      <tr>
+        <td><b>Go в Nx — обёртка, а не нативная поддержка</b></td>
+        <td>Два Go-модуля подключаются целями <code>nx:run-commands</code> (<code>go build</code>, <code>go test</code>, <code>go vet</code>). Что вы получаете: кэш Nx, <code>nx affected</code>, единый вход в CI. Чего не получаете: понимание Nx графа импортов внутри Go-кода. Лучше сказать это сразу, чем обнаружить в процессе.</td>
+      </tr>
+      <tr>
+        <td><b>Три разных владельца remote</b></td>
+        <td>Три репозитория на организационном алиасе <code>github-woodbison</code> (<code>wood-bison/*</code>), <code>fluent-question-vault</code> — на <b>личном</b> аккаунте <code>szhechko</code>, у Vue remote нет вообще. После слияния остаётся один remote, а значит нужно решить, кому принадлежит объединённый репозиторий и что делать со старыми (архив, а не удаление). Это не техническая задача, но блокирующая.</td>
+      </tr>
+      <tr>
+        <td><b>Vue без remote — первый шаг, не последний</b></td>
+        <td>20 006 строк UI существуют в одной локальной копии. До слияния Vue нужно опубликовать хотя бы куда-нибудь: иначе история 20 % кодовой базы попадёт в монорепо без бэкапа, а «до» и «после» станет невозможно сравнить.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Порядок операций с сохранением истории</h3>
+  <pre><code># 0. Предусловия: у Vue появился remote; все пять деревьев чистые;
+#    зафиксирован снимок ревизий из workspace.yaml как точка отката.
+
+# 1. Новый корень (или текущий fluent-interview как основа истории)
+git switch -c monorepo/merge
+
+# 2. Каждый репозиторий втягивается поддеревом — вся история сохраняется
+git remote add lab      git@github-woodbison:wood-bison/ai-fluent-engineering-lab.git
+git subtree add --prefix=apps/learning-api-src   lab      main
+git subtree add --prefix=apps/question-brain     brain    main
+git subtree add --prefix=apps/task-runtime       runtime  main
+git subtree add --prefix=apps/learner-web        vue      main
+git subtree add --prefix=content/question-vault  vault    main
+
+# 3. Раскладка по целевой структуре (git mv — история файлов не теряется)
+#    apps/*  libs/contracts/*  libs/domain/*  libs/platform/*  libs/ui/*
+
+# 4. Один pnpm-workspace: packages: [apps/*, libs/**]
+#    Библиотеки Lab становятся настоящими пакетами; paths → workspace:*
+
+# 5. Nx: project.json для каждого проекта + теги.
+#    Go-проекты — цели nx:run-commands. Затем сразу проверить,
+#    что граф наполнился, а не остался из четырёх узлов:
+pnpm exec nx graph --file=graph.json
+
+# 6. Правила границ: депconstraints для domain:* / integration:* / boundary:pure
+#    и обязательный nx affected -t lint в CI. Без этого шага слияние = регресс.
+
+# 7. Один workflow вместо шести:
+#    nx affected -t lint test build  +  контрактные гейты umbrella
+#    (verify:schema, validation:matrix, design:tokens:check, release:verify)</code></pre>
+  <p class="fignote">Альтернатива <code>git subtree</code> — <code>git filter-repo</code> с переписыванием путей: чище результат, но переписанная история, что для пяти репозиториев с публикованными релизами хуже. <code>subtree</code> — консервативный выбор, и он здесь правильный.</p>
+
+  <h3>Что монорепо реально даёт (и чего не даёт)</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">Даёт</h4>
+      <ul class="checks">
+        <li class="y">Один <code>git clone</code> — прямо то, что вы просили.</li>
+        <li class="y"><b>Кросс-сервисный CI, которого сегодня нет ни в одном из шести workflow.</b> Контрактные гейты <code>verify:schema</code>, <code>validation:matrix</code>, <code>release:verify</code> начинают исполняться в каждом PR, а не вручную.</li>
+        <li class="y">Атомарный коммит на изменение контракта: сегодня правка HTTP-контракта Brain ↔ Lab — это два PR в двух репозиториях без общего гейта.</li>
+        <li class="y">Конец рассинхрону версий из находки №10: одна версия <code>@types/node</code>, TypeScript, Playwright на всю платформу — структурно, а не по договорённости.</li>
+        <li class="y"><code>nx affected</code> вместо «прогнать всё во всех репозиториях».</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">Не даёт (и это надо компенсировать)</h4>
+      <ul class="checks">
+        <li class="n"><b>Физическую невозможность нарушить границу.</b> Единственная замена — теги + линтер в CI. Это ядро сделки.</li>
+        <li class="n">Независимую релизную политику «из коробки»: сейчас у каждого репозитория своя. Понадобятся release-теги вида <code>question-brain@x.y.z</code> и правила, что именно собирается на каждый тег.</li>
+        <li class="w">Экономию на CI-времени по умолчанию: без корректных <code>inputs</code>/<code>outputs</code> в целях Nx кэш будет промахиваться, и один большой workflow станет медленнее шести маленьких.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 13 -->
+<section id="roadmap">
+  <h2><span class="num">14</span>Роадмап по фазам</h2>
+  <p class="lede">Ф0–Ф5.5 — рекомендуемая техническая линия, которая сохраняет текущие service boundaries. Ф6 и Ф7 — альтернативные стратегические ветки и не входят в разрешённый рефакторинг, пока владелец повторно не подтвердит их. Каждая фаза должна оставлять систему рабочей; оценки — порядок величины для одного разработчика.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:5%">Фаза</th><th style="width:22%">Что</th><th style="width:8%">Оценка</th><th style="width:11%">Риск</th><th>Приёмка</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="num">Ф0</td>
+        <td><b>Гигиена зависимостей.</b> Удалить 4 мёртвые зависимости, починить phantom dependency, поднять 38 minor/patch, выровнять <code>@types/node</code> на 26.x везде, Nx → 23.1.2, Playwright в Lab → 1.62.1. Отдельным коммитом — образы наблюдаемости (Grafana → 13.2, Prometheus → v3.14, Loki/Promtail → 3.7).</td>
+        <td>0,5–1 дн</td>
+        <td><span class="pill ok">низкий</span></td>
+        <td>664 теста зелёные; <code>pnpm release:verify:dev</code> — по-прежнему 58/58 (базовая линия снята в этом аудите, см. раздел 15).</td>
+      </tr>
+      <tr>
+        <td class="num">Ф1</td>
+        <td><b>TypeScript 7 на typecheck.</b> Lab: <code>tsc --noEmit</code> на 7.0.2 в CI и редакторе, сборка пока на 6.x. Включить <code>strict: true</code> (12 правок в 3 spec-файлах). Поднять <code>target</code> до es2023.</td>
+        <td>1–2 дн</td>
+        <td><span class="pill ok">низкий</span></td>
+        <td>0 ошибок типов; сравнение <code>design:paramtypes</code> «до/после» даёт 0 расхождений на 209 записях.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф2</td>
+        <td><b>Nest 11 → 12 и инструментарий Lab.</b> Четыре пакета Nest, ESLint 9 → 10 (по образцу Vue-конфига), <code>jsdom</code>, <code>webpack-dev-server</code>, <code>jsonc-eslint-parser</code>, <code>eslint-plugin-playwright</code>. Решить судьбу Jest vs Vitest.</td>
+        <td>2–3 дн</td>
+        <td><span class="pill minor">средний</span></td>
+        <td>Тесты зелёные; приложение поднимается; <code>pnpm observability:live</code> без регресса.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф3</td>
+        <td><b>Go 1.27 и песочницы задач.</b> Установить Go локально. Brain: 1.23 → 1.27, otel 1.37 → 1.46, pgx 5.10. Runtime: 1.24 → 1.27, otel → 1.46. Плюс образы песочниц: Node 24 → 26, Go 1.24 → 1.27, Java 21 → 25, Postgres 17 → 18 (.NET 10 не трогать) с перегенерацией digest-пинов.</td>
+        <td>1 дн</td>
+        <td><span class="pill ok">низкий</span></td>
+        <td><code>go vet</code>, <code>go test</code>, <code>gofmt</code> локально и в CI; сквозной трейс в Jaeger не разрывается; <code>pnpm runtime:images:check</code> подтверждает 5 новых digest.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф4</td>
+        <td><b>Доработка приёмочной сетки.</b> Существующие 54 e2e-теста (~38 маршрутов) привести к виду, независимому от разметки Vue: селекторы на <code>data-testid</code>, базовый URL параметром. Добить пробелы в покрытии по 37 маршрутам. Удалить пустой <code>tests/</code>.</td>
+        <td>1–2 дн</td>
+        <td><span class="pill ok">низкий</span></td>
+        <td>Набор проходит на Vue после переписывания селекторов (то есть он не сломался, а стал переносимым); каждый из 37 маршрутов покрыт.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф4.5</td>
+        <td><b>AssessmentPolicy и честная аналитика.</b> Зафиксировать authority/evidence по каждому ActivityKind; развести self-confidence, deterministic verdict, rubric verdict, human review и portfolio evidence. Recall grade перестаёт называться mastery; Run не закрывает capability; Submit привязан к immutable TaskRevision.</td>
+        <td>3–5 дн</td>
+        <td><span class="pill major">высокий</span></td>
+        <td>Контрактная матрица покрывает theory/interview/code/SQL/project; браузер не может прислать server verdict; LLM не unlock-ит; adversarial rubric corpus ловит keyword stuffing; analytics показывает confidence и verified mastery раздельно.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф5</td>
+        <td><b>Декомпозиция learning-api.</b> <code>project-book</code>: 14 клеток → 1 параметризованный модуль. AppModule: 106 импортов → ~8 доменных модулей. Разнос по <code>libs/domain/*</code>, <code>libs/integration/*</code>, <code>libs/platform/*</code> с тегами и правилами границ.</td>
+        <td>5–8 дн</td>
+        <td><span class="pill major">высокий</span></td>
+        <td>Nx-граф содержит ≥ 12 проектов, не 4; <code>nx affected -t lint</code> красный при попытке импорта домен → домен; все 101 эндпоинт отвечают как раньше (контрактные гейты).</td>
+      </tr>
+      <tr>
+        <td class="num">Ф5.5</td>
+        <td><b>Контракты и кэш.</b> Единая <code>libs/contracts</code> на zod как единственный источник; из неё TS-типы и JSON Schema → Go. <code>ZodValidationPipe</code> вместо class-validator. ETag на релизных проекциях + <code>GET /api/release</code>. Начать с домена Task Runtime (описан трижды).</td>
+        <td>3–5 дн</td>
+        <td><span class="pill minor">средний</span></td>
+        <td>Ни одного рукописного дубля контракта в выбранном домене; <code>git diff --exit-code</code> после генерации пустой; <code>verify:schema</code> расширен и зелёный; повторный GET проекции отдаёт <code>304</code>.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф6</td>
+        <td><b>Слияние в монорепозиторий.</b> <span class="pill owner">только после решения</span> Публикация Vue, <code>git subtree</code> ×5, единый pnpm-workspace, проекты Nx + теги, один CI с <code>nx affected</code>, CMS с npm на pnpm.</td>
+        <td>3–5 дн</td>
+        <td><span class="pill minor">средний</span></td>
+        <td><code>git log --follow</code> находит историю файлов всех пяти частей; <code>pnpm layout:check</code> и <code>release:verify</code> адаптированы и зелёные; один workflow заменил шесть.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф7</td>
+        <td><b>Vue → Next 16.</b> <span class="pill owner">только после решения</span> Токены 1:1, 6 примитивов и 24 view вручную, <code>libs/ui/client-only</code> для CodeMirror/xterm, выбранная модель доставки. Клиент API — <b>генерируемый</b> из Ф5.5, а не ещё одна рукописная копия. Подписка на изменения — SSE-канал.</td>
+        <td>8–13 дн</td>
+        <td><span class="pill major">высокий</span></td>
+        <td>Набор из Ф4 зелёный на Next-версии без правок сценариев; <code>design:tokens:check</code> зелёный; <code>performance:vue</code> заменён эквивалентным гейтом для Next.</td>
+      </tr>
+      <tr>
+        <td class="num">Ф8</td>
+        <td><b>TypeScript 7 на сборке.</b> Проверка поддержки TS 7 в <code>@nx/webpack</code>; при отсутствии — переход на <code>compiler: 'swc'</code> с гейтом на сравнение метаданных декораторов.</td>
+        <td>1–2 дн</td>
+        <td><span class="pill minor">средний</span></td>
+        <td>0 расхождений в 209 записях <code>design:paramtypes</code> против эталона TS 6; приложение поднимается и DI резолвится.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Почему именно такой порядок</h4>
+    <ul class="checks">
+      <li class="y"><b>Ф4 (тесты) строго до любой замены UI.</b> 54 e2e-теста уже есть, но пока они местами привязаны к разметке Vue. Сначала сделать их поведенческой спецификацией; это полезно и без миграции.</li>
+      <li class="y"><b>Ф4.5 до метрик и нового контента.</b> Иначе self-grade, server verdict и human review попадут в один счётчик, а позднее исправление разрушит историю прогресса.</li>
+      <li class="y"><b>Ф5 (декомпозиция) до Ф6 (слияние).</b> Резать монолит внутри одного знакомого репозитория проще, чем сразу после переезда: если что-то пойдёт не так, откат тривиален.</li>
+      <li class="y"><b>Ф5 до Ф7.</b> Иначе новый Next-клиент унаследует 14 URL для главы проекта там, где после обобщения нужен один.</li>
+      <li class="y"><b>Ф1 (typecheck) отделён от Ф8 (сборка).</b> 8,5× ускорения проверки типов забирается сразу и без риска; единственный неизвестный — webpack-плагин — изолирован в конец.</li>
+      <li class="y"><b>Ф5.5 (контракты) строго между Ф5 и Ф7.</b> Генерировать DTO из плоской кучи на 84 722 строки бессмысленно — значит после декомпозиции. Переписывать фронтенд, не имея генерируемого клиента, — значит добавить ещё одну рукописную копию контрактов — значит до Next.</li>
+    <li class="y"><b>ETag раньше SSE.</b> Условные запросы не требуют ни нового процесса, ни нового порта и уже дают корректность. SSE добавляет только мгновенность — и опирается на версионированные проекции из Ф5.</li>
+    <li class="w"><b>Ф0–Ф3 независимы друг от друга</b> и могут идти в любом порядке или параллельно. Начинать стоит с Ф0: она дёшева и сразу уменьшает поверхность остальных фаз.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ 14 -->
+<section id="risks">
+  <h2><span class="num">15</span>Риски и что может пойти не так</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:24%">Риск</th><th style="width:10%">Вероятность</th><th style="width:10%">Ущерб</th><th>Что делать</th></tr></thead>
+    <tbody>
+      <tr><td><code>@nx/webpack</code> не поддерживает TS 7 в режиме <code>compiler: 'tsc'</code></td><td>средняя</td><td>средний</td><td>Уже учтено разделением Ф1/Ф8: typecheck и сборка переезжают по отдельности. Сборка спокойно живёт на TS 6 сколько нужно.</td></tr>
+      <tr><td>swc эмитит метаданные декораторов иначе, чем tsc → DI ломается молча</td><td>средняя</td><td><b>высокий</b></td><td>Не переключать сборку без гейта: сравнение всех 209 записей <code>design:paramtypes</code> с эталоном TS 6, требование — 0 расхождений. Инструмент уже написан и применён в этом аудите.</td></tr>
+      <tr><td><code>vue-tsc</code> не работает с TS 7 → Vue-репозиторий остаётся на TS 6</td><td>высокая</td><td>низкий</td><td>Не связывать обновление всего продукта одним номером: оставить Vue на поддерживаемой TS 6.0.3, пока его официальный toolchain не готов. Это не причина менять framework.</td></tr>
+      <tr><td>Условная миграция Vue → Next теряет поведение, и это замечают позже</td><td>средняя</td><td><b>высокий</b></td><td>Только если Ф7 будет подтверждена: 54 e2e-теста на ~38 маршрутов превращаются в framework-neutral acceptance suite до миграции.</td></tr>
+      <tr><td>Поведение <i>отдельного компонента</i> ломается незаметно для e2e</td><td>средняя</td><td>средний</td><td>Компонентных тестов сейчас 0 на 38 <code>.vue</code>. Для 24 переписываемых view завести компонентные тесты по ходу Ф7, а не после.</td></tr>
+      <tr><td>После слияния кто-то импортирует домен из домена или таблицу из чужого сервиса</td><td><b>высокая</b> без правил</td><td><b>высокий</b></td><td><code>@nx/enforce-module-boundaries</code> с <code>depConstraints</code> для <code>domain:*</code>/<code>integration:*</code> и обязательный <code>nx affected -t lint</code> в PR. Правила уже существуют в Lab — вопрос распространения, не изобретения.</td></tr>
+      <tr><td>Декомпозиция AppModule ломает разрешение зависимостей Nest в рантайме</td><td>средняя</td><td>средний</td><td>Двигаться по одному домену за коммит, каждый раз прогоняя 664 теста и контрактные гейты. 45 контроллеров дают 45 естественных точек проверки.</td></tr>
+      <tr><td>Единый CI оказывается медленнее шести раздельных</td><td>средняя</td><td>низкий</td><td>Корректные <code>inputs</code>/<code>outputs</code> в целях Nx + удалённый кэш. Проверять на <code>nx affected</code> при точечном изменении: если пересобирается всё — кэш настроен неверно.</td></tr>
+      <tr><td>Выравнивание Postgres 17 → 18 ломает данные</td><td>средняя</td><td><b>высокий</b></td><td>Это не bump тега: <code>pg_upgrade</code> либо dump/restore, отдельно для durable-томов Lab и Brain, плюс совместимость расширения <code>pgvector</code>. Выносить в отдельную задачу с бэкапом тома, а не в фазу обновлений.</td></tr>
+      <tr><td>История Vue теряется при слиянии</td><td>низкая</td><td><b>высокий</b></td><td>Vue публикуется в remote <b>до</b> Ф6. Пока <code>remote: local-only</code>, любое слияние — операция без сети безопасности.</td></tr>
+      <tr><td>Объединённый репозиторий оказывается на личном аккаунте, а не в организации</td><td>средняя</td><td>средний</td><td>Решить владельца до Ф6: три из пяти репозиториев сейчас в <code>wood-bison</code>, один — на личном <code>szhechko</code>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ============================================================ 16 -->
+<section id="solvit">
+  <h2><span class="num">16</span>Solvit.space: разбор конкурента и что забирать</h2>
+  <p class="lede">Повторно разобрано 28.08.2026 по публичным страницам, публичным read-only API и загружаемому браузером Nuxt-коду. Фронтенд — Vue/Nuxt, Tailwind, PrimeVue, Pinia, TanStack Query и Ace. Закрытый backend, база данных, скрытые наборы тестов и точная формула метрик нам недоступны — поэтому ниже строго разделены <b>наблюдаемый контракт</b> и <b>непроверяемая реализация</b>.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">166</div><div class="k">«Все» в публичном coding-каталоге</div><div class="n">не смешивать с суммой фильтров</div></div>
+    <div class="tile bad"><div class="v">170</div><div class="k">67 + 79 + 24 по сложности</div><div class="n">расхождение публичных счётчиков = data-quality warning</div></div>
+    <div class="tile"><div class="v">6 + SQL</div><div class="k">вариантов исполнения</div><div class="n">python · js · go · java · c# · c++</div></div>
+    <div class="tile"><div class="v">45</div><div class="k">публичных тестовых заданий</div><div class="n">26 помечены Backend</div></div>
+    <div class="tile"><div class="v">25</div><div class="k">шагов Backend roadmap</div><div class="n">ручная отметка прогресса</div></div>
+    <div class="tile"><div class="v">Run / Submit</div><div class="k">два намерения пользователя</div><div class="n">проверка и финальная попытка разделены</div></div>
+  </div>
+
+  <h3>Что публичные данные действительно доказывают</h3>
+  <p><a href="https://api.solvit.space/questions/dictionary_data"><code>GET /questions/dictionary_data</code></a> отдаёт <b>справочники клиентского контракта</b>, а не «всю модель данных» и не схему их БД:</p>
+  <pre><code>grades          → Стажёр · Junior · Middle · Senior                       (4)
+statuses        → easy «Знаю» · avrg «Нужно повторить» · hard «Сложно»    (3)
+questions_types → 1 Текстовый ответ · 2 С выбором ответа · 3 Один ответ
+                  4 С выполнением кода · 5 SQL задача                     (5)
+languages       → python «Python 3.12» · js · go «Go 1.17.13» · java «Java 21»
+                  csharp · cpp — каждый с полем ace_editor_name           (6)</code></pre>
+
+  <div class="card">
+    <h4 style="margin-top:0">Коррекция к первой версии аудита</h4>
+    <p>Публичный API показывает единый полиморфный ресурс <code>question</code> с <code>type_name</code>, но <b>не доказывает</b>, что теория, код и SQL физически лежат в одной таблице. Он также не доказывает отсутствие ревизий, локалей, дедупликации или внутреннего графа. Корректный вывод: <b>клиент получает унифицированную activity-проекцию</b>. Именно этот UX-паттерн полезен нам; копировать предполагаемую внутреннюю схему нельзя, потому что мы её не знаем.</p>
+    <p style="margin-bottom:0">У Fluent Interview разделение Brain (контент), Runtime (исполнение) и Lab (learner evidence) — не недостаток само по себе. Недостаток находится в проекции: W22 показывает 1 591 карточку, но только 6 station-bound cards и 27 runnable stations. Нужно улучшить композицию <code>Lesson → Activity</code>, а не сливать владельцев данных в одну таблицу.</p>
+  </div>
+
+  <h3>Как Solvit валидирует теорию и задачи</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:16%">Активность</th><th style="width:31%">Наблюдаемый поток</th><th style="width:25%">Кто выдаёт сигнал</th><th>Что нельзя утверждать</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Теория</b></td>
+        <td>Учащийся формулирует ответ, затем открывает «Показать ответ» и ставит «Знаю / Нужно повторить / Сложно». Просмотр/попытка и status записываются раздельно.</td>
+        <td><span class="pill minor">Сам учащийся</span><br>Это confidence/SRS-сигнал.</td>
+        <td>Нет публичных доказательств semantic grading введённого текста или автоматического mastery-verdict.</td>
+      </tr>
+      <tr>
+        <td><b>Интервью</b></td>
+        <td>Публичная инструкция: выбрать направление, отвечать, <b>оценивать качество своих ответов</b>, затем получить аналитику слабых/сильных мест.</td>
+        <td><span class="pill minor">Сам учащийся</span></td>
+        <td>Не доказана независимая рубрика или человеческая модерация каждого ответа.</td>
+      </tr>
+      <tr>
+        <td><b>Код</b></td>
+        <td><code>POST /questions/{id}/solution?submit=…</code> принимает язык и код; результат опрашивается через <code>/solutions/{id}/result</code>. UI разделяет Run и Submit, показывает test results.</td>
+        <td><span class="pill ok">Сервер</span><br><code>is_passed</code> — server-owned verdict.</td>
+        <td>Клиент не раскрывает точный состав hidden tests, isolation limits и формулу acceptance.</td>
+      </tr>
+      <tr>
+        <td><b>SQL</b></td>
+        <td><a href="https://api.solvit.space/questions/3362">Публичный пример</a> содержит typed content blocks, таблицы, колонки и relationships; запрос уходит в <code>/questions/{id}/sql_runner</code>, а таблицы можно preview-ить.</td>
+        <td><span class="pill ok">Сервер</span><br>UI получает результат/verdict.</td>
+        <td>Неизвестно, сравниваются ли строки точно, нормализуется ли порядок, есть ли несколько скрытых датасетов и query-plan/security checks.</td>
+      </tr>
+      <tr>
+        <td><b>Roadmap</b></td>
+        <td>Backend roadmap показывает 25 шагов и просит правой кнопкой отметить прогресс.</td>
+        <td><span class="pill minor">Сам учащийся</span></td>
+        <td>«Отмечено» означает progress tracking, не доказанное владение capability.</td>
+      </tr>
+      <tr>
+        <td><b>Test task / project</b></td>
+        <td><a href="https://solvit.space/test-tasks">45 briefs</a> с компанией и специальностью; публично виден каталог и задание.</td>
+        <td><span class="pill proof">Не установлен</span></td>
+        <td>Публичная поверхность не доказывает автоматическую проверку репозитория, архитектуры или защиты решения.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Что обнаружено в нашей валидации</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:18%">Поток Fluent</th><th style="width:35%">Фактический контракт</th><th style="width:16%">Уровень доверия</th><th>Аудиторский вывод</th></tr></thead>
+    <tbody>
+      <tr><td><b>Recall journal</b></td><td>Браузер отправляет <code>grade: solid|partial|missed</code> и <code>termsHit/termsTotal</code>. Сервер требует предшествующий event <code>answered|unknown</code>, но DTO намеренно <b>не содержит текст ответа</b>.</td><td><span class="pill minor">Самооценка</span></td><td>Это хороший SRS schedule signal, но не доказательство recall. Сейчас отчёт и UI должны называть его confidence/recall-grade, не mastery.</td></tr>
+      <tr><td><b>Explanation</b></td><td>Server-side domain assessor + общая 5-мерная rubric; LLM только coach. Для Event Loop критерии основаны на regex/ключевых словах и минимуме 12 слов.</td><td><span class="pill minor">Детерминированная эвристика</span></td><td>Сильнее чистой самооценки, но возможны false pass/false miss. Нужны adversarial corpus, evidence citations и human-review escape hatch.</td></tr>
+      <tr><td><b>Code / SQL labs</b></td><td>Task Runtime держит starter/hidden tests вне learner projection, запускает digest-pinned image с <code>--network none</code>, read-only mounts и sanitization; verdict формируется сервером.</td><td><span class="pill ok">Исполняемое доказательство</span></td><td>Это правильная граница. Её нельзя ослаблять при рефакторинге контрактов или UI.</td></tr>
+      <tr><td><b>Capability mastery</b></td><td>Компилятор требует раздельные facets: accepted run, accepted explanation и поздний cold repeat.</td><td><span class="pill ok">Составное доказательство</span></td><td>Архитектурно сильнее Solvit, но работает лишь там, где Activity реально привязана к станции. W22: 6 station-bound cards — текущий bottleneck.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Целевая модель: не один validator, а AssessmentPolicy</h3>
+  <p>Главный вывод из Solvit и собственного кода: разные активности отвечают на разные вопросы. Универсальный boolean <code>passed</code> неизбежно смешивает уверенность, факт запуска, качество объяснения и удержание знания. После рефакторинга каждая Activity должна явно объявлять policy:</p>
+  <pre><code>AssessmentPolicy {
+  mode: selfConfidence | deterministicRun | deterministicRubric | humanReview | portfolioEvidence
+  authority: learner | lab | taskRuntime | reviewer
+  requiredEvidence: [...]
+  mayUnlock: boolean
+  retentionPolicy: none | spacedRecall | coldRepeat
+  rubricVersion?: string
+  evaluatorVersion?: string
+}</code></pre>
+  <ul class="checks">
+    <li class="y"><b>Самооценку сохранить, но переименовать.</b> <code>solid/partial/missed</code> влияет на SRS, не на mastery. В аналитике показывать confidence рядом с independently verified evidence, а не складывать их в один процент.</li>
+    <li class="y"><b>Run и Submit разделить контрактно.</b> Run — быстрый feedback, не закрывает capability. Submit — immutable attempt against pinned TaskRevision и server-owned verdict.</li>
+    <li class="y"><b>Метрики определить до вывода в UI.</b> У Solvit SQL-пример: 17 solved / 43 tried ≈ 39,5 %, но <code>acceptance_rate=11</code>; code-пример: 3998 / 4189 ≈ 95,4 %, но rate 63. Следовательно, rate нельзя вычислять как <code>solved/tried</code> без документации; вероятно, он submission-based или использует другую выборку.</li>
+    <li class="y"><b>Typed content blocks и schema preview.</b> Перенять представление таблиц/relationships как данные. Это полезно независимо от внутреннего validator.</li>
+    <li class="y"><b>Company taxonomy, next/prev, my solutions.</b> Это read-модели поверх уже существующих данных, но каждое поле должно иметь owner, provenance и release version.</li>
+    <li class="w"><b>Граф не считать отсутствующим у конкурента.</b> Публичная learner-поверхность не показывает semantic graph; внутреннее наличие неизвестно. У нас факт другой: W07 release чистый, но пустой; 2 001 related-proposal ждёт editorial review.</li>
+  </ul>
+
+  <h3>Правовая и исследовательская граница</h3>
+  <ul class="checks">
+    <li class="w"><b>Не покупать подписку ради массового копирования.</b> В оферте база определяется как самостоятельная БД, а условия запрещают передачу материалов без соответствующих прав и автоматизированную навигацию вне обычных браузеров. Допустимы продуктовый анализ, собственные формулировки, открытые источники и вручную зафиксированные идеи; недопустимы обход ограничений и перенос платного корпуса.</li>
+    <li class="y"><b>Источники аудита:</b> <a href="https://solvit.space/baza_voprosov">база вопросов</a>, <a href="https://solvit.space/interviews">интервью</a>, <a href="https://solvit.space/coding">coding</a>, <a href="https://solvit.space/roadmaps/interactive/backend-beginner">Backend roadmap</a>, <a href="https://solvit.space/test-tasks">test tasks</a>, <a href="https://solvit.space/terms-of-usage">условия использования</a>, публичные API-примеры <a href="https://api.solvit.space/questions/3362">SQL 3362</a> и <a href="https://api.solvit.space/questions/2858">code 2858</a>.</li>
+  </ul>
+</section>
+
+<!-- ============================================================ 17 -->
+<section id="decomp2">
+  <h2><span class="num">17</span>Декомпозиция второго уровня</h2>
+  <p class="lede">Раздел 05 говорил о God Module в приложении. Более точное измерение показало, что <b>самый крупный объект платформы — не приложение</b>. И у него нет внутренней структуры вообще.</p>
+
+  <div class="card" style="border-color:var(--critical)">
+    <h4 style="margin-top:0">Находка №11: <code>libs/lab-contracts</code> — 84 722 строки, из них 63 534 в одном плоском каталоге</h4>
+    <div class="tbl-wrap" style="border:0;padding:0">
+    <table>
+      <thead><tr><th style="width:34%">Что внутри</th><th class="num" style="width:14%">Строк</th><th>Почему это проблема</th></tr></thead>
+      <tbody>
+        <tr><td><code>lib/*.ts</code> — <b>плоский корень</b></td><td class="num">63 534</td><td>Около 330 файлов в одном каталоге без иерархии. Контракты, политики, матрицы, десктоп-контракты, coach, circuit-breaker — всё рядом.</td></tr>
+        <tr><td><code>lib/content/</code></td><td class="num">11 516</td><td><b>Учебный контент в TypeScript-библиотеке</b>, включая <code>ordering-puzzles.generated.ts</code> на 6 321 строку и <code>backend-track.ts</code> на 1 232. Прямо противоречит правилу <code>AGENTS.md</code>: «Question Brain is the only question/content authority».</td></tr>
+        <tr><td><code>lib/curriculum/</code></td><td class="num">3 721</td><td>Манифесты учебного плана — это домен, а не общая утилита.</td></tr>
+        <tr><td><code>lib/tasks/</code>, <code>lib/policies/</code>, <code>lib/kernel/</code></td><td class="num">1 668</td><td>Единственные три каталога, у которых форма правильная.</td></tr>
+        <tr><td>из них тесты</td><td class="num">15 066</td><td>—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="margin-bottom:0">Библиотека помечена <b>одним</b> тегом <code>type:util, scope:shared</code>, и приложение тянет её примерно через десяток path-алиасов вида <code>@workspace/lab-contracts/internal-ordering</code>. То есть правила границ формально соблюдены, а фактическая связанность — «всё зависит от всего».</p>
+  </div>
+
+  <h3>Целевые метрики, а не благие пожелания</h3>
+  <p>Декомпозиция без числового критерия останавливается на середине. Предлагаю четыре проверяемых порога — их можно поставить гейтом в CI:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:38%">Метрика</th><th class="num" style="width:14%">Сейчас</th><th class="num" style="width:14%">Порог</th><th>Как проверять</th></tr></thead>
+    <tbody>
+      <tr><td>Проектов в Nx-графе</td><td class="num">4</td><td class="num">≥ 20</td><td><code>nx graph --file=graph.json</code> + счётчик в гейте</td></tr>
+      <tr><td>Импортов в <code>app.module.ts</code></td><td class="num">106</td><td class="num">≤ 12</td><td>грep по файлу в pre-push</td></tr>
+      <tr><td>Строк в одной библиотеке</td><td class="num">84 722</td><td class="num">≤ 6 000</td><td>обход <code>libs/*</code> в гейте</td></tr>
+      <tr><td>Файлов в одном каталоге</td><td class="num">~330</td><td class="num">≤ 25</td><td>тот же гейт</td></tr>
+      <tr><td>Рёбер «домен → домен»</td><td class="num">н/д</td><td class="num">0</td><td><code>@nx/enforce-module-boundaries</code>, <code>depConstraints</code></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Структура внутри домена: порты и адаптеры</h3>
+  <p>Разрезать монолит на доменные библиотеки недостаточно — внутри каждой нужна одна и та же форма, иначе через полгода получится шесть маленьких монолитов. Форма уже частично применяется (<code>app/kernel/lab-port.decorator.ts</code>, <code>port-conformance.ts</code>) — её надо сделать обязательной:</p>
+  <pre><code>libs/domain/&lt;name&gt;/src/
+  model/        # чистые типы и правила. Тег boundary:pure → внешних импортов НОЛЬ.
+  ports/        # интерфейсы того, что домену нужно снаружи (репозиторий, клиент, часы)
+  use-cases/    # по одному файлу на сценарий; зависят только от model + ports
+  adapters/     # реализация портов: postgres, http-клиент, in-memory для тестов
+  &lt;name&gt;.module.ts   # единственная точка сборки для Nest: провайдеры и экспорт</code></pre>
+  <ul class="checks">
+    <li class="y"><b>Что это даёт немедленно.</b> Сегодня в <code>app/persistence/</code> лежит <b>26 пар</b> «in-memory + postgres» репозиториев (<code>in-memory-attempt</code> ↔ <code>postgres-attempt</code>, <code>in-memory-recall</code> ↔ <code>postgres-recall</code> и так далее) в одном каталоге вместе с моделями и токенами. В форме выше это один интерфейс в <code>ports/</code> и два адаптера, выбор — DI-токеном. Каталог перестаёт расти линейно от числа сущностей.</li>
+    <li class="y"><b>Тег <code>boundary:pure</code> уже существует</b> в конфиге ESLint и запрещает внешние импорты. Сейчас его почти никто не носит. На <code>model/</code> он обязателен — это и есть механическая защита от протечки инфраструктуры в домен.</li>
+    <li class="y"><b><code>port-conformance.ts</code> (330 строк) уже проверяет соответствие портам</b> — то есть идея в проекте есть, ей просто не дали структуры.</li>
+  </ul>
+
+  <h3>CQRS-lite: разделить 81 GET и 20 POST</h3>
+  <p>Профиль API — read-dominated: 81 чтение против 20 команд, мутирующих ресурсных методов нет вообще. Это ровно тот случай, когда разделение читающей и пишущей моделей стоит дешево и даёт много:</p>
+  <ul class="checks">
+    <li class="y"><b>Команды (20 POST)</b> — попытка, сабмит, коммит — идут через use-case, пишут события и не занимаются формой ответа. Уже почти так и есть: <code>attempt.coordinator.ts</code> (902 строки) — по сути шина команд, которую стоит нарезать по домену.</li>
+    <li class="y"><b>Чтения (81 GET)</b> — становятся <b>проекциями</b> (read-model) вместо композиции на лету. Сейчас композиция на лету — это <code>learner-route-context.service.ts</code> (1 088 строк), <code>question-brain.library.ts</code> (853), <code>next-action.service.ts</code> (651): три самых больших файла приложения — все три собирают ответ из нескольких источников в момент запроса.</li>
+    <li class="y"><b>Побочный выигрыш — кэшируемость.</b> Проекция имеет версию, а значит у неё появляется ETag и понятная инвалидация (см. <a href="#sync">раздел 18</a>). Композиция на лету не кэшируется в принципе.</li>
+  </ul>
+
+  <h3>Порядок разрезания — от дешёвого к дорогому</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:5%">Шаг</th><th style="width:30%">Что</th><th>Критерий готовности</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td><b>Вынести контент из <code>lab-contracts</code>.</b> <code>lib/content/</code> (11 516 строк, включая 6 321 сгенерированную) переходит в Question Brain как публикуемая проекция.</td><td>В <code>libs/</code> не осталось учебного контента; правило «Question Brain — единственный владелец контента» снова истинно.</td></tr>
+      <tr><td class="num">2</td><td><b>Разложить плоский корень по доменам.</b> 63 534 строки → <code>libs/contracts/&lt;домен&gt;</code> и <code>libs/domain/&lt;домен&gt;/model</code>. Механически: по префиксу имени файла.</td><td>Ни одного каталога > 25 файлов; ни одной библиотеки > 6 000 строк.</td></tr>
+      <tr><td class="num">3</td><td><b><code>project-book</code>: 14 клеток → один параметризованный модуль</b> (раздел 04). Самый крупный единичный выигрыш: ~2 000 строк из 4 289.</td><td>Один <code>@Get(':bookId/chapters/:chapterKind/:facet')</code>; все 14 старых URL отвечают через редирект или алиас.</td></tr>
+      <tr><td class="num">4</td><td><b>AppModule → доменные модули.</b> 106 импортов и 99 провайдеров → ~8–10 модулей, каждый регистрирует свои контроллеры сам.</td><td><code>app.module.ts</code> ≤ 12 импортов; 45 контроллеров распределены; 664 теста зелёные.</td></tr>
+      <tr><td class="num">5</td><td><b>Форма «порты и адаптеры» внутри каждого домена</b> + <code>boundary:pure</code> на <code>model/</code>. Слияние 26 пар репозиториев.</td><td><code>nx affected -t lint</code> красный при импорте инфраструктуры в <code>model/</code>.</td></tr>
+      <tr><td class="num">6</td><td><b>Проекции для 81 GET.</b> Три файла-агрегатора (1 088 + 853 + 651) распадаются на read-модели с версией.</td><td>Ни одного файла > 400 строк в доменных библиотеках; у каждой проекции есть версия для ETag.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="fignote">Шаги 1–2 механические и безопасные: это перемещение файлов и правка алиасов, без изменения поведения. Шаги 3–6 меняют код и требуют прогонов тестов на каждом коммите. Порядок важен: пытаться резать AppModule (шаг 4) до разбора <code>lab-contracts</code> (шаги 1–2) бессмысленно — импорты всё равно ведут в одну плоскую кучу.</p>
+</section>
+
+<!-- ============================================================ 18 -->
+<section id="sync">
+  <h2><span class="num">18</span>Оповещение фронтенда и генерация DTO</h2>
+  <p class="lede">Два вопроса, у которых один корень: сегодня <b>правда об изменениях и правда о форме данных нигде не выражена машинно</b>. Хорошая новость — производящая половина обеих задач уже построена.</p>
+
+  <h3>Часть A. Как фронтенд узнаёт, что контент изменился</h3>
+
+  <div class="card">
+    <h4 style="margin-top:0">Что уже есть (и это много)</h4>
+    <p>В Question Brain работает полноценный <b>transactional outbox</b>: таблица <code>content.outbox_event</code>, <b>10 841 событие</b>, все вычитаны (<code>published_at</code> заполнен у всех), последнее — 27 августа. Поля промышленные: <code>idempotency_key</code>, <code>attempts</code>, <code>available_at</code>, <code>claimed_at</code>, <code>published_at</code>, <code>last_error</code>.</p>
+    <pre style="margin-bottom:0"><code>question.revision.published    8 419
+question.revision.imported     1 368
+question.locale.translated     1 037
+question.graph.released           16
+question.revision.rolled_back      1</code></pre>
+  </div>
+
+  <ul class="checks">
+    <li class="n"><b>Чего нет:</b> транспорта до браузера. SSE в проекте есть, но ровно один — <code>/ai/runs/{runId}/events</code> через <code>EventSource</code> для стриминга ответов ИИ.</li>
+    <li class="n"><b>Чего нет:</b> условных запросов. <code>ETag</code> / <code>If-None-Match</code> в learning-api не используется <b>ни разу</b>; из кэш-заголовков только <code>Cache-Control: private, no-store</code> на studio-эндпоинтах. То есть 81 GET всегда отдаёт полное тело.</li>
+    <li class="w"><b>Следствие сегодня:</b> учащийся видит новый контент только после перезагрузки страницы или истечения кэша TanStack Query, и никто не знает, устарели ли данные.</li>
+  </ul>
+
+  <h4>Предлагаемая схема — четыре слоя, каждый работает сам по себе</h4>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:5%">№</th><th style="width:23%">Слой</th><th style="width:32%">Что делает</th><th>Цена и что даёт</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="num">1</td>
+        <td><b>ETag на проекциях</b></td>
+        <td>Каждый GET, отдающий релизную проекцию, возвращает <code>ETag</code> = хэш содержимого. Браузер присылает <code>If-None-Match</code>, сервер отвечает <code>304</code>.</td>
+        <td><b>Самое дешёвое и первое.</b> Не нужен ни новый процесс, ни новый порт. У нас уже есть <code>content_hash</code> в <code>question_revision</code> — материал для ETag готов. Работает даже без всего остального.</td>
+      </tr>
+      <tr>
+        <td class="num">2</td>
+        <td><b>Указатель релиза</b></td>
+        <td>Один эндпоинт <code>GET /api/release</code> → <code>{ releaseId, contentHash, publishedAt }</code>. Фронт держит <code>releaseId</code> в состоянии.</td>
+        <td>Ключевой трюк: <code>releaseId</code> входит в <b>ключ кэша</b> — <code>queryKey: ['question', id, releaseId]</code>. Тогда смена релиза автоматически делает все ключи новыми, и инвалидация не нужна вовсе. Старые данные остаются валидными для истории и evidence.</td>
+      </tr>
+      <tr>
+        <td class="num">3</td>
+        <td><b>SSE-канал</b></td>
+        <td><code>GET /api/events</code> — проекция outbox наружу: <code>content.released</code>, <code>graph.released</code>, <code>attempt.recorded</code>, <code>mastery.changed</code>. Переподключение по <code>Last-Event-ID</code>.</td>
+        <td>Паттерн <code>EventSource</code> в <code>api-client</code> уже реализован — берём его. В браузер уходит <b>только факт «что-то в области X изменилось»</b>, без полезной нагрузки: клиент сам решает, что перезапросить.</td>
+      </tr>
+      <tr>
+        <td class="num">4</td>
+        <td><b>Проекции с версией</b></td>
+        <td>Read-модели из <a href="#decomp2">раздела 17</a> получают версию, а не собираются на лету.</td>
+        <td>Замыкает круг: без версионированной проекции ETag из слоя 1 нечем считать, а композиция на лету не кэшируется в принципе.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Почему SSE, а не WebSocket</h4>
+    <ul class="checks" style="margin-bottom:0">
+      <li class="y">Профиль трафика односторонний: 81 GET против 20 POST, коллаборативного редактирования в learner-поверхности нет. Полнодуплексный канал нечем занять.</li>
+      <li class="y">SSE — обычный HTTP: проходит через тот же прокси <code>/api</code>, переживает разрыв через <code>Last-Event-ID</code>, не требует отдельного порта в <code>workspace.yaml</code>.</li>
+      <li class="y"><b>Kafka в браузер не идёт.</b> Kafka (порт 49312) остаётся транспортом между сервисами; наружу выходит только SSE-проекция. Иначе домен утекает в клиент.</li>
+      <li class="w">Порядок внедрения: слой 1 → слой 2 → слой 3. Первые два не создают новых процессов и уже дают корректность; SSE добавляет только «мгновенность».</li>
+    </ul>
+  </div>
+
+  <h3>Часть B. Генерация DTO</h3>
+
+  <div class="card" style="border-color:var(--critical)">
+    <h4 style="margin-top:0">Находка №12: одна правда описана руками четыре раза</h4>
+    <div class="tbl-wrap" style="border:0;padding:0">
+    <table>
+      <thead><tr><th style="width:32%">Где</th><th class="num" style="width:14%">Объём</th><th style="width:16%">Формат</th><th>Кто потребитель</th></tr></thead>
+      <tbody>
+        <tr><td><code>fluent-engineering-lab/libs/lab-contracts</code></td><td class="num">84 722 стр.</td><td>TypeScript-интерфейсы</td><td>Nest-приложение</td></tr>
+        <tr><td><code>fluent-engineering-vue/packages/contracts</code></td><td class="num">1 869 стр.</td><td>Zod-схемы (zod 4.4.3)</td><td>Браузер</td></tr>
+        <tr><td><code>fluent-task-runtime/contracts/*.go</code></td><td class="num">698 стр.</td><td>Go-структуры</td><td>Task Runtime</td></tr>
+        <tr><td><code>docs/contracts/*.schema.json</code></td><td class="num">1 схема</td><td>JSON Schema 2020-12</td><td>кросс-репозиторный гейт</td></tr>
+        <tr><td><code>apps/learning-api/src/app/dto/*.dto.ts</code></td><td class="num">862 стр.</td><td>class-validator</td><td>валидация входа Nest</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="margin-bottom:0"><b>И ни одного машинного описания API:</b> <code>@nestjs/swagger</code> в проекте отсутствует, OpenAPI-документа нет вообще. Значит сегодня генерация клиента невозможна не потому, что не выбрали инструмент, а потому, что <b>нет источника</b>.</p>
+  </div>
+
+  <h4>Три варианта, с рекомендацией</h4>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:6%">Вар.</th><th style="width:20%">Подход</th><th style="width:30%">Как работает</th><th>Оценка</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>A</b></td>
+        <td>OpenAPI из кода</td>
+        <td>Добавить <code>@nestjs/swagger</code>, декорировать существующие 8 DTO → получить <code>openapi.json</code> → сгенерировать клиент (<code>openapi-typescript</code> / <code>orval</code>) и Go-структуры.</td>
+        <td>Дешевле всего на старте: DTO уже на class-validator. Но схема <b>выводится</b> из кода и легко расходится с реальностью, а рантайм-валидации на фронте не появляется. Годится как промежуточный шаг, не как цель.</td>
+      </tr>
+      <tr>
+        <td><b>B</b></td>
+        <td><b>Zod-first</b> <span class="pill ok">рекомендую</span></td>
+        <td>Единая библиотека <code>libs/contracts</code> на zod — <b>единственный</b> источник. Из неё: TS-типы через <code>z.infer</code> (бесплатно, без кодогенерации), JSON Schema через <code>z.toJSONSchema</code> → Go-структуры и кросс-репозиторный гейт. На Nest — <code>ZodValidationPipe</code> вместо class-validator.</td>
+        <td>Одна правда, две генерации. Фронт <b>уже</b> на zod 4.4.3, то есть половина работы сделана и проверена в бою. Рантайм-валидация появляется на обеих сторонах. Цена: переписать 862 строки DTO с class-validator и постепенно втянуть 84 722 строки <code>lab-contracts</code>.</td>
+      </tr>
+      <tr>
+        <td><b>C</b></td>
+        <td>Schema-first</td>
+        <td>JSON Schema (или protobuf) — первичный артефакт, из него генерируется во все три языка.</td>
+        <td>Максимальная строгость и языковая нейтральность. Оправдано, если появится четвёртый язык-потребитель. Сейчас — самая высокая цена при том же результате, что даёт B.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="card">
+    <h4 style="margin-top:0">Почему B, а не A</h4>
+    <ul class="checks">
+      <li class="y"><b>Направление важнее инструмента.</b> В варианте A правда живёт в декораторах Nest, и Go с браузером получают её из вывода. В B правда живёт в отдельной чистой библиотеке, а Nest — такой же потребитель, как и все. Второе выживает при смене фреймворка; первое — нет. А фреймворк мы как раз меняем (Vue → Next), поэтому цена ошибки здесь реальная.</li>
+      <li class="y"><b>JSON Schema как промежуточный формат в проекте уже принята</b> — <code>docs/contracts/question-capability-task.v1.schema.json</code> написана на draft 2020-12 с <code>$defs</code> и паттернами ключей. То есть B не вводит новый формат, а достраивает существующий путь.</li>
+      <li class="y"><b>Гейт уже существует.</b> <code>pnpm verify:schema</code> проверяет совместимость схем. Расширить его двумя правилами: (1) контракт не собран из zod → CI красный; (2) сгенерированные файлы коммитятся, и после генерации <code>git diff --exit-code</code> должен быть пустым — иначе кто-то правил вывод руками.</li>
+      <li class="y"><b>Где живёт:</b> <code>libs/contracts/*</code> с тегом <code>boundary:pure</code> — внешних импортов ноль, кроме самого zod. Тогда контракт не может утащить за собой рантайм-зависимость, а это ровно тот класс ошибок, от которого правило и придумано.</li>
+      <li class="w"><b>Порядок:</b> начать с одного домена — не с самого большого. Хороший кандидат — контракт Task Runtime: он уже описан в трёх местах (<code>lab-contracts/task-runtime.ts</code> 911 строк, Go-структуры, zod на фронте) и имеет узкую границу. Один домен целиком покажет реальную цену до того, как трогать остальные.</li>
+    </ul>
+  </div>
+
+  <h4>Куда это встаёт в роадмап</h4>
+  <p>Обе части — <b>после</b> Ф5 (декомпозиция) и <b>до</b> Ф7 (Next). Причина одна: генерировать DTO из плоской кучи на 84 722 строки бессмысленно, а переписывать фронтенд на Next, не имея сгенерированного клиента, — значит добавить ещё одну рукописную копию контрактов. Порядок: Ф5 → <b>Ф5.5 (контракты и ETag)</b> → Ф6 (монорепо) → Ф7 (Next, сразу на генерируемом клиенте и SSE).</p>
+</section>
+
+<!-- ============================================================ 15 -->
+<section id="repro">
+  <h2><span class="num">19</span>Приложение: как воспроизвести аудит</h2>
+  <p class="lede">Каждая цифра в этом документе получена одной из команд ниже. Исходный код не менялся; единственные изменения на диске — поля <code>generatedAt</code> в файлах-доказательствах самих гейтов.</p>
+
+  <h4>Собственные гейты workspace — запущены в этом аудите, вывод как есть</h4>
+  <pre><code>pnpm layout:check                    # 5 независимых Git-корней — OK
+pnpm ci:inventory:check              # 6 workflow в 4 репозиториях → pass-with-coverage-gaps
+pnpm design:tokens:check             # 116 токенов, 0 raw-цветов, все theme hooks → pass
+pnpm runtime:images:check:static     # 5 immutable references, 20 task descriptors → OK
+pnpm lab:graph --file=graph.json     # Nx-граф Lab: 4 проекта
+pnpm release:verify:dev              # 58 шагов из 58 pass, 2,9 мин, productionPromotable: false</code></pre>
+  <p><b>Базовая линия для Ф0.</b> <code>release:verify:dev</code> прогнан целиком: <b>58/58 шагов pass</b>, суммарно 173 720 мс. Самые долгие шаги — <code>vue-e2e</code> (64,1 с), <code>runtime-failure-matrix</code> (39,1 с), <code>lab-check</code> (28,4 с). <code>productionPromotable: false</code> — это ожидаемый результат, а не поломка: строгий режим требует remote-backed SHA у всех пяти репозиториев, а у Vue remote нет. Машинный результат сохранён в <code>docs/verification/release-verify-dev-2026-08-28-audit.json</code> — с ним и нужно сравнивать после каждой фазы.</p>
+  <p><b>Что НЕ запускалось:</b> строгий <code>pnpm release:verify</code> (заведомо fail-closed без remote у Vue), <code>pnpm docker:provenance:check --live</code> и <code>observability:live</code> с живым стеком, а также сборка Lab с TypeScript 7 через webpack (см. раздел 08 — это вынесено в Ф8).</p>
+
+  <h4>Свежесть зависимостей</h4>
+  <pre><code># npm: 124 объявления из 9 манифестов против dist-tags реестра
+npm view typescript dist-tags     # latest 7.0.2
+npm view @nestjs/core dist-tags   # latest 12.0.1
+npm view next dist-tags           # latest 16.3.3
+npm view @nestjs/core@12.0.1 peerDependencies engines
+
+# Go: сверка с proxy.golang.org
+curl -s 'https://proxy.golang.org/go.opentelemetry.io/otel/@latest'
+curl -s 'https://proxy.golang.org/github.com/jackc/pgx/v5/@latest'
+curl -s 'https://go.dev/dl/?mode=json'   # go1.27.0</code></pre>
+
+  <h4>Проверки TypeScript 7 (в изолированном каталоге, вне репозитория)</h4>
+  <pre><code>npm i typescript@7.0.2            # 3,5 МБ + платформенный бинарник
+
+# typecheck реального приложения
+TS7/node_modules/.bin/tsc -p apps/learning-api/tsconfig.app.json --noEmit
+#   → 0 ошибок · --listFiles: 1613 файлов (столько же, сколько у TS 6)
+#   → с --strict: тоже 0; 12 ошибок только в tsconfig.spec.json
+
+# сравнение DI-метаданных: главная проверка
+TS7/…/tsc -p apps/learning-api/tsconfig.app.json --outDir /tmp/e7 --noEmit false
+./node_modules/.bin/tsc -p apps/learning-api/tsconfig.app.json --outDir /tmp/e6
+# нормализовать пробелы, извлечь все __metadata("design:paramtypes", […])
+#   → 569 .js-файлов у каждого; 209 записей в 108 файлах; расхождений 0
+#   → записей с Object: 26 и 26 (то есть TS 7 не теряет типы дополнительно)</code></pre>
+
+  <h4>Языки исполнения и образы</h4>
+  <pre><code>grep -rh '^FROM' fluent-task-runtime/task-images
+#   node:24-slim · golang:1.24-bookworm · eclipse-temurin:21-jdk
+#   mcr.microsoft.com/dotnet/sdk:10.0 · postgres:17
+
+# актуальные версии — из реестров, не по памяти
+curl -s 'https://hub.docker.com/v2/repositories/library/node/tags?page_size=100'      # 26-slim
+curl -s 'https://hub.docker.com/v2/repositories/library/golang/tags?page_size=100'    # 1.27-bookworm
+curl -s 'https://api.adoptium.net/v3/info/available_releases'                         # most_recent_lts: 25
+curl -s 'https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json'
+#   10.0 → active/lts · 11.0 → preview
+
+# расхождение по Postgres внутри платформы
+grep -rn 'image:.*postgres' fluent-engineering-lab/docker-compose.yml \
+        fluent-question-brain/deploy/compose/compose.yaml
+#   Lab: pgvector:pg17 · Brain: pgvector:0.8.6-pg18 · задачи: postgres:17</code></pre>
+
+  <h4>Разбор Solvit.space (публичные страницы и публичный API)</h4>
+  <pre><code>curl -s https://solvit.space/robots.txt      # ClaudeBot разрешён; Nuxt
+curl -s https://solvit.space/sitemap.xml    # 2 080 URL: 1 350 /questions, 412 /coding,
+                                            # 209 /analytics/vacancies, 41 /specializations
+
+# публичные справочники клиентского контракта (не схема внутренней БД)
+curl -s https://api.solvit.space/questions/dictionary_data
+#   grades 4 · statuses 3 · questions_types 5 · languages 6 · tags 36
+
+curl -s 'https://api.solvit.space/questions/coding?per_page=3&amp;page=1'
+#   filters: easy 67 / avrg 79 / hard 24, ~70 компаний со счётчиками
+#   объект задачи: id, title, is_free, grade, companies[], languages[],
+#                  acceptance_rate, users_tried_cnt, users_solved_cnt
+
+curl -s https://api.solvit.space/questions/3362        # SQL-задача целиком
+#   type_name: "sql_runner" · tables_data[].table_relationships[] (MANY_TO_ONE)
+#   иерархия: topic_category → topic → unit → lesson → question
+curl -s https://api.solvit.space/questions/3362/sql_runner_table_data/deal_status_log
+#   колоночный превью данных: [{"name":"deal_id","data":[1,1,1,…]}, …]
+curl -s https://api.solvit.space/sql_sandbox           # переиспользуемые учебные БД
+
+# UI смотрелся в headless-браузере (страницы рендерятся на клиенте)
+#   /coding/2858 → стаб class Solution, кнопки «Запустить»/«Отправить»,
+#                  вкладки «Результат кода»/«Тест кейсы», «Мои решения»/«Решения»</code></pre>
+
+  <h4>Наши цифры для сравнения (живая БД Question Brain)</h4>
+  <pre><code>docker exec fluent-question-brain-postgres-1 psql -U question_brain -d question_brain -tAc \
+  "select status, count(*) from content.question group by status;"
+#   исторический DB-снимок аудита: published 1596 · archived 4416
+#   локали: en 8 420 · ru 6 400 · topics 145 · capabilities 27
+#   embeddings 17 564 · question_edge 0  ← исторический DB-снимок
+#   company заполнена у 222 из 1596, с дублями регистра: Avito 72 и avito 1
+#   level: Middle 723 · Middle+ 448 · Senior 267 · Junior 78 + мусор (All, concept, Hard)
+
+  "select event_type, count(*) from content.outbox_event group by 1 order by 2 desc;"
+#   question.revision.published 8419 · imported 1368 · locale.translated 1037
+#   graph.released 16 · rolled_back 1 — всего 10 841, все published_at заполнены
+
+# контрактное дублирование
+find fluent-engineering-lab/libs/lab-contracts -name '*.ts' | xargs cat | wc -l   # 84 722
+find fluent-engineering-lab/libs/lab-contracts/src/lib -maxdepth 1 -name '*.ts' \
+  | xargs cat | wc -l                                                            # 63 534 в плоском корне
+grep -rn '@nestjs/swagger\|openapi' fluent-engineering-lab/package.json          # ничего</code></pre>
+
+  <h4>Метрики связанности</h4>
+  <pre><code># размер и структура
+find apps/learning-api/src -name '*.ts' | wc -l                    # 405
+grep -rl '@Controller' --include='*.controller.ts' app | wc -l     # 45
+grep -c '^import' app/app.module.ts                                # 106
+grep -rn '@\(Get\|Post\|Put\|Patch\|Delete\)(' --include='*.controller.ts' | wc -l   # 101
+
+# мёртвые зависимости — грепы расширены на весь репозиторий, не только apps/libs
+cd fluent-engineering-lab && grep -rn 'xterm\|codemirror' . \
+  --include='*.ts' --include='*.js' --include='*.mjs' --include='*.cjs' \
+  --include='*.html' --include='*.json' --include='*.sh' \
+  | grep -v node_modules | grep -v '^./dist/' | grep -v package.json | grep -v pnpm-lock
+#   → 14 совпадений, ВСЕ в docs/ и reports/ (проза аудитов) + 1 в scripts/g9-layout-audit.mjs
+#     (селектор .xterm в DOM-обходе). Ни одного import в исходниках → зависимости мёртвые.
+cd ../fluent-engineering-vue && grep -rn 'reka' . --include='*.ts' --include='*.vue' \
+  --include='*.js' --include='*.mjs' --include='*.html' | grep -v node_modules
+#   → 0 совпадений
+
+# матрица project-book
+ls app/project-book/*.controller.ts | grep -v spec | wc -l         # 20 (14 из них — клетки)
+
+# фактическое покрытие фронтенда (поправка к первой версии аудита)
+cat fluent-engineering-vue/playwright.config.ts | grep testDir     # ./apps/web/tests
+wc -l fluent-engineering-vue/apps/web/tests/*.spec.ts              # 4 файла, 1 462 строки
+grep -h 'test(' fluent-engineering-vue/apps/web/tests/*.spec.ts | wc -l   # 54 теста
+cat fluent-engineering-vue/vitest.config.ts                        # include только src/**/*.spec.ts
+#   → компонентных тестов 0; корневой каталог tests/ пуст (мусор)</code></pre>
+
+  <div class="card">
+    <h4 style="margin-top:0">Связанные документы</h4>
+    <ul style="margin:6px 0 0">
+      <li><a href="../WISHLIST.md">docs/WISHLIST.md</a> — лист хотелок владельца, который дополняется по ходу</li>
+      <li><a href="../WORKSPACE-TOPOLOGY.md">docs/WORKSPACE-TOPOLOGY.md</a> — текущая топология пяти репозиториев</li>
+      <li><code>docs/design-system/fluent-design-tokens.v1.md</code> — политика дизайн-токенов (source of truth)</li>
+      <li><code>docs/verification/two-audit-remediation/</code> — машинные артефакты гейтов W00–W22</li>
+      <li><code>AGENTS.md</code> — действующий инвариант «not a source monorepo»; его нельзя считать снятым до повторного решения владельца</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="doc">
+  <p>Fluent Interview · аудит архитектуры и зависимостей · 28 августа 2026 · исходный код не изменялся; гейты перезаписали только свои <code>generatedAt</code>.<br>
+  Все версии сверены с npm-реестром и <code>proxy.golang.org</code> на дату документа. Проверки TypeScript 7 выполнены на этой машине; результаты воспроизводимы командами из раздела 19.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var root = document.documentElement;
+  var stored = null;
+  try { stored = localStorage.getItem('fi-audit-theme'); } catch (e) {}
+  if (stored) { root.setAttribute('data-theme', stored); }
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('fi-audit-theme', next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
