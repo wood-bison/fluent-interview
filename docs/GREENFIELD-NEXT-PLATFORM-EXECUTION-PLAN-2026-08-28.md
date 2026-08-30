@@ -975,6 +975,23 @@ textarea, поэтому heavy-editor lazy-loading guard закрывается 
 profile. Web Vitals, interaction latency, code-splitting UX, visual diff и
 accessibility human review по-прежнему требуют отдельных доказательств.
 
+### Execution update — G12 observability lifecycle — 30 августа 2026
+
+В disposable Compose project `fluent-g12-observability-20260830b` проверены
+collector off/on/outage/recovery и incident capture на target `c57f211`.
+Пользовательский core без `otel` сохранил home/trace-probe `200`; opt-in
+`observability` profile поднял collector и шесть долгоживущих сервисов в
+healthy-состоянии, OTEL `/api/health` вернул `200`. После остановки collector
+trace-probe остался `200`, запрос к collector fail-closed, а после start health
+восстановился максимум за 2 секунды. `incident:capture` создал redacted
+bundle с 7 service records и без forbidden fields; scoped `pnpm down` оставил
+0 containers/networks и сохранил 3 durable volumes. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/observability-lifecycle-2026-08-30.json`.
+
+Это закрывает machine-only lifecycle slice `G12-012`. OTLP delivery,
+cardinality/load/disk-pressure, scheduled retention/DSAR и independent privacy
+review остаются отдельными promotion gates.
+
 ### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
 
 На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
@@ -2053,7 +2070,10 @@ paths; denominators и stable IDs обязаны объяснять переис
   explicitly unclaimed. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/runtime-conformance-2026-08-30.json`.
 - [ ] `G12-011` Проверить AI absent/offline/connected/stream/cancel/timeout states.
-- [ ] `G12-012` Проверить observability off/on/outage и incident bundle.
+- [x] `G12-012` Проверить observability off/on/outage/recovery и incident
+  bundle: core остаётся ready без optional collector, collector восстанавливается
+  после outage, incident capture redacts forbidden fields. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/observability-lifecycle-2026-08-30.json`.
 - [ ] `G12-013` Проверить stop/restart/backup/restore/data persistence.
 - [x] `G12-014` Проверить clean shutdown и zero orphan resources.
 
@@ -2130,7 +2150,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-005..013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+`G12-005..011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, offline Navigator без connected streaming,
 Node runtime без multi-language conformance). Точные границы и ожидаемые
