@@ -992,6 +992,25 @@ bundle с 7 service records и без forbidden fields; scoped `pnpm down` ос�
 cardinality/load/disk-pressure, scheduled retention/DSAR и independent privacy
 review остаются отдельными promotion gates.
 
+### Execution update — G12 generated API contract matrix — 30 августа 2026
+
+Target `main` (`ae2d779`) добавил воспроизводимый
+`tools/api/contract-matrix.mjs`. Скрипт внутри API-контейнера извлекает
+контроллеры Nest, строит ожидаемый route inventory (40 handlers), выполняет
+direct readback для всех доступных GET-поверхностей и динамических join-ов
+(question card, observability bundle, project filter, Studio readback),
+декодирует успешные projections через `@fluent/contracts`, а для mutation и
+parameter error branches проверяет fail-closed Nest error envelope. Результат:
+`43/43` cases passed, `failures=[]`, `uncoveredRoutes=[]`, manifest SHA
+`5c74393806688dd52fd09ea6a81e3d16efe14d8588acc2ebcb65fe05203d579b`.
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/api-contract-matrix-2026-08-30.{json,md}`.
+
+Это закрывает только machine API-contract slice `G12-007`. Positive mutation
+journeys остаются покрытыми отдельными G6–G10 evidence; route crawl, visual,
+security, language/runtime, content reconciliation и independent human review
+по-прежнему не объявляются закрытыми.
+
 ### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
 
 На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
@@ -2061,7 +2080,12 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-004` Проверить `doctor/status` до/во время/после startup.
 - [ ] `G12-005` Прокликать все routes/links/buttons/menus/dialogs/settings/deep links.
 - [ ] `G12-006` Проверить every route RU/EN, light/dark/system, keyboard, required viewports.
-- [ ] `G12-007` Проверить all API endpoints against generated contract.
+- [x] `G12-007` Проверить all API endpoints against generated contract. Generated
+  controller inventory covered 40/40 route handlers and 43/43 direct/negative
+  cases; all response projections decoded through `@fluent/contracts`, all
+  malformed branches returned the expected Nest error envelope, and the
+  uncovered-route set was empty. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/api-contract-matrix-2026-08-30.json`.
 - [ ] `G12-008` Проверить question/content/placement/release counts/hashes.
 - [ ] `G12-009` Проверить Run/Submit/Evidence/Progress/Revision/Projects/Navigator/Studio.
 - [x] `G12-010` Проверить all released language/runtime drills. Current
@@ -2150,7 +2174,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-005..011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+`G12-005..006`, `G12-008..009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, offline Navigator без connected streaming,
 Node runtime без multi-language conformance). Точные границы и ожидаемые
