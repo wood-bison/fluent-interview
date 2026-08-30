@@ -825,6 +825,21 @@ manifest. G7-023 (полная event-ledger/backup promotion) и G7-026 оста
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G7/artifact-wide-canary-2026-08-30.md`.
 
+### Execution update — G10 research provenance boundary — 30 августа 2026
+
+Target `62e3c11` добавляет versioned `content/research/policy.v1.json` и
+оригинальный brief set для Node event-loop, PostgreSQL isolation и NestJS
+interceptor boundaries. `pnpm research:validate` проверяет HTTPS references,
+`originalBy`, запрет close paraphrase/source excerpts и обязательные license/
+rights metadata для paid-portal observation. Три brief прошли позитивную
+проверку, а adversarial fixtures с copied content, missing license и неполным
+original artifact были отклонены. Target evidence `9609139` добавляет
+machine-readable output, commands и checksums.
+
+Это закрывает policy slices `G10-009` и `G10-012`; legal approval конкретных
+источников, Brain/Vault/portal batch importer и reviewer-gated promotion всё ещё
+остаются отдельными открытыми пунктами.
+
 ### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
 
 Следующий deterministic batch довёл durable history до локального PostgreSQL
@@ -1785,10 +1800,10 @@ edges до переноса product code.
 ### G10.2. External ingestion
 
 - [x] `G10-008` Source snapshot, rights/license, acquisition date и reviewer обязательны.
-- [ ] `G10-009` Paid portals используются для product-pattern research, не bulk copying без разрешения.
+- [x] `G10-009` Paid portals используются для product-pattern research, не bulk copying без разрешения. Versioned policy требует `pattern_only`, `observation_only`, `copiedContent=false` и license evidence; target `62e3c11`/`9609139`.
 - [x] `G10-010` Candidate проходит exact/fuzzy/semantic dedupe, но auto-merge запрещён.
 - [x] `G10-011` Import сохраняет source wording hash и transformed-original distinction.
-- [ ] `G10-012` Research brief создаёт оригинальный high-signal content, а не close paraphrase.
+- [x] `G10-012` Research brief создаёт оригинальный high-signal content, а не close paraphrase. Validator требует original author, transformation notes, no excerpt/close paraphrase и непустые original artifacts; target `62e3c11`/`9609139`.
 - [x] `G10-013` TaskCandidate должен стать typed Activity/TaskFamily или rejected(reason).
 - [x] `G10-014` Quarantine не считается production coverage.
 - [x] `G10-015` Agent import batches имеют bounded size и reviewer samples
