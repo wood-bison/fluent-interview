@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 612 пунктов из 1 134.**
+**Осталось: 611 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 522 |
-| Осталось (`[ ]`) | 612 |
+| Закрыто (`[x]`) | 523 |
+| Осталось (`[ ]`) | 611 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.03% |
+| Формальное выполнение | 46.12% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -194,6 +194,23 @@ Projection metadata-only и детерминирован, архитектурн
 evidence validation и checksum validation; push не выполнялся по ограничению
 Actions quota. Следующий implementation slice: `G10S-111` — доказать, что
 stable IDs не зависят от array order, локального path или timestamp.
+
+Последний implementation slice: target `d37cd484e39639c954bc01b0b70eabb3bf5165b2`
+(evidence `0e70aa4`) закрыл `G10S-111`. Canonical stable IDs теперь вычисляются
+только из явных `namespace/entity/identity`: ключи identity сортируются,
+скалярные строки нормализуются, а array order, локальные пути, timestamps,
+body и transient metadata никогда не участвуют. Rehearsal
+`pnpm architecture:stable-ids` проверил 6 synthetic records: 4 валидных,
+2 intentional invalid/quarantine, 3 unique IDs и 1 duplicate semantic group;
+отдельно подтверждены `metadataOnly=true`, `noBodies=true`,
+`arrayOrderIndependent=true`, `pathIndependent=true` и
+`timestampIndependent=true`. Classification ledger и expert-sample audit
+перестали использовать path hash и принимают canonical source ID либо
+content-hash fallback. Полный `pnpm check`, boundary/toolchain checks и 103
+architecture tests зелёные; evidence/checksum validation зелёные; push не
+выполнялся по ограничению Actions quota. Следующий implementation slice:
+`G10S-112` — versioned domain contract и property tests для identity,
+preferred transition, provenance disposition и deterministic serialization.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
