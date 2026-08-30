@@ -766,6 +766,23 @@ storm, cache stampede, queue replay и GC/memory pressure остаются яв�
 (код плюс evidence/index commits), а документация target зафиксирована
 отдельными `7e358ca` и `4e780e8`.
 
+### Execution update — G8 released Node deep lab — 30 августа 2026
+
+`21ce0bc` добавляет learner-facing `DeepObservabilityLab` для единственного
+released сценария `node-event-loop-trace`. UI последовательно открывает
+`Predict → Run → Observe → Explain → Defend → Repeat`, записывает по одной
+bounded evidence note через `/api/observability/evidence`, декодирует ответ
+`{ evidence, deterministicAssessmentUnaffected }` тем же Zod-контрактом и
+разрешает следующий этап только после принятия текущего. `Run` ведёт в
+существующий controlled Node station; mastery/unlock/evaluator boundary не
+затрагивается. Web typecheck/smoke **45/45**, lint, build, `test:observability`,
+live `observability:live` и direct 201 proxy write — PASS. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G8/deep-lab-journey-2026-08-30.md`.
+
+Это закрывает `G8-015` для released Node slice. Preview incident runtimes,
+cross-language profiles, OTLP/load/outage drills и human walkthrough остаются
+в promotion scope; `G8-026` по-прежнему не переводится в PASS.
+
 ### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
 
 Следующий deterministic batch довёл durable history до локального PostgreSQL
@@ -1608,7 +1625,7 @@ edges до переноса product code.
 
 ### G8.3. Observability как учебная поверхность
 
-- [ ] `G8-015` Deep lab поддерживает Predict→Run→Observe→Explain→Defend→Repeat.
+- [x] `G8-015` Deep lab поддерживает Predict→Run→Observe→Explain→Defend→Repeat для released Node scenario; UI sequential unlock и bounded evidence write подтверждены `21ce0bc`.
 - [x] `G8-016` Trace/log/metric evidence scoped по attempt и redacted в
       server/local bundle boundary; OTLP export и load/cardinality promotion
       остаются частью G8-023.
