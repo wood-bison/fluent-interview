@@ -2198,7 +2198,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-013` Все Brain/Vault records классифицированы по canonical ID, capability, role, locale, provenance и disposition.
 - [x] `G11-014` Unmapped/unreviewed/quarantined counts публикуются, не исчезают.
 - [ ] `G11-015` Generic content помещается в shared modules и получает path-specific prerequisites.
-- [ ] `G11-016` Language-native content проходит forbidden-set tests.
+- [x] `G11-016` Language-native content проходит forbidden-set tests. Текущий release evidence: `10/10` placements passed (native allowlist, forbidden semantic/runtime/task-family sets и explicit generic reuse).
 - [x] `G11-017` Missing-role ledger генерируется по stable IDs.
 - [ ] `G11-018` Research/authoring packs закрывают gaps официальными sources и original explanations.
 - [ ] `G11-019` Expert sample review по capability cluster обязателен.
@@ -2279,6 +2279,15 @@ SLA, запрет duplicate-card filler quotas и hard-gate contract
 и ни один путь не eligible. Это честный content-authoring gap; tool не меняет
 карточки и не повышает score вручную. Полный отчёт:
 `fluent-interview-platform/docs/verification/greenfield/G11/coverage-policy-audit-2026-08-30.{json,md}`.
+
+### Execution update — G11-016 path relevance — 30 августа 2026
+
+Target evidence commit `6ab7ad4` повторно запустил
+`pnpm content:path-relevance` и четыре validator-теста. Все `10/10` current
+placements прошли: `4` native и `6` explicit generic; запрещённые language
+semantic keys, runtime profiles и task-family keys не просачиваются в чужой
+path. Это закрывает именно механический G11-016, но не продвигает pending
+Brain/Vault records автоматически.
 
 ---
 
