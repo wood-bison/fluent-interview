@@ -1560,6 +1560,38 @@ This closes G10S-119. The next executable slice is G10S-120: enforce the
 configurable independent-reviewer rule only when policy requires it, without
 fabricating a second person in local single-user mode.
 
+### Execution update — G10S-120 configurable independent review — 31 августа 2026
+
+Target `main` now contains `d6ae03a` (`feat(g10s): enforce configurable
+independent review`) and evidence commit `8ee890f` (`docs(g10s): record
+independent review policy gate`). The checked-in versioned policy keeps
+`requireSecondReviewer=false`; a global switch or a matched bounded risk rule
+requires a reviewer actor different from the exact source author.
+
+The accepted review transaction persists immutable policy hash, matched risk
+rules, source author, reviewer and derived independence next to the review
+decision. Request idempotency includes the policy, so replay under a changed
+policy fails closed. Same-actor global/risk review, policy drift, direct SQL
+bypass and policy-evidence mutation were rejected. The post-commit live journey
+observed two revisions, two review decisions, two policy evaluations and four
+authority receipts, with zero serving or legacy Studio writes.
+
+Only `sergey.local` is a real configured actor. The positive independent-review
+branch uses an explicitly labelled synthetic fixture in a disposable database;
+it is not a production user or a claim that a second person exists. When the
+real local policy requires independence, the command blocks rather than
+inventing identity.
+
+The full ladder passed `16/16` content-model tests, `134/134` architecture
+tests, `57/57` API tests, `45/45` web tests, all 28 PostgreSQL schema/platform
+assertions plus 12 functional role checks, `pnpm check`, boundary/toolchain and
+complete evidence checksum validation. Push was intentionally not performed
+because of the Actions quota.
+
+This closes G10S-120. The next executable slice is G10S-121: Studio publish
+creates a reviewed authoring release-candidate/bundle request and must not
+activate a learner release directly.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1606,7 +1638,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-120`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-121`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2764,7 +2796,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode. Evidence: target `bbd2238`, evidence `12b4737`; one local actor, 3 explicit roles/actions, 3 decision receipts, 0 implicit roles, 5/5 negative authority cases rejected.
 - [x] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection. Evidence: target `99cbda3`, evidence `4943cc4`; one-shot CLI performed create/edit with exact replay, conflict and stale-head rollback, produced 2 immutable revisions/4 versioned layers/2 metadata receipts, and wrote 0 serving cards/legacy Studio rows/JSONL projections.
 - [x] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision. Evidence: target `e7ab46f`, evidence `6b017c9`; one-shot command bound an approved decision to the exact immutable revision/source author and explicit reviewer, exact replay stayed idempotent, 7 negative mutation/identity cases failed closed, and serving/legacy writes remained zero.
-- [ ] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально.
+- [x] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально. Evidence: target `d6ae03a`, evidence `8ee890f`; versioned policy hash and matched rules are immutable, same-actor global/risk review and policy drift fail closed, and the only distinct actor is an explicitly synthetic disposable rehearsal fixture rather than a fabricated production person.
 - [ ] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request.
 - [ ] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction.
 - [ ] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases.
