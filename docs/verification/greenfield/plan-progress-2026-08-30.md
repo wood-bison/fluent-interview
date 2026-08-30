@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 633 пункта из 1 134.**
+**Осталось: 632 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 501 |
-| Осталось (`[ ]`) | 633 |
+| Закрыто (`[x]`) | 502 |
+| Осталось (`[ ]`) | 632 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.18% |
+| Формальное выполнение | 44.27% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -21,7 +21,7 @@ policy/evidence/independent-review пункты, поэтому он намер�
 closure и независимая финальная проверка. Формальный счётчик не является
 оценкой оставшихся часов и не подменяет evidence каждого гейта.
 
-Последний implementation slice: target `c018ed2` (evidence `51d24d4`) добавил
+Предыдущий implementation slice: target `c018ed2` (evidence `51d24d4`) добавил
 backup-completeness rehearsal для G10S-086. Disposable database после всех
 восьми миграций содержит Strata authoring и public serving records; custom-format
 dump включает обязательные таблицы, а `roles-grants.json` фиксирует 4
@@ -30,47 +30,56 @@ credentials (`credentialsDetected=false`). Временная база и dump �
 `G10S-086` закрыт только после зелёного `pnpm check`, post-commit ladder,
 checksum validation и evidence validation.
 
-Следующий implementation slice: `G10S-087` — восстановить этот dump во вторую
-disposable database, повторить grants/invariants и сравнить exact logical hashes.
+Последний implementation slice: target `74c3242` (evidence `f1cb582`) закрыл
+G10S-087. Custom dump из migrated source восстановлен во вторую disposable
+database; после replay allowlisted grants source/restored/target logical hash
+совпал (`4f528310…70f5cc`), role metadata совпала (4 роли, 6 schema grants,
+271 object grants, 0 memberships), а `g10s_role_checks.sql` подтвердил 12/12.
+Обе временные базы и dump удалены. Gate закрыт после полного `pnpm check`,
+архитектурного тестового набора и evidence/checksum validation.
 
-Последний implementation slice: target `4811050` (evidence `a5cdf89`) добавил
+Следующий implementation slice: `G10S-091` — сохранить строгую triple identity
+`(kc_code, aspect, stack)` и сблизить domain invariants перед Studio/content
+convergence.
+
+Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
 IDs и трёхчастный evidence contract, но не закрыл checkbox: фактических
 captures `0/71`, promotable dispositions `0/12`, unresolved `83`.
 
-Следующий slice: target `cd1497e` (evidence `a183d99`) добавил
+Исторический slice: target `cd1497e` (evidence `a183d99`) добавил
 `practice-portfolio-policy.v1` и audit G11-021…028. Он честно зафиксировал
 `6` cards, `7` assessed activities, `1` family, `0` runnable revisions из
 `456`, `0` package-mode evidence и `0/8` закрытых проверок. Контентные
 checkboxes остаются открытыми: аудит формирует точный authoring/runtime backlog
 и не подменяет его синтетическими карточками.
 
-Следующий implementation slice: target `72e4978` (evidence `f4ef25b`) добавил
+Исторический implementation slice: target `72e4978` (evidence `f4ef25b`) добавил
 `vault-classification-ledger.v1` для G11-013. Все `1 597` Brain/Vault records
 теперь представлены metadata-only строками; закрытыми по факту являются
 `1 591` canonical IDs, `1 591` capabilities и `1 594` RU/EN locale facets.
 Roles, provenance/license и reviewer dispositions пока `0`; поэтому
 `G11-013` остаётся открытым, а `0/1 597` записей считаются fully classified.
 
-Следующий implementation slice: target `c326e79` (evidence `5d37354`) добавил
+Исторический implementation slice: target `c326e79` (evidence `5d37354`) добавил
 `shared-content-audit.v1` для G11-015. Он проверил `3` shared modules и `6`
 generic placements: explicit shared keys отсутствуют (`0/3`), а `3` generic
 placements не имеют path-specific prerequisite. Итог `G11-015=OPEN`,
 `6` unresolved items; это теперь измеримый curriculum metadata backlog.
 
-Следующий implementation slice: target `0b2669e` (evidence `93ee3fa`) добавил
+Исторический implementation slice: target `0b2669e` (evidence `93ee3fa`) добавил
 bounded `research-authoring-pack.v1` для G11-018. Все `1 597` records получили
 path-specific research boundaries и authoring checklist; в первом batch `100`
 записей, `0` review-ready, official source missing у `1 597`, mechanism у
 `494`, answer у `463`, typed placement у `1 370`, assessed activity у `1 346`.
 Гейт остаётся открытым до оригинального текста, источников и reviewer sign-off.
 
-Следующий implementation slice: target `de1836d` (evidence `10021d2`) добавил
+Исторический implementation slice: target `de1836d` (evidence `10021d2`) добавил
 `expert-sample-audit.v1` для G11-019. Выбрано `27` стабильных samples — по
 одному на каждый path/domain cluster; `0` independent expert reviews записано,
 поэтому гейт остаётся OPEN до полного decision set.
 
-Последний implementation slice: target `96a0506` добавил seeded
+Исторический implementation slice: target `96a0506` добавил seeded
 `wrong-solution` vector в `pnpm runtime:vectors`. Живой released Node profile
 прошёл `13` vectors и recovery; неверный source получил
 `failed/public_event_loop_order_mismatch`, `baselineMatch=false`, worker cleanup
