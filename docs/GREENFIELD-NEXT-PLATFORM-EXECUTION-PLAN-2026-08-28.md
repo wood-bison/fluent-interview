@@ -2428,7 +2428,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-079` Positive SQL: authoring может выполнить полный Strata authoring transaction. Evidence: committed synthetic KC/question/provenance/layer transaction, commit `6bc6f12`.
 - [x] `G10S-080` Positive SQL: import может атомарно materialize serving release из bundle staging. Evidence: committed cards/revision/translation transaction, commit `6bc6f12`.
 - [x] `G10S-081` Positive SQL: serving читает active release и пишет только разрешённые learner/application facts. Evidence: projection read plus assistance event append, commit `6bc6f12`.
-- [ ] `G10S-082` Concurrency test: два preferred prompt с разным `ord` одновременно — ровно один commit успешен.
+- [x] `G10S-082` Concurrency test: два preferred prompt с разным `ord` одновременно — ровно один commit успешен. Evidence: `G10S/concurrency-2026-08-30.json`/`.md`; `pnpm architecture:concurrency` observed one `ord=0` commit, `ord=7` conflict on `layer_preferred_uk`, final preferred rows=1; target commits `72eea78` and `37bd477`.
 - [ ] `G10S-083` Idempotency test: migrations и fixture load повторяются без duplicates/data drift.
 - [ ] `G10S-084` Fresh-database test применяет всю migration chain с нуля и проходит 12 inherited + platform invariants.
 - [ ] `G10S-085` Upgrade-database test берёт copy текущего G10 database, применяет migrations, сверяет counts/hashes и Studio history.
