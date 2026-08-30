@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 611 пунктов из 1 134.**
+**Осталось: 610 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 523 |
-| Осталось (`[ ]`) | 611 |
+| Закрыто (`[x]`) | 524 |
+| Осталось (`[ ]`) | 610 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.12% |
+| Формальное выполнение | 46.21% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -211,6 +211,19 @@ architecture tests зелёные; evidence/checksum validation зелёные; 
 выполнялся по ограничению Actions quota. Следующий implementation slice:
 `G10S-112` — versioned domain contract и property tests для identity,
 preferred transition, provenance disposition и deterministic serialization.
+
+Последний implementation slice: target `0bd3da0` (evidence `65442b5`) закрыл
+`G10S-112`. Versioned registry теперь требует owner/consumer metadata и
+монотонные версии; breaking transition без migration ID, migration notes и
+rollback notes отклоняется. Rehearsal зарегистрировал 3 контракта и 2 изменения
+(1 breaking с миграцией), отклонил все 4 negative cases (missing migration,
+non-monotonic version, unowned contract, duplicate migration) и подтвердил
+стабильную identity, rollback preferred transition, provenance disposition и
+детерминированную metadata-only сериализацию. Полный `pnpm check`,
+boundary/toolchain checks и 107 architecture tests зелёные; evidence/checksum
+validation зелёные; push не выполнялся по ограничению Actions quota. Следующий
+implementation slice: `G10S-113` — сохранить golden question/task fixtures или
+зафиксировать exact reviewed delta.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх

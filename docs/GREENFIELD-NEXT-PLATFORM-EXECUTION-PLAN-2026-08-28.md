@@ -1392,6 +1392,33 @@ This closes G10S-111. The next executable slice is G10S-112: version the domain
 contract and add property tests for identity, preferred transitions, provenance
 disposition and deterministic serialization.
 
+### Execution update — G10S-112 versioned domain contracts — 30 августа 2026
+
+Target `main` now contains `0bd3da0` (`feat(g10s): version domain contract
+changes`). The contract package exposes a versioned registry for owned domain
+contracts and changes. Every change must increase the contract version and
+reference an owned contract; a breaking change is invalid without an explicit
+migration ID, migration notes and rollback notes. The registry also records
+consumers and requires the `explicit-migration-required` policy, keeping
+provider/consumer compatibility decisions reviewable rather than implicit.
+
+`pnpm architecture:domain-contract` rehearsed three owned contracts and two
+versioned changes, including one breaking transition with migration/rollback
+notes. Four negative cases (breaking without migration, non-monotonic version,
+unowned contract and duplicate migration) were rejected. Property-style checks
+also proved stable identity, preferred-transition rollback, provenance
+disposition and order-independent serialization. The projection is deterministic
+and metadata-only (`projectionHash=0af5ea18…a4bc63db368`); no body, prompt,
+answer or secret is emitted. The full `pnpm check`, boundary and toolchain
+ladder passed, including 107 architecture tests. Evidence is recorded in
+`fluent-interview-platform/docs/verification/greenfield/G10S/domain-contract-2026-08-30.{json,md}`
+with evidence commit `65442b5`. Push was intentionally omitted because the
+owner requested local commits while the Actions quota is near its monthly
+limit.
+
+This closes G10S-112. The next executable slice is G10S-113: preserve the
+golden question/task fixtures or record an exact reviewed delta.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1438,7 +1465,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-112`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-113`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2585,7 +2612,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки. Evidence: target `fluent-interview-platform/docs/verification/greenfield/G10S/task-build-context-2026-08-30.json`/`.md`; `pnpm architecture:task-build-context` принял 2/5 metadata records, отклонил 3 intentional canaries (unallowlisted evaluator file, public `reference-solution`, forbidden `.env` body key), подтвердил 38/41 allowlist matches, 1 public leak, 0 missing required entries, metadata-only deterministic projection и 0 bodies; target implementation `d37fcb7b07cf7f270e6cedd088a9cc479f3fd6fe`, evidence commit `10159b035c65c429da34b234a4c388f419cdce76`.
 - [x] `G10S-110` Release bundle publication копирует только allowlisted public surface в learner artifact; hidden/evaluator assets и body keys не попадают в публикацию. Evidence: `fluent-interview-platform/docs/verification/greenfield/G10S/release-publication-2026-08-30.json`/`.md`; target implementation `17e254aa5d4e15274d0043e67b6a42b33cc56efd`, evidence commits `42300980d05ee64ac5eabb396c027f419edc7be5` and `5afa397e43220d290a8e8797d57e208e2082bb16`; `pnpm architecture:release-publication` accepted `2/5` records, quarantined `3`, found `1` public evaluator leak, `1` unallowlisted public file, `1` body-key canary, and emitted `0` bodies.
 - [x] `G10S-111` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает. Evidence: target `docs/verification/greenfield/G10S/stable-ids-2026-08-30.json`/`.md`; `pnpm architecture:stable-ids` проверил 6 synthetic records (4 valid, 2 intentional `REVIEW_REQUIRED`), 3 unique IDs и 1 duplicate semantic group, подтвердил metadata-only/no-bodies и независимость от array order/path/timestamp; target implementation `d37cd484e39639c954bc01b0b70eabb3bf5165b2`, evidence commit `0e70aa4`.
-- [ ] `G10S-112` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён; property tests покрывают identity, preferred transition, provenance disposition и serialization determinism.
+- [x] `G10S-112` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён; property tests покрывают identity, preferred transition, provenance disposition и serialization determinism. Evidence: target `0bd3da0`; `pnpm architecture:domain-contract` проверил 3 owned contracts, 2 versioned changes и 4/4 negative rejections (breaking without migration, non-monotonic version, unowned contract, duplicate migration), с deterministic metadata-only projection; evidence `65442b5`.
 - [ ] `G10S-113` Golden fixtures сохраняют baseline: 6 cards, 75 layers, 3 tasks, 1 dataset либо exact reviewed delta.
 - [ ] `G10S-114` Все 12 inherited PostgreSQL invariant tests перенесены и дополнены platform ownership/grant tests.
 - [ ] `G10S-115` Commit: `feat(g10s): converge question and task domain invariants`.
