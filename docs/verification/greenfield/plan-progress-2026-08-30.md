@@ -5,20 +5,34 @@
 
 ## Формальный счётчик
 
-**Осталось: 193 пункта из 606.**
+**Осталось: 634 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 413 |
-| Осталось (`[ ]`) | 193 |
-| Всего | 606 |
-| Формальное выполнение | 68.15% |
+| Закрыто (`[x]`) | 500 |
+| Осталось (`[ ]`) | 634 |
+| Всего | 1 134 |
+| Формальное выполнение | 44.09% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
  текущих технических дефектов. Для понимания узкого технического фронта смотри
-разбивку `pnpm plan:progress`: на implementation gates `G0–G12` остаётся 16
-пунктов, а независимая финальная проверка `R-*` ещё не начата.
+разбивку `pnpm plan:progress`: в неё входят implementation gates, quality/content
+closure и независимая финальная проверка. Формальный счётчик не является
+оценкой оставшихся часов и не подменяет evidence каждого гейта.
+
+Последний implementation slice: target `c68293b` (evidence `62936ec`) добавил
+upgrade-database rehearsal для G10S-085. Custom-format dump текущей базы был
+восстановлен в disposable database; восемь миграций применились без drift,
+пять pre-existing public-table counts и Studio history hash
+(`b58fd792…61947`) сохранились, serving schema выросла с 5 до 13 таблиц,
+временная база и dump удалены. `G10S-085` закрыт только после зелёного
+`pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` и checksum validation.
+
+Следующий implementation slice: `G10S-086` — backup/restore completeness:
+schema, роли и grants metadata, serving projection и authoring records без
+credentials. Затем `G10S-087` отдельно докажет restore в disposable database,
+повтор grants/invariants и exact logical hashes.
 
 Последний implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
