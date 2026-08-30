@@ -25,6 +25,13 @@ G12-025 state evidence registry. Он формализовал `71` critical-sta
 IDs и трёхчастный evidence contract, но не закрыл checkbox: фактических
 captures `0/71`, promotable dispositions `0/12`, unresolved `83`.
 
+Следующий slice: target `cd1497e` (evidence `a183d99`) добавил
+`practice-portfolio-policy.v1` и audit G11-021…028. Он честно зафиксировал
+`6` cards, `7` assessed activities, `1` family, `0` runnable revisions из
+`456`, `0` package-mode evidence и `0/8` закрытых проверок. Контентные
+checkboxes остаются открытыми: аудит формирует точный authoring/runtime backlog
+и не подменяет его синтетическими карточками.
+
 ## Открытые кластеры
 
 - governance и evidence protocol (`0.*`, `A-*`, `D-*`);

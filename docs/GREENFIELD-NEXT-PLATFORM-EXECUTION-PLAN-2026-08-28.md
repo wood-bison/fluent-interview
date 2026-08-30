@@ -2293,6 +2293,22 @@ SLA, запрет duplicate-card filler quotas и hard-gate contract
 карточки и не повышает score вручную. Полный отчёт:
 `fluent-interview-platform/docs/verification/greenfield/G11/coverage-policy-audit-2026-08-30.{json,md}`.
 
+### Execution update — G11-021…028 practice portfolio audit — 30 августа 2026
+
+Target `main` (`cd1497e`, evidence `a183d99`) добавил versioned
+`practice-portfolio-policy.v1` и fail-closed `practice-portfolio-audit.v1`.
+Аудит разделяет карточки и оцениваемые runnable activities, считает уникальные
+`TaskFamily`/revision, требует явную shared/path composition, независимые
+сценарии, seeded wrong-solution vectors и package-mode evidence для каждого
+released runtime. На текущем seed: `6` cards, `7` assessed activities, `1`
+family, `4` runnable candidates, `0` runnable revisions из `456`, и `0/8`
+проверок G11-021…028 закрыты. Это зафиксированный authoring/runtime gap, а не
+основание повышать статус релиза или заполнять квоты дублями.
+
+Checkboxes `G11-021…028` остаются `[ ]` до появления оригинального контента,
+typed metadata, runtime evidence и package-mode прогонов. Полные артефакты:
+`fluent-interview-platform/docs/verification/greenfield/G11/practice-portfolio-audit-2026-08-30.{json,md}`.
+
 ### Execution update — G11-016 path relevance — 30 августа 2026
 
 Target evidence commit `6ab7ad4` повторно запустил
