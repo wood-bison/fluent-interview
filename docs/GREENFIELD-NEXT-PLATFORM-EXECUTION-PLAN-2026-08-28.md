@@ -1047,6 +1047,24 @@ inline Navigator: компонент читал `document.lang` во время 
 Pixel visual diff, WCAG/screen-reader human review, connected LM Studio и
 stateful mutation journeys остаются отдельными открытыми gates.
 
+### Execution update — G12 content/release reconciliation — 30 августа 2026
+
+Target `main` evidence commit `45b7b04` повторил content validators,
+release-pointer check и canonical question-release build. Question release
+`2026.08.28-questions.1` валиден (6 cards, 10 placements, 7 assessed
+activities, RU/EN); curriculum `2026.08.28-curriculum.1` валиден (3 tracks,
+10 modules, 20 lessons). Route manifest содержит 43 routes, `unresolved=0`;
+placement и path-relevance joins не имеют issues/failures. Два последовательных
+canonical builds дали одинаковый logical hash `241a5434…ad39`, а все проверенные
+projections сохранили этот source hash и собственные стабильные state hashes.
+Active release pointer указывает на единственный доступный question release;
+authored candidates и history отсутствуют. Полный machine-readable отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G12/content-release-reconciliation-2026-08-30.{json,md}`.
+
+Это закрывает только integrity/count/hash slice `G12-008`; 20 lessons, 70 role
+requirements и остальные content-completeness цели G11 по-прежнему требуют
+авторинга и не объявляются production-ready.
+
 ### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
 
 На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
@@ -2122,7 +2140,8 @@ paths; denominators и stable IDs обязаны объяснять переис
   malformed branches returned the expected Nest error envelope, and the
   uncovered-route set was empty. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/api-contract-matrix-2026-08-30.json`.
-- [ ] `G12-008` Проверить question/content/placement/release counts/hashes.
+- [x] `G12-008` Проверить question/content/placement/release counts/hashes.
+  Target evidence `fluent-interview-platform/docs/verification/greenfield/G12/content-release-reconciliation-2026-08-30.json`: question/curriculum/route/placement/release-pointer joins and projection hashes reconcile; canonical question build is deterministic. Seed completeness remains an explicit limitation.
 - [ ] `G12-009` Проверить Run/Submit/Evidence/Progress/Revision/Projects/Navigator/Studio.
 - [x] `G12-010` Проверить all released language/runtime drills. Current
   release has only Node.js JavaScript; its released profile passed the full
@@ -2210,7 +2229,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-008..009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+`G12-009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, offline Navigator без connected streaming,
 Node runtime без multi-language conformance). Точные границы и ожидаемые
