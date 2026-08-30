@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 627 пунктов из 1 134.**
+**Осталось: 626 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 507 |
-| Осталось (`[ ]`) | 627 |
+| Закрыто (`[x]`) | 508 |
+| Осталось (`[ ]`) | 626 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.71% |
+| Формальное выполнение | 44.8% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -56,8 +56,9 @@ depth)` теперь защищён независимо от `ord/version`: о�
 координата разрешена отдельно. Гейт закрыт после полного `pnpm check`,
 architecture test ladder и evidence/checksum validation.
 
-Следующий implementation slice: `G10S-096` — service/command transaction,
-который demotes old preferred и promotes new preferred атомарно.
+Следующий implementation slice: `G10S-097` — alternative normal prompts
+требуют reviewer field и declaration `sameExpectedAnswer=true`; semantic
+sameness остаётся human-review responsibility.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture

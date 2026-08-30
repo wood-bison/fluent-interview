@@ -1314,7 +1314,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-096`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-097`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2445,7 +2445,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-093` Сохранить dynamic language table и ISO/BCP-47 normalization policy; closed enum RU/EN не использовать в authoring. Evidence: target `docs/verification/greenfield/G10S/language-policy-2026-08-30.json`/`.md`; `pnpm architecture:language` accepted dynamic `es`, `pt-BR`, and `zh-Hant` rows, canonicalized `pt-br`/`zh-hant`, rejected malformed tags, and reported no closed enum; target commits `7c590bc` (implementation) and `de6b8f7` (evidence).
 - [x] `G10S-094` Сохранить layer kinds и versioned layers; edit создаёт новую version/preferred transition, а не destructive overwrite. Evidence: target `docs/verification/greenfield/G10S/layer-versioning-2026-08-30.json`/`.md`; `pnpm architecture:layers` preserved 14 layer kinds, rejected an in-place body update, retained two distinct version hashes, and atomically transitioned v1 `deprecated` → v2 `preferred`; target commits `e9c1f8f` (implementation) and `401c0b4` (evidence).
 - [x] `G10S-095` Canonical prompt uniqueness действует на `(question, layer_key=prompt, lang, depth)` независимо от `ord/version`. Evidence: target `docs/verification/greenfield/G10S/prompt-uniqueness-2026-08-30.json`/`.md`; `pnpm architecture:prompts` отклонил preferred bypass с другим `ord+version` и с другой `version`, сохранил три English-варианта с единственным preferred и разрешил отдельную Russian coordinate; target commits `0cd4acc` (implementation) and `acc6e45` (evidence).
-- [ ] `G10S-096` Добавить service/command transaction, который demotes old preferred и promotes new preferred атомарно.
+- [x] `G10S-096` Добавить service/command transaction, который demotes old preferred и promotes new preferred атомарно. Evidence: target `docs/verification/greenfield/G10S/preferred-transition-2026-08-30.json`/`.md`; `pnpm architecture:preferred-transition` выполнил guarded demote/promote в одной транзакции, успешно оставил v1 `deprecated` и v2 `preferred`, затем отклонил отсутствующий v3 с exit 3 и доказал rollback по идентичным before/after facts; target commits `05e2236` (implementation) and `edba7d6` (evidence).
 - [ ] `G10S-097` Alternative normal prompts требуют reviewer field и declaration `sameExpectedAnswer=true`; machine gate лишь проверяет metadata, semantic sameness остаётся `[review]`.
 - [ ] `G10S-098` Corpus review queue явно выводит все alternative prompts для human compare; silent acceptance запрещён.
 - [ ] `G10S-099` Code-prediction source record преобразуется в Activity/Task/Drill с link на Question, а не в second semantic prompt.
