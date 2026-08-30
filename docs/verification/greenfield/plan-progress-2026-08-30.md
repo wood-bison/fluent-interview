@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 606 пунктов из 1 134.**
+**Осталось: 605 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 528 |
-| Осталось (`[ ]`) | 606 |
+| Закрыто (`[x]`) | 529 |
+| Осталось (`[ ]`) | 605 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.56% |
+| Формальное выполнение | 46.65% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -259,6 +259,17 @@ checksums и `118/118` architecture tests зелёные; push не выполн
 ограничению Actions quota. Следующий implementation slice: `G10S-117` —
 сохранить explicit author/reviewer/publisher identities и decisions в local
 single-user mode.
+
+Последний implementation slice: target `bbd2238` (evidence `12b4737`) закрыл
+`G10S-117`. Versioned local policy сохраняет одного реального actor и три явных
+roles — `author`, `reviewer`, `publisher`; три metadata receipts связывают
+profile/actor, required role/action, command, request hash, result и unique
+decision ID. `5/5` negative cases отклонили implicit/mismatched authority,
+duplicate decision и forged profile/actor. `10/10` content-model tests,
+`122/122` architecture tests и полный gate зелёные; push не выполнялся по
+ограничению Actions quota. Следующий implementation slice: `G10S-118` —
+перевести Studio create/edit на Strata authoring application command без writes
+в serving tables или JSONL authority.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх

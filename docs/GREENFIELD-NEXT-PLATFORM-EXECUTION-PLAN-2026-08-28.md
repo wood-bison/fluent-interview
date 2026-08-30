@@ -1487,6 +1487,27 @@ This closes G10S-116. The next executable slice is G10S-117: preserve explicit
 author/reviewer/publisher identities and immutable decisions in local
 single-user mode.
 
+### Execution update — G10S-117 explicit local Studio roles — 30 августа 2026
+
+Target `main` now contains `bbd2238` (`feat(g10s): preserve explicit Studio
+roles`) and evidence commit `12b4737` (`docs(g10s): record Studio role gate`).
+Versioned local policy моделирует одного реального actor, но три явных
+capabilities: `author`, `reviewer`, `publisher`. Каждая из трёх операций
+создаёт metadata decision receipt с profile/actor, required role/action,
+command ID, request hash, result ref, timestamp и unique decision ID; implicit
+super-role отсутствует.
+
+Machine gate отклонил `5/5` negative cases: missing role, role/action mismatch,
+duplicate decision ID, forged profile и forged actor. Same local actor может
+явно выполнять все три роли; configurable second reviewer не включён глобально
+и остаётся G10S-120. `10/10` content-model tests, `122/122` architecture tests,
+полный `pnpm check`, boundary/toolchain и evidence/checksum validation зелёные.
+Push не выполнялся по ограничению Actions quota.
+
+This closes G10S-117. The next executable slice is G10S-118: move Studio
+create/edit to a Strata authoring application command without serving-table or
+JSONL writes.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1533,7 +1554,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-117`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-118`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2688,7 +2709,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 ### G10S.5. Studio convergence без dual-write
 
 - [x] `G10S-116` Нарисовать current G10 sequence author→review→publish→outbox→readback и target Strata sequence; каждый old step получает target command. Evidence: target `1bca061`, evidence `18a85cf`; `5/5` old steps mapped once, `2` new export/import seams explicit, `10/10` source anchors and `5/5` negative cases verified.
-- [ ] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode.
+- [x] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode. Evidence: target `bbd2238`, evidence `12b4737`; one local actor, 3 explicit roles/actions, 3 decision receipts, 0 implicit roles, 5/5 negative authority cases rejected.
 - [ ] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection.
 - [ ] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision.
 - [ ] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально.
