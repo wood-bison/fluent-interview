@@ -1257,6 +1257,25 @@ state-specific evidence пока `0/71`; текущие `12` dispositions всё
 `ported|adapted|dropped(reason)` по каждому случаю. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-audit-2026-08-30.{json,md}`.
 
+### Execution update — G12 release graph reconciliation — 30 августа 2026
+
+Target `main` (`90f1a92`, evidence index `3ee3108`) добавил
+`pnpm reconciliation:release` и негативные fixture-тесты. Проверка связывает
+question/curriculum/activity/graph/project/observability authorities с
+projections, проверяет exact revision targets, release pointer и rebuilt
+progress projection. На seed-релизе `6` cards, `10` placements, `7` assessed
+activities, `3` graph edges, `5` projects, `30` project-coverage entries,
+`6` observability scenarios и `43` route entries проходят без orphan или
+source-hash mismatch. Два clean projection rebuild-прохода с фиксированным
+`asOf=2026-08-30T00:00:00.000Z` совпали побайтно (`10` artifacts), поэтому
+`unexplainedDeltaCount = 0`.
+
+G12-027 помечен `[x]` только для внутреннего reconciliation slice со статусом
+`PASS_WITH_LIMITATIONS`. Полнота seed-каталога не подменяется этим результатом:
+остаются `20` открытых lessons, `70` role requirements, `212` вопросов и `56`
+activities в content-enrichment очереди. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/release-graph-reconciliation-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -2322,7 +2341,12 @@ paths; denominators и stable IDs обязаны объяснять переис
 
 - [ ] `G12-025` Port Ledger entries all `ported|adapted|dropped(reason)`; planned/unresolved = 0.
 - [x] `G12-026` Route reconciliation unresolved = 0.
-- [ ] `G12-027` Data/content/task/project/progress reconciliation unexplained delta = 0.
+- [x] `G12-027` Data/content/task/project/progress reconciliation has
+  `unexplainedDeltaCount = 0` across released authorities and projections;
+  two fixed-`asOf` clean rebuilds are byte-identical. Seed content shortfalls
+  remain explicit (`20` open lessons, `70` role requirements, `212` questions
+  and `56` activities) and are not fabricated as coverage. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/release-graph-reconciliation-2026-08-30.json`.
 - [x] `G12-028` Target backup restored in disposable stack and reverified.
 - [x] `G12-029` Target startup failure → recovery → scoped cleanup rehearsed in
   a disposable Compose project; port collision failed closed, the unchanged
@@ -2369,12 +2393,15 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-018..019`, `G12-021`, `G12-023..024` намеренно остаются без галочек там, где
-репетиция покрыла только автоматический subset (например, route crawl без
-полной ручной визуальной вычитки, Navigator без реальной LM Studio usefulness
-review/streaming contract, Node runtime без multi-language conformance).
-Точные границы и ожидаемые следующие доказательства перечислены в target
-`G12/known-limitations.md`.
+`G12-018..019`, `G12-021` и `G12-024` намеренно остаются без полного
+production-утверждения там, где репетиция покрыла только автоматический
+subset (например, route crawl без полной ручной визуальной вычитки, Navigator
+без реальной LM Studio usefulness review/streaming contract, Node runtime без
+multi-language conformance, exact-RC без remote Actions из-за quota).
+`G12-023` и `G12-027` имеют локальные machine slices с явными
+`PASS_WITH_LIMITATIONS`; внешние collector/retention и content completeness
+по-прежнему являются отдельными promotion gates. Точные границы и ожидаемые
+следующие доказательства перечислены в target `G12/known-limitations.md`.
 
 ### Execution update — G12 stateful learner surface journey — 30 августа 2026
 
