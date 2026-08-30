@@ -783,6 +783,18 @@ live `observability:live` и direct 201 proxy write — PASS. Evidence:
 cross-language profiles, OTLP/load/outage drills и human walkthrough остаются
 в promotion scope; `G8-026` по-прежнему не переводится в PASS.
 
+### Execution update — G6 editor budget boundary — 30 августа 2026
+
+`10e7078` фиксирует проверенный редакторный boundary: текущий workbench
+использует source-owned textarea, а тяжелые `xterm`/Monaco/CodeMirror пакеты не
+установлены. Поэтому lazy-loading для отсутствующего пакета является N/A, но
+route budget остаётся обязательным guard. `pnpm performance:check` прошёл:
+`/practice/[slug]` 946084 B < 1000000, largest chunk 413669 B < 450000,
+total chunks 1120108 B < 1200000, forbidden packages = 0. Если тяжёлый
+редактор будет добавлен, G6-022 автоматически переоткрывается для chunk split,
+interaction latency и Web Vitals evidence. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G6/editor-budget-2026-08-30.md`.
+
 ### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
 
 Следующий deterministic batch довёл durable history до локального PostgreSQL
@@ -1521,7 +1533,7 @@ edges до переноса product code.
 - [x] `G6-019` Language/runtime selector показывает только compatible released options.
 - [ ] `G6-020` Node golden task предлагает JS/TS только если обе revisions реально существуют.
 - [x] `G6-021` Run, reset, hints, errors, loading/cancel/retry имеют ясные states.
-- [ ] `G6-022` xterm/large editor chunks lazy-loaded; initial route budget соблюдён.
+- [x] `G6-022` xterm/large editor chunks lazy-loaded; initial route budget соблюдён. Для текущего source-owned textarea heavy editor отсутствует (N/A); измеренный route/chunk budget PASS, при добавлении пакета пункт reopen.
 - [x] `G6-023` Keyboard, screen-reader labels, focus after run и terminal fallback PASS.
 
 ### Gate G6
