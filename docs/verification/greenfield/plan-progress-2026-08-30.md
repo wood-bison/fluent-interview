@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 623 пункта из 1 134.**
+**Осталось: 622 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 511 |
-| Осталось (`[ ]`) | 623 |
+| Закрыто (`[x]`) | 512 |
+| Осталось (`[ ]`) | 622 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.06% |
+| Формальное выполнение | 45.15% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -69,11 +69,20 @@ alternative, оставляет каждую запись в `REVIEW_REQUIRED`, 
 queue hash. Гейт закрыт после полного `pnpm check`, architecture test ladder,
 evidence/checksum validation и ручной проверки отсутствия body в queue.
 
-Следующий implementation slice: `G10S-100` — different semantic questions
-получают новый aspect и проходят duplicate review; Probe table/type/API не
-создаётся.
+Последний implementation slice: target `1ac1a1714c0c316e01aeb061335a8c204ace0a4c`
+(evidence `33b24741310eac2c1c0245cc379edd0306a9ca0d`) закрыл `G10S-100`.
+Metadata-only review сформировал три strict identity groups из пяти записей:
+одна clear, одна с явным human decision на новый aspect и одна
+`REVIEW_REQUIRED`. Автоматическое merge/aspect/semantic-question creation и
+Probe artifacts равны нулю; output без bodies, batch hash детерминирован.
+Reviewed proposal лишь готов к отдельной authoring command. Гейт закрыт после
+полного `pnpm check`, boundary/toolchain checks, architecture test ladder,
+evidence validation и checksum validation.
 
-Последний implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
+Следующий implementation slice: `G10S-101` — canonical `responseBudgetMin`
+и запрет UI-copy выдавать его за фактическую длительность ответа.
+
+Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
 code-prediction записей одна получила Activity/Task/Drill links при точном
 совпадении темы, две остались `REVIEW_REQUIRED`/`BLOCKED`, а обычная prompt-only
