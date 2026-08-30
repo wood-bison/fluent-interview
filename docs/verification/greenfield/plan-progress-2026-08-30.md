@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 604 пункта из 1 134.**
+**Осталось: 603 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 530 |
-| Осталось (`[ ]`) | 604 |
+| Закрыто (`[x]`) | 531 |
+| Осталось (`[ ]`) | 603 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.74% |
+| Формальное выполнение | 46.83% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -21,17 +21,17 @@ policy/evidence/independent-review пункты, поэтому он намер�
 closure и независимая финальная проверка. Формальный счётчик не является
 оценкой оставшихся часов и не подменяет evidence каждого гейта.
 
-Последний implementation slice: target `99cbda3` (evidence `4943cc4`) закрыл
-`G10S-118`. One-shot CLI под explicit `fluent_authoring` role выполнил create,
-exact replay, conflicting replay, edit и stale-head rollback в одной Strata
-transaction boundary. Disposable PostgreSQL сохранил `2` immutable revisions,
-`4` versioned layers, `2` metadata receipts и подтвердил `0` serving/legacy
-writes; browser-facing legacy mutation retired с `410 Gone`, а serving process
-не получил authoring credentials. `12/12` inherited, `16/16` platform и `12/12`
-functional-role database checks, `125/125` architecture tests, полный `pnpm
-check`, boundary/toolchain и checksum/evidence validation зелёные. Push не
+Последний implementation slice: target `e7ab46f` (evidence `6b017c9`) закрыл
+`G10S-119`. One-shot `strata.review.record-decision` связал immutable решение с
+exact revision ID/number, source author, explicit reviewer и PostgreSQL
+timestamp. Exact replay вернул ту же запись; changed replay, forged author,
+wrong revision, duplicate reviewer decision, update и delete отклонены. В базе
+остались `1` question, `1` revision, `1` review decision и `2` metadata
+receipts; serving/legacy writes и review bodies равны нулю. `12/12` inherited,
+`16/16` platform, `12/12` functional-role checks, `129/129` architecture tests,
+полный `pnpm check`, boundary/toolchain и checksum validation зелёные. Push не
 выполнялся по ограничению Actions quota. Следующий implementation slice:
-`G10S-119` — immutable review decision на exact authored revision.
+`G10S-120` — configurable independent-reviewer policy без fake второго actor.
 
 Предыдущий implementation slice: target `2b8a20d` (evidence `4abd375`) закрыл
 G10S-091. Disposable database после всех восьми миграций подтвердил точную

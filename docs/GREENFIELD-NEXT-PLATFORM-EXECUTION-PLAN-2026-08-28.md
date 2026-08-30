@@ -1532,6 +1532,34 @@ This closes G10S-118. The next executable slice is G10S-119: persist an
 immutable review decision bound to the exact authored revision, reviewer,
 timestamp and source revision.
 
+### Execution update — G10S-119 immutable Studio review decision — 30 августа 2026
+
+Target `main` now contains `e7ab46f` (`feat(g10s): persist immutable Studio
+review decisions`) and evidence commit `6b017c9` (`docs(g10s): record Studio
+review command gate`). Browser/Nest review mutations now return `410 Gone`;
+the supported boundary is the explicit one-shot
+`strata.review.record-decision` command under `fluent_authoring`.
+
+Post-commit disposable PostgreSQL rehearsal applied `10` migrations and bound
+one `approved` decision to the exact revision ID, revision number, source
+author, explicit reviewer and database timestamp. Exact replay returned the
+same decision. Changed replay, forged source author, wrong revision number,
+duplicate reviewer decision, update and delete all failed closed. Final state:
+`1` question, `1` immutable revision, `1` immutable review decision, `2`
+metadata receipts, `0` serving review writes and `0` legacy Studio rows. Raw
+rationale was never stored or emitted; only its SHA-256 crossed the command
+boundary.
+
+The post-commit ladder passed `12/12` inherited invariants, `16/16` platform
+ownership/grant assertions, `12/12` functional role checks, `14/14`
+content-model tests, `129/129` architecture tests, `57/57` API tests, `45/45`
+web tests, full `pnpm check`, boundary/toolchain and complete evidence checksum
+validation. Push was intentionally not performed because of the Actions quota.
+
+This closes G10S-119. The next executable slice is G10S-120: enforce the
+configurable independent-reviewer rule only when policy requires it, without
+fabricating a second person in local single-user mode.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1578,7 +1606,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-119`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-120`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2735,7 +2763,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-116` Нарисовать current G10 sequence author→review→publish→outbox→readback и target Strata sequence; каждый old step получает target command. Evidence: target `1bca061`, evidence `18a85cf`; `5/5` old steps mapped once, `2` new export/import seams explicit, `10/10` source anchors and `5/5` negative cases verified.
 - [x] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode. Evidence: target `bbd2238`, evidence `12b4737`; one local actor, 3 explicit roles/actions, 3 decision receipts, 0 implicit roles, 5/5 negative authority cases rejected.
 - [x] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection. Evidence: target `99cbda3`, evidence `4943cc4`; one-shot CLI performed create/edit with exact replay, conflict and stale-head rollback, produced 2 immutable revisions/4 versioned layers/2 metadata receipts, and wrote 0 serving cards/legacy Studio rows/JSONL projections.
-- [ ] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision.
+- [x] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision. Evidence: target `e7ab46f`, evidence `6b017c9`; one-shot command bound an approved decision to the exact immutable revision/source author and explicit reviewer, exact replay stayed idempotent, 7 negative mutation/identity cases failed closed, and serving/legacy writes remained zero.
 - [ ] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально.
 - [ ] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request.
 - [ ] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction.
