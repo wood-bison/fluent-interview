@@ -1257,6 +1257,19 @@ state-specific evidence пока `0/71`; текущие `12` dispositions всё
 `ported|adapted|dropped(reason)` по каждому случаю. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-audit-2026-08-30.{json,md}`.
 
+### Execution update — G12 state evidence registry — 30 августа 2026
+
+Target `main` (`4811050`, evidence `a5cdf89`) добавил `pnpm design:state-evidence` и durable
+`G12/state-evidence/index.json`. Реестр разворачивает все `71` D0 critical
+state в стабильные fixture IDs и требует для каждого независимые
+`interaction`, `visual` и `semantic` artifacts с SHA-256 под одним
+evidence-root. Structural audit проходит (`0` failures), но promotion
+остаётся fail-closed: `0/71` state entries, `0/12` promotable dispositions и
+`83` unresolved items. Это закрывает подготовительный implementation slice
+G12-025, но сам checkbox G12-025 остаётся `[ ]` до фактических captures и
+owner disposition. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence-registry-2026-08-30.{json,md}`.
+
 ### Execution update — G12 release graph reconciliation — 30 августа 2026
 
 Target `main` (`90f1a92`, evidence index `3ee3108`) добавил

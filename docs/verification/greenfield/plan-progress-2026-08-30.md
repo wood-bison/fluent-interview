@@ -20,6 +20,11 @@ policy/evidence/independent-review пункты, поэтому он намер�
 разбивку `pnpm plan:progress`: на implementation gates `G0–G12` остаётся 16
 пунктов, а независимая финальная проверка `R-*` ещё не начата.
 
+Последний implementation slice: target `4811050` (evidence `a5cdf89`) добавил
+G12-025 state evidence registry. Он формализовал `71` critical-state fixture
+IDs и трёхчастный evidence contract, но не закрыл checkbox: фактических
+captures `0/71`, promotable dispositions `0/12`, unresolved `83`.
+
 ## Открытые кластеры
 
 - governance и evidence protocol (`0.*`, `A-*`, `D-*`);
