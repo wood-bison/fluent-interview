@@ -185,9 +185,10 @@ evidence chain: `pnpm --filter @fluent/api test` — 38/38, projection rebuild �
 explanation/defense, deterministic rebuild прогресс- и revision-projection и
 bounded exact-revision Evidence Journal (`eba5dce` и предшествующие G7
 коммиты). Поэтому в чек-листе отмечены `G7-009`, `G7-013` и `G7-019`.
-Evaluator-backed spoken review, полноценный canonical event ledger и
-backup/restore остаются открытыми (`G7-012`, `G7-015`, `G7-023`); статус G7 не
-повышается до production `PASS`.
+Evaluator-backed spoken review и human semantic review остаются открытыми
+(`G7-012`); backup/restore для локальной single-project authority chain
+закрыт отдельной полной матрицей, а статус G7 по-прежнему не повышается до
+production `PASS`.
 
 ### Execution update — G8 project breadth release — 29 августа 2026
 
@@ -805,8 +806,8 @@ oversized body, exact idempotent replay, changed-payload conflict и четыр�
 конкурентные запросы получили `200/200/200/200`, `uniqueVerdicts=1` и
 `uniqueEvidence=1`; mastery/unlock не изменились. Это закрывает `G7-022` в
 текущем released Node/public-Next scope. G7-021 остаётся отдельной canary
-проверкой, G7-023 — полной event-ledger/backup promotion границей, поэтому
-`G7-026` по-прежнему честно остаётся `PASS_WITH_LIMITATIONS`.
+проверкой, а G7-023 закрывается только после отдельной backup/rebuild матрицы
+ниже; `G7-026` по-прежнему честно остаётся `PASS_WITH_LIMITATIONS`.
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G7/submit-matrix-2026-08-30.md`.
@@ -819,11 +820,36 @@ Evidence:
 `PASS`, 1 889 файлов, 0 findings, 0 symlink escapes, limits 10 000 files и
 128 MiB/file. Это закрывает `G7-021` для текущего declared local artifact
 surface; внешние logs/volumes и будущие roots требуют отдельной записи в
-manifest. G7-023 (полная event-ledger/backup promotion) и G7-026 остаются
-открытыми.
+manifest. Полная локальная event-ledger/backup matrix для G7-023 теперь
+зафиксирована ниже; G7-026 остаётся открытым из-за остальных promotion gates.
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G7/artifact-wide-canary-2026-08-30.md`.
+
+### Execution update — G7 canonical backup/restore matrix — 30 августа 2026
+
+Target `943d6b8` централизует allowlist в `tools/stack/stack-core.mjs`,
+добавляет `validateLedgerArchiveMatrix()` и metadata-only команду
+`pnpm stack:backup-matrix`. Она требует канонический набор из 14 durable
+ledger names, проверяет canonical order, duplicate/unknown entries,
+archive/manifest equality и hashes PostgreSQL/tar/artifact manifest; пустые
+ledgers отражаются как явные `absentEntries`.
+
+Свежий backup `var/backups/2026-08-30T11-32-05-415Z` прошёл matrix `PASS`
+(7 present, 7 explicit absent), integrity-only restore `valid=true`, а затем
+полный destructive rehearsal в scoped `fluent-restore-20260830` на порту
+`47461` (restore/restart/readiness `0`). Readback после восстановления дал 9
+submission evidence records, 1 learning assessment и 8 progress/mastery rows;
+projection rebuild из извлечённых authority ledgers дал 10 артефактов и
+детерминированный state hash
+`64a7ef262af34ad3de0a073766d60eca786dcf75dfaac14a7f7361caf91dc30b`.
+Disposable resources удалены scoped-командой (`containers=0`, `volumes=0`,
+`networks=0`). Это закрывает `G7-023` для локальной single-project chain;
+managed object storage, secret manager, multi-tenant locking и disaster
+recovery остаются promotion work.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G7/backup-matrix-2026-08-30.md`.
 
 ### Execution update — G10 research provenance boundary — 30 августа 2026
 
@@ -1658,10 +1684,16 @@ edges до переноса product code.
 - [x] `G7-022` Submit adversarial/concurrency/idempotency matrix PASS;
       `fb0267d` + `d3a8864`, live 7-case matrix and four-way same-key replay
       proof.
-- [ ] `G7-023` Evidence rebuild + backup/restore PASS.
+- [x] `G7-023` Evidence rebuild + canonical backup/restore matrix PASS для
+      локальной single-project authority chain; `943d6b8` и
+      `backup-matrix-2026-08-30.json`. Managed multi-tenant DR остаётся
+      отдельным promotion gate.
 - [x] `G7-024` Browser authority forgery tests PASS.
 - [x] `G7-025` Commit: `feat(g7): add authoritative submit verdict and evidence chain`.
-- [ ] `G7-026` `gate.json.status = PASS` (остаётся `PASS_WITH_LIMITATIONS`: отдельная evaluator trust zone и полноценная evidence/rebuild цепочка впереди).
+- [ ] `G7-026` `gate.json.status = PASS` (остаётся `PASS_WITH_LIMITATIONS`:
+      human/semantic review, secret-manager/remote trust and multi-language
+      promotion gates остаются впереди, хотя локальная evidence/rebuild chain
+      теперь закрыта).
 
 ---
 
