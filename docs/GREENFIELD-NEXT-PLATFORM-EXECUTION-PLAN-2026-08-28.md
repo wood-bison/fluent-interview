@@ -1508,6 +1508,30 @@ This closes G10S-117. The next executable slice is G10S-118: move Studio
 create/edit to a Strata authoring application command without serving-table or
 JSONL writes.
 
+### Execution update — G10S-118 Studio authoring command — 30 августа 2026
+
+Target `main` now contains `99cbda3` (`feat(g10s): route Studio authoring
+through Strata command`) and evidence commit `4943cc4` (`docs(g10s): record
+Studio authoring command gate`). ADR-0002 закрепляет one-shot CLI как
+единственный local authoring transport: Next/Nest serving process не получает
+authoring credentials, а legacy browser mutation отвечает `410 Gone` вместо
+dual-write.
+
+Живая disposable PostgreSQL репетиция применила `9` migrations и выполнила
+create, exact idempotent replay, conflicting replay, edit и stale-head rollback
+через scoped one-shot container без published port. Финальное состояние:
+`1` question, `2` immutable revisions, `4` versioned layers, `4` exact
+revision-layer links, `2` metadata receipts, `0` serving-card writes и `0`
+legacy Studio rows. PostgreSQL gate сохранил `12/12` inherited invariants,
+`16/16` ownership/grant assertions и `12/12` functional role checks. `12/12`
+content-model tests, `125/125` architecture tests, `57/57` API tests, `45/45`
+web tests, полный `pnpm check`, boundary/toolchain и evidence/checksum validation
+зелёные. Push не выполнялся по ограничению Actions quota.
+
+This closes G10S-118. The next executable slice is G10S-119: persist an
+immutable review decision bound to the exact authored revision, reviewer,
+timestamp and source revision.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1554,7 +1578,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-118`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-119`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2710,7 +2734,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 - [x] `G10S-116` Нарисовать current G10 sequence author→review→publish→outbox→readback и target Strata sequence; каждый old step получает target command. Evidence: target `1bca061`, evidence `18a85cf`; `5/5` old steps mapped once, `2` new export/import seams explicit, `10/10` source anchors and `5/5` negative cases verified.
 - [x] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode. Evidence: target `bbd2238`, evidence `12b4737`; one local actor, 3 explicit roles/actions, 3 decision receipts, 0 implicit roles, 5/5 negative authority cases rejected.
-- [ ] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection.
+- [x] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection. Evidence: target `99cbda3`, evidence `4943cc4`; one-shot CLI performed create/edit with exact replay, conflict and stale-head rollback, produced 2 immutable revisions/4 versioned layers/2 metadata receipts, and wrote 0 serving cards/legacy Studio rows/JSONL projections.
 - [ ] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision.
 - [ ] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально.
 - [ ] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request.

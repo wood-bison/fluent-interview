@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 605 пунктов из 1 134.**
+**Осталось: 604 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 529 |
-| Осталось (`[ ]`) | 605 |
+| Закрыто (`[x]`) | 530 |
+| Осталось (`[ ]`) | 604 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.65% |
+| Формальное выполнение | 46.74% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -20,6 +20,18 @@ policy/evidence/independent-review пункты, поэтому он намер�
 разбивку `pnpm plan:progress`: в неё входят implementation gates, quality/content
 closure и независимая финальная проверка. Формальный счётчик не является
 оценкой оставшихся часов и не подменяет evidence каждого гейта.
+
+Последний implementation slice: target `99cbda3` (evidence `4943cc4`) закрыл
+`G10S-118`. One-shot CLI под explicit `fluent_authoring` role выполнил create,
+exact replay, conflicting replay, edit и stale-head rollback в одной Strata
+transaction boundary. Disposable PostgreSQL сохранил `2` immutable revisions,
+`4` versioned layers, `2` metadata receipts и подтвердил `0` serving/legacy
+writes; browser-facing legacy mutation retired с `410 Gone`, а serving process
+не получил authoring credentials. `12/12` inherited, `16/16` platform и `12/12`
+functional-role database checks, `125/125` architecture tests, полный `pnpm
+check`, boundary/toolchain и checksum/evidence validation зелёные. Push не
+выполнялся по ограничению Actions quota. Следующий implementation slice:
+`G10S-119` — immutable review decision на exact authored revision.
 
 Предыдущий implementation slice: target `2b8a20d` (evidence `4abd375`) закрыл
 G10S-091. Disposable database после всех восьми миграций подтвердил точную
