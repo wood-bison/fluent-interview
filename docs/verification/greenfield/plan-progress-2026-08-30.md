@@ -5,12 +5,12 @@
 
 ## Формальный счётчик
 
-**Осталось: 625 пунктов из 1 134.**
+**Осталось: 624 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 509 |
-| Осталось (`[ ]`) | 625 |
+| Закрыто (`[x]`) | 510 |
+| Осталось (`[ ]`) | 624 |
 | Всего | 1 134 |
 | Формальное выполнение | 44.89% |
 
@@ -62,8 +62,16 @@ G10S-097. Alternative normal prompts теперь требуют `reviewer` и �
 sameness остаётся human-review responsibility. Гейт закрыт после полного
 `pnpm check`, architecture test ladder и evidence/checksum validation.
 
-Следующий implementation slice: `G10S-098` — вывести все alternative prompts
-в явную human review queue; silent acceptance запрещён.
+Последний implementation slice: target `78dcb10` (evidence `737df92`) закрыл
+G10S-098. Полная metadata-only queue теперь выводит каждую normal prompt
+alternative, оставляет каждую запись в `REVIEW_REQUIRED`, блокирует malformed
+кандидатов и содержит 0 silent acceptances; перестановка источника сохраняет
+queue hash. Гейт закрыт после полного `pnpm check`, architecture test ladder,
+evidence/checksum validation и ручной проверки отсутствия body в queue.
+
+Следующий implementation slice: `G10S-099` — code-prediction source record
+преобразуется в Activity/Task/Drill с link на Question, а не в second semantic
+prompt.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
