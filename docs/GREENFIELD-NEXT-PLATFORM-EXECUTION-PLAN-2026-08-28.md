@@ -1314,7 +1314,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-099`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-100`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2448,7 +2448,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-096` Добавить service/command transaction, который demotes old preferred и promotes new preferred атомарно. Evidence: target `docs/verification/greenfield/G10S/preferred-transition-2026-08-30.json`/`.md`; `pnpm architecture:preferred-transition` выполнил guarded demote/promote в одной транзакции, успешно оставил v1 `deprecated` и v2 `preferred`, затем отклонил отсутствующий v3 с exit 3 и доказал rollback по идентичным before/after facts; target commits `05e2236` (implementation) and `edba7d6` (evidence).
 - [x] `G10S-097` Alternative normal prompts требуют reviewer field и declaration `sameExpectedAnswer=true`; machine gate лишь проверяет metadata, semantic sameness остаётся `[review]`. Evidence: target `docs/verification/greenfield/G10S/alternative-prompt-2026-08-30.json`/`.md`; `pnpm architecture:alternative-prompts` принял reviewed normal variant и отклонил missing reviewer, missing declaration и `false`; target commits `49b872d` (implementation) and `4de55e9` (evidence).
 - [x] `G10S-098` Corpus review queue явно выводит все alternative prompts для human compare; silent acceptance запрещён. Evidence: target `docs/verification/greenfield/G10S/alternative-prompt-queue-2026-08-30.json`/`.md`; `pnpm architecture:alternative-queue` surfaced 4/4 alternatives, kept 4/4 `REVIEW_REQUIRED`, blocked 2 malformed/missing-coordinate candidates, emitted 0 silent acceptances, and produced the same queue hash after source permutation; target commits `78dcb10` (implementation) and `737df92` (evidence).
-- [ ] `G10S-099` Code-prediction source record преобразуется в Activity/Task/Drill с link на Question, а не в second semantic prompt.
+- [x] `G10S-099` Code-prediction source record преобразуется в Activity/Task/Drill с link на Question, а не в second semantic prompt. Evidence: target `docs/verification/greenfield/G10S/code-prediction-2026-08-30.json`/`.md`; `pnpm architecture:code-prediction` mapped 1 of 3 code-prediction records, kept 2 missing/mismatched task links `REVIEW_REQUIRED`, left 1 ordinary prompt-only record `NOT_APPLICABLE`, emitted 1 Activity + 1 Task link + 1 Drill, created 0 semantic questions, emitted no bodies, and preserved the same batch hash after source permutation; target commits `3fb97e6` (implementation) and `018ca80` (evidence).
 - [ ] `G10S-100` Different semantic question получает новый aspect и проходит duplicate review; Probe table/type/API не создаётся.
 - [ ] `G10S-101` `responseBudgetMin` имеет canonical definition и validation; UI-copy не называет его фактической длительностью ответа.
 - [ ] `G10S-102` Curriculum placement хранит priority/order/pattern/prerequisites; adapter не копирует их назад в Question.

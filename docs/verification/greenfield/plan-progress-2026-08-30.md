@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 624 пункта из 1 134.**
+**Осталось: 623 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 510 |
-| Осталось (`[ ]`) | 624 |
+| Закрыто (`[x]`) | 511 |
+| Осталось (`[ ]`) | 623 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.89% |
+| Формальное выполнение | 45.06% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -69,9 +69,17 @@ alternative, оставляет каждую запись в `REVIEW_REQUIRED`, 
 queue hash. Гейт закрыт после полного `pnpm check`, architecture test ladder,
 evidence/checksum validation и ручной проверки отсутствия body в queue.
 
-Следующий implementation slice: `G10S-099` — code-prediction source record
-преобразуется в Activity/Task/Drill с link на Question, а не в second semantic
-prompt.
+Следующий implementation slice: `G10S-100` — different semantic questions
+получают новый aspect и проходят duplicate review; Probe table/type/API не
+создаётся.
+
+Последний implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
+G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
+code-prediction записей одна получила Activity/Task/Drill links при точном
+совпадении темы, две остались `REVIEW_REQUIRED`/`BLOCKED`, а обычная prompt-only
+запись помечена `NOT_APPLICABLE`. В output нет body, semanticQuestionsCreated=0,
+а перестановка источника сохранила batch hash. Гейт закрыт после полного
+`pnpm check`, boundary/toolchain checks, evidence validation и checksum validation.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
