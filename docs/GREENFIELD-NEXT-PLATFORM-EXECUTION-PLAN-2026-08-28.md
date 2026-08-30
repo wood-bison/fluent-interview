@@ -1152,6 +1152,24 @@ multi-tenant authorization и third-party penetration test остаются от
 promotion gates. Push не выполнялся из-за зафиксированного лимита GitHub
 Actions; target `main` содержит коммиты локально.
 
+### Execution update — G12 provenance and signature boundary — 30 августа 2026
+
+Target `main` (`17cef51`, gate index `391ff62`) добавил
+`pnpm security:provenance`. Команда выполнила production build, locked
+dependency audit (`high=0`, `critical=0`), CycloneDX 1.5 inventory (175
+production components), immutable CodeQL workflow-shape/pin check и SLSA-shaped
+provenance envelope, связав Git `HEAD`, полный source-tree manifest,
+`pnpm-lock.yaml` и SBOM digest. Envelope подписан и проверен Ed25519;
+private key не сохраняется, в evidence попадают только public-key/signature
+hashes. Unit suite теперь `15/15`.
+
+Это закрывает machine provenance/signature slice `G12-019` с
+`PASS_WITH_LIMITATIONS`: ephemeral key доказывает только локальную целостность,
+CodeQL authority остаётся pinned remote workflow, а trusted registry/image
+signatures и exact immutable-RC attestation требуют внешнего signing identity.
+Report:
+`fluent-interview-platform/docs/verification/greenfield/G12/provenance-signature-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -2202,7 +2220,7 @@ paths; denominators и stable IDs обязаны объяснять переис
   evidence `c431bc3` сканирует declared и artifact-wide roots с 0 findings.
   Это не является независимым production sign-off.
 - [x] `G12-018` Auth/session/CSRF/XSS/SSRF/path traversal/command injection/secrets checks PASS. Target `8a554de` добавил static/live `security:boundary`; перечисленные fail-closed vectors и cleanup прошли, а local-single-user/auth limitation явно записана в G12 evidence.
-- [ ] `G12-019` Dependency audit/CodeQL/SBOM/provenance/signature checks PASS.
+- [x] `G12-019` Dependency audit/CodeQL/SBOM/provenance/signature checks PASS. Target `17cef51` добавил build/audit/SBOM/pinned-CodeQL/provenance и Ed25519 verification; ограничения trusted registry/image attestation явно записаны в evidence.
 - [x] `G12-020` Performance budgets PASS per route; released Node profile
   проверен на 13 routes и heavy-editor policy закрыта отсутствием `xterm`,
   `monaco-editor` и `codemirror` при bounded textarea editor. Evidence:
