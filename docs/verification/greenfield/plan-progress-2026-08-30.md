@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 615 пунктов из 1 134.**
+**Осталось: 614 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 519 |
-| Осталось (`[ ]`) | 615 |
+| Закрыто (`[x]`) | 520 |
+| Осталось (`[ ]`) | 614 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.77% |
+| Формальное выполнение | 45.86% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -136,8 +136,8 @@ Release boundary закрепляет `provenance-method.v1` с пятью ме�
 `human`, `translation`, `mt_reviewed`, `generated`, `imported`. Rehearsal
 принял 3 из 5 records и поместил два неизвестных ключа в `QUARANTINED`; missing
 method также quarantine-only, автоматическое сопоставление запрещено,
-projection metadata-only и детерминирован (`c3e3b583…c85fd`). Следующий
-implementation slice: `G10S-107` — explicit distributable grant для
+projection metadata-only и детерминирован (`c3e3b583…c85fd`). Реализованный
+implementation slice `G10S-107` — explicit distributable grant для
 company-linked и paid sources перед public disposition.
 
 Последний implementation slice: target `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -148,8 +148,21 @@ redistributable grant artifact для `company_linked` и `paid` источни�
 artifacts, поместил записи без grant или с non-redistributable grant в
 quarantine и подтвердил `autoGrantCount=0`; projection metadata-only и
 детерминирован (`aed8569be3b1858ca682e0aebda521947a808e3431fa08c52960289d9f5550dd`).
-Следующий implementation slice: `G10S-108` — разделить hidden/reference
-assets evaluator-а от public statement/contracts.
+Следующий implementation slice после него `G10S-108` разделил
+hidden/reference assets evaluator-а от public statement/contracts.
+
+Последний implementation slice: target `ce7e73d05e3f3bb94733f7cc7a1a125efdf785be`
+(evidence `c316b3bc2a962d6bd74ab9b9c550f2ea5ee16c1f`) закрыл `G10S-108`.
+`TaskPublicContract` и `TaskHiddenAssetManifest` теперь разделены строгими
+coordinate-bound схемами: публичная поверхность содержит только `public/`
+refs/hashes, evaluator surface — только `hidden/` refs/hashes для tests,
+reference solutions, harnesses, seeds и grading variants. Body-key canaries,
+public-to-hidden refs, coordinate mismatch, namespace leaks и duplicate hidden
+refs fail closed; rehearsal дал `2/5` accepted и `3` ожидаемых quarantine,
+`0` bodies в projection, hash
+`aef1cffc71a7bc04f01510458d8fb89e50a85fb07997886fcdaa15a9b3f90e8f`.
+Следующий implementation slice: `G10S-109` — allowlist evaluator build
+context и release-artifact leak canary.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх

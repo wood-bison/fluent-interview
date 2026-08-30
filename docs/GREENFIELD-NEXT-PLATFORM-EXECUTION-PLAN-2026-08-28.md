@@ -1289,6 +1289,26 @@ G12-027 помечен `[x]` только для внутреннего reconcil
 activities в content-enrichment очереди. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/release-graph-reconciliation-2026-08-30.{json,md}`.
 
+### Execution update — G10S-108 public/hidden task asset boundary — 30 августа 2026
+
+Target `main` now contains `ce7e73d05e3f3bb94733f7cc7a1a125efdf785be`
+(`feat(g10s): separate public and hidden task assets`) and evidence commit
+`c316b3bc2a962d6bd74ab9b9c550f2ea5ee16c1f` (`docs(g10s): record task asset boundary`).
+`TaskPublicContract` now carries only `public/` statement, input/output,
+dataset and grading references plus hashes. `TaskHiddenAssetManifest` is a
+separate coordinate-bound evaluator surface for hidden tests, reference
+solutions, harnesses, hidden seeds, grading variants and rubric fixtures;
+every entry requires `hidden/`, `visibility=hidden`, `audience=evaluator` and a
+content hash. Strict schemas and the policy reject body/solution/test-code
+keys, public-to-hidden references, namespace leaks, duplicate refs and
+TaskFamily/TaskRevision mismatches before projection. Five fixture records
+yielded `2` accepted and `3` expected quarantines, with `0` projected bodies
+and deterministic hash `aef1cffc71a7bc04f01510458d8fb89e50a85fb07997886fcdaa15a9b3f90e8f`.
+
+This closes only G10S-108's contract boundary. G10S-109 must add the
+build-context allowlist and release-artifact canary proving evaluator assets
+cannot leak into the public bundle.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1335,7 +1355,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-108`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-109`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2478,7 +2498,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-105` Provenance хранит source, method, acquiredAt/importedAt, reviewer, disposition, rights и redistributable flag. Evidence: target `docs/verification/greenfield/G10S/provenance-fields-2026-08-30.json`/`.md`; `pnpm architecture:provenance-fields` принял 2 из 5 metadata records и отклонил 3 intentional negative fixtures (missing importedAt, reversed clock, public non-redistributable), подтвердил все обязательные поля, chronology/public-rights guards, metadata-only deterministic projection и отсутствие bodies; target commit `16c62996747a49a79e65518c5d6603f7f560d9e7`; evidence commit `bf7187a2e89ded9a92374ee6043feaf02526e4fc`.
 - [x] `G10S-106` Метод `human|translation|mt_reviewed|generated|imported` либо reviewed equivalent определён versioned vocabulary; unknown method rejected/quarantined. Evidence: target `docs/verification/greenfield/G10S/provenance-method-2026-08-30.json`/`.md`; `pnpm architecture:provenance-method` закрепил `provenance-method.v1`, принял 3 из 5 records, отправил 2 неизвестных метода в `QUARANTINED`, не применил auto-map и выпустил metadata-only deterministic projection; target commit `7815ed07d09150ef220a4f6e97d9479501153d10`; evidence commit `c98873d64fd02f767cd9a9326e95bd9c6cc6e491`.
 - [x] `G10S-107` Company-linked source и paid source не может иметь public disposition без explicit distributable grant artifact. Evidence: target `docs/verification/greenfield/G10S/provenance-grant-2026-08-30.json`/`.md`; `pnpm architecture:provenance-grant` accepted 3/5 records, quarantined missing/non-redistributable grants, reported `autoGrantCount=0`, and emitted deterministic metadata-only projection; target implementation `c619ae412bad0f26d81cee57f08ec5255e63dda1`, evidence commit `6c09aa2fa06c2fde656d86f2d5526aac79801a4b`.
-- [ ] `G10S-108` TaskFamily/TaskRevision/Dataset/grading model сохраняет hidden/reference assets отдельно от public statement/contracts.
+- [x] `G10S-108` TaskFamily/TaskRevision/Dataset/grading model сохраняет hidden/reference assets отдельно от public statement/contracts. Evidence: target `docs/verification/greenfield/G10S/task-asset-boundary-2026-08-30.json`/`.md`; `pnpm architecture:task-asset-boundary` accepted 2/5 records, rejected public/hidden body-key canaries, coordinate mismatch and hidden namespace leakage, and emitted deterministic metadata-only public/hidden projections; target implementation `ce7e73d05e3f3bb94733f7cc7a1a125efdf785be`, evidence commit `c316b3bc2a962d6bd74ab9b9c550f2ea5ee16c1f`.
 - [ ] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки.
 - [ ] `G10S-110` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает.
 - [ ] `G10S-111` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён.
