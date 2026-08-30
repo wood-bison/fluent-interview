@@ -2158,7 +2158,12 @@ paths; denominators и stable IDs обязаны объяснять переис
   bundle: core остаётся ready без optional collector, collector восстанавливается
   после outage, incident capture redacts forbidden fields. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/observability-lifecycle-2026-08-30.json`.
-- [ ] `G12-013` Проверить stop/restart/backup/restore/data persistence.
+- [x] `G12-013` Проверить stop/restart/backup/restore/data persistence.
+  `stack:persistence` прошёл stop/start и scoped down/up, backup matrix для 14
+  canonical ledgers, exact SHA-256 restore и проверку сохранности Studio
+  PostgreSQL authority; baseline сохранился, post-backup sentinels удалены,
+  cleanup оставил 0 containers/networks. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/persistence-journey-2026-08-30.json`.
 - [x] `G12-014` Проверить clean shutdown и zero orphan resources.
 
 ### G12.2. Quality/security/supply chain
@@ -2234,8 +2239,8 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там,
-где репетиция покрыла только автоматический subset (например, route crawl без
+`G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, Navigator без реальной LM Studio usefulness
 review/streaming contract, Node runtime без multi-language conformance).
 Точные границы и ожидаемые следующие доказательства перечислены в target
@@ -2278,6 +2283,30 @@ turn и exact idempotent replay декодируются через contracts; S
 usefulness реальной LM Studio, human prompt review или поддержку SSE: текущий
 `navigator-turn.v1` намеренно JSON-only и требует отдельного versioned
 streaming contract.
+
+### Execution update — G12 persistence journey — 30 августа 2026
+
+Target `fluent-interview-platform` commits `004e7ec`, `ceb93c5` и `8f75036`
+добавили воспроизводимый `pnpm stack:persistence` и metadata-only evidence
+для `G12-013`. На disposable Compose project baseline-записи прошли через
+публичную Next boundary в submit/progress/observability ledgers, а Studio
+candidate → review → publish → readback записался в PostgreSQL authority.
+
+`docker compose stop` → `start` и полный scoped `pnpm down` → неизменённый
+`pnpm dev -- --detached` сохранили baseline. `data:backup --confirm` плюс
+`stack:backup-matrix` проверили `data-backup.v1`, SHA-256 и полный canonical
+набор из 14 ledger names. После добавления post-backup sentinels
+`data:restore --confirm --input <backup-dir>` проверил integrity, очистил
+allowlisted ledgers, восстановил snapshot и перезапустил application services.
+После restore baseline и Studio release присутствуют, post-backup submit,
+progress и observability отсутствуют; cleanup оставил `0` containers и `0`
+networks, durable volumes сохранены.
+
+Полный результат:
+`fluent-interview-platform/docs/verification/greenfield/G12/persistence-journey-2026-08-30.{json,md}`.
+Это закрывает local single-host machine slice `G12-013`; encrypted off-host
+backup, retention/DSAR, key rotation, multi-host disaster recovery, load и
+human sign-off остаются отдельными promotion gates.
 
 ### Что агенту запрещено писать после G12
 
