@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 622 пункта из 1 134.**
+**Осталось: 621 пункт из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 512 |
-| Осталось (`[ ]`) | 622 |
+| Закрыто (`[x]`) | 513 |
+| Осталось (`[ ]`) | 621 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.15% |
+| Формальное выполнение | 45.24% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -79,8 +79,18 @@ Reviewed proposal лишь готов к отдельной authoring command. �
 полного `pnpm check`, boundary/toolchain checks, architecture test ladder,
 evidence validation и checksum validation.
 
-Следующий implementation slice: `G10S-101` — canonical `responseBudgetMin`
-и запрет UI-copy выдавать его за фактическую длительность ответа.
+Последний implementation slice: target `85570a17e2c0863566678af9d76afaaed3a4598b`
+(evidence `db97d2c485745a9ffbb66d6d22e6b9d04ddb90f6`) закрыл `G10S-101`.
+Единая Zod-схема принимает целые плановые минуты `1..120`; RU/EN planned-budget
+copy проходит, unsafe `Actual response duration`, ноль, дробь и значение выше
+границы отклоняются. Negative fixtures дают ожидаемый `REVIEW_REQUIRED`, при
+этом все три отказы корректны; observed learner duration и Activity execution
+budget не смешиваются, bodies не эмитируются. Гейт закрыт после полного
+`pnpm check`, boundary/toolchain checks, architecture test ladder, evidence
+validation и checksum validation.
+
+Следующий implementation slice: `G10S-102` — curriculum placement хранит
+priority/order/pattern/prerequisites; adapter не копирует их назад в Question.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
