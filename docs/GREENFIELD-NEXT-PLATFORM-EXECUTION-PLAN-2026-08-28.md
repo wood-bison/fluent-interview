@@ -1319,13 +1319,35 @@ authority: затронутые content, release, Studio, persistence, route и 
 на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex после
 независимой проверки. Только затем агент получает G11 breadth work.
 
+### Master-plan expansion — controlled legacy decommission — 30 августа 2026
+
+После production cutover добавлен обязательный **G13**: проверяемое удаление
+старого кода, duplicate entities и локальных Docker-ресурсов. Это не разрешение
+удалять их сейчас. G13 запускается только после принятого G12 RC, exact
+decommission manifest, проверенных archives/restores и owner authorization.
+
+Read-only snapshot на момент расширения плана:
+
+- system data volume: `460 GiB`, used `379 GiB`, available `57 GiB` (`87%`);
+- legacy umbrella workspace: `4.8 GiB`;
+- active target: `3.4 GiB` — **никогда не legacy target**;
+- standalone Strata: `171 MiB`; questions research root: `15 MiB`;
+- Docker: images `18.13 GB` (`2.805 GB` reported reclaimable), local volumes
+  `19 GB` (`14.96 GB` reported reclaimable), build cache `22.67 GB`
+  (`21.13 GB` reported reclaimable).
+
+Docker totals относятся ко всему host и не являются разрешением на global
+prune: здесь одновременно работают unrelated `spearad-test-stack`, `searxng`
+и другие проекты. G13 удаляет только exact IDs/paths из approved manifest и
+отдельно доказывает, что active target и unrelated resources не изменились.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
 
 ### 0.1. Неподвижный порядок
 
-- [ ] `P-001` Выполнять только `G0 → G1 → … → G10 → G10S → G11 → G12`.
+- [ ] `P-001` Выполнять только `G0 → G1 → … → G10 → G10S → G11 → G12 → independent release review → G13`.
 - [ ] `P-002` Не начинать следующий gate, пока текущий не имеет `PASS`.
 - [ ] `P-003` `PARTIAL`, `WAIVED`, `MOSTLY PASS` и «работает у меня» не разрешают переход.
 - [ ] `P-004` Destructive/cutover действия разрешены только после отдельного preflight внутри соответствующего gate.
@@ -1406,7 +1428,8 @@ docs/verification/greenfield/Gxx/
 
 ### 0.5. Универсальный test ladder
 
-Каждый gate запускает релевантное подмножество, а G12 — всё:
+Каждый gate запускает релевантное подмножество, G12 — полный product suite, а
+G13 повторяет его после физического удаления legacy resources:
 
 - [ ] `P-036` format/lint/typecheck;
 - [ ] `P-037` unit tests;
@@ -1448,6 +1471,23 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `P-064` Standalone Strata не удаляется и не архивируется до parity, rollback rehearsal и независимого review.
 - [ ] `P-065` Agent заканчивает G10S статусом `AWAITING_INDEPENDENT_REVIEW`; окончательное принятие выполняет Codex по разделу 3.
 - [ ] `P-066` После принятия G10S агент продолжает G11 с первого реально открытого пункта, а не переигрывает уже доказанные независимые gates без причины.
+
+### 0.8. Decommission и disk-reclamation discipline
+
+- [ ] `P-067` Полный порядок: G10S implementation → G10S independent review → G11 → G12 RC → final independent review/owner authorization → G13 cleanup → G13 independent verification → `DONE`.
+- [ ] `P-068` Ни один destructive G13 command не запускается без versioned `decommission-manifest.json` и exact approved manifest hash.
+- [ ] `P-069` Любой cleanup tool по умолчанию выполняет dry-run; mutation требует `--confirm <manifest-sha256>` и повторной проверки target IDs непосредственно перед действием.
+- [ ] `P-070` `rm -rf` по broad path, `$HOME`, `~`, workspace root, unresolved variable, glob, symlink target, `docker system prune`, `docker volume prune` и global Trash empty запрещены.
+- [ ] `P-071` Active target root, active target Compose project, current release images/volumes и backup root входят в immutable denylist cleanup tool.
+- [ ] `P-072` Unrelated Compose projects/resources, включая `spearad-test-stack`, `searxng`, Minikube и неизвестные labels, никогда не удаляются G13.
+- [ ] `P-073` Cleanup выполняется по одной волне: stop → verify target → archive/restore proof → mutate exact resources → verify target → commit evidence.
+- [ ] `P-074` Umbrella repo нельзя удалить, пока current master-plan, ADR/context decisions, Port Ledger и required evidence index не перенесены и не проверены в target.
+- [ ] `P-075` Remote repository сначала становится archived/read-only; remote deletion требует нового отдельного owner request и не входит в G13.
+- [ ] `P-076` Local Git repo удаляется только после clean/dirty inventory, `git bundle --all`, bundle clone/fsck/check и remote reachability proof.
+- [ ] `P-077` Database table/column/file entity удаляется только после zero code references, zero observed reads/writes, migration reconciliation и tested restore.
+- [ ] `P-078` Shared Docker build cache не считается owned по одному имени; его prune требует separate owner approval или dedicated builder scope.
+- [ ] `P-079` Каждая cleanup wave публикует bytes eligible/retained/reclaimed, exact deleted IDs, checksums archives и post-wave free space.
+- [ ] `P-080` Если manifest target изменился, стал mounted/running/dirty или replacement evidence устарело, wave останавливается и требует новый review.
 
 ---
 
@@ -1498,6 +1538,17 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `A-043` В target monorepo один `.git`, один `pnpm-lock.yaml`, один Nx project graph и один root Compose project; standalone npm/Compose authority после cutover не остаётся.
 - [ ] `A-044` Standalone Strata сохраняется как immutable reference tag/bundle до проверенного rollback; физическое удаление требует отдельного owner decision.
 - [ ] `A-045` Dual-write между Strata, Studio ledger и serving catalog запрещён; у каждого факта ровно один owner и rebuildable projections.
+- [ ] `A-046` Lifecycle states каноничны: `active` → `reference` → `retired` → `archived` → `removed-local`; эти слова не взаимозаменяемы.
+- [ ] `A-047` `retired` означает zero runtime/release/CI dependency; `archived` добавляет проверяемый Git/data restore artifact; только `removed-local` освобождает диск.
+- [ ] `A-048` Legacy decommission выполняется manifest-driven tooling, а не ручным набором ad hoc shell-команд.
+- [ ] `A-049` Один active source monorepo и один active root Compose project остаются после G13; исторические remotes сохраняются archived/read-only.
+- [ ] `A-050` Legacy DB entities удаляются двухфазно: сначала stop-write/read-observation + compatibility migration, затем отдельная irreversible drop migration после acceptance.
+- [ ] `A-051` Старые JSONL/catalog/projection files не удаляются до reconciliation с Strata/serving authority и explicit `migrated|archived|rejected(reason)` disposition.
+- [ ] `A-052` Большие source histories/evidence не копируются целиком в target Git; target хранит manifests/hashes/pointers, а compressed archives живут вне Git.
+- [ ] `A-053` Build/output caches являются regenerable, но shared host caches не принадлежат Fluent автоматически; future builds используют dedicated Fluent buildx builder/cache namespace.
+- [ ] `A-054` GitHub legacy repos архивируются только после target fresh-clone independence и source bundle restore; scheduled workflows отключаются до archive.
+- [ ] `A-055` Old Compose volumes удаляются только по exact ID после backup→restore; container/network/image удаляются только после mount/reference scan.
+- [ ] `A-056` Active target, unrelated workspaces и user data имеют deny-by-default protection; отсутствие owner label означает `unknown`, а не `safe-to-delete`.
 
 ---
 
@@ -1511,7 +1562,7 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `D-003` `pnpm dev` запускает один scoped Compose stack и выводит один непротиворечивый status.
 - [ ] `D-004` `pnpm down` сохраняет durable data и удаляет scoped orphan resources.
 - [ ] `D-005` `doctor/status/clean/data backup/restore/incident capture` имеют typed JSON output.
-- [ ] `D-006` Reference Product всё ещё запускается из frozen snapshot.
+- [ ] `D-006` До G13 Reference Product запускается из frozen snapshot; после G13 тот же baseline воспроизводится из проверенного archive bundle/dump без сохранённого working tree.
 - [ ] `D-007` Нет production fallback calls/symlinks/nested Git на Reference Product.
 - [ ] `D-008` Все reference learner routes классифицированы `ported|replaced|retired(reason)`; unresolved = 0.
 - [ ] `D-009` Next route/behavior/data/visual/a11y parity подписана по route manifest.
@@ -1534,10 +1585,10 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `D-026` Browser artifacts находятся в CI/artifact storage, не раздувают Git.
 - [ ] `D-027` SBOM, provenance, pinned actions/images и dependency review проходят.
 - [ ] `D-028` Backup→restore и target→reference rollback реально отрепетированы.
-- [ ] `D-029` G0–G10, G10S, G11 и G12 имеют PASS evidence и clean commits.
+- [ ] `D-029` G0–G10, G10S, G11, G12 и G13 имеют PASS evidence и clean commits.
 - [ ] `D-030` Agent выставил `AWAITING_INDEPENDENT_REVIEW`, а не `DONE`.
 - [ ] `D-031` Независимый Codex-аудит повторил проверки и владелец подписал human visual/learning flows.
-- [ ] `D-032` Только после D-031 release получает `DONE` и immutable tag.
+- [ ] `D-032` После D-031 release получает immutable production tag, но master-plan получает `DONE` только после G13 independent PASS.
 - [ ] `D-033` Strata перенесена в target monorepo без nested Git/npm lock/standalone Compose и включена в Nx affected graph.
 - [ ] `D-034` Fresh/upgrade PostgreSQL migrations создают schema/roles/default privileges; все запрещённые cross-boundary SQL операции fail closed.
 - [ ] `D-035` Static scan и live DB proof подтверждают: API/serving не импортируют Strata, не знают authoring DSN и не читают `strata.*`.
@@ -1551,6 +1602,17 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `D-043` Standalone Strata архивирована только после parity, restore и rollback rehearsal; reference tag/bundle/hash доступны.
 - [ ] `D-044` G10S имеет independent PASS, а все затронутые G11/G12 evidence повторены на новом content/release authority.
 - [ ] `D-045` Ни paid Solvit wording, ни company-linked source, ни unknown-rights body не присутствуют в distributable Git, bundle, logs, traces или learner UI.
+- [ ] `D-046` G13 decommission ledger имеет disposition для каждого legacy repo, entity, container, network, volume, image, cache root и artifact root; unresolved = 0.
+- [ ] `D-047` На диске остаётся один active source monorepo; removed legacy repos имеют tested bundles/remotes и target pointers.
+- [ ] `D-048` Legacy Fluent Compose projects/containers/networks отсутствуют; active target Compose project проходит restart/health/learner journey.
+- [ ] `D-049` Legacy Fluent volumes/images удалены либо имеют approved retention reason; unrelated Docker resources не изменены.
+- [ ] `D-050` Legacy tables/columns/JSONL/catalog projections удалены отдельными migrations после zero-reference/read/write proof и restorable archive.
+- [ ] `D-051` Standalone Strata/questions/old umbrella roots удалены локально только после соответствующих migration/archive gates; active quarantine data имеет новый explicit owner/path.
+- [ ] `D-052` Legacy GitHub repositories archived/read-only с replacement URL/SHA/tag; remote deletion не выполнялось без отдельного запроса.
+- [ ] `D-053` Disk report публикует baseline, eligible bytes, archive bytes, reclaimed bytes, residual unrelated bytes и post-cleanup capacity.
+- [ ] `D-054` Fresh clone + `pnpm dev` + C098 + one canary per production path проходят после физического удаления source repos и legacy Docker resources.
+- [ ] `D-055` G13 cleanup tool fail-closed защищает broad paths, symlinks, active target IDs, mounted volumes, running containers и unknown ownership.
+- [ ] `D-056` Independent Codex audit повторил manifests, restore, negative guards и post-cleanup product journey; только после этого статус `DONE`.
 
 ---
 
@@ -2521,7 +2583,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [ ] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым.
 - [ ] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks.
 - [ ] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить.
-- [ ] `G10S-219` Не удалять local source repo без отдельного owner request; automatic cleanup ограничить containers/networks source Compose после backup.
+- [ ] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof.
 - [ ] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target.
 - [ ] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service.
 - [ ] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes.
@@ -3077,7 +3139,7 @@ human sign-off остаются отдельными promotion gates.
 - [ ] `R-013` Провести timed coding, system design, incident response и English defense mock.
 - [ ] `R-014` Зафиксировать findings как P0–P3; P0/P1 должны быть исправлены и перепроверены.
 - [ ] `R-015` Только после PASS создать final production tag и owner sign-off.
-- [ ] `R-016` Решение об archive/delete старых repos принимается отдельным запросом владельца.
+- [ ] `R-016` После production sign-off владелец отдельно утверждает exact G13 `decommission-manifest.json` hash; это разрешает только перечисленные local resources, но не remote-repository deletion.
 - [ ] `R-017` Сверить source Strata baseline/tag/bundle с target provenance map; необъяснённые missing/changed files = 0.
 - [ ] `R-018` Повторить source Strata `npm run check`, double `db:load`, `db:verify` и golden queries на archived baseline.
 - [ ] `R-019` Повторить target authoring unit/corpus/link/fixture/property tests без доверия agent summary.
@@ -3102,12 +3164,240 @@ human sign-off остаются отдельными promotion gates.
 
 ---
 
+# G13 — Legacy decommission и controlled disk reclamation
+
+## Цель
+
+После принятого production RC освободить диск и завершить greenfield migration:
+удалить только доказанно заменённые legacy entities, Compose resources и local
+working trees, сохранив минимальный проверяемый provenance/rollback archive.
+G13 не трогает active target и unrelated host projects.
+
+> `docs/verification/G13-LEGACY-REMOVAL-2026-08-25.md` относится к прежней
+> multi-repository архитектуре и не закрывает этот gate. Его нужно сохранить как
+> `HISTORICAL_PRE_GREENFIELD` input; новый evidence живёт только в target
+> `docs/verification/greenfield/G13/` и ссылается на current production SHA.
+
+## Неподвижная последовательность
+
+```text
+accepted G12 RC
+  → exact dependency/resource inventory
+  → stop legacy writes and prove zero consumers
+  → create + restore Git/DB archives
+  → remove legacy containers/networks
+  → remove exact legacy volumes/images/caches
+  → remove local legacy working trees (umbrella — последним)
+  → fresh-clone/product/disk verification
+  → independent Codex review
+  → DONE
+```
+
+| Волна | Диапазон | Destructive | Commit/evidence owner |
+| --- | --- | --- | --- |
+| Authorization/baseline | `001–018` | нет | implementing agent |
+| Resource ledger | `019–040` | нет | implementing agent |
+| Dependency/entity retirement | `041–068` | schema drop только в конце подфазы | implementing agent |
+| Archives/restore | `069–088` | нет, кроме disposable restore cleanup | implementing agent |
+| Docker cleanup | `089–112` | да, exact approved IDs | implementing agent |
+| Files/repos/cache cleanup | `113–132` | да, exact approved paths | implementing agent |
+| Machine verification/handoff | `133–143` | нет | implementing agent |
+| Independent acceptance | `144–150` | нет | Codex/owner |
+
+### G13.0. Authorization и immutable baseline
+
+- [ ] `G13-001` Подтвердить G10S, G11, G12 и applicable independent review PASS на exact target HEAD/production tag.
+- [ ] `G13-002` Подтвердить, что target fresh clone запускается без mounted/symlink/runtime access к legacy roots, databases или APIs.
+- [ ] `G13-003` Создать `docs/verification/greenfield/G13/` и versioned schema `legacy-decommission.v1`.
+- [ ] `G13-004` Снять `df -h`, `du` exact candidate roots, `docker system df -v`, Compose/projects/containers/networks/volumes/images/builders и open ports/processes.
+- [ ] `G13-005` Сохранить current active target Compose project, container IDs, image digests, volume IDs, release IDs и database logical hashes в immutable denylist.
+- [ ] `G13-006` Сохранить unrelated Docker resources по exact IDs/labels в immutable denylist; отсутствие Fluent owner proof означает `unknown/protected`.
+- [ ] `G13-007` Проверить git status/branch/HEAD/remotes/tags/LFS/submodules каждого legacy repo и target; dirty/unknown останавливает его removal wave.
+- [ ] `G13-008` Проверить current target `pnpm check`, full content/runtime gates, `pnpm dev`, doctor/status и selected learner journeys до cleanup.
+- [ ] `G13-009` Создать target data backup и выполнить disposable restore до любого legacy stop/delete.
+- [ ] `G13-010` Создать owner-approved `decommission-authorization.json`: target production SHA/tag, manifest hash, allowed resource classes, approved waves и expiry/review timestamp.
+- [ ] `G13-011` Authorization не содержит wildcard/path prefix approval; каждая mutation требует exact path/resource ID.
+- [ ] `G13-012` Создать cleanup tool с default dry-run и `--confirm <manifest-sha256>`; direct manual deletion не является нормальным workflow.
+- [ ] `G13-013` Cleanup tool canonicalizes path, refuses symlinks, mount roots, filesystem roots, home/workspace roots, active target root и parent-directory removal.
+- [ ] `G13-014` Cleanup tool re-inspects Docker IDs/labels/mounts/running state immediately before mutation; stale manifest fails closed.
+- [ ] `G13-015` Cleanup tool logs metadata only: exact IDs/paths, before/after bytes, exit code, timestamps; secrets/source bodies не логируются.
+- [ ] `G13-016` Добавить negative fixtures для broad path, glob, unresolved variable, symlink escape, active target, mounted volume, running unknown container и changed manifest hash.
+- [ ] `G13-017` Перенести canonical master-plan, target-relevant ADR/context, Port Ledger, release/evidence index и decommission schema в target repo; сохранить source→target hash map.
+- [ ] `G13-018` Commit target: `docs(g13): establish controlled legacy decommission gate`; old umbrella plan после этого становится frozen source snapshot.
+
+Required lifecycle tool contract (точные script names создаёт G13-012):
+
+```text
+pnpm decommission:inventory --output <absolute-evidence-path>
+pnpm decommission:validate --manifest <absolute-manifest-path>
+pnpm decommission:dry-run --manifest <absolute-manifest-path>
+pnpm decommission:apply --manifest <absolute-manifest-path> --confirm <sha256>
+pnpm decommission:verify --manifest <absolute-manifest-path>
+pnpm disk:budget --output <absolute-evidence-path>
+```
+
+`apply` обрабатывает только одну объявленную wave за запуск; команда без exact
+wave ID, manifest hash или current denylist verification обязана завершаться до
+первой mutation.
+
+### G13.1. Exact resource/dependency ledger
+
+- [ ] `G13-019` Инвентаризировать nested legacy repos в old umbrella: Lab, Vue, Question Brain, Task Runtime и Vault; для каждого записать role, remote, HEAD, size и replacement evidence.
+- [ ] `G13-020` Инвентаризировать standalone `/Users/sergeyzhechko/developer/strata`; removal eligible только после G10S archive/parity PASS.
+- [ ] `G13-021` Инвентаризировать `/Users/sergeyzhechko/developer/questions`; raw/quarantine records получают новый explicit data owner/path либо retained reason до source-root removal.
+- [ ] `G13-022` Инвентаризировать old umbrella `/Users/sergeyzhechko/developer/fluent-interview`; removal eligible последним после target docs/archive verification.
+- [ ] `G13-023` Historical sandbox roots (`developer/sandbox/*`) и любые repos вне explicit manifest пометить `out_of_scope/protected`.
+- [ ] `G13-024` Known Trash candidate `fluent-engineering-lab-nx-2026-08-26` может войти только exact path entry; global Trash enumeration/removal запрещены.
+- [ ] `G13-025` Для каждого repo записать tracked/untracked/ignored bytes, object database size, worktree outputs, `node_modules`, build artifacts, logs, caches и local-only data.
+- [ ] `G13-026` Для каждого repo проверить remote branch/tag reachability; unpushed commits/branches получают push, bundle-only retention или explicit blocker.
+- [ ] `G13-027` Для каждого repo проверить Git LFS objects/submodules; bundle без необходимых objects не считается archive.
+- [ ] `G13-028` Инвентаризировать legacy Compose projects минимум `fluent-engineering-lab`, `fluent-question-brain`, `fluent-task-runtime`, `strata` и disposable old target RC projects.
+- [ ] `G13-029` Active target Compose project `fluent-interview-platform-dev` (либо current exact name) пометить `active/protected`; name-only match недостаточен — сохранить labels/config paths.
+- [ ] `G13-030` Инвентаризировать legacy containers/networks по Compose labels и inspect data; container name без provenance не даёт права удаления.
+- [ ] `G13-031` Инвентаризировать volumes: ID/name, labels, mountpoint, current mounts, bytes, data class, backup artifact и restore command.
+- [ ] `G13-032` Инвентаризировать images: digest/tags, image history/size, containers referencing digest, target release reference и rebuild source.
+- [ ] `G13-033` Инвентаризировать build cache по builder; shared/default builder entries без ownership остаются `unknown/protected`.
+- [ ] `G13-034` Инвентаризировать old host processes, ports, launch agents, cron/scheduled workflows и env files, которые запускают legacy repos/stacks.
+- [ ] `G13-035` Инвентаризировать legacy DB schemas/tables/columns/indexes/sequences/functions/roles и row counts через system catalog, не через предположение из migrations.
+- [ ] `G13-036` Инвентаризировать duplicate files/authorities: JSONL Studio ledger, static catalog releases, old projection caches, DB dumps, Playwright traces/videos и generated reports.
+- [ ] `G13-037` Каждая ledger entry содержит `state`, `exactTarget`, `bytes`, `owner`, `replacementProof`, `archiveProof`, `restoreProof`, `deleteCommand`, `guard`, `retentionReason` и `status`.
+- [ ] `G13-038` Allowed dispositions: `keep-active`, `keep-reference(reason)`, `archive-then-remove`, `remove-regenerable`, `out-of-scope`; blank/implicit disposition invalid.
+- [ ] `G13-039` Machine audit запрещает duplicate exactTarget, parent/child double deletion, active denylist overlap, missing owner и deletion без replacement/archive proof.
+- [ ] `G13-040` Commit target: `docs(g13): inventory legacy resources and disk ownership`; manifest remains dry-run-only.
+
+### G13.2. Eliminate dependencies и retire legacy entities
+
+- [ ] `G13-041` Port Ledger unresolved entries = 0; каждый legacy capability имеет target owner и current test/evidence.
+- [ ] `G13-042` Static scan target source/config/docs/scripts/workflows на absolute legacy paths, sibling imports, old API URLs, old Compose names и old DB credentials.
+- [ ] `G13-043` Built Next/Nest/Runtime artifacts scan на legacy host/path/URL/credential strings; findings = 0 либо reviewed non-runtime historical metadata.
+- [ ] `G13-044` Network/trace audit target journeys показывает zero calls to legacy Lab/Brain/Runtime/Strata services.
+- [ ] `G13-045` Stop legacy application containers без volumes; target full route/content/runtime journey остаётся green минимум в двух fresh starts.
+- [ ] `G13-046` Disable legacy scheduled jobs/watchers/indexers and scheduled GitHub workflows before remote archive; target jobs remain active.
+- [ ] `G13-047` Remove/replace old root launch/status/port scripts in target; target lifecycle does not shell into sibling repos.
+- [ ] `G13-048` Remove old environment variables/secrets from active `.env` templates and secret stores after target replacement proof; values не попадают в evidence.
+- [ ] `G13-049` Update current docs/runbooks/links to target paths; historical docs get explicit `HISTORICAL — DO NOT EXECUTE` banner or remain only in archive.
+- [ ] `G13-050` Update target glossary with lifecycle terms `active`, `reference`, `retired`, `archived`, `removed-local` and avoid ambiguous «deleted» before proof.
+- [ ] `G13-051` Generate legacy-entity ledger for old Studio PostgreSQL/JSONL authority, old question catalog/provenance projections, old graph/search cache and duplicate runtime metadata.
+- [ ] `G13-052` For every entity prove canonical replacement, row/file reconciliation, writer list, reader list, last observed read/write and rollback source.
+- [ ] `G13-053` Phase A migration revokes/stops legacy writes and adds fail-fast guard; no entity is dropped in same migration.
+- [ ] `G13-054` Run instrumented canary/release journeys after Phase A; legacy read/write counters remain zero.
+- [ ] `G13-055` Compare old entity snapshot with new authority/projection; unexplained rows/fields = 0, intentional losses have disposition/reviewer.
+- [ ] `G13-056` Archive legacy entity data with schema/version/checksum before drop; sensitive/raw bodies use encrypted or access-controlled artifact storage outside Git.
+- [ ] `G13-057` Restore archived entity into disposable DB/filesystem and run reconciliation queries.
+- [ ] `G13-058` Phase B migration drops only exact approved tables/columns/indexes/sequences/functions/roles; broad schema drop requires every contained object listed.
+- [ ] `G13-059` Migration refuses drop when dependency catalog, row reconciliation, archive checksum or restore proof is stale/missing.
+- [ ] `G13-060` Remove compatibility adapters, dual-read comparators and dead feature flags only after Phase B target tests pass.
+- [ ] `G13-061` Remove old JSONL/static catalog/projection files only after target release import/rebuild/readback passes from canonical authority.
+- [ ] `G13-062` Preserve immutable release manifests/hashes needed for learner attempt/evidence provenance; remove bulky derived bodies when rebuildable.
+- [ ] `G13-063` Remove legacy DB users/grants/secrets after no container/job uses them; negative connection test proves credentials rejected.
+- [ ] `G13-064` Add boundary test that fails if future source/config reintroduces legacy path, Compose project, DB role/schema or endpoint.
+- [ ] `G13-065` Repeat target backup/restore after entity drops; active release, authoring history, progress, evidence and projects reconcile.
+- [ ] `G13-066` Commit target: `refactor(g13): retire legacy authorities and compatibility paths`.
+- [ ] `G13-067` Commit target: `chore(g13): drop reconciled legacy entities` only after G13-051…065 PASS; never squash with Phase A.
+- [ ] `G13-068` Update decommission manifest exact entity statuses and reclaimed DB/file bytes.
+
+### G13.3. Git/data archives и restore proof
+
+- [ ] `G13-069` Resolve one explicit archive root outside source repos and active target; store its absolute canonical path in authorization, not `$HOME`/`~`.
+- [ ] `G13-070` Archive root has enough free space for temporary bundles/dumps and is excluded from cleanup denylist.
+- [ ] `G13-071` For each Git repo create `git bundle --all`, refs/tags/remotes manifest, dirty patch, untracked/ignored disposition and SHA-256.
+- [ ] `G13-072` Run `git bundle verify`, clone bundle to disposable exact path, `git fsck --full`, compare refs and run repository check/build appropriate to frozen SHA.
+- [ ] `G13-073` Verify remote default branch and immutable migration/archive tag contain every retained commit; bundle remains fallback, not excuse for missing remote history.
+- [ ] `G13-074` Capture LFS/submodule artifacts separately and prove disposable clone can materialize them without source working tree.
+- [ ] `G13-075` Create compressed logical dumps for each legacy durable DB/volume before deletion; record engine/tool versions and restore commands.
+- [ ] `G13-076` Restore each dump into disposable isolated stack and run schema/count/hash/domain invariants.
+- [ ] `G13-077` Archive non-Git required assets only when not rebuildable/retrievable; generated caches/build outputs are excluded.
+- [ ] `G13-078` Archive manifests contain no plaintext credentials, paid source bodies in Git, hidden tests in public artifacts or raw learner submissions.
+- [ ] `G13-079` Generate one top-level `legacy-archive-index.json` linking repo bundles, data dumps, release manifests, checksums and replacement target SHA.
+- [ ] `G13-080` Copy metadata-only archive index/checksums/restore runbook into target Git; large bundles/dumps remain external.
+- [ ] `G13-081` Perform random sample restore of at least one repo per technology and every unique database format, not just file checksum verification.
+- [ ] `G13-082` Restore old Reference Product in isolated disposable paths/ports from archives only; verify selected baseline routes/contracts without contacting active target.
+- [ ] `G13-083` Delete disposable restore resources by exact IDs and prove active/unrelated before/after inventories unchanged.
+- [ ] `G13-084` Classify retained archive bytes vs removal benefit; duplicate archives with identical hash collapse to one referenced copy.
+- [ ] `G13-085` Ensure archive root is backed up or remotely recoverable according to owner policy before permanent local source removal.
+- [ ] `G13-086` Commit target: `docs(g13): prove legacy source and data restoration`.
+- [ ] `G13-087` Agent requests/records owner approval of exact destructive manifest hash after archive evidence review.
+- [ ] `G13-088` Any post-approval source/DB/Docker delta invalidates approval and returns to G13-019 inventory.
+
+### G13.4. Scoped Docker cleanup wave
+
+- [ ] `G13-089` Stop old stacks through their canonical Compose files/project names while source paths still exist; normal first pass does not use `-v`.
+- [ ] `G13-090` Verify target restart, C098 and one canary per production path with all legacy stacks stopped.
+- [ ] `G13-091` Remove exact legacy containers and Compose networks only after inspect label/config/mount match approved manifest.
+- [ ] `G13-092` Remove stale disposable RC/audit target projects one by one after evidence/log retention decision; active target project protected.
+- [ ] `G13-093` Remove standalone `strata` container/network only after G10S target authoring flow and archive restore PASS.
+- [ ] `G13-094` Remove old Lab/Brain/Runtime containers/networks only after target no-network-dependency proof.
+- [ ] `G13-095` Re-inspect every candidate volume for mounts and labels immediately before delete; mounted/changed/unknown volume fails closed.
+- [ ] `G13-096` For each durable legacy volume verify dump checksum and disposable restore, then remove exact volume ID/name individually.
+- [ ] `G13-097` Volumes without labels require explicit origin proof plus owner approval; name prefix alone is insufficient.
+- [ ] `G13-098` Preserve active target Postgres/data/telemetry volumes and any archive/quarantine volume declared retained.
+- [ ] `G13-099` Map image digest to running/stopped containers and target releases; remove only exact unreferenced legacy digests/tags.
+- [ ] `G13-100` Do not remove shared base image required by active/unrelated containers; deduplicated image layers are not counted twice as reclaimed.
+- [ ] `G13-101` Create dedicated Fluent buildx builder/cache namespace for future builds and record retention/size budget.
+- [ ] `G13-102` Prune only dedicated Fluent builder cache by explicit builder name and retention rule.
+- [ ] `G13-103` Shared/default builder cleanup is optional separate owner-approved wave; no `--all` or global builder prune inside automatic G13.
+- [ ] `G13-104` Remove exact legacy container log files only via Docker resource removal/approved Docker API, never by deleting Docker Desktop internals directly.
+- [ ] `G13-105` `docker system prune`, `docker volume prune`, broad image prune and reset-to-factory remain prohibited.
+- [ ] `G13-106` Compare before/after unrelated container/network/volume/image IDs and state; changed set = 0.
+- [ ] `G13-107` Compare active target container/image/volume IDs or documented restart replacements and logical data hashes.
+- [ ] `G13-108` Run `docker system df -v` after each wave; record actual reclaimed bytes, not nominal resource sizes.
+- [ ] `G13-109` Run target `pnpm dev`, doctor/status, content/runtime canaries and `pnpm down` zero-orphan check after Docker cleanup.
+- [ ] `G13-110` Recreate target from current Compose and restore target backup to prove deleted legacy images/volumes were not hidden dependencies.
+- [ ] `G13-111` Commit target evidence: `chore(g13): remove verified legacy Docker resources`.
+- [ ] `G13-112` Update manifest Docker statuses; any retained legacy resource has owner, size, reason and expiry/review trigger.
+
+### G13.5. Local working trees, artifacts и cache cleanup wave
+
+- [ ] `G13-113` После G13-087 archive GitHub legacy repos read-only, disable scheduled workflows и set replacement repo/tag in description/README до local source removal.
+- [ ] `G13-114` Inside each exact allowlisted legacy repo first remove regenerable `node_modules`, build outputs, `.next`, `dist`, coverage, traces/videos, local logs и tool caches; parent workspace, user home, unrelated sandbox и archive root protected.
+- [ ] `G13-115` Verify no running process has cwd/open files under candidate root and no Docker bind mount references it.
+- [ ] `G13-116` Verify repo bundle/remote/dirty/untracked/LFS proofs immediately before source removal; changed HEAD/status invalidates manifest.
+- [ ] `G13-117` Remove nested legacy repos Lab/Vue/Brain/Runtime/Vault one at a time; after each, run target fresh start and selected journey.
+- [ ] `G13-118` Remove standalone Strata working tree only after G10S parity/archive and target authoring gates remain green without it.
+- [ ] `G13-119` Remove questions research root only if every record has migrated/archived/rejected disposition and active quarantine has a new explicit owner/path; otherwise retain only necessary data, not tool/cache copies.
+- [ ] `G13-120` Migrate any still-needed Obsidian/Vault source to approved target/external content source before Vault working tree removal.
+- [ ] `G13-121` Remove old umbrella working tree last, after current plan/ADR/evidence manifests exist in target and umbrella bundle clone is verified.
+- [ ] `G13-122` Exact known obsolete Trash candidate may be permanently removed only as its own manifest entry; global Trash empty prohibited.
+- [ ] `G13-123` Cleanup tool removes only the approved canonical path and refuses if inode/device/path differs from manifest snapshot.
+- [ ] `G13-124` Prefer recoverable move for uncertain content; to reclaim disk permanently, require completed archive proof and exact second confirmation for final deletion.
+- [ ] `G13-125` Remove duplicate downloaded/generated reports only when target manifest/hash proves canonical copy; user attachments outside scope protected.
+- [ ] `G13-126` Remove only dedicated Fluent package manager/Nx/test caches; shared pnpm store/npm cache remains unless separate owner-approved host maintenance.
+- [ ] `G13-127` Run filesystem scan for surviving legacy source copies/symlinks/nested Git/lockfiles under declared Fluent roots; unresolved = 0.
+- [ ] `G13-128` Run target source/built artifact scan again for deleted absolute paths and legacy endpoints; findings = 0.
+- [ ] `G13-129` Verify archived GitHub repos remain reachable, immutable tags/refs match archive index and replacement pointers resolve after local working trees are absent.
+- [ ] `G13-130` Do not delete remote repositories, issues/releases/tags/packages without a separate explicit owner request outside this plan.
+- [ ] `G13-131` Commit target evidence: `chore(g13): remove archived legacy working trees and caches`.
+- [ ] `G13-132` Update manifest exact reclaimed bytes and retained archive size after filesystem cleanup.
+
+### Gate G13 — post-removal verification и handoff
+
+- [ ] `G13-133` Manifest entries all terminal: `kept-active`, `kept-reference(reason)`, `removed`, `out-of-scope`; unresolved/pending = 0.
+- [ ] `G13-134` Legacy local roots marked `removed` are absent; retained roots match exact approved path/hash/size budget.
+- [ ] `G13-135` Legacy Compose project/container/network/volume/image IDs marked removed are absent; unrelated before/after set unchanged.
+- [ ] `G13-136` Legacy DB entities/roles/files marked removed are absent; target migration chain fresh/upgrade/restore PASS.
+- [ ] `G13-137` Fresh target clone in disposable explicit path installs, builds, checks and starts without source/archive/legacy Docker dependencies.
+- [ ] `G13-138` Full route/link/API/content/runtime/security suite and C098 + one canary per production path PASS after physical removal.
+- [ ] `G13-139` Backup→restore, target rollback and archive sample restore PASS after cleanup.
+- [ ] `G13-140` Disk report records filesystem/Docker baseline, eligible bytes, retained archives, actual reclaimed bytes, residual protected/unrelated bytes and post-cleanup capacity.
+- [ ] `G13-141` `eligibleUnreclaimedBytes = 0`; if host remains above 80% used, report top unrelated/protected consumers without deleting them.
+- [ ] `G13-142` Final target commit: `docs(g13): record legacy decommission and disk reclamation evidence`.
+- [ ] `G13-143` Implementing agent sets `AWAITING_INDEPENDENT_REVIEW` and hands off target SHA/tag, manifest hash, archive index, deleted IDs/paths and verification commands.
+- [ ] `G13-144` Codex independently replays manifest schema/guard negative tests and verifies no broad/global cleanup command was used.
+- [ ] `G13-145` Codex independently samples Git bundle clone, DB restore, target fresh clone and C098 learner journey.
+- [ ] `G13-146` Codex compares active/unrelated Docker IDs and disk reports before/after; unexplained mutation = 0.
+- [ ] `G13-147` Codex verifies target docs/CONTEXT/ADR no longer instruct execution from deleted roots and master-plan status is singular.
+- [ ] `G13-148` P0/P1 findings fixed with new atomic commits and relevant cleanup/product checks repeated.
+- [ ] `G13-149` Owner reviews reclaimed/retained summary and explicitly accepts archived remotes plus remaining protected resources.
+- [ ] `G13-150` Only after G13-144…149 PASS set G13 and master-plan `DONE`; final tag/attestation references both product RC and decommission manifest.
+
+---
+
 ## 4. Короткий prompt для implementing agent
 
 ```text
 Выполни документ
 /Users/sergeyzhechko/developer/fluent-interview/docs/GREENFIELD-NEXT-PLATFORM-EXECUTION-PLAN-2026-08-28.md
-строго по порядку G0→…→G10→G10S→G11→G12. Сначала сверяй уже закрытые пункты
+строго по порядку G0→…→G10→G10S→G11→G12→independent review→G13. Сначала сверяй уже закрытые пункты
 по evidence; не переигрывай их без REVERIFY-причины. Текущий обязательный corrective
 gate — G10S: перенеси Strata authoring authority в target monorepo, докажи один DB
 с role isolation, устрани Studio dual-write, выпусти file-only bundle и проведи C098
@@ -3115,10 +3405,16 @@ gate — G10S: перенеси Strata authoring authority в target monorepo, �
 breadth. Не пропускай пункты и не ставь PASS без machine-readable evidence. Каждый
 implementation slice закрывай заранее объявленным atomic commit, repo-required
 check→commit chain и clean-tree проверкой; push только fast-forward и только когда
-это разрешено текущей CI quota policy. Reference Product и standalone Strata не
-удаляй, не используй как runtime fallback и не перезаписывай unknown dirty files.
+это разрешено текущей CI quota policy. До G13 Reference Product и standalone
+Strata не удаляй, не используй как runtime fallback и не перезаписывай unknown
+dirty files. В G13 удаляй их только после exact archive/restore/manifest gates.
 Paid Solvit/company/unknown-rights bodies не копируй в distributable Git. При
-STOP-условии фиксируй FAIL и exact blocker. После G10S и после G12 не объявляй DONE:
-передай SHA, migrations, bundle/release IDs и evidence со статусом
-AWAITING_INDEPENDENT_REVIEW для отдельной проверки Codex и владельца.
+STOP-условии фиксируй FAIL и exact blocker. После G10S, G12 и G13 не объявляй
+DONE самостоятельно: передай SHA, migrations, bundle/release IDs, а для G13 —
+exact decommission manifest, archive index, удалённые IDs/paths и disk report со
+статусом AWAITING_INDEPENDENT_REVIEW. В G13 destructive commands разрешены только
+после accepted production RC, проверенного restore и owner-approved exact manifest
+hash; active target, unrelated Docker projects, shared caches и remote repositories
+не удаляй. После G13-017 продолжай вести status только в проверенной target-копии
+master-plan; source umbrella copy остаётся frozen и удаляется последней по G13-121.
 ```
