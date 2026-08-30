@@ -2065,7 +2065,11 @@ paths; denominators и stable IDs обязаны объяснять переис
   networks while preserving durable volumes. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/startup-recovery-2026-08-30.json`.
 - [ ] `G12-030` Reference Product needs no target service/data to run.
-- [ ] `G12-031` Target needs no reference service/path/symlink to run.
+- [x] `G12-031` Target needs no reference service/path/symlink to run. Clean
+  git archive from target `b409c68` installed offline and built Next/Nest
+  successfully with no reference workspace, nested Git root, symlink or
+  external Dockerfile copy source. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/target-independence-2026-08-30.json`.
 - [x] `G12-032` No legacy repo is deleted/archived by this gate.
 
 ### G12.4. Handoff package
