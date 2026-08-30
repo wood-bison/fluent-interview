@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 607 пунктов из 1 134.**
+**Осталось: 606 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 527 |
-| Осталось (`[ ]`) | 607 |
+| Закрыто (`[x]`) | 528 |
+| Осталось (`[ ]`) | 606 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.47% |
+| Формальное выполнение | 46.56% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -247,6 +247,18 @@ parser, migrations, cleanup, SHA-256 и metadata-only boundary проверяю�
 tests и evidence/checksum validation зелёные; push не выполнялся по ограничению
 Actions quota. Следующий implementation slice: `G10S-116` — зафиксировать
 однозначное соответствие current Studio sequence и target Strata commands.
+
+Последний implementation slice: target `1bca061` (evidence `18a85cf`) закрыл
+`G10S-116`. Versioned map связал `5/5` current Studio steps с единственными
+target commands и явно добавил два отсутствовавших seams — deterministic bundle
+export и transactional serving import. `10/10` source anchors защищают current
+G10 sequence от silent drift; `5/5` negative fixtures отклоняют missing mapping,
+order drift, unknown step, dual-write и serving read из Strata. Все `7` target
+commands остаются честно `planned`. Полный `pnpm check`, boundary/toolchain,
+checksums и `118/118` architecture tests зелёные; push не выполнялся по
+ограничению Actions quota. Следующий implementation slice: `G10S-117` —
+сохранить explicit author/reviewer/publisher identities и decisions в local
+single-user mode.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх

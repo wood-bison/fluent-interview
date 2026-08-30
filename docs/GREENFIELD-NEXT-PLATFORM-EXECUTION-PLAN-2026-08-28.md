@@ -1467,6 +1467,26 @@ This closes G10S-114 and G10S-115. The next executable slice is G10S-116:
 record the exact current Studio sequence and its one-to-one Strata target
 commands before changing Studio authority.
 
+### Execution update — G10S-116 Studio → Strata sequence map — 30 августа 2026
+
+Target `main` now contains `1bca061` (`docs(g10s): map Studio to Strata
+commands`) and evidence commit `18a85cf` (`docs(g10s): record Studio sequence
+gate`). Versioned JSON и Mermaid-документ фиксируют `5/5` current G10 steps с
+единственным target command и отдельно показывают два отсутствовавших seams:
+deterministic `question-catalog.v1` export и transactional serving import.
+
+Machine gate проверил `10/10` source anchors, `7/7` ordered unique target
+commands, deterministic metadata-only projection и отклонил `5/5` negative
+cases: missing mapping, duplicate order, unknown old step, dual-write и serving
+read из `strata.*`. Все target commands честно помечены `planned`; gate не
+выдаёт G10S-117…135 за реализацию. Полный `pnpm check`, boundary/toolchain,
+checksums и `118/118` architecture tests зелёные. Push не выполнялся по
+ограничению Actions quota.
+
+This closes G10S-116. The next executable slice is G10S-117: preserve explicit
+author/reviewer/publisher identities and immutable decisions in local
+single-user mode.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1513,7 +1533,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-116`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-117`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2667,7 +2687,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.5. Studio convergence без dual-write
 
-- [ ] `G10S-116` Нарисовать current G10 sequence author→review→publish→outbox→readback и target Strata sequence; каждый old step получает target command.
+- [x] `G10S-116` Нарисовать current G10 sequence author→review→publish→outbox→readback и target Strata sequence; каждый old step получает target command. Evidence: target `1bca061`, evidence `18a85cf`; `5/5` old steps mapped once, `2` new export/import seams explicit, `10/10` source anchors and `5/5` negative cases verified.
 - [ ] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode.
 - [ ] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection.
 - [ ] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision.
