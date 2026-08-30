@@ -2148,7 +2148,12 @@ paths; denominators и stable IDs обязаны объяснять переис
   runtime vector/Submit/outage/recovery matrix. Preview languages remain
   explicitly unclaimed. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/runtime-conformance-2026-08-30.json`.
-- [ ] `G12-011` Проверить AI absent/offline/connected/stream/cancel/timeout states.
+- [x] `G12-011` Проверить AI absent/offline/connected/stream/cancel/timeout states.
+  Machine matrix `6/6` прошла через Next boundary на disposable local
+  OpenAI-compatible provider: absent/offline `unavailable`, connected JSON
+  `completed` с replay, timeout `provider_timeout`, SSE fail-closed и client
+  cancel с bounded outcome. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/navigator-state-matrix-2026-08-30.json`.
 - [x] `G12-012` Проверить observability off/on/outage/recovery и incident
   bundle: core остаётся ready без optional collector, collector восстанавливается
   после outage, incident capture redacts forbidden fields. Evidence:
@@ -2229,11 +2234,12 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
-репетиция покрыла только автоматический subset (например, route crawl без
-полной ручной визуальной вычитки, offline Navigator без connected streaming,
-Node runtime без multi-language conformance). Точные границы и ожидаемые
-следующие доказательства перечислены в target `G12/known-limitations.md`.
+`G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там,
+где репетиция покрыла только автоматический subset (например, route crawl без
+полной ручной визуальной вычитки, Navigator без реальной LM Studio usefulness
+review/streaming contract, Node runtime без multi-language conformance).
+Точные границы и ожидаемые следующие доказательства перечислены в target
+`G12/known-limitations.md`.
 
 ### Execution update — G12 stateful learner surface journey — 30 августа 2026
 
@@ -2250,9 +2256,28 @@ Project defense assessment стал persisted evidence и projected milestone
 counts стабильны. Scoped `pnpm down` оставил ноль target containers/networks и
 сохранил два durable volumes. Machine evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/learner-surface-journey-2026-08-30.json`.
-Это закрывает machine-only G12-009; connected LM Studio, streaming/cancel/
-timeout, content completeness и human visual/learning sign-off остаются
-отдельными gates.
+Это закрывает machine-only G12-009; content completeness и human
+visual/learning sign-off остаются отдельными gates.
+
+### Execution update — G12 Navigator state matrix — 30 августа 2026
+
+Target commits `d5dcf9e` и `9015a30` добавили server-owned bounded provider
+timeouts, request abort propagation до Nest/LM fetch и воспроизводимый
+`pnpm navigator:states`. На disposable stack
+`fluent-g12-ai-20260830` через публичную Next boundary прошли absent, offline,
+connected JSON, timeout, SSE fail-closed и client cancel (`6/6`). Connected
+turn и exact idempotent replay декодируются через contracts; SSE partial chunks
+и `[DONE]` не попадают в public response; отменённый браузером запрос получает
+`AbortError`, а provider outcome остаётся bounded. Прямой API unit test отдельно
+подтверждает abort без append.
+
+Проверка очистила временную историю (`6` записей удалены), `pnpm down` оставил
+`0` target containers/networks и сохранил `2` durable volumes. Полный результат:
+`fluent-interview-platform/docs/verification/greenfield/G12/navigator-state-matrix-2026-08-30.{json,md}`.
+Это закрывает machine state-contract slice `G12-011`, но не утверждает
+usefulness реальной LM Studio, human prompt review или поддержку SSE: текущий
+`navigator-turn.v1` намеренно JSON-only и требует отдельного versioned
+streaming contract.
 
 ### Что агенту запрещено писать после G12
 
