@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 621 пункт из 1 134.**
+**Осталось: 620 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 513 |
-| Осталось (`[ ]`) | 621 |
+| Закрыто (`[x]`) | 514 |
+| Осталось (`[ ]`) | 620 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.24% |
+| Формальное выполнение | 45.33% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -89,8 +89,16 @@ budget не смешиваются, bodies не эмитируются. Гейт
 `pnpm check`, boundary/toolchain checks, architecture test ladder, evidence
 validation и checksum validation.
 
-Следующий implementation slice: `G10S-102` — curriculum placement хранит
-priority/order/pattern/prerequisites; adapter не копирует их назад в Question.
+Последний implementation slice: target `e5db22b` (evidence `57f197c`) закрыл
+`G10S-102`. Curriculum placement теперь владеет `priority`, `order`, `pattern`
+и `prerequisites`; malformed priority/pattern записи отклоняются, а
+metadata-only Question joins содержат только `questionId`, `trackId`,
+`moduleId`, `lessonId`, `scope`. Projection hash детерминирован, bodies не
+эмитируются. Гейт закрыт после полного `pnpm check`, boundary/toolchain checks,
+architecture test ladder, evidence validation и checksum validation.
+
+Следующий implementation slice: `G10S-103` — Activity/TaskRevision хранит
+execution/time budget отдельно; learner analytics не смешивает оба budget.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
