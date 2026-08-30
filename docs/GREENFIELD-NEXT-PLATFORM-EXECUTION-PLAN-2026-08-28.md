@@ -2352,6 +2352,19 @@ review-ready, official-source missing `1,597`, mechanism `494`, answer/solution
 Полный артефакт:
 `fluent-interview-platform/docs/verification/greenfield/G11/research-authoring-pack-2026-08-30.{json,md}`.
 
+### Execution update — G11-019 expert sample review — 30 августа 2026
+
+Target `main` (`de1836d`, evidence `10021d2`) добавил
+`expert-sample-policy.v1` и `expert-sample-audit.v1`. Для каждого из `27`
+path/domain capability clusters выбран стабильный sample, связанный с точным
+source hash. Закрытие требует независимого `subject-matter-expert`, подробных
+notes и решения `pass`; сейчас `27/27` samples выбраны, но `0` review decisions
+записано, поэтому `G11-019=OPEN`. Инструмент не меняет release и не подменяет
+editorial review.
+
+Полный артефакт:
+`fluent-interview-platform/docs/verification/greenfield/G11/expert-sample-audit-2026-08-30.{json,md}`.
+
 ### Execution update — G11-016 path relevance — 30 августа 2026
 
 Target evidence commit `6ab7ad4` повторно запустил

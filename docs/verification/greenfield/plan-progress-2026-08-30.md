@@ -52,6 +52,11 @@ path-specific research boundaries и authoring checklist; в первом batch 
 `494`, answer у `463`, typed placement у `1 370`, assessed activity у `1 346`.
 Гейт остаётся открытым до оригинального текста, источников и reviewer sign-off.
 
+Следующий implementation slice: target `de1836d` (evidence `10021d2`) добавил
+`expert-sample-audit.v1` для G11-019. Выбрано `27` стабильных samples — по
+одному на каждый path/domain cluster; `0` independent expert reviews записано,
+поэтому гейт остаётся OPEN до полного decision set.
+
 ## Открытые кластеры
 
 - governance и evidence protocol (`0.*`, `A-*`, `D-*`);
