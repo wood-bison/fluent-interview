@@ -1189,6 +1189,24 @@ owner promotion gates и не выдаются за автоматический
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/accessibility-audit-2026-08-30.{json,md}`.
 
+### Execution update — G12 desktop visual contract — 30 августа 2026
+
+Target `main` (`b7aa5d4`, evidence index `383d882`) добавил воспроизводимый
+`pnpm visual:contract`. Playwright открыл 12 learner/operator surfaces на
+`1280×800` (MacBook Pro 13), `1728×1117` (MacBook Pro 16) и `2560×1440`
+(Apple Studio Display) в light/dark — `72/72` cases. Машинные инварианты
+зелёные: page horizontal overflow `0`, clipped visible controls `0`,
+unexplained P0/P1 geometry defects `0`, `.app-scroll-region` владеет
+вертикальной прокруткой во всех `72` случаях. Шесть доступных D3 reference
+captures измерены и классифицированы как `INFORMATIONAL_BASELINE_DELTA`, так
+как reference-файлы содержат JPEG-байты с `.png` расширением и сняты в другой
+rasterisation/target среде.
+
+Это закрывает machine visual geometry slice `G12-022` со статусом
+`PASS_WITH_LIMITATIONS`. Exact pixel-perfect сравнение в одной capture-среде и
+human owner visual sign-off намеренно остаются promotion gates; evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/visual-contract-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -2246,7 +2264,7 @@ paths; denominators и stable IDs обязаны объяснять переис
   `fluent-interview-platform/docs/verification/greenfield/G12/performance-budget-2026-08-30.json`.
 - [x] `G12-021` Repeatable WCAG machine baseline PASS_WITH_LIMITATIONS: 23 curated routes, 739/739 named controls, landmarks/heading/alt/focus guards и 27/27 token contrast checks. Human VoiceOver/NVDA smoke и full browser/AT matrix остаются owner gates. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/accessibility-audit-2026-08-30.json`.
-- [ ] `G12-022` Visual diff has zero unexplained P0/P1; intentional deltas documented.
+- [x] `G12-022` Machine visual contract PASS_WITH_LIMITATIONS: 12 surfaces × 3 desktop profiles × light/dark (`72/72`), zero page overflow/clipped visible controls/unexplained P0/P1 geometry defects, and `.app-scroll-region` owns vertical scroll in every case. D3 raster deltas are explicitly classified `INFORMATIONAL_BASELINE_DELTA`; exact pixel/owner sign-off remains open. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/visual-contract-2026-08-30.json`.
 - [ ] `G12-023` Telemetry cardinality/privacy/retention/load/disk-pressure tests PASS.
 - [ ] `G12-024` CI required checks green on exact RC SHA.
 
@@ -2301,7 +2319,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+`G12-018..019`, `G12-021`, `G12-023..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, Navigator без реальной LM Studio usefulness
 review/streaming contract, Node runtime без multi-language conformance).
