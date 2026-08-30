@@ -2059,7 +2059,11 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-026` Route reconciliation unresolved = 0.
 - [ ] `G12-027` Data/content/task/project/progress reconciliation unexplained delta = 0.
 - [x] `G12-028` Target backup restored in disposable stack and reverified.
-- [ ] `G12-029` Target startup failure followed by Reference Product restart rehearsed.
+- [x] `G12-029` Target startup failure → recovery → scoped cleanup rehearsed in
+  a disposable Compose project; port collision failed closed, the unchanged
+  `pnpm dev` retry reached healthy services, and cleanup left zero containers/
+  networks while preserving durable volumes. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/startup-recovery-2026-08-30.json`.
 - [ ] `G12-030` Reference Product needs no target service/data to run.
 - [ ] `G12-031` Target needs no reference service/path/symlink to run.
 - [x] `G12-032` No legacy repo is deleted/archived by this gate.
@@ -2070,6 +2074,19 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-034` Создать final gate index G0–G12 with hashes and links.
 - [x] `G12-035` Список known limitations пуст либо каждое ограничение блокирует production claim.
 - [x] `G12-036` Создать reviewer runbook с одной командой и expected outputs.
+
+### Execution update — G12 startup recovery — 30 августа 2026
+
+В отдельном stack `fluent-g12-startup-recovery-20260830` (web port `47462`)
+порт был занят disposable holder-ом. Штатный `pnpm dev -- --detached` получил
+ожидаемый `compose-up` `exitCode=1` (`address already in use`) без изменения
+learner data. После освобождения holder-а та же команда вернула `ready`; API,
+PostgreSQL, runtime-control, evaluator и web были healthy, `doctor`/`status`
+вернули exit code 0. Scoped `pnpm down` оставил `0 containers`, `0 networks` и
+сохранил 2 durable volumes. Это закрывает только `G12-029`; production,
+multi-language, CI exact-RC и independent visual/security review остаются
+открытыми. Машиночитаемый результат и воспроизведение находятся в
+`fluent-interview-platform/docs/verification/greenfield/G12/`.
 - [x] `G12-037` Создать owner visual/learning sign-off checklist.
 
 ### Gate G12
