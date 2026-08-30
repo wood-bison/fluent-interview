@@ -1027,6 +1027,26 @@ request failures равны нулю. Шесть disabled deep-lab stage control
 остаются за отдельным `G12-009`/G9 evidence; visual diff, accessibility и
 independent review не подменяются этим crawl.
 
+### Execution update — G12 RU/EN × theme × desktop viewport matrix — 30 августа 2026
+
+На target `main` (`0ea1f47` code, evidence commit `c04ad77`) новый изолированный
+Playwright page прошёл 552 случая: 23 curated routes × RU/EN × `light`, `dark`
+и `system` (system отдельно при эмулированной светлой и тёмной OS-схеме) ×
+1280×800, 1728×1117 и 2560×1440. Проверены HTTP status, `html[lang]`,
+`html[data-theme]`, наличие `h1`, горизонтальный overflow и шесть Tab-фокусов.
+Все случаи PASS; page/console/request errors равны нулю.
+
+Первый прогон обнаружил реальный React hydration error `#418` на RU lesson с
+inline Navigator: компонент читал `document.lang` во время первого render после
+того, как bootstrap уже применил RU. `0ea1f47` сделал первый render
+детерминированным, синхронизировал локаль после mount и добавил событие
+`fluent:locale-change`; повторная полная матрица стала чистой. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/locale-theme-viewport-2026-08-30.{json,md}`.
+
+Это закрывает machine route/locale/theme/viewport/keyboard slice `G12-006`.
+Pixel visual diff, WCAG/screen-reader human review, connected LM Studio и
+stateful mutation journeys остаются отдельными открытыми gates.
+
 ### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
 
 На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
@@ -2095,7 +2115,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-003` Запустить только `pnpm dev`.
 - [x] `G12-004` Проверить `doctor/status` до/во время/после startup.
 - [x] `G12-005` Прокликать все routes/links/buttons/menus/dialogs/settings/deep links. Safe subset: 23/23 routes, 55/55 internal link destinations и 336/336 visible enabled controls; stateful mutations остаются в G12-009/G9. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/interactive-crawl-2026-08-30.json`.
-- [ ] `G12-006` Проверить every route RU/EN, light/dark/system, keyboard, required viewports.
+- [x] `G12-006` Проверить every route RU/EN, light/dark/system, keyboard, required viewports. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/locale-theme-viewport-2026-08-30.json` — 552/552 cases, system theme проверен при обеих OS-схемах, 0 page/console/request errors.
 - [x] `G12-007` Проверить all API endpoints against generated contract. Generated
   controller inventory covered 40/40 route handlers and 43/43 direct/negative
   cases; all response projections decoded through `@fluent/contracts`, all
@@ -2190,7 +2210,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-006`, `G12-008..009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+`G12-008..009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, offline Navigator без connected streaming,
 Node runtime без multi-language conformance). Точные границы и ожидаемые
