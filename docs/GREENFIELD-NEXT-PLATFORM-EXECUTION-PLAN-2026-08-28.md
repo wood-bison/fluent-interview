@@ -1314,7 +1314,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-086`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-087`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2432,7 +2432,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-083` Idempotency test: migrations и fixture load повторяются без duplicates/data drift. Evidence: target `docs/verification/greenfield/G10S/idempotency-2026-08-30.json`/`.md`, `pnpm --filter @fluent/content-authoring integration` twice with byte-identical normalized output, migration-chain second apply with 17 Strata tables and source `npm run db:load` twice; target commit `9ed7c4a`.
 - [x] `G10S-084` Fresh-database test применяет всю migration chain с нуля и проходит 12 inherited + platform invariants. Evidence: target `docs/verification/greenfield/G10S/fresh-database-2026-08-30.json`/`.md`; `pnpm architecture:fresh-db` created a disposable database, applied 8 migrations, observed 17 Strata tables, 4 least-privilege roles, all 12 inherited assertions and 7 platform invariants, then dropped the database; target commit `00b2163`.
 - [x] `G10S-085` Upgrade-database test берёт copy текущего G10 database, применяет migrations, сверяет counts/hashes и Studio history. Evidence: target `docs/verification/greenfield/G10S/upgrade-database-2026-08-30.json`/`.md`; `pnpm architecture:upgrade-db` restored a custom-format dump into a disposable database, applied 8 migrations, preserved the 5 pre-existing public-table counts and Studio history hash (`b58fd792…61947`), materialized 8 new platform tables (5 → 13), then dropped the disposable database and removed the dump; target commits `c68293b` (implementation) and `62936ec` (evidence).
-- [ ] `G10S-086` Backup/restore включает schema, roles/grants metadata, serving projection и authoring records без credentials.
+- [x] `G10S-086` Backup/restore включает schema, roles/grants metadata, serving projection и authoring records без credentials. Evidence: target `docs/verification/greenfield/G10S/backup-completeness-2026-08-30.json`/`.md`; `pnpm architecture:backup` applied all 8 migrations in a disposable database, captured four least-privilege roles (6 schema grants, 271 object grants, 0 memberships), verified Strata authoring plus public serving objects in the custom dump, and reported `credentialsDetected=false`; target commits `c018ed2` (rehearsal) and `51d24d4` (evidence).
 - [ ] `G10S-087` Restore в disposable database повторяет grants/invariants и exact logical hashes.
 - [x] `G10S-088` API container environment/static bundle scan подтверждает отсутствие authoring DSN/role/password. Evidence: `G10S/serving-boundary-2026-08-30.json` scans API source/dist and Compose API environment; zero authoring DSN/role/password markers, commit `6bc6f12`.
 - [x] `G10S-089` Static scan `apps/api`/`apps/web` подтверждает 0 imports authoring repositories и 0 raw `strata.` SQL. Evidence: `G10S/serving-boundary-2026-08-30.json` and `architecture:serving-boundary`; 629 files, zero violations, commit `6bc6f12`.

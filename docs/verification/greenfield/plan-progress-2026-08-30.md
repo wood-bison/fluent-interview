@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 634 пункта из 1 134.**
+**Осталось: 633 пункта из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 500 |
-| Осталось (`[ ]`) | 634 |
+| Закрыто (`[x]`) | 501 |
+| Осталось (`[ ]`) | 633 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.09% |
+| Формальное выполнение | 44.18% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -21,18 +21,17 @@ policy/evidence/independent-review пункты, поэтому он намер�
 closure и независимая финальная проверка. Формальный счётчик не является
 оценкой оставшихся часов и не подменяет evidence каждого гейта.
 
-Последний implementation slice: target `c68293b` (evidence `62936ec`) добавил
-upgrade-database rehearsal для G10S-085. Custom-format dump текущей базы был
-восстановлен в disposable database; восемь миграций применились без drift,
-пять pre-existing public-table counts и Studio history hash
-(`b58fd792…61947`) сохранились, serving schema выросла с 5 до 13 таблиц,
-временная база и dump удалены. `G10S-085` закрыт только после зелёного
-`pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` и checksum validation.
+Последний implementation slice: target `c018ed2` (evidence `51d24d4`) добавил
+backup-completeness rehearsal для G10S-086. Disposable database после всех
+восьми миграций содержит Strata authoring и public serving records; custom-format
+dump включает обязательные таблицы, а `roles-grants.json` фиксирует 4
+least-privilege роли, 6 schema grants, 271 object grants и 0 memberships без
+credentials (`credentialsDetected=false`). Временная база и dump удалены;
+`G10S-086` закрыт только после зелёного `pnpm check`, post-commit ladder,
+checksum validation и evidence validation.
 
-Следующий implementation slice: `G10S-086` — backup/restore completeness:
-schema, роли и grants metadata, serving projection и authoring records без
-credentials. Затем `G10S-087` отдельно докажет restore в disposable database,
-повтор grants/invariants и exact logical hashes.
+Следующий implementation slice: `G10S-087` — восстановить этот dump во вторую
+disposable database, повторить grants/invariants и сравнить exact logical hashes.
 
 Последний implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
