@@ -2359,27 +2359,27 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.1. ADR reconciliation и ownership map
 
-- [ ] `G10S-019` Создать target ADR «Strata is the authoring source of truth» со статусом Accepted и ссылками на source ADR, reports 13/14 и G10 evidence.
-- [ ] `G10S-020` ADR фиксирует, что Strata — CLI/build-time domain, не HTTP service и не дополнительный deployable/container.
-- [ ] `G10S-021` ADR фиксирует одну PostgreSQL database, отдельную schema `strata` и отсутствие второй content database.
-- [ ] `G10S-022` ADR фиксирует три operational roles: authoring, release import, serving; naming может измениться, но privilege matrix — нет.
-- [ ] `G10S-023` ADR фиксирует file bundle как единственный Strata→serving seam; прямой cross-schema read import-процессом запрещён.
-- [ ] `G10S-024` ADR фиксирует Studio как application workflow над Strata authority, а не отдельную authoring authority.
-- [ ] `G10S-025` ADR фиксирует Question identity `(kc, aspect, stack)` и challenge test: менять identity можно только с двумя reviewed non-duplicate counterexamples.
-- [ ] `G10S-026` ADR фиксирует `generic` как существующий stack; запрещает ввод redundant `scope` в Question.
-- [ ] `G10S-027` ADR фиксирует canonical prompt invariant и human-only review альтернативных rephrasings.
-- [ ] `G10S-028` ADR фиксирует отказ от Probe; semantic variants получают aspect, executable prediction — Activity/Task/Drill.
-- [ ] `G10S-029` ADR фиксирует `responseBudgetMin` как canonical-answer budget и явное исключение Activity execution time.
-- [ ] `G10S-030` ADR фиксирует ownership: Question — response budget; Curriculum — placement/priority/patterns/prerequisites; Activity — execution budget.
-- [ ] `G10S-031` ADR фиксирует v1 lossy adapter first и запрещает проектировать/выпускать v2 до фактического C098 loss ledger.
-- [ ] `G10S-032` ADR фиксирует rights policy: Solvit и любой paid/company-linked/unknown corpus — quarantine/reference only без публикации.
-- [ ] `G10S-033` ADR фиксирует standalone retirement условия: parity, rollback, immutable archive, owner acknowledgement; до них deletion запрещён.
-- [ ] `G10S-034` Создать owner matrix «fact → command owner → DB owner → projection → reviewer»: для identity, prompt, answer layers, provenance, rights, revision, placement, graph edge, activity, verdict и progress.
-- [ ] `G10S-035` Проверить owner matrix на duplicate owner и ownerless facts; обе группы должны быть 0 до schema work.
-- [ ] `G10S-036` Обновить Port Ledger: каждый G10 Studio capability получает `kept|adapted|replaced|retired(reason)` и target owner.
-- [ ] `G10S-037` Добавить rollback decision tree для каждой миграционной стадии: docs-only, schema-created, corpus-loaded, serving-imported, standalone-retired.
-- [ ] `G10S-038` Проверить ADR links и vocabulary consistency; `check:links` должен иметь негативный fixture для broken relative ADR link.
-- [ ] `G10S-039` Commit: `docs(g10s): lock authoring authority and migration decisions`.
+- [x] `G10S-019` Создать target ADR «Strata is the authoring source of truth» со статусом Accepted и ссылками на source ADR, reports 13/14 и G10 evidence. Evidence: `fluent-interview-platform/docs/architecture/adr/0001-strata-authoring-and-release-seam.md`, commit `07fb21b`.
+- [x] `G10S-020` ADR фиксирует, что Strata — CLI/build-time domain, не HTTP service и не дополнительный deployable/container. Evidence: target ADR §Decision summary/role matrix.
+- [x] `G10S-021` ADR фиксирует одну PostgreSQL database, отдельную schema `strata` и отсутствие второй content database. Evidence: target ADR §Decision summary and rejected alternatives.
+- [x] `G10S-022` ADR фиксирует три operational roles: authoring, release import, serving; naming может измениться, но privilege matrix — нет. Evidence: target ADR §Ownership and privilege matrix.
+- [x] `G10S-023` ADR фиксирует file bundle как единственный Strata→serving seam; прямой cross-schema read import-процессом запрещён. Evidence: target ADR §Data flow and release seam.
+- [x] `G10S-024` ADR фиксирует Studio как application workflow над Strata authority, а не отдельную authoring authority. Evidence: target ADR §Decision summary and Studio port ledger.
+- [x] `G10S-025` ADR фиксирует Question identity `(kc, aspect, stack)` и challenge test: менять identity можно только с двумя reviewed non-duplicate counterexamples. Evidence: target ADR §Canonical content model.
+- [x] `G10S-026` ADR фиксирует `generic` как существующий stack; запрещает ввод redundant `scope` в Question. Evidence: target ADR §Canonical content model.
+- [x] `G10S-027` ADR фиксирует canonical prompt invariant и human-only review альтернативных rephrasings. Evidence: target ADR §Canonical content model.
+- [x] `G10S-028` ADR фиксирует отказ от Probe; semantic variants получают aspect, executable prediction — Activity/Task/Drill. Evidence: target ADR §Canonical content model.
+- [x] `G10S-029` ADR фиксирует `responseBudgetMin` как canonical-answer budget и явное исключение Activity execution time. Evidence: target ADR §Canonical content model.
+- [x] `G10S-030` ADR фиксирует ownership: Question — response budget; Curriculum — placement/priority/patterns/prerequisites; Activity — execution budget. Evidence: target ADR §Canonical content model and owner matrix.
+- [x] `G10S-031` ADR фиксирует v1 lossy adapter first и запрещает проектировать/выпускать v2 до фактического C098 loss ledger. Evidence: target ADR §Migration contract.
+- [x] `G10S-032` ADR фиксирует rights policy: Solvit и любой paid/company-linked/unknown corpus — quarantine/reference only без публикации. Evidence: target ADR §Rights and quarantine.
+- [x] `G10S-033` ADR фиксирует standalone retirement условия: parity, rollback, immutable archive, owner acknowledgement; до них deletion запрещён. Evidence: target ADR §Rollback and review boundary.
+- [x] `G10S-034` Создать owner matrix «fact → command owner → DB owner → projection → reviewer»: для identity, prompt, answer layers, provenance, rights, revision, placement, graph edge, activity, verdict и progress. Evidence: `G10S/owner-matrix.json`, 16 facts.
+- [x] `G10S-035` Проверить owner matrix на duplicate owner и ownerless facts; обе группы должны быть 0 до schema work. Evidence: `architecture:ownership` and test: 0 duplicate fact IDs, 0 ownerless facts, 0 duplicate command owners.
+- [x] `G10S-036` Обновить Port Ledger: каждый G10 Studio capability получает `kept|adapted|replaced|retired(reason)` и target owner. Evidence: `G10S/studio-port-ledger.json`, 3 kept / 6 adapted / 0 replaced / 1 retired.
+- [x] `G10S-037` Добавить rollback decision tree для каждой миграционной стадии: docs-only, schema-created, corpus-loaded, serving-imported, standalone-retired. Evidence: `G10S/rollback-decision-tree.md`.
+- [x] `G10S-038` Проверить ADR links и vocabulary consistency; `check:links` должен иметь негативный fixture для broken relative ADR link. Evidence: `architecture:links` 5 files valid plus negative fixture test.
+- [x] `G10S-039` Commit: `docs(g10s): lock authoring authority and migration decisions`. Evidence: target commit `07fb21b`; `pnpm check`, `boundary:check`, `toolchain:check` green; no push.
 
 ### G10S.2. Monorepo project и toolchain integration
 
