@@ -1314,7 +1314,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-082`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-083`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2429,7 +2429,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-080` Positive SQL: import может атомарно materialize serving release из bundle staging. Evidence: committed cards/revision/translation transaction, commit `6bc6f12`.
 - [x] `G10S-081` Positive SQL: serving читает active release и пишет только разрешённые learner/application facts. Evidence: projection read plus assistance event append, commit `6bc6f12`.
 - [x] `G10S-082` Concurrency test: два preferred prompt с разным `ord` одновременно — ровно один commit успешен. Evidence: `G10S/concurrency-2026-08-30.json`/`.md`; `pnpm architecture:concurrency` observed one `ord=0` commit, `ord=7` conflict on `layer_preferred_uk`, final preferred rows=1; target commits `72eea78` and `37bd477`.
-- [ ] `G10S-083` Idempotency test: migrations и fixture load повторяются без duplicates/data drift.
+- [x] `G10S-083` Idempotency test: migrations и fixture load повторяются без duplicates/data drift. Evidence: target `docs/verification/greenfield/G10S/idempotency-2026-08-30.json`/`.md`, `pnpm --filter @fluent/content-authoring integration` twice with byte-identical normalized output, migration-chain second apply with 17 Strata tables and source `npm run db:load` twice; target commit `9ed7c4a`.
 - [ ] `G10S-084` Fresh-database test применяет всю migration chain с нуля и проходит 12 inherited + platform invariants.
 - [ ] `G10S-085` Upgrade-database test берёт copy текущего G10 database, применяет migrations, сверяет counts/hashes и Studio history.
 - [ ] `G10S-086` Backup/restore включает schema, roles/grants metadata, serving projection и authoring records без credentials.
