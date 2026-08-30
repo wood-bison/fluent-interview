@@ -1592,6 +1592,38 @@ This closes G10S-120. The next executable slice is G10S-121: Studio publish
 creates a reviewed authoring release-candidate/bundle request and must not
 activate a learner release directly.
 
+### Execution update — G10S-121 reviewed release candidate — 31 августа 2026
+
+Target `main` now contains `aeb8130` (`feat(g10s): request reviewed release
+candidates`), follow-up hardening `9803d80` (`fix(g10s): reject stale release
+candidate revisions`) and evidence commit `79668ea` (`docs(g10s): record
+release candidate request gate`). The former Next/Nest publish endpoints return
+HTTP 410; the executable publisher boundary is the one-shot
+`strata.release.request-bundle` command.
+
+The command accepts only unique approved, policy-evaluated review decisions for
+current revision heads, normalizes intent before hashing, and records one
+immutable authoring candidate plus exact revision links and a metadata-only
+authority receipt. Exact replay returns the same candidate. Changed replay,
+rejected, stale, unknown and duplicate reviews fail closed. PostgreSQL also
+rejects empty candidates, rejected-review and stale-revision direct inserts,
+updates and deletes, so bypassing the CLI cannot weaken the invariant.
+
+The disposable twelve-migration journey observed three questions, four
+revisions, three review decisions, three policy evaluations, one candidate,
+one candidate item and eight receipts. Learner revisions, legacy Studio rows,
+serving outbox events, learner activations and emitted content bodies were all
+zero. Review-policy, review-command, restore and all 28 PostgreSQL
+schema/platform assertions plus 12 functional role checks passed. The full
+ladder passed `18/18` content-model tests, `139/139` architecture tests,
+`57/57` API tests, `45/45` web tests, `pnpm check`, boundary/toolchain and
+complete evidence checksum validation. Push was intentionally not performed
+because of the Actions quota.
+
+This closes G10S-121. The next executable slice is G10S-122: export the exact
+reviewed candidate into a validated `question-catalog.v1` bundle, then import
+and activate it through one atomic serving transaction with manifest readback.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1638,7 +1670,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-121`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-122`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2797,7 +2829,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection. Evidence: target `99cbda3`, evidence `4943cc4`; one-shot CLI performed create/edit with exact replay, conflict and stale-head rollback, produced 2 immutable revisions/4 versioned layers/2 metadata receipts, and wrote 0 serving cards/legacy Studio rows/JSONL projections.
 - [x] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision. Evidence: target `e7ab46f`, evidence `6b017c9`; one-shot command bound an approved decision to the exact immutable revision/source author and explicit reviewer, exact replay stayed idempotent, 7 negative mutation/identity cases failed closed, and serving/legacy writes remained zero.
 - [x] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально. Evidence: target `d6ae03a`, evidence `8ee890f`; versioned policy hash and matched rules are immutable, same-actor global/risk review and policy drift fail closed, and the only distinct actor is an explicitly synthetic disposable rehearsal fixture rather than a fabricated production person.
-- [ ] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request.
+- [x] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request. Evidence: target `aeb8130`, DB hardening `9803d80`, evidence `79668ea`; the one-shot publisher command accepted only unique approved/policy-evaluated current revision heads, exact replay returned the same immutable candidate, CLI and direct-DB stale/rejected/empty/mutation bypasses failed closed, while learner revisions, legacy Studio rows, serving outbox events, activations and emitted bodies remained zero.
 - [ ] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction.
 - [ ] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases.
 - [ ] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis.
