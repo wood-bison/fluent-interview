@@ -1662,6 +1662,41 @@ or broader cross-key re-import policy. The next executable slice is G10S-123:
 reconcile or replace every legacy command receipt with exact mappings and prove
 that repeat commands cannot create duplicate revisions, reviews or releases.
 
+### Execution update — G10S-123 Studio receipt convergence — 31 августа 2026
+
+Target `main` now contains implementation commit `ef30ee0` (`feat(g10s):
+converge Studio command receipts`) and evidence commit `ae400e1` (`docs(g10s):
+record Studio receipt convergence gate`). The versioned
+`studio-receipt-convergence.v1.json` maps exactly three retired Studio mutation
+commands through five ordered target stages and ten live source anchors.
+
+`candidate.create`, `candidate.review` and `release.publish` remain HTTP 410 and
+write zero legacy rows. New revision, review and release-request commands bind
+their canonical request hashes and immutable result IDs in
+`strata.command_receipt`; serving import uses
+`question_release_import_receipts`; deterministic export is bound by its
+canonical manifest/artifact/logical hashes rather than a fabricated receipt.
+The owner matrix now contains 23 facts with zero duplicate or ownerless paths.
+
+One post-commit command ran four real disposable PostgreSQL journeys. Authoring,
+review, release request and serving import each returned the original result on
+same-key/same-request replay and rejected changed intent under the same key.
+Final durable facts remained two intended authoring revisions, one review
+decision, one release candidate/revision link and one serving manifest/pointer
+event/import receipt; replay created no duplicates and emitted zero content
+bodies. Architecture tests passed `147/147`; the full `pnpm check`,
+boundary/toolchain and evidence gates also passed. Push was intentionally not
+performed because of the Actions quota.
+
+The historical authority is the receipt records inside append-only
+`studio_ledger_records`; `studio_command_receipts` is their rebuildable
+projection. Neither is copied blindly because legacy result IDs are not target
+revision/review IDs. Per-row historical entity/receipt reconciliation remains
+G10S-126 and must use all seven declared join fields with explicit
+dispositions. Legacy release-pointer receipts remain separately visible for
+G10S-125, and serving outbox convergence is the next executable slice,
+G10S-124.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1708,7 +1743,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-123`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-124`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2869,7 +2904,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально. Evidence: target `d6ae03a`, evidence `8ee890f`; versioned policy hash and matched rules are immutable, same-actor global/risk review and policy drift fail closed, and the only distinct actor is an explicitly synthetic disposable rehearsal fixture rather than a fabricated production person.
 - [x] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request. Evidence: target `aeb8130`, DB hardening `9803d80`, evidence `79668ea`; the one-shot publisher command accepted only unique approved/policy-evaluated current revision heads, exact replay returned the same immutable candidate, CLI and direct-DB stale/rejected/empty/mutation bypasses failed closed, while learner revisions, legacy Studio rows, serving outbox events, activations and emitted bodies remained zero.
 - [x] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction. Evidence: target implementation `c66a2c3`, evidence `2235eb7`; strict two-file bundle validation, one PostgreSQL serving transaction, exact replay/readback, tamper rejection, late-conflict rollback, pointer preservation and immutable history all passed with zero emitted content bodies.
-- [ ] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases.
+- [x] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases. Evidence: target implementation `ef30ee0`, evidence `ae400e1`; 3 retired legacy commands map to 5 target stages/10 source anchors, all 4 receipt-bearing boundaries return exact results on same-request replay, reject changed intent with the same key, write zero legacy rows and create no duplicate revisions/reviews/releases.
 - [ ] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis.
 - [ ] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена.
 - [ ] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts.
