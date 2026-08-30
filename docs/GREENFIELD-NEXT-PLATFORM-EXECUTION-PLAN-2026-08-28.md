@@ -1289,6 +1289,27 @@ G12-027 помечен `[x]` только для внутреннего reconcil
 activities в content-enrichment очереди. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/release-graph-reconciliation-2026-08-30.{json,md}`.
 
+### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
+
+Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
+(`feat(g10s): gate restricted provenance grants`) and evidence commit
+`6c09aa2fa06c2fde656d86f2d5526aac79801a4b` (`docs(g10s): record restricted-source grant gate`).
+The new framework-neutral contract requires an explicit, reviewed and
+redistributable grant artifact before a `company_linked` or `paid` provenance
+record can receive `public` disposition. Missing, malformed,
+non-redistributable or mismatched artifacts fail closed to quarantine; no
+automatic grants are issued and projections contain only deterministic
+metadata/hashes, never source bodies. The rehearsal accepted `3/5` records,
+required grants for `3` restricted records, validated `2` artifacts and
+reported `autoGrantCount=0` with projection hash
+`aed8569be3b1858ca682e0aebda521947a808e3431fa08c52960289d9f5550dd`.
+
+This closes only the G10S-107 machine contract slice. Hidden/reference asset
+separation is the next implementation item (`G10S-108`); corpus breadth,
+human rights review and independent G10S acceptance remain open. Push was not
+performed because the owner requested local commits while the Actions quota is
+near its monthly limit.
+
 ### Master-plan expansion — Strata authoring convergence — 30 августа 2026
 
 После G10–G12 был обнаружен архитектурный разрыв между уже работающим Studio,
@@ -1314,7 +1335,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-107`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-108`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2456,7 +2477,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-104` `source_grant` является prerequisite provenance; cited source без grant rejected. Evidence: target `docs/verification/greenfield/G10S/source-grant-2026-08-30.json`/`.md`; `pnpm architecture:source-grant` принял 2 metadata records, отклонил 3 intentional negative fixtures (grantless citation, malformed grant, duplicate source grant), подтвердил 7 citations/6 covered/1 grantless, `autoGrantCount=0`, note hashes вместо текста, отсутствие bodies и deterministic projection; target commit `1380278a14e5cd321faed511d800640dd47fafb7`; evidence commit `49c6430377bcbf8c4699a8430ff764c6e57c4c14`.
 - [x] `G10S-105` Provenance хранит source, method, acquiredAt/importedAt, reviewer, disposition, rights и redistributable flag. Evidence: target `docs/verification/greenfield/G10S/provenance-fields-2026-08-30.json`/`.md`; `pnpm architecture:provenance-fields` принял 2 из 5 metadata records и отклонил 3 intentional negative fixtures (missing importedAt, reversed clock, public non-redistributable), подтвердил все обязательные поля, chronology/public-rights guards, metadata-only deterministic projection и отсутствие bodies; target commit `16c62996747a49a79e65518c5d6603f7f560d9e7`; evidence commit `bf7187a2e89ded9a92374ee6043feaf02526e4fc`.
 - [x] `G10S-106` Метод `human|translation|mt_reviewed|generated|imported` либо reviewed equivalent определён versioned vocabulary; unknown method rejected/quarantined. Evidence: target `docs/verification/greenfield/G10S/provenance-method-2026-08-30.json`/`.md`; `pnpm architecture:provenance-method` закрепил `provenance-method.v1`, принял 3 из 5 records, отправил 2 неизвестных метода в `QUARANTINED`, не применил auto-map и выпустил metadata-only deterministic projection; target commit `7815ed07d09150ef220a4f6e97d9479501153d10`; evidence commit `c98873d64fd02f767cd9a9326e95bd9c6cc6e491`.
-- [ ] `G10S-107` Company-linked source и paid source не может иметь public disposition без explicit distributable grant artifact.
+- [x] `G10S-107` Company-linked source и paid source не может иметь public disposition без explicit distributable grant artifact. Evidence: target `docs/verification/greenfield/G10S/provenance-grant-2026-08-30.json`/`.md`; `pnpm architecture:provenance-grant` accepted 3/5 records, quarantined missing/non-redistributable grants, reported `autoGrantCount=0`, and emitted deterministic metadata-only projection; target implementation `c619ae412bad0f26d81cee57f08ec5255e63dda1`, evidence commit `6c09aa2fa06c2fde656d86f2d5526aac79801a4b`.
 - [ ] `G10S-108` TaskFamily/TaskRevision/Dataset/grading model сохраняет hidden/reference assets отдельно от public statement/contracts.
 - [ ] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки.
 - [ ] `G10S-110` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает.

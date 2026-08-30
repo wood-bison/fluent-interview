@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 616 пунктов из 1 134.**
+**Осталось: 615 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 518 |
-| Осталось (`[ ]`) | 616 |
+| Закрыто (`[x]`) | 519 |
+| Осталось (`[ ]`) | 615 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.68% |
+| Формальное выполнение | 45.77% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -139,6 +139,17 @@ method также quarantine-only, автоматическое сопостав
 projection metadata-only и детерминирован (`c3e3b583…c85fd`). Следующий
 implementation slice: `G10S-107` — explicit distributable grant для
 company-linked и paid sources перед public disposition.
+
+Последний implementation slice: target `c619ae412bad0f26d81cee57f08ec5255e63dda1`
+(evidence `6c09aa2fa06c2fde656d86f2d5526aac79801a4b`) закрыл `G10S-107`.
+Restricted provenance contract теперь требует явный reviewed и
+redistributable grant artifact для `company_linked` и `paid` источников перед
+`public` disposition. Rehearsal принял `3/5` records, проверил `2` grant
+artifacts, поместил записи без grant или с non-redistributable grant в
+quarantine и подтвердил `autoGrantCount=0`; projection metadata-only и
+детерминирован (`aed8569be3b1858ca682e0aebda521947a808e3431fa08c52960289d9f5550dd`).
+Следующий implementation slice: `G10S-108` — разделить hidden/reference
+assets evaluator-а от public statement/contracts.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
