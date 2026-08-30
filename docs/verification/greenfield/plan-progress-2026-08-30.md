@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 632 пункта из 1 134.**
+**Осталось: 631 пункт из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 502 |
-| Осталось (`[ ]`) | 632 |
+| Закрыто (`[x]`) | 503 |
+| Осталось (`[ ]`) | 631 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.27% |
+| Формальное выполнение | 44.36% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -38,9 +38,8 @@ database; после replay allowlisted grants source/restored/target logical ha
 Обе временные базы и dump удалены. Gate закрыт после полного `pnpm check`,
 архитектурного тестового набора и evidence/checksum validation.
 
-Следующий implementation slice: `G10S-091` — сохранить строгую triple identity
-`(kc_code, aspect, stack)` и сблизить domain invariants перед Studio/content
-convergence.
+Следующий implementation slice: `G10S-092` — создать deterministic migration
+rejection report для source collisions; auto-merge вопросов запрещён.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture

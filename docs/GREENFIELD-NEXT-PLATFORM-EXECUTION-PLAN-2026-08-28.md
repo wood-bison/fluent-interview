@@ -1314,7 +1314,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-091`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-092`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2440,7 +2440,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.4. Domain model и invariant convergence
 
-- [ ] `G10S-091` Перенести triple identity и сохранить unique `(kc_code, aspect, stack)` без дополнительного band/scope discriminator.
+- [x] `G10S-091` Перенести triple identity и сохранить unique `(kc_code, aspect, stack)` без дополнительного band/scope discriminator. Evidence: target `docs/verification/greenfield/G10S/domain-identity-2026-08-30.json`/`.md`; `pnpm architecture:identity` applied all 8 migrations in a disposable database, observed exact `UNIQUE (kc_code, aspect, stack)` constraint/index, accepted generic and node variants, rejected a duplicate triple, and confirmed no band/scope discriminator; target commits `2b8a20d` (rehearsal) and `4abd375` (evidence).
 - [ ] `G10S-092` Создать migration rejection report для source collisions; auto-merge вопросов запрещён.
 - [ ] `G10S-093` Сохранить dynamic language table и ISO/BCP-47 normalization policy; closed enum RU/EN не использовать в authoring.
 - [ ] `G10S-094` Сохранить layer kinds и versioned layers; edit создаёт новую version/preferred transition, а не destructive overwrite.
