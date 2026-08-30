@@ -1314,8 +1314,8 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-044`. Implementing agent последовательно
-выполняет оставшиеся `G10S-044…244`, создаёт перечисленные atomic commits и
+**Следующий исполняемый пункт:** `G10S-082`. Implementing agent последовательно
+выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
 
@@ -2387,9 +2387,9 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-041` Создать `packages/content-model` либо эквивалентный named package для framework-neutral schemas/types; не помещать DB/process code в contract package. Evidence: `packages/content-model`, strict Zod tests, commit `e114cf5`.
 - [x] `G10S-042` Создать `tools/content-authoring` либо эквивалентный Nx project для CLI commands, gates и bundle export. Evidence: `tools/content-authoring/project.json`, integration output, commit `e114cf5`.
 - [x] `G10S-043` Поместить authoring fixtures/content в явный versioned root с README о rights, language, review и release policy. Evidence: `content/authoring/README.md` and rights-cleared C098 fixture, commit `e114cf5`.
-- [ ] `G10S-044` Поместить Strata PostgreSQL migrations в единственную platform migration chain; runtime DDL и duplicate bootstrap SQL запрещены.
-- [ ] `G10S-045` Перенести только source files по source manifest; `.git`, `node_modules`, npm lock, standalone Compose state и generated artifacts не копировать.
-- [ ] `G10S-046` Сохранить source file→target file provenance map и SHA before/after; intentional edits имеют rationale.
+- [x] `G10S-044` Поместить Strata PostgreSQL migrations в единственную platform migration chain; runtime DDL и duplicate bootstrap SQL запрещены. Evidence: target `infra/postgres/migrations/0001..0008`, `architecture:migrations`, commit `6bc6f12`.
+- [x] `G10S-045` Перенести только source files по source manifest; `.git`, `node_modules`, npm lock, standalone Compose state и generated artifacts не копировать. Evidence: `G10S/source-transfer-ledger.json` and `architecture:provenance`, commit `f52d925`.
+- [x] `G10S-046` Сохранить source file→target file provenance map и SHA before/after; intentional edits имеют rationale. Evidence: `G10S/source-transfer-ledger.json` validates 41-file manifest, 13 mapped inputs and recalculated target hashes, commit `f52d925`.
 - [x] `G10S-047` Конвертировать scripts с npm на root pnpm; новый nested `package-lock.json` не создаётся. Evidence: root `pnpm` scripts and single `pnpm-lock.yaml`, `drift:check`/`toolchain:check`, commit `e114cf5`.
 - [x] `G10S-048` Согласовать TypeScript, Node, Zod, Vitest, Biome и Oxlint с root toolchain; любое version change — отдельный toolchain commit, без floating `latest`. Evidence: Node `v26.7.0`, root pins and Zod `4.5.1`, `pnpm toolchain:check`, commits `e114cf5`/`85d951f`.
 - [x] `G10S-049` Разрешить текущий Zod delta Strata/platform осознанным pin/upgrade и записать compatibility proof. Evidence: `packages/content-model` pins Zod `4.5.1`; three compatibility tests pass, commit `e114cf5`.
@@ -2397,46 +2397,46 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-051` Добавить tags/ownership (`scope:content`, `type:domain|tool|data`, owner) в принятый target taxonomy. Evidence: project tags plus 16-fact owner matrix with zero ownerless/duplicate facts, `architecture:ownership`.
 - [x] `G10S-052` Добавить реальное boundary enforcement для content projects; наличие tags без fail-closed import rule не засчитывается. Evidence: `boundary:check` and negative fixtures for API→authoring/content-model→runtime, commits `07fb21b`/`e114cf5`.
 - [x] `G10S-053` Создать негативный import fixture, который доказывает: web/API не может импортировать authoring CLI/DB adapters/hidden task assets. Evidence: `tools/dev/fixtures/forbidden-api-authoring.ts`, `boundary:check` expected violation.
-- [ ] `G10S-054` Разрешить serving использовать только versioned contract/projection types, не Strata repositories или migration internals.
+- [x] `G10S-054` Разрешить serving использовать только versioned contract/projection types, не Strata repositories или migration internals. Evidence: `G10S/serving-boundary-2026-08-30.json`, `architecture:serving-boundary`, commit `6bc6f12`.
 - [x] `G10S-055` `pnpm nx graph`/machine project graph включает новые projects без cycles и ownerless nodes. Evidence: `architecture:graph` reports 12 nodes, 9 edges, required content projects present, `cycles=[]`, `ownerless=[]`; commit `caf9d82`.
 - [x] `G10S-056` `nx affected` на изменении prompt fixture запускает content gates/adapter tests, но не unrelated runtime builds; сохранить exact affected set. Evidence: `architecture:affected` records fixture → `content-authoring`, contract → `content-authoring + content-model`; all six content targets declared and dry-run is green; commit `caf9d82`.
-- [ ] `G10S-057` `nx affected` на contract change включает producer и consumers; негативный test ломает consumer при несовместимом schema change.
+- [x] `G10S-057` `nx affected` на contract change включает producer и consumers; негативный test ломает consumer при несовместимом schema change. Evidence: `architecture:affected` plus `contract-compatibility-2026-08-30.json` and negative test, commit `6bc6f12`.
 - [x] `G10S-058` Root `pnpm check` включает новые targets и не вызывает Docker для pure unit path. Evidence: full target `pnpm check` green with content-model/content-authoring build, test and integration; `db-verify` remains `database=not-connected`, commits `e114cf5`, `816de78`, `85d951f`, `caf9d82`.
 - [x] `G10S-059` `pnpm dev/down/doctor/status` остаются единственными product lifecycle commands; Strata не добавляет второй stack. Evidence: `docs/architecture/monorepo-project-layout.md`, authoring CLI is build-time only, no new Compose service.
 - [x] `G10S-060` Commit: `feat(g10s): integrate Strata authoring projects into Nx workspace`; `pnpm check && git commit` или эквивалентная repo-required chain обязательна. Evidence: `e114cf5`; follow-up test/architecture commits `816de78`, `85d951f`, `caf9d82`; no push.
 
 ### G10S.3. One-database schema и role isolation
 
-- [ ] `G10S-061` Инвентаризировать platform migration authority и выбрать monotonic migration IDs без переписывания применённых migrations.
-- [ ] `G10S-062` Создать schema `strata` через migration, не через application startup.
-- [ ] `G10S-063` Перенести language/layer-kind/KC/aspect/edge/question/layer/source-grant/provenance/task/dataset schema с сохранением constraints.
-- [ ] `G10S-064` Перенести migration 003 canonical preferred layer так, чтобы uniqueness не включала `ord`.
-- [ ] `G10S-065` Добавить migration для `response_budget_min`; определить unit, bounds, nullability/default и conversion старого `duration_min`.
-- [ ] `G10S-066` Удалить/не переносить question-level `priority` и `patterns` после backfill ownership в Curriculum; before/after report обязан иметь unresolved = 0.
-- [ ] `G10S-067` Создать DB roles с least privilege; credentials генерируются lifecycle tooling и не коммитятся.
-- [ ] `G10S-068` Authoring role получает needed DML/sequence rights только в `strata`; write в serving `question_*` запрещён.
-- [ ] `G10S-069` Release-import role получает write только в allowlisted serving projection/release/outbox tables и не получает USAGE/SELECT на `strata`.
-- [ ] `G10S-070` Serving/API role получает read/command rights только для serving/application tables и не получает USAGE/SELECT на `strata`.
-- [ ] `G10S-071` Migration/admin role не используется application containers после migrations.
-- [ ] `G10S-072` Настроить default privileges так, чтобы новые tables/sequences не расширяли роли автоматически.
-- [ ] `G10S-073` Настроить explicit `search_path`; unqualified table names не могут подменить object в другой schema.
-- [ ] `G10S-074` Negative SQL: authoring `INSERT/UPDATE/DELETE question_*` fail.
-- [ ] `G10S-075` Negative SQL: import `SELECT strata.question` и `USAGE ON SCHEMA strata` fail.
-- [ ] `G10S-076` Negative SQL: serving/API `SELECT/INSERT/UPDATE strata.*` fail.
-- [ ] `G10S-077` Negative SQL: public role не имеет create/use privileges в application schemas.
-- [ ] `G10S-078` Negative SQL: role cannot `SET ROLE` в migration/admin/другую application role.
-- [ ] `G10S-079` Positive SQL: authoring может выполнить полный Strata authoring transaction.
-- [ ] `G10S-080` Positive SQL: import может атомарно materialize serving release из bundle staging.
-- [ ] `G10S-081` Positive SQL: serving читает active release и пишет только разрешённые learner/application facts.
+- [x] `G10S-061` Инвентаризировать platform migration authority и выбрать monotonic migration IDs без переписывания применённых migrations. Evidence: `G10S/migration-chain-2026-08-30.json`, `architecture:migrations`, commit `6bc6f12`.
+- [x] `G10S-062` Создать schema `strata` через migration, не через application startup. Evidence: live disposable chain and `0007_strata_authoring.sql`, commit `6bc6f12`.
+- [x] `G10S-063` Перенести language/layer-kind/KC/aspect/edge/question/layer/source-grant/provenance/task/dataset schema с сохранением constraints. Evidence: 17 Strata tables in the fresh rehearsal, `role-isolation-2026-08-30.md`, commit `6bc6f12`.
+- [x] `G10S-064` Перенести migration 003 canonical preferred layer так, чтобы uniqueness не включала `ord`. Evidence: `layer_preferred_uk` migration plus live schema ownership assertion, commit `6bc6f12`.
+- [x] `G10S-065` Добавить migration для `response_budget_min`; определить unit, bounds, nullability/default и conversion старого `duration_min`. Evidence: `strata.question.response_budget_min` constraint/default and content-model Zod contract, commit `6bc6f12`.
+- [x] `G10S-066` Удалить/не переносить question-level `priority` и `patterns` после backfill ownership в Curriculum; before/after report обязан иметь unresolved = 0. Evidence: question schema omits both fields and disposable ownership assertion passes, commit `6bc6f12`.
+- [x] `G10S-067` Создать DB roles с least privilege; credentials генерируются lifecycle tooling и не коммитятся. Evidence: four NOLOGIN roles and credential-free `0008`, `role-isolation-2026-08-30.md`, commit `6bc6f12`.
+- [x] `G10S-068` Authoring role получает needed DML/sequence rights только в `strata`; write в serving `question_*` запрещён. Evidence: authoring transaction and INSERT/UPDATE/DELETE negative SQL, commit `6bc6f12`.
+- [x] `G10S-069` Release-import role получает write только в allowlisted serving projection/release/outbox tables и не получает USAGE/SELECT на `strata`. Evidence: atomic projection transaction and denied Strata read, commit `6bc6f12`.
+- [x] `G10S-070` Serving/API role получает read/command rights только для serving/application tables и не получает USAGE/SELECT на `strata`. Evidence: serving read/learner write and denied Strata SELECT/INSERT/UPDATE, commit `6bc6f12`.
+- [x] `G10S-071` Migration/admin role не используется application containers после migrations. Evidence: `fluent_migration` is NOLOGIN and Compose has no migration application service, `role-isolation-2026-08-30.md`, commit `6bc6f12`.
+- [x] `G10S-072` Настроить default privileges так, чтобы новые tables/sequences не расширяли роли автоматически. Evidence: explicit `ALTER DEFAULT PRIVILEGES ... REVOKE ALL` in `0008`, live role rehearsal, commit `6bc6f12`.
+- [x] `G10S-073` Настроить explicit `search_path`; unqualified table names не могут подменить object в другой schema. Evidence: per-role search paths in `0008` and live privilege matrix, commit `6bc6f12`.
+- [x] `G10S-074` Negative SQL: authoring `INSERT/UPDATE/DELETE question_*` fail. Evidence: three denied DML assertions in `g10s_role_checks.sql`, commit `6bc6f12`.
+- [x] `G10S-075` Negative SQL: import `SELECT strata.question` и `USAGE ON SCHEMA strata` fail. Evidence: denied Strata read plus `has_schema_privilege(..., 'USAGE') = false` for import role, commit `6bc6f12`.
+- [x] `G10S-076` Negative SQL: serving/API `SELECT/INSERT/UPDATE strata.*` fail. Evidence: three denied serving access assertions in `g10s_role_checks.sql`, commit `6bc6f12`.
+- [x] `G10S-077` Negative SQL: public role не имеет create/use privileges в application schemas. Evidence: denied public CREATE and role privilege matrix, commit `6bc6f12`.
+- [x] `G10S-078` Negative SQL: role cannot `SET ROLE` в migration/admin/другую application role. Evidence: denied `SET ROLE fluent_migration`, commit `6bc6f12`.
+- [x] `G10S-079` Positive SQL: authoring может выполнить полный Strata authoring transaction. Evidence: committed synthetic KC/question/provenance/layer transaction, commit `6bc6f12`.
+- [x] `G10S-080` Positive SQL: import может атомарно materialize serving release из bundle staging. Evidence: committed cards/revision/translation transaction, commit `6bc6f12`.
+- [x] `G10S-081` Positive SQL: serving читает active release и пишет только разрешённые learner/application facts. Evidence: projection read plus assistance event append, commit `6bc6f12`.
 - [ ] `G10S-082` Concurrency test: два preferred prompt с разным `ord` одновременно — ровно один commit успешен.
 - [ ] `G10S-083` Idempotency test: migrations и fixture load повторяются без duplicates/data drift.
 - [ ] `G10S-084` Fresh-database test применяет всю migration chain с нуля и проходит 12 inherited + platform invariants.
 - [ ] `G10S-085` Upgrade-database test берёт copy текущего G10 database, применяет migrations, сверяет counts/hashes и Studio history.
 - [ ] `G10S-086` Backup/restore включает schema, roles/grants metadata, serving projection и authoring records без credentials.
 - [ ] `G10S-087` Restore в disposable database повторяет grants/invariants и exact logical hashes.
-- [ ] `G10S-088` API container environment/static bundle scan подтверждает отсутствие authoring DSN/role/password.
-- [ ] `G10S-089` Static scan `apps/api`/`apps/web` подтверждает 0 imports authoring repositories и 0 raw `strata.` SQL.
-- [ ] `G10S-090` Commit: `feat(g10s): establish isolated Strata schema and database roles`.
+- [x] `G10S-088` API container environment/static bundle scan подтверждает отсутствие authoring DSN/role/password. Evidence: `G10S/serving-boundary-2026-08-30.json` scans API source/dist and Compose API environment; zero authoring DSN/role/password markers, commit `6bc6f12`.
+- [x] `G10S-089` Static scan `apps/api`/`apps/web` подтверждает 0 imports authoring repositories и 0 raw `strata.` SQL. Evidence: `G10S/serving-boundary-2026-08-30.json` and `architecture:serving-boundary`; 629 files, zero violations, commit `6bc6f12`.
+- [x] `G10S-090` Commit: `feat(g10s): establish isolated Strata schema and database roles`. Evidence: target commit `6bc6f12` plus follow-up evidence refresh `8de0a43`.
 
 ### G10S.4. Domain model и invariant convergence
 
