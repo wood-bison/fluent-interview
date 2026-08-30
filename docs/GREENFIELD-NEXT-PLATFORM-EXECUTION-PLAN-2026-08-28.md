@@ -1240,6 +1240,23 @@ remote часть `G12-024`: GitHub Actions для исходного immutable 
 workflow dispatch на `rc-2026.08.29.1` и сохранить run/job IDs. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/exact-rc-ci-2026-08-30.{json,md}`.
 
+### Execution update — G12 Port Ledger state coverage — 30 августа 2026
+
+Target `main` (`dc7d157`, evidence index `6454f95`) добавил
+`pnpm design:port-ledger`. Он сопоставляет D0 `port-ledger.design.json` с
+G12-022 visual contract и fail-closed проверяет owners/routes/disposition и
+каждое critical state. Все `12/12` screen entries структурно валидны и имеют
+geometry evidence, но D0 объявляет `71` critical state, а explicit
+state-specific evidence пока `0/71`; текущие `12` dispositions всё ещё
+`partial|open`, всего `83` unresolved disposition/state items.
+
+Это не ошибка проверки и не повод ставить `adapted` автоматически: route или
+общий screenshot не закрывает, например, `atlas:zoomed`,
+`practice-workbench:runner-down` или `settings:model-unavailable`. G12-025
+остаётся открытым до state fixtures/evidence и disposition
+`ported|adapted|dropped(reason)` по каждому случаю. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-audit-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
