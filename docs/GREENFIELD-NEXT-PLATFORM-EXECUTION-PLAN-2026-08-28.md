@@ -1124,9 +1124,33 @@ immutable RC `rc-2026.08.29.1 → 476aa01` не перемещался и не �
 проверенный.
 
 Это закрывает только machine slices для CORS и remote workflow на candidate и
-текущем `main`. `G12-018` в части auth/session/CSRF/XSS/SSRF, signed
-attestation/provenance, `G12-024` для исходного RC SHA, visual/accessibility,
-content/runtime-language и independent owner review остаются открытыми.
+текущем `main`. Signed attestation/provenance, `G12-024` для исходного RC SHA,
+visual/accessibility, content/runtime-language и independent owner review
+остаются открытыми.
+
+### Execution update — G12 local security boundary — 30 августа 2026
+
+Target `main` (`8a554de`, gate index `f4c9198`) добавил воспроизводимый
+`pnpm security:boundary` и 14/14 unit guards. В отдельном disposable Compose
+project статические проверки подтвердили `credentials:false`, явный local
+CORS allowlist, bounded JSON bodies, loopback-only Navigator endpoint без
+credentials/query/fragment, runtime `index.js` allowlist, отсутствие
+application HTML/eval/child-process sinks и hardened read-only containers.
+
+Live journey через Next boundary дал `PASS`: WebMCP-aware browser headers,
+семь learner-owned verdict fields `400`, release digest drift `400`, oversized
+body `413`, hostile-origin GET/OPTIONS без ACAO/credentials, четыре SSRF
+вектора `400`, XSS marker без reflection, runtime/profile path traversal `400`,
+command-injection payload `sandbox_refused` с `workerCleanedUp=true`, отсутствие
+`Set-Cookie` и scoped cleanup `0 containers / 0 networks`. Report:
+`fluent-interview-platform/docs/verification/greenfield/G12/security-boundary-2026-08-30.{json,md}`.
+
+Это закрывает machine security boundary slice `G12-018` с
+`PASS_WITH_LIMITATIONS`: продукт намеренно local-single-user и не имеет remote
+identity/session provider, поэтому internet-facing authentication,
+multi-tenant authorization и third-party penetration test остаются отдельными
+promotion gates. Push не выполнялся из-за зафиксированного лимита GitHub
+Actions; target `main` содержит коммиты локально.
 
 ---
 
@@ -2177,7 +2201,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-017` Hidden canary leak scan PASS для текущего post-RC target;
   evidence `c431bc3` сканирует declared и artifact-wide roots с 0 findings.
   Это не является независимым production sign-off.
-- [ ] `G12-018` Auth/session/CSRF/XSS/SSRF/path traversal/command injection/secrets checks PASS.
+- [x] `G12-018` Auth/session/CSRF/XSS/SSRF/path traversal/command injection/secrets checks PASS. Target `8a554de` добавил static/live `security:boundary`; перечисленные fail-closed vectors и cleanup прошли, а local-single-user/auth limitation явно записана в G12 evidence.
 - [ ] `G12-019` Dependency audit/CodeQL/SBOM/provenance/signature checks PASS.
 - [x] `G12-020` Performance budgets PASS per route; released Node profile
   проверен на 13 routes и heavy-editor policy закрыта отсутствием `xterm`,
