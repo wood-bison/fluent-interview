@@ -1011,6 +1011,22 @@ journeys остаются покрытыми отдельными G6–G10 evide
 security, language/runtime, content reconciliation и independent human review
 по-прежнему не объявляются закрытыми.
 
+### Execution update — G12 safe interactive route crawl — 30 августа 2026
+
+На target `main` (`048891b`) новый изолированный Playwright page прошёл 23
+curated routes (Node/Java/Go, RU/EN, settings/deep links и not-found) и 55
+уникальных same-origin link destinations. Все routes/links получили ожидаемый
+status и H1: `23/23` и `55/55`. Обработаны 336 видимых enabled navigation,
+filter, graph, settings и transient-surface controls; action/page/console/
+request failures равны нулю. Шесть disabled deep-lab stage controls записаны
+как ожидаемые prerequisite gates. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/interactive-crawl-2026-08-30.{json,md}`.
+
+Это закрывает safe navigation/action subset `G12-005`. Stateful controls
+(`Run`, `Submit`, `Reset`, `Save`, `Delete`, `Record`, `Navigator ask`) намеренно
+остаются за отдельным `G12-009`/G9 evidence; visual diff, accessibility и
+independent review не подменяются этим crawl.
+
 ### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
 
 На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
@@ -2078,7 +2094,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G12-002` Проверить exact toolchain/bootstrap instructions.
 - [x] `G12-003` Запустить только `pnpm dev`.
 - [x] `G12-004` Проверить `doctor/status` до/во время/после startup.
-- [ ] `G12-005` Прокликать все routes/links/buttons/menus/dialogs/settings/deep links.
+- [x] `G12-005` Прокликать все routes/links/buttons/menus/dialogs/settings/deep links. Safe subset: 23/23 routes, 55/55 internal link destinations и 336/336 visible enabled controls; stateful mutations остаются в G12-009/G9. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/interactive-crawl-2026-08-30.json`.
 - [ ] `G12-006` Проверить every route RU/EN, light/dark/system, keyboard, required viewports.
 - [x] `G12-007` Проверить all API endpoints against generated contract. Generated
   controller inventory covered 40/40 route handlers and 43/43 direct/negative
@@ -2174,7 +2190,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-005..006`, `G12-008..009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
+`G12-006`, `G12-008..009`, `G12-011`, `G12-013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, offline Navigator без connected streaming,
 Node runtime без multi-language conformance). Точные границы и ожидаемые
