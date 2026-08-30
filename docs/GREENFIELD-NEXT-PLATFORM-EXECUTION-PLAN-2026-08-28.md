@@ -795,6 +795,22 @@ total chunks 1120108 B < 1200000, forbidden packages = 0. Если тяжёлы�
 interaction latency и Web Vitals evidence. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G6/editor-budget-2026-08-30.md`.
 
+### Execution update — G7 Submit adversarial matrix — 30 августа 2026
+
+`fb0267d` добавляет bounded `pnpm runtime:submit-matrix` на публичной Next
+границе, а `d3a8864` фиксирует live output и checksums. Матрица покрывает
+malformed payload, learner-owned verdict fields, release-digest drift,
+oversized body, exact idempotent replay, changed-payload conflict и четыре
+конкурентных запроса с одним idempotency key. Live result: все 7 cases PASS;
+конкурентные запросы получили `200/200/200/200`, `uniqueVerdicts=1` и
+`uniqueEvidence=1`; mastery/unlock не изменились. Это закрывает `G7-022` в
+текущем released Node/public-Next scope. G7-021 остаётся отдельной canary
+проверкой, G7-023 — полной event-ledger/backup promotion границей, поэтому
+`G7-026` по-прежнему честно остаётся `PASS_WITH_LIMITATIONS`.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G7/submit-matrix-2026-08-30.md`.
+
 ### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
 
 Следующий deterministic batch довёл durable history до локального PostgreSQL
@@ -1594,7 +1610,9 @@ edges до переноса product code.
 ### Gate G7
 
 - [ ] `G7-021` Hidden canary leakage = 0 по всем surfaces.
-- [ ] `G7-022` Submit adversarial/concurrency/idempotency matrix PASS.
+- [x] `G7-022` Submit adversarial/concurrency/idempotency matrix PASS;
+      `fb0267d` + `d3a8864`, live 7-case matrix and four-way same-key replay
+      proof.
 - [ ] `G7-023` Evidence rebuild + backup/restore PASS.
 - [x] `G7-024` Browser authority forgery tests PASS.
 - [x] `G7-025` Commit: `feat(g7): add authoritative submit verdict and evidence chain`.
