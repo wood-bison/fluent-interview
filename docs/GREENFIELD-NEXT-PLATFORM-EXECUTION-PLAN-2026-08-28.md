@@ -1289,13 +1289,43 @@ G12-027 помечен `[x]` только для внутреннего reconcil
 activities в content-enrichment очереди. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/release-graph-reconciliation-2026-08-30.{json,md}`.
 
+### Master-plan expansion — Strata authoring convergence — 30 августа 2026
+
+После G10–G12 был обнаружен архитектурный разрыв между уже работающим Studio,
+serving-каталогом платформы и новым authoring domain в
+`/Users/sergeyzhechko/developer/strata`. Поэтому этот документ теперь содержит
+обязательный corrective gate **G10S** между G10 и G11. Он не замораживает
+продукт и не отменяет собранные evidence: он устраняет двойной source of truth
+до массового наполнения curriculum.
+
+Входы решения зафиксированы на:
+
+- Strata `main@ec3b680` — 32 tests, 12 ADR links, 9 corpus checks,
+  12 PostgreSQL invariants;
+- `/Users/sergeyzhechko/developer/questions/brain-reports/13-answers.md`;
+- `/Users/sergeyzhechko/developer/questions/brain-reports/14-answers-round-2.md`;
+- текущем `question-catalog.v1` с семью answer layers
+  (`concise`, `understanding`, `mechanism`, `traps`, `followUps`, `evidence`,
+  `sources`).
+
+Существующие результаты G11/G12 считаются историческим baseline. Их нельзя
+использовать как финальное production-доказательство после изменения authoring
+authority: затронутые content, release, Studio, persistence, route и visual
+проверки повторяются на новых revision/release IDs. В рамках этого изменения
+плана код Strata и платформы не меняется.
+
+**Следующий исполняемый пункт:** `G10S-001`. Implementing agent последовательно
+выполняет `G10S-001…244`, создаёт перечисленные atomic commits и останавливается
+на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex после
+независимой проверки. Только затем агент получает G11 breadth work.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
 
 ### 0.1. Неподвижный порядок
 
-- [ ] `P-001` Выполнять только `G0 → G1 → … → G12`.
+- [ ] `P-001` Выполнять только `G0 → G1 → … → G10 → G10S → G11 → G12`.
 - [ ] `P-002` Не начинать следующий gate, пока текущий не имеет `PASS`.
 - [ ] `P-003` `PARTIAL`, `WAIVED`, `MOSTLY PASS` и «работает у меня» не разрешают переход.
 - [ ] `P-004` Destructive/cutover действия разрешены только после отдельного preflight внутри соответствующего gate.
@@ -1406,6 +1436,19 @@ docs/verification/greenfield/Gxx/
 STOP означает: сохранить evidence, поставить `FAIL`, сделать безопасный commit
 только если он не маскирует проблему, и передать владельцу точный blocker.
 
+### 0.7. Status authority и corrective-gate discipline
+
+- [ ] `P-057` Этот master-plan — единственный status authority; дочерние планы и ADR описывают implementation, но не ведут параллельный процент готовности.
+- [ ] `P-058` Implementing agent меняет `[ ]` на `[x]` только вместе с exact command evidence и commit SHA.
+- [ ] `P-059` Уже закрытый пункт, семантика которого изменилась после G10S, получает explicit `REVERIFY`, а не молчаливо сохраняет PASS.
+- [ ] `P-060` Historical evidence не удаляется и не переписывается; новый прогон ссылается на superseded artifact и объясняет delta.
+- [ ] `P-061` Каждая G10S implementation-фаза заканчивается `check → atomic commit → clean-tree check`; проверки и commit запускаются последовательно одной сцепленной командой там, где это требует repository policy.
+- [ ] `P-062` Один commit не может одновременно менять PostgreSQL authority, domain contract, Studio workflow, corpus и learner UI.
+- [ ] `P-063` Массовый corpus import запрещён до PASS вертикального slice C098.
+- [ ] `P-064` Standalone Strata не удаляется и не архивируется до parity, rollback rehearsal и независимого review.
+- [ ] `P-065` Agent заканчивает G10S статусом `AWAITING_INDEPENDENT_REVIEW`; окончательное принятие выполняет Codex по разделу 3.
+- [ ] `P-066` После принятия G10S агент продолжает G11 с первого реально открытого пункта, а не переигрывает уже доказанные независимые gates без причины.
+
 ---
 
 ## 1. Неподвижные архитектурные решения
@@ -1436,6 +1479,25 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `A-024` Kotlin/JVM telemetry использует OTel Java agent/autoconfigure, не experimental native Kotlin SDK.
 - [ ] `A-025` Product claim проходит пять уровней: operational → curriculum → executable practice → proven mastery → interview benchmarked.
 - [ ] `A-026` Старый продукт удаляется/архивируется только отдельным owner decision после G12.
+- [ ] `A-027` Strata становится единственным authoring source of truth для Question, Layer, provenance, rights, TaskFamily, TaskRevision и Dataset.
+- [ ] `A-028` Strata остаётся CLI/build-time domain: у неё нет HTTP API, собственного long-running service или browser credentials.
+- [ ] `A-029` Authoring и serving используют один PostgreSQL instance/database, но Strata живёт в отдельной schema `strata` с запретительными grants.
+- [ ] `A-030` Роли разделены: authoring пишет `strata` и не пишет serving `question_*`; import читает подписанный bundle-файл и пишет serving projection; serving/API читает `question_*` и не имеет доступа к `strata`.
+- [ ] `A-031` Release bundle — единственный seam между authoring и serving; API никогда не импортирует Strata package и не получает authoring credentials.
+- [ ] `A-032` Serving `question-catalog.v1` — rebuildable release projection, а не второй authoring source of truth.
+- [ ] `A-033` Studio — application workflow над Strata commands/review/release, а не независимая PostgreSQL/JSONL authority с dual-write.
+- [ ] `A-034` Каноническая Question identity остаётся `(kc, aspect, stack)`; `generic` уже является допустимым stack и новое поле scope не вводится.
+- [ ] `A-035` На `(question, layer kind, language, depth)` существует ровно один preferred canonical prompt; альтернативы — только human-reviewed rephrasings с тем же expected answer.
+- [ ] `A-036` Сущность Probe не вводится: другой semantic question получает другой aspect; code prediction становится Activity/Task/Drill.
+- [ ] `A-037` Question владеет `responseBudgetMin` для preferred prompt на canonical depth; Curriculum владеет placement/priority/patterns/prerequisites; Activity владеет execution budget.
+- [ ] `A-038` Language остаётся динамическим catalog/table, не закрытым enum; release явно объявляет поддержанные locale и runtime revisions.
+- [ ] `A-039` Hidden tests, reference solutions и evaluator artifacts входят только в изолированный task build context и никогда не попадают в web/API/release projection.
+- [ ] `A-040` Сначала реализуется измеримый lossy adapter Strata → `question-catalog.v1`; `question-catalog.v2` проектируется только по доказанному loss ledger одного полного slice.
+- [ ] `A-041` Solvit/paid/company-linked/unknown-rights material импортируется только в quarantine/reference с `redistributable=false`; production release требует source grant и reviewer decision.
+- [ ] `A-042` Один vertical slice C098 Node Event Loop должен пройти author→review→bundle→import→learner→activity→evidence до breadth migration.
+- [ ] `A-043` В target monorepo один `.git`, один `pnpm-lock.yaml`, один Nx project graph и один root Compose project; standalone npm/Compose authority после cutover не остаётся.
+- [ ] `A-044` Standalone Strata сохраняется как immutable reference tag/bundle до проверенного rollback; физическое удаление требует отдельного owner decision.
+- [ ] `A-045` Dual-write между Strata, Studio ledger и serving catalog запрещён; у каждого факта ровно один owner и rebuildable projections.
 
 ---
 
@@ -1472,10 +1534,23 @@ STOP означает: сохранить evidence, поставить `FAIL`, �
 - [ ] `D-026` Browser artifacts находятся в CI/artifact storage, не раздувают Git.
 - [ ] `D-027` SBOM, provenance, pinned actions/images и dependency review проходят.
 - [ ] `D-028` Backup→restore и target→reference rollback реально отрепетированы.
-- [ ] `D-029` G0–G12 имеют PASS evidence и clean commits.
+- [ ] `D-029` G0–G10, G10S, G11 и G12 имеют PASS evidence и clean commits.
 - [ ] `D-030` Agent выставил `AWAITING_INDEPENDENT_REVIEW`, а не `DONE`.
 - [ ] `D-031` Независимый Codex-аудит повторил проверки и владелец подписал human visual/learning flows.
 - [ ] `D-032` Только после D-031 release получает `DONE` и immutable tag.
+- [ ] `D-033` Strata перенесена в target monorepo без nested Git/npm lock/standalone Compose и включена в Nx affected graph.
+- [ ] `D-034` Fresh/upgrade PostgreSQL migrations создают schema/roles/default privileges; все запрещённые cross-boundary SQL операции fail closed.
+- [ ] `D-035` Static scan и live DB proof подтверждают: API/serving не импортируют Strata, не знают authoring DSN и не читают `strata.*`.
+- [ ] `D-036` Studio полностью использует Strata authority; старые JSONL/PostgreSQL authoring ledgers либо migrated, либо retired(reason), dual-write = 0.
+- [ ] `D-037` Canonical-prompt invariant проходит DB, fixture, corpus и concurrency tests; semantic alternatives не маскируются изменением `ord`.
+- [ ] `D-038` `durationMin` заменён на `responseBudgetMin`, а question-level `priority/patterns` удалены либо имеют approved ownership migration без двух хозяев.
+- [ ] `D-039` Every authored/imported item имеет source grant, provenance, method, reviewer и disposition; quarantine и non-redistributable content не попадают в release.
+- [ ] `D-040` Strata→v1 adapter детерминирован, публикует machine-readable loss ledger и проходит double-build/readback без silent data loss.
+- [ ] `D-041` C098 Event Loop проходит полный author→review→release→route→question→activity→Run/Submit→Evidence journey на exact revision.
+- [ ] `D-042` Master-plan остаётся единственным status ledger; standalone `docs/plan.md` Strata помечен implementation history/read-only и не расходится по статусам.
+- [ ] `D-043` Standalone Strata архивирована только после parity, restore и rollback rehearsal; reference tag/bundle/hash доступны.
+- [ ] `D-044` G10S имеет independent PASS, а все затронутые G11/G12 evidence повторены на новом content/release authority.
+- [ ] `D-045` Ни paid Solvit wording, ни company-linked source, ни unknown-rights body не присутствуют в distributable Git, bundle, logs, traces или learner UI.
 
 ---
 
@@ -2154,7 +2229,329 @@ edges до переноса product code.
 - [x] `G10-025a` Commits `d36ae64` + `caa61b3`: bounded outbox benchmark,
       G10-020 ADR, machine-readable evidence and checksums; temporary stacks
       were scoped and removed.
-- [ ] `G10-026` `gate.json.status = PASS`.
+- [ ] `G10-026` `gate.json.status = PASS` только после G10S-246; до этого
+      G10 имеет `REMEDIATION_REQUIRED`. G10S является corrective subgate самого
+      G10 и поэтому его выполнение не нарушает P-002.
+
+---
+
+# G10S — Strata authoring convergence и Question Brain migration
+
+## Цель
+
+Устранить двойную content authority до масштабного G11: перенести проверенную
+модель Strata в target monorepo, связать её с существующим Studio через один
+command/review workflow, выпускать детерминированный file bundle и импортировать
+его в serving catalog без доступа API к authoring schema. Первый и обязательный
+proof — полный slice `C098 / Node.js Event Loop`.
+
+## Статус и граница
+
+- Source Strata: `/Users/sergeyzhechko/developer/strata`, baseline
+  `main@ec3b680`.
+- Source research/quarantine: `/Users/sergeyzhechko/developer/questions`, включая
+  `questions.jsonl` (`2526` records; rights/disposition проверяются заново, а не
+  доверяются summary).
+- Target: `/Users/sergeyzhechko/developer/fluent-interview-platform`.
+- G10S не считается начатым, пока preflight ниже не сохранён в evidence.
+- Уже реализованные G10 Studio и `question-catalog.v1` являются migration inputs,
+  а не параллельными permanent authorities.
+- До independent review standalone Strata остаётся clean, запускаемым и
+  неизменяемым reference oracle.
+
+| Пакет | Диапазон | Результат/commit boundary | Кто закрывает |
+| --- | --- | --- | --- |
+| Input freeze | `001–018` | source manifests + `docs(g10s): freeze…` | implementing agent |
+| Decisions | `019–039` | ADR/ownership/rollback + `docs(g10s): lock…` | implementing agent |
+| Workspace | `040–060` | Nx projects/toolchain/boundaries + `feat(g10s): integrate…` | implementing agent |
+| Database | `061–090` | schema/roles/grants/migrations + `feat(g10s): establish…` | implementing agent |
+| Domain | `091–115` | identity/layers/tasks/invariants + `feat(g10s): converge…` | implementing agent |
+| Studio | `116–136` | one command authority/no dual-write + `feat(g10s): converge Studio…` | implementing agent |
+| Corpus | `137–161` | rights/quarantine/import metadata + `feat(g10s): migrate…` | implementing agent |
+| Adapter | `162–186` | deterministic bundle/loss ledger/import + `feat(g10s): export…` | implementing agent |
+| Vertical slice | `187–209` | complete C098 journey + `feat(g10s): prove…` | implementing agent |
+| Retirement readiness | `210–225` | parity/archive/rollback + conditional `chore(g10s): retire…` | implementing agent |
+| Machine handoff | `226–244` | evidence + `AWAITING_INDEPENDENT_REVIEW` | implementing agent |
+| Independent acceptance | `245–246` | P0/P1 closure and G10S PASS | Codex/owner |
+
+### G10S.0. Preflight, baselines и decision intake
+
+- [ ] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes.
+- [ ] `G10S-002` Проверить `git status --short --branch` во всех четырёх roots; неизвестные изменения остановят migration до provenance решения.
+- [ ] `G10S-003` Подтвердить Strata baseline `ec3b680` либо записать reviewed SHA delta и повторить весь source baseline.
+- [ ] `G10S-004` В Strata выполнить `npm run check`; сохранить 32 test results, 12 ADR links, 9 corpus gates или актуальные exact counts.
+- [ ] `G10S-005` Выполнить `npm run db:up && npm run db:load && npm run db:load && npm run db:verify`; второй load обязан быть idempotent, invariants = 12 или reviewed delta.
+- [ ] `G10S-006` Выполнить representative queries из `schema/queries.sql`; сохранить metadata/results без paid prompt/answer bodies.
+- [ ] `G10S-007` В target выполнить `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates`; любой baseline FAIL исправляется отдельным pre-migration commit.
+- [ ] `G10S-008` Запустить target `pnpm dev` в scoped Compose project и проверить current Studio author→review→publish→readback baseline.
+- [ ] `G10S-009` Снять current serving counts/hashes: cards, revisions, translations, placements, reviews, graph edges, activities и release pointer.
+- [ ] `G10S-010` Снять current Studio storage owners: PostgreSQL tables, JSONL fallback, outbox, command receipts, projections и backup members.
+- [ ] `G10S-011` Снять current Strata counts: questions, layers per kind/lang/depth, grants, provenance, task families/revisions, datasets и grading artifacts.
+- [ ] `G10S-012` Пересчитать `questions.jsonl`: total, paid, company-linked, Claude/generated, external/unknown, duplicate/hash groups и malformed records; summary не заменяет command output.
+- [ ] `G10S-013` Прочитать полностью `AGENTS.md`, `README.md`, `docs/migration.md`, `docs/plan.md`, `docs/adr/README.md` и все ADR Strata перед первым target edit.
+- [ ] `G10S-014` Прочитать полностью `brain-reports/13-answers.md` и `14-answers-round-2.md`; решения перенести в target ADR без reinterpretation.
+- [ ] `G10S-015` Создать immutable source manifest с SHA-256 всех Strata schema/docs/fixtures и metadata-only manifest questions corpus.
+- [ ] `G10S-016` Создать recoverable Git bundle/tag Strata baseline; проверить bundle clone и `npm run check` из него.
+- [ ] `G10S-017` Зафиксировать список данных, которые запрещено копировать в target Git: paid wording, paid answers, company-linked bodies, credentials, hidden evaluator assets и unknown-rights bodies.
+- [ ] `G10S-018` Evidence commit: `docs(g10s): freeze Strata and Question Brain migration inputs`; после commit оба source repos остаются clean.
+
+### G10S.1. ADR reconciliation и ownership map
+
+- [ ] `G10S-019` Создать target ADR «Strata is the authoring source of truth» со статусом Accepted и ссылками на source ADR, reports 13/14 и G10 evidence.
+- [ ] `G10S-020` ADR фиксирует, что Strata — CLI/build-time domain, не HTTP service и не дополнительный deployable/container.
+- [ ] `G10S-021` ADR фиксирует одну PostgreSQL database, отдельную schema `strata` и отсутствие второй content database.
+- [ ] `G10S-022` ADR фиксирует три operational roles: authoring, release import, serving; naming может измениться, но privilege matrix — нет.
+- [ ] `G10S-023` ADR фиксирует file bundle как единственный Strata→serving seam; прямой cross-schema read import-процессом запрещён.
+- [ ] `G10S-024` ADR фиксирует Studio как application workflow над Strata authority, а не отдельную authoring authority.
+- [ ] `G10S-025` ADR фиксирует Question identity `(kc, aspect, stack)` и challenge test: менять identity можно только с двумя reviewed non-duplicate counterexamples.
+- [ ] `G10S-026` ADR фиксирует `generic` как существующий stack; запрещает ввод redundant `scope` в Question.
+- [ ] `G10S-027` ADR фиксирует canonical prompt invariant и human-only review альтернативных rephrasings.
+- [ ] `G10S-028` ADR фиксирует отказ от Probe; semantic variants получают aspect, executable prediction — Activity/Task/Drill.
+- [ ] `G10S-029` ADR фиксирует `responseBudgetMin` как canonical-answer budget и явное исключение Activity execution time.
+- [ ] `G10S-030` ADR фиксирует ownership: Question — response budget; Curriculum — placement/priority/patterns/prerequisites; Activity — execution budget.
+- [ ] `G10S-031` ADR фиксирует v1 lossy adapter first и запрещает проектировать/выпускать v2 до фактического C098 loss ledger.
+- [ ] `G10S-032` ADR фиксирует rights policy: Solvit и любой paid/company-linked/unknown corpus — quarantine/reference only без публикации.
+- [ ] `G10S-033` ADR фиксирует standalone retirement условия: parity, rollback, immutable archive, owner acknowledgement; до них deletion запрещён.
+- [ ] `G10S-034` Создать owner matrix «fact → command owner → DB owner → projection → reviewer»: для identity, prompt, answer layers, provenance, rights, revision, placement, graph edge, activity, verdict и progress.
+- [ ] `G10S-035` Проверить owner matrix на duplicate owner и ownerless facts; обе группы должны быть 0 до schema work.
+- [ ] `G10S-036` Обновить Port Ledger: каждый G10 Studio capability получает `kept|adapted|replaced|retired(reason)` и target owner.
+- [ ] `G10S-037` Добавить rollback decision tree для каждой миграционной стадии: docs-only, schema-created, corpus-loaded, serving-imported, standalone-retired.
+- [ ] `G10S-038` Проверить ADR links и vocabulary consistency; `check:links` должен иметь негативный fixture для broken relative ADR link.
+- [ ] `G10S-039` Commit: `docs(g10s): lock authoring authority and migration decisions`.
+
+### G10S.2. Monorepo project и toolchain integration
+
+- [ ] `G10S-040` Выбрать и документировать Nx project layout без generic dump folders: domain package, authoring CLI/tool, content assets и PostgreSQL migrations имеют отдельных owners.
+- [ ] `G10S-041` Создать `packages/content-model` либо эквивалентный named package для framework-neutral schemas/types; не помещать DB/process code в contract package.
+- [ ] `G10S-042` Создать `tools/content-authoring` либо эквивалентный Nx project для CLI commands, gates и bundle export.
+- [ ] `G10S-043` Поместить authoring fixtures/content в явный versioned root с README о rights, language, review и release policy.
+- [ ] `G10S-044` Поместить Strata PostgreSQL migrations в единственную platform migration chain; runtime DDL и duplicate bootstrap SQL запрещены.
+- [ ] `G10S-045` Перенести только source files по source manifest; `.git`, `node_modules`, npm lock, standalone Compose state и generated artifacts не копировать.
+- [ ] `G10S-046` Сохранить source file→target file provenance map и SHA before/after; intentional edits имеют rationale.
+- [ ] `G10S-047` Конвертировать scripts с npm на root pnpm; новый nested `package-lock.json` не создаётся.
+- [ ] `G10S-048` Согласовать TypeScript, Node, Zod, Vitest, Biome и Oxlint с root toolchain; любое version change — отдельный toolchain commit, без floating `latest`.
+- [ ] `G10S-049` Разрешить текущий Zod delta Strata/platform осознанным pin/upgrade и записать compatibility proof.
+- [ ] `G10S-050` Добавить Nx `project.json` targets: typecheck, lint, test, fixtures, links, corpus, bundle, db-verify и integration.
+- [ ] `G10S-051` Добавить tags/ownership (`scope:content`, `type:domain|tool|data`, owner) в принятый target taxonomy.
+- [ ] `G10S-052` Добавить реальное boundary enforcement для content projects; наличие tags без fail-closed import rule не засчитывается.
+- [ ] `G10S-053` Создать негативный import fixture, который доказывает: web/API не может импортировать authoring CLI/DB adapters/hidden task assets.
+- [ ] `G10S-054` Разрешить serving использовать только versioned contract/projection types, не Strata repositories или migration internals.
+- [ ] `G10S-055` `pnpm nx graph`/machine project graph включает новые projects без cycles и ownerless nodes.
+- [ ] `G10S-056` `nx affected` на изменении prompt fixture запускает content gates/adapter tests, но не unrelated runtime builds; сохранить exact affected set.
+- [ ] `G10S-057` `nx affected` на contract change включает producer и consumers; негативный test ломает consumer при несовместимом schema change.
+- [ ] `G10S-058` Root `pnpm check` включает новые targets и не вызывает Docker для pure unit path.
+- [ ] `G10S-059` `pnpm dev/down/doctor/status` остаются единственными product lifecycle commands; Strata не добавляет второй stack.
+- [ ] `G10S-060` Commit: `feat(g10s): integrate Strata authoring projects into Nx workspace`; `pnpm check && git commit` или эквивалентная repo-required chain обязательна.
+
+### G10S.3. One-database schema и role isolation
+
+- [ ] `G10S-061` Инвентаризировать platform migration authority и выбрать monotonic migration IDs без переписывания применённых migrations.
+- [ ] `G10S-062` Создать schema `strata` через migration, не через application startup.
+- [ ] `G10S-063` Перенести language/layer-kind/KC/aspect/edge/question/layer/source-grant/provenance/task/dataset schema с сохранением constraints.
+- [ ] `G10S-064` Перенести migration 003 canonical preferred layer так, чтобы uniqueness не включала `ord`.
+- [ ] `G10S-065` Добавить migration для `response_budget_min`; определить unit, bounds, nullability/default и conversion старого `duration_min`.
+- [ ] `G10S-066` Удалить/не переносить question-level `priority` и `patterns` после backfill ownership в Curriculum; before/after report обязан иметь unresolved = 0.
+- [ ] `G10S-067` Создать DB roles с least privilege; credentials генерируются lifecycle tooling и не коммитятся.
+- [ ] `G10S-068` Authoring role получает needed DML/sequence rights только в `strata`; write в serving `question_*` запрещён.
+- [ ] `G10S-069` Release-import role получает write только в allowlisted serving projection/release/outbox tables и не получает USAGE/SELECT на `strata`.
+- [ ] `G10S-070` Serving/API role получает read/command rights только для serving/application tables и не получает USAGE/SELECT на `strata`.
+- [ ] `G10S-071` Migration/admin role не используется application containers после migrations.
+- [ ] `G10S-072` Настроить default privileges так, чтобы новые tables/sequences не расширяли роли автоматически.
+- [ ] `G10S-073` Настроить explicit `search_path`; unqualified table names не могут подменить object в другой schema.
+- [ ] `G10S-074` Negative SQL: authoring `INSERT/UPDATE/DELETE question_*` fail.
+- [ ] `G10S-075` Negative SQL: import `SELECT strata.question` и `USAGE ON SCHEMA strata` fail.
+- [ ] `G10S-076` Negative SQL: serving/API `SELECT/INSERT/UPDATE strata.*` fail.
+- [ ] `G10S-077` Negative SQL: public role не имеет create/use privileges в application schemas.
+- [ ] `G10S-078` Negative SQL: role cannot `SET ROLE` в migration/admin/другую application role.
+- [ ] `G10S-079` Positive SQL: authoring может выполнить полный Strata authoring transaction.
+- [ ] `G10S-080` Positive SQL: import может атомарно materialize serving release из bundle staging.
+- [ ] `G10S-081` Positive SQL: serving читает active release и пишет только разрешённые learner/application facts.
+- [ ] `G10S-082` Concurrency test: два preferred prompt с разным `ord` одновременно — ровно один commit успешен.
+- [ ] `G10S-083` Idempotency test: migrations и fixture load повторяются без duplicates/data drift.
+- [ ] `G10S-084` Fresh-database test применяет всю migration chain с нуля и проходит 12 inherited + platform invariants.
+- [ ] `G10S-085` Upgrade-database test берёт copy текущего G10 database, применяет migrations, сверяет counts/hashes и Studio history.
+- [ ] `G10S-086` Backup/restore включает schema, roles/grants metadata, serving projection и authoring records без credentials.
+- [ ] `G10S-087` Restore в disposable database повторяет grants/invariants и exact logical hashes.
+- [ ] `G10S-088` API container environment/static bundle scan подтверждает отсутствие authoring DSN/role/password.
+- [ ] `G10S-089` Static scan `apps/api`/`apps/web` подтверждает 0 imports authoring repositories и 0 raw `strata.` SQL.
+- [ ] `G10S-090` Commit: `feat(g10s): establish isolated Strata schema and database roles`.
+
+### G10S.4. Domain model и invariant convergence
+
+- [ ] `G10S-091` Перенести triple identity и сохранить unique `(kc_code, aspect, stack)` без дополнительного band/scope discriminator.
+- [ ] `G10S-092` Создать migration rejection report для source collisions; auto-merge вопросов запрещён.
+- [ ] `G10S-093` Сохранить dynamic language table и ISO/BCP-47 normalization policy; closed enum RU/EN не использовать в authoring.
+- [ ] `G10S-094` Сохранить layer kinds и versioned layers; edit создаёт новую version/preferred transition, а не destructive overwrite.
+- [ ] `G10S-095` Canonical prompt uniqueness действует на `(question, layer_key=prompt, lang, depth)` независимо от `ord/version`.
+- [ ] `G10S-096` Добавить service/command transaction, который demotes old preferred и promotes new preferred атомарно.
+- [ ] `G10S-097` Alternative normal prompts требуют reviewer field и declaration `sameExpectedAnswer=true`; machine gate лишь проверяет metadata, semantic sameness остаётся `[review]`.
+- [ ] `G10S-098` Corpus review queue явно выводит все alternative prompts для human compare; silent acceptance запрещён.
+- [ ] `G10S-099` Code-prediction source record преобразуется в Activity/Task/Drill с link на Question, а не в second semantic prompt.
+- [ ] `G10S-100` Different semantic question получает новый aspect и проходит duplicate review; Probe table/type/API не создаётся.
+- [ ] `G10S-101` `responseBudgetMin` имеет canonical definition и validation; UI-copy не называет его фактической длительностью ответа.
+- [ ] `G10S-102` Curriculum placement хранит priority/order/pattern/prerequisites; adapter не копирует их назад в Question.
+- [ ] `G10S-103` Activity/TaskRevision хранит execution/time budget отдельно; learner analytics не смешивает оба budget.
+- [ ] `G10S-104` `source_grant` является prerequisite provenance; cited source без grant rejected.
+- [ ] `G10S-105` Provenance хранит source, method, acquiredAt/importedAt, reviewer, disposition, rights и redistributable flag.
+- [ ] `G10S-106` Метод `human|translation|mt_reviewed|generated|imported` либо reviewed equivalent определён versioned vocabulary; unknown method rejected/quarantined.
+- [ ] `G10S-107` Company-linked source и paid source не может иметь public disposition без explicit distributable grant artifact.
+- [ ] `G10S-108` TaskFamily/TaskRevision/Dataset/grading model сохраняет hidden/reference assets отдельно от public statement/contracts.
+- [ ] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки.
+- [ ] `G10S-110` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает.
+- [ ] `G10S-111` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён.
+- [ ] `G10S-112` Property tests покрывают identity, preferred transition, provenance disposition и serialization determinism.
+- [ ] `G10S-113` Golden fixtures сохраняют baseline: 6 cards, 75 layers, 3 tasks, 1 dataset либо exact reviewed delta.
+- [ ] `G10S-114` Все 12 inherited PostgreSQL invariant tests перенесены и дополнены platform ownership/grant tests.
+- [ ] `G10S-115` Commit: `feat(g10s): converge question and task domain invariants`.
+
+### G10S.5. Studio convergence без dual-write
+
+- [ ] `G10S-116` Нарисовать current G10 sequence author→review→publish→outbox→readback и target Strata sequence; каждый old step получает target command.
+- [ ] `G10S-117` Сохранить роли author/reviewer/publisher и explicit decisions в local single-user mode.
+- [ ] `G10S-118` Studio create/edit вызывает authoring application command над Strata transaction, не пишет serving tables/JSONL projection.
+- [ ] `G10S-119` Studio review создаёт immutable review decision, author/reviewer identity, timestamp и source revision.
+- [ ] `G10S-120` Configurable second reviewer остаётся `default(false)`; required только policy/risk rule, не глобально.
+- [ ] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request.
+- [ ] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction.
+- [ ] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases.
+- [ ] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis.
+- [ ] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена.
+- [ ] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts.
+- [ ] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer.
+- [ ] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно.
+- [ ] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready.
+- [ ] `G10S-130` Unauthorized publish, forged reviewer, stale revision, duplicate preferred prompt и missing grant fail closed.
+- [ ] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release.
+- [ ] `G10S-132` Crash test внутри serving import откатывает весь release и сохраняет previous active pointer.
+- [ ] `G10S-133` Studio readback сравнивает authoring release manifest с serving IDs/hashes, а не доверяет HTTP 200.
+- [ ] `G10S-134` Backup/restore сохраняет authoring history, reviews, bundle manifests, serving pointers и outbox receipts.
+- [ ] `G10S-135` Existing G10 browser journey переписан на новый seam и проходит без direct DB shortcut.
+- [ ] `G10S-136` Commit: `feat(g10s): converge Studio on Strata authoring authority`.
+
+### G10S.6. Corpus migration, quarantine и rights
+
+- [ ] `G10S-137` Создать versioned import manifest для каждого source dataset с source SHA, record count, acquisition method, rights state и intended disposition.
+- [ ] `G10S-138` Пересчитать 2526-source snapshot; любые отличия от baseline отдельно классифицировать до import.
+- [ ] `G10S-139` Raw paid/company-linked/unknown-rights wording хранить вне distributable target Git; в Git допустим metadata hash/manifest без body.
+- [ ] `G10S-140` Создать quarantine store с encryption/permissions либо оставить raw source в существующем controlled location; выбранный вариант записать ADR/operations note.
+- [ ] `G10S-141` Import неизвестного rights state по умолчанию ставит `redistributable=false`, `disposition=quarantine` и требует reviewer.
+- [ ] `G10S-142` Solvit paid records никогда не получают `public` автоматически, даже при наличии answer/generated transformation.
+- [ ] `G10S-143` Company-attributed records не отображают company claim/name learner-у без разрешения и reviewed product rationale.
+- [ ] `G10S-144` Claude/generated answers сохраняют method/model/prompt hash/tool version, если доступны; отсутствующие facts помечаются unknown, не выдумываются.
+- [ ] `G10S-145` Exact/fuzzy/semantic candidate groups создаются metadata-only; auto-merge и auto-delete запрещены.
+- [ ] `G10S-146` Duplicate decision сохраняет winner, aliases/source IDs, reviewer и rationale; identity collision не решается изменением stack/aspect без смысла.
+- [ ] `G10S-147` Language detection/normalization не переводит content автоматически в canonical preferred layer.
+- [ ] `G10S-148` Translation/MT content требует `mt_reviewed` до production; EN/RU absence допускается в authoring, но честно блокирует конкретный release policy.
+- [ ] `G10S-149` Imported question получает KC/aspect/stack только через reviewed classification; low-confidence mapping остаётся queue.
+- [ ] `G10S-150` Generic classification проверяется на отсутствие language/framework-specific semantics; false-generic уходит в native stack.
+- [ ] `G10S-151` Task-like record маршрутизируется в TaskCandidate/Activity queue, не принудительно в Question prompt.
+- [ ] `G10S-152` Algorithm/system-design/behavioral records получают соответствующие role vocabulary и не смешиваются с language-native release без placement review.
+- [ ] `G10S-153` Research sources сохраняются ссылками/notes в рамках copyright limits; copied paid text не становится original explanation.
+- [ ] `G10S-154` Release scanner ищет known paid/company canaries, forbidden source IDs и raw hashes во всех generated bundles/artifacts.
+- [ ] `G10S-155` Logs/traces/evidence scanner запрещает prompt/answer/source bodies; сохраняет только IDs/hashes/counts.
+- [ ] `G10S-156` Quarantine export/import roundtrip не меняет disposition и не делает content доступным serving role.
+- [ ] `G10S-157` Human review sample policy задаёт minimum sample per source/batch/risk и escalation при defect.
+- [ ] `G10S-158` Corpus quality report публикует total/mapped/reviewed/public/quarantine/rejected/unknown counts отдельно.
+- [ ] `G10S-159` Coverage report не считает quarantine, supporting prompt или duplicate alias primary question.
+- [ ] `G10S-160` Migration допускает сначала только 6 golden cards + C098; breadth corpus ждёт adapter gate.
+- [ ] `G10S-161` Commit: `feat(g10s): migrate governed corpus metadata and quarantine policy`.
+
+### G10S.7. Deterministic v1 adapter и release import
+
+- [ ] `G10S-162` Создать explicit mapping spec Strata Question/Layer/Task/Provenance → `question-catalog.v1` fields.
+- [ ] `G10S-163` Mapping spec перечисляет семь v1 answer layers: `concise`, `understanding`, `mechanism`, `traps`, `followUps`, `evidence`, `sources`.
+- [ ] `G10S-164` Для каждого v1 field указать source layer kind, lang/depth selection, ordering, requiredness и loss behavior.
+- [ ] `G10S-165` `prompt` берётся только из preferred prompt нужного locale/depth; ambiguous preferred state делает export FAIL.
+- [ ] `G10S-166` v1 exact RU+EN policy не заставляет authoring хранить фиктивные переводы: missing locale создаёт release blocker, не fabricated text.
+- [ ] `G10S-167` Curriculum enriches projection placements/priority/prerequisites; Strata не становится владельцем route order.
+- [ ] `G10S-168` Assessed activities соединяются по stable TaskFamily/Revision IDs; conceptual question может честно не иметь runnable task.
+- [ ] `G10S-169` Graph edges export только reviewed exact target revision; orphan/stale target блокирует bundle.
+- [ ] `G10S-170` Review/release ID minted deterministically/transactionally и не зависит от current clock без declared build input.
+- [ ] `G10S-171` Provenance projection содержит только безопасные public facts; private paid/source body не копируется.
+- [ ] `G10S-172` Adapter создаёт `loss-ledger.json`: source field, target field/null, loss class, reason, severity и follow-up v2 requirement.
+- [ ] `G10S-173` Silent drop запрещён: каждый source layer/fact либо mapped, intentionally_not_released(reason), либо loss entry.
+- [ ] `G10S-174` Double build одного authoring release + curriculum revision даёт byte-identical canonical bundle/hash.
+- [ ] `G10S-175` Different source revision или curriculum revision меняет declared release inputs/hash.
+- [ ] `G10S-176` Bundle имеет schema version, authoring release, curriculum revision, created-by tool version, counts, hashes и signature/checksum.
+- [ ] `G10S-177` Bundle не содержит DB credentials, raw quarantine, hidden tests/reference solutions, internal review comments или private source text.
+- [ ] `G10S-178` Release importer принимает только file/stream bundle и никогда не подключается к `strata` schema.
+- [ ] `G10S-179` Import сначала полностью validates schema/hash/signature/rights/references, затем выполняет одну serving transaction.
+- [ ] `G10S-180` Re-import same bundle idempotent; same release ID с другим hash rejected.
+- [ ] `G10S-181` Import writes serving cards/revisions/translations/placements/graph/activity joins/outbox и active pointer по allowlist.
+- [ ] `G10S-182` Failed import сохраняет previous pointer и не оставляет partial rows visible learner-у.
+- [ ] `G10S-183` Projection rebuild из bundle после truncate/disposable DB даёт exact logical hashes.
+- [ ] `G10S-184` Readback сверяет every ID/count/hash и выпускает metadata-only reconciliation report.
+- [ ] `G10S-185` На основании C098 loss ledger написать draft требований `question-catalog.v2`; v2 implementation остаётся отдельным approved gate.
+- [ ] `G10S-186` Commit: `feat(g10s): export and import deterministic question release bundles`.
+
+### G10S.8. C098 Node Event Loop vertical slice
+
+- [ ] `G10S-187` Подтвердить stable identity C098, KC/aspect/stack, roles, locales, provenance, grants и current serving references.
+- [ ] `G10S-188` Собрать preferred EN/RU prompts и seven-layer answers только из reviewed/public authoring data.
+- [ ] `G10S-189` Alternative prompts C098 пройти human same-expected-answer review; semantic variants выделить в отдельные aspects/questions.
+- [ ] `G10S-190` Перенести минимум одну prediction Activity из prompt space в assessed Activity/Task.
+- [ ] `G10S-191` Связать Event Loop task family с exact released Node runtime revision и public/hidden evaluator split.
+- [ ] `G10S-192` Сохранить/создать scenario progression: baseline order, nested `nextTick`/Promise, timer vs immediate I/O boundary, starvation/edge и explanation defense.
+- [ ] `G10S-193` Каждый scenario имеет explicit objective, prerequisites, public statement, expected evidence и failure feedback; hidden solution не доступен browser.
+- [ ] `G10S-194` Curriculum placement принадлежит Node path и shared JS runtime там, где семантически верно; Go/Java paths не получают Node-specific content.
+- [ ] `G10S-195` Author в Studio меняет C098 layer → review → publish candidate без serving mutation до import.
+- [ ] `G10S-196` Export C098 bundle проходит rights/locale/layer/task/graph gates и создаёт loss ledger.
+- [ ] `G10S-197` Import C098 bundle создаёт exact serving revision, placement и active release atomically.
+- [ ] `G10S-198` Learner route открывает C098 question и все expected layers без broken/dead links.
+- [ ] `G10S-199` Language/runtime selector показывает только реально compatible released Node profile; preview languages не активны.
+- [ ] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict.
+- [ ] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence.
+- [ ] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly.
+- [ ] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary.
+- [ ] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice.
+- [ ] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls.
+- [ ] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names.
+- [ ] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload.
+- [ ] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence.
+- [ ] `G10S-209` Commit: `feat(g10s): prove C098 authoring-to-learning vertical slice`.
+
+### G10S.9. Breadth readiness и standalone retirement
+
+- [ ] `G10S-210` Сравнить source Strata и target counts/hashes/invariants; every difference имеет mapping/disposition.
+- [ ] `G10S-211` Повторить Strata golden fixtures против target CLI и сравнить normalized outputs.
+- [ ] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision.
+- [ ] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo.
+- [ ] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит.
+- [ ] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098.
+- [ ] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым.
+- [ ] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks.
+- [ ] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить.
+- [ ] `G10S-219` Не удалять local source repo без отдельного owner request; automatic cleanup ограничить containers/networks source Compose после backup.
+- [ ] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target.
+- [ ] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service.
+- [ ] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes.
+- [ ] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema.
+- [ ] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены.
+- [ ] `G10S-225` Commit: `chore(g10s): retire standalone Strata as an active authority` — выполнять только после G10S-210…224 PASS.
+
+### Gate G10S — machine evidence, commits и handoff
+
+- [ ] `G10S-226` Создать `docs/verification/greenfield/G10S/` по общему evidence schema; historical G10/G11/G12 artifacts не переписывать.
+- [ ] `G10S-227` Evidence inputs фиксируют Strata `ec3b680` (или reviewed successor), target parent SHA, questions manifest hash и reports 13/14 hashes.
+- [ ] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS.
+- [ ] `G10S-229` Новые `pnpm content:authoring:check`, `content:db:verify`, `content:bundle:verify` или утверждённые эквиваленты PASS и задокументированы.
+- [ ] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS.
+- [ ] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS.
+- [ ] `G10S-232` Corpus rights/quarantine/leak scans PASS; forbidden distributable findings = 0.
+- [ ] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs.
+- [ ] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS.
+- [ ] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority.
+- [ ] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; все intentional losses находятся в loss ledger.
+- [ ] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches.
+- [ ] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement.
+- [ ] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md.
+- [ ] `G10S-240` Push только fast-forward после local PASS и с учётом текущей CI quota policy; если push запрещён владельцем, локальные SHAs сохраняются, статус remote attestation остаётся open.
+- [ ] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: retained limitations либо закрыты, либо перенесены в G11/G12 с owner и exact trigger.
+- [ ] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в evidence index, не в виде скрытого assumption.
+- [ ] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package.
+- [ ] `G10S-244` Handoff содержит repo path, branch, HEAD, commits, start command, DB migration range, bundle/release IDs, C098 route и evidence index.
+- [ ] `G10S-245` Независимый Codex review из раздела 3 завершён; все P0/P1 исправлены отдельными commits и повторно проверены.
+- [ ] `G10S-246` Только после G10S-245 gate получает `PASS`, G11 breadth migration разблокируется.
 
 ---
 
@@ -2170,6 +2567,13 @@ edges до переноса product code.
 > authoring queue are live and
 > strict, but their non-zero gap ledger is intentional: the seed release is not
 > yet production-eligible.
+
+> **Обязательная зависимость после расширения плана:** G11 breadth work не
+> продолжается, пока G10S-246 не имеет `PASS`. Уже созданные G11 policy tools и
+> ledgers сохраняются, но content/release evidence, зависящие от старого Studio
+> или `question-catalog.v1` authority, получают `REVERIFY_AFTER_G10S`. Corpus
+> пополняется только через Strata authoring → reviewed bundle → serving import;
+> прямое редактирование release JSON больше не является допустимым workflow.
 
 ### G11.0. Coverage policy
 
@@ -2266,6 +2670,23 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-035` English defense rubric and recorded/mock workflow exist.
 - [ ] `G11-036` Product does not claim interview readiness until human/external mock evidence exists.
 
+### G11.6. Обязательная revalidation после G10S
+
+- [ ] `G11-R01` Новый inventory читается из Strata authoring release и serving readback, а не из hand-maintained release JSON.
+- [ ] `G11-R02` Все source records имеют canonical disposition; unresolved не скрываются за aggregate count.
+- [ ] `G11-R03` Missing-role ledger пересобран на новых stable IDs и revision hashes.
+- [ ] `G11-R04` Coverage score пересобран после исключения quarantine, duplicate aliases, supporting prompts и non-released translations.
+- [ ] `G11-R05` Все G11 authoring packs создают Strata commands/review queue; direct write в serving catalog fail closed.
+- [ ] `G11-R06` Generic/shared placement reuse не превращает language-native content в чужой path.
+- [ ] `G11-R07` Каждый runnable Activity ссылается на exact TaskFamily/TaskRevision/runtime release; broken и preview links не считаются coverage.
+- [ ] `G11-R08` Node/Java/Go/.NET/Kotlin/Python/React/Next paths повторно проходят forbidden-set и relevance matrix после import.
+- [ ] `G11-R09` Algorithms/System Design/Behavioral overlays используют shared placements осознанно и не дублируют canonical Questions.
+- [ ] `G11-R10` Rights leak scan проходит для каждого release bundle и learner projection; forbidden findings = 0.
+- [ ] `G11-R11` C098 remains green как canary после каждого mass-import batch; regression блокирует следующий batch.
+- [ ] `G11-R12` Каждая path/release фаза закрывается отдельным bundle, reconciliation report, browser journey и atomic commit.
+- [ ] `G11-R13` G11 final evidence ссылается на G10S PASS SHA, authoring release IDs, serving release IDs и current adapter version.
+- [ ] `G11-R14` Старые G11 evidence artifacts помечены superseded либо still-valid с доказанным independent scope; молчаливое наследование запрещено.
+
 ### Gate G11
 
 - [ ] `G11-037` Every production path manifest reaches approved targets with exact IDs.
@@ -2277,6 +2698,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G11-043` Commits are path/release scoped; no mega content dump without manifests/reviews.
 - [ ] `G11-044` Final commit: `feat(g11): publish production curriculum and practice portfolio`.
 - [ ] `G11-045` `gate.json.status = PASS`.
+- [ ] `G11-046` `G11-R01…R14` PASS; иначе G11-045 остаётся FAIL независимо от card/activity counts.
 
 ### Execution update — G11.0 coverage policy audit — 30 августа 2026
 
@@ -2408,6 +2830,10 @@ violations), но `0` из `3` production paths eligible и `11` role requiremen
 Доказать новый продукт целиком, не удалить reference и передать независимому
 ревьюеру проверяемый RC.
 
+> Existing G12 RC/evidence был собран до G10S и остаётся полезным baseline, но
+> не является финальным RC после смены content authority. После G10S и G11 PASS
+> требуется новый RC SHA/tag и selective-plus-full requalification ниже.
+
 ### G12.1. Full clean-room verification
 
 - [x] `G12-001` Создать brand-new clone из `origin/main` в disposable explicit path.
@@ -2501,7 +2927,8 @@ violations), но `0` из `3` production paths eligible и `11` role requiremen
 ### G12.4. Handoff package
 
 - [x] `G12-033` Создать RC manifest: repo URL, branch, HEAD SHA, image digests, schema/content/task releases.
-- [x] `G12-034` Создать final gate index G0–G12 with hashes and links.
+- [x] `G12-034` Создать final gate index G0–G12 with hashes and links; после
+      G10S расширить index отдельным G10S node и supersession links.
 - [x] `G12-035` Список known limitations пуст либо каждое ограничение блокирует production claim.
 - [x] `G12-036` Создать reviewer runbook с одной командой и expected outputs.
 
@@ -2526,6 +2953,27 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-040` Создать immutable **RC tag**, не final production tag.
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
+
+### G12.5. Mandatory requalification after G10S/G11
+
+- [ ] `G12-R01` Выпустить новый RC на exact G10S+G11 HEAD; старый RC tag не перемещать и пометить superseded в release index.
+- [ ] `G12-R02` Повторить fresh clone/archive, `pnpm dev`, doctor/status/down и zero-orphan lifecycle на новом RC.
+- [ ] `G12-R03` Повторить full route/link/control crawl после новых content IDs и placement graph.
+- [ ] `G12-R04` Повторить API contract matrix для authoring commands, bundle import/readback и serving catalog.
+- [ ] `G12-R05` Повторить content/release reconciliation от Strata authority до active serving pointer; unexplained delta = 0.
+- [ ] `G12-R06` Повторить Studio lifecycle, persistence, restart, backup/restore и rollback на one-database schema/roles.
+- [ ] `G12-R07` Повторить forbidden DB privilege matrix из clean database и restored database.
+- [ ] `G12-R08` Повторить paid/company/hidden/source-body leak scan по Git, bundles, images, logs, traces и browser payloads.
+- [ ] `G12-R09` Повторить runtime conformance для всех реально released language profiles и exact TaskRevision joins.
+- [ ] `G12-R10` Повторить Node/Java/Go/.NET/Kotlin/Python/Next path relevance и forbidden-set matrix.
+- [ ] `G12-R11` Повторить Run/Submit/Evidence/Progress/Navigator journey минимум для C098 и по одному canary каждого production path.
+- [ ] `G12-R12` Повторить RU/EN × light/dark/system × MacBook 13/16 × Studio Display state/visual matrix на current release.
+- [ ] `G12-R13` Повторить accessibility, keyboard, focus, dialog/panel и reduced-motion checks на изменённых learner/Studio surfaces.
+- [ ] `G12-R14` Повторить performance budgets и проверить, что authoring/content payload не попал в learner bundles.
+- [ ] `G12-R15` Повторить security/supply-chain/SBOM/provenance gates с новыми content/tool projects.
+- [ ] `G12-R16` Remote CI required checks проходят на exact new RC SHA либо остаются explicit release blocker; local equivalence не подменяет remote attestation.
+- [ ] `G12-R17` Owner/Codex получают новый handoff с G10S/G11/G12 evidence graph и списком superseded artifacts.
+- [ ] `G12-R18` G12 `AWAITING_INDEPENDENT_REVIEW` выставляется повторно только после R01…R17 PASS.
 
 `G12-018..019`, `G12-021` и `G12-024` намеренно остаются без полного
 production-утверждения там, где репетиция покрыла только автоматический
@@ -2604,7 +3052,7 @@ human sign-off остаются отдельными promotion gates.
 Агент **не пишет** «всё готово», «production complete» или `DONE`. Допустимый
 финальный текст:
 
-> G0–G11 имеют PASS. G12 release candidate собран на `<sha>`, clean-room suite
+> G0–G10, G10S и G11 имеют PASS. G12 release candidate собран на `<sha>`, clean-room suite
 > прошёл `<passed>/<total>`, unresolved limitations `<n>`. Статус:
 > `AWAITING_INDEPENDENT_REVIEW`. Reference Product не удалён.
 
@@ -2615,7 +3063,7 @@ human sign-off остаются отдельными promotion gates.
 Этот раздел не закрывает implementing agent.
 
 - [ ] `R-001` Сверить `origin/main`, RC tag и clean tree.
-- [ ] `R-002` Проверить G0–G12 schemas, hashes, commands и отсутствие fabricated evidence.
+- [ ] `R-002` Проверить G0–G10, G10S, G11 и G12 schemas, hashes, commands и отсутствие fabricated evidence.
 - [ ] `R-003` Повторить fresh clone + `pnpm dev` без agent-local caches.
 - [ ] `R-004` Повторить full route/link crawl и browser console/network audit.
 - [ ] `R-005` Повторить RU/EN × light/dark × desktop/narrow visual review.
@@ -2630,6 +3078,27 @@ human sign-off остаются отдельными promotion gates.
 - [ ] `R-014` Зафиксировать findings как P0–P3; P0/P1 должны быть исправлены и перепроверены.
 - [ ] `R-015` Только после PASS создать final production tag и owner sign-off.
 - [ ] `R-016` Решение об archive/delete старых repos принимается отдельным запросом владельца.
+- [ ] `R-017` Сверить source Strata baseline/tag/bundle с target provenance map; необъяснённые missing/changed files = 0.
+- [ ] `R-018` Повторить source Strata `npm run check`, double `db:load`, `db:verify` и golden queries на archived baseline.
+- [ ] `R-019` Повторить target authoring unit/corpus/link/fixture/property tests без доверия agent summary.
+- [ ] `R-020` Подключиться каждым DB role и вручную повторить positive/negative privilege matrix, включая default privileges новых tables.
+- [ ] `R-021` Просканировать API/web source, container env и built artifacts на Strata imports, raw SQL, authoring DSN и credentials.
+- [ ] `R-022` Проверить DB concurrent preferred-prompt race и невозможность обойти uniqueness изменением `ord`.
+- [ ] `R-023` Проверить ownership migration `durationMin → responseBudgetMin`, отсутствие question-level duplicate priority/patterns и корректные Curriculum/Activity owners.
+- [ ] `R-024` Вручную просмотреть C098 prompt alternatives: same expected answer либо separate reviewed aspect; machine metadata не заменяет semantic review.
+- [ ] `R-025` Дважды собрать C098 bundle и сравнить bytes/hash; затем изменить declared input и убедиться, что hash меняется.
+- [ ] `R-026` Просмотреть `loss-ledger.json`: silent/unclassified losses = 0; v2 follow-ups обоснованы реальными source facts.
+- [ ] `R-027` Импортировать bundle в disposable serving DB без доступа к `strata`; повторный import idempotent, corrupted/conflicting bundle rejected.
+- [ ] `R-028` Пройти browser C098 author→review→release→question→Run→Submit→Evidence и сверить exact revision IDs во всех переходах.
+- [ ] `R-029` Проверить, что Go/Java/другие paths не показывают Node-specific C098/task content без reviewed shared placement.
+- [ ] `R-030` Независимо просканировать distributable Git/bundles/logs/traces/browser payload на paid Solvit/company-linked/unknown-rights/hidden bodies.
+- [ ] `R-031` Проверить Studio на dual-write через crash/restart: authoring commit без bundle не меняет learner release; failed import не меняет active pointer.
+- [ ] `R-032` Повторить backup/restore и pre-G10S→C098 rollback/forward recovery; authoring history и learner evidence сохраняются.
+- [ ] `R-033` Проверить target fresh clone без standalone Strata/questions paths, symlinks, nested Git/lockfiles и second Compose project.
+- [ ] `R-034` Проверить, что standalone Strata archive воспроизводим, а local repo не удалён без owner decision.
+- [ ] `R-035` Сверить master-plan, G10S gate и Strata archived plan: параллельных противоречащих statuses = 0.
+- [ ] `R-036` Провести adversarial review каждого G10S atomic commit; P0/P1 фиксируются новым commit, а не amendment/history rewrite.
+- [ ] `R-037` Только после R-017…R-036 разрешить G10S-246 и переход к G11 breadth batches.
 
 ---
 
@@ -2638,10 +3107,18 @@ human sign-off остаются отдельными promotion gates.
 ```text
 Выполни документ
 /Users/sergeyzhechko/developer/fluent-interview/docs/GREENFIELD-NEXT-PLATFORM-EXECUTION-PLAN-2026-08-28.md
-строго по порядку G0→G12. Не пропускай пункты и не ставь PASS без machine-readable
-evidence. Каждый gate закрывай atomic commit(s), clean-tree проверкой и fast-forward
-push в main после PASS. Reference Product не удаляй, не используй как runtime
-fallback и не перезаписывай unknown dirty files. При STOP-условии фиксируй FAIL и
-точный blocker. После G12 не объявляй DONE: передай RC SHA/tag/evidence со статусом
+строго по порядку G0→…→G10→G10S→G11→G12. Сначала сверяй уже закрытые пункты
+по evidence; не переигрывай их без REVERIFY-причины. Текущий обязательный corrective
+gate — G10S: перенеси Strata authoring authority в target monorepo, докажи один DB
+с role isolation, устрани Studio dual-write, выпусти file-only bundle и проведи C098
+до learner evidence. Только после независимого Codex review G10S переходи к G11
+breadth. Не пропускай пункты и не ставь PASS без machine-readable evidence. Каждый
+implementation slice закрывай заранее объявленным atomic commit, repo-required
+check→commit chain и clean-tree проверкой; push только fast-forward и только когда
+это разрешено текущей CI quota policy. Reference Product и standalone Strata не
+удаляй, не используй как runtime fallback и не перезаписывай unknown dirty files.
+Paid Solvit/company/unknown-rights bodies не копируй в distributable Git. При
+STOP-условии фиксируй FAIL и exact blocker. После G10S и после G12 не объявляй DONE:
+передай SHA, migrations, bundle/release IDs и evidence со статусом
 AWAITING_INDEPENDENT_REVIEW для отдельной проверки Codex и владельца.
 ```
