@@ -1,6 +1,6 @@
 # W14 — design token audit
 
-Снимок: 2026-08-28T18:47:55.561Z
+Снимок: 2026-08-30T10:08:12.051Z
 Статус: **pass**
 
 Token source: `fluent-engineering-vue/packages/design-tokens/tokens.css` · 116/49 required names present.
