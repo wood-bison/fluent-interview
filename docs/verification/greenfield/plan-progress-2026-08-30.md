@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 610 пунктов из 1 134.**
+**Осталось: 609 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 524 |
-| Осталось (`[ ]`) | 610 |
+| Закрыто (`[x]`) | 525 |
+| Осталось (`[ ]`) | 609 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.21% |
+| Формальное выполнение | 46.30% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -224,6 +224,18 @@ boundary/toolchain checks и 107 architecture tests зелёные; evidence/che
 validation зелёные; push не выполнялся по ограничению Actions quota. Следующий
 implementation slice: `G10S-113` — сохранить golden question/task fixtures или
 зафиксировать exact reviewed delta.
+
+Последний implementation slice: target `a30e2eb` (evidence `91ccc60`) закрыл
+`G10S-113`. Versioned metadata-only baseline сохраняет ровно 6 cards, 75 layers,
+3 task families и 1 logical dataset по 11 fixture files на Strata
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`. Rehearsal
+`pnpm architecture:golden-fixtures` подтвердил exact/deterministic/no-bodies
+projection (`40520dd3…4a97ae8b`) и отклонил 5/5 negative cases: drift card/layer
+counts, missing task, source-manifest drift и body-field canary. Полный
+`pnpm check`, boundary/toolchain checks и 110 architecture tests зелёные;
+evidence/checksum validation зелёные; push не выполнялся по ограничению Actions
+quota. Следующий implementation slice: `G10S-114` — перенести 12 inherited
+PostgreSQL invariant tests и добавить platform ownership/grant tests.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх

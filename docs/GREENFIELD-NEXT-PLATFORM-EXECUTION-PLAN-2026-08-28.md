@@ -1419,6 +1419,30 @@ limit.
 This closes G10S-112. The next executable slice is G10S-113: preserve the
 golden question/task fixtures or record an exact reviewed delta.
 
+### Execution update — G10S-113 golden fixture baseline — 30 августа 2026
+
+Target `main` now contains `a30e2eb` (`feat(g10s): preserve golden fixture
+baseline`) and evidence commit `91ccc60` (`docs(g10s): record golden fixture
+gate`). A versioned, metadata-only contract freezes the exact inherited Strata
+baseline at `6` cards, `75` layers, `3` task families and `1` logical dataset.
+The inventory covers `11` fixture files (six card files, three task files and
+two files grouped into the single `commerce-v1` dataset) at Strata
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`, with source manifest hash
+`e4cabff081bdf4660709330af28bcb832c43c0cda4789233e17b0e369e5804ae`.
+
+`pnpm architecture:golden-fixtures` proved byte-stable generation and exact
+baseline equality (`projectionHash=40520dd3…4a97ae8b`). All five negative
+rehearsals were rejected: card-count drift, layer-count drift, missing task
+fixture, source-manifest hash drift and a body-field canary. The projection is
+deterministic, metadata-only and contains no prompt, answer, solution, content
+or secret bodies. The full `pnpm check`, boundary and toolchain ladder passed,
+including `110` architecture tests; evidence and checksum validation passed.
+Push was intentionally omitted because the owner requested local commits while
+the Actions quota is near its monthly limit.
+
+This closes G10S-113. The next executable slice is G10S-114: port all twelve
+inherited PostgreSQL invariant tests and add platform ownership/grant tests.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1465,7 +1489,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-113`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-114`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2613,7 +2637,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-110` Release bundle publication копирует только allowlisted public surface в learner artifact; hidden/evaluator assets и body keys не попадают в публикацию. Evidence: `fluent-interview-platform/docs/verification/greenfield/G10S/release-publication-2026-08-30.json`/`.md`; target implementation `17e254aa5d4e15274d0043e67b6a42b33cc56efd`, evidence commits `42300980d05ee64ac5eabb396c027f419edc7be5` and `5afa397e43220d290a8e8797d57e208e2082bb16`; `pnpm architecture:release-publication` accepted `2/5` records, quarantined `3`, found `1` public evaluator leak, `1` unallowlisted public file, `1` body-key canary, and emitted `0` bodies.
 - [x] `G10S-111` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает. Evidence: target `docs/verification/greenfield/G10S/stable-ids-2026-08-30.json`/`.md`; `pnpm architecture:stable-ids` проверил 6 synthetic records (4 valid, 2 intentional `REVIEW_REQUIRED`), 3 unique IDs и 1 duplicate semantic group, подтвердил metadata-only/no-bodies и независимость от array order/path/timestamp; target implementation `d37cd484e39639c954bc01b0b70eabb3bf5165b2`, evidence commit `0e70aa4`.
 - [x] `G10S-112` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён; property tests покрывают identity, preferred transition, provenance disposition и serialization determinism. Evidence: target `0bd3da0`; `pnpm architecture:domain-contract` проверил 3 owned contracts, 2 versioned changes и 4/4 negative rejections (breaking without migration, non-monotonic version, unowned contract, duplicate migration), с deterministic metadata-only projection; evidence `65442b5`.
-- [ ] `G10S-113` Golden fixtures сохраняют baseline: 6 cards, 75 layers, 3 tasks, 1 dataset либо exact reviewed delta.
+- [x] `G10S-113` Golden fixtures сохраняют baseline: 6 cards, 75 layers, 3 tasks, 1 dataset либо exact reviewed delta. Evidence: target `a30e2eb`; `pnpm architecture:golden-fixtures` сохранил exact baseline 6/75/3/1 по 11 metadata fixture files, подтвердил deterministic metadata-only/no-bodies projection и отклонил 5/5 negative cases (card/layer drift, missing task, source-manifest drift, body-field canary); evidence `91ccc60`.
 - [ ] `G10S-114` Все 12 inherited PostgreSQL invariant tests перенесены и дополнены platform ownership/grant tests.
 - [ ] `G10S-115` Commit: `feat(g10s): converge question and task domain invariants`.
 
