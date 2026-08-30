@@ -2324,6 +2324,20 @@ intake остаются видимыми до bounded reviewer decision set.
 Полные артефакты:
 `fluent-interview-platform/docs/verification/greenfield/G11/classification-ledger-2026-08-30.{json,md}`.
 
+### Execution update — G11-015 shared content and prerequisites — 30 августа 2026
+
+Target `main` (`c326e79`, evidence `5d37354`) добавил
+`shared-content-policy.v1` и `shared-content-audit.v1`. Guard отделяет
+reusable generic placements от native content: shared modules должны иметь
+явный `sharedKey` и exposure минимум в двух tracks, а каждый generic placement
+должен ссылаться на существующий generic/shared module с path-specific
+prerequisite. Текущий release: `3` shared modules, `0` explicit keys, `6`
+generic placements (`3` pass, `3` open), `6` unresolved items; `G11-015` остаётся
+`OPEN`, пока curriculum metadata не будет дополнена.
+
+Полные артефакты:
+`fluent-interview-platform/docs/verification/greenfield/G11/shared-content-audit-2026-08-30.{json,md}`.
+
 ### Execution update — G11-016 path relevance — 30 августа 2026
 
 Target evidence commit `6ab7ad4` повторно запустил

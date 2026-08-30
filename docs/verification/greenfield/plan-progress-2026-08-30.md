@@ -39,6 +39,12 @@ checkboxes остаются открытыми: аудит формирует т
 Roles, provenance/license и reviewer dispositions пока `0`; поэтому
 `G11-013` остаётся открытым, а `0/1 597` записей считаются fully classified.
 
+Следующий implementation slice: target `c326e79` (evidence `5d37354`) добавил
+`shared-content-audit.v1` для G11-015. Он проверил `3` shared modules и `6`
+generic placements: explicit shared keys отсутствуют (`0/3`), а `3` generic
+placements не имеют path-specific prerequisite. Итог `G11-015=OPEN`,
+`6` unresolved items; это теперь измеримый curriculum metadata backlog.
+
 ## Открытые кластеры
 
 - governance и evidence protocol (`0.*`, `A-*`, `D-*`);
