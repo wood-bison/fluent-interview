@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 619 пунктов из 1 134.**
+**Осталось: 618 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 515 |
-| Осталось (`[ ]`) | 619 |
+| Закрыто (`[x]`) | 516 |
+| Осталось (`[ ]`) | 618 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.41% |
+| Формальное выполнение | 45.5% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -106,8 +106,19 @@ budget блокируются; projection детерминирован и metada
 после полного `pnpm check`, boundary/toolchain checks, architecture test
 ladder, evidence validation и checksum validation.
 
-Следующий implementation slice: `G10S-104` — `source_grant` является
-prerequisite provenance; cited source без grant rejected.
+Последний implementation slice: target `1380278a14e5cd321faed511d800640dd47fafb7`
+(evidence `49c6430377bcbf8c4699a8430ff764c6e57c4c14`) закрыл `G10S-104`.
+Source grants и cited provenance теперь связаны строгим контрактом: из пяти
+metadata records два приняты, три intentional negative fixtures отклонены;
+проверены 7 citations, 6 покрытых grant’ами, 1 grantless citation,
+`duplicateGrantSourceCount=1`, `autoGrantCount=0`. Projection содержит только
+license/disposition metadata и note hash, без текста и bodies, детерминирован
+при перестановке входа. Гейт закрыт после полного `pnpm check`,
+boundary/toolchain checks, architecture test ladder, evidence validation и
+checksum validation.
+
+Следующий implementation slice: `G10S-105` — provenance хранит source, method,
+acquiredAt/importedAt, reviewer, disposition, rights и redistributable flag.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
