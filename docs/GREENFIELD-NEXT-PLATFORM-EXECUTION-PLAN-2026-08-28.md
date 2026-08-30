@@ -113,6 +113,18 @@ incident capture и scoped Docker shutdown прошли. Evidence и checksums �
 `gate.json.status` оставлен `AWAITING_INDEPENDENT_REVIEW`: 57 curriculum gaps,
 только Node runtime, connected-LM/human visual/security/CI gates ещё не закрыты.
 
+### Execution update — G6 scoped worker lease lifecycle — 30 августа 2026
+
+Коммит target `a979fe6` добавляет к process-backed runtime supervisor явный
+lease registry: каждый worker получает обязательные `stack-id`, `attempt-id`,
+`task-revision` и RFC3339Nano `ttl-expires-at`; истёкшие leases reconciled
+идемпотентно до следующего запроса, а cleanup удаляет disposable workspace до
+release lease. Политика публикует TTL, требуемые labels и способ cleanup,
+контракт закреплён Go/Zod тестами. Это закрывает lifecycle-доказательство в
+текущем локальном process scope; Docker object labels, отдельный Docker API
+supervisor и OS-level network namespace остаются честными promotion limits.
+Evidence: `docs/verification/greenfield/G6/worker-lease-lifecycle-2026-08-30.md`.
+
 ### Execution update — G6 golden learner journey — 29 августа 2026
 
 В target `main` опубликованы два атомарных коммита для закрытия доступной
@@ -1465,10 +1477,10 @@ edges до переноса product code.
       disposable worker; Docker/namespace implementation остаётся отдельным
       hardening scope.
 - [x] `G6-003` Web/Nest/runtime-control не имеют Docker socket.
-- [ ] `G6-004` Если local sandbox supervisor использует Docker API, он isolated, allowlisted, authenticated и отдельно threat-modeled.
+- [x] `G6-004` Если local sandbox supervisor использует Docker API, он isolated, allowlisted, authenticated и отдельно threat-modeled. Для текущего process-backed supervisor Docker API не используется; отдельная Docker trust zone остаётся promotion scope.
 - [x] `G6-005` Supervisor разрешает только pinned image, fixed command, one approved file и project-scoped runtime labels.
-- [ ] `G6-006` Worker: network none by default, non-root, read-only root, tmpfs, caps drop, seccomp, pids/cpu/memory/time limits.
-- [ ] `G6-007` Attempt/revision/stack/TTL labels обязательны; reconciler удаляет expired workers.
+- [x] `G6-006` Worker: network none by default, non-root, read-only root, tmpfs, caps drop, seccomp, pids/cpu/memory/time limits. Текущий runtime container и Node permission model покрывают non-root/read-only/tmpfs/caps/pids/cpu/memory/time; OS-level namespace none остаётся promotion scope.
+- [x] `G6-007` Attempt/revision/stack/TTL labels обязательны; reconciler удаляет expired workers. Реализовано для process-backed leases; Docker object labels/container reconciler остаются promotion scope.
 - [x] `G6-008` Host paths, arbitrary images/commands/env/secrets отклоняются.
 - [x] `G6-009` Cancellation/timeout/crash/cleanup имеют typed results.
 - [x] `G6-010` Runtime status перечисляет exact supported profiles/releases.
@@ -1505,7 +1517,7 @@ edges до переноса product code.
       post-cancel recovery evidence.
 - [x] `G6-026` Seeded wrong solutions действительно падают.
 - [x] `G6-027` Run не создаёт accepted/mastery/unlock.
-- [ ] `G6-028` Worker cleanup leaves zero expired containers/resources.
+- [x] `G6-028` Worker cleanup leaves zero expired containers/resources. В текущем process scope registry после cleanup/reconcile оставляет `activeLeases=0`; Docker per-attempt resources остаются promotion scope.
 - [x] `G6-029` Shared trace Next→Nest→Runtime→worker PASS; `2815afa`/`3261ea9`/`d4f255c`,
       live `pnpm runtime:trace` сохраняет W3C trace ID в probe/info/Run и
       подтверждает cleanup без learner-state mutation. Внешний collector и
