@@ -1733,6 +1733,37 @@ historical Studio entity/receipt reconciliation remains G10S-126. The next
 executable slice is G10S-125, and no fallback may become a permanent second
 authority.
 
+### Execution update — G10S-125 JSONL authority retirement — 31 августа 2026
+
+Target `main` now contains implementation commit `8c6f03c` (`feat(g10s):
+retire JSONL runtime authority`) and evidence commit `9b14341` (`docs(g10s):
+record JSONL authority retirement gate`). PostgreSQL is the only production
+authority for Studio, serving release pointers and outbox state. The four
+historical JSONL files have an exact machine-readable disposition: one is
+retired and three are recovery-only; no environment selector, production
+adapter import or production JSONL write remains.
+
+Studio is wired directly to `PostgresStudioLedger`, active release-pointer
+readback uses the serving PostgreSQL projection, and direct pointer mutation
+plus all three legacy browser Studio mutation routes return HTTP 410. Legacy
+adapters reject writes unless an explicit test/recovery rehearsal opts in, and
+read paths no longer perform hidden reconciliation writes. The backup matrix
+retains the files while excluding them from active event authority.
+
+Post-commit rehearsals passed all 15 migrations, exact upgrade history,
+restore with matching logical hashes and 358 object grants, and atomic serving
+import/replay/rollback. PostgreSQL checks passed `12/12` inherited, `16/16`
+platform and `12/12` functional-role assertions; architecture tests passed
+`156/156`, API tests `63/63`, stack tests `18/18`, and the complete
+check/boundary/toolchain ladder passed. Push was intentionally not performed
+because of the Actions quota.
+
+This closes only G10S-125. No historical row is claimed migrated or deleted:
+entity/receipt/pointer reconciliation remains G10S-126, explicit per-row
+dispositions remain G10S-127, controlled adapter/file deletion remains G13,
+and one-root persistent-stack migration remains G10S-221. The next executable
+slice is G10S-126.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1779,7 +1810,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-125`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-126`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2942,7 +2973,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction. Evidence: target implementation `c66a2c3`, evidence `2235eb7`; strict two-file bundle validation, one PostgreSQL serving transaction, exact replay/readback, tamper rejection, late-conflict rollback, pointer preservation and immutable history all passed with zero emitted content bodies.
 - [x] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases. Evidence: target implementation `ef30ee0`, evidence `ae400e1`; 3 retired legacy commands map to 5 target stages/10 source anchors, all 4 receipt-bearing boundaries return exact results on same-request replay, reject changed intent with the same key, write zero legacy rows and create no duplicate revisions/reviews/releases.
 - [x] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis. Evidence: target implementation `3c90830`, evidence `69d9afe`; import commits one contract-valid `serving.release.imported` event with its serving projection/manifest/pointer/receipt, exact replay creates no duplicate, changed intent and late failure leave no event, serving appends one immutable idempotent acknowledgement, and authoring has zero broker dependencies.
-- [ ] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена.
+- [x] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена. Evidence: target implementation `8c6f03c`, evidence `9b14341`; 4/4 historical artifacts have one explicit disposition (1 retired, 3 recovery-only), production selectors/imports/writes are zero, PostgreSQL owns Studio and release-pointer runtime state, four legacy HTTP mutations return 410, and fresh/upgrade/restore/import plus full check/boundary/toolchain gates pass without claiming historical migration or deletion.
 - [ ] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts.
 - [ ] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer.
 - [ ] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно.
