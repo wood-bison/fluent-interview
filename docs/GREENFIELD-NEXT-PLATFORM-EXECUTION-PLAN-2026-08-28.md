@@ -960,6 +960,21 @@ chunks `1,045,641` при `1,200,000`; heavy editor packages не найдены
 interaction latency, code-splitting/lazy-loading UX, visual diff и
 accessibility human review остаются открытыми.
 
+### Execution update — G12 performance budget recheck — 30 августа 2026
+
+На текущем target `main` (`4ac695d`) повторены `pnpm build` и
+`pnpm performance:check`. Проверены 13 Next routes: максимум first-load
+`946,447` bytes при budget `1,000,000`, largest chunk `414,120` при `450,000`,
+total chunks `1,120,471` при `1,200,000`; failures отсутствуют. В lockfile нет
+`xterm`, `monaco-editor` или `codemirror`, а runtime editor остаётся bounded
+textarea, поэтому heavy-editor lazy-loading guard закрывается отсутствием
+тяжёлой зависимости. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/performance-budget-2026-08-30.json`.
+
+Это закрывает измеримый bundle/editor-policy slice `G12-020` для released Node
+profile. Web Vitals, interaction latency, code-splitting UX, visual diff и
+accessibility human review по-прежнему требуют отдельных доказательств.
+
 ### Execution update — G12 clean-clone CI remediation and remote runs — 29 августа 2026
 
 На remote runner был обнаружен воспроизводимый clean-clone дефект: workflow
@@ -2055,7 +2070,10 @@ paths; denominators и stable IDs обязаны объяснять переис
   Это не является независимым production sign-off.
 - [ ] `G12-018` Auth/session/CSRF/XSS/SSRF/path traversal/command injection/secrets checks PASS.
 - [ ] `G12-019` Dependency audit/CodeQL/SBOM/provenance/signature checks PASS.
-- [ ] `G12-020` Performance budgets PASS per route; editor/xterm lazy loading confirmed.
+- [x] `G12-020` Performance budgets PASS per route; released Node profile
+  проверен на 13 routes и heavy-editor policy закрыта отсутствием `xterm`,
+  `monaco-editor` и `codemirror` при bounded textarea editor. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/performance-budget-2026-08-30.json`.
 - [ ] `G12-021` Accessibility WCAG checks plus keyboard/screen-reader human smoke PASS.
 - [ ] `G12-022` Visual diff has zero unexplained P0/P1; intentional deltas documented.
 - [ ] `G12-023` Telemetry cardinality/privacy/retention/load/disk-pressure tests PASS.
@@ -2112,7 +2130,7 @@ multi-language, CI exact-RC и independent visual/security review остаютс
 - [x] `G12-041` `gate.json.status = AWAITING_INDEPENDENT_REVIEW`.
 - [x] `G12-042` Передать владельцу/Codex exact repo path, remote, SHA, tag, start command и evidence index.
 
-`G12-005..013` и `G12-016..024` намеренно остаются без галочек там, где
+`G12-005..013`, `G12-018..019` и `G12-021..024` намеренно остаются без галочек там, где
 репетиция покрыла только автоматический subset (например, route crawl без
 полной ручной визуальной вычитки, offline Navigator без connected streaming,
 Node runtime без multi-language conformance). Точные границы и ожидаемые
