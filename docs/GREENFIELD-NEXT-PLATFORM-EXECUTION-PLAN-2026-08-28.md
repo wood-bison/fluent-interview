@@ -2032,7 +2032,11 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G12-007` Проверить all API endpoints against generated contract.
 - [ ] `G12-008` Проверить question/content/placement/release counts/hashes.
 - [ ] `G12-009` Проверить Run/Submit/Evidence/Progress/Revision/Projects/Navigator/Studio.
-- [ ] `G12-010` Проверить all released language/runtime drills.
+- [x] `G12-010` Проверить all released language/runtime drills. Current
+  release has only Node.js JavaScript; its released profile passed the full
+  runtime vector/Submit/outage/recovery matrix. Preview languages remain
+  explicitly unclaimed. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/runtime-conformance-2026-08-30.json`.
 - [ ] `G12-011` Проверить AI absent/offline/connected/stream/cancel/timeout states.
 - [ ] `G12-012` Проверить observability off/on/outage и incident bundle.
 - [ ] `G12-013` Проверить stop/restart/backup/restore/data persistence.
@@ -2041,7 +2045,11 @@ paths; denominators и stable IDs обязаны объяснять переис
 ### G12.2. Quality/security/supply chain
 
 - [x] `G12-015` Full format/lint/type/unit/component/contract/integration/browser suite PASS.
-- [ ] `G12-016` Runtime adversarial/conformance matrix PASS.
+- [x] `G12-016` Runtime adversarial/conformance matrix PASS for the released
+  Node.js profile: unit/profile policy, 12 Run vectors, Submit replay and
+  concurrency, runner/evaluator outage recovery, and W3C trace continuity.
+  Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/runtime-conformance-2026-08-30.json`.
 - [x] `G12-017` Hidden canary leak scan PASS для текущего post-RC target;
   evidence `c431bc3` сканирует declared и artifact-wide roots с 0 findings.
   Это не является независимым production sign-off.
