@@ -2064,7 +2064,10 @@ paths; denominators и stable IDs обязаны объяснять переис
   `pnpm dev` retry reached healthy services, and cleanup left zero containers/
   networks while preserving durable volumes. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/startup-recovery-2026-08-30.json`.
-- [ ] `G12-030` Reference Product needs no target service/data to run.
+- [x] `G12-030` Reference learner routes remained reachable (`200` on `/`,
+  `/program`, `/atlas`, `/practice`) while the target Compose project had zero
+  containers; target then restarted with healthy services. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/reference-independence-2026-08-30.json`.
 - [x] `G12-031` Target needs no reference service/path/symlink to run. Clean
   git archive from target `b409c68` installed offline and built Next/Nest
   successfully with no reference workspace, nested Git root, symlink or
