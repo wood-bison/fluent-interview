@@ -1697,6 +1697,42 @@ dispositions. Legacy release-pointer receipts remain separately visible for
 G10S-125, and serving outbox convergence is the next executable slice,
 G10S-124.
 
+### Execution update — G10S-124 serving outbox convergence — 31 августа 2026
+
+Target `main` now contains implementation commit `3c90830` (`feat(g10s):
+converge serving outbox semantics`) and evidence commit `69d9afe` (`docs(g10s):
+record serving outbox convergence gate`). The existing PostgreSQL outbox is
+preserved as serving metadata and recovery history; authoring continues to
+cross the boundary through exactly two checksummed files and requires no
+Kafka, Redis, queue worker or second content authority.
+
+The release importer now writes a contract-valid `serving.release.imported`
+event in the same transaction as the serving projection, immutable manifest,
+pointer event, active pointer and import receipt. Its source is the
+serving-owned release manifest rather than an unreadable Strata candidate.
+One database timestamp binds manifest, pointer, receipt and event without
+driver precision drift. Event and acknowledgement history reject update/delete
+even from the migration owner; import can append but cannot acknowledge, while
+serving can append one idempotent acknowledgement but cannot mutate history.
+
+The post-commit disposable PostgreSQL rehearsal proved first import, exact
+same-key replay without a duplicate event, changed-intent rejection, and a
+synthetic late failure after event insert with zero leaked manifests,
+revisions, pointers, receipts or events. Pending count moved from one to zero
+after acknowledgement and remained one immutable ack after repeat. Authoring
+created zero outbox events and had zero broker dependencies. Upgrade/restore
+passed all 14 migrations with preserved history, exact logical hashes and 357
+object grants; PostgreSQL checks passed `12/12` inherited, `16/16` platform and
+`12/12` functional role assertions. Architecture tests passed `153/153`, API
+tests `58/58`, and the complete check/boundary/toolchain ladder passed. Push was
+intentionally not performed because of the Actions quota.
+
+This closes only G10S-124. Historical JSONL and legacy outbox artifacts remain
+visible until G10S-125 classifies each one as retired or recovery-only;
+historical Studio entity/receipt reconciliation remains G10S-126. The next
+executable slice is G10S-125, and no fallback may become a permanent second
+authority.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1743,7 +1779,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-124`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-125`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2905,7 +2941,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-121` Studio publish не активирует learner release напрямую; он создаёт reviewed authoring release candidate/bundle request. Evidence: target `aeb8130`, DB hardening `9803d80`, evidence `79668ea`; the one-shot publisher command accepted only unique approved/policy-evaluated current revision heads, exact replay returned the same immutable candidate, CLI and direct-DB stale/rejected/empty/mutation bypasses failed closed, while learner revisions, legacy Studio rows, serving outbox events, activations and emitted bodies remained zero.
 - [x] `G10S-122` Release activation выполняет отдельный import command после bundle validation и atomic serving transaction. Evidence: target implementation `c66a2c3`, evidence `2235eb7`; strict two-file bundle validation, one PostgreSQL serving transaction, exact replay/readback, tamper rejection, late-conflict rollback, pointer preservation and immutable history all passed with zero emitted content bodies.
 - [x] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases. Evidence: target implementation `ef30ee0`, evidence `ae400e1`; 3 retired legacy commands map to 5 target stages/10 source anchors, all 4 receipt-bearing boundaries return exact results on same-request replay, reject changed intent with the same key, write zero legacy rows and create no duplicate revisions/reviews/releases.
-- [ ] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis.
+- [x] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis. Evidence: target implementation `3c90830`, evidence `69d9afe`; import commits one contract-valid `serving.release.imported` event with its serving projection/manifest/pointer/receipt, exact replay creates no duplicate, changed intent and late failure leave no event, serving appends one immutable idempotent acknowledgement, and authoring has zero broker dependencies.
 - [ ] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена.
 - [ ] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts.
 - [ ] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer.
