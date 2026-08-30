@@ -2338,24 +2338,24 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.0. Preflight, baselines и decision intake
 
-- [ ] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes.
-- [ ] `G10S-002` Проверить `git status --short --branch` во всех четырёх roots; неизвестные изменения остановят migration до provenance решения.
-- [ ] `G10S-003` Подтвердить Strata baseline `ec3b680` либо записать reviewed SHA delta и повторить весь source baseline.
-- [ ] `G10S-004` В Strata выполнить `npm run check`; сохранить 32 test results, 12 ADR links, 9 corpus gates или актуальные exact counts.
-- [ ] `G10S-005` Выполнить `npm run db:up && npm run db:load && npm run db:load && npm run db:verify`; второй load обязан быть idempotent, invariants = 12 или reviewed delta.
-- [ ] `G10S-006` Выполнить representative queries из `schema/queries.sql`; сохранить metadata/results без paid prompt/answer bodies.
-- [ ] `G10S-007` В target выполнить `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates`; любой baseline FAIL исправляется отдельным pre-migration commit.
+- [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
+- [x] `G10S-002` Проверить `git status --short --branch` во всех четырёх roots; неизвестные изменения остановят migration до provenance решения. Evidence records `questions` as known external-unversioned (no Git root), with no unknown working-tree changes.
+- [x] `G10S-003` Подтвердить Strata baseline `ec3b680` либо записать reviewed SHA delta и повторить весь source baseline. Evidence: `G10S/source-manifest.json`.
+- [x] `G10S-004` В Strata выполнить `npm run check`; сохранить 32 test results, 12 ADR links, 9 corpus gates или актуальные exact counts. Evidence: `G10S/preflight.json` and `commands.ndjson`.
+- [x] `G10S-005` Выполнить `npm run db:up && npm run db:load && npm run db:load && npm run db:verify`; второй load обязан быть idempotent, invariants = 12 или reviewed delta. Evidence: 12 invariants and two successful loads.
+- [x] `G10S-006` Выполнить representative queries из `schema/queries.sql`; сохранить metadata/results без paid prompt/answer bodies. Evidence: `G10S/preflight.json`.
+- [x] `G10S-007` В target выполнить `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates`; любой baseline FAIL исправляется отдельным pre-migration commit. Evidence: target check and boundary/toolchain runs are green.
 - [ ] `G10S-008` Запустить target `pnpm dev` в scoped Compose project и проверить current Studio author→review→publish→readback baseline.
-- [ ] `G10S-009` Снять current serving counts/hashes: cards, revisions, translations, placements, reviews, graph edges, activities и release pointer.
-- [ ] `G10S-010` Снять current Studio storage owners: PostgreSQL tables, JSONL fallback, outbox, command receipts, projections и backup members.
-- [ ] `G10S-011` Снять current Strata counts: questions, layers per kind/lang/depth, grants, provenance, task families/revisions, datasets и grading artifacts.
-- [ ] `G10S-012` Пересчитать `questions.jsonl`: total, paid, company-linked, Claude/generated, external/unknown, duplicate/hash groups и malformed records; summary не заменяет command output.
-- [ ] `G10S-013` Прочитать полностью `AGENTS.md`, `README.md`, `docs/migration.md`, `docs/plan.md`, `docs/adr/README.md` и все ADR Strata перед первым target edit.
-- [ ] `G10S-014` Прочитать полностью `brain-reports/13-answers.md` и `14-answers-round-2.md`; решения перенести в target ADR без reinterpretation.
-- [ ] `G10S-015` Создать immutable source manifest с SHA-256 всех Strata schema/docs/fixtures и metadata-only manifest questions corpus.
-- [ ] `G10S-016` Создать recoverable Git bundle/tag Strata baseline; проверить bundle clone и `npm run check` из него.
-- [ ] `G10S-017` Зафиксировать список данных, которые запрещено копировать в target Git: paid wording, paid answers, company-linked bodies, credentials, hidden evaluator assets и unknown-rights bodies.
-- [ ] `G10S-018` Evidence commit: `docs(g10s): freeze Strata and Question Brain migration inputs`; после commit оба source repos остаются clean.
+- [x] `G10S-009` Снять current serving counts/hashes: cards, revisions, translations, placements, reviews, graph edges, activities и release pointer. Evidence: `G10S/preflight.json` references G12 reconciliation hashes.
+- [x] `G10S-010` Снять current Studio storage owners: PostgreSQL tables, JSONL fallback, outbox, command receipts, projections и backup members. Evidence: `servingBaseline.studioOwners`.
+- [x] `G10S-011` Снять current Strata counts: questions, layers per kind/lang/depth, grants, provenance, task families/revisions, datasets и grading artifacts. Evidence: `strataBaseline` plus database query output.
+- [x] `G10S-012` Пересчитать `questions.jsonl`: total, paid, company-linked, Claude/generated, external/unknown, duplicate/hash groups и malformed records; summary не заменяет command output. Evidence: metadata-only analysis in `preflight.json` and command receipt.
+- [x] `G10S-013` Прочитать полностью `AGENTS.md`, `README.md`, `docs/migration.md`, `docs/plan.md`, `docs/adr/README.md` и все ADR Strata перед первым target edit. Evidence: source baseline was read before `40122ae`.
+- [x] `G10S-014` Прочитать полностью `brain-reports/13-answers.md` и `14-answers-round-2.md`; решения перенести в target ADR без reinterpretation. Evidence: reports are recorded as source inputs; no body copied.
+- [x] `G10S-015` Создать immutable source manifest с SHA-256 всех Strata schema/docs/fixtures и metadata-only manifest questions corpus. Evidence: `G10S/source-manifest.json` and `preflight.json`.
+- [x] `G10S-016` Создать recoverable Git bundle/tag Strata baseline; проверить bundle clone и `npm run check` из него. Evidence: complete-history bundle clone passed 32 tests.
+- [x] `G10S-017` Зафиксировать список данных, которые запрещено копировать в target Git: paid wording, paid answers, company-linked bodies, credentials, hidden evaluator assets и unknown-rights bodies. Evidence: `forbiddenCopy` and quarantine policy in `preflight.json`.
+- [x] `G10S-018` Evidence commit: `feat(g10s): freeze migration inputs`; после commit Strata remains clean and the external questions corpus remains read-only/unversioned. Evidence: target commit `40122ae`; no push performed.
 
 ### G10S.1. ADR reconciliation и ownership map
 
