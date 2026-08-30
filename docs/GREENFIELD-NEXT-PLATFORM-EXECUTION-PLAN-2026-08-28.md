@@ -2202,7 +2202,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G11-017` Missing-role ledger генерируется по stable IDs.
 - [ ] `G11-018` Research/authoring packs закрывают gaps официальными sources и original explanations.
 - [ ] `G11-019` Expert sample review по capability cluster обязателен.
-- [ ] `G11-020` No production release по total count без role matrix.
+- [x] `G11-020` No production release по total count без role matrix. `production-eligibility-audit.v1` fail-closed связывает coverage score/hard-gates с role ledger; текущие `0` eligible paths и `11` open production-role requirements явно сохранены.
 
 ### G11.3. Executable practice portfolio
 
@@ -2288,6 +2288,17 @@ placements прошли: `4` native и `6` explicit generic; запрещённ�
 semantic keys, runtime profiles и task-family keys не просачиваются в чужой
 path. Это закрывает именно механический G11-016, но не продвигает pending
 Brain/Vault records автоматически.
+
+### Execution update — G11-020 production eligibility guard — 30 августа 2026
+
+Target `main` (`80a8942`, evidence `0c40e6d`) добавил
+`tools/content-compiler/production-eligibility-audit.mjs` и
+`pnpm content:eligibility`. Guard не позволяет считать production path готовым
+только по total card count: одновременно требуются score ≥ 0.90, все release
+hard-gates и complete role matrix. На текущем seed invariant PASS (`0`
+violations), но `0` из `3` production paths eligible и `11` role requirements
+остаются открытыми. Негативные fixtures проверяют подделанное `eligible=true`
+и отсутствие path declaration.
 
 ---
 
