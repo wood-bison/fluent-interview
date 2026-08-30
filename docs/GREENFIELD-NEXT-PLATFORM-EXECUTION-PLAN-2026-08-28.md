@@ -1170,6 +1170,25 @@ signatures и exact immutable-RC attestation требуют внешнего sig
 Report:
 `fluent-interview-platform/docs/verification/greenfield/G12/provenance-signature-2026-08-30.{json,md}`.
 
+### Execution update — G12 WCAG machine baseline — 30 августа 2026
+
+Target `main` (`d270a9b`) добавил воспроизводимый
+`pnpm accessibility:journey` и исправил два найденных семантических дефекта:
+skip-link теперь ведёт в `#main-content` на error/loading/404 surfaces, а
+Practice использует последовательную иерархию `h1 → h2 → h3`. На отдельном
+disposable Compose project проверены те же 23 curated learner routes,
+ожидаемый `/not-found = 404`, `739/739` доступно именованных интерактивных
+элементов, `0` изображений без `alt`, `0` positive `tabindex`, все landmarks и
+`27/27` token contrast checks для light/dark/system. `impeccable` detector и
+unit suite (`5/5`) зелёные; cleanup оставил `0` target containers/networks.
+
+Это закрывает repeatable machine baseline `G12-021` с
+`PASS_WITH_LIMITATIONS`. Ручной VoiceOver/NVDA smoke, динамический focus
+announcement и полный browser/assistive-technology matrix остаются отдельными
+owner promotion gates и не выдаются за автоматический sign-off.
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/accessibility-audit-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -2225,7 +2244,8 @@ paths; denominators и stable IDs обязаны объяснять переис
   проверен на 13 routes и heavy-editor policy закрыта отсутствием `xterm`,
   `monaco-editor` и `codemirror` при bounded textarea editor. Evidence:
   `fluent-interview-platform/docs/verification/greenfield/G12/performance-budget-2026-08-30.json`.
-- [ ] `G12-021` Accessibility WCAG checks plus keyboard/screen-reader human smoke PASS.
+- [x] `G12-021` Repeatable WCAG machine baseline PASS_WITH_LIMITATIONS: 23 curated routes, 739/739 named controls, landmarks/heading/alt/focus guards и 27/27 token contrast checks. Human VoiceOver/NVDA smoke и full browser/AT matrix остаются owner gates. Evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/accessibility-audit-2026-08-30.json`.
 - [ ] `G12-022` Visual diff has zero unexplained P0/P1; intentional deltas documented.
 - [ ] `G12-023` Telemetry cardinality/privacy/retention/load/disk-pressure tests PASS.
 - [ ] `G12-024` CI required checks green on exact RC SHA.
