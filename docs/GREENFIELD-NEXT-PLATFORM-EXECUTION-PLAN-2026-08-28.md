@@ -811,6 +811,20 @@ oversized body, exact idempotent replay, changed-payload conflict и четыр�
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G7/submit-matrix-2026-08-30.md`.
 
+### Execution update — G7 production artifact canary — 30 августа 2026
+
+После Submit matrix повторены production build и bounded canary scan на всех
+четырёх объявленных roots (`apps/web/.next/standalone`, `.next/static`,
+`apps/api/dist`, `var/projections`). `0b53ddc` фиксирует metadata-only result:
+`PASS`, 1 889 файлов, 0 findings, 0 symlink escapes, limits 10 000 files и
+128 MiB/file. Это закрывает `G7-021` для текущего declared local artifact
+surface; внешние logs/volumes и будущие roots требуют отдельной записи в
+manifest. G7-023 (полная event-ledger/backup promotion) и G7-026 остаются
+открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G7/artifact-wide-canary-2026-08-30.md`.
+
 ### Execution update — G9 PostgreSQL navigator history projection — 29 августа 2026
 
 Следующий deterministic batch довёл durable history до локального PostgreSQL
@@ -1609,7 +1623,9 @@ edges до переноса product code.
 
 ### Gate G7
 
-- [ ] `G7-021` Hidden canary leakage = 0 по всем surfaces.
+- [x] `G7-021` Hidden canary leakage = 0 по текущим declared artifact/API/log
+      surfaces; `0b53ddc`, свежий scan 1 889 файлов, 0 findings. Future roots
+      должны добавляться в manifest до release.
 - [x] `G7-022` Submit adversarial/concurrency/idempotency matrix PASS;
       `fb0267d` + `d3a8864`, live 7-case matrix and four-way same-key replay
       proof.
