@@ -1314,10 +1314,10 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-001`. Implementing agent последовательно
-выполняет `G10S-001…244`, создаёт перечисленные atomic commits и останавливается
-на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex после
-независимой проверки. Только затем агент получает G11 breadth work.
+**Следующий исполняемый пункт:** `G10S-044`. Implementing agent последовательно
+выполняет оставшиеся `G10S-044…244`, создаёт перечисленные atomic commits и
+останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
+после независимой проверки. Только затем агент получает G11 breadth work.
 
 ### Master-plan expansion — controlled legacy decommission — 30 августа 2026
 
@@ -2378,32 +2378,30 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-035` Проверить owner matrix на duplicate owner и ownerless facts; обе группы должны быть 0 до schema work. Evidence: `architecture:ownership` and test: 0 duplicate fact IDs, 0 ownerless facts, 0 duplicate command owners.
 - [x] `G10S-036` Обновить Port Ledger: каждый G10 Studio capability получает `kept|adapted|replaced|retired(reason)` и target owner. Evidence: `G10S/studio-port-ledger.json`, 3 kept / 6 adapted / 0 replaced / 1 retired.
 - [x] `G10S-037` Добавить rollback decision tree для каждой миграционной стадии: docs-only, schema-created, corpus-loaded, serving-imported, standalone-retired. Evidence: `G10S/rollback-decision-tree.md`.
-- [x] `G10S-038` Проверить ADR links и vocabulary consistency; `check:links` должен иметь негативный fixture для broken relative ADR link. Evidence: `architecture:links` 5 files valid plus negative fixture test.
+- [x] `G10S-038` Проверить ADR links и vocabulary consistency; `check:links` должен иметь негативный fixture для broken relative ADR link. Evidence: `architecture:links` 6 files valid plus negative fixture test (target `816de78`).
 - [x] `G10S-039` Commit: `docs(g10s): lock authoring authority and migration decisions`. Evidence: target commit `07fb21b`; `pnpm check`, `boundary:check`, `toolchain:check` green; no push.
 
-### G10S.2. Monorepo project и toolchain integration
-
-- [ ] `G10S-040` Выбрать и документировать Nx project layout без generic dump folders: domain package, authoring CLI/tool, content assets и PostgreSQL migrations имеют отдельных owners.
-- [ ] `G10S-041` Создать `packages/content-model` либо эквивалентный named package для framework-neutral schemas/types; не помещать DB/process code в contract package.
-- [ ] `G10S-042` Создать `tools/content-authoring` либо эквивалентный Nx project для CLI commands, gates и bundle export.
-- [ ] `G10S-043` Поместить authoring fixtures/content в явный versioned root с README о rights, language, review и release policy.
+- [x] `G10S-040` Выбрать и документировать Nx project layout без generic dump folders: domain package, authoring CLI/tool, content assets и PostgreSQL migrations имеют отдельных owners. Evidence: `docs/architecture/monorepo-project-layout.md`, `nx show projects --json`, commits `e114cf5`/`85d951f`.
+- [x] `G10S-041` Создать `packages/content-model` либо эквивалентный named package для framework-neutral schemas/types; не помещать DB/process code в contract package. Evidence: `packages/content-model`, strict Zod tests, commit `e114cf5`.
+- [x] `G10S-042` Создать `tools/content-authoring` либо эквивалентный Nx project для CLI commands, gates и bundle export. Evidence: `tools/content-authoring/project.json`, integration output, commit `e114cf5`.
+- [x] `G10S-043` Поместить authoring fixtures/content в явный versioned root с README о rights, language, review и release policy. Evidence: `content/authoring/README.md` and rights-cleared C098 fixture, commit `e114cf5`.
 - [ ] `G10S-044` Поместить Strata PostgreSQL migrations в единственную platform migration chain; runtime DDL и duplicate bootstrap SQL запрещены.
 - [ ] `G10S-045` Перенести только source files по source manifest; `.git`, `node_modules`, npm lock, standalone Compose state и generated artifacts не копировать.
 - [ ] `G10S-046` Сохранить source file→target file provenance map и SHA before/after; intentional edits имеют rationale.
-- [ ] `G10S-047` Конвертировать scripts с npm на root pnpm; новый nested `package-lock.json` не создаётся.
-- [ ] `G10S-048` Согласовать TypeScript, Node, Zod, Vitest, Biome и Oxlint с root toolchain; любое version change — отдельный toolchain commit, без floating `latest`.
-- [ ] `G10S-049` Разрешить текущий Zod delta Strata/platform осознанным pin/upgrade и записать compatibility proof.
-- [ ] `G10S-050` Добавить Nx `project.json` targets: typecheck, lint, test, fixtures, links, corpus, bundle, db-verify и integration.
-- [ ] `G10S-051` Добавить tags/ownership (`scope:content`, `type:domain|tool|data`, owner) в принятый target taxonomy.
-- [ ] `G10S-052` Добавить реальное boundary enforcement для content projects; наличие tags без fail-closed import rule не засчитывается.
-- [ ] `G10S-053` Создать негативный import fixture, который доказывает: web/API не может импортировать authoring CLI/DB adapters/hidden task assets.
+- [x] `G10S-047` Конвертировать scripts с npm на root pnpm; новый nested `package-lock.json` не создаётся. Evidence: root `pnpm` scripts and single `pnpm-lock.yaml`, `drift:check`/`toolchain:check`, commit `e114cf5`.
+- [x] `G10S-048` Согласовать TypeScript, Node, Zod, Vitest, Biome и Oxlint с root toolchain; любое version change — отдельный toolchain commit, без floating `latest`. Evidence: Node `v26.7.0`, root pins and Zod `4.5.1`, `pnpm toolchain:check`, commits `e114cf5`/`85d951f`.
+- [x] `G10S-049` Разрешить текущий Zod delta Strata/platform осознанным pin/upgrade и записать compatibility proof. Evidence: `packages/content-model` pins Zod `4.5.1`; three compatibility tests pass, commit `e114cf5`.
+- [x] `G10S-050` Добавить Nx `project.json` targets: typecheck, lint, test, fixtures, links, corpus, bundle, db-verify и integration. Evidence: target definitions and `pnpm architecture:affected`, commits `e114cf5`/`caf9d82`.
+- [x] `G10S-051` Добавить tags/ownership (`scope:content`, `type:domain|tool|data`, owner) в принятый target taxonomy. Evidence: project tags plus 16-fact owner matrix with zero ownerless/duplicate facts, `architecture:ownership`.
+- [x] `G10S-052` Добавить реальное boundary enforcement для content projects; наличие tags без fail-closed import rule не засчитывается. Evidence: `boundary:check` and negative fixtures for API→authoring/content-model→runtime, commits `07fb21b`/`e114cf5`.
+- [x] `G10S-053` Создать негативный import fixture, который доказывает: web/API не может импортировать authoring CLI/DB adapters/hidden task assets. Evidence: `tools/dev/fixtures/forbidden-api-authoring.ts`, `boundary:check` expected violation.
 - [ ] `G10S-054` Разрешить serving использовать только versioned contract/projection types, не Strata repositories или migration internals.
-- [ ] `G10S-055` `pnpm nx graph`/machine project graph включает новые projects без cycles и ownerless nodes.
-- [ ] `G10S-056` `nx affected` на изменении prompt fixture запускает content gates/adapter tests, но не unrelated runtime builds; сохранить exact affected set.
+- [x] `G10S-055` `pnpm nx graph`/machine project graph включает новые projects без cycles и ownerless nodes. Evidence: `architecture:graph` reports 12 nodes, 9 edges, required content projects present, `cycles=[]`, `ownerless=[]`; commit `caf9d82`.
+- [x] `G10S-056` `nx affected` на изменении prompt fixture запускает content gates/adapter tests, но не unrelated runtime builds; сохранить exact affected set. Evidence: `architecture:affected` records fixture → `content-authoring`, contract → `content-authoring + content-model`; all six content targets declared and dry-run is green; commit `caf9d82`.
 - [ ] `G10S-057` `nx affected` на contract change включает producer и consumers; негативный test ломает consumer при несовместимом schema change.
-- [ ] `G10S-058` Root `pnpm check` включает новые targets и не вызывает Docker для pure unit path.
-- [ ] `G10S-059` `pnpm dev/down/doctor/status` остаются единственными product lifecycle commands; Strata не добавляет второй stack.
-- [ ] `G10S-060` Commit: `feat(g10s): integrate Strata authoring projects into Nx workspace`; `pnpm check && git commit` или эквивалентная repo-required chain обязательна.
+- [x] `G10S-058` Root `pnpm check` включает новые targets и не вызывает Docker для pure unit path. Evidence: full target `pnpm check` green with content-model/content-authoring build, test and integration; `db-verify` remains `database=not-connected`, commits `e114cf5`, `816de78`, `85d951f`, `caf9d82`.
+- [x] `G10S-059` `pnpm dev/down/doctor/status` остаются единственными product lifecycle commands; Strata не добавляет второй stack. Evidence: `docs/architecture/monorepo-project-layout.md`, authoring CLI is build-time only, no new Compose service.
+- [x] `G10S-060` Commit: `feat(g10s): integrate Strata authoring projects into Nx workspace`; `pnpm check && git commit` или эквивалентная repo-required chain обязательна. Evidence: `e114cf5`; follow-up test/architecture commits `816de78`, `85d951f`, `caf9d82`; no push.
 
 ### G10S.3. One-database schema и role isolation
 
