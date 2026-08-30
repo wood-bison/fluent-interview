@@ -1334,9 +1334,39 @@ The full target `pnpm check`, boundary gate and toolchain gate passed with 96
 architecture tests. Push was not performed because the owner requested local
 commits while the Actions quota is near its monthly limit.
 
-This closes only G10S-109's build-context slice. G10S-110 must define the
-release bundle publication gate and prove that only the allowlisted public
+This closes only G10S-109's build-context slice. G10S-110 now defines the
+release bundle publication gate and proves that only the allowlisted public
 surface is copied into a learner artifact.
+
+### Execution update — G10S-110 learner release publication — 30 августа 2026
+
+Target `main` now contains `17e254aa5d4e15274d0043e67b6a42b33cc56efd`
+(`feat(g10s): gate learner release publication`). Evidence and the corrected
+checksum ledger are recorded in target commits `42300980d05ee64ac5eabb396c027f419edc7be5`
+(`docs(g10s): record learner publication gate`) and
+`5afa397e43220d290a8e8797d57e208e2082bb16` (`fix(g10s): refresh evidence checksums`).
+The strict publication contract separates the candidate build from the
+learner artifact: only allowlisted `public/` manifest, catalog, question-shard
+and public-index files may be published. Hidden tests, reference solutions,
+harnesses, dataset seeds, grading variants and rubric fixtures remain
+candidate-only; any evaluator file in `publishedFiles` is a leak and is
+quarantined. Unsafe/forbidden paths, duplicate or unallowlisted files,
+namespace/kind/surface mismatches, hash drift, missing candidate files and
+missing allowlist entries fail closed. The projection is metadata-only and
+deterministic.
+
+`pnpm architecture:release-publication` inspected five records: two accepted
+and three expected `REVIEW_REQUIRED`, 24 candidate files, six candidate
+evaluator files, 18 published files, one published evaluator leak, one
+unallowlisted public file and one body-key canary; all other mismatch counters
+were zero, with 16 public allowlist entries and zero projected bodies. The
+full target check, boundary/toolchain checks and architecture suite passed
+with 100 tests. Push was not performed because the owner requested local
+commits while the Actions quota is near its monthly limit. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/release-publication-2026-08-30.{json,md}`.
+
+This closes G10S-110. The next executable slice is G10S-111: stable IDs must
+remain independent of array order, local paths and timestamps.
 
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
@@ -1384,7 +1414,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-110`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-111`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2529,9 +2559,9 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-107` Company-linked source и paid source не может иметь public disposition без explicit distributable grant artifact. Evidence: target `docs/verification/greenfield/G10S/provenance-grant-2026-08-30.json`/`.md`; `pnpm architecture:provenance-grant` accepted 3/5 records, quarantined missing/non-redistributable grants, reported `autoGrantCount=0`, and emitted deterministic metadata-only projection; target implementation `c619ae412bad0f26d81cee57f08ec5255e63dda1`, evidence commit `6c09aa2fa06c2fde656d86f2d5526aac79801a4b`.
 - [x] `G10S-108` TaskFamily/TaskRevision/Dataset/grading model сохраняет hidden/reference assets отдельно от public statement/contracts. Evidence: target `docs/verification/greenfield/G10S/task-asset-boundary-2026-08-30.json`/`.md`; `pnpm architecture:task-asset-boundary` accepted 2/5 records, rejected public/hidden body-key canaries, coordinate mismatch and hidden namespace leakage, and emitted deterministic metadata-only public/hidden projections; target implementation `ce7e73d05e3f3bb94733f7cc7a1a125efdf785be`, evidence commit `c316b3bc2a962d6bd74ab9b9c550f2ea5ee16c1f`.
 - [x] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки. Evidence: target `fluent-interview-platform/docs/verification/greenfield/G10S/task-build-context-2026-08-30.json`/`.md`; `pnpm architecture:task-build-context` принял 2/5 metadata records, отклонил 3 intentional canaries (unallowlisted evaluator file, public `reference-solution`, forbidden `.env` body key), подтвердил 38/41 allowlist matches, 1 public leak, 0 missing required entries, metadata-only deterministic projection и 0 bodies; target implementation `d37fcb7b07cf7f270e6cedd088a9cc479f3fd6fe`, evidence commit `10159b035c65c429da34b234a4c388f419cdce76`.
-- [ ] `G10S-110` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает.
-- [ ] `G10S-111` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён.
-- [ ] `G10S-112` Property tests покрывают identity, preferred transition, provenance disposition и serialization determinism.
+- [x] `G10S-110` Release bundle publication копирует только allowlisted public surface в learner artifact; hidden/evaluator assets и body keys не попадают в публикацию. Evidence: `fluent-interview-platform/docs/verification/greenfield/G10S/release-publication-2026-08-30.json`/`.md`; target implementation `17e254aa5d4e15274d0043e67b6a42b33cc56efd`, evidence commits `42300980d05ee64ac5eabb396c027f419edc7be5` and `5afa397e43220d290a8e8797d57e208e2082bb16`; `pnpm architecture:release-publication` accepted `2/5` records, quarantined `3`, found `1` public evaluator leak, `1` unallowlisted public file, `1` body-key canary, and emitted `0` bodies.
+- [ ] `G10S-111` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает.
+- [ ] `G10S-112` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён; property tests покрывают identity, preferred transition, provenance disposition и serialization determinism.
 - [ ] `G10S-113` Golden fixtures сохраняют baseline: 6 cards, 75 layers, 3 tasks, 1 dataset либо exact reviewed delta.
 - [ ] `G10S-114` Все 12 inherited PostgreSQL invariant tests перенесены и дополнены platform ownership/grant tests.
 - [ ] `G10S-115` Commit: `feat(g10s): converge question and task domain invariants`.

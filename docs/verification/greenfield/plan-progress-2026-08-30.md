@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 613 пунктов из 1 134.**
+**Осталось: 612 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 521 |
-| Осталось (`[ ]`) | 613 |
+| Закрыто (`[x]`) | 522 |
+| Осталось (`[ ]`) | 612 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.94% |
+| Формальное выполнение | 46.03% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -175,8 +175,25 @@ Rehearsal `pnpm architecture:task-build-context` принял 2/5 records и о�
 projection hash детерминирован. Гейт закрыт после полного `pnpm check`,
 boundary/toolchain checks, 96 architecture tests, evidence validation и
 checksum validation; push не выполнялся по ограничению Actions quota.
-Следующий implementation slice: `G10S-110` — release bundle publication gate,
-который копирует только allowlisted public surface в learner artifact.
+Следующий implementation slice: `G10S-111` — stable IDs, независимые от array
+order, локального path и timestamp.
+
+Последний implementation slice: target `17e254aa5d4e15274d0043e67b6a42b33cc56efd`
+(evidence `42300980d05ee64ac5eabb396c027f419edc7be`, checksum fix
+`5afa397e43220d290a8e8797d57e208e2082bb16`) закрыл `G10S-110`.
+Learner release publication теперь принимает только allowlisted `public/`
+manifest/catalog/question-shard/public-index entries; hidden tests, reference
+solutions, harnesses, seeds, grading variants и rubric fixtures остаются
+candidate-only. Rehearsal `pnpm architecture:release-publication` inspected
+5 records (`2` accepted, `3` expected `REVIEW_REQUIRED`), 24 candidate files,
+6 candidate evaluator files и 18 published files; обнаружены 1 published
+evaluator leak, 1 unallowlisted public file и 1 body-key canary, все остальные
+drift/namespace/path counters равны нулю, projected bodies — `0`.
+Projection metadata-only и детерминирован, архитектурный suite расширен до
+100 тестов. Гейт закрыт после полного `pnpm check`, boundary/toolchain checks,
+evidence validation и checksum validation; push не выполнялся по ограничению
+Actions quota. Следующий implementation slice: `G10S-111` — доказать, что
+stable IDs не зависят от array order, локального path или timestamp.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
