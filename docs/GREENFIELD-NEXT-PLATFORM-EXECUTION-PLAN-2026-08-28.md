@@ -1305,9 +1305,38 @@ TaskFamily/TaskRevision mismatches before projection. Five fixture records
 yielded `2` accepted and `3` expected quarantines, with `0` projected bodies
 and deterministic hash `aef1cffc71a7bc04f01510458d8fb89e50a85fb07997886fcdaa15a9b3f90e8f`.
 
-This closes only G10S-108's contract boundary. G10S-109 must add the
-build-context allowlist and release-artifact canary proving evaluator assets
-cannot leak into the public bundle.
+This closes only G10S-108's contract boundary. The next executable slice is
+G10S-109: the evaluator build context must be allowlisted and a release
+artifact canary must prove that evaluator assets cannot leak into the public
+bundle.
+
+### Execution update — G10S-109 evaluator build-context allowlist — 30 августа 2026
+
+Target `main` now contains `d37fcb7b07cf7f270e6cedd088a9cc479f3fd6fe`
+(`feat(g10s): allowlist task build context`) and evidence commit
+`10159b035c65c429da34b234a4c388f419cdce76` (`docs(g10s): record task build context gate`).
+`TaskBuildContext` is a strict versioned contract containing only task
+coordinates plus public/hidden paths, asset kinds, content hashes and required
+flags. Public entries are confined to `public/`; evaluator entries are
+confined to `hidden/`. Required entries must be observed in the build with the
+same surface, kind and hash; duplicate, unsafe, forbidden or unallowlisted
+files fail closed. A public `reference-solution`, `.env` body-key canary and
+unallowlisted evaluator file remain visible as intentional quarantine fixtures.
+
+`pnpm architecture:task-build-context` inspected five metadata-only records:
+two accepted and three expected `REVIEW_REQUIRED`, 41 observed files, 38
+allowlist matches, three unallowlisted files, one public evaluator leak, one
+forbidden path, one body-key canary record, zero missing required entries and
+zero projected bodies. Reversing record, allowlist and file order preserved the
+projection hash
+`e89fa9ae2e34610bf2294418e8e8a90f009f4df8bc5bfa43510a2820f0177341`.
+The full target `pnpm check`, boundary gate and toolchain gate passed with 96
+architecture tests. Push was not performed because the owner requested local
+commits while the Actions quota is near its monthly limit.
+
+This closes only G10S-109's build-context slice. G10S-110 must define the
+release bundle publication gate and prove that only the allowlisted public
+surface is copied into a learner artifact.
 
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
@@ -1355,7 +1384,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-109`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-110`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2499,7 +2528,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-106` Метод `human|translation|mt_reviewed|generated|imported` либо reviewed equivalent определён versioned vocabulary; unknown method rejected/quarantined. Evidence: target `docs/verification/greenfield/G10S/provenance-method-2026-08-30.json`/`.md`; `pnpm architecture:provenance-method` закрепил `provenance-method.v1`, принял 3 из 5 records, отправил 2 неизвестных метода в `QUARANTINED`, не применил auto-map и выпустил metadata-only deterministic projection; target commit `7815ed07d09150ef220a4f6e97d9479501153d10`; evidence commit `c98873d64fd02f767cd9a9326e95bd9c6cc6e491`.
 - [x] `G10S-107` Company-linked source и paid source не может иметь public disposition без explicit distributable grant artifact. Evidence: target `docs/verification/greenfield/G10S/provenance-grant-2026-08-30.json`/`.md`; `pnpm architecture:provenance-grant` accepted 3/5 records, quarantined missing/non-redistributable grants, reported `autoGrantCount=0`, and emitted deterministic metadata-only projection; target implementation `c619ae412bad0f26d81cee57f08ec5255e63dda1`, evidence commit `6c09aa2fa06c2fde656d86f2d5526aac79801a4b`.
 - [x] `G10S-108` TaskFamily/TaskRevision/Dataset/grading model сохраняет hidden/reference assets отдельно от public statement/contracts. Evidence: target `docs/verification/greenfield/G10S/task-asset-boundary-2026-08-30.json`/`.md`; `pnpm architecture:task-asset-boundary` accepted 2/5 records, rejected public/hidden body-key canaries, coordinate mismatch and hidden namespace leakage, and emitted deterministic metadata-only public/hidden projections; target implementation `ce7e73d05e3f3bb94733f7cc7a1a125efdf785be`, evidence commit `c316b3bc2a962d6bd74ab9b9c550f2ea5ee16c1f`.
-- [ ] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки.
+- [x] `G10S-109` Task build context allowlist копирует только нужные evaluator assets; negative canary доказывает отсутствие утечки. Evidence: target `fluent-interview-platform/docs/verification/greenfield/G10S/task-build-context-2026-08-30.json`/`.md`; `pnpm architecture:task-build-context` принял 2/5 metadata records, отклонил 3 intentional canaries (unallowlisted evaluator file, public `reference-solution`, forbidden `.env` body key), подтвердил 38/41 allowlist matches, 1 public leak, 0 missing required entries, metadata-only deterministic projection и 0 bodies; target implementation `d37fcb7b07cf7f270e6cedd088a9cc479f3fd6fe`, evidence commit `10159b035c65c429da34b234a4c388f419cdce76`.
 - [ ] `G10S-110` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает.
 - [ ] `G10S-111` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён.
 - [ ] `G10S-112` Property tests покрывают identity, preferred transition, provenance disposition и serialization determinism.

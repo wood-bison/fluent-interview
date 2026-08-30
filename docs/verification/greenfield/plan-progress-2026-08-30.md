@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 614 пунктов из 1 134.**
+**Осталось: 613 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 520 |
-| Осталось (`[ ]`) | 614 |
+| Закрыто (`[x]`) | 521 |
+| Осталось (`[ ]`) | 613 |
 | Всего | 1 134 |
-| Формальное выполнение | 45.86% |
+| Формальное выполнение | 45.94% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -161,8 +161,22 @@ public-to-hidden refs, coordinate mismatch, namespace leaks и duplicate hidden
 refs fail closed; rehearsal дал `2/5` accepted и `3` ожидаемых quarantine,
 `0` bodies в projection, hash
 `aef1cffc71a7bc04f01510458d8fb89e50a85fb07997886fcdaa15a9b3f90e8f`.
-Следующий implementation slice: `G10S-109` — allowlist evaluator build
-context и release-artifact leak canary.
+Последний implementation slice: target `d37fcb7b07cf7f270e6cedd088a9cc479f3fd6fe`
+(evidence `10159b035c65c429da34b234a4c388f419cdce76`) закрыл `G10S-109`.
+`TaskBuildContext` теперь содержит только task coordinates, public/hidden
+paths, asset kinds, content hashes и required flags; public entries ограничены
+`public/`, evaluator entries — `hidden/`. Обязательные entries должны быть
+наблюдаемы в сборке с теми же surface/kind/hash; duplicate, unsafe, forbidden
+и unallowlisted files, public evaluator assets и body keys fail closed.
+Rehearsal `pnpm architecture:task-build-context` принял 2/5 records и отправил
+3 intentional canaries в `REVIEW_REQUIRED`: 38/41 files совпали с allowlist,
+обнаружены 3 unallowlisted files, 1 public evaluator leak, 1 forbidden path и
+1 body-key record; missing required entries и projected bodies равны нулю,
+projection hash детерминирован. Гейт закрыт после полного `pnpm check`,
+boundary/toolchain checks, 96 architecture tests, evidence validation и
+checksum validation; push не выполнялся по ограничению Actions quota.
+Следующий implementation slice: `G10S-110` — release bundle publication gate,
+который копирует только allowlisted public surface в learner artifact.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх
