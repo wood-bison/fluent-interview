@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 194 пунктов из 606.**
+**Осталось: 193 пункта из 606.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 412 |
-| Осталось (`[ ]`) | 194 |
+| Закрыто (`[x]`) | 413 |
+| Осталось (`[ ]`) | 193 |
 | Всего | 606 |
-| Формальное выполнение | 67.99% |
+| Формальное выполнение | 68.15% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -56,6 +56,15 @@ path-specific research boundaries и authoring checklist; в первом batch 
 `expert-sample-audit.v1` для G11-019. Выбрано `27` стабильных samples — по
 одному на каждый path/domain cluster; `0` independent expert reviews записано,
 поэтому гейт остаётся OPEN до полного decision set.
+
+Последний implementation slice: target `96a0506` добавил seeded
+`wrong-solution` vector в `pnpm runtime:vectors`. Живой released Node profile
+прошёл `13` vectors и recovery; неверный source получил
+`failed/public_event_loop_order_mismatch`, `baselineMatch=false`, worker cleanup
+и нулевые mastery/unlock/accepted mutations. Это перевело `G11-027` в `[x]` для
+текущего released runtime; package-mode и будущие языки остаются отдельными
+гейтами. Practice projection теперь `1/8` pass, state hash
+`da2a4de17fe4c9a34b9ebbd3273da9eee612fc78a83e8d80e38a012d3e14b7e7`.
 
 ## Открытые кластеры
 

@@ -2225,7 +2225,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-024` React/Next path: 12 algorithms + 20 React/Next/browser + 8 Web/API/security + 4 performance/a11y + 6 project = 50.
 - [ ] `G11-025` System Design: 32 defense cases + 12 infra labs + 6 projects = 50.
 - [ ] `G11-026` Critical capability имеет ≥2 independent scenarios; остальные core — ≥1 assessed Activity.
-- [ ] `G11-027` Seeded wrong solutions проверяют tests, а не только happy path.
+- [x] `G11-027` Seeded wrong solutions проверяют tests, а не только happy path. Для единственного released runtime `node-26-commonjs` отдельный wrong-solution vector вернул `failed/public_event_loop_order_mismatch`, baseline mismatch, cleanup и отсутствие mastery/unlock; остальные runtimes закрываются вместе с их release.
 - [ ] `G11-028` Package-mode drills проходят по всем released runtimes.
 
 ### G11.4. Path-specific closure packs
@@ -2364,6 +2364,20 @@ editorial review.
 
 Полный артефакт:
 `fluent-interview-platform/docs/verification/greenfield/G11/expert-sample-audit-2026-08-30.{json,md}`.
+
+### Execution update — G11-027 seeded wrong-solution vector — 30 августа 2026
+
+Target `main` (`96a0506`) расширил `pnpm runtime:vectors` отдельным
+исполняемым неверным решением для released `node-26-commonjs`. Вектор проходит
+через публичную Next boundary, получает `failed` с причиной
+`public_event_loop_order_mismatch`, `baselineMatch=false`, очищает worker и не
+меняет `masteryChanged`, `unlockChanged` или `accepted`. После него canonical
+recovery также проходит. Поэтому `G11-027` закрыт для текущего released
+runtime; package-mode и новые языки остаются отдельными гейтами.
+
+Evidence: `fluent-interview-platform/docs/verification/greenfield/G6/runtime-vectors-live-2026-08-30.{json,md}`;
+practice projection обновлена до `1/8` pass, state hash
+`da2a4de17fe4c9a34b9ebbd3273da9eee612fc78a83e8d80e38a012d3e14b7e7`.
 
 ### Execution update — G11-016 path relevance — 30 августа 2026
 
