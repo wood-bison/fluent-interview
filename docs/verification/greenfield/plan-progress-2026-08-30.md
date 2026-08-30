@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 609 пунктов из 1 134.**
+**Осталось: 607 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 525 |
-| Осталось (`[ ]`) | 609 |
+| Закрыто (`[x]`) | 527 |
+| Осталось (`[ ]`) | 607 |
 | Всего | 1 134 |
-| Формальное выполнение | 46.30% |
+| Формальное выполнение | 46.47% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -236,6 +236,17 @@ counts, missing task, source-manifest drift и body-field canary. Полный
 evidence/checksum validation зелёные; push не выполнялся по ограничению Actions
 quota. Следующий implementation slice: `G10S-114` — перенести 12 inherited
 PostgreSQL invariant tests и добавить platform ownership/grant tests.
+
+Последний implementation slice: target `123b1fe` (evidence `5d4c85d`) закрыл
+`G10S-114/115`. Новый disposable PostgreSQL gate перенёс все `12/12` inherited
+Strata invariants, добавил `16/16` platform ownership/grant assertions и
+подтвердил `12/12` functional role checks. В процессе устранён ложноположительный
+fail helper: успешный SQL больше нельзя выдать за ожидаемый отказ. Exact marker
+parser, migrations, cleanup, SHA-256 и metadata-only boundary проверяются
+машиной. Полный `pnpm check`, boundary/toolchain checks, `114/114` architecture
+tests и evidence/checksum validation зелёные; push не выполнялся по ограничению
+Actions quota. Следующий implementation slice: `G10S-116` — зафиксировать
+однозначное соответствие current Studio sequence и target Strata commands.
 
 Предыдущий implementation slice: target `3fb97e6` (evidence `018ca80`) закрыл
 G10S-099. Metadata-only adapter не создаёт вторую semantic question: из трёх

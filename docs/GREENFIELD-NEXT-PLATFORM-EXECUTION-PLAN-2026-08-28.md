@@ -1443,6 +1443,30 @@ the Actions quota is near its monthly limit.
 This closes G10S-113. The next executable slice is G10S-114: port all twelve
 inherited PostgreSQL invariant tests and add platform ownership/grant tests.
 
+### Execution update — G10S-114/115 PostgreSQL invariant convergence — 30 августа 2026
+
+Target `main` now contains `123b1fe` (`feat(g10s): converge question and task
+domain invariants`) and evidence commit `5d4c85d` (`docs(g10s): record
+PostgreSQL invariant gate`). Перед закрытием гейта исправлен ложноположительный
+`must_fail`: прежний helper мог поймать собственный exception об успешном SQL и
+выдать его за ожидаемый отказ. Новый parser принимает только именованные exact
+markers, а privilege-escalation rehearsal использует реальную serving session
+через `SET SESSION AUTHORIZATION`.
+
+Disposable PostgreSQL gate после всех восьми migrations теперь исполняет и
+раздельно подтверждает `12/12` inherited Strata invariants, `16/16` platform
+ownership/grant assertions и `12/12` functional role-journey checks. Все
+negative cases fail closed, source/target SQL и итоговая projection имеют
+зафиксированные SHA-256; rehearsal metadata-only (`sourceBodiesRead=0`) и всегда
+удаляет временную database. `pnpm architecture:fresh-db`, `pnpm
+architecture:postgres-invariants`, `114/114` architecture tests, полный `pnpm
+check`, boundary/toolchain и evidence/checksum validation зелёные. Push
+намеренно не выполнялся по ограничению Actions quota.
+
+This closes G10S-114 and G10S-115. The next executable slice is G10S-116:
+record the exact current Studio sequence and its one-to-one Strata target
+commands before changing Studio authority.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1489,7 +1513,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-114`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-116`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2638,8 +2662,8 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-111` Stable IDs не зависят от array order, локального path или timestamp; deterministic fixture test это доказывает. Evidence: target `docs/verification/greenfield/G10S/stable-ids-2026-08-30.json`/`.md`; `pnpm architecture:stable-ids` проверил 6 synthetic records (4 valid, 2 intentional `REVIEW_REQUIRED`), 3 unique IDs и 1 duplicate semantic group, подтвердил metadata-only/no-bodies и независимость от array order/path/timestamp; target implementation `d37cd484e39639c954bc01b0b70eabb3bf5165b2`, evidence commit `0e70aa4`.
 - [x] `G10S-112` Domain contract changes имеют versioning/migration notes; incompatible silent change запрещён; property tests покрывают identity, preferred transition, provenance disposition и serialization determinism. Evidence: target `0bd3da0`; `pnpm architecture:domain-contract` проверил 3 owned contracts, 2 versioned changes и 4/4 negative rejections (breaking without migration, non-monotonic version, unowned contract, duplicate migration), с deterministic metadata-only projection; evidence `65442b5`.
 - [x] `G10S-113` Golden fixtures сохраняют baseline: 6 cards, 75 layers, 3 tasks, 1 dataset либо exact reviewed delta. Evidence: target `a30e2eb`; `pnpm architecture:golden-fixtures` сохранил exact baseline 6/75/3/1 по 11 metadata fixture files, подтвердил deterministic metadata-only/no-bodies projection и отклонил 5/5 negative cases (card/layer drift, missing task, source-manifest drift, body-field canary); evidence `91ccc60`.
-- [ ] `G10S-114` Все 12 inherited PostgreSQL invariant tests перенесены и дополнены platform ownership/grant tests.
-- [ ] `G10S-115` Commit: `feat(g10s): converge question and task domain invariants`.
+- [x] `G10S-114` Все 12 inherited PostgreSQL invariant tests перенесены и дополнены platform ownership/grant tests. Evidence: target `123b1fe`, evidence `5d4c85d`; disposable PostgreSQL подтвердил exact `12/12` inherited, `16/16` ownership/grant и `12/12` functional role checks, включая исправление ложноположительного fail helper.
+- [x] `G10S-115` Commit: `feat(g10s): converge question and task domain invariants` (`123b1fe`).
 
 ### G10S.5. Studio convergence без dual-write
 
