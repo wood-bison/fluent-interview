@@ -1225,6 +1225,21 @@ batch, retention `10 100 → 7 575` (purged `2 525`), pressure cap `16 KiB` с
 остаются promotion gates; evidence:
 `fluent-interview-platform/docs/verification/greenfield/G12/telemetry-budget-2026-08-30.{json,md}`.
 
+### Execution update — G12 exact RC CI-equivalent rehearsal — 30 августа 2026
+
+Target `main` (`55bc817`, evidence index `ecd346e`) добавил
+`pnpm ci:exact-rc`. Immutable `rc-2026.08.29.1` разрешается в ожидаемый SHA
+`476aa01b852ffbb9ca91da11e7eb0922dd7f6f95`; workflow на самом теге проверен
+на frozen install/full check ladder и immutable action pin. Clean archive
+установился с `pnpm install --offline --frozen-lockfile`, полный `pnpm check`
+(lint/typecheck/tests/build) прошёл, target checkout не изменялся.
+
+Это даёт local CI-equivalent evidence `PASS_WITH_LIMITATIONS`, но не закрывает
+remote часть `G12-024`: GitHub Actions для исходного immutable RC не
+диспетчеризовался из-за Actions quota `90%`. После сброса квоты нужно выполнить
+workflow dispatch на `rc-2026.08.29.1` и сохранить run/job IDs. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G12/exact-rc-ci-2026-08-30.{json,md}`.
+
 ---
 
 ## 0. Как агент обязан использовать этот план
@@ -2284,7 +2299,7 @@ paths; denominators и stable IDs обязаны объяснять переис
   `fluent-interview-platform/docs/verification/greenfield/G12/accessibility-audit-2026-08-30.json`.
 - [x] `G12-022` Machine visual contract PASS_WITH_LIMITATIONS: 12 surfaces × 3 desktop profiles × light/dark (`72/72`), zero page overflow/clipped visible controls/unexplained P0/P1 geometry defects, and `.app-scroll-region` owns vertical scroll in every case. D3 raster deltas are explicitly classified `INFORMATIONAL_BASELINE_DELTA`; exact pixel/owner sign-off remains open. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/visual-contract-2026-08-30.json`.
 - [x] `G12-023` Local telemetry budget PASS_WITH_LIMITATIONS: recursive privacy/unknown-field guards, normalized dynamic routes, `10,000` synthetic events, `60/128` bounded dimension tuples, `2,700,793/4,194,304` batch bytes, 90-day retention purge and fail-closed `16 KiB` disk-pressure rehearsal. External collector, long-duration retention and multi-host drills remain open. Evidence: `fluent-interview-platform/docs/verification/greenfield/G12/telemetry-budget-2026-08-30.json`.
-- [ ] `G12-024` CI required checks green on exact RC SHA.
+- [ ] `G12-024` Remote CI required checks green on exact RC SHA — still open because Actions dispatch is quota-bound. Local clean-archive CI-equivalent PASS_WITH_LIMITATIONS (`rc-2026.08.29.1`, `476aa01…`) is recorded in `fluent-interview-platform/docs/verification/greenfield/G12/exact-rc-ci-2026-08-30.json`; do not treat it as remote attestation.
 
 ### G12.3. Reconciliation and rollback
 
