@@ -5,14 +5,14 @@
 
 ## Формальный счётчик
 
-**Осталось: 630 пунктов из 1 134.**
+**Осталось: 629 пунктов из 1 134.**
 
 | Состояние | Количество |
 | --- | ---: |
-| Закрыто (`[x]`) | 504 |
-| Осталось (`[ ]`) | 630 |
+| Закрыто (`[x]`) | 505 |
+| Осталось (`[ ]`) | 629 |
 | Всего | 1 134 |
-| Формальное выполнение | 44.44% |
+| Формальное выполнение | 44.53% |
 
 Это счётчик строк-чекбоксов, а не обещание production readiness. В него входят
 policy/evidence/independent-review пункты, поэтому он намеренно больше числа
@@ -28,16 +28,24 @@ identity constraint `UNIQUE (kc_code, aspect, stack)`: `generic` и `node`
 Гейт закрыт только после зелёного `pnpm check`, post-commit ladder, checksum
 validation и evidence validation.
 
-Последний implementation slice: target `a6e9fed` (evidence `108e8ef`) закрыл
+Предыдущий implementation slice: target `a6e9fed` (evidence `108e8ef`) закрыл
 G10S-092. Metadata-only collision report нормализует strict identity, группирует
 двух кандидатов в `REVIEW_REQUIRED`, отклоняет malformed metadata и оставляет
 даже одиночный кандидат без implicit promotion. `autoMergedRecords=0`; source
 wording и answers не копируются. Гейт закрыт после полного `pnpm check`,
 архитектурного test ladder и evidence/checksum validation.
 
-Следующий implementation slice: `G10S-093` — сохранить dynamic language table
-и ISO/BCP-47 normalization policy; closed enum RU/EN не использовать в
-authoring.
+Последний implementation slice: target `7c590bc` (evidence `de6b8f7`) закрыл
+G10S-093. Dynamic `strata.language` table принимает новые BCP-47 tags без
+закрытого RU/EN enum; `Intl.Locale` канонизирует `pt-br` → `pt-BR` и
+`zh-hant` → `zh-Hant`, а disposable database rehearsal подтвердил три
+динамические строки и отсутствие closed enum constraint. Гейт закрыт после
+полного `pnpm check`, language/architecture test ladder и evidence/checksum
+validation.
+
+Следующий implementation slice: `G10S-094` — сохранить layer kinds и
+versioned layers; edit создаёт новую version/preferred transition, а не
+destructive overwrite.
 
 Исторический implementation slice: target `4811050` (evidence `a5cdf89`) добавил
 G12-025 state evidence registry. Он формализовал `71` critical-state fixture
