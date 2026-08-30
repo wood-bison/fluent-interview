@@ -32,6 +32,13 @@ captures `0/71`, promotable dispositions `0/12`, unresolved `83`.
 checkboxes остаются открытыми: аудит формирует точный authoring/runtime backlog
 и не подменяет его синтетическими карточками.
 
+Следующий implementation slice: target `72e4978` (evidence `f4ef25b`) добавил
+`vault-classification-ledger.v1` для G11-013. Все `1 597` Brain/Vault records
+теперь представлены metadata-only строками; закрытыми по факту являются
+`1 591` canonical IDs, `1 591` capabilities и `1 594` RU/EN locale facets.
+Roles, provenance/license и reviewer dispositions пока `0`; поэтому
+`G11-013` остаётся открытым, а `0/1 597` записей считаются fully classified.
+
 ## Открытые кластеры
 
 - governance и evidence protocol (`0.*`, `A-*`, `D-*`);

@@ -2309,6 +2309,21 @@ Checkboxes `G11-021…028` остаются `[ ]` до появления ори
 typed metadata, runtime evidence и package-mode прогонов. Полные артефакты:
 `fluent-interview-platform/docs/verification/greenfield/G11/practice-portfolio-audit-2026-08-30.{json,md}`.
 
+### Execution update — G11-013 classification ledger — 30 августа 2026
+
+Target `main` (`72e4978`, evidence `f4ef25b`) добавил
+`vault-classification-policy.v1` и `vault-classification-ledger.v1`. Теперь
+каждая из `1,597` Brain/Vault записей имеет отдельную metadata-only строку для
+canonical ID, capability, role, locale, provenance и disposition; состояния
+неизвестного поля не угадываются и не приводят к promotion. Snapshot: `1,591`
+canonical IDs, `1,591` capabilities, `1,594` полных RU/EN locale, `0` role
+назначений, `0` provenance decisions и `0` final reviewer dispositions; итог
+`G11-013=OPEN`, `0/1,597` fully classified. Automatic `pending`/`quarantined`
+intake остаются видимыми до bounded reviewer decision set.
+
+Полные артефакты:
+`fluent-interview-platform/docs/verification/greenfield/G11/classification-ledger-2026-08-30.{json,md}`.
+
 ### Execution update — G11-016 path relevance — 30 августа 2026
 
 Target evidence commit `6ab7ad4` повторно запустил
