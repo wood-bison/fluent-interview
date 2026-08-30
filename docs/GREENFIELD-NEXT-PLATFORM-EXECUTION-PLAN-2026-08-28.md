@@ -2338,6 +2338,20 @@ generic placements (`3` pass, `3` open), `6` unresolved items; `G11-015` ост�
 Полные артефакты:
 `fluent-interview-platform/docs/verification/greenfield/G11/shared-content-audit-2026-08-30.{json,md}`.
 
+### Execution update — G11-018 research/authoring packs — 30 августа 2026
+
+Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
+`research-authoring-policy.v1` и bounded `research-authoring-pack.v1`. Для всех
+`1,597` Brain/Vault records pack назначает path-specific domains первичных
+источников и missing original-content artifacts, но выбирает не более `100`
+записей за batch и не копирует source wording. Текущий snapshot: `0/1,597`
+review-ready, official-source missing `1,597`, mechanism `494`, answer/solution
+`463`, typed placement `1,370`, assessed activity `1,346`; `G11-018=OPEN` до
+оригинального authoring и reviewer sign-off.
+
+Полный артефакт:
+`fluent-interview-platform/docs/verification/greenfield/G11/research-authoring-pack-2026-08-30.{json,md}`.
+
 ### Execution update — G11-016 path relevance — 30 августа 2026
 
 Target evidence commit `6ab7ad4` повторно запустил

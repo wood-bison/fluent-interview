@@ -45,6 +45,13 @@ generic placements: explicit shared keys отсутствуют (`0/3`), а `3` 
 placements не имеют path-specific prerequisite. Итог `G11-015=OPEN`,
 `6` unresolved items; это теперь измеримый curriculum metadata backlog.
 
+Следующий implementation slice: target `0b2669e` (evidence `93ee3fa`) добавил
+bounded `research-authoring-pack.v1` для G11-018. Все `1 597` records получили
+path-specific research boundaries и authoring checklist; в первом batch `100`
+записей, `0` review-ready, official source missing у `1 597`, mechanism у
+`494`, answer у `463`, typed placement у `1 370`, assessed activity у `1 346`.
+Гейт остаётся открытым до оригинального текста, источников и reviewer sign-off.
+
 ## Открытые кластеры
 
 - governance и evidence protocol (`0.*`, `A-*`, `D-*`);
