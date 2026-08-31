@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-207.md`](verification/greenfield/plan-progress-2026-08-31-g10s-207.md).
+[`plan-progress-2026-08-31-g10s-208.md`](verification/greenfield/plan-progress-2026-08-31-g10s-208.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -500,6 +500,32 @@ tests — `9/9`, production checks — `8/8`; `pnpm check` теперь запу
 Следующий executable пункт — `G10S-208`: полная C098
 route→question→activity→Run→Submit→Evidence machine journey и отдельная
 human spoken-explanation evidence.
+
+### Execution update — G10S-208 C098 authoring-to-learning vertical slice — 31 августа 2026
+
+Target `main` закрыл machine-часть G10S-208 локальными commit-gated коммитами
+без push из-за ограничения Actions quota: implementation `8e41ba1`,
+metadata-only evidence/documentation `493fa96`. Скрипт
+`tools/runtime/c098-vertical-slice-journey.mjs` выполняет единую проверяемую
+цепочку `route → question → activity → Run → Submit → Evidence` на exact
+координате `node-event-loop-001@revision 1` / `node-26-commonjs` и fail-closed
+сводит результаты дочерних golden, submit и observe/explain journeys.
+
+Live machine journey PASS_WITH_LIMITATIONS: 5 route responses `200`; Run — `5`
+outputs и `8` trace events с совпавшим prediction order и clean worker; Submit —
+`5/5` hidden checks, один evidence, stable replay и `409` duplicate conflict;
+Evidence — `4` metadata-only facets (`trace`, `log`, `metric`, `assessment`) и
+стабильный progress. Source, prompt, answer, solution и evaluator bodies не
+попадают в отчёт. Human spoken explanation намеренно не автоматизируется:
+статус `AWAITING_HUMAN`, evidence id отсутствует, агент не имеет права его
+фабриковать. Полные `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` green; focused vertical tests — `6/6`.
+
+Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-vertical-slice-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-209`: отдельный commit-marker для полного
+C098 authoring-to-learning vertical slice, после чего начинается G10S.9
+breadth-readiness/standalone-retirement.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3770,7 +3796,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls. Evidence: target `a35c919`, index `8dc3b8b`, `c098-desktop-matrix-2026-08-31.{json,md}`; `276/276` cases, `9,612` controls, `0` overflow/clipping/missing-landmark/viewport/console/page/request errors, static `30/30`, mutation `7/7`, exact query templates и metadata-only report.
 - [x] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names. Evidence: target `955db57` (source fix `cbcec0f`), `c098-accessibility-2026-08-31.{json,md}`; `92/92` route cases, `3,204` named controls, `12/12` interaction cases, `0` ARIA/focus/landmark/id issues, static `30/30`, mutations `6/6`, metadata-only.
 - [x] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload. Evidence: target `b351fa0`, docs/evidence `5829de7`, `13` routes, initial/editor/task `930785/948852/924391` bytes, largest chunk `415610`, total `1130694`, route-specific `8103/26170/1709`, duplicate references/hashes `0`, static `9/9`, production `8/8`, metadata-only.
-- [ ] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence.
+- [x] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence. Machine journey PASS_WITH_LIMITATIONS: target `8e41ba1`, metadata-only evidence `493fa96`, `5` routes/`200`, Run `5` outputs + `8` trace, Submit `5/5` hidden + replay/`409`, Evidence `4` facets; human spoken explanation остаётся отдельной `AWAITING_HUMAN` boundary и не фабрикуется автоматикой.
 - [ ] `G10S-209` Commit: `feat(g10s): prove C098 authoring-to-learning vertical slice`.
 
 ### G10S.9. Breadth readiness и standalone retirement
