@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31.md`](verification/greenfield/plan-progress-2026-08-31.md).
+[`plan-progress-2026-08-31-g10s-193.md`](verification/greenfield/plan-progress-2026-08-31-g10s-193.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -113,6 +113,33 @@ Task/Activity, не пишет БД, не импортирует и не акт�
 Следующий executable пункт — G10S-193: explicit objective, prerequisites,
 public statement, expected evidence и failure feedback для каждого scenario без
 раскрытия hidden solution в browser.
+
+### Execution update — G10S-193 observability scenario contracts — 31 августа 2026
+
+Target `main` закрыл G10S-193 тремя локальными коммитами без push из-за
+ограничения Actions quota: implementation `47d45c1`
+(`feat(g10s): publish scenario contract metadata`) и evidence
+`c7773d1` / `e9e84a3` (`docs(g10s): record scenario contract evidence`,
+`docs(g10s): add scenario contract evidence guide`). Versioned policy
+`g10s-observability-scenario-contracts-policy.v1`
+(`2026.08.31-observability-scenario-contracts.1`) фиксирует ровно шесть
+сценариев и для каждого шесть стадий `predict → run → observe → explain →
+defend → repeat`: objective, prerequisites, learner-safe public statement,
+expected evidence и failure feedback. Координаты проверяются against the
+curriculum graph; preview-сценарии не становятся released автоматически.
+
+Browser boundary allowlist/denylist проверяет, что route отдаёт только
+metadata-only scenario contract и не раскрывает `solution`, `referenceSolution`,
+`hiddenTests`, `expectedOrder`, `answerKey`, `privateSource` или
+`expectedVerdict`. Gate не создаёт Task/Activity, не импортирует release и не
+пишет БД. Focused tests `6/6`, content suite `457/457`, `content:gates`, полный
+`pnpm check`, boundary и toolchain прошли; deep static body-boundary после
+implementation показал `1382` tracked / `1374` text / `8` binary,
+`8122` source fragments, `0` body matches и `2526/2526` baseline records.
+Metadata-only evidence находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/`.
+Следующий executable пункт — `G10S-194` (curriculum placement и language-path
+relevance).
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3368,7 +3395,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-190` Перенести минимум одну prediction Activity из prompt space в assessed Activity/Task. Evidence: target implementation `67303da`, evidence final `7b71f18`; versioned `g10s-c098-prediction-activity-policy.v1` (`2026.08.31-c098-prediction-activity.1`) hash-binds the reviewed C098 authoring prompt coordinate (`prompt/en/depth=1/version=1/preferred/human/ord=0`) to released `question.node-event-loop-001@r1` and its assessed `predict` Activity. The Activity now carries `taskFamilyKey=node-event-loop-001` and `runtimeProfile=node-26-commonjs`; the mapping keeps C098 as semantic owner and creates no second question. Focused tests `6/6`, content compiler `439/439`, content-gates/full check/boundary/toolchain and implementation body-boundary `1367` tracked / `1359` text / `8` binary / `8122` source fragments / `0` matches with exact source baseline `2526/2526` are green. The machine report is metadata-only: no prompt/answer bodies, automatic Activity/Task creation, DB mutation, import, or release authority. Exact TaskRevision plus public/hidden evaluator binding is implemented and verified by `G10S-191`; next executable item is `G10S-192`.
 - [x] `G10S-191` Связать Event Loop task family с exact released Node runtime revision и public/hidden evaluator split. Evidence: target implementation `08d4648`, evidence `578d113`; `g10s-c098-runtime-revision-policy.v1` (`2026.08.31-c098-runtime-revision.1`) binds `question.node-event-loop-001@r1`, `TaskFamily=node-event-loop-001`, `TaskRevision=1`, `node-26-commonjs`, JavaScript, source digest and release `2026.08.28-questions.1` to runtime `g6-node-golden.1` and hidden submit `g7-hidden-submit.1`. Public `POST /v1/run` (`runtime.run.v1`) exposes only learner RunResponse; hidden `POST /v1/submit` (`runtime.submit.v1`) sends the public envelope through authorized internal `POST /v1/evaluate` to `task-evaluator`, which has no host port and is reachable only on `runtime-evaluator`. Contract/endpoint/network/source-hash drift fails closed. Focused tests `6/6`, content compiler `445/445`, content-gates/full check/boundary/toolchain and deep body-boundary (`1372` tracked / `1364` text / `8` binary / `8122` fragments / `0` matches, source baseline `2526/2526`) are green. The gate is metadata-only: no task/activity creation, DB mutation, import, release, or source-body emission. Evidence: `docs/verification/greenfield/G10S/c098-runtime-revision-2026-08-31.{json,md}`. Next executable item is `G10S-192`.
 - [x] `G10S-192` Сохранить/создать scenario progression: baseline order, nested `nextTick`/Promise, timer vs immediate I/O boundary, starvation/edge и explanation defense. Evidence: target implementation `134b2f0`, evidence `8300cb7`; versioned `g10s-c098-scenario-progression-policy.v1` (`2026.08.31-c098-scenario-progression.1`) binds the released `node-event-loop-trace` scenario to `question.node-event-loop-001@r1`, `TaskFamily=node-event-loop-001`, `TaskRevision=1` and `node-26-commonjs`. Six ordered stages (`predict`, `run`, `observe`, `explain`, `defend`, `repeat`) carry explicit activity IDs, runtime order indexes, evidence facets and explanation/defense rubric coordinates. The gate hash-checks all six runtime `ExpectedOrders()` and five hidden evaluator checks; focused `6/6`, content `451/451`, content-gates/full check/boundary/toolchain and deep body-boundary (`1377` tracked / `1369` text / `8` binary / `8122` fragments / `0` matches, source baseline `2526/2526`) are green. Metadata-only: no source bodies, Task/Activity creation, DB/Docker mutation, import or release authority. Evidence: `docs/verification/greenfield/G10S/c098-scenario-progression-2026-08-31.{json,md}`. Next executable item is `G10S-193`.
-- [ ] `G10S-193` Каждый scenario имеет explicit objective, prerequisites, public statement, expected evidence и failure feedback; hidden solution не доступен browser.
+- [x] `G10S-193` Каждый scenario имеет explicit objective, prerequisites, public statement, expected evidence и failure feedback; hidden solution не доступен browser. Evidence: target implementation `47d45c1`, evidence `c7773d1`/`e9e84a3`; versioned `g10s-observability-scenario-contracts-policy.v1` фиксирует `6` сценариев × `6` стадий, `36` evidence bindings и `36` feedback rules, проверяет graph prerequisites и browser denylist. Focused `6/6`, content `457/457`, full gates/check/boundary/toolchain и deep metadata-only body-boundary (`1382` tracked / `1374` text / `8` binary / `8122` fragments / `0` matches; source baseline `2526/2526`) green; no Task/Activity creation, DB mutation, import or release authority. Next executable item is `G10S-194`.
 - [ ] `G10S-194` Curriculum placement принадлежит Node path и shared JS runtime там, где семантически верно; Go/Java paths не получают Node-specific content.
 - [ ] `G10S-195` Author в Studio меняет C098 layer → review → publish candidate без serving mutation до import.
 - [ ] `G10S-196` Export C098 bundle проходит rights/locale/layer/task/graph gates и создаёт loss ledger.
