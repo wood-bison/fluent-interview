@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-209.md`](verification/greenfield/plan-progress-2026-08-31-g10s-209.md).
+[`plan-progress-2026-08-31-g10s-210.md`](verification/greenfield/plan-progress-2026-08-31-g10s-210.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -544,6 +544,30 @@ Evidence target:
 `fluent-interview-platform/docs/verification/greenfield/G10S/c098-authoring-to-learning-marker-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-210`: сравнить Strata и target counts,
 hashes и invariants перед standalone retirement.
+
+### Execution update — G10S-210 Strata ↔ target reconciliation — 31 августа 2026
+
+Target `main` закрыл G10S-210 локальными commit-gated коммитами без push из-за
+ограничения Actions quota: implementation `6bc19f6`, evidence/documentation
+`4e66c63`. Live reconciliation подтвердил чистый frozen Strata `main` на
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`: все `41` manifest files и
+`159,515` bytes совпали, source drift/missing равны `0`. Every source
+difference имеет решение: `13` mappings и `28` explicit dispositions,
+uncovered `0`; adapted source/target hashes намеренно не объявлены
+byte-identical.
+
+Target transfer validation PASS (`13` mapped records, `3` unique targets),
+current migration chain — `17/17` contiguous migrations. Disposable
+PostgreSQL rehearsal PASS: inherited invariants `12/12`, platform ownership
+invariants `16/16`, functional role checks `12`; disposable DB удалена,
+target DB не изменена. Focused reconciliation tests `5/5`, полные
+`pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` green; evidence
+metadata-only, source bodies не эмитируются.
+
+Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/strata-target-reconciliation-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-211`: повторить Strata golden fixtures
+против target CLI и сравнить normalized outputs.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3819,7 +3843,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.9. Breadth readiness и standalone retirement
 
-- [ ] `G10S-210` Сравнить source Strata и target counts/hashes/invariants; every difference имеет mapping/disposition.
+- [x] `G10S-210` Сравнить source Strata и target counts/hashes/invariants; every difference имеет mapping/disposition. Evidence: target implementation `6bc19f6`, evidence `4e66c63`, frozen Strata `ec3b6804ecc1d08e3ab355be0c78930a46b34815`; `41/41` files and `159,515` bytes, drift/missing `0`, `13` mappings + `28` dispositions, uncovered `0`, target `17/17` contiguous migrations, invariant `12/12` inherited + `16/16` platform + `12` role checks, disposable DB dropped.
 - [ ] `G10S-211` Повторить Strata golden fixtures против target CLI и сравнить normalized outputs.
 - [ ] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision.
 - [ ] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo.
