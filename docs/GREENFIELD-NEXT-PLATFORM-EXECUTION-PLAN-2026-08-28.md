@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-202.md`](verification/greenfield/plan-progress-2026-08-31-g10s-202.md).
+[`plan-progress-2026-08-31-g10s-203.md`](verification/greenfield/plan-progress-2026-08-31-g10s-203.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -382,6 +382,30 @@ mutation отсутствуют. Evidence находится в
 Следующий executable пункт — `G10S-203`: Observe/Explain показывают
 trace/evidence без hidden-answer leakage, Navigator получает exact context IDs
 и сохраняет advisory-only boundary.
+
+### Execution update — G10S-203 Observe/Explain + Navigator context — 31 августа 2026
+
+Target `main` закрыл G10S-203 локальным commit-gated implementation-коммитом
+`87849f5`; push отложен из-за ограничения Actions quota, а metadata-only
+evidence фиксируется следующим docs-коммитом. Versioned policy
+`g10s-c098-observe-explain-navigator-policy.v1`
+(`2026.08.31-c098-observe-explain-navigator.1`) фиксирует released C098
+`question.node-event-loop-001@r1`, `TaskFamily=node-event-loop-001@1`,
+`node-26-commonjs`, scenario `node-event-loop-trace` и шесть ordered stages.
+
+Contract добавляет строгие runtime/context coordinates; C098 learner shell
+передаёт их Navigator только на canonical lesson routes, а API отклоняет
+runtime/scenario drift до provider call. Observe/Explain и evidence bundle
+показывают trace/evidence metadata без hidden answers, source, prompts или
+diagnostics. Static policy — `40/40`, focused tests — `5/5`; live
+`runtime:c098-observe-explain-journey` PASS: trace correlation, четыре evidence
+kinds, 14 Navigator coordinates, revision/context forwarding, advisory-only
+completion, stable replay, history cleanup и binding-drift rejection.
+Полные `pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` green.
+Evidence находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-observe-explain-navigator-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-204`: restart/persistence для active
+release, attempts, evidence и Studio history с backup/restore.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3647,7 +3671,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict. Evidence: target implementation `a6d6fc5`, evidence `7d95250`; static policy `13/13`, focused `10/10`, live public-run journey PASS, stable progress digest, 5 output lines и 8 trace events, без mastery/verdict mutation.
 - [x] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence. Evidence: target implementation `c7e7dbd`, evidence `c067a05`; static policy `26/26`, focused `4/4`, live canonical/replay/conflict/drift journey PASS, five hidden checks, evidence-only metadata и cleanup.
 - [x] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly. Evidence: target implementation `3668785`, evidence `0a2ca28`; static policy `24/24`, focused `4/4`, live `pnpm runtime:c098-negative-journey` PASS (13 runtime vectors, 8 Submit cases, replay/conflict/concurrency, cancellation recovery, no learner-state mutation).
-- [ ] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary.
+- [x] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary. Evidence: target implementation `87849f5`, target evidence `c098-observe-explain-navigator-2026-08-31.{json,md}`; static `40/40`, focused `5/5`, live journey PASS, 14 context coordinates, metadata-only/advisory-only.
 - [ ] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice.
 - [ ] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls.
 - [ ] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names.
