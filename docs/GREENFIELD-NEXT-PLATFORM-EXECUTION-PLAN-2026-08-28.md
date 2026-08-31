@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-215.md`](verification/greenfield/plan-progress-2026-09-01-g10s-215.md).
+[`plan-progress-2026-09-01-g10s-216.md`](verification/greenfield/plan-progress-2026-09-01-g10s-216.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -670,6 +670,36 @@ forward-команду без второй записи. Результат `PAS
 `fluent-interview-platform/docs/verification/greenfield/G10S/release-pointer-transition-2026-09-01.{json,md}`.
 Следующий executable пункт — `G10S-216`: DB restore pre-G10S backup в
 disposable stack с запускаемым reference product.
+
+### Execution update — G10S-216 pre-G10S backup restore и product continuity — 1 сентября 2026
+
+Target `main` закрыл G10S-216 двумя локальными commit-gated коммитами без push
+из-за Actions quota: `c428809` (scoped restore rehearsal и focused tests) и
+`bce1e17` (metadata-only evidence и handoff documentation).
+
+`pnpm architecture:pre-g10s-restore-product` доказала полный disposable
+сценарий: target database прошла миграции `1..18`, source database —
+pre-G10S `1..17`; synthetic baseline и C098 были выгружены через
+`pg_dump --no-owner --no-acl`, восстановлены в target и затем применена
+migration `0018`. Так как `--no-acl` намеренно исключает grant statements,
+rehearsal явно зафиксировала и повторила role ACL metadata; role journey
+проверена в отдельной disposable role-check database, чтобы не менять active
+release singleton. Source/restored logical hash совпал
+(`c8682e78c7a550dc05fc2005b96a283a84ad748515926e9d2d3f53dca43d8cef`), все
+19 release-history counts совпали, schema/role checks `12/12` PASS.
+
+Reference product был поднят до restore и после restore: `/`, `/questions`,
+`/api/studio/releases/active` вернули HTTP `200`, internal API readiness
+вернула exit `0`. После проверки source DB, role-check DB, временный dump и
+scoped Compose stack удалены (`0` containers/volumes/networks); persistent
+stack не затронут. Evidence metadata-only, bodies `0`, dump bytes/hash и
+rehearsal checksums записаны в
+`fluent-interview-platform/docs/verification/greenfield/G10S/pre-g10s-restore-product-2026-09-01.{json,md}`.
+Это synthetic restore rehearsal, а не production backup claim; настоящий
+backup owner/retention остаётся отдельным G13/G12 acceptance gate.
+
+Следующий executable пункт — `G10S-217`: immutable Strata archive tag/bundle,
+hash manifest и clean clone/source checks.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3951,7 +3981,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo. Evidence: target `6f0f801`, evidence `1c6a072`; standalone docs/CLI PASS, source fallback и database/Docker mutations отсутствуют.
 - [x] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит. Evidence: target `d126d17`, evidence `ebbb082`; archive/fresh clone PASS, C098 export/import/journey PASS, source path references `0`, lockfiles `pnpm-lock.yaml` only.
 - [x] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098. Evidence: target implementation `58b017f`, evidence/docs `175395e`; `18` migrations, rollback/stale rejection/forward restore/replay `PASS`, four-event immutable sequence, stable projection digest, readback verified, metadata-only `contentBodiesEmitted=0`, disposable cleanup.
-- [ ] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым.
+- [x] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым. Evidence: target implementation `c428809`, evidence/docs `bce1e17`; migrations `1..17 → 1..18`, logical hash/counts/schema/role grants совпали, role checks `12/12`, product probes до/после restore `200`, cleanup `0` scoped resources, metadata-only.
 - [ ] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks.
 - [ ] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить.
 - [ ] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof.
