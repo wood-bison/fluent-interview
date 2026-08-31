@@ -407,6 +407,32 @@ Evidence находится в
 Следующий executable пункт — `G10S-204`: restart/persistence для active
 release, attempts, evidence и Studio history с backup/restore.
 
+### Execution update — G10S-204 C098 persistence и exact restore — 31 августа 2026
+
+Target `main` закрыл G10S-204 локальными commit-gated коммитами без push из-за
+ограничения Actions quota: implementation `b113da1`, evidence/documentation
+`0b2c4a5`. Versioned policy
+`g10s-c098-persistence-policy.v1` (`2026.08.31-c098-persistence.1`)
+фиксирует released C098 `question.node-event-loop-001@r1`,
+`TaskFamily=node-event-loop-001@1`, `node-26-commonjs` и
+`node-event-loop-trace`.
+
+Live persistence journey сохраняет submission, progress, четыре evidence вида
+и Studio active release после service `stop → start`, scoped Compose `down →
+dev --detached` и полного restart. `data-backup.v1` проходит backup matrix с
+14 canonical ledger entries и нулём issues; restore проверяет SHA-256
+PostgreSQL/ledger/roles-grants, удаляет только allowlisted post-backup
+sentinels, восстанавливает baseline и завершает cleanup с `0 containers / 0
+networks`. Static policy — `33/33`, focused tests — `5/5`, live journey —
+`PASS`. Report metadata-only: source/prompt/answer/dump/credential/hidden
+evaluator bodies не эмитируются, database mutation/import/release authority не
+выдаются. В journey исправлены nested Studio release identity и повторное
+использование stale volume: каждый запуск получает свежий disposable stack ID.
+Evidence находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-persistence-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-205`: RU/EN × light/dark × MacBook 13/16 ×
+Studio Display browser matrix без overflow, clipping и unreachable controls.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -3672,7 +3698,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence. Evidence: target implementation `c7e7dbd`, evidence `c067a05`; static policy `26/26`, focused `4/4`, live canonical/replay/conflict/drift journey PASS, five hidden checks, evidence-only metadata и cleanup.
 - [x] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly. Evidence: target implementation `3668785`, evidence `0a2ca28`; static policy `24/24`, focused `4/4`, live `pnpm runtime:c098-negative-journey` PASS (13 runtime vectors, 8 Submit cases, replay/conflict/concurrency, cancellation recovery, no learner-state mutation).
 - [x] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary. Evidence: target implementation `87849f5`, target evidence `c098-observe-explain-navigator-2026-08-31.{json,md}`; static `40/40`, focused `5/5`, live journey PASS, 14 context coordinates, metadata-only/advisory-only.
-- [ ] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice.
+- [x] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice. Evidence: target implementation `b113da1`, evidence `0b2c4a5`; static `33/33`, focused `5/5`, live persistence journey `PASS`, 14-entry backup matrix, integrity-checked restore и cleanup `0 containers / 0 networks`.
 - [ ] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls.
 - [ ] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names.
 - [ ] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload.
