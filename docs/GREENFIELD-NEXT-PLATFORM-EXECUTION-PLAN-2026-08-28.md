@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-208.md`](verification/greenfield/plan-progress-2026-08-31-g10s-208.md).
+[`plan-progress-2026-08-31-g10s-209.md`](verification/greenfield/plan-progress-2026-08-31-g10s-209.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -526,6 +526,24 @@ Evidence target:
 Следующий executable пункт — `G10S-209`: отдельный commit-marker для полного
 C098 authoring-to-learning vertical slice, после чего начинается G10S.9
 breadth-readiness/standalone-retirement.
+
+### Execution update — G10S-209 C098 authoring-to-learning commit marker — 31 августа 2026
+
+Target `main` закрыл G10S-209 локальным commit-gated коммитом без push из-за
+ограничения Actions quota: `a4c2533` (`feat(g10s): prove C098 authoring-to-learning vertical slice`).
+Marker `tools/runtime/c098-authoring-to-learning-marker.mjs` читает
+versioned G10S-208 evidence и fail-closed проверяет exact target/evidence
+commits (`8e41ba1`/`493fa96`), C098 coordinate, SHA-256, порядок и PASS-статус
+всех шести machine stages, metadata-only controls и immutable
+`AWAITING_HUMAN` boundary. Marker и mutation tests — `5/5`; `pnpm check`,
+`pnpm boundary:check` и `pnpm toolchain:check` green. Никакие learner,
+prompt, answer, solution или evaluator bodies не читаются в output; БД,
+import и release authority не затрагиваются.
+
+Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-authoring-to-learning-marker-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-210`: сравнить Strata и target counts,
+hashes и invariants перед standalone retirement.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3797,7 +3815,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names. Evidence: target `955db57` (source fix `cbcec0f`), `c098-accessibility-2026-08-31.{json,md}`; `92/92` route cases, `3,204` named controls, `12/12` interaction cases, `0` ARIA/focus/landmark/id issues, static `30/30`, mutations `6/6`, metadata-only.
 - [x] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload. Evidence: target `b351fa0`, docs/evidence `5829de7`, `13` routes, initial/editor/task `930785/948852/924391` bytes, largest chunk `415610`, total `1130694`, route-specific `8103/26170/1709`, duplicate references/hashes `0`, static `9/9`, production `8/8`, metadata-only.
 - [x] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence. Machine journey PASS_WITH_LIMITATIONS: target `8e41ba1`, metadata-only evidence `493fa96`, `5` routes/`200`, Run `5` outputs + `8` trace, Submit `5/5` hidden + replay/`409`, Evidence `4` facets; human spoken explanation остаётся отдельной `AWAITING_HUMAN` boundary и не фабрикуется автоматикой.
-- [ ] `G10S-209` Commit: `feat(g10s): prove C098 authoring-to-learning vertical slice`.
+- [x] `G10S-209` Commit: `feat(g10s): prove C098 authoring-to-learning vertical slice`. Evidence: target `a4c2533`, marker `c098-authoring-to-learning-marker-2026-08-31.{json,md}`; exact target/evidence commits `8e41ba1`/`493fa96`, six machine stages/order/status, C098 coordinates, evidence SHA-256, metadata-only controls and immutable `AWAITING_HUMAN` boundary are fail-closed; marker mutations `5/5`, full check/boundary/toolchain green.
 
 ### G10S.9. Breadth readiness и standalone retirement
 
