@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-197.md`](verification/greenfield/plan-progress-2026-08-31-g10s-197.md).
+[`plan-progress-2026-08-31-g10s-198.md`](verification/greenfield/plan-progress-2026-08-31-g10s-198.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -274,6 +274,39 @@ Evidence target:
 `fluent-interview-platform/docs/verification/greenfield/G10S/c098-serving-import-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-198` (learner route C098 с полными
 answer layers и без broken/dead links).
+
+### Execution update — G10S-198 C098 learner route — 31 августа 2026
+
+Target `main` закрыл G10S-198 локальными implementation- и evidence-коммитами
+без push из-за ограничения Actions quota: `a8d6eb7bb0b1f5d8f81925dca3e782667649d707`
+(`feat(g10s): expose C098 learner route layers`) и `3148c98`
+(`docs(g10s): record C098 learner route evidence`).
+
+Learner route `/practice/lesson/:id` теперь является явным manifest target для
+C098: release-only decoder открывает ровно `question.node-event-loop-001@r1`,
+проверяет identity/EN-RU locale и возвращает все семь ожидаемых слоёв ответа,
+включая `evidence`. В route contract зафиксированы deep links к Questions,
+track и locale, exact practice runtime `node-event-loop-001@1` /
+`node-26-commonjs`, program/Atlas/related-question links и graph target
+`question.node-nexttick-promise-001.r1`. Unknown/stale question, лишний слой,
+неподдержанный runtime или missing link закрываются fail-closed; preview content
+и hidden evaluator bodies в browser не выдаются.
+
+Проверки: focused G10S `6/6`, combined smoke/boundary route tests `54/54`,
+content compiler `487/487`, architecture suite `213/213`,
+`content:gates`, полный `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — `PASS`. Static metadata-only gate зафиксировал state
+hash `61180869fd35b8cbb6fe9e190d636d232104cb7c661c6f99344bb11aa60d4548`,
+policy hash `a4ea07cb5caecc47d4acfa00a115cded7a194589daf4a10aa696f60452dd26d1`,
+catalog hash `9a617497fb291dd9bb33bce4430fc55e51ec7220ad7a05dfdddf2137d4b2b942`,
+curriculum hash `34adc43449ed44c1e7dfaa4654dfc03055d6626c6d1dfae4497d35076c85ebec`,
+route manifest hash `7be333d945b55544f6b46eeb990e5e934098d7e6695a8c8496bd43e1d58b76ac`,
+source-set hash `d9b497556c1771a8a6cb2564cab6ae3c0b85d2437d895754b7697596201e9a10`.
+Evidence находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-learner-route-2026-08-31.{json,md}`;
+все артефакты metadata-only, без answer bodies и database mutation.
+Следующий executable пункт — `G10S-199` (language/runtime selector только с
+реально compatible released Node profile; preview languages не активны).
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3534,7 +3567,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-195` Author в Studio меняет C098 layer → review → publish candidate без serving mutation до import. Evidence: target implementation `315baaa`, evidence `77b10c5`; exact author → review → publish-request sequence, C098 `ordering/generic` identity, EN/RU prompt coverage, transaction/write-set and browser/serving denylist; focused `6/6`, content `469/469`, full check/boundary/toolchain and deep body-boundary `1392/1384/8`, `8122` fragments, `0` matches, baseline `2526/2526` PASS. Next executable item is `G10S-196`.
 - [x] `G10S-196` Export C098 bundle проходит rights/locale/layer/task/graph gates и создаёт loss ledger. Evidence: target implementation `7c8b8f1c081cc9b6f5f65bd63b11e4dfb8bf898e`, evidence `4299b9b81ef9240af1067ebd1edb5650c137e3e4`; evaluated metadata-only gate проверяет upstream `G10S-172/188/191/194/195`, exact `C098 / ordering / generic` identity, reviewed redistributable rights, EN/RU preferred layers, Node task/runtime join, graph target и 59-entry loss ledger. Deterministic in-memory bundle: 6 records, 12 translations, 26 layer rows, 2 assessed activities, 1 graph dependency, artifact 36 604 bytes, logical/release hash `bd482d33131190268da6e5b9d0fc81f204687b843a7651203ecd26a56aa33c06`, manifest `fe27e0e2010bb08beb50c502442509c631e59c00423d36fdb7d8c95d817b14c6`. Focused `6/6`, content `475/475`, `content:gates`, full check/boundary/toolchain и post-evidence body-boundary `1399/1391/8`, `8122` fragments, `0` matches, source baseline `2526/2526` PASS. Gate не пишет БД/files, не импортирует/активирует release и не эмитит bodies. Следующий пункт — `G10S-197`.
 - [x] `G10S-197` Import C098 bundle создаёт exact serving revision, placement и active release atomically. Evidence: target implementation `e1d2eb8` + hash-stability fix `6bb023c`, evidence `fef29c1`; disposable live import/replay/readback на 17 миграциях подтвердил exact projection counts/IDs, active pointer, idempotency, cleanup и persistent DB untouched. Static/live gates и полный check ladder PASS. Следующий пункт — `G10S-198`.
-- [ ] `G10S-198` Learner route открывает C098 question и все expected layers без broken/dead links.
+- [x] `G10S-198` Learner route открывает C098 question и все expected layers без broken/dead links. Evidence: target implementation `a8d6eb7bb0b1f5d8f81925dca3e782667649d707`, evidence `3148c98`; `/practice/lesson/:id` — release-only manifest target с exact C098 identity, EN/RU layers `7/7` включая `evidence`, practice `node-event-loop-001@1` / `node-26-commonjs`, graph/Questions/track/locale/Atlas links и fail-closed unknown/stale/preview checks. Focused G10S `6/6`, route smoke/boundary `54/54`, content `487/487`, architecture `213/213`, full check/content-gates/boundary/toolchain и static metadata-only gate PASS; state hash `61180869fd35b8cbb6fe9e190d636d232104cb7c661c6f99344bb11aa60d4548`, policy `a4ea07cb5caecc47d4acfa00a115cded7a194589daf4a10aa696f60452dd26d1`, route manifest `7be333d945b55544f6b46eeb990e5e934098d7e6695a8c8496bd43e1d58b76ac`. Evidence: `docs/verification/greenfield/G10S/c098-learner-route-2026-08-31.{json,md}`. Browser/runtime live execution и hidden answer bodies не заявлены.
 - [ ] `G10S-199` Language/runtime selector показывает только реально compatible released Node profile; preview languages не активны.
 - [ ] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict.
 - [ ] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence.
