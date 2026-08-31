@@ -1922,6 +1922,32 @@ G10S-130. The next executable slice is G10S-131: inject a crash after the
 authoring commit and prove deterministic bundle-export recovery without any
 partial serving release.
 
+### Execution update — G10S-131 authoring-to-export crash recovery — 31 августа 2026
+
+Target `main` now contains implementation commit `a72593f` (`test(g10s): prove
+export crash recovery`) and evidence commit `0248a29` (`docs(g10s): record
+export crash recovery`). A test-only crash point exits the one-shot export
+process with code `86` after the immutable candidate is read in a read-only
+transaction and before any bundle target is published. The hook requires both
+`NODE_ENV=test` and the exact bounded crash-point variable; normal execution
+cannot activate it accidentally.
+
+After the abrupt exit, authoring still contains exactly one candidate, one
+candidate revision and three command receipts. Serving manifests, active
+pointer, pointer events, import receipts, cards, revisions and outbox events
+all remain zero, and no bundle target directory exists. A clean restart then
+exports successfully; a second export has identical `release.json` and
+`manifest.json` hashes. The recovered bundle imports once and readback matches
+the exact release, manifest and logical hashes. Stable evidence hash is
+`6a2f034077b5e864de5de4bdda9be44adc3f537703e2681868ed22e58d63f8ab`.
+
+Crash-recovery mutation tests pass `7/7`, architecture tests `180/180`, and the
+complete check/boundary/toolchain ladder passes twice. The disposable database,
+one-shot containers and temporary bundles are removed; persistent PostgreSQL
+is unchanged. This closes only G10S-131. The next executable slice is G10S-132:
+inject failure inside the serving import transaction and prove total rollback
+while preserving the previously active release pointer.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3137,7 +3163,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно. Evidence: target bootstrap `e1e7726`, implementation `53f5c68`, evidence `d8b07c5`; five independently derived cells preserve contradictions and pointer unavailability, web `49/49`, Studio `12/12`, API `64/64`, full check/boundary/toolchain and live 1440×900 + 390×844 WebMCP matrices pass with zero overlap or horizontal overflow.
 - [x] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready. Evidence: target implementation `9125445`, evidence `938a423`; one strict release-only catalog contract guards 8 learner/release seams, rejects draft/reviewed/candidate/quarantine state without hiding reviewed `brain-import` provenance, makes contaminated/empty coverage fail closed, and passes web `52/52`, API `65/65`, release-import `4/4`, full check/boundary/toolchain plus live Questions→Program→lesson WebMCP verification with zero horizontal overflow or browser errors.
 - [x] `G10S-130` Unauthorized publish, forged reviewer, stale revision, duplicate preferred prompt и missing grant fail closed. Evidence: target implementation `53f1e72`, evidence `b247133`; a live 5/5 adversarial matrix exercises four disposable PostgreSQL databases, checks stale revision at CLI and direct-DB layers, preserves one canonical preferred prompt and exact final state, activates zero learner releases, passes architecture `173/173` plus full check/boundary/toolchain, and leaves persistent PostgreSQL unchanged.
-- [ ] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release.
+- [x] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release. Evidence: target implementation `a72593f`, evidence `0248a29`; abrupt exit 86 after candidate read leaves exact authoring state, zero serving rows and no bundle target, clean retry produces two byte-identical exports and exact import/readback, architecture `180/180` plus full check/boundary/toolchain pass, and all disposable resources are removed without touching persistent PostgreSQL.
 - [ ] `G10S-132` Crash test внутри serving import откатывает весь release и сохраняет previous active pointer.
 - [ ] `G10S-133` Studio readback сравнивает authoring release manifest с serving IDs/hashes, а не доверяет HTTP 200.
 - [ ] `G10S-134` Backup/restore сохраняет authoring history, reviews, bundle manifests, serving pointers и outbox receipts.
