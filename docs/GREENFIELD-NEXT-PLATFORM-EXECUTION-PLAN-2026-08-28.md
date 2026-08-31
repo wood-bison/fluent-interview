@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-196.md`](verification/greenfield/plan-progress-2026-08-31-g10s-196.md).
+[`plan-progress-2026-08-31-g10s-197.md`](verification/greenfield/plan-progress-2026-08-31-g10s-197.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -231,6 +231,49 @@ post-evidence deep body-boundary: `1399` tracked / `1391` text / `8` binary,
 `8122` fragments, `0` matches, source baseline `2526/2526`. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S/c098-release-export-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-197` (atomic serving import C098 bundle).
+
+### Execution update — G10S-197 C098 serving import — 31 августа 2026
+
+Target `main` закрыл G10S-197 двумя локальными implementation-коммитами и
+отдельным evidence-коммитом без push из-за ограничения Actions quota:
+`e1d2eb8` (`feat(g10s): import exact C098 serving bundle`), `6bb023c`
+(`fix(g10s): make serving readback hash-stable`) и `fef29c1`
+(`docs(g10s): record C098 serving import evidence`).
+
+Versioned policy и importer связывают file-only
+`question-release-bundle.v1` с exact serving projection для релиза
+`2026.08.28-questions.1`: 6 карточек/ревизий, 12 EN/RU переводов, 10
+placement’ов, 40 ролей, 6 supporting prompts, 7 activities и 3 graph edges.
+Write-set содержит 15 serving tables; Strata/authoring database credential не
+используется. До `BEGIN` проходят schema/hash/identity проверки, затем одна
+write-транзакция создаёт immutable manifest, projection, pointer event, active
+pointer, outbox event и receipt. Отдельный read-only readback восстанавливает
+тот же logical hash. Exact retry с idempotency key возвращает `replayed=true`;
+изменённый запрос не принимается.
+
+В первой live-самопроверке readback правильно остановил процесс на
+logical-hash drift. Причины были локализованы и исправлены до evidence:
+явный SQL alias для source revision graph edge и сохранение bundle-aware
+лексической формы zero-millisecond timestamps. Повторный live rehearsal
+применил 17 миграций в disposable PostgreSQL, прошёл import/replay/readback,
+проверил все projection counts и exact IDs/placement/activity/graph target;
+временная БД, one-shot containers и bundle удалены, persistent DB не изменена.
+
+Проверки: focused gate `6/6`, release-import `18/18`, content compiler
+`481/481`, architecture `213/213`, `content:gates`, полный `pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check` и deep body-boundary
+`1405/1397/8`, `8122` fragments, `0` matches, source baseline `2526/2526` —
+`PASS`. Static gate state hash
+`6739fda6496ed6cef4cfd88c21e8c70d4c78ad45c65851d6018d76d19656a29b`, live
+evidence hash `7e38a2f742ffc5556405bc910e4d8e522470774e61c4d0ccd2ab26e4f036b1ba`.
+Evidence metadata-only: тела контента, hidden evaluator assets, автоматическое
+создание задач, import/release authority и persistent database mutation не
+выдаются.
+
+Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-serving-import-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-198` (learner route C098 с полными
+answer layers и без broken/dead links).
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3490,7 +3533,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-194` Curriculum placement принадлежит Node path и shared JS runtime там, где семантически верно; Go/Java paths не получают Node-specific content. Evidence: target implementation `8106b4d`, evidence `279e927`; metadata-only path-join policy связывает 6 observability-сценариев с exact curriculum coordinates, выпускает 1 released question join, 2 task-joined stages и оставляет 5 preview-сценариев/30 preview stages deferred. Exact question/revision/family/runtime, activity IDs и cross-language leakage fail closed; focused `6/6`, content `463/463`, full check/boundary/toolchain и deep body-boundary `1387/1379/8`, `8122` fragments, `0` matches, baseline `2526/2526` green. Next executable item is `G10S-195`.
 - [x] `G10S-195` Author в Studio меняет C098 layer → review → publish candidate без serving mutation до import. Evidence: target implementation `315baaa`, evidence `77b10c5`; exact author → review → publish-request sequence, C098 `ordering/generic` identity, EN/RU prompt coverage, transaction/write-set and browser/serving denylist; focused `6/6`, content `469/469`, full check/boundary/toolchain and deep body-boundary `1392/1384/8`, `8122` fragments, `0` matches, baseline `2526/2526` PASS. Next executable item is `G10S-196`.
 - [x] `G10S-196` Export C098 bundle проходит rights/locale/layer/task/graph gates и создаёт loss ledger. Evidence: target implementation `7c8b8f1c081cc9b6f5f65bd63b11e4dfb8bf898e`, evidence `4299b9b81ef9240af1067ebd1edb5650c137e3e4`; evaluated metadata-only gate проверяет upstream `G10S-172/188/191/194/195`, exact `C098 / ordering / generic` identity, reviewed redistributable rights, EN/RU preferred layers, Node task/runtime join, graph target и 59-entry loss ledger. Deterministic in-memory bundle: 6 records, 12 translations, 26 layer rows, 2 assessed activities, 1 graph dependency, artifact 36 604 bytes, logical/release hash `bd482d33131190268da6e5b9d0fc81f204687b843a7651203ecd26a56aa33c06`, manifest `fe27e0e2010bb08beb50c502442509c631e59c00423d36fdb7d8c95d817b14c6`. Focused `6/6`, content `475/475`, `content:gates`, full check/boundary/toolchain и post-evidence body-boundary `1399/1391/8`, `8122` fragments, `0` matches, source baseline `2526/2526` PASS. Gate не пишет БД/files, не импортирует/активирует release и не эмитит bodies. Следующий пункт — `G10S-197`.
-- [ ] `G10S-197` Import C098 bundle создаёт exact serving revision, placement и active release atomically.
+- [x] `G10S-197` Import C098 bundle создаёт exact serving revision, placement и active release atomically. Evidence: target implementation `e1d2eb8` + hash-stability fix `6bb023c`, evidence `fef29c1`; disposable live import/replay/readback на 17 миграциях подтвердил exact projection counts/IDs, active pointer, idempotency, cleanup и persistent DB untouched. Static/live gates и полный check ladder PASS. Следующий пункт — `G10S-198`.
 - [ ] `G10S-198` Learner route открывает C098 question и все expected layers без broken/dead links.
 - [ ] `G10S-199` Language/runtime selector показывает только реально compatible released Node profile; preview languages не активны.
 - [ ] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict.
