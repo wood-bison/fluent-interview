@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-210.md`](verification/greenfield/plan-progress-2026-08-31-g10s-210.md).
+[`plan-progress-2026-08-31-g10s-211.md`](verification/greenfield/plan-progress-2026-08-31-g10s-211.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -568,6 +568,39 @@ Evidence target:
 `fluent-interview-platform/docs/verification/greenfield/G10S/strata-target-reconciliation-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-211`: повторить Strata golden fixtures
 против target CLI и сравнить normalized outputs.
+
+### Execution update — G10S-211 Strata golden fixtures ↔ target CLI — 31 августа 2026
+
+Target `main` закрыл G10S-211 двумя локальными commit-gated коммитами без push
+из-за ограничения Actions quota: implementation `ba34664`,
+evidence/documentation `00b37f6`. Инструмент
+`tools/dev/g10s-golden-cli-reconciliation.mjs` перечитывает все 11 frozen
+golden-файлов Strata, сверяет bytes/SHA с baseline и source manifest и дважды
+запускает target authoring CLI. В отчёт попадает только metadata projection:
+source bodies, prompts, answers, evaluator material, database mutations и
+release/import authority не эмитируются.
+
+Результат `PASS_WITH_LIMITATIONS`: Strata `main` остаётся на
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`; manifest SHA
+`e4cabff081bdf4660709330af28bcb832c43c0cda4789233e17b0e369e5804ae` совпал,
+drift/missing `0`. Проверены `6` карточек, `75` layers, `3` task families и
+`1` logical dataset. Target CLI integration прошёл `2/2` с exit codes `0,0`;
+normalized digest обоих запусков совпал
+(`f1660d56cef96a8efc114744281e4c11e9a41f954225a99b8955df8a7b614eca`).
+
+Различия не скрываются: семь dispositions фиксируют намеренно суженный
+authoring seed (один rights-cleared generic C098 вместо полного frozen
+набора), `node → generic` projection, target-owned ref, `11 → 2` bilingual
+layers, различие `durationMin=6` и `responseBudgetMin=4`, отсутствие expert
+слоя и явное очищение provenance. Это адаптация с quarantine/routing
+границами, а не заявление о полном переносе Strata. Focused mutation tests
+`6/6`, полный `pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check`
+green.
+
+Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/golden-cli-reconciliation-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-212`: повторить source `npm run check` и
+target `pnpm check` как одну воспроизводимую toolchain-сверку.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3844,7 +3877,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 ### G10S.9. Breadth readiness и standalone retirement
 
 - [x] `G10S-210` Сравнить source Strata и target counts/hashes/invariants; every difference имеет mapping/disposition. Evidence: target implementation `6bc19f6`, evidence `4e66c63`, frozen Strata `ec3b6804ecc1d08e3ab355be0c78930a46b34815`; `41/41` files and `159,515` bytes, drift/missing `0`, `13` mappings + `28` dispositions, uncovered `0`, target `17/17` contiguous migrations, invariant `12/12` inherited + `16/16` platform + `12` role checks, disposable DB dropped.
-- [ ] `G10S-211` Повторить Strata golden fixtures против target CLI и сравнить normalized outputs.
+- [x] `G10S-211` Повторить Strata golden fixtures против target CLI и сравнить normalized outputs. Evidence: target implementation `ba34664`, evidence/documentation `00b37f6`, Strata `ec3b680`; `11/11` frozen files, `6` cards, `75` layers, `3` task families, `1` dataset, drift/missing `0`, target CLI `2/2` exit `0`, normalized digest совпал; `7` explicit dispositions; metadata-only, source bodies и DB/import/release authority не эмитируются; focused `6/6`, full check/boundary/toolchain green.
 - [ ] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision.
 - [ ] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo.
 - [ ] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит.
