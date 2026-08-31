@@ -1764,6 +1764,41 @@ dispositions remain G10S-127, controlled adapter/file deletion remains G13,
 and one-root persistent-stack migration remains G10S-221. The next executable
 slice is G10S-126.
 
+### Execution update — G10S-126 legacy Studio authority migration — 31 августа 2026
+
+Target `main` now contains implementation commit `1d89010` (`feat(g10s):
+migrate legacy Studio authority`) and evidence commit `e92cde2` (`docs(g10s):
+record legacy Studio migration gate`). A checked-in metadata-only manifest
+binds the exact persistent Studio snapshot: 11 ledger facts, 3 receipt
+projection rows, six source anchors and source snapshot hash
+`e8344611984dcac01d98f042e0318c8fc9dfa4dd59c7336b63bd60190f001efe`.
+
+The rehearsal takes a real `pg_dump`, restores it into a disposable clone,
+applies all 16 migrations and runs the migration twice. Canonical state is
+created only through the existing create-revision, record-review and
+request-release application commands; manual domain inserts are forbidden.
+The observed target contains exactly one Question, 16 immutable layers, one
+revision, one review plus policy evaluation, one authoring release candidate,
+3 target command receipts and 11 immutable reconciliation rows. All 3 receipt
+rows carry the complete seven-field legacy→target join, partial joins are zero,
+the second run replays exact target state, serving activation remains zero and
+the persistent database is unchanged.
+
+The first live-clone attempts caught and fixed two SQL fail-closed defects: a
+reserved `grant` alias and lexical ordering caused by an output text alias for
+numeric sequences. The final post-commit rehearsal, full check/boundary/
+toolchain ladder, 6/6 authoring tests and 161/161 architecture tests pass.
+Fresh database has 26 Strata tables; PostgreSQL checks pass `12/12` inherited,
+`16/16` platform and `12/12` functional-role assertions; restore reproduces
+exact logical hashes and 362 object grants. Push was intentionally not
+performed because of the Actions quota.
+
+This closes only G10S-126. Roles, placements, supporting prompts, assessed
+activities, graph edges and incomplete source metadata remain explicit
+deferrals for G10S-127; the one-root migration of an already-persistent stack
+remains G10S-221 and controlled legacy deletion remains G13. The next
+executable slice is G10S-127.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -1810,7 +1845,7 @@ authority: затронутые content, release, Studio, persistence, route и 
 проверки повторяются на новых revision/release IDs. В рамках этого изменения
 плана код Strata и платформы не меняется.
 
-**Следующий исполняемый пункт:** `G10S-126`. Implementing agent последовательно
+**Следующий исполняемый пункт:** `G10S-127`. Implementing agent последовательно
 выполняет оставшиеся `G10S-082…244`, создаёт перечисленные atomic commits и
 останавливается на `AWAITING_INDEPENDENT_REVIEW`. `G10S-245…246` закрывает Codex
 после независимой проверки. Только затем агент получает G11 breadth work.
@@ -2974,7 +3009,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-123` Existing command idempotency receipts мигрированы либо заменены с exact mapping; repeated commands не создают duplicate versions/reviews/releases. Evidence: target implementation `ef30ee0`, evidence `ae400e1`; 3 retired legacy commands map to 5 target stages/10 source anchors, all 4 receipt-bearing boundaries return exact results on same-request replay, reject changed intent with the same key, write zero legacy rows and create no duplicate revisions/reviews/releases.
 - [x] `G10S-124` Existing outbox semantics сохранены на serving side; authoring bundle export не требует Kafka/Redis. Evidence: target implementation `3c90830`, evidence `69d9afe`; import commits one contract-valid `serving.release.imported` event with its serving projection/manifest/pointer/receipt, exact replay creates no duplicate, changed intent and late failure leave no event, serving appends one immutable idempotent acknowledgement, and authoring has zero broker dependencies.
 - [x] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена. Evidence: target implementation `8c6f03c`, evidence `9b14341`; 4/4 historical artifacts have one explicit disposition (1 retired, 3 recovery-only), production selectors/imports/writes are zero, PostgreSQL owns Studio and release-pointer runtime state, four legacy HTTP mutations return 410, and fresh/upgrade/restore/import plus full check/boundary/toolchain gates pass without claiming historical migration or deletion.
-- [ ] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts.
+- [x] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts. Evidence: target implementation `1d89010`, evidence `e92cde2`; exact live `pg_dump` clone preserved 11/11 source rows and 3/3 receipt projections, created canonical state only through three Strata application commands, recorded 11 immutable reconciliation rows with 3 complete seven-field receipt joins, replayed without duplicate target state, activated zero serving releases and left the persistent database unchanged; 16-migration fresh/invariant/restore/import plus full check/boundary/toolchain gates pass.
 - [ ] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer.
 - [ ] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно.
 - [ ] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready.
