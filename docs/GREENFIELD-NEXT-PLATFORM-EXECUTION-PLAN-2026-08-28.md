@@ -602,6 +602,33 @@ Evidence target:
 Следующий executable пункт — `G10S-212`: повторить source `npm run check` и
 target `pnpm check` как одну воспроизводимую toolchain-сверку.
 
+### Execution update — G10S-212 source npm check ↔ target pnpm check — 31 августа 2026
+
+Target `main` закрыл G10S-212 двумя локальными commit-gated коммитами без push
+из-за Actions quota: implementation `bb1acc4`, evidence/documentation
+`fcfc2f8`. Reconciler запускает ровно две команды в фиксированном порядке:
+сначала `npm run check` в frozen Strata, затем `pnpm check` в target; fallback,
+dependency installation, database/Docker mutation и release authority
+запрещены.
+
+Обе команды стартовали и завершились с exit `0`. Source `main` clean на
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`; manifest SHA
+`e4cabff081bdf4660709330af28bcb832c43c0cda4789233e17b0e369e5804ae` совпал.
+Target check выполнен на clean `main` commit
+`bb1acc4731abe32bd4d7dc86ca555fe74317dac2`. Для воспроизводимости записаны
+только нормализованные output SHA/размеры/строки (source `41` строк,
+target `2,494`); тела stdout/stderr не публикуются. Focused mutation tests
+`5/5`, полный `pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check`
+green.
+
+Статус `PASS` означает готовность перейти к archive/retirement проверкам, но
+не разрешает удалить Strata: production deploy, clean clone, rollback и
+restore остаются отдельными гейтами. Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/toolchain-reconciliation-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-213`: проверить, что target docs/CLI
+полностью описывают authoring, review, export, import, rollback и recovery без
+source repo.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -3878,7 +3905,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 - [x] `G10S-210` Сравнить source Strata и target counts/hashes/invariants; every difference имеет mapping/disposition. Evidence: target implementation `6bc19f6`, evidence `4e66c63`, frozen Strata `ec3b6804ecc1d08e3ab355be0c78930a46b34815`; `41/41` files and `159,515` bytes, drift/missing `0`, `13` mappings + `28` dispositions, uncovered `0`, target `17/17` contiguous migrations, invariant `12/12` inherited + `16/16` platform + `12` role checks, disposable DB dropped.
 - [x] `G10S-211` Повторить Strata golden fixtures против target CLI и сравнить normalized outputs. Evidence: target implementation `ba34664`, evidence/documentation `00b37f6`, Strata `ec3b680`; `11/11` frozen files, `6` cards, `75` layers, `3` task families, `1` dataset, drift/missing `0`, target CLI `2/2` exit `0`, normalized digest совпал; `7` explicit dispositions; metadata-only, source bodies и DB/import/release authority не эмитируются; focused `6/6`, full check/boundary/toolchain green.
-- [ ] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision.
+- [x] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision. Evidence: target implementation `bb1acc4`, evidence/documentation `fcfc2f8`; exact order/source `ec3b680` clean/target `bb1acc4` clean, exit `0/0`, output metadata only, focused `5/5`, full check/boundary/toolchain green.
 - [ ] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo.
 - [ ] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит.
 - [ ] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098.
