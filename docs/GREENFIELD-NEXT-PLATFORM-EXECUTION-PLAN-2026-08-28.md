@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-205.md`](verification/greenfield/plan-progress-2026-08-31-g10s-205.md).
+[`plan-progress-2026-08-31-g10s-206.md`](verification/greenfield/plan-progress-2026-08-31-g10s-206.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -455,6 +455,29 @@ learner/authoring/import/release mutations не выполнялись. Полн
 `fluent-interview-platform/docs/verification/greenfield/G10S/c098-desktop-matrix-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-206`: keyboard/screen-reader baseline для
 landmarks, labels, focus order, dialog/panel behavior и code/runtime controls.
+
+### Execution update — G10S-206 C098 accessibility baseline — 31 августа 2026
+
+Target `main` закрыл G10S-206 локальным commit-gated коммитом без push из-за
+ограничения Actions quota: implementation/evidence `955db57` (source fix
+`cbcec0f`). Versioned policy
+`g10s-c098-accessibility-policy.v1` (`2026.08.31-c098-accessibility.1`)
+фиксирует те же 23 exact route templates и проверяет `en`/`ru`, `light`/`dark`
+на MacBook Pro 16 (`1728×1117`).
+
+Live accessibility matrix PASS: `92/92` route cases, `3,204` named controls,
+zero unresolved ARIA references, duplicate IDs, positive `tabindex`, heading
+skips, button-type omissions, missing image alternatives и invalid expanded
+states. Command palette, profile menu и Navigator panel interaction matrix —
+`12/12`; structural focusable-control count — `396`, focus return — `0`
+failures. Static source/evidence policy — `30/30`, focused mutation suite —
+`6/6`; conditional ARIA reference drift and missing focus-visible/reduced
+motion/transparency guards fail closed. Evidence metadata-only, без learner
+content, answer bodies, import/release authority или mutations. Полные
+`pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-accessibility-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-207`: performance budget для initial route,
+editor/task chunks и отсутствия duplicate content payload.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3723,7 +3746,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary. Evidence: target implementation `87849f5`, target evidence `c098-observe-explain-navigator-2026-08-31.{json,md}`; static `40/40`, focused `5/5`, live journey PASS, 14 context coordinates, metadata-only/advisory-only.
 - [x] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice. Evidence: target implementation `b113da1`, evidence `0b2c4a5`; static `33/33`, focused `5/5`, live persistence journey `PASS`, 14-entry backup matrix, integrity-checked restore и cleanup `0 containers / 0 networks`.
 - [x] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls. Evidence: target `a35c919`, index `8dc3b8b`, `c098-desktop-matrix-2026-08-31.{json,md}`; `276/276` cases, `9,612` controls, `0` overflow/clipping/missing-landmark/viewport/console/page/request errors, static `30/30`, mutation `7/7`, exact query templates и metadata-only report.
-- [ ] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names.
+- [x] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names. Evidence: target `955db57` (source fix `cbcec0f`), `c098-accessibility-2026-08-31.{json,md}`; `92/92` route cases, `3,204` named controls, `12/12` interaction cases, `0` ARIA/focus/landmark/id issues, static `30/30`, mutations `6/6`, metadata-only.
 - [ ] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload.
 - [ ] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence.
 - [ ] `G10S-209` Commit: `feat(g10s): prove C098 authoring-to-learning vertical slice`.
