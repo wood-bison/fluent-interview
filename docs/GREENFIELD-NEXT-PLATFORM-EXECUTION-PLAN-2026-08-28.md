@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-206.md`](verification/greenfield/plan-progress-2026-08-31-g10s-206.md).
+[`plan-progress-2026-08-31-g10s-207.md`](verification/greenfield/plan-progress-2026-08-31-g10s-207.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -478,6 +478,28 @@ content, answer bodies, import/release authority или mutations. Полные
 `fluent-interview-platform/docs/verification/greenfield/G10S/c098-accessibility-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-207`: performance budget для initial route,
 editor/task chunks и отсутствия duplicate content payload.
+
+### Execution update — G10S-207 C098 production performance budget — 31 августа 2026
+
+Target `main` закрыл G10S-207 локальными commit-gated коммитами без push из-за
+ограничения Actions quota: implementation `b351fa0`, evidence/documentation
+`5829de7`. Versioned policy
+`g10s-c098-performance-policy.v1` (`2026.08.31-c098-performance.1`) расширяет
+существующий production budget и не меняет runtime authority.
+
+Production diagnostics PASS: проверены 13 routes; initial route — `930,785`
+bytes, editor route `/practice/[slug]` — `948,852`, task route
+`/practice/lesson/[id]` — `924,391`; largest emitted chunk — `415,610`, total
+chunks — `1,130,694`. Route-specific payloads равны `8,103` (initial),
+`26,170` (editor) и `1,709` (task), при бюджете `180,000` для каждого. Все
+required routes присутствуют, heavy editor packages отсутствуют, duplicate
+route chunk references и byte-identical chunk SHA-256 равны нулю. Static policy
+tests — `9/9`, production checks — `8/8`; `pnpm check` теперь запускает
+`performance:c098-policy` сразу после build. Evidence metadata-only находится
+в `fluent-interview-platform/docs/verification/greenfield/G10S/c098-performance-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-208`: полная C098
+route→question→activity→Run→Submit→Evidence machine journey и отдельная
+human spoken-explanation evidence.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3747,7 +3769,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice. Evidence: target implementation `b113da1`, evidence `0b2c4a5`; static `33/33`, focused `5/5`, live persistence journey `PASS`, 14-entry backup matrix, integrity-checked restore и cleanup `0 containers / 0 networks`.
 - [x] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls. Evidence: target `a35c919`, index `8dc3b8b`, `c098-desktop-matrix-2026-08-31.{json,md}`; `276/276` cases, `9,612` controls, `0` overflow/clipping/missing-landmark/viewport/console/page/request errors, static `30/30`, mutation `7/7`, exact query templates и metadata-only report.
 - [x] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names. Evidence: target `955db57` (source fix `cbcec0f`), `c098-accessibility-2026-08-31.{json,md}`; `92/92` route cases, `3,204` named controls, `12/12` interaction cases, `0` ARIA/focus/landmark/id issues, static `30/30`, mutations `6/6`, metadata-only.
-- [ ] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload.
+- [x] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload. Evidence: target `b351fa0`, docs/evidence `5829de7`, `13` routes, initial/editor/task `930785/948852/924391` bytes, largest chunk `415610`, total `1130694`, route-specific `8103/26170/1709`, duplicate references/hashes `0`, static `9/9`, production `8/8`, metadata-only.
 - [ ] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence.
 - [ ] `G10S-209` Commit: `feat(g10s): prove C098 authoring-to-learning vertical slice`.
 
