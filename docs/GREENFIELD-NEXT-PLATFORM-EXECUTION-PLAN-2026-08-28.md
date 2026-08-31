@@ -3314,7 +3314,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.7. Deterministic v1 adapter и release import
 
-- [ ] `G10S-162` Создать explicit mapping spec Strata Question/Layer/Task/Provenance → `question-catalog.v1` fields.
+- [x] `G10S-162` Создать explicit mapping spec Strata Question/Layer/Task/Provenance → `question-catalog.v1` fields. Evidence: target implementation `d43481de287cbf3d93f5abd3608690e71ae9fbd1`, evidence `91503325df47101f1ca457f31704336a502b6516`; versioned `g10s-question-catalog-mapping-policy.v1` (`2026.08.31-question-catalog-mapping.1`) and mandatory `content:mapping-spec` gate cover all `47/47` target paths from `15` source entities (`11` Strata, `2` curriculum, `2` content-review) through `47` deterministic mappings. `12` explicit non-target source facts remain loss/review-visible and `11` mappings are content-bearing; curriculum retains route-order ownership, while task bodies, source bodies, database, Docker, import and release authority remain excluded. Focused `5/5`, content `282/282`, evidence validator `13/13`, full check/boundary/toolchain ladder and post-feature body scan (`1220` tracked / `1212` text / `8122` fragments / `0` matches; sensitive records `2526/2526`) are green. Next executable item is `G10S-163`.
 - [ ] `G10S-163` Mapping spec перечисляет семь v1 answer layers: `concise`, `understanding`, `mechanism`, `traps`, `followUps`, `evidence`, `sources`.
 - [ ] `G10S-164` Для каждого v1 field указать source layer kind, lang/depth selection, ordering, requiredness и loss behavior.
 - [ ] `G10S-165` `prompt` берётся только из preferred prompt нужного locale/depth; ambiguous preferred state делает export FAIL.
