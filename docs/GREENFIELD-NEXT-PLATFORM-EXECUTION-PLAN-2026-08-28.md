@@ -3286,7 +3286,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.6. Corpus migration, quarantine и rights
 
-- [ ] `G10S-137` Создать versioned import manifest для каждого source dataset с source SHA, record count, acquisition method, rights state и intended disposition.
+- [x] `G10S-137` Создать versioned import manifest для каждого source dataset с source SHA, record count, acquisition method, rights state и intended disposition. Evidence: target implementation `81a1f9e`, evidence `34e5980`; два versioned metadata-only manifest (`external.solvit-question-candidates` и `legacy.question-vault-candidates`) фиксируют source SHA, record count, acquisition method, rights state и intended disposition. Validator fail-closed проверяет index/hash/duplicate/body/rights invariants. Наблюдаемые `4123` записи могут пересекаться и не являются числом уникальных вопросов или coverage; `releaseEligible=0`, tracked source bodies `0`.
 - [ ] `G10S-138` Пересчитать 2526-source snapshot; любые отличия от baseline отдельно классифицировать до import.
 - [ ] `G10S-139` Raw paid/company-linked/unknown-rights wording хранить вне distributable target Git; в Git допустим metadata hash/manifest без body.
 - [ ] `G10S-140` Создать quarantine store с encryption/permissions либо оставить raw source в существующем controlled location; выбранный вариант записать ADR/operations note.
