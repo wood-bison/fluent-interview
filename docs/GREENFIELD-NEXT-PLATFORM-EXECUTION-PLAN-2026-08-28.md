@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-195.md`](verification/greenfield/plan-progress-2026-08-31-g10s-195.md).
+[`plan-progress-2026-08-31-g10s-196.md`](verification/greenfield/plan-progress-2026-08-31-g10s-196.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -203,6 +203,34 @@ body-boundary после implementation: `1392` tracked / `1384` text / `8` bina
 Evidence находится в `fluent-interview-platform/docs/verification/greenfield/G10S/`
 и остаётся metadata-only. Следующий executable пункт — `G10S-196` (export
 C098 bundle через rights/locale/layer/task/graph gates с loss ledger).
+
+### Execution update — G10S-196 C098 release export — 31 августа 2026
+
+Target `main` закрыл G10S-196 двумя локальными commit-gated коммитами без
+push из-за ограничения Actions quota: implementation
+`7c8b8f1c081cc9b6f5f65bd63b11e4dfb8bf898e`
+(`feat(g10s): guard C098 release export`) и evidence
+`4299b9b81ef9240af1067ebd1edb5650c137e3e4`
+(`docs(g10s): record C098 release export evidence`). Versioned policy
+`g10s-c098-release-export-policy.v1` (`2026.08.31-c098-release-export.1`)
+связывает C098 `ordering/generic` с exact released Node question revision,
+curriculum placement, task/runtime join и graph dependency. Перед сборкой
+обязательны upstream gates `G10S-172`, `G10S-188`, `G10S-191`, `G10S-194` и
+`G10S-195`; rights, EN/RU locale, preferred layers, task, graph и loss ledger
+проверяются fail-closed.
+
+Кандидат bundle строится дважды в памяти: `6` records, `12` translations,
+`26` selected layer rows, `2` assessed activities, `1` graph dependency и
+`59` loss-ledger entries. Artifact `36 604` bytes имеет logical/release hash
+`bd482d33131190268da6e5b9d0fc81f204687b843a7651203ecd26a56aa33c06`, manifest
+hash `fe27e0e2010bb08beb50c502442509c631e59c00423d36fdb7d8c95d817b14c6`;
+повторная сборка byte-identical. Gate не пишет БД/файлы, не импортирует и не
+активирует release, не эмитит bodies. Focused tests `6/6`, content suite
+`475/475`, `content:gates`, полный `pnpm check`, boundary и toolchain — PASS;
+post-evidence deep body-boundary: `1399` tracked / `1391` text / `8` binary,
+`8122` fragments, `0` matches, source baseline `2526/2526`. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-release-export-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-197` (atomic serving import C098 bundle).
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3461,7 +3489,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-193` Каждый scenario имеет explicit objective, prerequisites, public statement, expected evidence и failure feedback; hidden solution не доступен browser. Evidence: target implementation `47d45c1`, evidence `c7773d1`/`e9e84a3`; versioned `g10s-observability-scenario-contracts-policy.v1` фиксирует `6` сценариев × `6` стадий, `36` evidence bindings и `36` feedback rules, проверяет graph prerequisites и browser denylist. Focused `6/6`, content `457/457`, full gates/check/boundary/toolchain и deep metadata-only body-boundary (`1382` tracked / `1374` text / `8` binary / `8122` fragments / `0` matches; source baseline `2526/2526`) green; no Task/Activity creation, DB mutation, import or release authority. Next executable item is `G10S-194`.
 - [x] `G10S-194` Curriculum placement принадлежит Node path и shared JS runtime там, где семантически верно; Go/Java paths не получают Node-specific content. Evidence: target implementation `8106b4d`, evidence `279e927`; metadata-only path-join policy связывает 6 observability-сценариев с exact curriculum coordinates, выпускает 1 released question join, 2 task-joined stages и оставляет 5 preview-сценариев/30 preview stages deferred. Exact question/revision/family/runtime, activity IDs и cross-language leakage fail closed; focused `6/6`, content `463/463`, full check/boundary/toolchain и deep body-boundary `1387/1379/8`, `8122` fragments, `0` matches, baseline `2526/2526` green. Next executable item is `G10S-195`.
 - [x] `G10S-195` Author в Studio меняет C098 layer → review → publish candidate без serving mutation до import. Evidence: target implementation `315baaa`, evidence `77b10c5`; exact author → review → publish-request sequence, C098 `ordering/generic` identity, EN/RU prompt coverage, transaction/write-set and browser/serving denylist; focused `6/6`, content `469/469`, full check/boundary/toolchain and deep body-boundary `1392/1384/8`, `8122` fragments, `0` matches, baseline `2526/2526` PASS. Next executable item is `G10S-196`.
-- [ ] `G10S-196` Export C098 bundle проходит rights/locale/layer/task/graph gates и создаёт loss ledger.
+- [x] `G10S-196` Export C098 bundle проходит rights/locale/layer/task/graph gates и создаёт loss ledger. Evidence: target implementation `7c8b8f1c081cc9b6f5f65bd63b11e4dfb8bf898e`, evidence `4299b9b81ef9240af1067ebd1edb5650c137e3e4`; evaluated metadata-only gate проверяет upstream `G10S-172/188/191/194/195`, exact `C098 / ordering / generic` identity, reviewed redistributable rights, EN/RU preferred layers, Node task/runtime join, graph target и 59-entry loss ledger. Deterministic in-memory bundle: 6 records, 12 translations, 26 layer rows, 2 assessed activities, 1 graph dependency, artifact 36 604 bytes, logical/release hash `bd482d33131190268da6e5b9d0fc81f204687b843a7651203ecd26a56aa33c06`, manifest `fe27e0e2010bb08beb50c502442509c631e59c00423d36fdb7d8c95d817b14c6`. Focused `6/6`, content `475/475`, `content:gates`, full check/boundary/toolchain и post-evidence body-boundary `1399/1391/8`, `8122` fragments, `0` matches, source baseline `2526/2526` PASS. Gate не пишет БД/files, не импортирует/активирует release и не эмитит bodies. Следующий пункт — `G10S-197`.
 - [ ] `G10S-197` Import C098 bundle создаёт exact serving revision, placement и active release atomically.
 - [ ] `G10S-198` Learner route открывает C098 question и все expected layers без broken/dead links.
 - [ ] `G10S-199` Language/runtime selector показывает только реально compatible released Node profile; preview languages не активны.
