@@ -1867,6 +1867,35 @@ not claim a persistent-stack migration or active serving import. The next
 executable slice is G10S-129: every learner projection must exclude quarantine
 and import candidates from published and coverage-ready states.
 
+### Execution update — G10S-129 learner release projection boundary — 31 августа 2026
+
+Target `main` now contains implementation commit `9125445` (`feat(g10s):
+guard learner release projections`) and evidence commit `938a423` (`docs(g10s):
+record learner release guard`). One strict learner catalog contract now owns
+Questions, Practice, Program coverage, lesson lookup, API loading, authoring
+release export, serving bundle validation and serving readback. It requires an
+exact `released` review state with reviewer and timestamp, rejects unknown
+candidate/quarantine lifecycle markers at every nested object boundary, and
+continues to preserve reviewed `brain-import` as provenance rather than
+mistaking it for an unpublished lifecycle state.
+
+Coverage derives `hardGates.noQuarantine` from the same release-only contract.
+A contaminated card therefore makes the path ineligible and creates an
+explicit critical gap; an empty path also fails closed. Web tests pass `52/52`,
+API tests `65/65`, release-import tests `4/4`, contracts/domain builds and
+web/API type checks pass, and the complete check/boundary/toolchain ladder
+passes twice. Canonical `pnpm dev -- --no-watch` reached `6/6` ready services.
+
+Live WebMCP verification at 1280×720 passed across `/questions`,
+`/program?track=node` and a real navigation to
+`/practice/lesson/js-closures?track=node`: six released cards render, Program
+honestly reports `Формируется`, vertical scrolling works, horizontal overflow
+is zero and browser warnings/errors are zero. No authoring record, serving
+pointer, learner progress or persistent database row was mutated. This closes
+only G10S-129; it does not claim curriculum completeness. The next executable
+slice is G10S-130: prove all authoring/review/release bypass attempts fail
+closed through the current production seams.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3080,7 +3109,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts. Evidence: target implementation `1d89010`, evidence `e92cde2`; exact live `pg_dump` clone preserved 11/11 source rows and 3/3 receipt projections, created canonical state only through three Strata application commands, recorded 11 immutable reconciliation rows with 3 complete seven-field receipt joins, replayed without duplicate target state, activated zero serving releases and left the persistent database unchanged; 16-migration fresh/invariant/restore/import plus full check/boundary/toolchain gates pass.
 - [x] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer. Evidence: target implementation `8f5c5db`, evidence `cd6999c`; 11/11 source rows and 26/26 source fields have exactly one immutable decision (23 mapped, 12 needs-authoring, one quarantined, one rejected), all non-mapped decisions carry reason and reviewer, exact replay creates no duplicate, app roles have zero access, mutation fails closed and the 17-migration live-clone plus full check/boundary/toolchain gates pass without changing the persistent database or serving state.
 - [x] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно. Evidence: target bootstrap `e1e7726`, implementation `53f5c68`, evidence `d8b07c5`; five independently derived cells preserve contradictions and pointer unavailability, web `49/49`, Studio `12/12`, API `64/64`, full check/boundary/toolchain and live 1440×900 + 390×844 WebMCP matrices pass with zero overlap or horizontal overflow.
-- [ ] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready.
+- [x] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready. Evidence: target implementation `9125445`, evidence `938a423`; one strict release-only catalog contract guards 8 learner/release seams, rejects draft/reviewed/candidate/quarantine state without hiding reviewed `brain-import` provenance, makes contaminated/empty coverage fail closed, and passes web `52/52`, API `65/65`, release-import `4/4`, full check/boundary/toolchain plus live Questions→Program→lesson WebMCP verification with zero horizontal overflow or browser errors.
 - [ ] `G10S-130` Unauthorized publish, forged reviewer, stale revision, duplicate preferred prompt и missing grant fail closed.
 - [ ] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release.
 - [ ] `G10S-132` Crash test внутри serving import откатывает весь release и сохраняет previous active pointer.
