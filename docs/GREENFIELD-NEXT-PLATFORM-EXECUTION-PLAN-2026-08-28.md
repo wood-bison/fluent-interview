@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-216.md`](verification/greenfield/plan-progress-2026-09-01-g10s-216.md).
+[`plan-progress-2026-09-01-g10s-217.md`](verification/greenfield/plan-progress-2026-09-01-g10s-217.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -700,6 +700,32 @@ backup owner/retention остаётся отдельным G13/G12 acceptance ga
 
 Следующий executable пункт — `G10S-217`: immutable Strata archive tag/bundle,
 hash manifest и clean clone/source checks.
+
+### Execution update — G10S-217 immutable Strata archive и clone — 1 сентября 2026
+
+Target `main` закрыл G10S-217 commit-gated implementation/evidence/docs
+цепочкой без push из-за Actions quota: `44015ff` (archive rehearsal и
+metadata guard), `3d9aa39` (machine-readable evidence) и `d3d10f9` (G10S
+README handoff).
+
+Frozen Strata `main` остался clean на
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`; все `41/41` файла manifest
+совпали по байтам и SHA, drift/missing `0`. В source checkout создан локальный
+annotated immutable tag `strata-archive-2026-09-01-g10s-217`; существующий tag
+при другом commit был бы отвергнут. Rehearsal собрала временный tar.gz archive
+(`99,047` bytes, SHA
+`2425e2133c848572d54e1f8d64ec4315bc24638ce291ddc3b564ebfbade8d966`) без
+symlink/Git metadata и complete-history Git bundle (`230,261` bytes, SHA
+`306df648e2bb6f6f318aba0f81d9d69a56059eec0da6d2890d73a78ac97db63c`).
+
+Bundle clone подтвердил `main`, frozen HEAD, tag и clean tree до/после install;
+source `npm run check`, clone `npm ci --ignore-scripts --no-audit --no-fund` и
+clone `npm run check` завершились exit `0`. Archive/bundle удалены из temporary
+directory, Strata не удалена и target не получает source bodies. Машиночитаемое
+evidence metadata-only: `G10S-217-strata-archive-2026-09-01.{json,md}`.
+
+Следующий executable пункт — `G10S-218`: пометить standalone Strata
+README/docs/plan как migrated/reference-only с target path/SHA.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3982,7 +4008,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит. Evidence: target `d126d17`, evidence `ebbb082`; archive/fresh clone PASS, C098 export/import/journey PASS, source path references `0`, lockfiles `pnpm-lock.yaml` only.
 - [x] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098. Evidence: target implementation `58b017f`, evidence/docs `175395e`; `18` migrations, rollback/stale rejection/forward restore/replay `PASS`, four-event immutable sequence, stable projection digest, readback verified, metadata-only `contentBodiesEmitted=0`, disposable cleanup.
 - [x] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым. Evidence: target implementation `c428809`, evidence/docs `bce1e17`; migrations `1..17 → 1..18`, logical hash/counts/schema/role grants совпали, role checks `12/12`, product probes до/после restore `200`, cleanup `0` scoped resources, metadata-only.
-- [ ] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks.
+- [x] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks. Evidence: target implementation `44015ff`, evidence `3d9aa39`, README handoff `d3d10f9`; frozen source `ec3b680`, manifest `41/41` без drift, immutable annotated tag, archive/bundle/clone PASS, source и clone checks exit `0`, metadata-only и temporary cleanup.
 - [ ] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить.
 - [ ] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof.
 - [ ] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target.
