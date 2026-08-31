@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-199.md`](verification/greenfield/plan-progress-2026-08-31-g10s-199.md).
+[`plan-progress-2026-08-31-g10s-201.md`](verification/greenfield/plan-progress-2026-08-31-g10s-201.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -333,6 +333,32 @@ routes 200). Полный `pnpm check`, `pnpm boundary:check` и
 
 Следующий executable пункт — `G10S-200`: доказать, что public Run выполняет
 эксперимент и не создаёт mastery/verdict.
+
+### Execution update — G10S-200/201 C098 public Run и hidden Submit — 31 августа 2026
+
+Target `main` закрыл G10S-200 и G10S-201 локальными commit-gated коммитами без
+push из-за ограничения Actions quota. Для G10S-200 implementation/evidence:
+`a6d6fc5` / `7d95250`; для G10S-201 implementation/evidence:
+`c7e7dbd` / `c067a05`.
+
+G10S-200 доказывает public Run для released C098 без verdict/mastery:
+`node-event-loop-001@revision 1`, `node-26-commonjs`, 5 ожидаемых строк вывода,
+8 trace events, стабильный progress digest и отсутствие learner state mutation.
+G10S-201 добавляет strict hidden Submit: Browser, Go runtime-control, evaluator
+и API принимают только exact TaskRevision/release/profile; пять hidden checks
+проходят, verdict/evidence IDs выводятся из request digest, а evidence хранит
+только metadata. Exact replay возвращает тот же envelope, изменённый запрос с
+тем же idempotency key получает `409`, stale revision и incompatible profile —
+`400`; worker очищается, mastery/unlock не меняются.
+
+Проверки G10S-200: static `13/13`, focused `10/10`, live PASS. Проверки
+G10S-201: static `26/26`, focused `4/4`, live PASS, один authority evidence
+record создан без raw source/prediction/hidden bodies. Для обоих срезов прошли
+полные `pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check`; evidence
+находится в `fluent-interview-platform/docs/verification/greenfield/G10S/`.
+Следующий executable пункт — `G10S-202`: wrong-order, malformed-input,
+stale-revision, forged-verdict и duplicate-idempotency vectors должны fail
+correctly.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3595,8 +3621,8 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-197` Import C098 bundle создаёт exact serving revision, placement и active release atomically. Evidence: target implementation `e1d2eb8` + hash-stability fix `6bb023c`, evidence `fef29c1`; disposable live import/replay/readback на 17 миграциях подтвердил exact projection counts/IDs, active pointer, idempotency, cleanup и persistent DB untouched. Static/live gates и полный check ladder PASS. Следующий пункт — `G10S-198`.
 - [x] `G10S-198` Learner route открывает C098 question и все expected layers без broken/dead links. Evidence: target implementation `a8d6eb7bb0b1f5d8f81925dca3e782667649d707`, evidence `3148c98`; `/practice/lesson/:id` — release-only manifest target с exact C098 identity, EN/RU layers `7/7` включая `evidence`, practice `node-event-loop-001@1` / `node-26-commonjs`, graph/Questions/track/locale/Atlas links и fail-closed unknown/stale/preview checks. Focused G10S `6/6`, route smoke/boundary `54/54`, content `487/487`, architecture `213/213`, full check/content-gates/boundary/toolchain и static metadata-only gate PASS; state hash `61180869fd35b8cbb6fe9e190d636d232104cb7c661c6f99344bb11aa60d4548`, policy `a4ea07cb5caecc47d4acfa00a115cded7a194589daf4a10aa696f60452dd26d1`, route manifest `7be333d945b55544f6b46eeb990e5e934098d7e6695a8c8496bd43e1d58b76ac`. Evidence: `docs/verification/greenfield/G10S/c098-learner-route-2026-08-31.{json,md}`. Browser/runtime live execution и hidden answer bodies не заявлены.
 - [x] `G10S-199` Language/runtime selector показывает только реально compatible released Node profile; preview languages не активны. Evidence: target implementation `19d60a7`, evidence `bd1203d`; strict learner selector выдаёт только JavaScript revision 1 / `node-26-commonjs`, preview TS/Go/Java/Python/.NET скрыты и direct vectors получают 400; EN/RU route 200, canonical Run PASS, mastery/unlock/accepted неизменны; static `21/21`, focused `12/12`, full check/boundary/toolchain и golden journey PASS.
-- [ ] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict.
-- [ ] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence.
+- [x] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict. Evidence: target implementation `a6d6fc5`, evidence `7d95250`; static policy `13/13`, focused `10/10`, live public-run journey PASS, stable progress digest, 5 output lines и 8 trace events, без mastery/verdict mutation.
+- [x] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence. Evidence: target implementation `c7e7dbd`, evidence `c067a05`; static policy `26/26`, focused `4/4`, live canonical/replay/conflict/drift journey PASS, five hidden checks, evidence-only metadata и cleanup.
 - [ ] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly.
 - [ ] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary.
 - [ ] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice.
