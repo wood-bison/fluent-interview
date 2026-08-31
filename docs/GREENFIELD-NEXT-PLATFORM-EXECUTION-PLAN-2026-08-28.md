@@ -1838,6 +1838,35 @@ review comments remain quarantined and the legacy logical hash remains
 rejected. The next executable slice is G10S-128: expose authoring revision,
 review, rights, completeness and serving projection as distinct UI states.
 
+### Execution update — G10S-128 independent Studio state projections — 31 августа 2026
+
+Target `main` now contains production-bootstrap fix `e1e7726` (`fix(api):
+restore production dependency injection`), implementation commit `53f5c68`
+(`feat(g10s): separate Studio projection states`) and evidence commit
+`d8b07c5` (`docs(g10s): record Studio projection gate`). Studio derives and
+renders five independently owned facts: immutable authoring revision, review
+decision/reviewer, rights source/licence/disposition, EN/RU core and enrichment
+completeness, and serving release projection. Review no longer implies
+publication, a manifest no longer implies an active pointer, quarantine never
+claims a learner release and mismatched hashes remain visibly
+`inconsistent`.
+
+The serving-pointer request is fail-visible rather than destructive: if the
+persistent development schema has not yet received its G10S-221 one-root
+migration, revision/review/rights/completeness still render and the fifth cell
+reports `unavailable`. The UI neither mutates PostgreSQL nor invents an active
+release. Web tests pass `49/49`, Studio contract tests `12/12`, API tests
+`64/64`, and the complete check/boundary/toolchain ladder passes. Canonical
+`pnpm dev -- --no-watch` reached `6/6` ready services.
+
+Live WebMCP verification passed at 1440×900 light/RU/open navigation and
+390×844 dark/EN/collapsed navigation: all five cells remain distinct, vertical
+scroll reaches the bottom, and horizontal overflow, cell overlap, browser
+warnings and browser errors are all zero. This closes only G10S-128; it does
+not claim a persistent-stack migration or active serving import. The next
+executable slice is G10S-129: every learner projection must exclude quarantine
+and import candidates from published and coverage-ready states.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3050,7 +3079,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-125` JSONL fallback классифицирован `retired` либо ограничен recovery artifact; permanent second authority запрещена. Evidence: target implementation `8c6f03c`, evidence `9b14341`; 4/4 historical artifacts have one explicit disposition (1 retired, 3 recovery-only), production selectors/imports/writes are zero, PostgreSQL owns Studio and release-pointer runtime state, four legacy HTTP mutations return 410, and fresh/upgrade/restore/import plus full check/boundary/toolchain gates pass without claiming historical migration or deletion.
 - [x] `G10S-126` Existing PostgreSQL Studio rows мигрированы в Strata с source IDs/hashes и reconciliation, без hand-edited inserts. Evidence: target implementation `1d89010`, evidence `e92cde2`; exact live `pg_dump` clone preserved 11/11 source rows and 3/3 receipt projections, created canonical state only through three Strata application commands, recorded 11 immutable reconciliation rows with 3 complete seven-field receipt joins, replayed without duplicate target state, activated zero serving releases and left the persistent database unchanged; 16-migration fresh/invariant/restore/import plus full check/boundary/toolchain gates pass.
 - [x] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer. Evidence: target implementation `8f5c5db`, evidence `cd6999c`; 11/11 source rows and 26/26 source fields have exactly one immutable decision (23 mapped, 12 needs-authoring, one quarantined, one rejected), all non-mapped decisions carry reason and reviewer, exact replay creates no duplicate, app roles have zero access, mutation fails closed and the 17-migration live-clone plus full check/boundary/toolchain gates pass without changing the persistent database or serving state.
-- [ ] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно.
+- [x] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно. Evidence: target bootstrap `e1e7726`, implementation `53f5c68`, evidence `d8b07c5`; five independently derived cells preserve contradictions and pointer unavailability, web `49/49`, Studio `12/12`, API `64/64`, full check/boundary/toolchain and live 1440×900 + 390×844 WebMCP matrices pass with zero overlap or horizontal overflow.
 - [ ] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready.
 - [ ] `G10S-130` Unauthorized publish, forged reviewer, stale revision, duplicate preferred prompt и missing grant fail closed.
 - [ ] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release.
