@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-214.md`](verification/greenfield/plan-progress-2026-08-31-g10s-214.md).
+[`plan-progress-2026-09-01-g10s-215.md`](verification/greenfield/plan-progress-2026-09-01-g10s-215.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -650,8 +650,26 @@ export/import scripts от заранее собранного contracts `dist`.
 
 Evidence target:
 `fluent-interview-platform/docs/verification/greenfield/G10S/target-independence-2026-08-31.{json,md}`.
-Следующий executable пункт — `G10S-215`: операторский rollback target release
-pointer на pre-G10S bundle и последующий forward restore C098.
+
+### Execution update — G10S-215 serving pointer rollback/restore — 1 сентября 2026
+
+Target `main` закрыл G10S-215 двумя локальными commit-gated коммитами без push
+из-за Actions quota: `58b017f` (implementation) и `175395e` (evidence/docs).
+Добавлены migration `0018_release_pointer_operator_transitions.sql`, отдельная
+operator-only команда `pnpm release:transition`, optimistic pointer check,
+idempotency replay и immutable `import/activate/rollback` event metadata.
+Контракт Zod теперь совпадает с DB constraints для bounded actor/reason.
+
+Disposable rehearsal `pnpm architecture:release-pointer-transition` применила
+все `18` миграций, импортировала synthetic pre-G10S baseline и C098, выполнила
+rollback, отклонила stale expected pointer, восстановила C098 и повторила
+forward-команду без второй записи. Результат `PASS`: event sequence
+`import → import → rollback → activate`, readback verified, projection digest
+стабилен, `contentBodiesEmitted=0`, база/one-shot containers/temporary bundles
+очищены. Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/release-pointer-transition-2026-09-01.{json,md}`.
+Следующий executable пункт — `G10S-216`: DB restore pre-G10S backup в
+disposable stack с запускаемым reference product.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3932,7 +3950,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision. Evidence: target implementation `bb1acc4`, evidence/documentation `fcfc2f8`; exact order/source `ec3b680` clean/target `bb1acc4` clean, exit `0/0`, output metadata only, focused `5/5`, full check/boundary/toolchain green.
 - [x] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo. Evidence: target `6f0f801`, evidence `1c6a072`; standalone docs/CLI PASS, source fallback и database/Docker mutations отсутствуют.
 - [x] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит. Evidence: target `d126d17`, evidence `ebbb082`; archive/fresh clone PASS, C098 export/import/journey PASS, source path references `0`, lockfiles `pnpm-lock.yaml` only.
-- [ ] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098.
+- [x] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098. Evidence: target implementation `58b017f`, evidence/docs `175395e`; `18` migrations, rollback/stale rejection/forward restore/replay `PASS`, four-event immutable sequence, stable projection digest, readback verified, metadata-only `contentBodiesEmitted=0`, disposable cleanup.
 - [ ] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым.
 - [ ] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks.
 - [ ] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить.
