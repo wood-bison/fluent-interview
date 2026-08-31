@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-211.md`](verification/greenfield/plan-progress-2026-08-31-g10s-211.md).
+[`plan-progress-2026-08-31-g10s-214.md`](verification/greenfield/plan-progress-2026-08-31-g10s-214.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -628,6 +628,30 @@ restore остаются отдельными гейтами. Evidence target:
 Следующий executable пункт — `G10S-213`: проверить, что target docs/CLI
 полностью описывают authoring, review, export, import, rollback и recovery без
 source repo.
+
+### Execution update — G10S-213/214 standalone lifecycle and target independence — 31 августа 2026
+
+Target `main` закрыл G10S-213 и G10S-214 двумя implementation/evidence-парами
+локальных commit-gated коммитов без push из-за Actions quota: G10S-213 —
+`6f0f801` и `1c6a072`, G10S-214 — `d126d17` и `ebbb082`.
+
+G10S-213 доказал self-contained target lifecycle: runbook содержит authoring,
+review, deterministic export, file-only import/readback/reconciliation,
+rollback и recovery; authoring/export/serving/stack CLIs отвечают на `--help`
+без базы и Docker. G10S-214 собрал clean `git archive` и отдельный
+`git clone --no-local --branch main` с тем же SHA, без `.git` в archive, symlink,
+nested Git root, лишнего lockfile или source fallback. В fresh clone прошли
+`pnpm install --offline --frozen-lockfile --ignore-scripts`, `pnpm build`,
+`pnpm content:c098-release-export`, disposable
+`pnpm architecture:c098-serving-import` и
+`pnpm runtime:c098-vertical-slice-journey`; все exit `0`, C098 machine status
+`PASS`. Первый clean-clone запуск выявил и устранил скрытую зависимость C098
+export/import scripts от заранее собранного contracts `dist`.
+
+Evidence target:
+`fluent-interview-platform/docs/verification/greenfield/G10S/target-independence-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-215`: операторский rollback target release
+pointer на pre-G10S bundle и последующий forward restore C098.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3906,8 +3930,8 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-210` Сравнить source Strata и target counts/hashes/invariants; every difference имеет mapping/disposition. Evidence: target implementation `6bc19f6`, evidence `4e66c63`, frozen Strata `ec3b6804ecc1d08e3ab355be0c78930a46b34815`; `41/41` files and `159,515` bytes, drift/missing `0`, `13` mappings + `28` dispositions, uncovered `0`, target `17/17` contiguous migrations, invariant `12/12` inherited + `16/16` platform + `12` role checks, disposable DB dropped.
 - [x] `G10S-211` Повторить Strata golden fixtures против target CLI и сравнить normalized outputs. Evidence: target implementation `ba34664`, evidence/documentation `00b37f6`, Strata `ec3b680`; `11/11` frozen files, `6` cards, `75` layers, `3` task families, `1` dataset, drift/missing `0`, target CLI `2/2` exit `0`, normalized digest совпал; `7` explicit dispositions; metadata-only, source bodies и DB/import/release authority не эмитируются; focused `6/6`, full check/boundary/toolchain green.
 - [x] `G10S-212` Повторить source `npm run check` и target `pnpm check`; оба должны быть green до retirement decision. Evidence: target implementation `bb1acc4`, evidence/documentation `fcfc2f8`; exact order/source `ec3b680` clean/target `bb1acc4` clean, exit `0/0`, output metadata only, focused `5/5`, full check/boundary/toolchain green.
-- [ ] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo.
-- [ ] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит.
+- [x] `G10S-213` Проверить, что target docs/CLI полностью описывают authoring, review, export, import, rollback и recovery без source repo. Evidence: target `6f0f801`, evidence `1c6a072`; standalone docs/CLI PASS, source fallback и database/Docker mutations отсутствуют.
+- [x] `G10S-214` Выполнить clean archive/fresh clone target без `/Users/sergeyzhechko/developer/strata`; C098 build/import/journey проходит. Evidence: target `d126d17`, evidence `ebbb082`; archive/fresh clone PASS, C098 export/import/journey PASS, source path references `0`, lockfiles `pnpm-lock.yaml` only.
 - [ ] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098.
 - [ ] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым.
 - [ ] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks.
