@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-217.md`](verification/greenfield/plan-progress-2026-09-01-g10s-217.md).
+[`plan-progress-2026-09-01-g10s-218.md`](verification/greenfield/plan-progress-2026-09-01-g10s-218.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -726,6 +726,25 @@ evidence metadata-only: `G10S-217-strata-archive-2026-09-01.{json,md}`.
 
 Следующий executable пункт — `G10S-218`: пометить standalone Strata
 README/docs/plan как migrated/reference-only с target path/SHA.
+
+### Execution update — G10S-218 Strata retirement handoff — 1 сентября 2026
+
+Target `main` закрыл G10S-218 локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `bf9dd70` и marker-alignment fix `161a79b`,
+затем evidence/docs commit `04026a3`. Rehearsal проверила, что retained Strata
+successor clean на `0921dd0271983244a5cc96301ba0b242369cafd2`, его post-archive
+изменения ограничены ровно `README.md`, `docs/migration.md` и `docs/plan.md`,
+а каждый документ явно называет `fluent-interview-platform` active authority и
+замораживает собственные historical checkboxes. Immutable annotated tag
+`strata-archive-2026-09-01-g10s-217` по-прежнему указывает на baseline
+`ec3b6804ecc1d08e3ab355be0c78930a46b34815`; source `npm run check` завершился
+exit `0`. Target `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` также green; evidence metadata-only, без source bodies,
+runtime/schema/content mutations, удаления checkout или перемещения tag.
+Машиночитаемая и human-readable фиксация находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-218-strata-retirement-2026-09-01.{json,md}`.
+Standalone checkout сознательно сохраняется до owner-approved G13 archive /
+restore proof; следующий executable пункт — `G10S-219`.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4009,7 +4028,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-215` Выполнить rollback target release pointer на pre-G10S bundle и затем forward restore C098. Evidence: target implementation `58b017f`, evidence/docs `175395e`; `18` migrations, rollback/stale rejection/forward restore/replay `PASS`, four-event immutable sequence, stable projection digest, readback verified, metadata-only `contentBodiesEmitted=0`, disposable cleanup.
 - [x] `G10S-216` Выполнить DB restore pre-G10S backup в disposable stack; reference product остаётся запускаемым. Evidence: target implementation `c428809`, evidence/docs `bce1e17`; migrations `1..17 → 1..18`, logical hash/counts/schema/role grants совпали, role checks `12/12`, product probes до/после restore `200`, cleanup `0` scoped resources, metadata-only.
 - [x] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks. Evidence: target implementation `44015ff`, evidence `3d9aa39`, README handoff `d3d10f9`; frozen source `ec3b680`, manifest `41/41` без drift, immutable annotated tag, archive/bundle/clone PASS, source и clone checks exit `0`, metadata-only и temporary cleanup.
-- [ ] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить.
+- [x] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить. Evidence: target implementation `bf9dd70`/`161a79b`, evidence/docs `04026a3`; successor `0921dd0`, immutable archive tag `strata-archive-2026-09-01-g10s-217` → `ec3b6804`; exact three-doc change range, source check and fail-closed marker rehearsal PASS.
 - [ ] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof.
 - [ ] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target.
 - [ ] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service.
