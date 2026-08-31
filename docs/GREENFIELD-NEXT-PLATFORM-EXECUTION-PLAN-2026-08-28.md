@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-219.md`](verification/greenfield/plan-progress-2026-09-01-g10s-219.md).
+[`plan-progress-2026-09-01-g10s-220.md`](verification/greenfield/plan-progress-2026-09-01-g10s-220.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -764,6 +764,27 @@ G10S-218/219 tests и live retention rehearsal — green. Evidence
 schema/content не изменялись, checkout не удалялся, tag не перемещался.
 Следующий executable пункт — `G10S-220`: проверить отсутствие forbidden
 legacy structure/fallbacks в target.
+
+### Execution update — G10S-220 target structure guard — 1 сентября 2026
+
+Target `main` закрыл G10S-220 локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `09fb087` и evidence/docs `b5de1f6`. Новый
+metadata-only guard проверяет активное дерево target: ровно один root `.git`,
+ноль nested Git roots/active или external symlinks, единственный root
+`pnpm-lock.yaml`, единственный root `compose.yaml` с project name
+`${FLUENT_STACK_ID:-fluent-interview-platform-dev}`, а также отсутствие
+legacy source-path/fallback references в `76` runtime/config files. Реальный
+результат — `PASS`: `901` files, `166` directories, `21` excluded generated /
+dependency directories, scan errors `0`, runtime references/fallbacks `0`.
+
+Focused target-independence tests — `5/5`; полный `pnpm check`,
+`pnpm boundary:check` и `pnpm toolchain:check` — green. Guard fail-closed
+тестируется на nested Git, external link, lockfile/Compose drift, env
+override, legacy reference и fallback fixtures. Evidence
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-220-target-structure-2026-09-01.{json,md}`
+содержит только metadata/counts/hashes; Docker и DB не запускались и не
+изменялись. Следующий executable пункт — `G10S-221`: доказать one-root
+startup через `pnpm dev` без самостоятельного Strata service.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4049,7 +4070,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-217` Создать immutable Strata archive tag/bundle/hash manifest и проверить clone + source checks. Evidence: target implementation `44015ff`, evidence `3d9aa39`, README handoff `d3d10f9`; frozen source `ec3b680`, manifest `41/41` без drift, immutable annotated tag, archive/bundle/clone PASS, source и clone checks exit `0`, metadata-only и temporary cleanup.
 - [x] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить. Evidence: target implementation `bf9dd70`/`161a79b`, evidence/docs `04026a3`; successor `0921dd0`, immutable archive tag `strata-archive-2026-09-01-g10s-217` → `ec3b6804`; exact three-doc change range, source check and fail-closed marker rehearsal PASS.
 - [x] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof. Evidence: target implementation `8ccb0f5`, evidence/docs `356f3ad`; retained Strata `0921dd0`, immutable tag → `ec3b6804`; source-target deletion scan `0`, G13 ownership markers and read-only controls PASS.
-- [ ] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target.
+- [x] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target. Evidence: target implementation `09fb087`, evidence/docs `b5de1f6`; one root Git, zero nested roots/active or external symlinks, one `pnpm-lock.yaml`, one root Compose project, runtime source/fallback findings `0`, scan `901` files/`166` dirs, focused `5/5`, full check/boundary/toolchain green, metadata-only.
 - [ ] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service.
 - [ ] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes.
 - [ ] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema.
