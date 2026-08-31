@@ -2044,6 +2044,24 @@ is not promoted to authoring authority. The next executable item is G10S-136:
 record the Studio-on-Strata convergence commit gate from the completed
 G10S-116…135 evidence chain.
 
+### Execution update — G10S-136 Studio authority convergence — 31 августа 2026
+
+Target `main` now contains the required commit `602cd8a` (`feat(g10s):
+converge Studio on Strata authoring authority`). It adds the versioned
+`g10s-studio-convergence.v1` manifest and a fail-closed architecture gate. The
+gate requires the exact twenty PASS artifacts from G10S-116…135, all seven
+target commands in `implemented` state, Strata as the single authoring
+authority, a checksummed `question-catalog.v1` file seam and the public Next
+boundary as read-only.
+
+Nine convergence tests reject missing evidence, restored legacy authority,
+dual-write, serving reads from Strata, production JSONL authority, accepted
+browser mutation, direct-database browser proof and any attempt to hide the
+persistent-stack boundary. Architecture tests now pass `213/213`; the complete
+check/build/boundary/toolchain ladder is green. G10S-137 corpus/rights work,
+G10S-221 persistent-stack migration and controlled G13 removal remain explicit
+open boundaries. Closing this commit gate does not claim those later phases.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3264,7 +3282,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-133` Studio readback сравнивает authoring release manifest с serving IDs/hashes, а не доверяет HTTP 200. Evidence: target implementation `242c36e`, evidence `11b6bb7`; bounded CLI readback validates the authoring bundle and compares 10/10 release IDs, hashes, counts and generation timestamp against PostgreSQL serving state, rejects 11 independent drifts plus an HTTP-shaped false success, retires both HTTP readback seams with 410, passes release-import `17/17`, API `65/65`, web `52/52`, architecture `190/190` and the full target ladder without mutating persistent PostgreSQL or masking deferred `G10S-221` migrations.
 - [x] `G10S-134` Backup/restore сохраняет authoring history, reviews, bundle manifests, serving pointers и outbox receipts. Evidence: target implementation `ac46607` + deterministic fixture `26eb323`, evidence `8a13de7`; 19/19 non-empty lifecycle families and 19/19 owning dump tables are required, two independent restores preserve exact hash `c8682e…d8cef`, 4 roles/6 schema grants/364 object grants and 12 role assertions match, architecture `192/192` and the full target ladder pass with all disposable resources removed and persistent PostgreSQL unchanged.
 - [x] `G10S-135` Existing G10 browser journey переписан на новый seam и проходит без direct DB shortcut. Evidence: target implementation `efe578e`, evidence `0427938`; disposable one-shot authoring→bundle→serving journey applied 17 migrations, passed exact import replay and bounded readback, exposed the active release through the public Next seam, kept 4 retired HTTP routes at 410, accepted zero browser mutations and used zero direct-database assertions; focused `17/17`, Studio `12/12`, architecture `204/204`, real browser/WebMCP and the full target ladder pass with zero scoped Docker residue and persistent PostgreSQL unchanged.
-- [ ] `G10S-136` Commit: `feat(g10s): converge Studio on Strata authoring authority`.
+- [x] `G10S-136` Commit: `feat(g10s): converge Studio on Strata authoring authority` (`602cd8a`). Evidence: versioned convergence manifest requires exact G10S-116…135 `20/20 PASS`, `7/7` implemented target commands, Strata-only authoring, checksummed file release transfer and zero dual-write/JSONL/browser-mutation/DB-shortcut authority; 9 convergence tests, architecture `213/213` and the full target ladder pass while G10S-137, G10S-221 and G13 remain explicitly open.
 
 ### G10S.6. Corpus migration, quarantine и rights
 
