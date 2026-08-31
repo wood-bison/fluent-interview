@@ -2016,6 +2016,34 @@ removed and persistent PostgreSQL is unchanged. This closes only G10S-134. The
 next executable slice is G10S-135: rewrite the G10 browser journey onto the new
 authoring-bundle-serving seam without direct database shortcuts.
 
+### Execution update — G10S-135 Studio browser journey — 31 августа 2026
+
+Target `main` now contains implementation commit `efe578e` (`test(g10s):
+migrate Studio browser journey`) and evidence commit `0427938` (`docs(g10s):
+record browser journey gate`). The replacement journey creates a disposable
+Compose/PostgreSQL boundary, applies all 17 migrations, and executes the exact
+one-shot create-revision → review → release-request → export → serving-import
+sequence. Import replay and bounded readback both pass before the isolated API
+and Next production containers are exposed to the browser.
+
+The public Next seam returns 200 for Studio state and the active serving
+pointer, links the exact generated release candidate and visibly renders
+`2026.08.31-questions.122`. All four retired HTTP authoring/readback routes
+return 410, accepted public browser mutations remain zero, and no direct SQL
+read is accepted as browser-journey evidence. Focused tests pass `17/17`,
+Studio `12/12`, architecture `204/204`, and the complete
+check/boundary/toolchain ladder passes twice. A real 1280×720 in-app browser +
+WebMCP pass found zero alerts, zero horizontal overflow and the explicit
+`.app-scroll-region` vertical scroll owner. Every scoped container, volume,
+network, image and temporary bundle is removed without touching persistent
+PostgreSQL.
+
+This closes only G10S-135. Persistent development-stack migration remains the
+explicit G10S-221 boundary; the recovery-compatible legacy Studio projection
+is not promoted to authoring authority. The next executable item is G10S-136:
+record the Studio-on-Strata convergence commit gate from the completed
+G10S-116…135 evidence chain.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3235,7 +3263,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-132` Crash test внутри serving import откатывает весь release и сохраняет previous active pointer. Evidence: target implementation `12b4228`, evidence `0817c11`; abrupt exit 87 at all 5 serving mutation phases preserves the exact prior database state and active release, clean retry imports and reads back the next release exactly, architecture `187/187` plus full check/boundary/toolchain pass, and all disposable resources are removed without touching persistent PostgreSQL.
 - [x] `G10S-133` Studio readback сравнивает authoring release manifest с serving IDs/hashes, а не доверяет HTTP 200. Evidence: target implementation `242c36e`, evidence `11b6bb7`; bounded CLI readback validates the authoring bundle and compares 10/10 release IDs, hashes, counts and generation timestamp against PostgreSQL serving state, rejects 11 independent drifts plus an HTTP-shaped false success, retires both HTTP readback seams with 410, passes release-import `17/17`, API `65/65`, web `52/52`, architecture `190/190` and the full target ladder without mutating persistent PostgreSQL or masking deferred `G10S-221` migrations.
 - [x] `G10S-134` Backup/restore сохраняет authoring history, reviews, bundle manifests, serving pointers и outbox receipts. Evidence: target implementation `ac46607` + deterministic fixture `26eb323`, evidence `8a13de7`; 19/19 non-empty lifecycle families and 19/19 owning dump tables are required, two independent restores preserve exact hash `c8682e…d8cef`, 4 roles/6 schema grants/364 object grants and 12 role assertions match, architecture `192/192` and the full target ladder pass with all disposable resources removed and persistent PostgreSQL unchanged.
-- [ ] `G10S-135` Existing G10 browser journey переписан на новый seam и проходит без direct DB shortcut.
+- [x] `G10S-135` Existing G10 browser journey переписан на новый seam и проходит без direct DB shortcut. Evidence: target implementation `efe578e`, evidence `0427938`; disposable one-shot authoring→bundle→serving journey applied 17 migrations, passed exact import replay and bounded readback, exposed the active release through the public Next seam, kept 4 retired HTTP routes at 410, accepted zero browser mutations and used zero direct-database assertions; focused `17/17`, Studio `12/12`, architecture `204/204`, real browser/WebMCP and the full target ladder pass with zero scoped Docker residue and persistent PostgreSQL unchanged.
 - [ ] `G10S-136` Commit: `feat(g10s): converge Studio on Strata authoring authority`.
 
 ### G10S.6. Corpus migration, quarantine и rights
