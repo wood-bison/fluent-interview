@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-203.md`](verification/greenfield/plan-progress-2026-08-31-g10s-203.md).
+[`plan-progress-2026-08-31-g10s-205.md`](verification/greenfield/plan-progress-2026-08-31-g10s-205.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -432,6 +432,29 @@ Evidence находится в
 `fluent-interview-platform/docs/verification/greenfield/G10S/c098-persistence-2026-08-31.{json,md}`.
 Следующий executable пункт — `G10S-205`: RU/EN × light/dark × MacBook 13/16 ×
 Studio Display browser matrix без overflow, clipping и unreachable controls.
+
+### Execution update — G10S-205 C098 desktop route matrix — 31 августа 2026
+
+Target `main` закрыл G10S-205 локальными commit-gated коммитами без push из-за
+ограничения Actions quota: implementation/evidence `a35c919`, target index
+`8dc3b8b`. Versioned policy
+`g10s-c098-desktop-matrix-policy.v1` (`2026.08.31-c098-desktop-matrix.1`)
+фиксирует 23 exact route templates — query strings сравниваются без
+нормализации — и перебирает `en`/`ru`, `light`/`dark`, MacBook Pro 13
+(1280×800), MacBook Pro 16 (1728×1117) и Apple Studio Display (2560×1440).
+
+Live matrix PASS: `276/276` cases, `9,612` controls inspected, zero clipped
+controls, zero horizontal overflow, `.app-scroll-region` — scroll owner в
+каждом случае, zero missing `main`/`h1` landmarks, zero viewport mismatches и
+zero console/page/request errors. Static source/evidence policy — `30/30`,
+focused mutation suite — `7/7`; mutations route, viewport, overflow, clipping,
+executor и scroll guard fail closed. Evidence metadata-only: source/prompt/
+answer/solution/content/dump/credential/hidden evaluator bodies не эмитируются,
+learner/authoring/import/release mutations не выполнялись. Полные `pnpm check`,
+`pnpm boundary:check` и `pnpm toolchain:check` green. Evidence находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-desktop-matrix-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-206`: keyboard/screen-reader baseline для
+landmarks, labels, focus order, dialog/panel behavior и code/runtime controls.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3699,7 +3722,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly. Evidence: target implementation `3668785`, evidence `0a2ca28`; static policy `24/24`, focused `4/4`, live `pnpm runtime:c098-negative-journey` PASS (13 runtime vectors, 8 Submit cases, replay/conflict/concurrency, cancellation recovery, no learner-state mutation).
 - [x] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary. Evidence: target implementation `87849f5`, target evidence `c098-observe-explain-navigator-2026-08-31.{json,md}`; static `40/40`, focused `5/5`, live journey PASS, 14 context coordinates, metadata-only/advisory-only.
 - [x] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice. Evidence: target implementation `b113da1`, evidence `0b2c4a5`; static `33/33`, focused `5/5`, live persistence journey `PASS`, 14-entry backup matrix, integrity-checked restore и cleanup `0 containers / 0 networks`.
-- [ ] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls.
+- [x] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls. Evidence: target `a35c919`, index `8dc3b8b`, `c098-desktop-matrix-2026-08-31.{json,md}`; `276/276` cases, `9,612` controls, `0` overflow/clipping/missing-landmark/viewport/console/page/request errors, static `30/30`, mutation `7/7`, exact query templates и metadata-only report.
 - [ ] `G10S-206` Keyboard/screen-reader baseline: headings, labels, focus order, dialog/panel behavior и code/runtime controls имеют accessible names.
 - [ ] `G10S-207` Performance budget проверяет initial route, editor/task chunks и no duplicate content payload.
 - [ ] `G10S-208` Full route→question→activity→Run→Submit→Evidence machine journey и human spoken explanation сохранены отдельными evidence.
