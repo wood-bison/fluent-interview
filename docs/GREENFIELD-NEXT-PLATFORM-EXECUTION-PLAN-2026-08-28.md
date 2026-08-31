@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-08-31-g10s-201.md`](verification/greenfield/plan-progress-2026-08-31-g10s-201.md).
+[`plan-progress-2026-08-31-g10s-202.md`](verification/greenfield/plan-progress-2026-08-31-g10s-202.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -359,6 +359,29 @@ record создан без raw source/prediction/hidden bodies. Для обои�
 Следующий executable пункт — `G10S-202`: wrong-order, malformed-input,
 stale-revision, forged-verdict и duplicate-idempotency vectors должны fail
 correctly.
+
+### Execution update — G10S-202 C098 negative vectors — 31 августа 2026
+
+Target `main` закрыл G10S-202 локальными commit-gated коммитами без push из-за
+ограничения Actions quota: implementation `3668785` и evidence `0a2ca28`.
+Versioned policy `g10s-c098-negative-vectors-policy.v1`
+(`2026.08.31-c098-negative-vectors.1`) объединяет существующие public Run
+vector journey и hidden Submit matrix на одной Next boundary. Она фиксирует
+пять обязательных негативных классов: wrong-order prediction остаётся
+видимым mismatch без authority, malformed Run/Submit получают `400` до worker,
+stale revision и forged verdict fail closed, exact replay стабилен, changed
+replay получает `409 idempotency_conflict`, а concurrent replay создаёт одну
+verdict/evidence пару.
+
+Static policy дала `24/24`, focused tests `4/4`; live journey PASS с `13`
+runtime vectors и `8` Submit cases. Cancellation recovery и learner-state
+stability также PASS. Отчёт metadata-only: source/diagnostics/hidden bodies не
+эмитируются, Task/Activity не создаются, import/release authority и database
+mutation отсутствуют. Evidence находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S/c098-negative-vectors-2026-08-31.{json,md}`.
+Следующий executable пункт — `G10S-203`: Observe/Explain показывают
+trace/evidence без hidden-answer leakage, Navigator получает exact context IDs
+и сохраняет advisory-only boundary.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -3623,7 +3646,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-199` Language/runtime selector показывает только реально compatible released Node profile; preview languages не активны. Evidence: target implementation `19d60a7`, evidence `bd1203d`; strict learner selector выдаёт только JavaScript revision 1 / `node-26-commonjs`, preview TS/Go/Java/Python/.NET скрыты и direct vectors получают 400; EN/RU route 200, canonical Run PASS, mastery/unlock/accepted неизменны; static `21/21`, focused `12/12`, full check/boundary/toolchain и golden journey PASS.
 - [x] `G10S-200` Run выполняет public experiment и не создаёт mastery/verdict. Evidence: target implementation `a6d6fc5`, evidence `7d95250`; static policy `13/13`, focused `10/10`, live public-run journey PASS, stable progress digest, 5 output lines и 8 trace events, без mastery/verdict mutation.
 - [x] `G10S-201` Submit выполняет hidden evaluation по exact TaskRevision и создаёт deterministic verdict/evidence. Evidence: target implementation `c7e7dbd`, evidence `c067a05`; static policy `26/26`, focused `4/4`, live canonical/replay/conflict/drift journey PASS, five hidden checks, evidence-only metadata и cleanup.
-- [ ] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly.
+- [x] `G10S-202` Wrong order, malformed input, stale revision, forged verdict и duplicate idempotency vectors fail correctly. Evidence: target implementation `3668785`, evidence `0a2ca28`; static policy `24/24`, focused `4/4`, live `pnpm runtime:c098-negative-journey` PASS (13 runtime vectors, 8 Submit cases, replay/conflict/concurrency, cancellation recovery, no learner-state mutation).
 - [ ] `G10S-203` Observe/Explain показывают trace/evidence без hidden answer leakage; Navigator получает exact context IDs и advisory-only boundary.
 - [ ] `G10S-204` Restart сохраняет active release, attempts, evidence и Studio history; backup/restore воспроизводит slice.
 - [ ] `G10S-205` RU/EN × light/dark × MacBook 13/16 × Studio Display browser matrix не имеет overflow, clipped text или unreachable controls.
