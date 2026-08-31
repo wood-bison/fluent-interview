@@ -3342,7 +3342,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### G10S.8. C098 Node Event Loop vertical slice
 
-- [ ] `G10S-187` Подтвердить stable identity C098, KC/aspect/stack, roles, locales, provenance, grants и current serving references.
+- [x] `G10S-187` Подтвердить stable identity C098, KC/aspect/stack, roles, locales, provenance, grants и current serving references. Evidence: target implementation `a08259d`, evidence `d8484e1`; `pnpm content:c098-identity`, focused tests `7/7`, content compiler `421/421`, full check/boundary/toolchain/body-boundary PASS; generic `C098 / ordering / generic` явно отделён от serving Node specialization `question.node-event-loop-001@r1` relation `node-specialization`, без identity alias/import/release mutation. Next executable item is `G10S-188`.
 - [ ] `G10S-188` Собрать preferred EN/RU prompts и seven-layer answers только из reviewed/public authoring data.
 - [ ] `G10S-189` Alternative prompts C098 пройти human same-expected-answer review; semantic variants выделить в отдельные aspects/questions.
 - [ ] `G10S-190` Перенести минимум одну prediction Activity из prompt space в assessed Activity/Task.
