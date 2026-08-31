@@ -1896,6 +1896,32 @@ only G10S-129; it does not claim curriculum completeness. The next executable
 slice is G10S-130: prove all authoring/review/release bypass attempts fail
 closed through the current production seams.
 
+### Execution update — G10S-130 authority negative matrix — 31 августа 2026
+
+Target `main` now contains implementation commit `53f1e72` (`test(g10s):
+enforce authority negative matrix`) and evidence commit `b247133` (`docs(g10s):
+record authority negative gate`). One aggregate production-seam rehearsal runs
+five attacks against four disposable PostgreSQL databases: unauthorized
+publisher, forged reviewer, stale revision, duplicate preferred prompt and
+missing source grant. All `5/5` fail closed and produce evidence hash
+`e2d05dd43e0c51784ab8ade42fad9df31feccf957ab76d6b3160f76102e70082`.
+
+The stale case is checked at three layers: optimistic authoring head, release
+request current-revision validation and direct PostgreSQL bypass. Preferred
+prompt uniqueness is probed with both an `ord + version` bypass and a
+version-only bypass; exactly one canonical preferred row remains. Failed
+attacks create no extra Question, revision, review or release candidate and
+activate zero learner releases. All four disposable databases are dropped and
+the persistent database is unchanged.
+
+Negative-matrix mutation tests pass `7/7`, architecture tests `173/173`, and
+the complete check/boundary/toolchain ladder passes twice. The canonical
+running application returns HTTP 410 for retired review and publish mutation
+endpoints, so a browser cannot acquire authoring credentials. This closes only
+G10S-130. The next executable slice is G10S-131: inject a crash after the
+authoring commit and prove deterministic bundle-export recovery without any
+partial serving release.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3110,7 +3136,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-127` Every migrated draft/review/publish state имеет explicit disposition; dropped rows имеют reason/reviewer. Evidence: target implementation `8f5c5db`, evidence `cd6999c`; 11/11 source rows and 26/26 source fields have exactly one immutable decision (23 mapped, 12 needs-authoring, one quarantined, one rejected), all non-mapped decisions carry reason and reviewer, exact replay creates no duplicate, app roles have zero access, mutation fails closed and the 17-migration live-clone plus full check/boundary/toolchain gates pass without changing the persistent database or serving state.
 - [x] `G10S-128` UI показывает authoring revision, review state, rights, locale/layer completeness и release projection state раздельно. Evidence: target bootstrap `e1e7726`, implementation `53f5c68`, evidence `d8b07c5`; five independently derived cells preserve contradictions and pointer unavailability, web `49/49`, Studio `12/12`, API `64/64`, full check/boundary/toolchain and live 1440×900 + 390×844 WebMCP matrices pass with zero overlap or horizontal overflow.
 - [x] `G10S-129` UI не показывает quarantine/import candidate как published/coverage-ready. Evidence: target implementation `9125445`, evidence `938a423`; one strict release-only catalog contract guards 8 learner/release seams, rejects draft/reviewed/candidate/quarantine state without hiding reviewed `brain-import` provenance, makes contaminated/empty coverage fail closed, and passes web `52/52`, API `65/65`, release-import `4/4`, full check/boundary/toolchain plus live Questions→Program→lesson WebMCP verification with zero horizontal overflow or browser errors.
-- [ ] `G10S-130` Unauthorized publish, forged reviewer, stale revision, duplicate preferred prompt и missing grant fail closed.
+- [x] `G10S-130` Unauthorized publish, forged reviewer, stale revision, duplicate preferred prompt и missing grant fail closed. Evidence: target implementation `53f1e72`, evidence `b247133`; a live 5/5 adversarial matrix exercises four disposable PostgreSQL databases, checks stale revision at CLI and direct-DB layers, preserves one canonical preferred prompt and exact final state, activates zero learner releases, passes architecture `173/173` plus full check/boundary/toolchain, and leaves persistent PostgreSQL unchanged.
 - [ ] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release.
 - [ ] `G10S-132` Crash test внутри serving import откатывает весь release и сохраняет previous active pointer.
 - [ ] `G10S-133` Studio readback сравнивает authoring release manifest с serving IDs/hashes, а не доверяет HTTP 200.
