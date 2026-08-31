@@ -1994,6 +1994,28 @@ G10S-133. The next executable slice is G10S-134: prove backup/restore preserves
 authoring history, reviews, bundle manifests, serving pointers and outbox
 receipts together.
 
+### Execution update — G10S-134 complete release-history restore — 31 августа 2026
+
+Target `main` now contains implementation commits `ac46607` (`test(g10s):
+prove complete release history restore`) and `26eb323` (`test(g10s): stabilize
+release restore evidence`), plus evidence commit `8a13de7` (`docs(g10s): record
+complete restore gate`). The canonical backup/restore harness now requires
+nineteen non-empty lifecycle families and all nineteen owning tables in the
+custom PostgreSQL dump. Empty but internally consistent archives cannot pass.
+
+The source database, immediate restore and post-role-replay target have the
+same complete-row SHA-256. Two independent restore rehearsals produced the
+same deterministic hash
+`c8682e78c7a550dc05fc2005b96a283a84ad748515926e9d2d3f53dca43d8cef`.
+Authoring revisions, reviews, policy evidence, release candidates and receipts;
+serving cards, manifest, pointer/import receipts and outbox acknowledgement all
+survive exactly. Four roles, six schema grants, 364 object grants and twelve
+role assertions match. Architecture tests pass `192/192` and the complete
+check/boundary/toolchain ladder passes twice. Every disposable database/dump is
+removed and persistent PostgreSQL is unchanged. This closes only G10S-134. The
+next executable slice is G10S-135: rewrite the G10 browser journey onto the new
+authoring-bundle-serving seam without direct database shortcuts.
+
 ### Execution update — G10S-107 restricted-source grant boundary — 30 августа 2026
 
 Target `main` now contains `c619ae412bad0f26d81cee57f08ec5255e63dda1`
@@ -3212,7 +3234,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-131` Crash test между authoring commit и bundle export восстанавливается без partial serving release. Evidence: target implementation `a72593f`, evidence `0248a29`; abrupt exit 86 after candidate read leaves exact authoring state, zero serving rows and no bundle target, clean retry produces two byte-identical exports and exact import/readback, architecture `180/180` plus full check/boundary/toolchain pass, and all disposable resources are removed without touching persistent PostgreSQL.
 - [x] `G10S-132` Crash test внутри serving import откатывает весь release и сохраняет previous active pointer. Evidence: target implementation `12b4228`, evidence `0817c11`; abrupt exit 87 at all 5 serving mutation phases preserves the exact prior database state and active release, clean retry imports and reads back the next release exactly, architecture `187/187` plus full check/boundary/toolchain pass, and all disposable resources are removed without touching persistent PostgreSQL.
 - [x] `G10S-133` Studio readback сравнивает authoring release manifest с serving IDs/hashes, а не доверяет HTTP 200. Evidence: target implementation `242c36e`, evidence `11b6bb7`; bounded CLI readback validates the authoring bundle and compares 10/10 release IDs, hashes, counts and generation timestamp against PostgreSQL serving state, rejects 11 independent drifts plus an HTTP-shaped false success, retires both HTTP readback seams with 410, passes release-import `17/17`, API `65/65`, web `52/52`, architecture `190/190` and the full target ladder without mutating persistent PostgreSQL or masking deferred `G10S-221` migrations.
-- [ ] `G10S-134` Backup/restore сохраняет authoring history, reviews, bundle manifests, serving pointers и outbox receipts.
+- [x] `G10S-134` Backup/restore сохраняет authoring history, reviews, bundle manifests, serving pointers и outbox receipts. Evidence: target implementation `ac46607` + deterministic fixture `26eb323`, evidence `8a13de7`; 19/19 non-empty lifecycle families and 19/19 owning dump tables are required, two independent restores preserve exact hash `c8682e…d8cef`, 4 roles/6 schema grants/364 object grants and 12 role assertions match, architecture `192/192` and the full target ladder pass with all disposable resources removed and persistent PostgreSQL unchanged.
 - [ ] `G10S-135` Existing G10 browser journey переписан на новый seam и проходит без direct DB shortcut.
 - [ ] `G10S-136` Commit: `feat(g10s): converge Studio on Strata authoring authority`.
 
