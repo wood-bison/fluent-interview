@@ -6378,3 +6378,36 @@ Live-проверка Atlas в русской локали выявила сме
 projects или progress records. `G10S-246` human acceptance, G11 content
 breadth, финальная revalidation, independent review и G13 decommission
 остаются открытыми. Push не выполнялся из-за ограничения Actions quota.
+
+## Локализация native select в Questions и Settings
+
+Target-коммит без push — `15fc2eb3e692cca7a2467de3584dcca42919884d`;
+evidence-коммит — `61293d5`.
+
+Live-проверка `/questions` и `/settings` нашла отдельный класс i18n-дефектов:
+нативные `<select>` показывали slash-delimited bilingual captions, поэтому
+русская локаль оставалась частично английской. В `Questions` теперь выбранный
+трек-фильтр показывает `Все треки` в RU и `All tracks` в EN, а language-фильтр
+— `Английский` в RU и `English` в EN. В `NavigatorSettings` provider и
+неподключённое состояние модели также получают locale-owned copy:
+`Локальный OpenAI-compatible`/`Local OpenAI-compatible` и
+`Выберите после проверки`/`Select after connection test`. Канонические
+technical IDs и значения `Node.js`, `Java`, `Go`, `Русский` не переводятся.
+
+Проверено:
+
+- live RU `/questions?track=node&locale=ru`: `html[lang]=ru`, options
+  `Все треки`, `Английский`, `Русский`, без смешанных подписей;
+- live EN `/questions?track=node&locale=en`: `html[lang]=en`, options
+  `All tracks`, `English`, `Русский`;
+- live RU/EN `/settings`: provider/model copy соответствует локали;
+- web regression **71/71**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/native-select-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не менялся: **658 / 476 / 1134 / 58,02%**. Это узкий
+display/i18n corrective slice: он не добавляет вопросов, задач, activity,
+projects или progress records и не закрывает `G10S-246`, G11 breadth, G12.5,
+independent final review или G13 decommission. Push не выполнялся из-за
+ограничения Actions quota.
