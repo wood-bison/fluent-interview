@@ -585,3 +585,26 @@ sign-off остаются открытыми. Push не выполнялся.
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-rubric-labels-2026-09-01.{json,md}`.
+
+## Коррекция coverage и progress labels
+
+Target `ba129cb`, evidence `253ccaf`, push не выполнялся.
+
+В learner-facing coverage/review UI устранены сырые `coverage-policy.v1`,
+`mastery-policy.v1`, underscore-критерии и английские event-count labels.
+Общий `coverage-labels.ts` даёт bilingual policy/criterion/note copy и оставляет
+стабильные IDs только в diagnostic `data-*` атрибутах. На `/program` RU видны
+`Политика покрытия v1`, локализованные критерии и gap-notes; EN toggle выдаёт
+`Coverage policy v1`. На `/review` RU footer показывает `Политика мастерства v1 ·
+0 событий обучения · 0 событий помощи`.
+
+Проверки: web `65/65`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — PASS; scoped stack `6/6`,
+migrations `18/18`, pending `0`. Snapshot: **658 / 476 / 1134 / 58,02%**.
+
+G10S-246 human acceptance, G11 content breadth, финальный independent review и
+G13 decommission остаются открытыми. Неизвестные будущие gap-notes требуют
+reviewed translation; текущая корректировка не меняет curriculum ёмкость.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/coverage-progress-labels-2026-09-01.{json,md}`.

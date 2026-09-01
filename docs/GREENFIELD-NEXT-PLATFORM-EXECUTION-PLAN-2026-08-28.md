@@ -6067,3 +6067,36 @@ progress records. G10S-246 human acceptance и G11 content breadth остают�
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-rubric-labels-2026-09-01.{json,md}`.
+
+## Коррекция coverage и progress labels
+
+Target-коммит без push — `ba129cb`; evidence-коммит — `253ccaf`.
+
+Повторный learner-аудит обнаружил технические значения в coverage/review:
+`coverage-policy.v1`, `mastery-policy.v1`, underscore-критерии и английские
+`learning events` / `assistance events` были видны даже при русском интерфейсе.
+Общий bilingual `coverage-labels.ts` теперь локализует обе policy versions,
+семь coverage criteria и известные gap-notes. Stable policy/criterion IDs
+сохранены только в `data-*` для диагностики; неизвестная будущая заметка
+безопасно сохраняет canonical source text до редакторского перевода.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/`:
+
+- `/program?track=node&locale=ru` показывает `Политика покрытия v1`, русские
+  критерии и gap-notes; raw policy/criterion identifiers отсутствуют;
+- переключатель EN показывает `Coverage policy v1`, `primary questions` и
+  English gap-notes;
+- `/review?track=node&locale=ru` показывает `Политика мастерства v1 · 0
+  событий обучения · 0 событий помощи`;
+- web regression `65/65`, `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+  `pnpm toolchain:check` — `PASS`;
+- scoped stack `6/6`, migrations `18/18`, pending `0`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/accessibility seam и не добавляет вопросов, задач, activity, projects
+или progress records. G10S-246 human acceptance и G11 content breadth
+остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/coverage-progress-labels-2026-09-01.{json,md}`.
