@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-224.md`](verification/greenfield/plan-progress-2026-09-01-g10s-224.md).
+[`plan-progress-2026-09-01-g10s-225.md`](verification/greenfield/plan-progress-2026-09-01-g10s-225.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -857,6 +857,25 @@ Focused tests `5/5`, полный check/boundary/toolchain ladder green. Evidenc
 `fluent-interview-platform/docs/verification/greenfield/G10S/G10S-224-g11-mass-import-boundary-2026-09-01.{json,md}`.
 Следующий executable пункт — G10S-225: retirement standalone Strata как active
 authority.
+
+### Execution update — G10S-225 standalone Strata authority retirement — 1 сентября 2026
+
+G10S-225 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `39b23ff`, handoff docs `4b59fb0`, machine
+evidence `1cbb69a`. Standalone Strata переведён из active authority в
+`migrated/reference-only`; target monorepo является единственным владельцем
+authoring, release-import и serving через `question-catalog.v1`. Все `15/15`
+prerequisite evidence G10S-210…224 приняты (включая явный
+`PASS_WITH_LIMITATIONS` для golden reconciliation), Strata `main` чистый, а
+annotated archive tag `strata-archive-2026-09-01-g10s-217` всё ещё указывает на
+`ec3b6804`. Active runtime/deployment scan проверил `231` файлов и нашёл `0`
+legacy checkout paths, source selectors, standalone services, fallbacks,
+authoring DSNs, package imports и прямых `strata.` references. Source checkout,
+database и Docker не удалялись и остаются под G13 owner approval. Focused tests
+`6/6`, полный check/boundary/toolchain ladder green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-225-strata-active-authority-retirement-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-226: общий machine-evidence schema и
+historical artifact handoff.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4147,7 +4166,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes. Evidence: target implementation `2942587`, evidence/docs `943fd45`; optional observability profile, две публичные команды `pnpm down`, `0` containers/networks, `3` durable volumes с неизменными IDs, migration ledger `18/18` после restart, без `--volumes`/`-v`, metadata-only.
 - [x] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema. Evidence: target implementation `bdf18e9`, evidence/docs `dc6e79c`; 1,597 records bound to bounded queue, frozen Strata `ec3b6804`, C098 exact release/runtime/graph joins, metadata-only and negative fixtures PASS.
 - [x] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены. Evidence: target `e58583e`, evidence/docs `cf31479`; `4/4` pack bindings, `4/4` policy refs, static `10` tools with `0` canonical refs/writes/inversions, body fields `0`, immutable historical drift `3`, metadata-only controls.
-- [ ] `G10S-225` Commit: `chore(g10s): retire standalone Strata as an active authority` — выполнять только после G10S-210…224 PASS.
+- [x] `G10S-225` Commit: `chore(g10s): retire standalone Strata as an active authority` — target `39b23ff`, handoff `4b59fb0`, evidence `1cbb69a`; `15/15` prerequisites accepted, target sole active authority, retained archive pinned, active scan `231` files/`0` findings, no deletion or runtime/database/Docker mutation.
 
 ### Gate G10S — machine evidence, commits и handoff
 
