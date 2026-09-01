@@ -942,6 +942,26 @@ tests `3/3`, полный check/boundary/toolchain ladder green. Evidence:
 Следующий executable пункт — G10S-230: fresh/upgrade DB, role/grant negative
 matrix, canonical prompt race и backup/restore.
 
+### Execution update — G10S-230 persistence, authority and recovery — 1 сентября 2026
+
+G10S-230 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `361e018`, evidence `c42e3ad`. Добавлен
+metadata-only gate `architecture:gate-230`, который последовательно запускает
+`architecture:fresh-db`, `architecture:upgrade-db`,
+`architecture:authority-negative-matrix`, `architecture:concurrency`,
+`architecture:backup` и `architecture:restore-db`. Все **6/6 PASS** с нулевыми
+failed/open/skipped: fresh/upgrade проверили 18 миграций и роли, negative matrix
+отвергла unauthorized/stale/duplicate атаки, race оставила одну preferred prompt,
+backup/restore сохранили логические snapshot hashes и role metadata. Временные
+базы ограничены префиксом `fluent_g10s_`: до и после `0`, persistent DB/Docker
+mutations `0`, durable volumes не удалялись. Evidence содержит только command
+coordinates, exit codes, длительности, byte counts и SHA-256 stdout/stderr; raw
+logs, credentials и question/answer bodies не эмитируются. Focused tests `3/3`,
+полный check/boundary/toolchain ladder green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-230-persistence-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-231: Studio author/review/publish,
+deterministic export, file-only import, readback и rollback.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4239,7 +4259,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-227` Evidence inputs фиксируют Strata `ec3b680` (или reviewed successor), target parent SHA, questions manifest hash и reports 13/14 hashes. Evidence: target implementation `4c1a0bd`, handoff `1d60683`; metadata-only `G10S-inputs/` ledger фиксирует reviewed successor `0921dd0`, immutable baseline/tag `ec3b6804`, target parent `3d9b092`, release/intake manifests и reports 13/14 SHA-256; `8/8` checks, focused `4/4`, full check/boundary/toolchain ladder green.
 - [x] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS. Evidence: target implementation `67d6bdd`, evidence `f2da01d`; sequential command ladder `4/4 PASS`, `0` failed/open/skipped, metadata-only output with byte/digest summaries only, focused `3/3`, full check/boundary/toolchain ladder green.
 - [x] `G10S-229` Новые `pnpm content:authoring:check`, `content:db:verify`, `content:bundle:verify` или утверждённые эквиваленты PASS и задокументированы. Evidence: target implementation `5b6b1c3`, evidence `3d332dd`; `3/3` dedicated gates PASS, database-free env guard, metadata-only output, zero catalog/DB/Docker/import/release mutation, focused `3/3`, full check/boundary/toolchain ladder green.
-- [ ] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS.
+- [x] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS. Evidence: target implementation `361e018`, evidence `c42e3ad`; `6/6` sequential commands PASS, scoped `fluent_g10s_*` database cleanup `0` before/after, persistent DB/Docker mutations `0`, durable volumes preserved, metadata-only output.
 - [ ] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS.
 - [ ] `G10S-232` Corpus rights/quarantine/leak scans PASS; forbidden distributable findings = 0.
 - [ ] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs.
