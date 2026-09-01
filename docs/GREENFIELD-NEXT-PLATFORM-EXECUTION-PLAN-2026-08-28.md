@@ -1082,6 +1082,34 @@ Evidence:
 Следующий executable пункт — G10S-236: reconciliation authoring→bundle→serving,
 unexplained delta `0` и полный loss ledger.
 
+### Execution update — G10S-236 cross-authority release reconciliation — 1 сентября 2026
+
+G10S-236 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `da9fed2`, evidence `e7040fa`. Добавлен
+metadata-only `architecture:gate-236`, который последовательно запускает
+source-field coverage, canonical bundle, release manifest/identity, public and
+serving import boundaries, loss ledger и `reconciliation:release`. Все **9/9
+PASS**: 73/73 source fields покрыты без contradictory mappings, canonical bundle
+byte/hash-identical, manifest negative cases `5/5`, serving readback vectors
+`18/18`, loss ledger `47 mapped / 5 intentional / 7 loss`, а release graph
+получил `unexplainedDeltaCount=0` и deterministic projection rebuild.
+
+В reconciliation исправлен реальный дефект: две assessed stages одной карточки
+(`node-event-loop-001`) ошибочно считались конфликтом task family; теперь
+повторная family допустима внутри одной card, но пересечение family между
+разными cards по-прежнему fail-closed. `contentGapCount=358` (20 открытых
+lessons, 70 role requirements, declared delta 212 questions и 56 activities)
+остаётся честной контентной очередью и не маскируется под внутреннюю ошибку.
+Gate metadata-only: persistent DB/Docker mutations `0`, import/release authority
+не выдаётся, durable volumes сохранены; stdout/stderr и тела контента не
+попадают в evidence. Focused `3/3`, полный check/boundary/toolchain ladder
+green.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-236-release-reconciliation-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-237: clean archive target install/build/check/
+dev/C098 без source repositories и agent-local caches.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4385,7 +4413,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs. Evidence: target implementation `9a83d03`, evidence `d3a15e7`; `9/9` sequential commands PASS, exact release/question/revision/runtime joins, persistence restart/down-up/restore cleanup, spoken explanation остаётся `AWAITING_HUMAN`.
 - [x] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS. Evidence: target implementation `60064fb`, evidence `99a80ea`; `5/5` sequential commands PASS, desktop `276/276`, accessibility `92/92 + 12/12`, parity `12` screens, raw colors `0`, performance `8/8`, metadata-only.
 - [x] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority. Evidence: target implementation `07fb3c5`, evidence `f879aad`; `8/8` sequential commands PASS, serving `643` files/`rawStrataSql=0`, authority-negative `7`, SBOM `175`/`0` high-critical, static/live boundaries PASS, metadata-only.
-- [ ] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; все intentional losses находятся в loss ledger.
+- [x] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; intentional losses находятся в loss ledger, а content gaps отделены от внутренних join/projection ошибок. Evidence: target implementation `da9fed2`, evidence `e7040fa`; `9/9` sequential commands PASS, source coverage `73/73`, canonical byte/hash identity, serving readback `18/18`, reconciliation `unexplainedDeltaCount=0`, deterministic rebuild и `0→0` scoped cleanup, metadata-only.
 - [ ] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches.
 - [ ] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement.
 - [ ] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md.
