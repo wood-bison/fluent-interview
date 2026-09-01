@@ -5234,6 +5234,26 @@ snapshot остаётся **658 / 476 / 1134 / 58,02%**. G10S-246 и G11 breadth
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-labels-correction-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`b97b32f`, evidence `76d933c`)
+устранил последний технический label в каталоге Projects. `ProjectsPanel`
+теперь использует единый bilingual `trackLabel` для пяти lanes (Node.js, Java,
+Go, Next.js и System design), а статусные enum-значения (`in_progress`, `ready`)
+получают проверенный локализованный текст. Канонический project ID не потерян:
+он остаётся в `data-project-id` и tooltip для диагностики, но не конкурирует с
+человекочитаемым заголовком карточки.
+
+На пересобранном scoped stack `http://127.0.0.1:47360/` live `/projects`
+показал пять локализованных project lanes; `готов` и `в работе` отображаются
+без сырых enum-значений. Web regression `62/62`, полный ladder
+(`NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`;
+stack `6/6`, migrations `18/18`, pending `0`. Это display/accessibility
+correction без новой учебной ёмкости: snapshot остаётся **658 / 476 / 1134 /
+58,02%**. `G10S-246` и G11 breadth по-прежнему требуют owner/content review;
+push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-track-labels-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил

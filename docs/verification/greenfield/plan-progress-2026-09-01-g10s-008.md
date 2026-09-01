@@ -333,6 +333,36 @@ Go. Evidence-коммит — `6098095`.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-labels-correction-2026-09-01.{json,md}`.
 
+## Коррекция project lane labels
+
+Live-аудит каталога Projects обнаружил последний технический визуальный слой:
+карточки показывали uppercased `trackId`, slug проекта и сырые статусы
+`in_progress`/`ready`. Target-коммит без push — `b97b32f`; evidence-коммит —
+`76d933c`.
+
+`ProjectsPanel` теперь получает отображаемые названия из общего bilingual
+resolver для Node.js, Java, Go, Next.js и System design. Статусы имеют явные
+EN/RU maps и безопасный fallback для будущих enum. Для диагностики project ID
+сохранён только как `data-project-id` и tooltip, поэтому URL/API-контракты не
+изменились, а UI не перегружен внутренними идентификаторами.
+
+Проверено на `http://127.0.0.1:47360/`:
+
+- `/projects` показывает пять human-readable project lanes;
+- `готов` и `в работе` отображаются локализованно;
+- web regression `62/62`;
+- полный ladder (`NX_CI=1 pnpm check`, `pnpm boundary:check`,
+  `pnpm toolchain:check`) — `PASS`;
+- scoped stack: `6/6` сервисов, migrations `18/18`, pending `0`;
+- progress snapshot не изменился: **658 / 476 / 1134 / 58,02%**.
+
+Это corrective display/accessibility evidence: project catalog, milestones,
+assessment evidence и learner progress не менялись. `G10S-246`, G11 breadth и
+human sign-off остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-track-labels-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
