@@ -6732,3 +6732,48 @@ advisory evidence, runtime join и граница «не меняет mastery» 
 задач, activity, projects или progress records; `G10S-246`, G11 breadth,
 G12.5, independent final review и G13 decommission остаются открытыми. Push не
 выполнялся из-за ограничения Actions quota.
+
+## Локализация Control Center shared specimens
+
+Target-коммит без push — `07b7822f0e8adffa9079f3866fab67c7fc5b26de`;
+evidence-коммит — `366a7b5`.
+
+В операторском Control Center корневые `TokenSpecimen` и `StateCatalog` имели
+статические английские `aria-label`, а список Light/Dark/System в shared
+`TokenSpecimen` не имел отдельного locale-owned контракта. В результате
+переключение RU/EN не давало единой accessibility tree для этих крупных
+областей: learner-маршруты уже были локализованы, а operator surface оставался
+смешанным.
+
+Теперь обе shared-области используют `aria-labelledby` anchors, которыми
+владеет operator route. `TokenSpecimen` принимает `themeLabel` и
+`themeLabels`, а список тем объявляет явный `role="group"` с generated
+`aria-labelledby`. В RU accessibility tree видны `Образец токенов Instrument
+Glass`, `Контракт темы`, `Светлая`, `Тёмная`, `Системная` и `Состояния
+production-компонентов`; в EN — `Instrument Glass design token specimen`,
+`Theme contract`, `Light`, `Dark`, `System` и `Production component state
+catalog`. Token values, layout, state behavior и бизнес-логика не менялись.
+
+Проверено:
+
+- fresh scoped stack после compose-project-scoped `pnpm down` (durable data
+  preserved) и штатного `pnpm dev -- --detached`: session
+  `5ea499be-e9b2-4bd7-a6ca-386dcddb2cf5`, URL
+  `http://127.0.0.1:47360/`, **6/6** services healthy;
+- migrations **18/18**, pending **0**;
+- live RU `/control-center?locale=ru`: named region/group names и theme
+  labels локализованы;
+- live EN `/control-center?locale=en`: canonical English names и theme labels
+  локализованы;
+- web regression **77/77**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/control-center-specimen-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный Control Center accessibility/i18n corrective slice без новых
+вопросов, задач, activity, projects или progress records; демонстрационные
+внутренние state/action labels `StateCatalog` остаются каноническим sample
+copy и при необходимости требуют отдельной полной локализации. `G10S-246`,
+G11 breadth, G12.5, independent final review и G13 decommission остаются
+открытыми. Push не выполнялся из-за ограничения Actions quota.
