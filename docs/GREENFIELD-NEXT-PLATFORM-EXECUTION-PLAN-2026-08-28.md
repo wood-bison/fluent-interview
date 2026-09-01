@@ -6454,6 +6454,52 @@ authority policy не менялись.
 breadth, G12.5, independent final review или G13 decommission. Push не
 выполнялся из-за ограничения Actions quota.
 
+## Локализованные learner route groups в accessibility tree
+
+Target-коммит без push — `ced575d79a98526859847669734b4f23bd33d5a3`;
+evidence-коммит — `089caef6db1cc11946482f8fb94ee6b805d5838a`.
+
+Короткие learner-поверхности (coverage, progress, hero actions, placement и
+lesson context) уже имели скрытые locale-owned подписи, но обычные `div` не
+имели семантической роли. Поэтому accessibility tree не представляла их как
+именованные регионы: `getByRole("group")` не находил эти области, несмотря на
+наличие DOM-подписи.
+
+Добавлен явный `role="group"` на пять компактных learner-групп и сохранена
+связь через `aria-labelledby` с локализованными anchor-элементами. В RU
+доступны `Node.js · метрики покрытия`, `Показатели прогресса`, `Действия
+маршрута`, `Контекст маршрута урока`, `Контекст размещения трека` и
+`Контекст общего размещения`; в EN — `Node.js coverage metrics`, `Progress
+claims`, `Route actions`, `Lesson route context`, `Track placement context` и
+`Shared placement context`. Atlas minimap и station jump buttons также
+перепроверены (`Инженер Node.js · мини-карта` / `Node.js engineer minimap`).
+Layout, граф, навигация, question content, runtime и progress calculations не
+изменялись.
+
+Проверено:
+
+- после compose-project-scoped `pnpm down` (durable data preserved) выполнен
+  штатный `pnpm dev -- --detached`: fresh session
+  `7aed9213-2f53-4f2d-b4e5-d2a66ecea0d7`, URL
+  `http://127.0.0.1:47360/`;
+- live RU/EN Program, Review, Home и Lesson: каждая целевая группа находится
+  как именованная `role=group` ровно один раз;
+- live Questions: RU — 4 `Контекст размещения трека` и 2 `Контекст общего
+  размещения`; EN — 4 `Track placement context` и 2 `Shared placement
+  context`;
+- live Atlas RU/EN — minimap и четыре jump labels локализованы;
+- web regression **76/76**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-route-region-groups-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+точечный accessibility/i18n corrective slice: он не добавляет вопросы, задачи,
+activity, projects или progress records. `G10S-246`, G11 breadth, G12.5,
+independent final review и G13 decommission остаются открытыми. Push не
+выполнялся из-за ограничения Actions quota.
+
 ## Локализация learner navigation labels
 
 Target-коммит без push — `06cd6379866d5c319b31346288a9caf941882d81`;
