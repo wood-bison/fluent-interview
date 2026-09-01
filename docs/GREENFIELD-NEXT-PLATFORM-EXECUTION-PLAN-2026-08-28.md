@@ -6265,3 +6265,40 @@ display/i18n срез без новых вопросов, задач, scenarios,
 records. Следующим executable gate остаётся `G10S-246` (human owner
 acceptance); G11 breadth, revalidation и G13 decommission по-прежнему открыты.
 Push не выполнялся из-за Actions quota.
+
+## Локализация каталога проектов и точность boundary-check
+
+Target-коммит без push — `16c3e431ecf38ce15bfb6b0bf47343e79057d77b`;
+evidence-коммит — `f100a5d`.
+
+Повторный live-аудит `/projects?track=node&locale=ru` выявил оставшийся
+смешанный интерфейс: названия пяти project books и тридцати milestone приходили
+только на английском. Добавлен reviewed bilingual resolver в
+`apps/web/app/components/project-labels.ts`; `ProjectsPanel` теперь отдаёт
+русские заголовки в RU и сохраняет канонический английский title в EN. Stable
+`projectId`/`milestoneId` не превращаются в learner copy и остаются в
+диагностических атрибутах и контрактах.
+
+В тот же atomic implementation slice уточнён `tools/dev/check-boundaries.mjs`:
+учебное слово `PostgreSQL` больше не ошибочно считается прямым доступом к БД,
+но imports, credentials, DSN и Docker/runtime authority по-прежнему запрещены
+в web. Это исправляет false positive без ослабления архитектурной границы.
+
+Проверено:
+
+- live RU `/projects?track=node&locale=ru`: пять русских project titles и
+  русские milestone titles видимы; EN `/projects?track=node&locale=en`
+  сохраняет канонические названия;
+- компактный HTTP-аудит обнаруженных внутренних маршрутов: **48/48 HTTP 200**;
+- web regression **71/71**, typecheck, полный `NX_CI=1 pnpm check`,
+  `pnpm boundary:check` и `pnpm toolchain:check` — PASS;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-catalog-labels-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+corrective display/i18n и guard-precision slice без новых проектов, milestone,
+вопросов, задач, evidence или progress records. `G10S-246` human acceptance,
+G11 content breadth, финальная revalidation, независимый review и G13
+decommission остаются открытыми. Push не выполнялся из-за ограничения Actions
+quota.
