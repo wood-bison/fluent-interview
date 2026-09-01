@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-241.md`](verification/greenfield/plan-progress-2026-09-01-g10s-241.md).
+[`plan-progress-2026-09-01-g10s-242.md`](verification/greenfield/plan-progress-2026-09-01-g10s-242.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -4267,6 +4267,34 @@ Evidence и handoff:
 Следующий executable пункт — `G10S-242`: отметить затронутые G11/G12 items как
 `REVERIFY_AFTER_G10S` в evidence index и сохранить эту связь при миграции.
 
+### Execution update — G10S-242 successor re-verification index — 1 сентября 2026
+
+Target `main` закрыл G10S-242 двумя локальными commit-gated коммитами без
+push из-за ограничения GitHub Actions quota: implementation
+`c6e2aac7e050fa897d9ea58e5aceaaf8edd7c847` (`feat(g10s): mark successor
+reverification items`) и evidence
+`c7480f3cd0b9c7d6b6fad8c2d30f8f0f1e0052ab`
+(`docs(g10s): record successor reverification gate`). Implementation является
+прямым ребёнком G10S-241 evidence `764645a`; allowlist содержит ровно шесть
+путей.
+
+Machine report `G10S-242-reverification-2026-09-01.json` фиксирует **35/35
+PASS, 0 FAIL, 4 OPEN, 0 SKIPPED**. Sidecar
+`g10s-reverification-index.v1.json` помечает `G11-037`, `G12-R01`, `G12-R06` и
+`G12-R16` состоянием `REVERIFY_AFTER_G10S`; их owner/trigger/evidence path
+связаны с шестью limitation IDs G10 ровно по одному разу. Исторический
+`G10S/evidence-index.v1.json` не переписан: entry count `428` и SHA-256
+проверяются явно. G11/G12 statuses и source hashes зафиксированы; product
+`DONE` не выставляется. Полный `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` зелёные на implementation/evidence границах, push не
+выполнялся.
+
+Evidence и handoff:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-242-reverification-2026-09-01.{json,md}`.
+Следующий executable пункт — `G10S-243`: запретить implementing agent
+выставлять product `DONE` и подготовить exact
+`AWAITING_INDEPENDENT_REVIEW` handoff package.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
@@ -4540,7 +4568,7 @@ Evidence и handoff:
 - [x] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md. Evidence: target implementation `e2fbaaf`, evidence `521bf2e`; `13/13` post-commit assertions PASS, five-command metadata-only receipt, full check on phase boundary, push `0`, remote attestation `OPEN`.
 - [x] `G10S-240` Push policy зафиксирована как fast-forward-only: local PASS обязателен, но push запрещён владельцем на время CI quota. Evidence: target implementation `383bc64`, evidence `a3b032d`; `15/15` local assertions PASS, полный `pnpm check` на implementation/evidence boundary, `git ls-remote` только read-only, remote attestation `OPEN`, `pushPerformed=false`. SHAs и policy сохранены в `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-240-push-policy-2026-09-01.{json,md}`. Статус `PASS_WITH_LIMITATIONS` честно отражает одну открытую remote attestation; следующий пункт — `G10S-241`.
 - [x] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: все 6 retained limitations перенесены в G11/G12 с owner и exact trigger, без фиктивного `DONE`. Evidence: target implementation `3783ca7`, evidence `764645a`; gate `34/34 PASS`, `6 OPEN`, metadata-only, push `0`. Handoff: `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-241-limitation-routing-2026-09-01.{json,md}`.
-- [ ] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в evidence index, не в виде скрытого assumption.
+- [x] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в sidecar evidence index без переписывания исторического индекса: `G11-037`, `G12-R01`, `G12-R06`, `G12-R16`; все 6 limitation IDs покрыты ровно по одному разу. Evidence: target implementation `c6e2aac`, evidence `c7480f3`; gate `35/35 PASS`, `4 OPEN`, metadata-only, push `0`.
 - [ ] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package.
 - [ ] `G10S-244` Handoff содержит repo path, branch, HEAD, commits, start command, DB migration range, bundle/release IDs, C098 route и evidence index.
 - [ ] `G10S-245` Независимый Codex review из раздела 3 завершён; все P0/P1 исправлены отдельными commits и повторно проверены.
