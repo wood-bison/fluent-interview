@@ -334,6 +334,31 @@ Evidence metadata-only находится в
 Это corrective evidence, а не новый curriculum checkbox и не закрытие
 G10S-246/G11.
 
+### Corrective update — Atlas route context — 1 сентября 2026
+
+Следующая live-проверка обнаружила тот же класс misleading fallback в Atlas:
+неизвестные `track` и `node` silently выбирали Node/первый модуль вместо того,
+чтобы сообщить о неверном deep link. Это делало URL, который можно сохранить
+или открыть из Questions, семантически опасным: интерфейс выглядел рабочим, но
+показывал не тот учебный путь.
+
+Target `main` получил implementation-коммит `eafcbf6`
+(`fix(atlas): reject stale route context`). Теперь Atlas fail-closed для
+неизвестного `track` и `node`, а выбор стартовой станции нормализует canonical
+`?track=...&node=...` URL. Regression source guard не позволяет вернуть
+тихое fallback-поведение.
+
+После штатной пересборки scoped stack `http://127.0.0.1:47360/` проверены
+четыре live-case: Java service selection, неизвестный track (`TRACK NOT
+FOUND` без графа), неизвестный node (`MODULE NOT FOUND` без графа) и обычный
+Node runtime. Evidence-коммит `5777f42` содержит metadata-only JSON/Markdown;
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` зелёные.
+Это corrective evidence без новой curriculum capacity: общий checkbox-счётчик
+не изменён, G10S-246 owner sign-off и G11 breadth по-прежнему открыты.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-route-context-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за

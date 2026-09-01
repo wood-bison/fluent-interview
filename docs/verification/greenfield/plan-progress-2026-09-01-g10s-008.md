@@ -79,6 +79,30 @@ G10S-198 seam, а не новая учебная ёмкость.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-placement-context-2026-09-01.{json,md}`.
 
+## Коррекция контекста Atlas
+
+В live-аудите найден ещё один misleading fallback: неизвестные `track` или
+`node` в `/atlas` silently открывали Node/первый модуль. Это нарушало правило
+«deep link должен показывать именно запрошенный контекст» и могло незаметно
+перенаправить учебную сессию на чужой путь.
+
+Локальные target-коммиты без push:
+
+- `eafcbf6` — Atlas fail-closed для неизвестного track/node и canonical URL
+  после выбора стартовой станции;
+- `5777f42` — metadata-only evidence и live-case receipts.
+
+Проверены четыре состояния на scoped stack `http://127.0.0.1:47360/`: Java
+service selection, invalid track (`TRACK NOT FOUND`), invalid node (`MODULE NOT
+FOUND`) и обычный Node runtime. Source guard, web regression `55/55`, build и
+строгая лестница `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` — `PASS`. Исправление не добавляет учебный контент и
+поэтому не меняет снимок **658 / 476 / 1134 / 58,02%**; G10S-246 и G11
+остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-route-context-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
