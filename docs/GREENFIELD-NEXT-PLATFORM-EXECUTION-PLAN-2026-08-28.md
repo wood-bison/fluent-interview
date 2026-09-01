@@ -470,6 +470,39 @@ G10S-246 owner sign-off и G11 breadth остаются открытыми.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-context-correction-2026-09-01.{json,md}`.
 
+### Corrective update — question deep-link context — 1 сентября 2026
+
+Следующий live-аудит нашёл fail-open в явном параметре `question`: неизвестный
+или устаревший id мог открыть общий lesson preview либо карточку другого
+placement вместо честного recovery. Это скрывало ошибочную ссылку и нарушало
+инвариант `question → track → lesson`.
+
+Target `main` получил implementation-коммит `998d0bf`
+(`fix(routes): reject stale question context`). В `/questions` и
+`/practice/lesson/:id` question теперь trim-ится и обязан разрешиться в
+опубликованную карточку с точным `track + lesson`; при отсутствии совпадения
+показывается двуязычный `QUESTION NOT FOUND`, а recovery-ссылка удаляет только
+ошибочный question и сохраняет валидный контекст. Нормализованные значения
+используются и в source guard C098, поэтому возврат к raw/раздельной проверке
+будет отклонён.
+
+После штатного scoped rebuild `pnpm run dev -- --detached` на
+`http://127.0.0.1:47360/` проверены invalid lesson question, valid lesson
+question, invalid/valid Questions deep-links и cross-track Node question в
+Java. Unknown/stale случаи не показывают preview или чужую карточку; valid
+`question.memory-ownership-001` открывает released card и placement.
+Web smoke `62/62`, C098 learner-route `9/9`, полный
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+
+Evidence-коммит `f4ee9d2` (`docs(g10s): record question deep-link evidence`)
+содержит metadata-only JSON/Markdown; push не выполнялся. Это corrective
+routing seam, не новая curriculum capacity: снимок остаётся
+**658 / 476 / 1134 / 58,02%**; G10S-246 owner sign-off и G11 breadth остаются
+открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-deep-link-context-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за

@@ -187,6 +187,27 @@ Lesson молча становился English. Это исправлено ло
 **658 / 476 / 1134 / 58,02%**. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-context-correction-2026-09-01.{json,md}`.
 
+## Коррекция question deep-link-контекста
+
+Live-аудит нашёл fail-open: явный неизвестный или устаревший `question` мог
+открыть общий preview либо карточку из другого placement. Исправлено локальными
+коммитами без push:
+
+- `998d0bf` — точное разрешение question по опубликованному `track + lesson`,
+  normalized query и двуязычный `QUESTION NOT FOUND` recovery;
+- `f4ee9d2` — metadata-only evidence с пятью live-кейсами и полным ladder.
+
+На scoped stack `http://127.0.0.1:47360/` проверены invalid lesson
+`question.not-released`, valid lesson `question.memory-ownership-001`, invalid
+и valid `/questions` deep-links, а также Node question в Java placement.
+Unknown/stale cases не показывают preview или чужую карточку; valid карточка
+сохраняет свой placement. Web smoke `62/62`, C098 learner-route `9/9`, полный
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+
+Это corrective routing seam, без новой учебной ёмкости; снимок остаётся
+**658 / 476 / 1134 / 58,02%**. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-deep-link-context-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
