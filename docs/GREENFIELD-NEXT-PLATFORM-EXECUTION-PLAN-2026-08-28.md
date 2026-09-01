@@ -6004,3 +6004,33 @@ progress records. G10S-246 human acceptance и G11 content breadth остают�
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-verdict-check-labels-2026-09-01.{json,md}`.
+
+## Коррекция runtime result и evaluator receipt metadata
+
+Target-коммит без push — `496bc8c`; evidence-коммит — `b542ea5`.
+
+После запуска runtime summary показывал технический `passed/failed`, а после
+submit — внутренние `verdictId` и `submitRelease`. Runtime statuses теперь
+проходят через общий bilingual resolver (`Пройдено`, `Не пройдено`, `Ошибка
+компиляции`, `Ошибка runtime`, `Песочница отклонила запуск`, `Истекло время`,
+`Отменено`, `Песочница недоступна`, `Не удалось настроить песочницу`). Receipt
+показывает `Квитанция evaluator сохранена` / `Evaluator receipt recorded`, а
+стабильные IDs сохранены только в `data-*` для диагностической корреляции.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/`:
+
+- `/practice/node-event-loop-001?track=node&locale=ru` — изолированный запуск и
+  evaluator submit завершились успешно;
+- summary показывает `Пройдено · 21.2 ms`, receipt — `Квитанция evaluator
+  сохранена`, пять human check labels и `hidden suite passed`;
+- raw `verdictId`, `submitRelease` и check IDs отсутствуют в видимом тексте;
+- web regression `64/64`, полный ladder и stack/migrations `6/6`, `18/18`,
+  pending `0` — `PASS`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/accessibility seam и не добавляет учебную ёмкость. G10S-246 human
+acceptance и G11 content breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-result-metadata-2026-09-01.{json,md}`.

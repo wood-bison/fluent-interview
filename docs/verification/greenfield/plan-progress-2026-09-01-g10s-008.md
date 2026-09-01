@@ -538,3 +538,28 @@ sign-off остаются открытыми. Push не выполнялся.
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-verdict-check-labels-2026-09-01.{json,md}`.
+
+## Коррекция runtime result и evaluator receipt metadata
+
+Target-коммит без push — `496bc8c`; evidence-коммит — `b542ea5`.
+Runtime summary теперь локализует все опубликованные run statuses через общий
+resolver, а receipt больше не выводит learner-facing `verdictId` и
+`submitRelease`. В RU видны `Пройдено · 21.2 ms` и `Квитанция evaluator
+сохранена`; стабильные IDs остаются в `data-*` только для диагностической
+корреляции, будущие неизвестные статусы получают deterministic humanized
+fallback.
+
+Live на
+`http://127.0.0.1:47360/practice/node-event-loop-001?track=node&locale=ru`:
+
+- isolated runtime run + local evaluator submit — PASS;
+- пять human check labels и `hidden suite passed` видны, raw IDs отсутствуют;
+- web regression `64/64`, полный ladder — PASS;
+- scoped stack `6/6`, migrations `18/18`, pending `0`;
+- progress snapshot без изменений: **658 / 476 / 1134 / 58,02%**.
+
+Это corrective display/accessibility seam; G10S-246, G11 breadth и human
+sign-off остаются открытыми. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-result-metadata-2026-09-01.{json,md}`.
