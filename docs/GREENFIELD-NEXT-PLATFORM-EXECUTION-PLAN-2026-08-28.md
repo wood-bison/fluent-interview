@@ -6341,3 +6341,40 @@ PASS**; записанные live matrices — desktop **276/276**, accessibilit
 activity, projects или progress records. `G10S-246` human acceptance, G11
 breadth, финальная revalidation, independent review и G13 decommission остаются
 открытыми. Push не выполнялся из-за ограничения Actions quota.
+
+## Локализация zoom-контролов Atlas
+
+Target-коммит без push — `d435bef6c937b7b89c7de2d06ea0c7013da49947`;
+evidence-коммит — `1cf09e3`.
+
+Live-проверка Atlas в русской локали выявила смешанные подписи у zoom-кнопок:
+`Zoom out / Уменьшить` и `Zoom in / Увеличить`. Эти строки были одновременно
+видны на экране и использовались как `aria-label`, поэтому выбранный язык не
+соблюдался на важном интерактивном контроле.
+
+`apps/web/app/components/atlas-explorer.tsx` теперь получает явный
+`locale` из query и передаёт locale-owned строки в общий `Tooltip` и
+`IconButton`: RU — `Уменьшить`/`Увеличить`, EN — `Zoom out`/`Zoom in`.
+Канонические graph IDs, границы масштаба, Fit view и scroll-поведение не
+изменялись. Smoke-тест закрепляет отсутствие bilingual slash-delimited labels
+и совместное использование одной строки tooltip/accessible name.
+
+Проверено:
+
+- live RU `/atlas?track=node&locale=ru`: `html[lang]=ru`, body и
+  `aria-label` содержат `Уменьшить`/`Увеличить`, старые смешанные подписи
+  отсутствуют;
+- live EN `/atlas?track=node&locale=en`: canonical `Zoom out`/`Zoom in`
+  сохранены;
+- `@fluent/web` regression **71/71**, typecheck и полный
+  `NX_CI=1 pnpm check` — PASS;
+- `pnpm boundary:check` и `pnpm toolchain:check` — PASS; scoped stack
+  **6/6**, migrations **18/18**, pending `0`;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-zoom-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не менялся: **658 / 476 / 1134 / 58,02%**. Это
+локальный display/i18n corrective slice без новых вопросов, задач, activity,
+projects или progress records. `G10S-246` human acceptance, G11 content
+breadth, финальная revalidation, independent review и G13 decommission
+остаются открытыми. Push не выполнялся из-за ограничения Actions quota.
