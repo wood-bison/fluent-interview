@@ -6777,3 +6777,42 @@ catalog`. Token values, layout, state behavior и бизнес-логика не
 copy и при необходимости требуют отдельной полной локализации. `G10S-246`,
 G11 breadth, G12.5, independent final review и G13 decommission остаются
 открытыми. Push не выполнялся из-за ограничения Actions quota.
+
+## Локализация StateCatalog demo copy и native-option safety
+
+Target-коммит без push — `206e1b1cf34ab7df6dbe97f5a0a720ffe2f4389e`;
+evidence-коммит — `e4514a6`.
+
+Контрольная live-проверка раскрытого `StateCatalog` обнаружила два остаточных
+дефекта в operator surface. В RU demo state/action labels и доступные имена
+оставались английскими, а нативный `<select>` получал две локали одновременно
+(`UnavailableНедоступно`), потому что внутрь `<option>` попадала двухъязычная
+разметка. Теперь demo copy собран в явный переиспользуемый `StateCatalogCopy`,
+действия получают locale-owned `labelNode`, а `fieldUnavailable` ограничен
+обычной строкой. `ControlCenterPage` выбирает строку по deep-link locale, так
+что нативный option содержит ровно один язык.
+
+Проверено:
+
+- свежий compose-project-scoped stack после `pnpm down` и
+  `pnpm dev -- --detached`: session
+  `9cb6ad7a-e71f-4a66-bb7e-66b48ec68480`, URL
+  `http://127.0.0.1:47360/`, **6/6** services healthy;
+- migrations **18/18**, pending **0**;
+- live RU `/control-center?locale=ru`: `Состояния
+  production-компонентов`, русские state/action labels и `<option>` ровно
+  `Недоступно`;
+- live EN `/control-center?locale=en`: `Production component state catalog`,
+  canonical English state/action labels и `<option>` ровно `Unavailable`;
+- web regression **77/77**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/state-catalog-copy-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный i18n/accessibility corrective slice для operator demo catalog и
+нативного select: layout, route semantics, runtime, learner content, вопросный
+банк и progress ledger не менялись. Ограничение о внутренних английских
+StateCatalog labels из предыдущего среза superseded этим evidence. Code и
+terminal fixtures остаются каноническими демонстрационными данными. `G10S-246`,
+G11 breadth, G12.5, independent final review и G13 decommission остаются
+открытыми. Push не выполнялся из-за ограничения Actions quota.
