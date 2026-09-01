@@ -456,6 +456,26 @@ migrations `18/18`, pending `0`.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/evidence-journal-labels-2026-09-01.{json,md}`.
 
+## Коррекция runtime profile labels
+
+Live-аудит нашёл raw `node-26-commonjs` и lowercase `javascript` в Practice,
+lesson activity и runtime selector. Target-коммит без push — `04dbcad`; общий
+resolver теперь показывает `JavaScript · Node.js 26.7.0 · CommonJS`, сохраняя
+стабильный profile ID только в строгом Run/Submit value. Evidence-коммит —
+`b0d5d41`.
+
+После rebuild на `http://127.0.0.1:47360/` проверены lesson и runtime station:
+raw profile/language labels отсутствуют, локализованный display copy виден.
+Web regression `64/64`, полный ladder — `PASS`; scoped stack `6/6`, migrations
+`18/18`, pending `0`.
+
+Это corrective display/accessibility seam, поэтому snapshot остаётся **658 /
+476 / 1134 / 58,02%**. G10S-246 human acceptance и G11 content breadth
+остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-profile-labels-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

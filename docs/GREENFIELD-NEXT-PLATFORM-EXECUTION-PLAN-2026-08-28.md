@@ -5331,6 +5331,26 @@ migrations `18/18`, pending `0`. Это display/accessibility correction без
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/evidence-journal-labels-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`04dbcad`, evidence `b0d5d41`)
+завершил тот же learner-label sweep на runtime entry points. Practice task
+cards, lesson activity rows и runtime profile selector используют общий
+`runtimeProfileLabel`/`runtimeLanguageLabel`: live UI показывает
+`JavaScript · Node.js 26.7.0 · CommonJS`, а stable `node-26-commonjs` остаётся
+только value для строгих Run/Submit запросов. Lowercase `javascript` больше не
+попадает в learner copy; будущие профили получают deterministic humanized
+fallback до reviewed mapping.
+
+Проверены `/practice/lesson/node-event-loop`, `/practice/node-event-loop-001`
+после штатного rebuild: raw profile и language labels отсутствуют. Web
+regression `64/64`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`; stack `6/6`,
+migrations `18/18`, pending `0`. Это display/accessibility correction без
+новой учебной ёмкости: snapshot остаётся **658 / 476 / 1134 / 58,02%**.
+`G10S-246` и G11 breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-profile-labels-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
