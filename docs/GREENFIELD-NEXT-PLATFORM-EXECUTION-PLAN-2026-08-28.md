@@ -1110,6 +1110,32 @@ Evidence:
 Следующий executable пункт — G10S-237: clean archive target install/build/check/
 dev/C098 без source repositories и agent-local caches.
 
+### Execution update — G10S-237 clean archive independence — 1 сентября 2026
+
+G10S-237 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota. Implementation gate — `21ab02c`; clean-room corrections —
+`836d438`, `996f180`, `9c11d85`, `3c729a1`; evidence marker — `1604224`.
+Финальная команда `pnpm architecture:gate-237 -- --write-report` завершилась
+`PASS` за 130.4 s: target main clean и ancestry к `e7040fa` подтверждена,
+archive не содержит `.git`, symlink или nested Git, fresh clone clean и содержит
+ровно `pnpm-lock.yaml`, source references/env — `0/false`.
+
+В clean archive последовательно прошли install, build, check, detached dev,
+C098 export/import/journey и scoped cleanup (`0→0`). C098 дал export `PASS`,
+import `PASS`, journey `PASS_WITH_LIMITATIONS` с machine status `PASS`; stdout,
+stderr, тела ответов и секреты не попали в metadata-only evidence. Во время
+rehearsal найдены и исправлены реальные дефекты: fresh-clone check теперь
+строит content projections перед content tests, release manifest G10S-227
+обновлён до шести записей/policy `.2`, а семь исторических screenshot-файлов,
+на которые ссылался immutable G10S-226 index, force-added в archive без
+переписывания индекса.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-237-clean-archive-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-238: ограничить каждый implementation commit
+одним объявленным slice и вести последовательность docs → workspace → DB →
+domain → Studio → corpus → adapter → C098 → retirement.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4414,7 +4440,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS. Evidence: target implementation `60064fb`, evidence `99a80ea`; `5/5` sequential commands PASS, desktop `276/276`, accessibility `92/92 + 12/12`, parity `12` screens, raw colors `0`, performance `8/8`, metadata-only.
 - [x] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority. Evidence: target implementation `07fb3c5`, evidence `f879aad`; `8/8` sequential commands PASS, serving `643` files/`rawStrataSql=0`, authority-negative `7`, SBOM `175`/`0` high-critical, static/live boundaries PASS, metadata-only.
 - [x] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; intentional losses находятся в loss ledger, а content gaps отделены от внутренних join/projection ошибок. Evidence: target implementation `da9fed2`, evidence `e7040fa`; `9/9` sequential commands PASS, source coverage `73/73`, canonical byte/hash identity, serving readback `18/18`, reconciliation `unexplainedDeltaCount=0`, deterministic rebuild и `0→0` scoped cleanup, metadata-only.
-- [ ] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches.
+- [x] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches. Evidence: target implementation `21ab02c`, clean-room corrections `836d438`, `996f180`, `9c11d85`, `3c729a1`, evidence `1604224`; one-command gate `PASS` (130.4 s), archive/fresh-clone metadata clean, source refs `0`, all install/build/check/dev/C098 export/import/journey/cleanup exit `0`, journey machine status `PASS`, metadata-only controls true, cleanup `0→0`.
 - [ ] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement.
 - [ ] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md.
 - [ ] `G10S-240` Push только fast-forward после local PASS и с учётом текущей CI quota policy; если push запрещён владельцем, локальные SHAs сохраняются, статус remote attestation остаётся open.
