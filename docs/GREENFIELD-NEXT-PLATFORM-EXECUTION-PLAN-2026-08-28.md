@@ -6342,6 +6342,47 @@ activity, projects или progress records. `G10S-246` human acceptance, G11
 breadth, финальная revalidation, independent review и G13 decommission остаются
 открытыми. Push не выполнялся из-за ограничения Actions quota.
 
+## Именованные scroll/support-группы в accessibility tree
+
+Target implementation-коммит без push — `65700017df78d03c87ad52fe888bd5318d956345`;
+metadata-only evidence-коммит — `6b90fd9f1faeaae4eb8cf6d57216d813b9723c4a`.
+
+Следующий live-аудит показал, что несколько контейнеров с уже существующим
+`aria-label` были обычными `div`. Их имя не попадало в accessibility tree, из-за
+чего route graph, панели runtime, грани evidence и Atlas viewport нельзя было
+надёжно адресовать по роли и имени. Это было семантическое препятствие для
+keyboard/screen-reader прохождения, а не дефект данных или layout.
+
+В `RouteGraph`, `DeepObservabilityLab`, runtime workbench и `AtlasExplorer`
+добавлен явный `role="group"` на контейнерах с locale-owned labels. Карта
+маршрута и Atlas viewport сохраняют прокрутку, а route graph scroll получает
+`tabIndex={0}` для фокусировки клавиатурой. CSS намеренно не изменялся: текущий
+desktop evidence G10S-205 закрепляет source-set hash; отдельный focus-ring
+требует новой визуальной evidence-волны. Геометрия графа, порядок станций,
+question/task joins, runtime authority и состояние прогресса не менялись.
+
+Проверено после compose-project-scoped `pnpm down` (durable data preserved) и
+штатного `pnpm dev -- --detached`: fresh session
+`9c767f52-701f-44ea-b3b5-5ad81b784368`, URL `http://127.0.0.1:47360/`, шесть
+ожидаемых сервисов в рабочем состоянии, migrations **18/18**, pending **0**.
+Live RU/EN проверка подтвердила:
+
+- home graph: `Легенда карты` / `Карта маршрута` и `Map legend` / `Route map`;
+- practice observability: `Грани доказательств` и `Evidence facets`;
+- event-loop lesson: `Файлы` / `Панели поддержки обучения` и `Files` /
+  `Learning support panels`;
+- Atlas: `Инженер Node.js · граф` и `Node.js engineer graph`.
+
+Route map и Atlas viewport имеют `tabIndex=0`; локализованные group names не
+смешиваются. Web regression — **77/77**, `NX_CI=1 pnpm check`, boundary и
+toolchain — PASS, evidence index сохранил **428/428** historical records.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный accessibility-semantic corrective slice без новых вопросов, задач,
+activity, проектов или progress records. Открытыми остаются `G10S-246` human
+owner acceptance, G11 content breadth, G12.5, независимая финальная проверка и
+G13 cleanup/decommission. Push не выполнялся из-за ограничения Actions quota.
+
 ## Локализация zoom-контролов Atlas
 
 Target-коммит без push — `d435bef6c937b7b89c7de2d06ea0c7013da49947`;
