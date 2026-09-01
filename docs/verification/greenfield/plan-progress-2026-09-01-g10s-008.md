@@ -167,6 +167,26 @@ source guard, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
 **658 / 476 / 1134 / 58,02%**. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-mode-context-correction-2026-09-01.{json,md}`.
 
+## Коррекция locale-контекста
+
+Live-аудит нашёл silent fallback: неизвестный явный `locale` в Questions и
+Lesson молча становился English. Это исправлено локальными коммитами без push:
+
+- `8d09b8d` — централизованная проверка `en`/`ru`, `LOCALE NOT FOUND` recovery и
+  сохранение не-locale части deep link;
+- `d95ab70` — metadata-only evidence с live invalid/valid cases.
+
+На scoped stack `http://127.0.0.1:47360/` invalid
+`/questions?track=node&locale=xx` и invalid
+`/practice/lesson/js-closures-001?question=question.js-closures-001&track=node&locale=xx`
+показывают `LOCALE NOT FOUND`; valid `/questions?track=node&locale=ru`
+остаётся русским. Web smoke `52/52`, C098 learner-route `9/9`, полный
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+
+Это corrective routing seam, без новой учебной ёмкости; снимок остаётся
+**658 / 476 / 1134 / 58,02%**. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-context-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

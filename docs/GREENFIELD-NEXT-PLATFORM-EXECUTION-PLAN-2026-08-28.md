@@ -443,6 +443,33 @@ G10S-246 owner sign-off и G11 breadth остаются открытыми.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-mode-context-correction-2026-09-01.{json,md}`.
 
+### Corrective update — locale context — 1 сентября 2026
+
+Live-аудит нашёл silent fallback: явный неизвестный `locale` в
+`/questions` и `/practice/lesson/:id` молча превращался в English. Это делало
+устаревшую ссылку визуально правдоподобной и скрывало ошибочный язык.
+
+Target `main` получил implementation-коммит `8d09b8d`
+(`fix(routes): reject stale locale context`). Locale теперь trim-ится и
+проверяется единственным `isSupportedLocale`; `en`/`ru` сохраняются, unknown
+получает двуязычный `LOCALE NOT FOUND`. Recovery каталога сохраняет
+track/lesson/search/question-фильтры, recovery урока сохраняет question/track;
+отсутствующий locale по-прежнему означает намеренный English default.
+
+После scoped rebuild `http://127.0.0.1:47360/` проверены invalid
+`/questions?track=node&locale=xx`, valid `...locale=ru` и invalid
+`/practice/lesson/js-closures-001?question=question.js-closures-001&track=node&locale=xx`.
+Web smoke `52/52`, C098 learner-route `9/9`, source guard, `NX_CI=1 pnpm check`,
+`pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+
+Evidence-коммит `d95ab70` (`docs(g10s): record locale context evidence`) содержит
+metadata-only JSON/Markdown; push не выполнялся. Это corrective routing seam,
+не новая curriculum capacity: снимок остаётся **658 / 476 / 1134 / 58,02%**;
+G10S-246 owner sign-off и G11 breadth остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-context-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за
