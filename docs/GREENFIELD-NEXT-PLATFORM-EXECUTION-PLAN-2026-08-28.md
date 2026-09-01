@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-244.md`](verification/greenfield/plan-progress-2026-09-01-g10s-244.md).
+[`plan-progress-2026-09-01-g10s-008.md`](verification/greenfield/plan-progress-2026-09-01-g10s-008.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -4387,6 +4387,32 @@ Machine report
 Следующий executable пункт — `G10S-246`: owner sign-off и финальная
 acceptance boundary. До него G11 breadth migration остаётся закрытой.
 
+### Execution update — G10S-008 Studio startup baseline — 1 сентября 2026
+
+Target `main` закрыл оставшийся preflight `G10S-008` локальным evidence-коммитом
+`6179a77` (`docs(g10s): record Studio startup baseline`) без push из-за
+ограничения Actions quota. Штатный `pnpm run dev` поднял scoped Compose project
+`fluent-interview-platform-dev` на `http://127.0.0.1:47360/`: migrations `18/18`,
+pending `0`, ожидаемые сервисы `6/6` (5 healthy, `api-data-init` exited `0`).
+Read-only baseline подтвердил HTTP `200` для `/`, `/studio`,
+`/api/studio/releases/active` и `/api/studio`; active release
+`2026.08.28-questions.1`, Studio state: `1` candidate, `1` review, `1` release,
+`3` audit events и `3` command receipts.
+
+Изолированный `pnpm studio:postgres-journey` также прошёл полный
+author→review→publish→readback seam: release
+`2026.08.31-questions.122`, `importReplayStable=true`,
+`readbackVerified=true`, четыре retired endpoint вернули `410`, disposable
+Compose resources удалены в `finally`. Evidence metadata-only, без durable target
+mutation, raw bodies и secrets; статус `PASS_WITH_LIMITATIONS` честно сохраняет
+границу, что G10S-246 owner sign-off и G11 breadth всё ещё открыты.
+Evidence: `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-008-studio-baseline-2026-09-01.{json,md}`.
+Полная `pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` лестница
+зелёная; push не выполнялся.
+
+Следующий executable пункт остаётся `G10S-246`: owner sign-off и финальная
+acceptance boundary. До него G11 breadth migration остаётся закрытой.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
@@ -4396,7 +4422,7 @@ acceptance boundary. До него G11 breadth migration остаётся зак
 - [x] `G10S-005` Выполнить `npm run db:up && npm run db:load && npm run db:load && npm run db:verify`; второй load обязан быть idempotent, invariants = 12 или reviewed delta. Evidence: 12 invariants and two successful loads.
 - [x] `G10S-006` Выполнить representative queries из `schema/queries.sql`; сохранить metadata/results без paid prompt/answer bodies. Evidence: `G10S/preflight.json`.
 - [x] `G10S-007` В target выполнить `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates`; любой baseline FAIL исправляется отдельным pre-migration commit. Evidence: target check and boundary/toolchain runs are green.
-- [ ] `G10S-008` Запустить target `pnpm dev` в scoped Compose project и проверить current Studio author→review→publish→readback baseline.
+- [x] `G10S-008` Запустить target `pnpm dev` в scoped Compose project и проверить current Studio author→review→publish→readback baseline. Evidence: target commit `6179a77`; `G10S-inputs/G10S-008-studio-baseline-2026-09-01.{json,md}`; `PASS_WITH_LIMITATIONS`, migrations `18/18`, services `6/6`, read-only routes `4/4` HTTP 200, isolated journey PASS and cleanup verified.
 - [x] `G10S-009` Снять current serving counts/hashes: cards, revisions, translations, placements, reviews, graph edges, activities и release pointer. Evidence: `G10S/preflight.json` references G12 reconciliation hashes.
 - [x] `G10S-010` Снять current Studio storage owners: PostgreSQL tables, JSONL fallback, outbox, command receipts, projections и backup members. Evidence: `servingBaseline.studioOwners`.
 - [x] `G10S-011` Снять current Strata counts: questions, layers per kind/lang/depth, grants, provenance, task families/revisions, datasets и grading artifacts. Evidence: `strataBaseline` plus database query output.
