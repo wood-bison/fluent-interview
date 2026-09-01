@@ -228,6 +228,35 @@ recovery по-прежнему ведёт на урок. Web smoke `53/53`, по
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-recovery-copy-2026-09-01.{json,md}`.
 
+## Коррекция объяснимости shared placement
+
+Live-проверка Java и Go показала недостающую подсказку, а не ошибку каталога:
+одна canonical-карточка может быть generic и осознанно находиться в нескольких
+языковых маршрутах. Раньше learner видел только выбранный `track · lesson` и не
+понимал, почему одна концепция повторяется.
+
+Локальные target-коммиты без push:
+
+- `897e330` — переиспользуемый `PlacementContext` в Questions и lesson;
+  generic/native labels, список generic-треков и bilingual route explanation;
+- `9579789` — metadata-only evidence с live Java/Go catalog и lesson cases.
+
+Проверено на scoped stack `http://127.0.0.1:47360/`:
+
+- `/questions?track=java&locale=en` и `/questions?track=go&locale=en` показывают
+  shared placement и сохраняют выбранный маршрут;
+- `/practice/lesson/java-memory?track=java&locale=en` и
+  `/practice/lesson/go-values?track=go&locale=ru` показывают тот же контекст;
+- горизонтальный overflow отсутствует.
+
+Source guard и web smoke `53/53`, затем полная ladder
+`NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` — `PASS`.
+Исправление только объясняет уже существующий граф: `G11-015` остаётся открытым
+до reviewed path-specific prerequisites для всех generic records. Счётчик
+мастер-плана остаётся **658 / 476 / 1134 / 58,02%**; G10S-246 также остаётся
+human boundary. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-shared-placement-context-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

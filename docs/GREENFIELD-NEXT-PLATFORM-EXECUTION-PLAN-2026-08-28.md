@@ -534,6 +534,32 @@ evidence`) содержит metadata-only JSON/Markdown; push не выполн�
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-recovery-copy-2026-09-01.{json,md}`.
 
+### Execution update — shared placement context in learner UI — 1 сентября 2026
+
+Live-проверка Java и Go показала не ошибку данных, а недостающую объяснимость:
+одна canonical-карточка законно переиспользуется в generic placements, но UI
+показывал только выбранный `track · lesson`. Это могло выглядеть как
+перемешивание языков и затрудняло чтение графа.
+
+Target `main` (`897e330`, evidence `9579789`) добавил общий компонент
+`PlacementContext`, используемый в `/questions` и
+`/practice/lesson/[id]`. Для generic placement он показывает
+`SHARED PLACEMENT / ОБЩЕЕ РАЗМЕЩЕНИЕ`, перечисляет только generic-дорожки и
+подтверждает сохранение текущего маршрута; native placement получает отдельную
+метку `TRACK PLACEMENT / РАЗМЕЩЕНИЕ ТРЕКА`. Это объясняет существующую связь и
+не создаёт новые карточки, не меняет release и не подменяет prerequisites.
+
+Проверены Java и Go catalog, Java и Go lesson (включая RU), отсутствие
+горизонтального overflow, source guard и web smoke `53/53`. Полная ladder
+`NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` — `PASS`;
+historical evidence-index пересобран без переписывания тел артефактов. Снимок
+мастер-плана не меняется: **658 / 476 / 1134 / 58,02%**. `G11-015` остаётся
+`OPEN`: prerequisite ledger для всех generic records ещё не закрыт; G10S-246
+остаётся человеческой acceptance boundary. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-shared-placement-context-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за
