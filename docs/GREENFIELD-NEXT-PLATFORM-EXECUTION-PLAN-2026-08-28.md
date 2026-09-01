@@ -6453,3 +6453,40 @@ authority policy не менялись.
 задач, activity, projects или progress records и не закрывает `G10S-246`, G11
 breadth, G12.5, independent final review или G13 decommission. Push не
 выполнялся из-за ограничения Actions quota.
+
+## Локализация runtime learning panels
+
+Target-коммит без push — `3aa36a7b462954fa3a1b5e7b443688b21acc9fa9`;
+evidence-коммит — `538069dbe25304387b59554ed0d134a133cf7eca`.
+
+Повторный live-аудит runtime workbench обнаружил, что после исправления верхних
+контролов четыре дочерних accessibility name всё ещё оставались bilingual:
+`Files / Файлы`, `Learning support panels / Панели поддержки обучения`,
+`Runtime evidence panel / Панель доказательств runtime` и
+`Authoritative submit verdict / Подтверждённый вердикт`. В
+`runtime-learning-components.tsx` добавлен тот же document-locale synchronizer,
+который слушает `html[lang]` и `fluent:locale-change`; editor, support panels,
+evidence card и submit verdict теперь получают одну locale-owned строку.
+
+Проверено:
+
+- scoped stack после compose-project-scoped `pnpm down` (durable data preserved)
+  и `pnpm dev -- --detached`: session
+  `1638d949-81d2-4491-931b-57ad02790bda`, URL `http://127.0.0.1:47360/`;
+- live RU `/practice/node-event-loop-001?track=node&locale=ru`: `Файлы`,
+  `Панели поддержки обучения`, `Панель доказательств runtime`;
+- live EN `/practice/node-event-loop-001?track=node&locale=en`: `Files`,
+  `Learning support panels`, `Runtime evidence panel`;
+- source guard фиксирует RU/EN submit-verdict names и отсутствие старых
+  slash-delimited literal attributes;
+- web regression **71/71**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-workbench-controls-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный accessibility/i18n corrective slice без новых вопросов, задач,
+activity, projects или progress records; `G10S-246`, G11 breadth, G12.5,
+independent final review и G13 decommission остаются открытыми. Push не
+выполнялся из-за ограничения Actions quota.
