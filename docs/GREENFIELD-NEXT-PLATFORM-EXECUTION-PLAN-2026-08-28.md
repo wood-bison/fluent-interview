@@ -6527,3 +6527,42 @@ scroll ownership не менялись.
 activity, projects или progress records; `G10S-246`, G11 breadth, G12.5,
 independent final review и G13 decommission остаются открытыми. Push не
 выполнялся из-за ограничения Actions quota.
+
+## Локализация домашнего route graph
+
+Target-коммит без push — `034e94ccbbfef3f80d66f4ad02a6b9b46db1b443`;
+evidence-коммит — `dfe823b66acc763421c9ee37e8662dae7cfe60cb`.
+
+Домашний граф маршрута сохранял bilingual accessible names в legend, viewport,
+release-order list и station buttons (`Map legend / Легенда карты`, `Route map /
+Карта маршрута`, а также одновременно английское и русское station title/status).
+Это делало клавиатурный и screen-reader маршрут смешанным, хотя видимый
+`LocaleCopy` уже переключался.
+
+`RouteGraph` теперь синхронизирует локаль из `html[lang]` и
+`fluent:locale-change`. RU использует `Легенда карты`, `Карта маршрута`,
+`Этапы программы в порядке релиза` и station labels с `из`, русским статусом и
+`уроков`; EN использует `Map legend`, `Route map`, `Program stages in release
+order` и `of`, canonical status и `lessons`. Геометрия графа, SVG edges,
+selection keyboard controls, scroll ownership и route semantics не менялись.
+
+Проверено:
+
+- scoped `pnpm down` с `durableDataPreserved=true` и штатный
+  `pnpm dev -- --detached`: fresh session
+  `92019b2b-2be5-4e49-842d-308937f5933f`, URL `http://127.0.0.1:47360/`;
+- live RU `/?locale=ru`: `Легенда карты`, `Карта маршрута`, `Этапы программы
+  в порядке релиза`, station `1 из 4. Основы JavaScript. В РАБОТЕ. 2 уроков.`;
+- live EN `/?locale=en`: `Map legend`, `Route map`, `Program stages in release
+  order`, station `1 of 4. JavaScript foundations. IN PROGRESS. 2 lessons.`;
+- web regression **72/72**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/route-graph-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный home accessibility/i18n corrective slice без новых вопросов, задач,
+activity, projects или progress records; `G10S-246`, G11 breadth, G12.5,
+independent final review и G13 decommission остаются открытыми. Push не
+выполнялся из-за ограничения Actions quota.
