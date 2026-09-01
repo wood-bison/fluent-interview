@@ -6599,3 +6599,47 @@ accessibility tree.
 задач, activity, projects или progress records; `G10S-246`, G11 breadth,
 G12.5, independent final review и G13 decommission остаются открытыми. Push не
 выполнялся из-за ограничения Actions quota.
+
+## Локализация Deep Observability Lab labels
+
+Target-коммит без push — `a40d4dadb3051625692e2697357522e2943d7774`;
+evidence-коммит — `ce501ae`.
+
+В `DeepObservabilityLab` видимый сценарий уже использовал `LocaleCopy`, но
+progressbar, навигация шести этапов, evidence facets и placeholder заметки
+оставались двуязычными или только английскими (`Deep lab progress /
+Прогресс deep lab`, `Deep lab stages / Этапы deep lab`, `Evidence facets /
+Грани доказательства`, а также английские детали stage buttons). Это нарушало
+единство русского accessibility tree и делало learner-facing Deep Lab сложнее
+для keyboard/screen-reader прохождения.
+
+Компонент теперь синхронизирует локаль из `html[lang]` и события
+`fluent:locale-change`. Progressbar, stage navigation, evidence facets, stage
+button labels/details и note placeholder получают одну locale-owned строку:
+RU — `Прогресс deep lab`, `Этапы deep lab`, `Грани доказательства`,
+`Прогноз: Зафиксировать до запуска`, `Зафиксируйте порядок очередей`; EN —
+`Deep lab progress`, `Deep lab stages`, `Evidence facets`, `Predict: Commit
+before reveal`, `Commit to the queue order`. Порядок шести этапов, разблокировка,
+advisory evidence, runtime join и граница «не меняет mastery» не изменялись.
+
+Проверено:
+
+- fresh scoped stack после compose-project-scoped down/up: session
+  `af44095b-6446-4dea-8509-1cd0b26d6292`, URL
+  `http://127.0.0.1:47360/`, **6/6** services healthy, migrations **18/18**,
+  pending `0`;
+- live RU `/practice?track=node&locale=ru`: `html[lang]=ru`, locale-owned
+  Deep Lab labels и placeholder присутствуют, bilingual slash-delimited names
+  отсутствуют;
+- live EN `/practice?track=node&locale=en`: canonical English labels и
+  placeholder присутствуют;
+- web regression **74/74**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/deep-observability-lab-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный Deep Lab accessibility/i18n corrective slice без новых вопросов,
+задач, activity, projects или progress records; `G10S-246`, G11 breadth,
+G12.5, independent final review и G13 decommission остаются открытыми. Push не
+выполнялся из-за ограничения Actions quota.
