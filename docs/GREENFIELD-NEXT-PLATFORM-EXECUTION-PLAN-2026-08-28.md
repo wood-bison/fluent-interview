@@ -6566,3 +6566,36 @@ selection keyboard controls, scroll ownership и route semantics не менял
 activity, projects или progress records; `G10S-246`, G11 breadth, G12.5,
 independent final review и G13 decommission остаются открытыми. Push не
 выполнялся из-за ограничения Actions quota.
+
+## Локализация Program region labels
+
+Target-коммит без push — `2fd8ce435684c916270903fef2a7ac803b21d723`;
+evidence-коммит — `303bd7373103ef7321f97e1d5901e92cdcda4d8b`.
+
+`ProgramPage` и `ProgramParity` объявляли четыре region/nav области
+двуязычными `aria-label` строками (`Learning tracks / Учебные треки`,
+`Program status / Состояние программы`, `Platform boundaries / Границы
+платформы`). Вместо этого добавлены `aria-labelledby` anchors с общим
+`LocaleCopy`, чтобы server-rendered Program отдавал только активный язык в
+accessibility tree.
+
+Проверено:
+
+- scoped `pnpm down` с `durableDataPreserved=true` и штатный
+  `pnpm dev -- --detached`: fresh session
+  `de0ad0fd-5ecb-4f21-885b-e6c5aff09bc3`, URL `http://127.0.0.1:47360/`;
+- live RU `/program?track=node&locale=ru`: anchors разрешаются как `Учебные
+  треки`, `Состояние программы`, `Учебные треки`, `Границы платформы`;
+- live EN `/program?track=node&locale=en`: `Learning tracks`, `Program status`,
+  `Learning tracks`, `Platform boundaries`;
+- web regression **73/73**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/program-region-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный Program accessibility/i18n corrective slice без новых вопросов,
+задач, activity, projects или progress records; `G10S-246`, G11 breadth,
+G12.5, independent final review и G13 decommission остаются открытыми. Push не
+выполнялся из-за ограничения Actions quota.
