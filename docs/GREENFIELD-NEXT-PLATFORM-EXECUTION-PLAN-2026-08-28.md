@@ -1034,6 +1034,30 @@ Evidence:
 Следующий executable пункт — G10S-234: C098 RU/EN, light/dark, desktop,
 keyboard/a11y и performance matrix.
 
+### Execution update — G10S-234 C098 desktop quality matrix — 1 сентября 2026
+
+G10S-234 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `60064fb`, evidence `99a80ea`. Добавлен
+metadata-only `architecture:gate-234`, который последовательно запускает
+`design:c098-desktop-matrix-policy`, `design:c098-accessibility-policy`,
+`design:parity`, `design:raw-colors` и `performance:c098-policy`. Все **5/5
+PASS**: desktop matrix дала `30/30` source checks и `276/276` cases,
+accessibility — `30/30`, `92/92` route cases и `12/12` keyboard interactions,
+design parity — `12` screens без issues, raw-color violations — `0`,
+performance — `8/8` с 13 measured routes, без missing routes, duplicate payload
+и forbidden heavy editor packages. Gate parser отдельно покрывает pretty-printed
+JSON performance report и не принимает вложенный объект за report-level документ.
+Статический quality slice не выдаёт import/release authority, не меняет БД,
+Docker или каталог; disposable prefix `fluent_g10s_*` остаётся `0→0`, durable
+volumes сохранены. Evidence содержит только command coordinates, durations,
+byte counts и SHA-256 stdout/stderr. Focused `3/3`, полный check/boundary/toolchain
+ladder green. Live screenshot diff, human visual sign-off, mobile matrix и
+network Web Vitals остаются честными отдельными promotion gates.
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-234-c098-quality-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-235: static dependency/SQL/credential scan,
+no API→Strata access и no dual authority.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4335,7 +4359,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS. Evidence: target implementation `e15dcc9`, evidence `002a7e1`; `9/9` sequential commands PASS, temporary prefix `fluent_g10s_` `0→0`, no persistent DB/Docker mutations.
 - [x] `G10S-232` Corpus rights/quarantine/leak scans PASS; forbidden distributable findings = 0. Evidence: target implementation `5cfb47a`, evidence `99664e2`; `9/9` sequential commands PASS, `findingCount/bodyMatchCount/importAllowedRecords/automaticPublicRecords=0`, quarantine `2`, scoped cleanup `0→0`, no persistent DB/Docker mutations.
 - [x] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs. Evidence: target implementation `9a83d03`, evidence `d3a15e7`; `9/9` sequential commands PASS, exact release/question/revision/runtime joins, persistence restart/down-up/restore cleanup, spoken explanation остаётся `AWAITING_HUMAN`.
-- [ ] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS.
+- [x] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS. Evidence: target implementation `60064fb`, evidence `99a80ea`; `5/5` sequential commands PASS, desktop `276/276`, accessibility `92/92 + 12/12`, parity `12` screens, raw colors `0`, performance `8/8`, metadata-only.
 - [ ] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority.
 - [ ] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; все intentional losses находятся в loss ledger.
 - [ ] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches.
