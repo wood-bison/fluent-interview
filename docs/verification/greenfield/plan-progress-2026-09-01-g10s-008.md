@@ -608,3 +608,26 @@ reviewed translation; текущая корректировка не меняе�
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/coverage-progress-labels-2026-09-01.{json,md}`.
+
+## Коррекция консистентности RU/EN на learner-маршрутах
+
+Target `2d471e5`, evidence `97ae42b`, push не выполнялся.
+
+Устранено смешение языка после глобального RU/EN toggle: question prompt и
+answer, lesson evidence и activity title теперь используют парный
+`LocaleCopy`, а `AssistanceActions` синхронизирует label и payload с
+`fluent:locale-change`. Stable question/lesson IDs остались только в links и
+diagnostic data. Live `/questions?track=node` и
+`/practice/lesson/node-event-loop?...` проверены в обеих локалях; raw semantic
+keys/release IDs в learner copy отсутствуют.
+
+Проверки: web `66/66`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — PASS; scoped stack `6/6`,
+migrations `18/18`, pending `0`. Snapshot: **658 / 476 / 1134 / 58,02%**.
+
+G10S-246 human acceptance, G11 content breadth, финальный independent review и
+G13 decommission остаются открытыми. Это только corrective i18n seam; curriculum
+ёмкость и evaluator semantics не менялись.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-consistency-2026-09-01.{json,md}`.

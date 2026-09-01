@@ -6100,3 +6100,38 @@ display/accessibility seam и не добавляет вопросов, зада
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/coverage-progress-labels-2026-09-01.{json,md}`.
+
+## Коррекция консистентности RU/EN на learner-маршрутах
+
+Target-коммит без push — `2d471e5`; evidence-коммит — `97ae42b`.
+
+Live-аудит обнаружил смешение языков: после глобального переключения RU shell
+становился русским, но prompt/answer карточек и lesson activity/evidence
+оставались английскими, потому что server components читали только query
+`requestedLocale`. Теперь question prompts, concise answers, lesson evidence и
+activity titles рендерятся парой через `LocaleCopy`, а badge урока следует
+активному языку shell. `AssistanceActions` слушает `fluent:locale-change` и
+отправляет в proxy фактически активный locale; question/lesson IDs и evaluator
+контракт не меняются.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/`:
+
+- `/questions?track=node` после RU показывает русские prompts и
+  `Релиз вопросов · 28 августа 2026`; English prompt, semantic keys и raw
+  release ID отсутствуют, EN toggle восстанавливает английский prompt;
+- `/practice/lesson/node-event-loop?track=node&question=question.node-event-loop-001`
+  после RU показывает русские prompt, Assistance actions и content layers, а
+  после EN — английские; активная кнопка помощи передаёт соответствующий
+  locale;
+- web regression `66/66`, `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+  `pnpm toolchain:check` — `PASS`;
+- scoped stack `6/6`, migrations `18/18`, pending `0`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+i18n/accessibility seam и не добавляет вопросов, задач, activity, projects или
+progress records. G10S-246 human acceptance и G11 content breadth остаются
+открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-consistency-2026-09-01.{json,md}`.
