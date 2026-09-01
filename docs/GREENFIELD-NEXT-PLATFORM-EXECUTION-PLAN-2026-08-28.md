@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-220.md`](verification/greenfield/plan-progress-2026-09-01-g10s-220.md).
+[`plan-progress-2026-09-01-g10s-221.md`](verification/greenfield/plan-progress-2026-09-01-g10s-221.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -785,6 +785,22 @@ override, legacy reference и fallback fixtures. Evidence
 содержит только metadata/counts/hashes; Docker и DB не запускались и не
 изменялись. Следующий executable пункт — `G10S-221`: доказать one-root
 startup через `pnpm dev` без самостоятельного Strata service.
+
+### Execution update — G10S-221 one-root startup — 1 сентября 2026
+
+Target `main` закрыл G10S-221 локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `c81e358` и evidence/docs `9b4040b`. `pnpm dev`
+теперь применяет checked-in PostgreSQL migrations до запуска остальных
+сервисов, fail-closed при ошибке и не поднимает самостоятельный Strata
+service. Изолированный rehearsal `fluent-g10s-221-mthx3yvd` достиг `ready`:
+точно шесть platform services (пять running/healthy и `api-data-init` exited
+`0`), migrations `18/18`, ledger `count=18`, все шесть learner/API routes
+`200`. Scoped cleanup завершился `0` containers / `0` networks и сохранил
+ровно `postgres-data` и `platform-events`; report metadata-only, без bodies,
+credentials или raw logs. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-221-one-root-startup-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-222: доказать scoped `pnpm down`, zero
+orphans и сохранность declared durable volumes.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4071,7 +4087,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-218` Пометить standalone Strata README/docs/plan как migrated/reference-only с target path/SHA; status checkbox authority удалить либо явно заморозить. Evidence: target implementation `bf9dd70`/`161a79b`, evidence/docs `04026a3`; successor `0921dd0`, immutable archive tag `strata-archive-2026-09-01-g10s-217` → `ec3b6804`; exact three-doc change range, source check and fail-closed marker rehearsal PASS.
 - [x] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof. Evidence: target implementation `8ccb0f5`, evidence/docs `356f3ad`; retained Strata `0921dd0`, immutable tag → `ec3b6804`; source-target deletion scan `0`, G13 ownership markers and read-only controls PASS.
 - [x] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target. Evidence: target implementation `09fb087`, evidence/docs `b5de1f6`; one root Git, zero nested roots/active or external symlinks, one `pnpm-lock.yaml`, one root Compose project, runtime source/fallback findings `0`, scan `901` files/`166` dirs, focused `5/5`, full check/boundary/toolchain green, metadata-only.
-- [ ] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service.
+- [x] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service. Evidence: target implementation `c81e358`, evidence/docs `9b4040b`; isolated `pnpm dev -- --detached --json` PASS, migrations `18/18`, exact six services, six routes `200`, scoped cleanup `0` containers/networks, durable volumes preserved, metadata-only.
 - [ ] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes.
 - [ ] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema.
 - [ ] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены.
