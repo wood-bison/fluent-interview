@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-226.md`](verification/greenfield/plan-progress-2026-09-01-g10s-226.md).
+[`plan-progress-2026-09-01-g10s-240.md`](verification/greenfield/plan-progress-2026-09-01-g10s-240.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -4218,6 +4218,28 @@ proof — полный slice `C098 / Node.js Event Loop`.
 | Machine handoff | `226–244` | evidence + `AWAITING_INDEPENDENT_REVIEW` | implementing agent |
 | Independent acceptance | `245–246` | P0/P1 closure and G10S PASS | Codex/owner |
 
+### Execution update — G10S-240 fast-forward push policy — 1 сентября 2026
+
+Target `main` закрыл G10S-240 двумя локальными commit-gated коммитами без
+push из-за ограничения GitHub Actions quota: implementation `383bc64`
+(`feat(g10s): add fast-forward push policy gate`) и evidence `a3b032d`
+(`docs(g10s): record fast-forward push policy gate`). Policy и schema
+`g10s-gate-240.v1` требуют fast-forward-only, local PASS и exact direct-child
+anchor G10S-239; allowlist implementation содержит ровно пять путей.
+
+На implementation/evidence boundaries полный `pnpm check`,
+`pnpm boundary:check` и `pnpm toolchain:check` прошли. Machine report
+`G10S-240-push-policy-2026-09-01.json` фиксирует `15/15` локальных assertions
+PASS: commit/path/parent/diff, пять receipts, main/ancestry/direct-child/clean,
+предыдущий G10S-239 full-check receipt и push-disabled control. Read-only
+`git ls-remote origin refs/heads/main` оставлен как `OPEN`; `pushAllowed=false`
+и `pushPerformed=false` намеренно отражают владельческий запрет, а не скрывают
+неподтверждённый remote state. Evidence metadata-only: тела команд, исходники,
+вопросы/ответы, секреты, DB/Docker mutations и внешние записи отсутствуют.
+
+Следующий executable пункт — `G10S-241`: пересмотреть retained limitations
+G10 и разнести каждую открытую capability в G11/G12 с owner и exact trigger.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
@@ -4489,7 +4511,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches. Evidence: target implementation `21ab02c`, clean-room corrections `836d438`, `996f180`, `9c11d85`, `3c729a1`, evidence `1604224`; one-command gate `PASS` (130.4 s), archive/fresh-clone metadata clean, source refs `0`, all install/build/check/dev/C098 export/import/journey/cleanup exit `0`, journey machine status `PASS`, metadata-only controls true, cleanup `0→0`.
 - [x] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement. Evidence: target implementation `ffa194f`, evidence `6ecc55c`; exact range `e7040fa..1604224`, six linear commits, 24/24 commit assertions plus range/main/clean/ancestry = `28/28 PASS`, unlisted path/SHA/parent/message/merge drift fail-closed, metadata-only and push `0`.
 - [x] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md. Evidence: target implementation `e2fbaaf`, evidence `521bf2e`; `13/13` post-commit assertions PASS, five-command metadata-only receipt, full check on phase boundary, push `0`, remote attestation `OPEN`.
-- [ ] `G10S-240` Push только fast-forward после local PASS и с учётом текущей CI quota policy; если push запрещён владельцем, локальные SHAs сохраняются, статус remote attestation остаётся open.
+- [x] `G10S-240` Push policy зафиксирована как fast-forward-only: local PASS обязателен, но push запрещён владельцем на время CI quota. Evidence: target implementation `383bc64`, evidence `a3b032d`; `15/15` local assertions PASS, полный `pnpm check` на implementation/evidence boundary, `git ls-remote` только read-only, remote attestation `OPEN`, `pushPerformed=false`. SHAs и policy сохранены в `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-240-push-policy-2026-09-01.{json,md}`. Статус `PASS_WITH_LIMITATIONS` честно отражает одну открытую remote attestation; следующий пункт — `G10S-241`.
 - [ ] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: retained limitations либо закрыты, либо перенесены в G11/G12 с owner и exact trigger.
 - [ ] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в evidence index, не в виде скрытого assumption.
 - [ ] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package.
