@@ -280,6 +280,33 @@ database, Docker и remote не изменялись. Счётчик плана 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G11-015-shared-key-formalization-2026-09-01.{json,md}`.
 
+## Коррекция человекочитаемых learner labels
+
+Следующая проверка закрыла UI/context-разрыв в Questions и lesson: внутренние
+`trackId/moduleId/lessonId` больше не показываются пользователю как названия
+маршрута. Target-коммит без push — `914ed70`; resolver
+`curriculumPlacementLabels` читает published curriculum и оставляет IDs только
+для стабильных ссылок. Shared placement copy также показывает локализованное
+имя выбранного трека.
+
+На штатном scoped stack `http://127.0.0.1:47360/` проверено:
+
+- `/questions?track=java&locale=en` показывает `Java engineer · Java service
+  boundaries · HTTP contracts` и `Java foundations · Heap, stack, and
+  ownership`;
+- `/practice/lesson/java-memory?question=question.memory-ownership-001&track=java&locale=en`
+  показывает `Java / Java foundations · Heap, stack, and ownership`;
+- Navigator и shared route explanation остаются доступны, raw IDs в видимом
+  breadcrumb отсутствуют.
+
+Web smoke `61/61` и полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`. Evidence-коммит
+`3663a87`; progress snapshot не изменён: **658 / 476 / 1134 / 58,02%**.
+Исправление не добавляет контент и не закрывает G10S-246 или G11.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-route-labels-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

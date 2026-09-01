@@ -5194,6 +5194,26 @@ placement gaps требуют reviewed curriculum decision, а не формал
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G11-015-shared-key-formalization-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`914ed70`, evidence
+`3663a87`) устранил последний learner-facing разрыв этой же route-context
+поверхности. В Questions и lesson raw IDs (`java-http`, `java-memory`) больше
+не являются видимыми подписями: `curriculumPlacementLabels` разрешает
+человекочитаемые названия track/module/lesson из published curriculum, а
+стабильные IDs остаются только в ссылках и route context. Shared placement copy
+теперь также показывает имя выбранного трека. Для malformed release сохранён
+явный ID fallback, чтобы recovery state не оказался пустым.
+
+Live Java smoke на `http://127.0.0.1:47360/` подтвердил Questions
+(`Java engineer · Java service boundaries · HTTP contracts` и
+`Java foundations · Heap, stack, and ownership`) и lesson breadcrumb
+(`Java / Java foundations · Heap, stack, and ownership`). Web smoke `61/61`,
+полный ladder (`NX_CI=1 pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check`) зелёный; content/progress snapshot не менялся.
+Evidence содержит только metadata и статусы; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-route-labels-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
