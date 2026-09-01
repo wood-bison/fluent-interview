@@ -6302,3 +6302,42 @@ corrective display/i18n и guard-precision slice без новых проект�
 G11 content breadth, финальная revalidation, независимый review и G13
 decommission остаются открытыми. Push не выполнялся из-за ограничения Actions
 quota.
+
+## Локализация runtime-лейблов и повторная привязка C098 evidence
+
+Target-коммит без push — `d1dd271d643c39d96e77aa4bb7823f4ca8d003b5`;
+evidence-коммит — `c913ac9d8fbaecaea0ebe70cbdbaaa65fea732a0`.
+
+В live-аудите после предыдущего i18n-среза обнаружилось, что bundle ещё
+обслуживал старые подписи, несмотря на исправленные исходники. Scoped stack был
+пересобран штатным `pnpm dev -- --detached` (session
+`2c2e7d40-109e-4d23-a5c5-2f72d4e22d38`), после чего browser-проверка подтвердила
+актуальные RU labels. В app shell и home route добавлены reviewed подписи
+`Среда выполнения Node.js`, `Продолжить среду выполнения Node.js` и
+`Next · локально`; deep observability lab использует `Сбросить лабораторию`, а
+Studio — `Только манифест авторинга`. Канонические EN labels и технические
+runtime names (`Node.js`, `JavaScript`, `CommonJS`) сохранены.
+
+Одновременно C098-205 desktop и C098-206 accessibility metadata были
+перепривязаны к target `d1dd271`, их evidence-index синхронизирован без
+переписывания исторических тел. Focused policies остаются **30/30 + 30/30
+PASS**; записанные live matrices — desktop **276/276**, accessibility
+**92/92** и interaction **12/12**.
+
+Проверено:
+
+- RU `/?locale=ru`, `/studio?locale=ru`, `/practice?track=node&locale=ru` и
+  `/practice/node-event-loop-001?track=node&locale=ru`: `html[lang]=ru`, новые
+  подписи видимы, прежние mixed варианты отсутствуют;
+- EN `/?locale=en`: канонические `Node.js runtime`, `Continue Node.js runtime`
+  и `Next · local` сохранены;
+- `NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` — PASS;
+  scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный display/i18n corrective slice; он не добавляет вопросов, задач,
+activity, projects или progress records. `G10S-246` human acceptance, G11
+breadth, финальная revalidation, independent review и G13 decommission остаются
+открытыми. Push не выполнялся из-за ограничения Actions quota.
