@@ -6490,3 +6490,40 @@ evidence card и submit verdict теперь получают одну locale-ow
 activity, projects или progress records; `G10S-246`, G11 breadth, G12.5,
 independent final review и G13 decommission остаются открытыми. Push не
 выполнялся из-за ограничения Actions quota.
+
+## Локализация Atlas navigation labels
+
+Target-коммит без push — `d3e44cb1ef5d82a6c234f7b38aafd5c11b588880`;
+evidence-коммит — `328a5aaef6049b1d09b7fb8c73aefe47b51b1390`.
+
+После Atlas zoom-среза три области графа всё ещё объявлялись bilingual:
+`Atlas view controls / Управление Atlas`, `Learning tracks / Учебные треки` и
+`Node.js engineer graph / граф Инженер Node.js`. Это оставляло второй язык в
+accessible name независимо от выбранной локали.
+
+`AtlasExplorer` теперь выбирает подписи controls group, tablist и viewport из
+явного `locale` query: RU — `Управление Atlas`, `Учебные треки`,
+`Инженер Node.js · граф`; EN — `Atlas view controls`, `Learning tracks`,
+`Node.js engineer graph`. Graph IDs, track selection, zoom/fit behavior и
+scroll ownership не менялись.
+
+Проверено:
+
+- scoped `pnpm down` с `durableDataPreserved=true` и штатный
+  `pnpm dev -- --detached`: fresh session
+  `040db586-0e49-4ada-b53f-2b1c475bd108`, URL `http://127.0.0.1:47360/`;
+- live RU `/atlas?track=node&locale=ru`: locale-owned controls/tabs/viewport
+  names без slash-delimited captions;
+- live EN `/atlas?track=node&locale=en`: canonical English controls/tabs/viewport
+  names;
+- web regression **71/71**, `NX_CI=1 pnpm check`, boundary и toolchain — PASS;
+  evidence validation сохранила **428/428** historical records;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-navigation-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный Atlas i18n/accessibility corrective slice без новых вопросов, задач,
+activity, projects или progress records; `G10S-246`, G11 breadth, G12.5,
+independent final review и G13 decommission остаются открытыми. Push не
+выполнялся из-за ограничения Actions quota.
