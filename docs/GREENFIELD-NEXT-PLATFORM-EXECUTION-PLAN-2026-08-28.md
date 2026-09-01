@@ -359,6 +359,36 @@ Node runtime. Evidence-коммит `5777f42` содержит metadata-only JSO
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-route-context-correction-2026-09-01.{json,md}`.
 
+### Corrective update — learner track context — 1 сентября 2026
+
+Повторная cross-route проверка выявила более широкий вариант того же дефекта:
+неизвестный `track` в `/program`, `/practice` и workbench мог молча получить
+Node-каталог, а lesson lookup мог заменить запрошенный язык первым совпадением
+из другой дорожки. Такой URL выглядел валидным, но learner видел не тот
+контекст. Это особенно опасно для сохранённых ссылок и переходов из Questions.
+
+Target `main` получил implementation-коммит `d56479d`
+(`fix(routes): preserve learner track context`). Он добавляет общий
+fail-closed recovery state `TRACK NOT FOUND`, убирает cross-track fallback в
+program/practice/lesson, ограничивает lesson и placement одним явно
+запрошенным `track`, и оставляет default только для URL без track-параметра.
+Source guards и regression tests закрепляют этот контракт.
+
+После пересборки scoped Compose `http://127.0.0.1:47360/` проверены шесть
+live-case: обычный Node program, unknown track в program/practice/workbench,
+Node URL с Java lesson и валидные Java program/lesson. Неверные ссылки
+показывают recovery/no-match без Node или Java подмены; валидные ссылки
+сохраняют свой track. Focused suite `8/8`, web smoke `56/56`, полный
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` зелёные.
+Evidence-коммит `f437f46` (`docs(g10s): record learner track context
+evidence`) добавляет metadata-only JSON/Markdown; push не выполнялся.
+
+Это corrective evidence, а не новая curriculum capacity: checkbox-счётчик не
+изменён, G10S-246 owner sign-off и G11 breadth остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-context-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за

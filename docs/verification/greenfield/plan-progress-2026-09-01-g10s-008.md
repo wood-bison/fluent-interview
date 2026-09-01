@@ -103,6 +103,31 @@ FOUND`) и обычный Node runtime. Source guard, web regression `55/55`, bu
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-route-context-correction-2026-09-01.{json,md}`.
 
+## Коррекция контекста learner track
+
+Повторная проверка deep links нашла общий fallback-дефект: неизвестный
+`track` в `/program`, `/practice` и workbench мог незаметно показывать Node, а
+lesson lookup мог перескочить на placement другой дорожки. Это исправлено
+локальным target-коммитом без push:
+
+- `d56479d` — fail-closed `TRACK NOT FOUND`, строгая фильтрация
+  `track → lesson → placement` и отсутствие cross-track fallback;
+- `f437f46` — metadata-only evidence с шестью live-case и результатами
+  регрессионных проверок.
+
+После пересборки scoped stack `http://127.0.0.1:47360/` проверены обычный Node
+маршрут, unknown track в трёх learner surfaces, несовместимый Node+Java
+lesson и валидные Java program/lesson. Focused `8/8`, web smoke `56/56`,
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+Неверные deep links теперь объясняются recovery/no-match state, а не
+подменяются другим языком.
+
+Это corrective seam, поэтому снимок остаётся **658 / 476 / 1134 / 58,02%**;
+учебная ёмкость не добавлена. G10S-246 и G11 по-прежнему открыты.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-context-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
