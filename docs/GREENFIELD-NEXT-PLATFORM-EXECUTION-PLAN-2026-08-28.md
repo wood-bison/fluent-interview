@@ -4353,6 +4353,38 @@ database/Docker mutations и push отсутствуют; исторически
 Следующий executable пункт — `G10S-245`: независимый Codex review и
 исправление всех найденных P0/P1 отдельными commit-gated slices.
 
+### Execution update — G10S-245 independent review и fail-closed hardening — 1 сентября 2026
+
+Target `main` закрыл G10S-245 локальными commit-gated slices без push из-за
+Actions quota. Review `codex-cli 0.151.0-alpha.7.2` подтвердил исходный P1
+по package schema, а повторная adversarial ревизия lineage implementation
+`8ac2d4f76f3ef1557759a50a122823508af09087` нашла ещё два обхода: symbolic
+`HEAD` принимался вместо immutable commit SHA и `target.clean=false` мог пройти
+при чистом текущем checkout.
+
+Закрывающая цепочка target:
+
+- `8ac2d4f76f3ef1557759a50a122823508af09087` — immutable correction SHA,
+  полная lineage и policy-count hardening;
+- `9ff974f60f85efb3550da262ef045a319c72a399` — fail-closed validator:
+  `cat-file -t` + 40-символьные SHA, реальный parent commit, строгий
+  `clean=true`, два regression vectors;
+- `262d599` — evidence/report docs обновлены на target `9ff974f`, повторный
+  codex review зафиксирован.
+
+Machine report
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-245-independent-review-and-fix-2026-09-01.json`
+фиксирует `34/34 PASS, 0 FAIL, 1 OPEN, 0 SKIPPED`,
+`target.lineageVerified=true`, `target.clean=true`, `promotion.g10s246=UNLOCKED`
+при `productClaim=NOT_PRODUCTION_READY`. `validateReport` возвращает пустой
+список failures на текущем target; adversarial mutations `clean=false` и
+`currentHead=HEAD` теперь отклоняются. Полный `pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check` и focused `test:gate-245`
+проходят; push не выполнялся.
+
+Следующий executable пункт — `G10S-246`: owner sign-off и финальная
+acceptance boundary. До него G11 breadth migration остаётся закрытой.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
@@ -4629,7 +4661,7 @@ database/Docker mutations и push отсутствуют; исторически
 - [x] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в sidecar evidence index без переписывания исторического индекса: `G11-037`, `G12-R01`, `G12-R06`, `G12-R16`; все 6 limitation IDs покрыты ровно по одному разу. Evidence: target implementation `c6e2aac`, evidence `c7480f3`; gate `35/35 PASS`, `4 OPEN`, metadata-only, push `0`.
 - [x] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package. Evidence: target implementation `fd4e85e`, evidence `d7969aa`; report `24/24 PASS`, `1 OPEN` (owner sign-off), metadata-only, push `0`.
 - [x] `G10S-244` Handoff содержит repo path, branch, HEAD, commits, start command, DB migration range, bundle/release IDs, C098 route и evidence index. Evidence: target implementation `b0c7555`, evidence `c2dfb81`; report `24/24 PASS`, `1 OPEN`, immutable package/prior-report/index bindings, metadata-only, push `0`.
-- [ ] `G10S-245` Независимый Codex review из раздела 3 завершён; все P0/P1 исправлены отдельными commits и повторно проверены.
+- [x] `G10S-245` Независимый Codex review из раздела 3 завершён; все P0/P1 исправлены отдельными commits и повторно проверены. Evidence: target implementation/hardening `8ac2d4f`, `9ff974f`, evidence/docs `3d6c830`, `262d599`; report `34/34 PASS`, symbolic refs и `clean=false` fail-closed, metadata-only, push `0`.
 - [ ] `G10S-246` Только после G10S-245 gate получает `PASS`, G11 breadth migration разблокируется.
 
 ---
