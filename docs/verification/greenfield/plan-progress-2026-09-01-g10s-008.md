@@ -208,6 +208,26 @@ Unknown/stale cases не показывают preview или чужую карт
 **658 / 476 / 1134 / 58,02%**. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-deep-link-context-2026-09-01.{json,md}`.
 
+## Коррекция destination-копирайта Questions recovery
+
+После fail-closed исправления deep-link найден UX-дефект: recovery в
+`/questions` показывал `Return to lesson`, хотя кнопка возвращала в каталог.
+Это исправлено локальными target-коммитами без push:
+
+- `5fb40cd` — явный `destination="catalog"` для Questions и корректные
+  `Return to questions` / `Вернуться к вопросам`; lesson recovery не изменён;
+- `28046b4` — metadata-only evidence с invalid Questions и invalid lesson
+  live-case.
+
+На scoped stack `http://127.0.0.1:47360/` catalog recovery сохраняет
+`track=node&locale=en`, не показывает preview и ведёт на `/questions`; lesson
+recovery по-прежнему ведёт на урок. Web smoke `53/53`, полный
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+Счётчик не изменён: **658 / 476 / 1134 / 58,02%**. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-recovery-copy-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

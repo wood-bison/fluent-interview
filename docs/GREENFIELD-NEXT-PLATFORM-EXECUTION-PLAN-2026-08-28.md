@@ -503,6 +503,37 @@ routing seam, не новая curriculum capacity: снимок остаётся
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-deep-link-context-2026-09-01.{json,md}`.
 
+### Corrective update — question recovery destination copy — 1 сентября 2026
+
+Повторный live-аудит подтвердил, что fail-closed логика уже работала, но
+recovery в `/questions` показывал слишком общий текст `Return to lesson`.
+Для пользователя каталога это была неверная следующая точка: кнопка вела в
+каталог, а подпись обещала урок. Это не меняло данные, но делало исправление
+ссылки неочевидным и расходилось с контрактом `surface → recovery destination`.
+
+Target `main` получил implementation-коммит `5fb40cd`
+(`fix(ui): align question recovery destination`). `QuestionQueryState` теперь
+принимает явный `destination`: Questions передаёт `catalog` и получает
+`Return to questions` / `Вернуться к вопросам`, а lesson сохраняет
+`Return to lesson`. Regression guard проверяет, что catalog recovery не
+возвращается к lesson-копирайту.
+
+После scoped rebuild на `http://127.0.0.1:47360/` проверены invalid
+`/questions?question=question.not-released&track=node&locale=en` (catalog
+recovery, href `/questions?track=node&locale=en`) и invalid lesson deep-link
+(`Return to lesson`). Preview не появляется ни в одном invalid-сценарии.
+Прямой web smoke `53/53`, полный `NX_CI=1 pnpm check`,
+`pnpm boundary:check` и `pnpm toolchain:check` — `PASS`.
+
+Evidence-коммит `28046b4` (`docs(g10s): record question recovery copy
+evidence`) содержит metadata-only JSON/Markdown; push не выполнялся. Это
+коррекция UX-контракта, а не новая curriculum capacity: снимок остаётся
+**658 / 476 / 1134 / 58,02%**; G10S-246 owner sign-off и G11 breadth остаются
+открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-recovery-copy-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за
