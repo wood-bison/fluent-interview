@@ -6411,3 +6411,45 @@ display/i18n corrective slice: он не добавляет вопросов, з
 projects или progress records и не закрывает `G10S-246`, G11 breadth, G12.5,
 independent final review или G13 decommission. Push не выполнялся из-за
 ограничения Actions quota.
+
+## Локализация runtime workbench controls
+
+Target-коммит без push — `f81430bc7ed16275e108b3f84bfe765843ac4341`;
+evidence-коммиты — `214e7b3` (первичная запись) и `3859ff228e9c9a1d6b1e90d3a392e790c5aeb993`
+(исправление полного SHA в metadata).
+
+После пересборки scoped stack live-проверка runtime workbench выявила, что
+`html[lang]=ru` уже переключал видимый контент, но доступные имена контролов
+оставались bilingual slash-delimited (`Language and released runtime /
+Язык…`, `Editor width / Ширина…`, `Resize editor and evidence / Изменить…`).
+Это делало RU-режим непоследовательным для keyboard и screen-reader сценариев.
+
+`RuntimeWorkbench` теперь синхронизирует locale-owned copy из `html[lang]` и
+события `fluent:locale-change`. Профиль released runtime, range ширины
+редактора и вертикальный separator получают отдельные RU/EN labels и
+`aria-valuetext`; loading/no-compatible-profile `<option>` также имеют локальные
+fallback-строки. Канонические runtime values, layout state, evaluator и
+authority policy не менялись.
+
+Проверено:
+
+- свежий штатный `pnpm dev -- --detached`: session
+  `9c919a19-f8bb-4363-a9a9-2f3f134c268e`, URL `http://127.0.0.1:47360/`;
+- live RU `/practice/node-event-loop-001?track=node&locale=ru`:
+  `Язык и опубликованный runtime`, `Ширина редактора`, `Изменить ширину
+  редактора и evidence`, `55% ширины редактора`;
+- live EN `/practice/node-event-loop-001?track=node&locale=en`:
+  `Language and released runtime`, `Editor width`, `Resize editor and evidence`,
+  `55% editor width`;
+- `@fluent/web` regression **71/71**, `NX_CI=1 pnpm check`, boundary и
+  toolchain — PASS; evidence validation сохранила **428/428** historical
+  records;
+- scoped stack **6/6**, migrations **18/18**, pending **0**;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-workbench-controls-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный display/accessibility corrective slice: он не добавляет вопросов,
+задач, activity, projects или progress records и не закрывает `G10S-246`, G11
+breadth, G12.5, independent final review или G13 decommission. Push не
+выполнялся из-за ограничения Actions quota.
