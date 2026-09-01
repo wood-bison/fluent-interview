@@ -6192,3 +6192,41 @@ display/accessibility seam; G10S-246 human acceptance, G11 content breadth,
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/navigator-status-labels-2026-09-01.{json,md}`.
+
+## Локализация динамических curriculum labels
+
+Target-коммит без push — `005c8a1b9f89e104d23bc718912672a1262592f0`;
+evidence-коммит — `341c03e5d2d84b09bc69f342c4d5cfb6aefc52e0`.
+
+Live-аудит после deep-link locale correction нашёл отдельный дефект: shell уже
+переключался на русский, но динамические имена треков, модулей и уроков в
+`/program`, `/practice`, `/atlas`, route graph, home и lesson preview
+оставались английскими. Поэтому одна страница одновременно сообщала о RU
+режиме и показывала английский curriculum.
+
+Добавлен единый `apps/web/app/components/curriculum-labels.ts` с reviewed EN/RU
+копиями для всех известных track/module/lesson IDs. Все learner projections
+используют resolver; стабильные IDs остаются в links/API/diagnostic context, а
+неизвестные будущие значения получают deterministic fallback до редакторского
+перевода.
+
+Проверено:
+
+- RU live routes `/program`, `/practice`, `/atlas` и lesson preview на
+  `http://127.0.0.1:47360/`: `html[lang]=ru`, русские динамические названия
+  видимы, проверенный набор английских названий отсутствует;
+- EN `/program?track=node&locale=en`: `html[lang]=en`, английские названия
+  видимы, проверенный набор русских динамических названий отсутствует;
+- `@fluent/web` — `70/70` tests и typecheck PASS;
+- полный `NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`
+  — PASS; scoped stack `6/6`, PostgreSQL migrations `18/18`, pending `0`;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/curriculum-labels-localization-2026-09-01.{json,md}`.
+
+Это corrective display/i18n seam без новой учебной ёмкости, вопросов,
+activity или progress records. Счётчик master-plan после
+`pnpm plan:progress:json`: **658 checked / 476 remaining / 1134 total /
+58,02%**. Следующим executable gate остаётся `G10S-246` (human owner
+acceptance); G11 breadth, финальная revalidation и G13 decommission не
+закрываются этим изменением. Push не выполнялся из-за ограничения Actions
+quota.
