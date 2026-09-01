@@ -412,6 +412,28 @@ ladder и stack/migrations `6/6`, `18/18`, pending `0` — `PASS`.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/module-activity-kind-localization-2026-09-01.{json,md}`.
 
+## Коррекция review progress labels
+
+В review-панели больше не показываются внутренние capability keys и raw
+revision enums. Target-коммит без push — `3225eec`; общий
+`progress-labels.ts` разрешает track/module/lesson по published curriculum,
+локализует причины и приоритеты пересмотра и заменяет canonical readiness
+sentence на locale-owned copy. Evidence-коммит — `9c1fabc`.
+
+На `http://127.0.0.1:47360/` live `/review` показал человекочитаемую цепочку
+`Node.Js Engineer · JavaScript Foundations · Closures And Retained State` и
+`Новый перенос · Приоритет 75`; raw dotted key и `unseen_transfer` в видимом
+списке отсутствуют. Web regression `64/64`, полный ladder
+(`NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`) —
+`PASS`; scoped stack `6/6`, migrations `18/18`, pending `0`.
+
+Это corrective display/accessibility seam, а не новая учебная ёмкость, поэтому
+snapshot остаётся **658 / 476 / 1134 / 58,02%**. G10S-246 human acceptance и
+G11 content breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/review-progress-labels-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

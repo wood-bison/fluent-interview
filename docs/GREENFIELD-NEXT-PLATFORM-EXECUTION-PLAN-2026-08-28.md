@@ -5291,6 +5291,27 @@ migrations `18/18`, pending `0`. Это display/accessibility correction без
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/module-activity-kind-localization-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`3225eec`, evidence `9c1fabc`)
+устранил последний необработанный слой в learner-facing review progress.
+Новый общий `progress-labels.ts` разрешает capability coordinates через
+published curriculum и даёт bilingual copy для revision reason/priority и
+readiness reason. Поэтому `/review` показывает
+`Node.Js Engineer · JavaScript Foundations · Closures And Retained State` и
+`Новый перенос · Приоритет 75`, а стабильные dotted keys остаются только
+join-метаданными. Серверная canonical sentence больше не протекает в русскую
+поверхность, а неизвестные значения получают безопасный fallback.
+
+Live на пересобранном scoped stack `http://127.0.0.1:47360/` подтвердил
+`/review`: revision plan читаем, raw `unseen_transfer` и dotted capability key
+в видимом заголовке отсутствуют. Web regression `64/64`, полный ladder
+(`NX_CI=1 pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`;
+stack `6/6`, migrations `18/18`, pending `0`. Это display/accessibility
+correction без новой учебной ёмкости: snapshot остаётся **658 / 476 / 1134 /
+58,02%**. `G10S-246` и G11 breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/review-progress-labels-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
