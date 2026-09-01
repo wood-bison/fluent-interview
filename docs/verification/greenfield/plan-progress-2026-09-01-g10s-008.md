@@ -35,6 +35,25 @@ gates остаются явными.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-008-studio-baseline-2026-09-01.{json,md}`.
 
+## Коррекция после live-аудита
+
+В ходе проверки языковых дорожек найден и исправлен отдельный defect в
+learner observability projection: `/practice` раньше показывал весь каталог
+на Node, Java и Go. Локальные target-коммиты без push:
+
+- `fa3979d` — фильтр `observabilityScenariosForTrack(trackId)` в domain и
+  learner route плюс regression test;
+- `aecce6b` — metadata-only evidence с browser DOM-проверкой.
+
+Проверенный результат: Node — 2 собственных сценария, Java — 2, Go — 2;
+`0` cross-language scenarios, `0` alerts, счётчики planned/released совпадают
+с каталогом. Полный target ladder после исправления зелёный. Общий счётчик
+мастер-плана не изменён: это исправление качества уже закрытого G10S-194, а не
+новый curriculum checkbox.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-194-observability-track-filter-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

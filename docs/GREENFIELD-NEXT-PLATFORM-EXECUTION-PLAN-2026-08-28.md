@@ -4413,6 +4413,35 @@ Evidence: `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G1
 Следующий executable пункт остаётся `G10S-246`: owner sign-off и финальная
 acceptance boundary. До него G11 breadth migration остаётся закрытой.
 
+### Execution update — G10S-194 learner track-filter correction — 1 сентября 2026
+
+В live-проверке после G10S-194 обнаружилась проекционная ошибка: `/practice`
+рендерил весь observability-каталог на каждой языковой дорожке. Из-за этого
+Java и Go показывали Node/PostgreSQL incidents, а planned-счётчик не отражал
+реальный lane-specific набор. Это был дефект learner-проекции, а не повод
+ослаблять уже закрытый path-join gate.
+
+Target `main` исправлен двумя локальными commit-gated slices без push:
+
+- `fa3979d` (`fix(g11): isolate observability labs by track`) добавляет
+  доменный `observabilityScenariosForTrack(trackId)`, переводит learner
+  страницу и её счётчики на этот helper и добавляет точный regression test;
+- `aecce6b` (`docs(g11): record observability track-filter evidence`) сохраняет
+  metadata-only evidence с browser-проверкой всех трёх дорожек.
+
+После пересборки web-образа штатным `pnpm run dev -- --detached` live DOM
+показал: Node — `node-event-loop-trace` и `postgres-db-lock` (2 planned, 1
+released), Java — `cache-stampede` и `gc-memory-pressure` (2 planned), Go —
+`retry-storm` и `queue-replay` (2 planned). На всех маршрутах `0` alerts и
+`crossLanguageScenarioCount=0`. `pnpm --dir apps/web test` — `53/53 PASS`;
+полные `pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — PASS.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-194-observability-track-filter-2026-09-01.{json,md}`.
+Evidence metadata-only: тела контента, database/Docker mutations и push
+отсутствуют. Это correction без изменения общего checkbox-счётчика; G10S-246
+human owner sign-off и широкий G11 curriculum gate остаются открытыми.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
