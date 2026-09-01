@@ -802,6 +802,23 @@ credentials или raw logs. Evidence:
 Следующий executable пункт — G10S-222: доказать scoped `pnpm down`, zero
 orphans и сохранность declared durable volumes.
 
+### Execution update — G10S-222 scoped cleanup and volume retention — 1 сентября 2026
+
+Target `main` закрыл G10S-222 локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `2942587` и evidence/docs `943fd45`. Новый
+metadata-only rehearsal вызывает именно публичный `pnpm down` дважды на
+изолированном Compose project `fluent-g10s-222-mthxl0rl`, предварительно
+включая optional observability profile в том же one-root stack. Оба shutdown
+завершились `exit 0`, оставили `0` containers и `0` networks, не использовали
+`--volumes`/`-v` и сохранили неизменными IDs всех трёх declared durable volumes:
+`postgres-data`, `platform-events`, `otel-data`. Повторный `pnpm dev` после
+первого shutdown прочитал PostgreSQL migration ledger как `18/18`, подтверждая
+реальную сохранность данных. Focused cleanup tests — `3/3`; полный
+`pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` — green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-222-scoped-cleanup-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-223: выровнять G11 input inventory и
+authoring queue с Strata authority и C098 release schema.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4088,7 +4105,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-219` Не удалять local source repo внутри G10S; final local removal выполняет только G13 после production acceptance, exact owner-approved manifest и archive/restore proof. Evidence: target implementation `8ccb0f5`, evidence/docs `356f3ad`; retained Strata `0921dd0`, immutable tag → `ec3b6804`; source-target deletion scan `0`, G13 ownership markers and read-only controls PASS.
 - [x] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target. Evidence: target implementation `09fb087`, evidence/docs `b5de1f6`; one root Git, zero nested roots/active or external symlinks, one `pnpm-lock.yaml`, one root Compose project, runtime source/fallback findings `0`, scan `901` files/`166` dirs, focused `5/5`, full check/boundary/toolchain green, metadata-only.
 - [x] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service. Evidence: target implementation `c81e358`, evidence/docs `9b4040b`; isolated `pnpm dev -- --detached --json` PASS, migrations `18/18`, exact six services, six routes `200`, scoped cleanup `0` containers/networks, durable volumes preserved, metadata-only.
-- [ ] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes.
+- [x] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes. Evidence: target implementation `2942587`, evidence/docs `943fd45`; optional observability profile, две публичные команды `pnpm down`, `0` containers/networks, `3` durable volumes с неизменными IDs, migration ledger `18/18` после restart, без `--volumes`/`-v`, metadata-only.
 - [ ] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema.
 - [ ] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены.
 - [ ] `G10S-225` Commit: `chore(g10s): retire standalone Strata as an active authority` — выполнять только после G10S-210…224 PASS.
