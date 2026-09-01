@@ -5254,6 +5254,26 @@ push не выполнялся.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-track-labels-correction-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`495ab36`, evidence `f7f82ad`)
+устранил оставшийся raw enum layer в Practice. Общий
+`practice-labels.ts` теперь разрешает bilingual названия для scenario kind,
+release status, шести стадий, `native/shared` scope и evidence facets; Practice
+page и parity-компонент используют один и тот же resolver. На пересобранном
+scoped stack `http://127.0.0.1:47360/` проверен
+`/practice?track=java&locale=en`: structural metadata больше не показывает
+`event_loop`, `released`, `predict`, `trace`, `native` или `shared` как сырые
+enum labels. Канонические English scenario titles/objectives не переписывались
+без утверждённого content translation.
+
+Web regression `62/62`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`; stack `6/6`,
+migrations `18/18`, pending `0`. Это display/accessibility correction без
+новой учебной ёмкости: snapshot остаётся **658 / 476 / 1134 / 58,02%**.
+`G10S-246` и G11 breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-metadata-localization-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил

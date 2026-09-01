@@ -363,6 +363,32 @@ human sign-off остаются открытыми.
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-track-labels-correction-2026-09-01.{json,md}`.
 
+## Коррекция Practice metadata
+
+После project labels live-аудит `/practice` выявил оставшийся raw enum layer:
+scenario kind/status, стадии, evidence facets и `native/shared` отображались
+техническими значениями или смешанной английской структурной копией.
+Исправление и evidence сделаны локально, без push:
+
+- `495ab36` — общий bilingual `practice-labels.ts`, подключённый к Practice
+  page и parity-компоненту;
+- `f7f82ad` — metadata-only evidence с Java practice live-case.
+
+На пересобранном scoped stack `http://127.0.0.1:47360/` проверен
+`/practice?track=java&locale=en`: release count, scenario kind/status, шесть
+stages, scope и evidence facets читаемы; raw `event_loop`, `released`,
+`predict`, `trace`, `native`, `shared` отсутствуют в видимой metadata.
+Канонические English titles/objectives не подменялись без reviewed translation.
+
+Web regression `62/62`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — `PASS`; stack `6/6`, migrations `18/18`, pending `0`.
+Это corrective display/accessibility seam, поэтому snapshot остаётся
+**658 / 476 / 1134 / 58,02%**. `G10S-246`, G11 breadth и human sign-off
+остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-metadata-localization-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
