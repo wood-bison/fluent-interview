@@ -6167,3 +6167,28 @@ display/accessibility seam и не добавляет вопросов, зада
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-release-labels-2026-09-01.{json,md}`.
+
+## Локализация статусов Navigator
+
+Target-коммит без push — `e9fdacd`; evidence-коммит — `13ae3fb`.
+
+В learner-панели локального штурмана запасная ветка могла вывести внутренние
+значения `completed`, `unavailable`, `timeout` и `error`. Новый общий
+`navigator-labels.ts` переводит все четыре статуса на EN/RU и применяет
+deterministic fallback к будущим значениям; API-контракт и advisory-only
+граница не меняются.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/` подтвердил открытие `Local Navigator`, читаемое
+состояние `Model not connected` и отсутствие raw status enums в видимом тексте.
+Web regression `68/68`, полный ladder (`pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) и scoped stack `6/6` с
+миграциями `18/18`, pending `0` — `PASS`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/accessibility seam; G10S-246 human acceptance, G11 content breadth,
+финальный independent review и G13 decommission остаются открытыми. Push не
+выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/navigator-status-labels-2026-09-01.{json,md}`.

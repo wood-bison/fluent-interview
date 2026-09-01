@@ -652,3 +652,24 @@ independent review и G13 decommission остаются открытыми. Push
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-release-labels-2026-09-01.{json,md}`.
+
+## Navigator status label correction
+
+Target `e9fdacd`, evidence `13ae3fb`, push не выполнялся.
+
+Контрактные статусы ответа локального штурмана (`completed`, `unavailable`,
+`timeout`, `error`) больше не выводятся напрямую. Общий bilingual
+`navigator-labels.ts` показывает понятные EN/RU подписи, а неизвестные будущие
+значения проходят через deterministic humanized fallback. Live панель на
+`/?track=node` открывается и показывает `Model not connected` без raw status
+enum; реальный provider turn намеренно не создавался.
+
+Проверки: web `68/68`, полный ladder (`pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check`) — PASS; scoped stack `6/6`, migrations `18/18`,
+pending `0`. Snapshot: **658 / 476 / 1134 / 58,02%**.
+
+Это corrective display/accessibility seam; G10S-246, G11 breadth, финальный
+independent review и G13 decommission остаются открытыми. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/navigator-status-labels-2026-09-01.{json,md}`.
