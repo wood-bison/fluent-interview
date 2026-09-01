@@ -1058,6 +1058,30 @@ Evidence:
 Следующий executable пункт — G10S-235: static dependency/SQL/credential scan,
 no API→Strata access и no dual authority.
 
+### Execution update — G10S-235 authority and security boundary — 1 сентября 2026
+
+G10S-235 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `07fb3c5`, evidence `f879aad`. Добавлен
+metadata-only `architecture:gate-235`, который последовательно запускает
+serving-boundary, contract compatibility, source provenance, authority-negative,
+security boundary, supply-chain, provenance signature и web-header checks. Все
+**8/8 PASS**: serving boundary проверил 643 файла, `rawStrataSql=0` и
+`authoringEnvironmentViolations=0`; contract/source ledgers не имеют gaps;
+authority-negative отклонил 7 forbidden fields; security boundary подтвердил
+защищённый CORS/HTML/process/runtime/Docker контур и cleanup `0` containers/
+networks; SBOM содержит 175 components и `0` high/critical vulnerabilities;
+CodeQL actions pinned, SARIF wait включён, локальная подпись проверена, web
+headers PASS для `/` и `/questions`. Ни одна команда не выдала import/release
+authority и не меняла durable data; disposable prefix `fluent_g10s_*` остаётся
+`0→0`. Evidence содержит только coordinates, durations, byte counts и SHA-256
+stdout/stderr. Focused `3/3`, полный check/boundary/toolchain ladder green.
+Честные ограничения (third-party pentest, registry/image attestation, remote
+CodeQL run и public deploy) оставлены явно в handoff.
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-235-authority-boundary-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-236: reconciliation authoring→bundle→serving,
+unexplained delta `0` и полный loss ledger.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4360,7 +4384,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-232` Corpus rights/quarantine/leak scans PASS; forbidden distributable findings = 0. Evidence: target implementation `5cfb47a`, evidence `99664e2`; `9/9` sequential commands PASS, `findingCount/bodyMatchCount/importAllowedRecords/automaticPublicRecords=0`, quarantine `2`, scoped cleanup `0→0`, no persistent DB/Docker mutations.
 - [x] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs. Evidence: target implementation `9a83d03`, evidence `d3a15e7`; `9/9` sequential commands PASS, exact release/question/revision/runtime joins, persistence restart/down-up/restore cleanup, spoken explanation остаётся `AWAITING_HUMAN`.
 - [x] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS. Evidence: target implementation `60064fb`, evidence `99a80ea`; `5/5` sequential commands PASS, desktop `276/276`, accessibility `92/92 + 12/12`, parity `12` screens, raw colors `0`, performance `8/8`, metadata-only.
-- [ ] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority.
+- [x] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority. Evidence: target implementation `07fb3c5`, evidence `f879aad`; `8/8` sequential commands PASS, serving `643` files/`rawStrataSql=0`, authority-negative `7`, SBOM `175`/`0` high-critical, static/live boundaries PASS, metadata-only.
 - [ ] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; все intentional losses находятся в loss ledger.
 - [ ] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches.
 - [ ] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement.
