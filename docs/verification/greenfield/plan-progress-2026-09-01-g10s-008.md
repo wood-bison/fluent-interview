@@ -54,6 +54,31 @@ learner observability projection: `/practice` раньше показывал в
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-194-observability-track-filter-2026-09-01.{json,md}`.
 
+## Коррекция контекста placement в Questions
+
+После предыдущей live-проверки найден отдельный defect: запрос только с
+`lesson=java-http` мог выбрать карточку Java, но взять первое (Node.js)
+placement и построить неправильный deep link. Исправление закоммичено локально
+в target `main`:
+
+- `7620388` — единый `track + lesson` predicate и contextual selector в
+  `/questions`;
+- `67991d0` — metadata-only G10S-198 corrective evidence.
+
+Live после штатной пересборки `pnpm run dev -- --detached`:
+
+- `/questions?lesson=java-http` → `java · java-http` и Java lesson link;
+- `/questions?lesson=go-http` → `go · go-http` и Go lesson link;
+- `/questions?track=node&lesson=java-http` → `0` карточек и no-match state.
+
+Source guard, focused placement tests `7/7`, web smoke `54/54`, route/content
+gates, `NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` —
+`PASS`. Общий счётчик не изменён: это исправление уже существующего
+G10S-198 seam, а не новая учебная ёмкость.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-placement-context-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

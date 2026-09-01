@@ -308,6 +308,32 @@ Evidence находится в
 Следующий executable пункт — `G10S-199` (language/runtime selector только с
 реально compatible released Node profile; preview languages не активны).
 
+### Corrective update — G10S-198 question placement context — 1 сентября 2026
+
+После live-аудита каталога обнаружен и исправлен отдельный context defect:
+`/questions?lesson=java-http` находил карточку по lesson, но затем брал первое
+placement и мог показать Node.js-контекст вместо Java. Это нарушало инвариант
+`question → lesson → track` и делало ссылку `Open lesson` misleading.
+
+Target `main` получил два локальных commit-gated коммита без push из-за
+ограничения Actions quota: `7620388`
+(`fix(questions): preserve lesson placement context`) и `67991d0`
+(`docs(g10s): record question placement context evidence`). Реализация
+сводит фильтр к одной проверке `cardHasPlacement(card, track, lesson)` и
+строит ссылку только через `selectPlacement` с той же парой координат. Source
+guard и негативный тест не позволяют вернуться к раздельной фильтрации.
+
+Evidence подтверждает `54/54` web smoke, `7/7` focused placement tests,
+`43` валидных routes, `10` path placements, `11/11` vertical-slice checks и
+зелёную строгую лестницу `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check`. Browser на scoped stack
+`http://127.0.0.1:47360/` подтвердил Java и Go placement/link, а несовместимое
+`track=node&lesson=java-http` возвращает `0` карточек и no-match state.
+Evidence metadata-only находится в
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-question-placement-context-2026-09-01.{json,md}`.
+Это corrective evidence, а не новый curriculum checkbox и не закрытие
+G10S-246/G11.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за
