@@ -6454,6 +6454,49 @@ authority policy не менялись.
 breadth, G12.5, independent final review или G13 decommission. Push не
 выполнялся из-за ограничения Actions quota.
 
+## Локализация learner navigation labels
+
+Target-коммит без push — `06cd6379866d5c319b31346288a9caf941882d81`;
+evidence-коммит — `84bf9a11b7270a6bb0463a07ec0723cb1cd27614`.
+
+Повторная проверка learner surface обнаружила смешанные accessibility names в
+Practice, Studio и Questions: `Practice modes / Режимы практики`, `Tracks /
+Треки`, `Studio state summary / Сводка состояний Studio` и `Search questions /
+Поиск вопросов`. Видимый текст уже переключался через `LocaleCopy`, однако
+screen-reader и keyboard tree получали оба языка одновременно. Это делало
+локаль непредсказуемой и расходилось с правилом одного активного языка.
+
+`PracticeParity`, `StudioPanel` и Questions combobox теперь используют
+locale-owned `aria-labelledby` anchors. Подписи читаются из активного
+`html[lang]` и обновляются событием `fluent:locale-change`; двуязычные literal
+`aria-label` удалены. RU live names: `Режимы практики`, `Треки`, `Поиск` и
+локальная сводка Studio; EN live names: `Practice modes`, `Tracks`, `Search`
+и английская сводка Studio. Маршруты, фильтры, состояние Studio и API не
+менялись.
+
+Проверено:
+
+- fresh scoped stack после compose-project-scoped down/up: session
+  `2458ad30-a9c4-45b3-a4e9-e7e239eb885b`, URL `http://127.0.0.1:47360/`,
+  **6/6** services healthy, migrations **18/18**, pending `0`;
+- live RU `/practice?track=node&locale=ru`: `Режимы практики` и `Треки`;
+  `/studio?locale=ru`: locale-owned Studio summary; `/questions?locale=ru`:
+  combobox `Поиск`;
+- live EN equivalents: `Practice modes`, `Tracks`, English Studio summary и
+  combobox `Search`;
+- source guard и web regression **75/75**, `NX_CI=1 pnpm check`, boundary и
+  toolchain — **PASS**; evidence validation сохранила **428/428** historical
+  records;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-navigation-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 / 58,02%**. Это
+локальный learner accessibility/i18n corrective slice: он не добавляет
+вопросов, задач, activity, projects или progress records и не закрывает
+`G10S-246`, G11 breadth/review queue, G12.5 revalidation, independent final
+review или G13 cleanup/decommission. Все commits локальные; push не
+выполнялся из-за ограничения Actions quota.
+
 ## Локализация runtime learning panels
 
 Target-коммит без push — `3aa36a7b462954fa3a1b5e7b443688b21acc9fa9`;
