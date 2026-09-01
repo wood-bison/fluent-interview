@@ -307,6 +307,32 @@ Web smoke `61/61` и полный ladder (`NX_CI=1 pnpm check`,
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-route-labels-correction-2026-09-01.{json,md}`.
 
+## Коррекция единого track label в learner UI
+
+После предыдущей коррекции route labels в Coverage и Practice footer ещё
+оставались технические `trackId`. Target-коммит без push — `04d982e`; общий
+resolver `track-labels.ts` вынес bilingual display names для Node.js, Java и
+Go. Evidence-коммит — `6098095`.
+
+Проверено на `http://127.0.0.1:47360/`:
+
+- `/practice?track=java&locale=en` показывает `Источник истины: релиз
+  программы Java` вместо `curriculum release java`;
+- `/program?track=java&locale=en` сообщает `Java coverage metrics / Java
+  покрытие` в доступном имени метрик;
+- Java route/module labels и shared placement context остаются корректными;
+  IDs не исчезли из ссылок и фильтров;
+- scoped stack: `6/6` сервисов, migrations `18/18`, pending `0`;
+- web regression `62/62`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+  `pnpm toolchain:check` — `PASS`.
+
+Это corrective UI/accessibility seam, а не новая учебная ёмкость: snapshot
+остаётся **658 / 476 / 1134 / 58,02%**. `G10S-246` и G11 content breadth
+остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-labels-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

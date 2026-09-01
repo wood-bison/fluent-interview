@@ -5214,6 +5214,26 @@ Evidence содержит только metadata и статусы; push не в�
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-route-labels-correction-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`04d982e`, evidence `6098095`)
+устранил оставшийся raw `trackId` в learner-поверхностях. Общий
+`track-labels.ts` теперь является единственным bilingual resolver для Node.js,
+Java и Go; PlacementContext, CoveragePanel и Practice footer используют его
+вместо технических `node`/`java`/`go`. Стабильные IDs сохранены для query
+filters, API и ссылок, а неизвестное значение получает явный recovery fallback.
+
+На пересобранном scoped stack `http://127.0.0.1:47360/` проверены
+`/practice?track=java&locale=en` (footer `Источник истины: релиз программы
+Java`) и `/program?track=java&locale=en` (aria-label `Java coverage metrics /
+Java покрытие`); Java route/module labels и shared placement context сохранены.
+Web regression `62/62`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — `PASS`; stack `6/6`, migrations `18/18`, pending `0`.
+Это UI/accessibility correction без новой учебной ёмкости, content/progress
+snapshot остаётся **658 / 476 / 1134 / 58,02%**. G10S-246 и G11 breadth не
+закрываются этим срезом; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-labels-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
