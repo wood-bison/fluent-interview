@@ -6230,3 +6230,38 @@ activity или progress records. Счётчик master-plan после
 acceptance); G11 breadth, финальная revalidation и G13 decommission не
 закрываются этим изменением. Push не выполнялся из-за ограничения Actions
 quota.
+
+## Локализация observability labs
+
+Target-коммит без push — `f44ba46dfe51a50321722ddfba4b04117f5e3339`;
+evidence-коммит — `287cfabb325ba20f54f3a6fa7e571a3135c126d4`.
+
+Следующий live-аудит Practice обнаружил, что русская поверхность всё ещё
+показывала английские названия и цели observability-сценариев (`Event-loop
+queue ordering`, `PostgreSQL lock wait` и activity deep lab). Единый
+`apps/web/app/components/observability-labels.ts` теперь содержит reviewed
+EN/RU copy для шести сценариев и 36 activity (title/objective), включая summary
+и mechanism. Practice и `DeepObservabilityLab` используют resolver, а IDs
+`scenarioId`/`activityId` остаются только в API, links и diagnostic attributes.
+Пустая заметка и успешная/ошибочная запись evidence также получают locale-owned
+copy; API-контракт и advisory-only семантика не меняются.
+
+Проверено:
+
+- `/practice?track=node|java|go&locale=ru` — `html[lang]=ru`, русские
+  scenario/activity labels присутствуют, проверенный английский набор
+  отсутствует;
+- `/practice?track=node&locale=en` — `html[lang]=en`, английские labels
+  присутствуют, проверенный русский набор отсутствует;
+- `@fluent/web` regression — `71/71`, typecheck и полный
+  `NX_CI=1 pnpm check` — PASS;
+- boundary/toolchain — PASS; Node `26.7.0`, scoped stack `6/6`, migrations
+  `18/18`, pending `0`;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/observability-labels-localization-2026-09-01.{json,md}`.
+
+Счётчик master-plan не менялся: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/i18n срез без новых вопросов, задач, scenarios, activity или progress
+records. Следующим executable gate остаётся `G10S-246` (human owner
+acceptance); G11 breadth, revalidation и G13 decommission по-прежнему открыты.
+Push не выполнялся из-за Actions quota.
