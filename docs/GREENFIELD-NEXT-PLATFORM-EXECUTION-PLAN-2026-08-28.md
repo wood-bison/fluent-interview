@@ -389,6 +389,33 @@ evidence`) добавляет metadata-only JSON/Markdown; push не выпол�
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-context-correction-2026-09-01.{json,md}`.
 
+### Corrective update — Program module context — 1 сентября 2026
+
+В том же learner deep-link contract обнаружен ещё один silent fallback:
+`/program?track=…&module=…` при неизвестном `module` открывал первый модуль
+выбранного трека. Сохранённая ссылка поэтому выглядела исправной, хотя
+пользователь попадал в другую главу.
+
+Target `main` получил implementation-коммит `2fdf865`
+(`fix(program): reject stale module context`). Явный `module` теперь trim-ится
+и проверяется только внутри выбранного track; неизвестное значение показывает
+двуязычный `MODULE NOT FOUND` с возвратом в тот же трек. Default первого модуля
+сохраняется только для URL без `module`.
+
+После пересборки scoped Compose `http://127.0.0.1:47360/` проверены invalid
+`/program?track=node&module=missing-module` и valid
+`/program?track=node&module=node-runtime`. Первый не подменяется первой главой,
+второй рендерит выбранный `node-runtime`. Web smoke `50/50`, source guard,
+`NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` зелёные.
+Evidence-коммит `93c8a4a` (`docs(g10s): record program module context evidence`)
+содержит metadata-only JSON/Markdown; push не выполнялся.
+
+Это corrective evidence без новой curriculum capacity: checkbox-счётчик не
+изменён, G10S-246 owner sign-off и G11 breadth остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/program-module-context-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за

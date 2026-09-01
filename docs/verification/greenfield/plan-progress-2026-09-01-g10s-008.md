@@ -128,6 +128,26 @@ lesson и валидные Java program/lesson. Focused `8/8`, web smoke `56/56`
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/learner-track-context-correction-2026-09-01.{json,md}`.
 
+## Коррекция module-контекста Program
+
+Live-аудит нашёл ещё один misleading fallback: неизвестный `module` в
+`/program?track=…&module=…` незаметно открывал первый модуль трека. Это
+исправлено локальными target-коммитами без push:
+
+- `2fdf865` — explicit module matching и двуязычный `MODULE NOT FOUND`;
+- `93c8a4a` — metadata-only evidence и live receipts.
+
+Проверены invalid URL `module=missing-module` (recovery, первая глава не
+подменена) и valid `module=node-runtime` (выбранный модуль отображён).
+Source guard, web smoke `50/50`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — `PASS`.
+
+Это исправление deep-link маршрутизации, а не новая учебная ёмкость; снимок
+остаётся **658 / 476 / 1134 / 58,02%**. G10S-246 и G11 остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/program-module-context-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
