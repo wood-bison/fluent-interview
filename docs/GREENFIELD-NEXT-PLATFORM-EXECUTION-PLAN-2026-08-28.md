@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-242.md`](verification/greenfield/plan-progress-2026-09-01-g10s-242.md).
+[`plan-progress-2026-09-01-g10s-243.md`](verification/greenfield/plan-progress-2026-09-01-g10s-243.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -4295,6 +4295,34 @@ Evidence и handoff:
 выставлять product `DONE` и подготовить exact
 `AWAITING_INDEPENDENT_REVIEW` handoff package.
 
+### Execution update — G10S-243 independent review handoff — 1 сентября 2026
+
+Target `main` закрыл G10S-243 двумя локальными commit-gated коммитами без
+push из-за ограничения GitHub Actions quota: implementation
+`fd4e85e2eaee24dce45e8a63cbe122993093b9d0` (`feat(g10s): freeze independent
+review handoff`) и evidence
+`d7969aa` (`docs(g10s): record independent review handoff`). Implementation
+является прямым ребёнком G10S-242 evidence
+`c7480f3cd0b9c7d6b6fad8c2d30f8f0f1e0052ab`; implementation allowlist содержит
+ровно шесть путей.
+
+Machine report
+`G10S-243-independent-review-handoff-2026-09-01.json` фиксирует
+`24/24 PASS, 0 FAIL, 1 OPEN, 0 SKIPPED`. Handoff package
+`g10s-handoff-package.v1.json` связывает repository/remote `main`, anchor и
+current implementation SHA, команду `pnpm install --frozen-lockfile && pnpm
+dev`, migrations `1..18`, target PostgreSQL authority, четыре release IDs,
+C098 route/revision/activity и evidence index. `reviewStatus` остаётся
+`AWAITING_INDEPENDENT_REVIEW`, `productClaim` — `NOT_PRODUCTION_READY`,
+`implementingAgentMaySetDone=false`, `ownerSignoffRequired=true`.
+
+Обе границы прошли полный `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check`; post-evidence focused checks `3/3` также зелёные.
+Evidence metadata-only: source/answer bodies, command outputs, secrets,
+database/Docker mutations и push отсутствуют; historical G10S index не
+переписан. Следующий executable пункт — `G10S-244`: отдельно проверить
+полноту и immutable binding handoff package.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
@@ -4569,7 +4597,7 @@ Evidence и handoff:
 - [x] `G10S-240` Push policy зафиксирована как fast-forward-only: local PASS обязателен, но push запрещён владельцем на время CI quota. Evidence: target implementation `383bc64`, evidence `a3b032d`; `15/15` local assertions PASS, полный `pnpm check` на implementation/evidence boundary, `git ls-remote` только read-only, remote attestation `OPEN`, `pushPerformed=false`. SHAs и policy сохранены в `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-240-push-policy-2026-09-01.{json,md}`. Статус `PASS_WITH_LIMITATIONS` честно отражает одну открытую remote attestation; следующий пункт — `G10S-241`.
 - [x] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: все 6 retained limitations перенесены в G11/G12 с owner и exact trigger, без фиктивного `DONE`. Evidence: target implementation `3783ca7`, evidence `764645a`; gate `34/34 PASS`, `6 OPEN`, metadata-only, push `0`. Handoff: `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-241-limitation-routing-2026-09-01.{json,md}`.
 - [x] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в sidecar evidence index без переписывания исторического индекса: `G11-037`, `G12-R01`, `G12-R06`, `G12-R16`; все 6 limitation IDs покрыты ровно по одному разу. Evidence: target implementation `c6e2aac`, evidence `c7480f3`; gate `35/35 PASS`, `4 OPEN`, metadata-only, push `0`.
-- [ ] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package.
+- [x] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package. Evidence: target implementation `fd4e85e`, evidence `d7969aa`; report `24/24 PASS`, `1 OPEN` (owner sign-off), metadata-only, push `0`.
 - [ ] `G10S-244` Handoff содержит repo path, branch, HEAD, commits, start command, DB migration range, bundle/release IDs, C098 route и evidence index.
 - [ ] `G10S-245` Независимый Codex review из раздела 3 завершён; все P0/P1 исправлены отдельными commits и повторно проверены.
 - [ ] `G10S-246` Только после G10S-245 gate получает `PASS`, G11 breadth migration разблокируется.
