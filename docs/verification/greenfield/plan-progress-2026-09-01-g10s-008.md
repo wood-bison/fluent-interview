@@ -389,6 +389,29 @@ Web regression `62/62`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-metadata-localization-2026-09-01.{json,md}`.
 
+## Коррекция module и activity kinds
+
+Повторный learner-аудит обнаружил оставшиеся raw enum labels в Program selected
+module и lesson activities (`NATIVE`, `SHARED`, `RUN`, `PREDICT` и другие).
+Исправление и evidence сделаны локально, без push:
+
+- `629d1e9` — Program и lesson используют общий bilingual `practiceLabel`, а
+  прямой `activity.kind.toUpperCase()` удалён;
+- `cd40341` — metadata-only evidence с Java Program и lesson live-cases.
+
+После rebuild scoped stack `http://127.0.0.1:47360/` проверены
+`/program?track=java&locale=ru&module=java-foundations` и
+`/practice/lesson/java-memory?track=java&locale=ru`: видны `Нативный` и
+`Наблюдение`, raw uppercase kinds отсутствуют. Web regression `63/63`, полный
+ladder и stack/migrations `6/6`, `18/18`, pending `0` — `PASS`.
+
+Это corrective display/accessibility seam, поэтому snapshot остаётся
+**658 / 476 / 1134 / 58,02%**. `G10S-246`, G11 breadth и human sign-off
+остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/module-activity-kind-localization-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

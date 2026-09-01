@@ -5274,6 +5274,23 @@ migrations `18/18`, pending `0`. Это display/accessibility correction без
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-metadata-localization-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`629d1e9`, evidence `cd40341`)
+устранил raw kind labels в Program и lesson. `practice-labels.ts` теперь
+задаёт bilingual copy для `generic/native/shared`, шести стадий учебного цикла
+и submit verdict statuses; selected-module eyebrow и activity metadata больше
+не используют `toUpperCase()` над внутренними enum. Live на
+`/program?track=java&locale=ru&module=java-foundations` показал
+`ВЫБРАННЫЙ МОДУЛЬ · Нативный`, а lesson route показал `Наблюдение`.
+
+Web regression `63/63`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`; stack `6/6`,
+migrations `18/18`, pending `0`. Это display/accessibility correction без
+новой учебной ёмкости: snapshot остаётся **658 / 476 / 1134 / 58,02%**.
+`G10S-246` и G11 breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/module-activity-kind-localization-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
