@@ -5180,6 +5180,20 @@ generic placements (`3` pass, `3` open), `6` unresolved items; `G11-015` ост�
 Полные артефакты:
 `fluent-interview-platform/docs/verification/greenfield/G11/shared-content-audit-2026-08-30.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`1496238`, evidence `e0cc216`)
+типизировал непустой optional `sharedKey` в curriculum contract и назначил
+единый `service-boundaries` для Node `production-systems`, Java
+`java-services` и Go `go-services`. Теперь audit показывает `3/3` shared
+modules PASS и `3/6` generic placements PASS; три memory placements всё ещё
+OPEN (Java/Go направлены в native foundation, Node не имеет path prerequisite).
+Это устраняет module-level ambiguity, но не закрывает `G11-015`: оставшиеся
+placement gaps требуют reviewed curriculum decision, а не формального ключа.
+Полный ladder (`NX_CI=1 pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check`) зелёный; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G11-015-shared-key-formalization-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил

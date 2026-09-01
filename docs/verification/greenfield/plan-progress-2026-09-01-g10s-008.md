@@ -257,6 +257,29 @@ Source guard и web smoke `53/53`, затем полная ladder
 human boundary. Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-198-shared-placement-context-2026-09-01.{json,md}`.
 
+## Частичное закрытие G11-015: shared keys
+
+Следом за UI-пояснением формализована сама module-level связь. Локальные
+target-коммиты без push:
+
+- `1496238` — curriculum contract принимает непустой `sharedKey`; три service
+  modules Node/Java/Go используют общий `service-boundaries`;
+- `e0cc216` — metadata-only evidence для `G11-015`.
+
+`pnpm content:shared` теперь фиксирует: **3/3** shared modules PASS, **3/6**
+generic placements PASS, **3** unresolved. Оставшиеся memory placements не
+замаскированы: Java/Go попадают в native foundation modules, Node — в generic
+foundation без path-specific prerequisite. Поэтому checkbox `G11-015` остаётся
+`[ ]` до reviewed curriculum decision и нулевого placement gap.
+
+Контрактный тест `4/4`, полный `NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check` — `PASS`; release bodies,
+database, Docker и remote не изменялись. Счётчик плана остаётся **658 / 476 /
+1134 / 58,02%**.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G11-015-shared-key-formalization-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
