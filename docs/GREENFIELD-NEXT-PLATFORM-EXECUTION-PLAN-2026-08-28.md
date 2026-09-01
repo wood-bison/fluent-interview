@@ -5947,3 +5947,29 @@ hash; active target, unrelated Docker projects, shared caches и remote reposito
 не удаляй. После G13-017 продолжай вести status только в проверенной target-копии
 master-plan; source umbrella copy остаётся frozen и удаляется последней по G13-121.
 ```
+
+## Коррекция подписей lesson graph
+
+Target-коммит без push — `9f2a815`; evidence-коммит — `b952f15`. В lesson graph
+технические `deepens` и `question.*` больше не выводятся как learner-facing
+текст: bilingual resolver показывает семантику связи (`Углубляет` / `Deepens`),
+а рядом — prompt опубликованной целевой карточки в выбранной локали. Stable
+question ID остаётся только в `href`, поэтому навигация и API-контракт не
+изменились. Неизвестный тип связи или отсутствующая карточка получают
+безопасный fallback вместо внутреннего identifier.
+
+На scoped stack `http://127.0.0.1:47360/` проверен маршрут
+`/practice/lesson/node-event-loop?track=node&locale=ru&question=question.node-event-loop-001`:
+видны `Углубляет` и `Почему nextTick внутри реакции Promise может задержать I/O и
+как сделать это наблюдаемым?`; сырые `deepens` и
+`question.node-nexttick-promise-001` отсутствуют в видимом списке. Web regression
+`64/64`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и `pnpm toolchain:check` —
+`PASS`; stack `6/6`, migrations `18/18`, pending `0`.
+
+Это corrective display/accessibility seam и не добавляет учебную ёмкость:
+snapshot остаётся **658 / 476 / 1134 / 58,02%**. Семантическая редакторская
+проверка всех будущих связей, G10S-246 и G11 content breadth остаются открытыми.
+Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/lesson-graph-labels-2026-09-01.{json,md}`.

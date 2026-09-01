@@ -483,3 +483,31 @@ acceptance boundary. Это намеренная человеческая гра
 машинным smoke-test или фиктивным `DONE`. После PASS открывается G11 breadth.
 Остаются также контентные и human-boundary группы G5.2/G6/G7/G8/G9, G11,
 G12.2–G12.3, G12.5, финальная независимая проверка и G13 decommission.
+
+## Коррекция подписей lesson graph
+
+Следующая display/accessibility-коррекция закрыла сырой графовый вывод в lesson.
+Target-коммит без push — `9f2a815`; evidence-коммит — `b952f15`.
+
+`deepens` теперь отображается как `Углубляет` / `Deepens`, а вместо
+`question.node-nexttick-promise-001` показывается prompt опубликованной целевой
+карточки в активной локали. Stable ID сохранён в `href` для навигации и не
+попадает в learner-facing copy; неизвестные типы и отсутствующие targets имеют
+безопасный fallback.
+
+Live на `http://127.0.0.1:47360/`:
+
+- `/practice/lesson/node-event-loop?track=node&locale=ru&question=question.node-event-loop-001`
+  показывает `Углубляет` и `Почему nextTick внутри реакции Promise может
+  задержать I/O и как сделать это наблюдаемым?`;
+- сырые `deepens` и `question.node-nexttick-promise-001` отсутствуют в видимом
+  списке связей;
+- web regression `64/64`, полный ladder и stack/migrations `6/6`, `18/18`,
+  pending `0` — `PASS`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это не новая учебная
+ёмкость; G10S-246, редакторская проверка семантики всех связей и G11 breadth
+остаются открытыми. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/lesson-graph-labels-2026-09-01.{json,md}`.
