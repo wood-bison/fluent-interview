@@ -6135,3 +6135,35 @@ progress records. G10S-246 human acceptance и G11 content breadth остают�
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-consistency-2026-09-01.{json,md}`.
+
+## Коррекция release labels в Atlas
+
+Target-коммит без push — `b35dfe0`; evidence-коммит — `b49bfe1`.
+
+Повторный learner-аудит Atlas обнаружил, что eyebrow показывал внутренний
+идентификатор `2026.08.28-curriculum.1`. Добавлен общий resolver
+`curriculum-release-labels.ts`: известный релиз получает проверенную
+двуязычную дату (`Curriculum release · 28 Aug 2026` /
+`Релиз программы · 28 августа 2026`), а будущие date-only IDs используют
+безопасный deterministic fallback. Канонический ID остаётся только в
+`data-release-id` для диагностики и не попадает в learner copy.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/`:
+
+- `/atlas?track=node` в EN показывает `RELEASED CURRICULUM · Curriculum
+  release · 28 Aug 2026`, в RU — `ОПУБЛИКОВАННАЯ ПРОГРАММА · Релиз программы ·
+  28 августа 2026`;
+- RU/EN toggle и отсутствие raw release ID проверены в браузере;
+- web regression `67/67`, полный ladder и stack/migrations `6/6`, `18/18`,
+  pending `0` — `PASS`;
+- evidence validator (`13/13`) — `PASS`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/accessibility seam и не добавляет вопросов, задач, activity, projects
+или progress records. G10S-246 human acceptance, G11 content breadth,
+финальный independent review и G13 decommission остаются открытыми; push не
+выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-release-labels-2026-09-01.{json,md}`.

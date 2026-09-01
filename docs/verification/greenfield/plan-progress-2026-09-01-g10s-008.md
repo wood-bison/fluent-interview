@@ -631,3 +631,24 @@ G13 decommission остаются открытыми. Это только correc
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/locale-consistency-2026-09-01.{json,md}`.
+
+## Atlas release label correction
+
+Target `b35dfe0`, evidence `b49bfe1`, push не выполнялся.
+
+Atlas больше не показывает learner-facing внутренний `releaseId`:
+`curriculum-release-labels.ts` локализует проверенный релиз для EN/RU, а
+стабильный ID остаётся только в `data-release-id`. Live `/atlas?track=node`
+проверен в обеих локалях: `Curriculum release · 28 Aug 2026` и `Релиз
+программы · 28 августа 2026`; raw ID отсутствует.
+
+Проверки: web `67/67`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — PASS; scoped stack `6/6`,
+migrations `18/18`, pending `0`; evidence validator `13/13` — PASS.
+Snapshot: **658 / 476 / 1134 / 58,02%**.
+
+Это corrective display/accessibility seam; G10S-246, G11 breadth, финальный
+independent review и G13 decommission остаются открытыми. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/atlas-release-labels-2026-09-01.{json,md}`.
