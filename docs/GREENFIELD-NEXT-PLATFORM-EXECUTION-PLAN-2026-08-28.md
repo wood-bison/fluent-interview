@@ -910,6 +910,22 @@ check/boundary/toolchain ladder green. Evidence:
 Следующий executable пункт — G10S-228: повторить обязательные repository и
 content gates уже с обоими metadata ledgers в check chain.
 
+### Execution update — G10S-228 repository/content gate closure — 1 сентября 2026
+
+G10S-228 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `67d6bdd`, evidence `f2da01d`. Четыре команды
+выполнены последовательно и повторно проверены: `pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` — **4/4
+PASS**, `0` failed/open/skipped. Evidence сохраняет только command IDs,
+arguments, exit codes, durations, output byte counts и SHA-256 digests; raw
+stdout/stderr, question/answer bodies, database/Docker writes и
+import/release authority не эмитируются. Anchor `1d60683` остаётся проверенной
+ancestor‑точкой target `main`; focused tests `3/3`, полный check/boundary/
+toolchain ladder green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-228-gate-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-229: добавить и задокументировать отдельные
+authoring/database/bundle verification gates.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4205,7 +4221,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 - [x] `G10S-226` Создать `docs/verification/greenfield/G10S/` по общему evidence schema; historical G10/G11/G12 artifacts не переписывать. Evidence: target implementation `eea6840`, evidence `3d9b092`; закрытый `g10s-machine-evidence.v1` envelope, deterministic metadata-only index `428` historical files, body-like/source/log fields rejected, `5/5` checks, focused `3/3`, full check/boundary/toolchain ladder green; current report отделён от historical index.
 - [x] `G10S-227` Evidence inputs фиксируют Strata `ec3b680` (или reviewed successor), target parent SHA, questions manifest hash и reports 13/14 hashes. Evidence: target implementation `4c1a0bd`, handoff `1d60683`; metadata-only `G10S-inputs/` ledger фиксирует reviewed successor `0921dd0`, immutable baseline/tag `ec3b6804`, target parent `3d9b092`, release/intake manifests и reports 13/14 SHA-256; `8/8` checks, focused `4/4`, full check/boundary/toolchain ladder green.
-- [ ] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS.
+- [x] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS. Evidence: target implementation `67d6bdd`, evidence `f2da01d`; sequential command ladder `4/4 PASS`, `0` failed/open/skipped, metadata-only output with byte/digest summaries only, focused `3/3`, full check/boundary/toolchain ladder green.
 - [ ] `G10S-229` Новые `pnpm content:authoring:check`, `content:db:verify`, `content:bundle:verify` или утверждённые эквиваленты PASS и задокументированы.
 - [ ] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS.
 - [ ] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS.
