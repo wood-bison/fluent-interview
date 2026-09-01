@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-221.md`](verification/greenfield/plan-progress-2026-09-01-g10s-221.md).
+[`plan-progress-2026-09-01-g10s-223.md`](verification/greenfield/plan-progress-2026-09-01-g10s-223.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -818,6 +818,26 @@ metadata-only rehearsal вызывает именно публичный `pnpm d
 `fluent-interview-platform/docs/verification/greenfield/G10S/G10S-222-scoped-cleanup-2026-09-01.{json,md}`.
 Следующий executable пункт — G10S-223: выровнять G11 input inventory и
 authoring queue с Strata authority и C098 release schema.
+
+### Execution update — G10S-223 G11 input reconciliation — 1 сентября 2026
+
+G10S-223 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `bdf18e9` и evidence/docs `dc6e79c`. Гейт
+детерминированно связывает G11 inventory (`1,597` записей, hash
+`85e28bf…ba168`) с bounded authoring queue (`1,597` total, batch `100`,
+`1,591` `authoring`, `6` `mapping-review`), проверяет оба intake manifest
+SHA и оставляет automatic promotion отключённым. Authority — чистый Strata
+`main` на `ec3b6804`; migration chain `1..18` и `0007_strata_authoring.sql`
+подтверждены, API содержит `0` ссылок `strata.`. C098 закреплён на
+`question-catalog.v1` / `question-release-bundle.v1`, identity
+`C098/ordering/generic`, release/curriculum revisions, `en`/`ru`,
+`predict`/`run`, `node-26-commonjs` и разрешённый `nexttick` graph target.
+Прямые catalog edits, automatic import/release, body emission и DB/file writes
+запрещены; negative fixtures и полный check/boundary/toolchain ladder green.
+Исторические G11 artifacts не переписывались. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-223-g11-input-reconciliation-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-224: доказать source-grant/quarantine/adapter
+gates для всех G11 mass-import packs и запретить прямую запись canonical catalog.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4106,7 +4126,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-220` Проверить отсутствие nested `.git`, `package-lock.json`, second Compose project, external symlink и runtime fallback в target. Evidence: target implementation `09fb087`, evidence/docs `b5de1f6`; one root Git, zero nested roots/active or external symlinks, one `pnpm-lock.yaml`, one root Compose project, runtime source/fallback findings `0`, scan `901` files/`166` dirs, focused `5/5`, full check/boundary/toolchain green, metadata-only.
 - [x] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service. Evidence: target implementation `c81e358`, evidence/docs `9b4040b`; isolated `pnpm dev -- --detached --json` PASS, migrations `18/18`, exact six services, six routes `200`, scoped cleanup `0` containers/networks, durable volumes preserved, metadata-only.
 - [x] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes. Evidence: target implementation `2942587`, evidence/docs `943fd45`; optional observability profile, две публичные команды `pnpm down`, `0` containers/networks, `3` durable volumes с неизменными IDs, migration ledger `18/18` после restart, без `--volumes`/`-v`, metadata-only.
-- [ ] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema.
+- [x] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema. Evidence: target implementation `bdf18e9`, evidence/docs `dc6e79c`; 1,597 records bound to bounded queue, frozen Strata `ec3b6804`, C098 exact release/runtime/graph joins, metadata-only and negative fixtures PASS.
 - [ ] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены.
 - [ ] `G10S-225` Commit: `chore(g10s): retire standalone Strata as an active authority` — выполнять только после G10S-210…224 PASS.
 
