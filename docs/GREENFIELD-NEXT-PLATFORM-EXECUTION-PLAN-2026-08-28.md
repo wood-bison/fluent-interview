@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-225.md`](verification/greenfield/plan-progress-2026-09-01-g10s-225.md).
+[`plan-progress-2026-09-01-g10s-226.md`](verification/greenfield/plan-progress-2026-09-01-g10s-226.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -876,6 +876,23 @@ database и Docker не удалялись и остаются под G13 owner 
 `fluent-interview-platform/docs/verification/greenfield/G10S/G10S-225-strata-active-authority-retirement-2026-09-01.{json,md}`.
 Следующий executable пункт — G10S-226: общий machine-evidence schema и
 historical artifact handoff.
+
+### Execution update — G10S-226 common machine-evidence schema — 1 сентября 2026
+
+G10S-226 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `eea6840`, evidence `3d9b092`. Target получил
+один закрытый `g10s-machine-evidence.v1` envelope и dependency-free validator;
+исторические G10/G11/G12/G10S artifacts не переписывались. Deterministic
+metadata-only index содержит `428` исторических файлов с относительным путём,
+размером, SHA-256 и безопасными координатами schema/gate/status; body-like
+поля, source/answer/log contents, DB/Docker writes и import/release authority
+запрещены. Rehearsal и evidence report: `5/5` checks passed, `0` failed/open,
+focused tests `3/3`, полный check/boundary/toolchain ladder green; текущий
+report валидируется отдельно от historical index. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-226-machine-evidence-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-227: зафиксировать metadata-only inputs,
+которые связывают frozen Strata, target parent, questions manifest и reports
+13/14 без копирования содержимого.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4170,7 +4187,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 
 ### Gate G10S — machine evidence, commits и handoff
 
-- [ ] `G10S-226` Создать `docs/verification/greenfield/G10S/` по общему evidence schema; historical G10/G11/G12 artifacts не переписывать.
+- [x] `G10S-226` Создать `docs/verification/greenfield/G10S/` по общему evidence schema; historical G10/G11/G12 artifacts не переписывать. Evidence: target implementation `eea6840`, evidence `3d9b092`; закрытый `g10s-machine-evidence.v1` envelope, deterministic metadata-only index `428` historical files, body-like/source/log fields rejected, `5/5` checks, focused `3/3`, full check/boundary/toolchain ladder green; current report отделён от historical index.
 - [ ] `G10S-227` Evidence inputs фиксируют Strata `ec3b680` (или reviewed successor), target parent SHA, questions manifest hash и reports 13/14 hashes.
 - [ ] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS.
 - [ ] `G10S-229` Новые `pnpm content:authoring:check`, `content:db:verify`, `content:bundle:verify` или утверждённые эквиваленты PASS и задокументированы.
