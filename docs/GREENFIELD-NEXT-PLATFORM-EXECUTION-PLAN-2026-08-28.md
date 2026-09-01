@@ -6819,6 +6819,42 @@ copy и при необходимости требуют отдельной по
 G11 breadth, G12.5, independent final review и G13 decommission остаются
 открытыми. Push не выполнялся из-за ограничения Actions quota.
 
+## Локализация подписи ширины редактора
+
+Target-коммит без push — `0c768a5e97cb591177a5577c8711c60a801d93c4`;
+metadata-only evidence-коммит — `ca0ea150030f7062307dd1c4b576c36137ad8707`.
+
+В runtime workbench был найден конкретный i18n/accessibility-дефект: селектор
+`.runtime-width-control span { display: flex }` перекрывал базовое правило,
+которое скрывает неактивную локаль. Поэтому в RU accessibility tree и в
+видимой подписи одновременно оставались `Editor widthШирина редактора`.
+Исправление ограничено компонентом: range-label теперь выводит одну строку,
+выбранную текущей локалью (`ru ? ... : ...`), а `aria-label`, диапазон 45–65,
+шаг 5, pointer resize и keyboard behavior сохранены. CSS, token set, layout,
+runtime authority, curriculum и progress ledger не менялись.
+
+Проверено:
+
+- свежий штатный compose-project-scoped stack после `pnpm down` и
+  `pnpm dev -- --detached`: session
+  `7afeba77-21d6-4238-8aa8-1d822d99e574`, URL
+  `http://127.0.0.1:47360/`, **6/6** сервисов healthy/running;
+- migrations **18/18**, pending **0**;
+- live RU `/practice/node-event-loop-001?track=node&locale=ru`: видимая
+  подпись ровно `Ширина редактора 55%`, input `aria-label` ровно
+  `Ширина редактора`, `LocaleCopy` внутри контрола отсутствует;
+- live EN того же маршрута: ровно `Editor width 55%` и `Editor width`;
+- web regression **77/77**, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+  `pnpm toolchain:check` — PASS;
+- metadata-only evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-width-label-localization-2026-09-01.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%**. Это
+локальный corrective slice без нового учебного контента или изменения
+маршрутов. `G10S-246`, G11 breadth, G12.5, независимая финальная проверка и
+G13 decommission остаются открытыми. Push не выполнялся из-за ограничения
+Actions quota.
+
 ## Локализация StateCatalog demo copy и native-option safety
 
 Target-коммит без push — `206e1b1cf34ab7df6dbe97f5a0a720ffe2f4389e`;
