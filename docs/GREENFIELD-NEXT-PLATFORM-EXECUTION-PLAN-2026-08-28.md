@@ -962,6 +962,30 @@ logs, credentials и question/answer bodies не эмитируются. Focused
 Следующий executable пункт — G10S-231: Studio author/review/publish,
 deterministic export, file-only import, readback и rollback.
 
+### Execution update — G10S-231 Studio release pipeline — 1 сентября 2026
+
+G10S-231 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `e15dcc9`, evidence `002a7e1`. Добавлен
+metadata-only `architecture:gate-231`, который в одном изолированном прогоне
+последовательно проверяет девять границ Studio и release pipeline:
+`architecture:studio-authoring-command`, `architecture:studio-review-command`,
+`architecture:studio-release-request`, `architecture:golden-cli-reconciliation`,
+`architecture:authoring-export-crash`, `architecture:serving-release-import`,
+`architecture:c098-serving-import`, `architecture:serving-import-crash` и
+`architecture:serving-release-reconciliation`. Все **9/9 PASS**; каждая команда
+завершилась с exit `0`, а результаты фиксируют только координаты команды,
+длительность, размеры и SHA-256 stdout/stderr — тела вопросов, ответов,
+аргументы, credentials и сырые логи не попадают в evidence. Прогон подтвердил
+детерминированную author/review/publish цепочку, crash-safe export/import,
+идемпотентный file-only readback и rollback без обхода release boundary.
+Временные базы ограничены префиксом `fluent_g10s_`: до и после `0`,
+`noLeftovers=true`; persistent DB/Docker mutations `0`, durable volumes
+сохранены. Focused tests `3/3`, полный check/boundary/toolchain ladder green.
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-231-studio-release-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-232: corpus rights/quarantine/leak scans,
+запретить любые forbidden distributable findings.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4260,7 +4284,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS. Evidence: target implementation `67d6bdd`, evidence `f2da01d`; sequential command ladder `4/4 PASS`, `0` failed/open/skipped, metadata-only output with byte/digest summaries only, focused `3/3`, full check/boundary/toolchain ladder green.
 - [x] `G10S-229` Новые `pnpm content:authoring:check`, `content:db:verify`, `content:bundle:verify` или утверждённые эквиваленты PASS и задокументированы. Evidence: target implementation `5b6b1c3`, evidence `3d332dd`; `3/3` dedicated gates PASS, database-free env guard, metadata-only output, zero catalog/DB/Docker/import/release mutation, focused `3/3`, full check/boundary/toolchain ladder green.
 - [x] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS. Evidence: target implementation `361e018`, evidence `c42e3ad`; `6/6` sequential commands PASS, scoped `fluent_g10s_*` database cleanup `0` before/after, persistent DB/Docker mutations `0`, durable volumes preserved, metadata-only output.
-- [ ] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS.
+- [x] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS. Evidence: target implementation `e15dcc9`, evidence `002a7e1`; `9/9` sequential commands PASS, temporary prefix `fluent_g10s_` `0→0`, no persistent DB/Docker mutations.
 - [ ] `G10S-232` Corpus rights/quarantine/leak scans PASS; forbidden distributable findings = 0.
 - [ ] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs.
 - [ ] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS.
