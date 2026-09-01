@@ -416,6 +416,33 @@ Evidence-коммит `93c8a4a` (`docs(g10s): record program module context evid
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/program-module-context-correction-2026-09-01.{json,md}`.
 
+### Corrective update — Practice mode context — 1 сентября 2026
+
+Live-аудит обнаружил ещё один опасный silent fallback: явный неизвестный
+`mode` в `/practice?track=…&mode=…` нормализовался в `all`. Сохранённая ссылка
+поэтому выглядела рабочей, но показывала более широкий набор практик, чем было
+запрошено.
+
+Target `main` получил implementation-коммит `0055b80`
+(`fix(practice): reject stale mode context`). Значения mode теперь trim-ятся и
+проверяются через единственный `isPracticeMode`; неизвестный explicit mode
+показывает двуязычный `MODE NOT FOUND` и ссылку возврата в тот же track. Default
+`all` сохраняется только при отсутствии query-параметра.
+
+После пересборки scoped Compose `http://127.0.0.1:47360/` проверены invalid
+`/practice?track=node&mode=missing-mode` (recovery без подмены на All entries) и
+valid `/practice?track=node&mode=controlled-lab` (entry point отрисован). Web
+smoke `51/51`, source guard, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — `PASS`.
+
+Evidence-коммит `bc5041f` (`docs(g10s): record practice mode context evidence`)
+содержит metadata-only JSON/Markdown; push не выполнялся. Это corrective seam,
+а не новая curriculum capacity: снимок остаётся **658 / 476 / 1134 / 58,02%**;
+G10S-246 owner sign-off и G11 breadth остаются открытыми.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-mode-context-correction-2026-09-01.{json,md}`.
+
 ### Execution update — G10S-199 C098 runtime selector — 31 августа 2026
 
 Target `main` закрыл G10S-199 двумя локальными коммитами без push из-за

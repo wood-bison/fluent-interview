@@ -148,6 +148,25 @@ Source guard, web smoke `50/50`, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/program-module-context-correction-2026-09-01.{json,md}`.
 
+## Коррекция mode-контекста Practice
+
+Live-аудит нашёл silent fallback в `/practice`: явный неизвестный `mode`
+превращался в `all`, поэтому deep link мог показать лишние practice entries.
+Исправление и evidence сделаны локально, без push:
+
+- `0055b80` — explicit mode matching и двуязычный `MODE NOT FOUND` recovery;
+- `bc5041f` — metadata-only evidence с invalid/valid live cases.
+
+На scoped stack `http://127.0.0.1:47360/` invalid
+`mode=missing-mode` остаётся в recovery и не подменяется All entries, а valid
+`mode=controlled-lab` открывает контролируемый entry point. Web smoke `51/51`,
+source guard, `NX_CI=1 pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — `PASS`.
+
+Это исправление маршрутизации, а не новая учебная ёмкость: снимок остаётся
+**658 / 476 / 1134 / 58,02%**. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/practice-mode-context-correction-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная
