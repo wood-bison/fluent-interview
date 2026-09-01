@@ -563,3 +563,25 @@ sign-off остаются открытыми. Push не выполнялся.
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-result-metadata-2026-09-01.{json,md}`.
+
+## Коррекция project rubric и evidence-kind labels
+
+Target-коммит без push — `b38a41e`; evidence-коммит — `42e8472`.
+На `/projects` raw rubric revisions и evidence kinds теперь проходят через
+общий bilingual `project-labels.ts`: RU показывает `Рубрика проекта Node.js
+v1` и `Нужно: вердикт evaluator`, EN — `Node.js project rubric v1` и
+`Requires evaluator verdict`; stable IDs остаются только в diagnostics/data.
+
+Live после `pnpm dev --detached`:
+
+- `/projects?track=node&locale=ru` и locale toggle EN — PASS, raw IDs отсутствуют;
+- web regression `64/64`, `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+  `pnpm toolchain:check` — PASS;
+- scoped stack `6/6`, migrations `18/18`, pending `0`;
+- progress snapshot без изменений: **658 / 476 / 1134 / 58,02%**.
+
+Это corrective display/accessibility seam; G10S-246, G11 breadth и human
+sign-off остаются открытыми. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-rubric-labels-2026-09-01.{json,md}`.

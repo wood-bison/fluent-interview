@@ -6034,3 +6034,36 @@ acceptance и G11 content breadth остаются открытыми; push не
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-result-metadata-2026-09-01.{json,md}`.
+
+## Коррекция project rubric и evidence-kind labels
+
+Target-коммит без push — `b38a41e`; evidence-коммит — `42e8472`.
+
+На `/projects` learner-facing milestones показывали технические версии rubric
+(`node-project-rubric.v1`, `system-design-failure-drill-rubric.v1`) и raw
+evidence kinds (`submit_verdict`, `failure_drill`, `defense`). Новый общий
+`project-labels.ts` локализует rubric по треку (`Рубрика проекта Node.js v1` /
+`Node.js project rubric v1`) и requirements (`вердикт evaluator` / `evaluator
+verdict`, `отработка отказа` / `failure drill`, `защита дизайна` / `design
+defense`). Stable IDs сохранены в `data-*`/API для диагностики, но не
+показываются как обычный learner copy; unknown values получают deterministic
+fallback.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/`:
+
+- `/projects?track=node&locale=ru` показывает читаемые русские rubric и
+  `Нужно: вердикт evaluator`, raw `node-project-rubric.v1` и `submit_verdict`
+  отсутствуют;
+- переключатель EN показывает `Node.js project rubric v1` и
+  `Requires evaluator verdict`;
+- web regression `64/64`, полный ladder и stack/migrations `6/6`, `18/18`,
+  pending `0` — `PASS`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/accessibility seam и не добавляет milestones, assessment evidence или
+progress records. G10S-246 human acceptance и G11 content breadth остаются
+открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/project-rubric-labels-2026-09-01.{json,md}`.
