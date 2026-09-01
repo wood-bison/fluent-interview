@@ -434,6 +434,28 @@ G11 content breadth остаются открытыми; push не выполн�
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/review-progress-labels-2026-09-01.{json,md}`.
 
+## Коррекция evidence journal labels
+
+В `/review` существующие записи больше не показывают внутренние
+`taskFamilyKey`, `runtimeProfile` и verdict status как learner-facing текст.
+Target-коммит без push — `e1446bf`; общий `evidence-labels.ts` локализует
+released Node task family, Node runtime profile и пять verdict statuses,
+неизвестные enum получают deterministic humanized fallback. Evidence-коммит —
+`db27f71`.
+
+На `http://127.0.0.1:47360/` live journal с существующими records показал
+`Цикл событий Node.js`, `Node.js 26 · CommonJS`, `Пройдено`; raw
+`node-event-loop-001`, `node-26-commonjs` и `pass` в learner-visible карточках
+отсутствуют. Полный ladder и web regression `64/64` — `PASS`; stack `6/6`,
+migrations `18/18`, pending `0`.
+
+Это corrective display/accessibility seam, поэтому snapshot остаётся **658 /
+476 / 1134 / 58,02%**. G10S-246 human acceptance и G11 content breadth
+остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/evidence-journal-labels-2026-09-01.{json,md}`.
+
 ## Что дальше
 
 Следующий исполнимый пункт — **G10S-246**: owner sign-off и финальная

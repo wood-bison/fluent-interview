@@ -5312,6 +5312,25 @@ correction без новой учебной ёмкости: snapshot остаё�
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/review-progress-labels-2026-09-01.{json,md}`.
 
+Follow-up 1 сентября 2026: target `main` (`e1446bf`, evidence `db27f71`)
+устранил raw identifiers в журнале evidence на `/review`. Новый
+`evidence-labels.ts` даёт bilingual названия task family, runtime profile и
+всех пяти verdict statuses; `evidenceId` остаётся только сокращённым
+диагностическим полем с полным значением в tooltip. Live с существующими
+records показал `Цикл событий Node.js`, `Node.js 26 · CommonJS` и `Пройдено`;
+`node-event-loop-001`, `node-26-commonjs` и `pass` больше не являются
+learner-visible labels. Неизвестные будущие значения проходят deterministic
+humanized fallback.
+
+Web regression `64/64`, полный ladder (`NX_CI=1 pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check`) — `PASS`; scoped stack `6/6`,
+migrations `18/18`, pending `0`. Это display/accessibility correction без
+новой учебной ёмкости: snapshot остаётся **658 / 476 / 1134 / 58,02%**.
+`G10S-246` и G11 breadth остаются открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/evidence-journal-labels-2026-09-01.{json,md}`.
+
 ### Execution update — G11-018 research/authoring packs — 30 августа 2026
 
 Target `main` (`0b2669e`, evidence `93ee3fa`) добавил
