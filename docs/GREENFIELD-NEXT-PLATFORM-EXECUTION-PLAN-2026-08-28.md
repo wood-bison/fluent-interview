@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-223.md`](verification/greenfield/plan-progress-2026-09-01-g10s-223.md).
+[`plan-progress-2026-09-01-g10s-224.md`](verification/greenfield/plan-progress-2026-09-01-g10s-224.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -838,6 +838,25 @@ SHA и оставляет automatic promotion отключённым. Authority 
 `fluent-interview-platform/docs/verification/greenfield/G10S/G10S-223-g11-input-reconciliation-2026-09-01.{json,md}`.
 Следующий executable пункт — G10S-224: доказать source-grant/quarantine/adapter
 gates для всех G11 mass-import packs и запретить прямую запись canonical catalog.
+
+### Execution update — G10S-224 G11 mass-import boundary — 1 сентября 2026
+
+G10S-224 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `e58583e`, evidence/docs `cf31479`. Гейт связывает
+четыре исторических G11 mass-import pack с четырьмя policy references: source
+grant, rights/quarantine и G10S.7 catalog adapter. Static scan десяти
+import/review tools нашёл `0` ссылок и `0` записей в canonical
+`content/questions/`, `0` инвертированных promotion expressions и `0` нарушений.
+Pack scan нашёл `0` body-like fields; controls сохраняют
+`metadataOnly=true`, `autoPromotion=false`, automatic import/release disabled,
+`catalogWrites=0` и `databaseMutations=0`. Три старых root
+`$.policy.autoPromotion=true` зафиксированы как immutable historical drift,
+исторические файлы не переписывались; текущие генераторы fail-closed, а legacy
+importer по умолчанию пишет в non-canonical `content/authoring/imports`.
+Focused tests `5/5`, полный check/boundary/toolchain ladder green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-224-g11-mass-import-boundary-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-225: retirement standalone Strata как active
+authority.
 
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
@@ -4127,7 +4146,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-221` Проверить one root startup: `pnpm dev` поднимает platform, migrations и serving без самостоятельного Strata service. Evidence: target implementation `c81e358`, evidence/docs `9b4040b`; isolated `pnpm dev -- --detached --json` PASS, migrations `18/18`, exact six services, six routes `200`, scoped cleanup `0` containers/networks, durable volumes preserved, metadata-only.
 - [x] `G10S-222` Проверить `pnpm down` оставляет zero orphan containers/networks и сохраняет declared durable volumes. Evidence: target implementation `2942587`, evidence/docs `943fd45`; optional observability profile, две публичные команды `pnpm down`, `0` containers/networks, `3` durable volumes с неизменными IDs, migration ledger `18/18` после restart, без `--volumes`/`-v`, metadata-only.
 - [x] `G10S-223` Обновить G11 input inventory/authoring queue на Strata authority и C098 release schema. Evidence: target implementation `bdf18e9`, evidence/docs `dc6e79c`; 1,597 records bound to bounded queue, frozen Strata `ec3b6804`, C098 exact release/runtime/graph joins, metadata-only and negative fixtures PASS.
-- [ ] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены.
+- [x] `G10S-224` Все mass-import packs G11 ссылаются на source grant/quarantine/adapter gates; direct catalog JSON edits запрещены. Evidence: target `e58583e`, evidence/docs `cf31479`; `4/4` pack bindings, `4/4` policy refs, static `10` tools with `0` canonical refs/writes/inversions, body fields `0`, immutable historical drift `3`, metadata-only controls.
 - [ ] `G10S-225` Commit: `chore(g10s): retire standalone Strata as an active authority` — выполнять только после G10S-210…224 PASS.
 
 ### Gate G10S — machine evidence, commits и handoff
