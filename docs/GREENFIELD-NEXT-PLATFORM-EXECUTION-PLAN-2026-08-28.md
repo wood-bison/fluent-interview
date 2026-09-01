@@ -894,6 +894,22 @@ report валидируется отдельно от historical index. Evidence
 которые связывают frozen Strata, target parent, questions manifest и reports
 13/14 без копирования содержимого.
 
+### Execution update — G10S-227 evidence input coordinates — 1 сентября 2026
+
+G10S-227 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `4c1a0bd`, evidence handoff `1d60683`. Вынесен
+отдельный `G10S-inputs/` ledger, чтобы не переписывать исторический G10S
+index: он фиксирует reviewed Strata successor `0921dd0`, archive tag
+`strata-archive-2026-09-01-g10s-217` → `ec3b6804`, target parent
+`3d9b092`, release/intake question manifests и SHA-256 обоих Brain reports
+13/14. Source/question/report bodies не копируются; symlink, path, size/hash,
+schema и ancestry drift fail closed; target/source/database/Docker/import/
+release mutations запрещены. Rehearsal `8/8`, focused tests `4/4`, полный
+check/boundary/toolchain ladder green. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-227-{inputs-2026-09-01.json,evidence-inputs-2026-09-01.md}`.
+Следующий executable пункт — G10S-228: повторить обязательные repository и
+content gates уже с обоими metadata ledgers в check chain.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4188,7 +4204,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 ### Gate G10S — machine evidence, commits и handoff
 
 - [x] `G10S-226` Создать `docs/verification/greenfield/G10S/` по общему evidence schema; historical G10/G11/G12 artifacts не переписывать. Evidence: target implementation `eea6840`, evidence `3d9b092`; закрытый `g10s-machine-evidence.v1` envelope, deterministic metadata-only index `428` historical files, body-like/source/log fields rejected, `5/5` checks, focused `3/3`, full check/boundary/toolchain ladder green; current report отделён от historical index.
-- [ ] `G10S-227` Evidence inputs фиксируют Strata `ec3b680` (или reviewed successor), target parent SHA, questions manifest hash и reports 13/14 hashes.
+- [x] `G10S-227` Evidence inputs фиксируют Strata `ec3b680` (или reviewed successor), target parent SHA, questions manifest hash и reports 13/14 hashes. Evidence: target implementation `4c1a0bd`, handoff `1d60683`; metadata-only `G10S-inputs/` ledger фиксирует reviewed successor `0921dd0`, immutable baseline/tag `ec3b6804`, target parent `3d9b092`, release/intake manifests и reports 13/14 SHA-256; `8/8` checks, focused `4/4`, full check/boundary/toolchain ladder green.
 - [ ] `G10S-228` `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm content:gates` PASS.
 - [ ] `G10S-229` Новые `pnpm content:authoring:check`, `content:db:verify`, `content:bundle:verify` или утверждённые эквиваленты PASS и задокументированы.
 - [ ] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS.
