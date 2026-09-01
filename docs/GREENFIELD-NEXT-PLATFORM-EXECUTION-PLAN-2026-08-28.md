@@ -5973,3 +5973,34 @@ Push не выполнялся.
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/lesson-graph-labels-2026-09-01.{json,md}`.
+
+## Коррекция подписей runtime verdict checks
+
+Target-коммит без push — `c2c66b8`; evidence-коммит — `f556946`.
+
+После отправки решения runtime-панель показывала внутренние check IDs
+`released_revision`, `baseline_order`, `trace_coverage`, `sandbox_boundary` и
+`no_private_output`. Они остаются частью строгого evaluator/evidence-контракта,
+но learner-facing copy теперь проходит через общий bilingual resolver:
+`Опубликованная ревизия`, `Ожидаемый порядок вывода`, `Покрытие трассой`,
+`Граница песочницы`, `Приватный вывод защищён` и локализованный статус
+`Пройдено`. Для будущего неизвестного ID используется deterministic
+humanized fallback; payload IDs и корреляция evaluator не меняются.
+
+Live после штатного `pnpm dev --detached` на
+`http://127.0.0.1:47360/`:
+
+- `/practice/node-event-loop-001?track=node&locale=ru` — изолированный запуск и
+  evaluator submit завершились успешно;
+- видны все пять русских подписей и `hidden suite passed`;
+- raw check IDs отсутствуют в видимом тексте;
+- web regression `64/64`, полный ladder и stack/migrations `6/6`, `18/18`,
+  pending `0` — `PASS`.
+
+Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это corrective
+display/accessibility seam и не добавляет вопросов, задач, activity или
+progress records. G10S-246 human acceptance и G11 content breadth остаются
+открытыми; push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-verdict-check-labels-2026-09-01.{json,md}`.

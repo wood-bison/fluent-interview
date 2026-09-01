@@ -511,3 +511,30 @@ Snapshot не изменился: **658 / 476 / 1134 / 58,02%**. Это не н�
 
 Evidence:
 `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/lesson-graph-labels-2026-09-01.{json,md}`.
+
+## Коррекция подписей runtime verdict checks
+
+Target-коммит без push — `c2c66b8`; evidence-коммит — `f556946`.
+Runtime verdict checks больше не выводят learner-facing raw IDs
+`released_revision`, `baseline_order`, `trace_coverage`, `sandbox_boundary` и
+`no_private_output`. Общий bilingual resolver показывает `Опубликованная
+ревизия`, `Ожидаемый порядок вывода`, `Покрытие трассой`, `Граница песочницы`,
+`Приватный вывод защищён` и статус `Пройдено`; стабильные IDs сохранены только
+в evaluator/evidence payload, неизвестные значения получают deterministic
+humanized fallback.
+
+Live после `pnpm dev --detached` на
+`http://127.0.0.1:47360/practice/node-event-loop-001?track=node&locale=ru`:
+
+- isolated runtime run + local evaluator submit — PASS;
+- пять русских подписей и `hidden suite passed` видны, raw IDs отсутствуют;
+- web regression `64/64`, `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+  `pnpm toolchain:check` — PASS;
+- scoped stack `6/6`, migrations `18/18`, pending `0`;
+- progress snapshot без изменений: **658 / 476 / 1134 / 58,02%**.
+
+Это corrective display/accessibility seam; G10S-246, G11 breadth и human
+sign-off остаются открытыми. Push не выполнялся.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/runtime-verdict-check-labels-2026-09-01.{json,md}`.
