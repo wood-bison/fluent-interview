@@ -1008,6 +1008,32 @@ persistent DB/Docker mutations `0`, durable volumes сохранены; focused 
 Следующий executable пункт — G10S-233: полный C098 learner/runtime/evidence
 journey на exact release/revision IDs.
 
+### Execution update — G10S-233 C098 full learner journey — 1 сентября 2026
+
+G10S-233 закрыт в target `main` локальной commit-gated цепочкой без push из-за
+Actions quota: implementation `9a83d03`, evidence `d3a15e7`. Добавлен
+metadata-only `architecture:gate-233`, который последовательно проверяет девять
+границ: released learner route, selector, public Run, Submit/replay/conflict,
+negative vectors, Observe/Explain + Navigator, vertical slice, persistence и
+authoring-to-learning marker. Все **9/9 PASS** на exact C098 coordinates:
+release `2026.08.28-questions.1`, question
+`question.node-event-loop-001`, revision `.r1`, runtime
+`node-26-commonjs`/`g6-node-golden.1`; 7 answer layers, 43 routes, 8 trace
+events, 5 hidden checks, 4 evidence facets, 13 runtime vectors и 8 submit
+cases подтверждены. Persistence proof сохранил ledgers/Studio history через
+restart, scoped down/up и integrity-checked restore, затем удалил post-backup
+sentinels и оставил `0` containers/networks. Вложенный Studio rehearsal больше
+не повторяет raw migrations после `pnpm dev`: lifecycle marker переиспользует
+уже применённый migration ledger, устраняя найденный `psql exit 3`.
+Scoped `fluent_g10s_*` cleanup `0→0`, persistent DB/Docker mutations `0`,
+durable volumes сохранены; stdout/stderr и learner/evaluator bodies не
+эмитируются. Focused `3/3`, полный check/boundary/toolchain ladder green.
+Единственная честная граница — spoken explanation `AWAITING_HUMAN`.
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-233-c098-journey-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-234: C098 RU/EN, light/dark, desktop,
+keyboard/a11y и performance matrix.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4308,7 +4334,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-230` Fresh/upgrade DB, role/grant negative matrix, canonical prompt race и backup/restore PASS. Evidence: target implementation `361e018`, evidence `c42e3ad`; `6/6` sequential commands PASS, scoped `fluent_g10s_*` database cleanup `0` before/after, persistent DB/Docker mutations `0`, durable volumes preserved, metadata-only output.
 - [x] `G10S-231` Studio author/review/publish, deterministic export, file-only import, readback и rollback PASS. Evidence: target implementation `e15dcc9`, evidence `002a7e1`; `9/9` sequential commands PASS, temporary prefix `fluent_g10s_` `0→0`, no persistent DB/Docker mutations.
 - [x] `G10S-232` Corpus rights/quarantine/leak scans PASS; forbidden distributable findings = 0. Evidence: target implementation `5cfb47a`, evidence `99664e2`; `9/9` sequential commands PASS, `findingCount/bodyMatchCount/importAllowedRecords/automaticPublicRecords=0`, quarantine `2`, scoped cleanup `0→0`, no persistent DB/Docker mutations.
-- [ ] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs.
+- [x] `G10S-233` C098 full learner/runtime/evidence journey PASS на exact release/revision IDs. Evidence: target implementation `9a83d03`, evidence `d3a15e7`; `9/9` sequential commands PASS, exact release/question/revision/runtime joins, persistence restart/down-up/restore cleanup, spoken explanation остаётся `AWAITING_HUMAN`.
 - [ ] `G10S-234` C098 RU/EN, light/dark, required desktop viewports, keyboard/a11y и performance matrix PASS.
 - [ ] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority.
 - [ ] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; все intentional losses находятся в loss ledger.
