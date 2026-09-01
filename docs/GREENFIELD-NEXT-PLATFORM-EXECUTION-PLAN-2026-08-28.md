@@ -1136,6 +1136,30 @@ Evidence:
 одним объявленным slice и вести последовательность docs → workspace → DB →
 domain → Studio → corpus → adapter → C098 → retirement.
 
+### Execution update — G10S-238 commit-slice discipline — 1 сентября 2026
+
+G10S-238 закрыт в target `main` двумя локальными commit-gated шагами без push
+из-за Actions quota: implementation `ffa194f`, evidence `6ecc55c`. Версионированные
+policy/schema и `architecture:gate-238` проверяют точный диапазон
+`e7040fa..1604224`: шесть SHA в линейном порядке, одного родителя, exact subject,
+полное множество changed paths по allowlist и `git diff-tree --check`.
+Итог — **28/28 PASS**: 24 commit-level assertions плюс history-range, main branch,
+clean tree и ancestry.
+
+Ledger различает `implementation`, `correction` и завершающий `evidence`; один
+implementation объявляет только `workspace`, corrections не двигают sequence,
+evidence обязан быть последним. Опубликована будущая последовательность
+`docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement`,
+следующий slice — `db`. Gate fail-closed при незаявленном SHA, merge-коммите,
+неверном родителе, subject или пути. Реальные исправления G10S-237 (content
+projection order, manifest `.2`, семь indexed screenshots) входят в ledger как
+отдельные bounded corrections.
+
+Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-238-commit-slice-2026-09-01.{json,md}`.
+Следующий executable пункт — G10S-239: после каждого commit повторять slice
+checks, фиксировать clean status и связывать SHA с gate.md.
+
 ### Execution update — G12 RC rehearsal — 29 августа 2026
 
 G12 выполнен как clean-room release-candidate rehearsal на новом clone
@@ -4441,7 +4465,7 @@ proof — полный slice `C098 / Node.js Event Loop`.
 - [x] `G10S-235` Static dependency/SQL/credential scan подтверждает no API→Strata access и no dual authority. Evidence: target implementation `07fb3c5`, evidence `f879aad`; `8/8` sequential commands PASS, serving `643` files/`rawStrataSql=0`, authority-negative `7`, SBOM `175`/`0` high-critical, static/live boundaries PASS, metadata-only.
 - [x] `G10S-236` Reconciliation: authoring→bundle→serving unexplained delta = 0; intentional losses находятся в loss ledger, а content gaps отделены от внутренних join/projection ошибок. Evidence: target implementation `da9fed2`, evidence `e7040fa`; `9/9` sequential commands PASS, source coverage `73/73`, canonical byte/hash identity, serving readback `18/18`, reconciliation `unexplainedDeltaCount=0`, deterministic rebuild и `0→0` scoped cleanup, metadata-only.
 - [x] `G10S-237` Clean archive target проходит install/build/check/dev/C098 без source repositories и agent-local caches. Evidence: target implementation `21ab02c`, clean-room corrections `836d438`, `996f180`, `9c11d85`, `3c729a1`, evidence `1604224`; one-command gate `PASS` (130.4 s), archive/fresh-clone metadata clean, source refs `0`, all install/build/check/dev/C098 export/import/journey/cleanup exit `0`, journey machine status `PASS`, metadata-only controls true, cleanup `0→0`.
-- [ ] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement.
+- [x] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement. Evidence: target implementation `ffa194f`, evidence `6ecc55c`; exact range `e7040fa..1604224`, six linear commits, 24/24 commit assertions plus range/main/clean/ancestry = `28/28 PASS`, unlisted path/SHA/parent/message/merge drift fail-closed, metadata-only and push `0`.
 - [ ] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md.
 - [ ] `G10S-240` Push только fast-forward после local PASS и с учётом текущей CI quota policy; если push запрещён владельцем, локальные SHAs сохраняются, статус remote attestation остаётся open.
 - [ ] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: retained limitations либо закрыты, либо перенесены в G11/G12 с owner и exact trigger.
