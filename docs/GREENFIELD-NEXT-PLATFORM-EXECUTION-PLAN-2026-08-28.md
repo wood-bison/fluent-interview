@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-240.md`](verification/greenfield/plan-progress-2026-09-01-g10s-240.md).
+[`plan-progress-2026-09-01-g10s-241.md`](verification/greenfield/plan-progress-2026-09-01-g10s-241.md).
 
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
@@ -4240,6 +4240,33 @@ PASS: commit/path/parent/diff, пять receipts, main/ancestry/direct-child/cle
 Следующий executable пункт — `G10S-241`: пересмотреть retained limitations
 G10 и разнести каждую открытую capability в G11/G12 с owner и exact trigger.
 
+### Execution update — G10S-241 limitation routing — 1 сентября 2026
+
+Target `main` закрыл G10S-241 двумя локальными commit-gated коммитами без
+push из-за ограничения GitHub Actions quota: implementation
+`3783ca7f8c78ddef99552ba7b820f682c1cdbb59` (`feat(g10s): classify G10
+limitations`) и evidence `764645a81af52fa37a97f1c65de4c7afa212ea8f`
+(`docs(g10s): record G10 limitation routing gate`). Implementation является
+прямым ребёнком G10S-240 evidence `a3b032d`; allowlist содержит ровно пять
+путей. В процессе обнаружен и исправлен ложный порядок ключей в
+`destinationCounts`, поэтому финальный gate не допускает зависимость от
+порядка JSON-полей.
+
+Machine report
+`G10S-241-limitation-routing-2026-09-01.json` фиксирует **34/34 PASS, 0 FAIL,
+6 OPEN, 0 SKIPPED**. Все шесть retained limitations из G10 покрыты ровно по
+одному маршруту, с ordinal 1–6, owner, exact trigger и следующим G11/G12 gate;
+состояние каждой записи — `TRANSFERRED_OPEN`, а не product `DONE`. Источники
+G10 и предыдущий G10S-240 receipt проверены по SHA-256. Gate metadata-only:
+тела контента/команд и секреты не записываются, DB/Docker mutations и push не
+выполнялись. Полный `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` зелёные на implementation/evidence границах.
+
+Evidence и handoff:
+`fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-241-limitation-routing-2026-09-01.{json,md}`.
+Следующий executable пункт — `G10S-242`: отметить затронутые G11/G12 items как
+`REVERIFY_AFTER_G10S` в evidence index и сохранить эту связь при миграции.
+
 ### G10S.0. Preflight, baselines и decision intake
 
 - [x] `G10S-001` Проверить exact roots через `git rev-parse --show-toplevel` для umbrella, target, Strata и questions; сохранить paths, branches, HEAD и remotes. Evidence: target `40122ae`, `G10S/preflight.json`.
@@ -4512,7 +4539,7 @@ G10 и разнести каждую открытую capability в G11/G12 с o
 - [x] `G10S-238` Каждый implementation commit содержит только объявленный slice; recommended sequence: docs → workspace → DB → domain → Studio → corpus → adapter → C098 → retirement. Evidence: target implementation `ffa194f`, evidence `6ecc55c`; exact range `e7040fa..1604224`, six linear commits, 24/24 commit assertions plus range/main/clean/ancestry = `28/28 PASS`, unlisted path/SHA/parent/message/merge drift fail-closed, metadata-only and push `0`.
 - [x] `G10S-239` После каждого commit повторены slice checks и `git status --short` clean; SHAs внесены в gate.md. Evidence: target implementation `e2fbaaf`, evidence `521bf2e`; `13/13` post-commit assertions PASS, five-command metadata-only receipt, full check on phase boundary, push `0`, remote attestation `OPEN`.
 - [x] `G10S-240` Push policy зафиксирована как fast-forward-only: local PASS обязателен, но push запрещён владельцем на время CI quota. Evidence: target implementation `383bc64`, evidence `a3b032d`; `15/15` local assertions PASS, полный `pnpm check` на implementation/evidence boundary, `git ls-remote` только read-only, remote attestation `OPEN`, `pushPerformed=false`. SHAs и policy сохранены в `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-240-push-policy-2026-09-01.{json,md}`. Статус `PASS_WITH_LIMITATIONS` честно отражает одну открытую remote attestation; следующий пункт — `G10S-241`.
-- [ ] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: retained limitations либо закрыты, либо перенесены в G11/G12 с owner и exact trigger.
+- [x] `G10S-241` Existing G10 `PASS_WITH_LIMITATIONS` пересмотрен: все 6 retained limitations перенесены в G11/G12 с owner и exact trigger, без фиктивного `DONE`. Evidence: target implementation `3783ca7`, evidence `764645a`; gate `34/34 PASS`, `6 OPEN`, metadata-only, push `0`. Handoff: `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-241-limitation-routing-2026-09-01.{json,md}`.
 - [ ] `G10S-242` Все затронутые G11/G12 items отмечены `REVERIFY_AFTER_G10S` в evidence index, не в виде скрытого assumption.
 - [ ] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package.
 - [ ] `G10S-244` Handoff содержит repo path, branch, HEAD, commits, start command, DB migration range, bundle/release IDs, C098 route и evidence index.
