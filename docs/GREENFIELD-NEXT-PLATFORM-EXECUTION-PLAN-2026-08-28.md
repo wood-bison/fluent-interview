@@ -7137,3 +7137,65 @@ evidence-only срез: curriculum content, задачи и progress records н�
 `focus-mode`, `resized`), затем G10S-246 human acceptance, G11 breadth,
 path-specific closure packs, G12.5 requalification, independent final
 review и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
+
+## G12-025 — Practice workbench state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `9e2a0f1` (`feat(g12): capture practice workbench
+state evidence`). Волна продолжает live-проверку Practice после corridor и
+фиксирует сам рабочий стол запуска кода, а не только список доступных
+станций. Снимки сделаны на том же compose-project-scoped стеке и привязаны к
+каноническому state-evidence index.
+
+Покрыты девять D0 состояний workbench:
+
+- `idle` — исходное состояние с редактором, prediction input и disabled run;
+- `running` — bounded execution с видимым pending/stop affordance;
+- `passed` — успешный deterministic envelope, verdict и terminal evidence;
+- `mismatch` — намеренно неверный prediction с объяснимым verdict;
+- `error` — пустой/невалидный ввод с inline validation и без падения UI;
+- `cancelled` — отмена bounded run с восстановлением доступного запуска;
+- `runner-down` — runtime-control недоступен, advisory ошибка отображена,
+  retry остаётся доступным, после проверки сервис восстановлен;
+- `focus-mode` — рабочая область разворачивается без потери контекста;
+- `resized` — разделитель изменяет ширину evidence-панели, доступная область
+  остаётся читаемой.
+
+Для каждого состояния сохранены interaction trace, semantic snapshot и
+реальный visual JPEG в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/practice-workbench/`.
+Их SHA-256 записаны в `G12/state-evidence/index.json` и проверяются
+`G12/checksums.sha256`; отдельный отчёт волны:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/practice-workbench-wave-2026-09-02.md`.
+
+Проверено:
+
+- live URL `http://127.0.0.1:47360/`, session
+  `7afeba77-21d6-4238-8aa8-1d822d99e574`, **6/6** services healthy;
+- migrations **18/18**, pending **0**;
+- Node.js 26 CommonJS profile, EN locale, dark theme, route
+  `/practice/node-event-loop-001?track=node&locale=en`;
+- run/pass/mismatch/error/cancel/recovery semantics, terminal output,
+  diagnostics, focus mode и keyboard-resizable evidence panel;
+- единственный владелец вертикальной прокрутки `.app-scroll-region` и
+  стабильная геометрия workbench при изменении размера;
+- state registry после волны: `stateHash=ae263fb4…`, `screens=12`,
+  `states=71`, `evidenceReadyStates=37`, `openStates=34`,
+  `openDispositions=12`, `unresolvedItems=46`,
+  `structuralFailureCount=0`;
+- G10S evidence index пересобран до **547** metadata-only записей без
+  перезаписи immutable handoff bodies;
+- `sha256sum -c docs/verification/greenfield/G12/checksums.sha256` — все
+  записи PASS;
+- focused state-registry tests **4/4 PASS**;
+- обязательный target ladder `git status → git diff --check →
+  NX_CI=1 pnpm check → pnpm boundary:check → pnpm toolchain:check →
+  git commit` — PASS. Полный `pnpm check` завершился зелёным, включая
+  TypeScript, contract/boundary и evidence gates.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%**. Это
+evidence-only срез: curriculum content, задачи и progress records не
+добавлялись. G12-025 остаётся `OPEN` до покрытия следующих **34** состояний
+и **12** human dispositions; unresolved items — **46**. Следующая bounded
+очередь: оставшиеся G12 state groups, G10S-246 human acceptance, G11 breadth,
+path-specific closure packs, G12.5 requalification, independent final review
+и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
