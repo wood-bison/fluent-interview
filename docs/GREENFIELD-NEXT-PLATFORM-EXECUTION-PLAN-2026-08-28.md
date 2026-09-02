@@ -7789,3 +7789,33 @@ review по этим bounded пакетам, затем G11 revalidation.
 Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
 **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
 на **495** локальных коммитов; push не выполнялся из-за CI Actions quota.
+
+## Execution update — F1 PREP_ONLY bounded authoring batch offset 300 — 2 сентября 2026
+
+Четвёртый bounded preparation slice зафиксирован в target `main` commit
+`0f6b52d` (`feat(g11): prepare fourth bounded authoring batch`), без push. Он
+выбирает записи `300..399` из того же immutable inventory; вместе с тремя
+предыдущими диапазонами подготовлено **400/1 597** metadata-only записей без
+пересечения.
+
+Входы: queue `vault-authoring-f9c41b9e805d6aa7` (100 записей,
+`offset=300`, `limit=100`, `sample=10`), queue hash
+`e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`, research
+pack `research-authoring-e4d898be9b8c4b66` с state hash
+`7b77a3ef9d6f158bf1de11d8ddfe4c59197e88f962f034d3c41c57b0546e546c`; итоговый
+PREP_ONLY state hash —
+`124886356a7e4d8e6199c55771ef64291cb8b3089c411ae6b9ef6442a4d216bd`.
+Общий quality-inventory content hash —
+`85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168`.
+
+Evidence и reproduce-команды находятся в
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-batch-2026-09-02-offset-300.{json,md}`. Guard и phase ladder подтвердили
+metadata-only/non-promoting envelope, отсутствие запрещённых body-полей,
+`architecture:evidence-schema` **663/663**, полный `pnpm check`, boundary и
+toolchain — PASS; target clean после коммита. Это не закрывает
+`G10S-246`, `G11-013/015/018/019`, authoring/review, path-specific packs или
+release. Следующий batch остаётся подготовкой до owner acceptance.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
+на **496** локальных коммитов; push не выполнялся из-за CI Actions quota.
