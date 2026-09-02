@@ -8065,9 +8065,9 @@ Umbrella обнаружил реальный guard-defect: `pnpm layout:check` �
 `/Users/sergeyzhechko/developer/fluent-interview-platform`, хотя этот sibling
 явно объявлен текущим greenfield-target в самом мастер-плане и уже является
 отдельным auditable Git-root. Это не основание ослаблять проверку и не повод
-перемещать target во время миграции. В отдельном локальном commit этой волны
-guard получил точный fail-closed allowlist только для
-`fluent-interview-platform`;
+перемещать target во время миграции. В локальном commit `cfee243`
+(`fix(workspace): classify greenfield target sibling`) guard получил точный
+fail-closed allowlist только для `fluent-interview-platform`;
 наличие `.git`, `AGENTS.md` и `package.json` проверяется перед пропуском. Любой
 другой `fluent-*` sibling по-прежнему останавливает layout gate.
 
