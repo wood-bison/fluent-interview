@@ -8216,3 +8216,44 @@ Product closure **79**, requalification/independent review **55**, G13
 decommission **150**. Target опережает `origin/main` локальными коммитами;
 push не выполняется из-за лимита GitHub Actions. Удаление репозиториев,
 контейнеров, volumes и исторических данных в этой фазе не выполняется.
+
+## Execution update — F1 PREP_ONLY independent-scenario authoring queue — 2 сентября 2026
+
+В target `fluent-interview-platform/main` создан локальный commit `323ba5f`
+(`feat(g11): prepare scenario authoring queue`), без push и без удаления.
+Добавлена команда `pnpm content:scenario-queue` и dependency-free compiler
+`tools/content-compiler/scenario-authoring-queue.mjs`. Он строит bounded
+metadata-only очередь для assessed Activities из текущего question release и
+policy, связывая каждую запись с `cardId`, `cardRevisionId`, semantic key,
+placement, runtime profile, TaskFamily и revision. Legacy `scenarioKey` и
+массив `scenarioKeys` нормализуются через trim + dedupe.
+
+Гейт намеренно не создаёт prompt, answer, solution, code, source wording,
+review decision или release body. `mode=PREP_ONLY`,
+`autoPromotion=false`, `servingWrites=false`, `releasePointerWrites=false`,
+`reviewerRequired=true`, `ownerAcceptanceRequired=true`; predecessor
+`G10S-246` остаётся обязательным. Для каждой assessed Activity выдаются
+только стабильные `requestedScenarioSlots`, если policy minimum ещё не
+достигнут; готовая запись получает `ready-for-review`, но не promotion.
+
+Фактический снимок текущего release: **7 assessed Activities**, **0**
+готовых к review записей, **7** требуют authoring, **14** недостающих
+слотов. Это честно отражает текущий G11 breadth gap и не превращает
+метаданные в содержимое. Для production closure всё ещё нужны owner
+acceptance по 12 экранам G10S-246, оригинальные RU/EN layers, provenance,
+typed placement, rubric, независимые сценарии и reviewer decisions.
+
+Добавлены `tools/content-compiler/test/scenario-authoring-queue.test.mjs`:
+нормализация дубликатов, missing-slot calculation, review-ready boundary,
+отсутствие body leakage и fail-closed invalid policy (**3/3**). Полный
+`pnpm check` перед commit прошёл; post-commit boundary/toolchain и combined
+portfolio/queue regression — **8/8 PASS**. Target clean на `main`, локально
+опережает `origin/main` на **511** коммитов; push отложен из-за CI Actions
+quota.
+
+Мастер-счётчики не меняются: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks; Product closure **79**,
+requalification/independent review **55**, G13 decommission **150**.
+Удаление репозиториев, старых сущностей, контейнеров, volumes и данных
+по-прежнему запрещено пользовательской границей; G13 остаётся только
+планом, пока не будет отдельной авторизации и restore proof.
