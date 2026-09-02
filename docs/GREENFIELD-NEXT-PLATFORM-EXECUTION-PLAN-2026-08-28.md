@@ -8182,3 +8182,37 @@ learner writes остаются запрещены.
 CI Actions quota. Следующий шаг, который не может быть автоматизирован,
 остаётся owner review 12 экранов, после чего можно будет revalidate exact
 snapshot и начать reviewed G11 authoring.
+
+## Execution update — F1 G11 independent-scenario guard hardening — 2 сентября 2026
+
+В target `main` добавлены два локальных commit-gated hardening-коммита без
+push: `ee31401` (`fix(g11): enforce independent scenario minimum`) и
+`f94f690` (`fix(g11): normalize independent scenario keys`). Проверка
+`G11-026` теперь учитывает как новый массив `scenarioKeys`, так и legacy
+`scenarioKey`, нормализует значения через trim и dedupe, и допускает статус
+`declared` только при достижении `minimumIndependentScenarios` для каждой
+assessed Activity. Одна запись или два варианта одного ключа больше не могут
+создать ложное закрытие независимого сценария.
+
+Добавлены positive/negative regression cases: одна независимая координата
+остаётся `open`, две разные координаты дают `pass`, а пробелы и дубликаты
+схлопываются в одну координату. Target `pnpm check` на границе фазы,
+`boundary:check`, `toolchain:check`, `git diff --check` и post-commit
+регрессия **5/5** прошли; stack `fluent-interview-platform-dev` остаётся
+здоровым (`6` ожидаемых сервисов, `18/18` migrations, cleanup/retention
+guards PASS). Изменение не добавляет контент, не пишет serving/release rows и
+не меняет authority.
+
+Это техническая защита будущего authoring handoff, а не закрытие G11:
+текущий seed по-прежнему содержит `6` cards, `7` assessed activities,
+`1` TaskFamily, `0` runnable revisions и `0` package-mode evidence; все семь
+activities остаются без rubric/scenario metadata. G10S-246 по-прежнему
+`AWAITING_OWNER` (`12` disposition decisions), поэтому PREP_ONLY и
+`autoPromotion=false` сохранены.
+
+Актуальный progress после коммитов намеренно не изменён: **658 / 476 / 1 134
+· 58,02%** формально, **658 / 284 / 942 · 69,85%** исполнимых gates/checks;
+Product closure **79**, requalification/independent review **55**, G13
+decommission **150**. Target опережает `origin/main` локальными коммитами;
+push не выполняется из-за лимита GitHub Actions. Удаление репозиториев,
+контейнеров, volumes и исторических данных в этой фазе не выполняется.
