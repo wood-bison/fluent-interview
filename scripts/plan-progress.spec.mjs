@@ -53,6 +53,9 @@ test("separates standing policy from execution workstreams", () => {
   assert.equal(summary.standingPolicy.total, 3);
   assert.equal(summary.execution.checked, 1);
   assert.equal(summary.execution.remaining, 4);
+  assert.equal(summary.nonDestructiveClosure.checked, 1);
+  assert.equal(summary.nonDestructiveClosure.remaining, 3);
+  assert.equal(summary.nonDestructiveClosure.total, 4);
   assert.equal(summary.workstreams.productClosure.remaining, 1);
   assert.equal(
     summary.workstreams.requalificationAndIndependentReview.remaining,

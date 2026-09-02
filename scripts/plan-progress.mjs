@@ -88,6 +88,10 @@ function summarize(rows) {
   const executionRows = rows.filter(
     (row) => rowCategory(row) !== "standingPolicy",
   );
+  const nonDestructiveRows = rows.filter((row) => {
+    const category = rowCategory(row);
+    return category !== "standingPolicy" && category !== "decommission";
+  });
   const workstreams = Object.fromEntries(
     [
       "productClosure",
@@ -102,6 +106,7 @@ function summarize(rows) {
     plan: path.relative(root, planPath),
     ...formal,
     execution: counts(executionRows),
+    nonDestructiveClosure: counts(nonDestructiveRows),
     standingPolicy: counts(standingPolicyRows),
     workstreams,
     sections: Object.fromEntries(bySection),
@@ -129,6 +134,9 @@ function main() {
       console.log(`Completion: ${summary.completionPercent}%`);
       console.log(
         `Execution: ${summary.execution.checked} checked, ${summary.execution.remaining} remaining, ${summary.execution.total} total (${summary.execution.completionPercent}%)`,
+      );
+      console.log(
+        `Non-destructive closure: ${summary.nonDestructiveClosure.checked} checked, ${summary.nonDestructiveClosure.remaining} remaining, ${summary.nonDestructiveClosure.total} total (${summary.nonDestructiveClosure.completionPercent}%)`,
       );
       console.log(
         `Standing policy: ${summary.standingPolicy.total} rules (enforced continuously; excluded from execution remaining)`,
