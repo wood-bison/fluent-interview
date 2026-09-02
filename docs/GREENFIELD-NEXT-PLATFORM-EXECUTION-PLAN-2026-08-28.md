@@ -7669,3 +7669,49 @@ path-specific closure packs, G12.5 requalification, independent final review
 и G13 decommission не закрыты. Следующая bounded работа выбирается только
 после этой фиксации из content breadth или следующего route-contract gap.
 Push не выполнялся.
+
+## Execution update — F1 PREP_ONLY bounded authoring batch — 2 сентября 2026
+
+В target `main` создан локальный commit `9dc2794`
+(`feat(g11): add non-promoting prep-only batch`) без push. Это первый
+ускоренный F1 preparation slice: он превращает актуальные inventory, queue и
+research pack в проверяемый metadata-only handoff, не подменяя human authoring
+и review.
+
+Зафиксированы точные входы и хэши:
+
+- quality inventory — **1 597** записей, content hash
+  `85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168`;
+- bounded queue — **100** записей (`offset=0`, `limit=100`, `sample=10`),
+  `batchId=vault-authoring-9a29388b153da4e8`, queue hash
+  `e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`;
+- research pack — `research-authoring-b955a7c16bdc20fc`, state hash
+  `995c28edd030875ad9012d360aae851694dc93a320f3c9870c062b6b87f08a51`;
+- resulting PREP_ONLY state hash —
+  `0352e39507705585a0d59a5428fcc94d535c4c4b38a176cb2cc0c95ffb1e345b`.
+
+Добавлены `prep-only-batch.v1`, CLI `pnpm content:prep-only`, regression
+tests и evidence в
+[`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-batch-2026-09-02.md`](https://github.com/wood-bison/fluent-interview-platform/blob/main/docs/verification/greenfield/G11/prep-only-batch-2026-09-02.md).
+Guard проверяет общий source hash, bounded размер, metadata-only envelope,
+отсутствие `prompt/answer/solution/code/sourceWording/sourceText/body` и
+запрещает `autoPromotion`, serving writes и release-pointer writes.
+
+Проверка commit slice: полный target `pnpm check` — PASS (lint, typecheck,
+build, content/runtime/architecture/gates); PREP_ONLY regression — **3/3**;
+content compiler suite — **496/496**; boundary и toolchain — PASS;
+`architecture:evidence-schema` — PASS, **657/657** исторических записей,
+rewrites `0`. После коммита рабочее дерево чистое. `origin/main` остаётся на
+один коммит позади (`main ahead 493`), push намеренно не выполнялся из-за
+лимита GitHub Actions.
+
+Это не закрывает `G10S-246`, `G11-013/015/018/019` или `G10S-246`: bodies,
+original answers, provenance, typed placement и reviewer decisions ещё не
+созданы. Следующий безопасный шаг — повторить PREP_ONLY queue после проверки
+предшественника, затем провести пакетную human authoring/review; критический
+путь остаётся `G10S-246 owner acceptance → G11 breadth → G12.5 → independent
+review → G13`.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** по исполнимым gates/checks. Preparation не ставит
+галочки и не выдаёт product readiness.
