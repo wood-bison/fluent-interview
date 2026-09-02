@@ -6946,3 +6946,42 @@ human disposition всех состояний; текущая волна зак�
 G11 breadth и path-specific closure packs, затем G12.5 requalification,
 independent final review и G13 decommission. Push не выполнялся из-за лимита
 GitHub Actions.
+
+## G12-025 — Program track state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `b337c7e` (`feat(g12): capture program track state evidence`).
+
+После Today route продолжена live state-evidence проверка Program на том же
+compose-project-scoped стеке. Зафиксированы пять состояний, которые раньше
+оставались только в контракте маршрута: выбор Node.js, Java и Go треков,
+восстановление после неизвестного `module`, а также длинная русская локаль.
+Снимки подтверждают, что track deep-link меняет выбранный путь и список
+модулей, недоступный модуль возвращает learner к выбранному треку, а RU-копия
+остаётся читаемой внутри единственного владельца прокрутки.
+
+Проверено:
+
+- live URL `http://127.0.0.1:47360/`, session
+  `7afeba77-21d6-4238-8aa8-1d822d99e574`, **6/6** services healthy;
+- migrations **18/18**, pending **0**;
+- five Program states: `node-selected`, `java-selected`, `go-selected`,
+  `empty-module`, `long-copy`;
+- для каждого состояния сохранены interaction trace, semantic snapshot и
+  реальный visual JPEG в `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/program-track/`;
+- state registry после волны: `stateHash=0c96911e…`, `screens=12`,
+  `states=71`, `evidenceReadyStates=10`, `openStates=61`,
+  `openDispositions=12`, `unresolvedItems=73`, `structuralFailureCount=0`;
+- G10S evidence index расширен до **462** metadata-only записей; immutable
+  исторический anchor старого handoff не переписывался;
+- SHA-256 checksum manifest и focused state-registry tests **4/4** PASS;
+- обязательный target ladder `git status → git diff --check → NX_CI=1 pnpm check →
+  pnpm boundary:check → pnpm toolchain:check → git commit` — PASS.
+
+Канонический отчёт волны: `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/program-track-wave-2026-09-02.md`.
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%** — это
+evidence-only срез без новых вопросов, задач или activity. G12-025 остаётся
+открытым до покрытия остальных 61 состояния и 12 human dispositions.
+Следующая очередь: Atlas, Questions/Practice, G10S-246 human acceptance, G11
+breadth и path-specific closure packs, затем G12.5 requalification,
+independent final review и G13 decommission. Push не выполнялся из-за лимита
+GitHub Actions.
