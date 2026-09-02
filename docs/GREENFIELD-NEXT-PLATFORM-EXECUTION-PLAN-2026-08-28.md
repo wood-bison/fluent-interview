@@ -7559,6 +7559,12 @@ Live HTTP matrix на `http://127.0.0.1:47360/` — **7/7 PASS**:
 `pnpm dev -- --detached` создал session `c6668d3b-c5d7-4676-b655-8ae4cf7ad0c4`:
 **6/6** сервисов в ожидаемом состоянии, миграции **18/18**, pending **0**.
 
+Дополнительный HTTP smoke после пересборки проверил **11/11** ключевых
+страниц (`/`, Program, Questions, Practice, runnable station, Atlas,
+Projects, Review, Control Center, Settings и Studio) в русской локали: каждый
+ответ — `200`, title `Fluent Interview Platform`, без `Application error`,
+`Internal Server Error` или `Unhandled Runtime Error`.
+
 Это corrective route-contract slice: новые вопросы, tasks, placements и
 progress records не добавлялись. Master counter остаётся
 **658 / 476 / 1 134 · 58,02%**. `G10S-246` по-прежнему `AWAITING_OWNER` с
