@@ -7919,3 +7919,30 @@ requalification. Критический путь не меняется:
 и **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. Remaining streams:
 Product closure **79**, requalification/independent review **55**, G13
 decommission **150**; PREP_ONLY манифест не ставит галочек в этих потоках.
+
+## Execution update — F1 PREP_ONLY manifest wired into content gates — 2 сентября 2026
+
+В target `main` добавлен локальный commit `6ac7432c4931f8e533101f2c1599127494beb847`
+(`chore(g11): enforce prep-only manifest guard`), без push. Скрипт
+`content:gates` теперь завершает общий content-gate командой
+`pnpm content:prep-only-manifest -- docs/verification/greenfield/G11`. Поэтому
+каждый последующий `pnpm check` автоматически fail-closed проверяет агрегат
+всех bounded PREP_ONLY envelopes: contiguous coverage, отсутствие gap/overlap,
+общие source hashes, уникальность identities и body/promotion boundary.
+
+После commit guard повторно прошёл PREP_ONLY regression **6/6**,
+`content:prep-only-manifest` (**16 batch, 1 597/1 597, 0..1596,
+contiguous=true**), `architecture:evidence-schema` **679/679** с rewrites `0`,
+`pnpm boundary:check` и `pnpm toolchain:check`; полный target `pnpm check`
+до commit — PASS. Target `main` clean, `origin/main` отстаёт на **500**
+локальных коммитов. Push не выполнялся из-за действующей CI Actions quota.
+
+Это только автоматизация технического guard и не меняет продуктовый статус:
+PREP_ONLY остаётся metadata-only/non-promoting, serving/release/progress rows не
+создаются. Ни одна из 1 597 записей не считается reviewed или released.
+Ближайший реальный gate — `G10S-246` (12 owner-решений), затем human
+classification, original answers, provenance, typed placement, review и
+requalification. Мастер-счётчик и критический путь не меняются:
+**658 / 476 / 1 134 · 58,02%** формально, **658 / 284 / 942 · 69,85%**
+исполняемых gates/checks; remaining streams — Product closure **79**,
+requalification/independent review **55**, G13 decommission **150**.
