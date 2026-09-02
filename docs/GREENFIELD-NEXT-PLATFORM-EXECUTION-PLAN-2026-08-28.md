@@ -7304,3 +7304,39 @@ dispositions. Следующая bounded очередь: Review, Projects, Studi
 Control Center и Settings; затем G10S-246 human acceptance, G11 breadth,
 path-specific closure packs, G12.5 requalification, independent final review
 и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
+
+## G12-025 — Projects state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `a189a77` (`feat(g12): capture projects state
+evidence`). Волна закрывает пять критических состояний `/projects` из D0/G12:
+backend‑lane, Next.js‑lane, system‑design‑lane, locked и assessed.
+
+Проверено:
+
+- backend‑lane — Node.js, Java и Go project books остаются отдельными и
+  явно типизированными;
+- next‑lane — `Production Next.js frontend` имеет шесть milestone и отдельную
+  `Next.js project rubric v1`;
+- system‑design‑lane — `Resilient learning platform` имеет шесть milestone,
+  а failure‑drill и trade‑off defense не смешаны с evaluator verdict;
+- locked — первый milestone `ready`, зависимые этапы `locked`, завершений без
+  evidence нет;
+- assessed — disposable passing failure‑drill через серверный контракт даёт
+  ровно `1/6 complete`, один completed milestone и `milestoneSelfDeclared=false`.
+
+Interaction trace, semantic snapshot и visual JPEG каждого состояния лежат в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/projects/`;
+SHA-256 внесены в индекс и checksum manifest. Канонический отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/projects-wave-2026-09-02.md`.
+
+Итоги gate: **5/5 PASS**, `stateHash=970e0bf6…`, `52/71` evidence-ready,
+`19` open states, `12` open dispositions, `31` unresolved items,
+`structuralFailureCount=0`; G10S historical index — **595/595**, rewrites `0`.
+Полный target ladder с `NX_CI=1 pnpm check`, boundary/toolchain checks и
+commit — PASS; основной test набор — **247/247 PASS**.
+
+Master counter не изменился: **658 / 476 / 1 134 · 58,02%** (evidence-only).
+Следующая bounded очередь: Studio, Control Center и Settings; затем G10S-246
+human acceptance, G11 breadth, path-specific closure packs, G12.5
+requalification, independent final review и G13 decommission. Push не
+выполнялся из-за лимита GitHub Actions.
