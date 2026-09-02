@@ -6947,6 +6947,58 @@ G11 breadth и path-specific closure packs, затем G12.5 requalification,
 independent final review и G13 decommission. Push не выполнялся из-за лимита
 GitHub Actions.
 
+## G12-025 — Questions catalog state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `13d3e9ef9188d398f1ab1934b5b44882d6e50623`
+(`feat(g12): capture question catalog state evidence`).
+
+После Today route, Program и Atlas продолжена live state-evidence проверка
+каталога вопросов. Зафиксированы шесть критических состояний D0:
+`all`, `track-filter`, `lesson-filter`, `ru`, `no-match` и `long-answer`.
+Снимки проверяют полный каталог, фильтры по языковому треку и уроку,
+русскую локаль, пустой результат поиска и открытие вопроса с сохранением
+контекста lesson/track. Для каждого состояния сохранены interaction trace,
+semantic snapshot и реальный visual JPEG.
+
+Проверено:
+
+- live URL `http://127.0.0.1:47360/`, session
+  `7afeba77-21d6-4238-8aa8-1d822d99e574`, **6/6** services healthy;
+- migrations **18/18**, pending **0**;
+- шесть Question catalog states: `all`, `track-filter`, `lesson-filter`,
+  `ru`, `no-match`, `long-answer`;
+- EN/RU semantics, `html[lang]`, выбранные `track`/`lesson`, zero-result
+  boundary и deep-link к `question.node-event-loop-001` сохранены в evidence;
+- state registry после волны:
+  `stateHash=88b98eff…`, `screens=12`, `states=71`,
+  `evidenceReadyStates=23`, `openStates=48`, `openDispositions=12`,
+  `unresolvedItems=60`, `structuralFailureCount=0`;
+- G10S evidence index пересобран до **503** исторических записей без
+  перезаписи immutable handoff anchor;
+- `sha256sum -c docs/verification/greenfield/G12/checksums.sha256` — все
+  записи PASS;
+- focused state-registry tests **4/4 PASS**;
+- обязательный target ladder `git status → git diff --check →
+  NX_CI=1 pnpm check → pnpm boundary:check → pnpm toolchain:check →
+  git commit` — PASS.
+
+Канонические артефакты target:
+
+- `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/index.json`;
+- `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/question-catalog/`;
+- `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/question-catalog-wave-2026-09-02.md`;
+- `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence-registry-2026-09-02.{json,md}`;
+- `fluent-interview-platform/docs/verification/greenfield/G12/checksums.sha256`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%**. Это
+evidence-only срез: новые вопросы, задачи, activity и progress records не
+добавлялись. G12-025 остаётся открытым до покрытия следующих **48**
+состояний и **12** human dispositions; unresolved items — **60**.
+Следующая очередь: Practice corridor/workbench, G10S-246 human acceptance,
+G11 breadth и path-specific closure packs, затем G12.5 requalification,
+independent final review и G13 decommission. Push не выполнялся из-за лимита
+GitHub Actions.
+
 ## G12-025 — Atlas state-evidence wave (2 сентября 2026)
 
 Target-коммит без push — `3d89bfe` (`feat(g12): capture atlas state evidence`).
