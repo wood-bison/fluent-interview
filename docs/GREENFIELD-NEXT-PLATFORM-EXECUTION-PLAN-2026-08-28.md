@@ -7073,3 +7073,67 @@ evidence-only срез без новых вопросов, задач или act
 breadth и path-specific closure packs, затем G12.5 requalification,
 independent final review и G13 decommission. Push не выполнялся из-за лимита
 GitHub Actions.
+
+## G12-025 — Practice corridor state-evidence wave (2 сентября 2026)
+
+Target-коммиты без push — `4261620` (`feat(g12): capture practice corridor
+state evidence`) и `b4b37f2` (`fix(g12): align practice evidence index`). Второй
+коммит нужен, потому что обновление checksum-манифеста закономерно изменило
+историческую metadata-запись G10S; индекс был пересобран тем же
+`architecture:evidence-schema -- --write-index`, после чего полный target
+quality-gate прошёл повторно.
+
+Волна закрывает пять D0 состояний Practice на live compose-project-scoped
+стеке:
+
+- `node-released` — Node.js lane с 8 видимыми уроками и одной released
+  executable-задачей;
+- `java-preview` — Java lane с 6 уроками без ложного released task family;
+- `go-preview` — Go lane с 6 уроками без ложного released task family;
+- `empty` — controlled-lab mode с нулевым каталогом и recovery-ссылкой в
+  Atlas;
+- `degraded` — advisory evidence POST корректно закрывается при временно
+  остановленном API, retry остаётся доступным, deterministic assessment не
+  меняется.
+
+Для каждого состояния сохранены interaction trace, semantic snapshot и
+реальный visual JPEG в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/practice-corridor/`.
+Состояния и SHA-256 отражены в каноническом
+`G12/state-evidence/index.json`, а checksum-манифест повторно подтверждён
+после пересборки G10S evidence index.
+
+Проверено:
+
+- live URL `http://127.0.0.1:47360/`, session
+  `7afeba77-21d6-4238-8aa8-1d822d99e574`, **6/6** services healthy после
+  восстановления API;
+- migrations **18/18**, pending **0**;
+- единственный владелец вертикальной прокрутки `.app-scroll-region`
+  оставался `overflow-y: auto` во всех состояниях;
+- EN semantics и выбранные треки Node.js/Java/Go, empty-mode recovery и
+  degraded-copy проверены через live browser state;
+- state registry: `stateHash=b197769f…`, `screens=12`, `states=71`,
+  `evidenceReadyStates=28`, `openStates=43`, `openDispositions=12`,
+  `unresolvedItems=55`, `structuralFailureCount=0`;
+- G10S evidence index пересобран до **519** исторических metadata-only
+  записей без перезаписи immutable handoff bodies;
+- `sha256sum -c docs/verification/greenfield/G12/checksums.sha256` — все
+  записи PASS;
+- focused state-registry tests **4/4 PASS**;
+- обязательный target ladder `git status → git diff --check →
+  NX_CI=1 pnpm check → pnpm boundary:check → pnpm toolchain:check →
+  git commit` — PASS для обоих коммитов, включая corrective index commit.
+
+Канонический отчёт волны:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/practice-corridor-wave-2026-09-02.md`.
+Registry: `G12/state-evidence-registry-2026-09-02.{json,md}`.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%**. Это
+evidence-only срез: curriculum content, задачи и progress records не
+добавлялись. G12-025 остаётся `OPEN` до покрытия следующих **43** состояний
+и **12** human dispositions. Следующая bounded queue — Practice workbench
+(`idle`, `running`, `passed`, `mismatch`, `error`, `cancelled`, `runner-down`,
+`focus-mode`, `resized`), затем G10S-246 human acceptance, G11 breadth,
+path-specific closure packs, G12.5 requalification, independent final
+review и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
