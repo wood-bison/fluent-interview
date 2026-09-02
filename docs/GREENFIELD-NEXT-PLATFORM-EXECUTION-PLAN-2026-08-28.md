@@ -7507,3 +7507,30 @@ Target подготовил immutable packet и fail-closed guard:
 не выполнялся из-за лимита GitHub Actions; физическое удаление legacy roots и
 Docker/кэшей остаётся исключительно G13 после acceptance и archive/restore
 proof.
+
+## Corrective update — Questions placement-query guard (2 сентября 2026)
+
+В target `main` создан локальный commit `cc6de88`
+(`fix(g11): guard question placement queries`) без push из-за ограничения
+GitHub Actions. Learner-каталог `/questions` теперь fail-closed проверяет
+`track` и `lesson` до построения списка: неизвестный трек показывает явный
+`TRACK NOT FOUND`, урок из другого трека или stale lesson — `LESSON NOT FOUND`,
+а не пустой каталог, который выглядел бы как успешный фильтр. Восстановление
+сохраняет корректные `track`, `locale` и поиск, но не переносит устаревший
+lesson/question context в другую выдачу. Валидный Node placement по-прежнему
+показывает обе опубликованные карточки.
+
+Добавлены bilingual `LessonQueryState` и regression smoke-test. Target ladder
+на implementation commit прошёл: `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check`; web tests **86/86**, typecheck и production build —
+PASS. Live HTTP matrix на `http://127.0.0.1:47360/` — **4/4 PASS** для
+unknown track, cross-track lesson, stale lesson и валидного Node lesson.
+Штатный `pnpm dev -- --detached` оставил **6/6** сервисов в ожидаемом состоянии,
+миграции **18/18**, pending **0**.
+
+Это corrective learner-route slice: он не добавляет curriculum content,
+activities или progress records и не закрывает автоматически G10S-246 human
+acceptance. G10S-246 остаётся `AWAITING_OWNER`, G11 breadth — следующей
+contentной очередью после owner sign-off; G12.5, независимая проверка и G13
+decommission также остаются открытыми. Мастер-счётчик не меняется:
+**658 / 476 / 1 134 · 58,02%**. Push не выполнялся.
