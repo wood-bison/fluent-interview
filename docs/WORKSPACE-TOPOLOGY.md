@@ -27,6 +27,23 @@ learner API. Источник редактирования — Obsidian; зер�
 контентный workflow Lab. Это важное разделение, чтобы случайно не создать
 второй каталог вопросов.
 
+## Объявленная greenfield-цель миграции
+
+`/Users/sergeyzhechko/developer/fluent-interview-platform/` — отдельный Git-root
+для greenfield-перехода на Next.js, описанный в активном мастер-плане. Это не
+шестой runtime-репозиторий и не дополнительный Compose-проект: до закрытия
+`G10S-246` он остаётся подготовительной target-поверхностью и не становится
+источником learner serving. Его ветка — локальный `main`; релизные claims,
+содержащиеся в нём, действуют только после явного owner acceptance и
+requalification.
+
+`pnpm layout:check` разрешает только этот один внешний sibling по точному имени
+и проверяет у него `.git`, `AGENTS.md` и `package.json`. Любой другой
+`fluent-*` каталог под `developer/` по-прежнему считается неразобранным
+мусором и останавливает проверку. Если greenfield-цель будет принята в
+production-топологию, этот раздел и allowlist должны быть пересмотрены одним
+сцепленным ADR/plan-изменением, а не молча превращены в шестой runtime-root.
+
 После аудита review-ветка `codex/content-ozon-go-first10-2026-08-24` была
 fast-forward перенесена в локальный `main` без переписывания истории. Локальный
 `main` содержит три контентных коммита сверх `origin/main`; удалённый
@@ -45,8 +62,9 @@ fast-forward перенесена в локальный `main` без переп
   обратимо в `/Users/sergeyzhechko/.Trash/fluent-engineering-lab-nx-2026-08-26`.
 - В `workspace.yaml`, `README.md`, `AGENTS.md` и `scripts/status.sh` отражена
   новая пятирепозиторная топология.
-- `pnpm layout:check` проверяет наличие пяти Git-root внутри workspace и
-  отсутствие неразобранных соседних `fluent-*` каталогов на уровне
+- `pnpm layout:check` проверяет наличие пяти Git-root внутри workspace,
+  валидирует объявленный внешний greenfield-target и блокирует все остальные
+  неразобранные соседние `fluent-*` каталоги на уровне
   `/Users/sergeyzhechko/developer`.
 
 После baseline в Lab/umbrella/Vue/Brain/Runtime есть ожидаемые незакоммиченные

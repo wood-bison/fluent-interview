@@ -8029,3 +8029,51 @@ decommission **150**. Target `origin/main` отстаёт на **502** лока�
 коммита; push отложен из-за CI Actions quota. Следующая ускоренная очередь —
 пакет `G11-P001` mapping review, но его содержимое можно продвигать только
 после закрытия G10S-246 и явного human owner/reviewer.
+
+## Execution update — F1 PREP_ONLY review readiness status — 2 сентября 2026
+
+Target `main` закрыл локальным commit-gated коммитом `81f88c8`
+(`feat(g11): add prep-only review status`) новый metadata-only guard и
+dashboard для bounded authoring plan. Артефакты
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-review-status-2026-09-02.{json,md}`
+проверяют hash всего review plan, contiguous packet IDs `G11-P001…G11-P080`,
+уникальность queue/stable IDs, лимит 25 записей и отсутствие body-bearing
+полей. Evidence index target пересобран штатно: **685/685**, `rewrites=0`.
+
+Текущее состояние handoff намеренно не маскирует владельческую границу:
+`G10S-246=OPEN`, `promotionAllowed=false`, `NOT_PRODUCTION_READY`,
+`reviewed=0/1 597`, `readyPackets=0/80`, `blockedPackets=80/80`. Каждый пакет
+имеет только безопасные координаты path/domain/record count; prompt, answer,
+solution, source wording, DB/release/learner writes и reviewer decisions не
+создаются. Следующее действие после owner acceptance — `G11-P001`, затем
+оригинальные bilingual layers, provenance, typed placement, reviewer decision
+и повторная сборка manifest/map/status после каждой bounded пачки.
+
+Post-commit target checks: status clean на `main`, compiler regression **12/12**,
+evidence schema **685/685**, `boundary:check` и `toolchain:check` — PASS.
+Push не выполнялся из-за действующего лимита GitHub Actions. Счётчики master
+plan не изменились: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks; remaining streams —
+Product closure **79**, requalification/independent review **55**, G13
+decommission **150**. Техническая подготовка F1 завершена, но 100% требует
+явного owner acceptance и последующей работы с содержимым, а не генерации
+фиктивных галочек.
+
+## Execution update — F1 workspace topology guard — 2 сентября 2026
+
+Umbrella обнаружил реальный guard-defect: `pnpm layout:check` блокировал
+`/Users/sergeyzhechko/developer/fluent-interview-platform`, хотя этот sibling
+явно объявлен текущим greenfield-target в самом мастер-плане и уже является
+отдельным auditable Git-root. Это не основание ослаблять проверку и не повод
+перемещать target во время миграции. В отдельном локальном commit этой волны
+guard получил точный fail-closed allowlist только для
+`fluent-interview-platform`;
+наличие `.git`, `AGENTS.md` и `package.json` проверяется перед пропуском. Любой
+другой `fluent-*` sibling по-прежнему останавливает layout gate.
+
+`docs/WORKSPACE-TOPOLOGY.md` и этот README синхронизированы: target не считается
+шестым runtime/Compose-проектом и не получает serving ownership до
+`G10S-246`, owner acceptance и requalification. После изменения должны быть
+зелёными `git diff --check`, `pnpm mode:check`, `pnpm layout:check` и
+`pnpm plan:progress:test`; counters не меняются, так как это topology guard, а
+не закрытие curriculum-контента.

@@ -18,6 +18,12 @@ scripts, contracts, documentation, and workspace metadata; it does not vendor
 the child repositories. The current topology and the treatment of historical
 sandbox prototypes are recorded in [`docs/WORKSPACE-TOPOLOGY.md`](docs/WORKSPACE-TOPOLOGY.md).
 
+During the greenfield migration, `/Users/sergeyzhechko/developer/fluent-interview-platform`
+is an explicitly declared external target repository for the Next.js rewrite.
+It is not a sixth runtime repository or a Compose project; `pnpm layout:check`
+allows only this exact auditable sibling while `G10S-246` is open and continues
+to reject every other unclassified `fluent-*` directory.
+
 ## One command
 
 Start the complete local development stack from this directory:
