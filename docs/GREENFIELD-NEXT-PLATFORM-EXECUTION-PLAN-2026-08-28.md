@@ -7254,6 +7254,54 @@ Settings; затем G10S-246 human acceptance, G11 breadth, path-specific closu
 packs, G12.5 requalification, independent final review и G13 decommission.
 Push не выполнялся из-за лимита GitHub Actions.
 
+## G12-025 — Settings state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `db7817d` (`feat(g12): capture settings state
+evidence`). Волна закрывает восемь критических состояний `/settings`: модель
+недоступна, системная тема, светлая тема, тёмная тема, русская локаль,
+английская локаль, готовая локальная модель и подтверждение удаления истории.
+
+В ходе live-проверки найден и исправлен дефект в
+`apps/web/app/components/navigator-panel.tsx`: сохранённая модель больше не
+исчезает из `<select>` до ответа `/api/llm/models`. Если модель уже записана в
+настройках, она показывается как временная option; после загрузки списка
+дубликат не создаётся. Smoke-тест закрепляет этот инвариант.
+
+Для каждого состояния сохранены metadata-only interaction trace, semantic
+snapshot и реальный visual JPEG в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/settings/`;
+SHA-256 внесены в `state-evidence/index.json` и `checksums.sha256`.
+Канонический отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/settings-wave-2026-09-02.md`.
+
+Проверено на изолированном disposable compose-стеке
+`fluent-g12-studio-20260902` (`http://127.0.0.1:47380/`):
+
+- Settings route отдаёт `200`, `<main>` и единственный владелец вертикальной
+  прокрутки `.app-scroll-region` присутствуют во всех восьми состояниях;
+- локальная модель `g12-fixture-model` видна и выбрана после восстановления
+  настроек, статус — `Connected/Подключён`;
+- действие `Delete local history` требует нативного подтверждения; в evidence
+  зафиксировано безопасное отклонение confirm, данные не удалялись;
+- все шесть сервисов healthy, migrations **18/18**, pending **0**;
+- state registry: `stateHash=9086c4d99214c11b7d8bbd629d7bad9657ffdf840b930489e739b9f3a00d71ad`,
+  `screens=12`, `states=71`, `66/71` evidence-ready, `5` open states,
+  `12` open dispositions, `17` unresolved items,
+  `structuralFailureCount=0`;
+- G10S historical evidence index пересобран до **639/639** записей,
+  `rewritesDetected=0`; checksum manifest — PASS;
+- полный target ladder (`git status → git diff --check → NX_CI=1 pnpm check →
+  pnpm boundary:check → pnpm toolchain:check → git commit`) — PASS;
+  основной набор — **247/247 PASS**.
+
+Master counter не изменился: **658 / 476 / 1 134 · 58,02%** (evidence-only;
+curriculum content, tasks и learner progress не добавлялись). После Settings
+остаются **5** незакрытых state-состояний Control Center и **12** human
+dispositions. Следующая bounded очередь — Control Center (`ready`, `starting`,
+`degraded`, `stopped`, `incident-capture`), затем G10S-246 human acceptance,
+G11 breadth, path-specific closure packs, G12.5 requalification, independent
+final review и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
+
 ## G12-025 — Lesson state-evidence wave (2 сентября 2026)
 
 Target-коммит без push — `642e6b4` (`feat(g12): capture lesson state
