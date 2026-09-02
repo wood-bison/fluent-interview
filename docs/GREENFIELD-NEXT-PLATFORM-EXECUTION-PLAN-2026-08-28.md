@@ -8,6 +8,83 @@
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
 [`plan-progress-2026-09-01-g10s-008.md`](verification/greenfield/plan-progress-2026-09-01-g10s-008.md).
 
+### Ускоренный режим исполнения — 2 сентября 2026
+
+Формальный счётчик чекбоксов и объём оставшейся разработки теперь разделяются.
+`P-*`, `A-*` и `D-*` — это **192 постоянно действующих правила/критерия**, а не
+192 будущие implementation-задачи. Они остаются обязательными, но исключаются
+из execution denominator команды `pnpm plan:progress`.
+
+| Срез | Закрыто | Осталось | Всего |
+| --- | ---: | ---: | ---: |
+| Формальный master-plan | 658 | 476 | 1 134 |
+| Исполнимые gates/checks | 658 | 284 | 942 |
+| Текущий product closure | — | 79 | — |
+| Requalification + independent review | — | 55 | — |
+| G13 decommission | — | 150 | — |
+
+Execution completion на этом снимке — **69,85%**. Это улучшенная метрика
+очереди, а не заявление о production readiness. Critical path остаётся:
+`G10S-246 owner acceptance → G11 breadth → G12.5 requalification → independent
+review → G13 controlled cleanup`.
+
+Чтобы сократить длительность без ослабления fail-closed gates, действует такой
+режим:
+
+1. Один рабочий batch равен цельному capability/path/release slice, а не одной
+   строке или одному тесту. До начала batch фиксируются exact IDs, allowlist
+   путей, ожидаемые counts, focused commands, rollback и критерий завершения.
+2. Внутри batch агент использует только focused loop по затронутым проектам:
+   package/Nx tests, schema/contract gate, `git diff --check` и релевантный live
+   probe. Полный `pnpm check` не повторяется после каждой промежуточной правки.
+3. Перед **единственным фазовым implementation commit** всё равно выполняется
+   обязательная цепочка target `AGENTS.md`: `git status --short → git diff
+   --check → pnpm check → pnpm boundary:check → pnpm toolchain:check → commit`.
+   Ускорение достигается уменьшением числа коммитов, а не пропуском pre-commit
+   проверки.
+4. Второй evidence commit создаётся только когда evidence обязан ссылаться на
+   уже существующий immutable implementation SHA. Иначе implementation,
+   metadata-only evidence, checksums и rollback входят в один phase commit.
+5. Один живой scoped stack переиспользуется на протяжении UI/API batch.
+   Disposable stack создаётся только для DB migration, destructive rehearsal,
+   runtime isolation или backup/restore. Docs-only batch не перезапускает
+   Docker.
+6. Lockfile/toolchain не переустанавливаются без их изменения. Nx/pnpm/Go/
+   Docker caches сохраняются; broad cache cleanup запрещён до G13.
+7. Coordinator проверяет итог batch и его evidence на phase boundary. Повторный
+   полный аудит внутри того же batch запускается только после P0/P1, contract
+   drift или изменения authority/release schema.
+8. Человеческие решения собираются пакетами: 12 disposition решений
+   G10S-246 — одна owner-session; финальные visual/learning flows — одна
+   sign-off session. Cold repeat через 48–72 часа нельзя честно ускорить или
+   заменить synthetic time travel.
+
+Ускоренная последовательность оставшейся продуктовой разработки:
+
+1. **F0 — Acceptance sync:** закрыть 12 owner dispositions G10S-246 одним
+   packet review и синхронизировать status authority.
+2. **F1 — Corpus/shared foundation:** G11-013/015/018/019 и G11-R01…R06;
+   обрабатывать authoring queue bounded batches, без direct catalog edits.
+3. **F2 — Node/Nest canary:** закончить Node/Nest questions, activities,
+   runtime revisions и один полный learner→evidence journey.
+4. **F3 — Language packs:** JVM (Java/Kotlin), Go, .NET и Python — один
+   independently releasable pack на language family с shared generic reuse.
+5. **F4 — Frontend/overlays:** React/Next, Algorithms, System Design и
+   Behavioral packs с собственными relevance/rubric gates.
+6. **F5 — Portfolio closure:** multi-runtime package mode, projects, independent
+   scenarios, learning rubrics и path completion manifests.
+7. **F6 — Consolidated G11 revalidation:** G11-R07…R14 и один release-scoped
+   reconciliation/browser matrix вместо повторения полного suite после каждого
+   content record.
+8. **F7 — G12.5 + independent review:** один clean-room RC, затем findings
+   fix-batch и повтор только затронутых + mandatory final suites.
+9. **F8 — G13:** manifest-driven archive/removal waves; проверки остаются
+   отдельными, потому destructive cleanup нельзя безопасно объединять.
+
+После каждого phase commit `pnpm plan:progress` показывает одновременно
+формальный и execution progress, а также три оставшихся workstream. Push
+остаётся запрещённым до снятия owner-ограничения GitHub Actions.
+
 Дата: **28 августа 2026**
 Статус на 29 августа 2026: **G0–G4 PASS; G5–G8 PASS_WITH_LIMITATIONS; G9 Navigator PASS_WITH_LIMITATIONS; G10 Studio PASS_WITH_LIMITATIONS; G11 coverage policy PASS_WITH_LIMITATIONS; G12 RC `AWAITING_INDEPENDENT_REVIEW`**
 Владелец продукта: **Sergey**
