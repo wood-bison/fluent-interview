@@ -7946,3 +7946,48 @@ requalification. Мастер-счётчик и критический путь 
 **658 / 476 / 1 134 · 58,02%** формально, **658 / 284 / 942 · 69,85%**
 исполняемых gates/checks; remaining streams — Product closure **79**,
 requalification/independent review **55**, G13 decommission **150**.
+
+## Execution update — F1 PREP_ONLY coverage map — 2 сентября 2026
+
+В target `main` создан локальный commit
+`c25b372bba4d88f61287edc45f6f35820680fd56` (`feat(g11): add prep-only
+coverage map`), без push. Новый `prep-only-coverage-map.v1` агрегирует только
+безопасные координаты из полного PREP_ONLY-манифеста: **1 597/1 597** записей,
+**10** learning paths, **10** domains и **27** непустых path×domain cells.
+Отдельно считаются `contentKind`, state, blocking и missing facets по каждому
+измерению; prompt, answer, solution, code, source wording, learner IDs и
+другие тела контента в карту не попадают.
+
+Артефакты находятся в
+`fluent-interview-platform/docs/verification/greenfield/G11/`:
+`prep-only-coverage-map-2026-09-02.json` (state hash
+`17c9f594e28043eaaec0d8aa56e4c0d0308fe100d708a9870054079651beadcc`) и его
+человекочитаемый `.md`-отчёт. Карта сцеплена с manifest state hash
+`f11f0eb8987632d007d00a6bc5ca6b01a2c8ba06ee4bef2599782caa0f1adfc6`, quality
+inventory hash `85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168`
+и queue hash
+`e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`.
+`content:gates` теперь запускает карту сразу после manifest guard, поэтому
+каждый полный `pnpm check` ловит drift, неполное покрытие и неверную
+классификацию до следующей фазы.
+
+После commit повторно прошли `pnpm content:prep-only-coverage-map`, **8/8**
+целевых compiler-тестов (batch, manifest и map), `architecture:evidence-schema`
+(**681/681** historical entries, rewrites `0`), `pnpm boundary:check` и
+`pnpm toolchain:check`; полный target `pnpm check` до commit — PASS (lint,
+typecheck, build, **501** content-тест, **247** architecture-тестов и все
+runtime/design/evidence suites). Target clean на `main`, `origin/main` отстаёт
+на **501** локальный commit; push не выполнялся из-за CI Actions quota.
+
+Это ускоряет подготовку, но не подменяет человеческий gate: карта остаётся
+`PREP_ONLY`, `metadataOnly=true`, `autoPromotion=false`, без serving/release/
+learner writes. Ни одна из 1 597 записей не стала reviewed или released и
+продуктовые счётчики не изменились. Ближайший реальный gate — `G10S-246` с 12
+owner-решениями; затем идут classification, original answers, provenance,
+typed placement, review и requalification.
+
+Мастер-счётчик и критический путь намеренно не меняются: **658 / 476 / 1 134 ·
+58,02%** формально и **658 / 284 / 942 · 69,85%** исполнимых gates/checks;
+remaining streams — Product closure **79**, requalification/independent review
+**55**, G13 decommission **150**. Карта сокращает ручной аудит размещения,
+но не ставит галочки за подготовленные данные.
