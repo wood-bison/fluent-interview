@@ -162,6 +162,9 @@ Default branch: **`main`**
 - [`reports/production-curriculum-closure-audit-2026-08-27/agent-production-closure-plan.md`](reports/production-curriculum-closure-audit-2026-08-27/agent-production-closure-plan.md);
 - [`CONTEXT.md`](../CONTEXT.md);
 - [`WISHLIST.md`](WISHLIST.md).
+- [`CURRICULUM-CONTENT-EXPANSION-PLAN-2026-09-02.md`](CURRICULUM-CONTENT-EXPANSION-PLAN-2026-09-02.md) — отдельная очередь наполнения
+  G11; она не подменяет master-plan и не позволяет считать PREP_ONLY
+  записи готовым контентом.
 
 ### Execution update — 29 августа 2026
 
