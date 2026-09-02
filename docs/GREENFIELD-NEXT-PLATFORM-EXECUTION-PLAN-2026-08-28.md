@@ -7879,3 +7879,43 @@ serving release, learner projection или progress record не изменён.
 остаётся `G10S-246 owner acceptance → G11 breadth → G12.5 → independent review
 → G13`; `origin/main` отстаёт на **498** локальных коммитов, push не
 выполнялся из-за CI Actions quota.
+
+## Execution update — F1 PREP_ONLY aggregate manifest guard — 2 сентября 2026
+
+В target `main` создан локальный commit `c07fbff3fe02b2697b28e988c0ba0ae9b0f62eb7`
+(`feat(g11): aggregate prep-only inventory manifest`), без push. Добавлен
+`prep-only-manifest.v1` и CLI `pnpm content:prep-only-manifest`: он читает все
+16 bounded envelopes, сортирует их по offset и fail-closed проверяет единую
+цепочку без gap/overlap, одинаковые quality-inventory и queue source hashes,
+лимит batch `100`, уникальность `path`/`queueId`/непустых `id` и отсутствие
+body-bearing keys. В агрегат попадают только counts и безопасные координаты;
+records, prompt, answer, solution, code и source wording не копируются.
+
+Манифест
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-manifest-2026-09-02.json`
+имеет state hash
+`f11f0eb8987632d007d00a6bc5ca6b01a2c8ba06ee4bef2599782caa0f1adfc6` и доклад
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-manifest-2026-09-02.md`.
+Покрытие подтверждено как **16 batch, 1 597/1 597 записей, диапазон 0..1596,
+contiguous=true**; evidence index после добавления манифеста — **679/679**,
+rewrites `0`.
+
+Phase gate прошёл: PREP_ONLY + legacy regression **6/6**, полный target
+`pnpm check` (lint, typecheck, build, 499 content-тестов, 247 архитектурных,
+runtime/design/evidence suites) — PASS, `pnpm boundary:check` — PASS,
+`pnpm toolchain:check` — PASS; после commit target clean на `main`, `origin/main`
+отстаёт на **499** коммитов. Push не выполнялся по действующей CI Actions quota.
+
+Это закрывает только техническую aggregation guard внутри разрешённой
+`PREP_ONLY` preparation. Production counters не увеличены: подготовленные
+1 597 metadata-only записей не являются reviewed/released corpus, не создают
+serving rows, release pointer или learner progress. `G10S-246` с 12
+owner-решениями остаётся ближайшим человеческим gate; после него нужны
+classification, original answers, provenance, typed placement, review и
+requalification. Критический путь не меняется:
+`G10S-246 owner acceptance → G11 breadth → G12.5 → independent review → G13`.
+
+Мастер-счётчик намеренно не меняется: **658 / 476 / 1 134 · 58,02%** формально
+и **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. Remaining streams:
+Product closure **79**, requalification/independent review **55**, G13
+decommission **150**; PREP_ONLY манифест не ставит галочек в этих потоках.
