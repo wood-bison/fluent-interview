@@ -7751,3 +7751,41 @@ toolchain — PASS; после коммита target clean. Это продол�
 Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
 **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
 на **494** локальных коммита; push не выполнялся из-за CI Actions quota.
+
+## Execution update — F1 PREP_ONLY bounded authoring batch offset 200 — 2 сентября 2026
+
+Третий непересекающийся preparation slice зафиксирован в target `main` commit
+`70b9419` (`feat(g11): prepare third bounded authoring batch`), без push. Он
+выбирает записи `200..299` из immutable Brain/Vault inventory и доводит
+суммарную безопасную подготовку до **300/1 597** записей (первые диапазоны:
+`0..99` и `100..199`).
+
+Точные входы третьего batch:
+
+- quality inventory — **1 597** записей, content hash
+  `85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168`;
+- queue — **100** записей (`offset=200`, `limit=100`, `sample=10`),
+  `batchId=vault-authoring-44575f44db41b9c8`, queue hash
+  `e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`;
+- research pack — `research-authoring-e5c0a84d5984e04e`, state hash
+  `8d00b585b11c9d06a14d740afea33dae6823df88a49cd2e50edb895c58b14b20`;
+- PREP_ONLY state hash —
+  `ab68fb2f230d5b22b668f8299eada4ea9fa17f1c1c8e1236f4d339c5c11132f5`.
+
+Evidence и reproduce-команды находятся в
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-batch-2026-09-02-offset-200.{json,md}`. Валидация подтвердила
+`metadataOnly=true`, `autoPromotion=false`, отсутствие serving/release writes,
+совпадение source hash и рекурсивный запрет `prompt`, `answer`, `solution`,
+`code`, `sourceWording`, `sourceText`, `body`.
+
+Phase ladder: полный target `pnpm check` — PASS; PREP_ONLY regression **3/3**;
+`architecture:evidence-schema` — PASS, **661/661** исторических записей,
+rewrites `0`; boundary и toolchain — PASS; target clean после коммита.
+Preparation остаётся metadata-only и не закрывает `G10S-246`,
+`G11-013/015/018/019`, path-specific authoring, reviewer decisions или
+production release. После owner acceptance следующий шаг — human authoring и
+review по этим bounded пакетам, затем G11 revalidation.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
+на **495** локальных коммитов; push не выполнялся из-за CI Actions quota.
