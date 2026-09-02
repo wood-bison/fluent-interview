@@ -7340,3 +7340,48 @@ Master counter не изменился: **658 / 476 / 1 134 · 58,02%** (evide
 human acceptance, G11 breadth, path-specific closure packs, G12.5
 requalification, independent final review и G13 decommission. Push не
 выполнялся из-за лимита GitHub Actions.
+
+## G12-025 — Studio state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `b05505a` (`feat(g12): capture studio state
+evidence`). Волна закрывает шесть критических состояний `/studio`: список
+кандидатов, черновик, review, опубликованный release, quarantine и
+сохранность после restart.
+
+Проверено live на изолированном disposable compose-стеке
+`fluent-g12-studio-20260902` (порт `47380`), не смешанном с durable стеком:
+
+- `candidate-list` — пять authoring candidates видимы в одном списке, у
+  каждого есть revision/metadata/core/release статусы;
+- `draft` — кандидат остаётся `Not reviewed` и `Not projected`, поэтому
+  неподтверждённый контент не появляется в learner projection;
+- `review` — серверный переход фиксирует `In review`, без подмены локальным
+  UI-состоянием;
+- `published` — только одобренный candidate получает `Authoring manifest
+  only`, release `2026.09.02-studio.1`;
+- `quarantine` — платный/неподтверждённый источник остаётся `Review blocked`,
+  `Quarantined`, `Not projected`;
+- `restart` — после restart API/web все пять записей и quarantine-состояние
+  сохранены, alerts отсутствуют, route остаётся доступным.
+
+Для каждого состояния сохранены metadata-only interaction trace, semantic
+snapshot и реальный visual JPEG в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/studio/`;
+SHA-256 внесены в `G12/state-evidence/index.json` и
+`G12/checksums.sha256`. Канонический отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/studio-wave-2026-09-02.md`.
+
+Итоги gate: **6/6 PASS**, `stateHash=a8d90785…`, `screens=12`, `states=71`,
+`58/71` evidence-ready, `13` open states, `12` open dispositions,
+`25` unresolved items, `structuralFailureCount=0`; G10S historical index —
+**614/614**, `rewritesDetected=0`. Checksum validation — PASS; полный target
+ladder с `NX_CI=1 pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` и commit — PASS; основной набор — **493/493 PASS**.
+
+Master counter не изменился: **658 / 476 / 1 134 · 58,02%** (evidence-only;
+curriculum content, tasks и learner progress не добавлялись). G12-025 остаётся
+`OPEN` до покрытия следующих **13** состояний и **12** human dispositions.
+Следующая bounded очередь: Control Center и Settings; затем G10S-246 human
+acceptance, G11 breadth, path-specific closure packs, G12.5 requalification,
+independent final review и G13 decommission. Push не выполнялся из-за лимита
+GitHub Actions.
