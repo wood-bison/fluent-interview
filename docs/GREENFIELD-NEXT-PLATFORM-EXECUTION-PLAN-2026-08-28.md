@@ -8257,3 +8257,37 @@ requalification/independent review **55**, G13 decommission **150**.
 Удаление репозиториев, старых сущностей, контейнеров, volumes и данных
 по-прежнему запрещено пользовательской границей; G13 остаётся только
 планом, пока не будет отдельной авторизации и restore proof.
+
+## Execution update — F1 G11 package-mode evidence consumer hardening — 2 сентября 2026
+
+В target `fluent-interview-platform/main` создан локальный commit `a6c1c75`
+(`fix(g11): consume package mode evidence`), без push и без удаления. Исправлен
+реальный defect в `practice-portfolio-audit`: до этого `G11-028` всегда
+использовал пустой массив и не мог закрыться даже после появления настоящего
+conformance evidence. Теперь audit принимает только отдельный
+`package-mode-conformance.v1` metadata-only artifact, совпадающий с текущим
+question release и policy evidence kind.
+
+Для каждого released runtime profile требуются уникальная запись со статусом
+`PASS` и четыре exact проверки: `run`, `submit`, `replay`, `cleanup`. Unknown
+или unreleased profile, duplicate, stale release, missing check, body-bearing
+key (`prompt`, `answer`, `solution`, `code`, source wording и т. п.) и любой
+не-PASS вектор дают fail-closed. Accepted profiles возвращаются только как
+IDs; evidence не содержит prompt/answer/code и не пишет serving/release/learner
+данные. Путь артефакта закреплён как
+`docs/verification/greenfield/G11/package-mode-conformance-2026-09-02.json`,
+но файл не создаётся автоматически: отсутствие остаётся явным OPEN.
+
+Добавлены regression cases для absent, exact PASS и mismatched/body-bearing
+evidence. Combined portfolio + scenario queue regression — **10/10 PASS**;
+полный target `pnpm check`, post-commit `boundary:check` и `toolchain:check` —
+PASS. Фактический snapshot не изменился: `6` cards, `7` assessed activities,
+`1` TaskFamily, `0` runnable revisions, `0` package-mode evidence; `G11-028`
+остаётся OPEN до реального run/submit/replay/cleanup matrix.
+
+Progress не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks; Product closure **79**,
+requalification/independent review **55**, G13 decommission **150**. Target
+`main` теперь опережает `origin/main` на **512** локальных коммитов; push
+отложен из-за CI Actions quota. Удаление репозиториев, контейнеров, volumes,
+старых сущностей и данных не выполнялось.
