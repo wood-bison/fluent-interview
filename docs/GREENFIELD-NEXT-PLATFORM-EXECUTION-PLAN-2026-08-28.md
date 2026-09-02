@@ -7479,3 +7479,31 @@ curriculum content, tasks и learner progress не добавлялись). G12-
 acceptance, G11 breadth, path-specific closure packs, G12.5 requalification,
 independent final review и G13 decommission. Push не выполнялся из-за лимита
 GitHub Actions.
+
+## G10S-246 — owner-acceptance packet подготовлен (2 сентября 2026)
+
+Machine evidence G12-025 завершено: **12/12 экранов, 71/71 критических
+состояний, 0 открытых machine states**. Следующий gate требует человеческого
+решения владельца и не может быть закрыт автоматическим тестом.
+
+Target подготовил immutable packet и fail-closed guard:
+
+- target commit `6cb25016098ee5ccb9531677d18e774f1210b842` содержит
+  `G10S-246-owner-acceptance-packet-2026-09-02.{json,md}`;
+- `pnpm architecture:gate-246` и `pnpm test:gate-246` подтверждают ровно 12
+  экранов, state registry `f4c663f7…`, `openDispositions=12` и все решения
+  `null`;
+- guard запрещает machine evidence, automatic owner decision и push выдавать
+  себя за подпись; статус остаётся `AWAITING_OWNER`, product claim —
+  `NOT_PRODUCTION_READY`;
+- пакет перечисляет route, owner, число состояний и evidence для каждого
+  экрана и даёт пошаговую форму для `ported|adapted|dropped(reason)`;
+- после заполнения всех 12 решений нужно повторить
+  `pnpm design:state-evidence`, затем валидировать G10S-246 и только после
+  PASS разблокировать G11 breadth.
+
+Мастер-счётчик не изменился: **658 / 476 / 1 134 · 58,02%** — это guard/docs
+волна, без добавления curriculum content, tasks или progress records. Push
+не выполнялся из-за лимита GitHub Actions; физическое удаление legacy roots и
+Docker/кэшей остаётся исключительно G13 после acceptance и archive/restore
+proof.
