@@ -7200,6 +7200,60 @@ evidence-only срез: curriculum content, задачи и progress records н�
 path-specific closure packs, G12.5 requalification, independent final review
 и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
 
+## G12-025 — Review state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `63731c9` (`feat(g12): capture review state
+evidence`). Волна продолжает bounded live-проверку и фиксирует пять состояний
+маршрута `/review`, включая пустой журнал, свежие evidence, просроченный
+cold-repeat, недоступный API и повреждённое evidence-хранилище.
+
+Покрыты состояния:
+
+- `empty` — новый disposable stack показывает `NO ASSESSMENTS YET`, нулевой
+  прогресс и не притворяется, что у learner уже есть результат;
+- `recent-evidence` — основной stack показывает принятые Node.js evidence,
+  журнал и EN-копию без смены route identity;
+- `cold-repeat-due` — отдельный disposable fixture с server-stamped событием
+  старше 48 часов показывает `Cold repeat · Priority 80`; время не берётся из
+  браузера и не меняет основной stack;
+- `offline` — остановка только API оставляет route доступным и показывает
+  `LEDGER UNAVAILABLE`/`Progress is not ready`, после восстановления сервис
+  возвращается без потери маршрута;
+- `error` — malformed submission line даёт 500 в evidence endpoint, но
+  `/api/progress` остаётся читаемым; UI не выдаёт повреждённый журнал за успех.
+
+Для каждого состояния сохранены interaction trace, semantic snapshot и
+реальный visual JPEG в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/review/`;
+их SHA-256 добавлены в `G12/state-evidence/index.json` и
+`G12/checksums.sha256`. Канонический отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/review-wave-2026-09-02.md`.
+
+Проверено:
+
+- основной live URL `http://127.0.0.1:47360/`, disposable URL
+  `http://127.0.0.1:47370/`; disposable stack использован только для
+  cold/offline/error fixtures и не смешан с durable volume основного stack;
+- все пять review-состояний — **5/5 PASS**, route `/review`, `<main>` и
+  единственный владелец вертикальной прокрутки `.app-scroll-region`;
+- state registry: `stateHash=8f8e79c8…`, `screens=12`, `states=71`,
+  `evidenceReadyStates=47`, `openStates=24`, `openDispositions=12`,
+  `unresolvedItems=36`, `structuralFailureCount=0`;
+- G10S evidence index пересобран до **579/579** historical metadata-only
+  записей, `rewritesDetected=0`;
+- checksum manifest и focused state-registry tests **4/4 PASS**;
+- полный target ladder (`git status → git diff --check → NX_CI=1 pnpm check →
+  pnpm boundary:check → pnpm toolchain:check → git commit`) — PASS; основной
+  набор содержит **247/247** тестов без падений.
+
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%**. Это
+evidence-only срез без новых curriculum questions, tasks или progress records.
+G12-025 остаётся `OPEN` до покрытия следующих **24** состояний и **12** human
+dispositions. Следующая bounded очередь: Projects, Studio, Control Center и
+Settings; затем G10S-246 human acceptance, G11 breadth, path-specific closure
+packs, G12.5 requalification, independent final review и G13 decommission.
+Push не выполнялся из-за лимита GitHub Actions.
+
 ## G12-025 — Lesson state-evidence wave (2 сентября 2026)
 
 Target-коммит без push — `642e6b4` (`feat(g12): capture lesson state
