@@ -8077,3 +8077,48 @@ fail-closed allowlist только для `fluent-interview-platform`;
 зелёными `git diff --check`, `pnpm mode:check`, `pnpm layout:check` и
 `pnpm plan:progress:test`; counters не меняются, так как это topology guard, а
 не закрытие curriculum-контента.
+
+## Execution update — F1 G10S-246 owner-decision input contract — 2 сентября 2026
+
+В target `main` создан локальный commit `19db2152f15a6d432661fbe7a783b03f258f5d9b`
+(`feat(g10s): validate owner decision handoff`), без push. Это не попытка
+автоматически закрыть человеческий gate, а строгий входной контракт, который
+принимает только решение владельца по каждому из 12 экранов G10S-246:
+`ported`, `adapted` или `dropped`. Для `adapted` и `dropped` требуется
+человеческое объяснение минимум из 10 символов; duplicate/unknown screen,
+лишнее поле, body/secret-bearing key, stale commit или несовпавший evidence
+hash немедленно fail-closed.
+
+Добавлены:
+
+- `fluent-interview-platform/tools/dev/g10s-gate-246-owner-decision.mjs` —
+  детерминированный валидатор snapshot-bound decision set;
+- `fluent-interview-platform/tools/dev/test/g10s-gate-246-owner-decision.test.mjs` —
+  positive/negative regression (3/3);
+- `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/g10s-gate-246-owner-decision.v1.schema.json` —
+  closed JSON Schema внешнего входа;
+- `fluent-interview-platform/docs/verification/greenfield/G10S-inputs/G10S-246-owner-decision-2026-09-02.md` —
+  инструкция owner review и границы следующей revalidation.
+
+Результат валидатора всегда `RECORDED_PENDING_REVALIDATION` и
+`promotion.allowed=false`: он не пишет PostgreSQL, serving catalog, release
+pointer, learner progress или Docker, не меняет packet и не выполняет push.
+После реального owner input обязательны `pnpm design:state-evidence` и
+`node tools/dev/g10s-gate-246.mjs`; только затем можно начинать G11.
+
+Проверено после commit: `architecture:evidence-schema` **PASS** (target
+clean, **685/685**, rewrites `0`), focused compiler/owner regression **13/13**,
+`pnpm boundary:check` **PASS**, `pnpm toolchain:check` **PASS**. Полный
+`pnpm check` перед commit также **PASS**. Target находится на `main`,
+`origin/main` отстаёт на **504** локальных коммита; push не выполнялся из-за
+действующего лимита GitHub Actions.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks. Текущий status остаётся
+`G10S-246=OPEN`, `reviewed=0/1 597`, `readyPackets=0/80`,
+`blockedPackets=80/80`, state hash
+`ecc8a41fdfb694a81cb89be4a18236d0a128976c25d3ca5f280afb82bfd813d6`.
+Это закрывает только техническую защиту будущего owner handoff; до 100%
+остаются owner acceptance, G11 human content closure, G12.5, independent
+review и G13 controlled decommission. Следующая разрешённая операция — не
+фиктивная генерация решений, а реальная owner-сессия по snapshot packet.
