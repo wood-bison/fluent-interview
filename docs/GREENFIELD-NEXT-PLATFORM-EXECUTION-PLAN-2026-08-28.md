@@ -7991,3 +7991,41 @@ typed placement, review и requalification.
 remaining streams — Product closure **79**, requalification/independent review
 **55**, G13 decommission **150**. Карта сокращает ручной аудит размещения,
 но не ставит галочки за подготовленные данные.
+
+## Execution update — F1 bounded human-review packet plan — 2 сентября 2026
+
+В target `main` создан локальный commit
+`b2682e9852228f66c6cd104019371768c69fd211` (`feat(g11): add prep-only review
+plan`), без push. На базе contiguous manifest и coverage map добавлен
+`prep-only-review-plan.v1`: **1 597/1 597** metadata-only records разложены в
+**80** детерминированных пакетов максимум по **25** ссылок. Пакеты сначала
+группируются по `pathKey` × `domainKey`, затем сортируются по policy priority,
+missing facets и queue ID; в ссылке остаются только `queueId`, optional stable
+`id`, authoring path и source hash. Это даёт агенту узкий, воспроизводимый
+контекст для одной human-review операции и устраняет ручное переключение между
+разными lane.
+
+Команда `content:gates` теперь выполняет этот план после manifest и coverage
+map, поэтому drift, duplicate identity, неполное покрытие или пакет больше 25
+записей fail-closed ловятся одним фазовым `pnpm check`. Полный target check
+прошёл перед commit: lint/typecheck/build, **503** content-теста,
+**247** architecture-тестов и все runtime/design/evidence suites — PASS;
+post-commit повторно прошли review-plan/coverage/manifest/batch tests **10/10**,
+`architecture:evidence-schema` **683/683** (rewrites `0`), boundary и toolchain;
+target clean на `main`.
+
+Это ускорение процесса, а не promotion: `PREP_ONLY` сохраняет
+`metadataOnly=true`, `autoPromotion=false`, `servingWrites=false`,
+`releasePointerWrites=false`, `reviewerRequired=true`. Пакетный план не создаёт
+serving/release/learner rows и не превращает queue metadata в reviewed content.
+`G10S-246` (12 owner decisions) остаётся prerequisite; затем для каждого
+пакета обязательны original layers, provenance, typed placement, reviewer
+decision и requalification.
+
+Счётчики намеренно не изменились: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks; remaining streams —
+Product closure **79**, requalification/independent review **55**, G13
+decommission **150**. Target `origin/main` отстаёт на **502** локальных
+коммита; push отложен из-за CI Actions quota. Следующая ускоренная очередь —
+пакет `G11-P001` mapping review, но его содержимое можно продвигать только
+после закрытия G10S-246 и явного human owner/reviewer.
