@@ -6947,6 +6947,42 @@ G11 breadth и path-specific closure packs, затем G12.5 requalification,
 independent final review и G13 decommission. Push не выполнялся из-за лимита
 GitHub Actions.
 
+## G12-025 — Atlas state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `3d89bfe` (`feat(g12): capture atlas state evidence`).
+
+После Program зафиксированы все семь критических состояний Atlas на live
+compose-project-scoped стеке: три языковых трека, масштабирование, возврат к
+fit view, выбор узла через доступный outline и invalid-track boundary. Это
+проверяет не только наличие canvas/графа, но и то, что query-координаты,
+language-specific nodes, keyboard surface и recovery остаются согласованными.
+
+Проверено:
+
+- live URL `http://127.0.0.1:47360/`, session
+  `7afeba77-21d6-4238-8aa8-1d822d99e574`, **6/6** services healthy;
+- migrations **18/18**, pending **0**;
+- seven Atlas states: `node-track`, `java-track`, `go-track`, `zoomed`, `fit`,
+  `keyboard-selection`, `empty`;
+- для каждого состояния сохранены interaction trace, semantic snapshot и
+  реальный visual JPEG в `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/atlas/`;
+- state registry после волны: `stateHash=bac8af0d…`, `screens=12`,
+  `states=71`, `evidenceReadyStates=17`, `openStates=54`,
+  `openDispositions=12`, `unresolvedItems=66`, `structuralFailureCount=0`;
+- G10S evidence index расширен до **484** metadata-only записей; immutable
+  handoff anchor старых G10S-242/244 сохранён;
+- SHA-256 checksum manifest и focused state-registry tests **4/4** PASS;
+- обязательный target ladder `git status → git diff --check → NX_CI=1 pnpm check →
+  pnpm boundary:check → pnpm toolchain:check → git commit` — PASS.
+
+Канонический отчёт волны: `fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/atlas-wave-2026-09-02.md`.
+Счётчик master-плана не изменился: **658 / 476 / 1134 · 58,02%** — это
+evidence-only срез без новых вопросов, задач или activity. G12-025 остаётся
+открытым до покрытия следующих 54 состояний и 12 human dispositions.
+Следующая очередь: Questions/Practice, затем G10S-246 human acceptance, G11
+breadth и path-specific closure packs, G12.5 requalification, independent
+final review и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
+
 ## G12-025 — Program track state-evidence wave (2 сентября 2026)
 
 Target-коммит без push — `b337c7e` (`feat(g12): capture program track state evidence`).
