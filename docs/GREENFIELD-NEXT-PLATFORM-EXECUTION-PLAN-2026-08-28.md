@@ -8156,3 +8156,29 @@ revalidation regression, `architecture:evidence-schema` **685/685**,
 действующего лимита GitHub Actions. Следующая операция, которая действительно
 может изменить счётчик, — owner acceptance по 12 экранам; после неё
 revalidation guard разрешит только human-reviewed G11 authoring.
+
+## Execution update — F1 G10S-246 state-evidence cross-binding hardening — 2 сентября 2026
+
+После первого revalidation commit в target выполнен дополнительный
+hardening-коммит `206985df06e5758542084ce47ff95430165658e0`
+(`test(g10s): bind revalidation evidence states`), без push. Revalidation
+теперь сравнивает весь набор из **71** state IDs с registry и для каждой из
+трёх evidence-категорий (`interaction`, `visual`, `semantic`) требует exact
+совпадение path и SHA-256 между index и registry. Подмена entry с тем же
+количеством, path traversal или чужой digest fail-closed; добавлен отдельный
+negative test.
+
+После коммита: revalidation regression **4/4**, `architecture:evidence-schema`
+**PASS** (target clean, **685/685**, rewrites `0`), boundary и toolchain —
+PASS. Это только техническая целостность будущего owner handoff: текущий
+`G10S-246` всё ещё `AWAITING_OWNER`, packet snapshot
+`6e5314914baad976f0fb03b610a4a00269f8111b` не изменён, а serving/release/
+learner writes остаются запрещены.
+
+Счётчики мастер-плана не меняются: **658 / 476 / 1 134 · 58,02%** формально,
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks; `reviewed=0/1 597`,
+`readyPackets=0/80`, `blockedPackets=80/80`. Target `main` опережает
+`origin/main` на **506** локальных коммитов; push по-прежнему отложен из-за
+CI Actions quota. Следующий шаг, который не может быть автоматизирован,
+остаётся owner review 12 экранов, после чего можно будет revalidate exact
+snapshot и начать reviewed G11 authoring.
