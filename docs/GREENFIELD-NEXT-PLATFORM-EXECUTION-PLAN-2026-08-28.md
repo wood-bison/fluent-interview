@@ -7715,3 +7715,39 @@ review → G13`.
 Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
 **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. Preparation не ставит
 галочки и не выдаёт product readiness.
+
+## Execution update — F1 PREP_ONLY bounded authoring batch offset 100 — 2 сентября 2026
+
+Следующий bounded preparation slice зафиксирован в target `main` commit
+`003b96a` (`feat(g11): prepare second bounded authoring batch`), без push. Он
+выбирает записи `100..199` из того же immutable inventory и не пересекается с
+первым batch `offset=0`.
+
+Входы batch:
+
+- quality inventory — **1 597** записей, content hash
+  `85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168`;
+- queue — **100** записей (`offset=100`, `limit=100`, `sample=10`),
+  `batchId=vault-authoring-4f346325e1822fad`, queue hash
+  `e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`;
+- research pack — `research-authoring-147defcf1d4953f8`, state hash
+  `ba682861503d4c77b0df9562ceba2c340bf1e1bb462c12722f8b9806039a053f`;
+- PREP_ONLY state hash —
+  `c1224d4276a220afd8ad2d583425ca8b57951d5d030520e953156b4c729dd3e6`.
+
+Evidence и воспроизводимые команды находятся в
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-batch-2026-09-02-offset-100.{json,md}`. Guard повторно подтверждает
+`metadataOnly=true`, `autoPromotion=false`, отсутствие serving/release writes,
+общий source hash и отсутствие полей `prompt`, `answer`, `solution`, `code`,
+`sourceWording`, `sourceText`, `body`.
+
+Проверки phase slice: полный target `pnpm check` — PASS; PREP_ONLY regression
+**3/3**; body scan — `forbidden=false`; `architecture:evidence-schema` — PASS,
+**659/659** исторических metadata-only записей, rewrites `0`; boundary и
+toolchain — PASS; после коммита target clean. Это продолжение F1 preparation,
+не human authoring/review и не release promotion: `G10S-246`,
+`G11-013/015/018/019`, path-specific content и G11 gate остаются открытыми.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
+на **494** локальных коммита; push не выполнялся из-за CI Actions quota.
