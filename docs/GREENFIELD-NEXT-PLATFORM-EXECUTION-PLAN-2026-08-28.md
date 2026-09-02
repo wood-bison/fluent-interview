@@ -6947,6 +6947,52 @@ G11 breadth и path-specific closure packs, затем G12.5 requalification,
 independent final review и G13 decommission. Push не выполнялся из-за лимита
 GitHub Actions.
 
+## G12-025 — Control Center state-evidence wave (2 сентября 2026)
+
+Target-коммит без push — `6e5314914baad976f0fb03b610a4a00269f8111b`
+(`feat(g12): capture control center state evidence`). Волна закрывает пять
+критических состояний `/control-center`, чтобы оператор видел честный
+lifecycle платформы, а не один статический preview: `ready`, `starting`,
+`degraded`, `stopped` и `incident-capture`.
+
+Проверено на изолированном disposable compose-стеке
+`fluent-g12-studio-20260902` (порт `47380`), не смешанном с durable стеком:
+
+- каждый state-link сохраняет `locale` и `state`, имеет явный active state и
+  переводит экран без client-side подмены;
+- неизвестный `state` fail-closed возвращает честное `ready` и видимый
+  `role=alert`, поэтому испорченная ссылка не маскирует другой lifecycle;
+- `starting` публикует `aria-busy=true`, остальные состояния — `false`;
+- health rows, banner и action copy принадлежат локализованному state
+  config, а не захардкоженному тексту;
+- во всех пяти состояниях есть один вертикальный владелец
+  `.app-scroll-region`, landmark `main`, корректный `h1` и нет горизонтального
+  overflow;
+- `incident-capture` остаётся CLI-only boundary: UI не создаёт инцидент и не
+  получает скрытых mutation authority.
+
+Для каждого состояния сохранены metadata-only interaction trace, semantic
+snapshot и реальный English dark-theme JPEG (1280×720) в
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/control-center/`;
+SHA-256 внесены в `G12/state-evidence/index.json` и
+`G12/checksums.sha256`. Канонический отчёт:
+`fluent-interview-platform/docs/verification/greenfield/G12/state-evidence/control-center-wave-2026-09-02.md`.
+
+Итоги gate: **5/5 PASS**, `stateHash=f4c663f7…`, `screens=12`, `states=71`,
+`evidenceReadyStates=71`, `openStates=0`, `openDispositions=12`,
+`unresolvedItems=12`, `structuralFailureCount=0`; G10S historical index —
+**655/655**, `rewritesDetected=0`. C098 desktop matrix и accessibility
+evidence re-bound к фактическому source set; оба policy gate PASS. Полный
+target ladder (`git status → git diff --check → NX_CI=1 pnpm check →
+pnpm boundary:check → pnpm toolchain:check → git commit`) — PASS.
+
+Master counter не изменился: **658 / 476 / 1 134 · 58,02%** (evidence-only;
+curriculum content, tasks и learner progress не добавлялись). G12-025 теперь
+не имеет незакрытых machine states; следующая bounded очередь — G10S-246
+human acceptance всех 12 screen dispositions, затем G11 breadth,
+path-specific closure packs, G12.5 requalification, independent final review
+и G13 decommission. Push не выполнялся из-за лимита GitHub Actions.
+
 ## G12-025 — Questions catalog state-evidence wave (2 сентября 2026)
 
 Target-коммит без push — `13d3e9ef9188d398f1ab1934b5b44882d6e50623`
