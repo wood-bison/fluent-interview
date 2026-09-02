@@ -7534,3 +7534,36 @@ acceptance. G10S-246 остаётся `AWAITING_OWNER`, G11 breadth — след
 contentной очередью после owner sign-off; G12.5, независимая проверка и G13
 decommission также остаются открытыми. Мастер-счётчик не меняется:
 **658 / 476 / 1 134 · 58,02%**. Push не выполнялся.
+
+## Corrective update — Locale-preserving recovery links (2 сентября 2026)
+
+В target `main` создан локальный commit `385d242`
+(`fix(g11): preserve locale in route recovery`) без push из-за ограничения
+GitHub Actions. После предыдущего placement guard-а восстановительные ссылки
+для ошибочного `track`, `lesson`, `module`, `mode` и cross-track station теперь
+не сбрасывают валидный `locale=ru`; для неподдерживаемой локали helper намеренно
+возвращает канонический URL без неподтверждённого значения. Общая функция
+`withLocale` используется в `TrackQueryState`, `ModuleQueryState` и
+`PracticeModeQueryState`, а также в learner route recovery/back links.
+
+Commit-gated ladder завершена до commit и прошла: `git status`,
+`git diff --check`, `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check`; web tests — **86/86**, typecheck и production build —
+PASS. G10S-198 learner-route policy после расширения его source guard-а —
+**PASS**, regression suite — **9/9**.
+
+Live HTTP matrix на `http://127.0.0.1:47360/` — **7/7 PASS**:
+`/questions`, `/program`, `/practice` и `/practice/lesson` с ошибочным
+контекстом, а также module/mode и cross-track station recovery возвращают
+`200` и сохраняют ожидаемую пару destination + `locale=ru`. Штатный
+`pnpm dev -- --detached` создал session `c6668d3b-c5d7-4676-b655-8ae4cf7ad0c4`:
+**6/6** сервисов в ожидаемом состоянии, миграции **18/18**, pending **0**.
+
+Это corrective route-contract slice: новые вопросы, tasks, placements и
+progress records не добавлялись. Master counter остаётся
+**658 / 476 / 1 134 · 58,02%**. `G10S-246` по-прежнему `AWAITING_OWNER` с
+`openDispositions=12`, product claim — `NOT_PRODUCTION_READY`; G11 breadth,
+path-specific closure packs, G12.5 requalification, independent final review
+и G13 decommission не закрыты. Следующая bounded работа выбирается только
+после этой фиксации из content breadth или следующего route-contract gap.
+Push не выполнялся.
