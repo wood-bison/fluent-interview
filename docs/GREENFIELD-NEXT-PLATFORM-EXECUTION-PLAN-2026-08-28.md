@@ -8122,3 +8122,37 @@ clean, **685/685**, rewrites `0`), focused compiler/owner regression **13/13**,
 остаются owner acceptance, G11 human content closure, G12.5, independent
 review и G13 controlled decommission. Следующая разрешённая операция — не
 фиктивная генерация решений, а реальная owner-сессия по snapshot packet.
+
+## Execution update — F1 G10S-246 revalidation guard — 2 сентября 2026
+
+В target `main` создан локальный commit `e474b7b35692f2a87acb5957daab22cbccbbe008`
+(`feat(g10s): add owner decision revalidation guard`), без push. Новый
+`g10s-gate-246-revalidation.v1` связывает owner decision set с immutable
+G10S-246 packet, текущим target HEAD, G12 state-evidence registry и raw
+state-evidence index hash. Он требует exact reviewed HEAD (не просто ancestor),
+71/71 complete states, 12/12 unique decisions и корректный decision-set hash;
+любой drift, body-bearing key, stale snapshot или нарушенный boundary даёт
+FAIL.
+
+Guard выпускает только `PASS` для следующего этапа
+`UNLOCKED_FOR_REVIEWED_AUTHORING`; serving import, release pointer, learner
+progress и production claim остаются запрещены. Все mutation counters — 0,
+`machineEvidenceMayNotSign=true`, `promotion.servingAllowed=false`. Добавлены
+dependency-free JSON Schema, CLI-документация и `3/3` positive/negative tests;
+полный target `pnpm check` до commit прошёл, после commit повторены owner/
+revalidation regression, `architecture:evidence-schema` **685/685**,
+`pnpm boundary:check` и `pnpm toolchain:check` — PASS.
+
+Текущий запуск `node tools/dev/g10s-gate-246.mjs` по-прежнему показывает
+`G10S-246=AWAITING_OWNER` (packet snapshot `6e53149…`, current target —
+`e474b7b…`), поэтому этот технический guard не создаёт и не имитирует
+владельческую подпись. До фактической owner-сессии status остаётся
+`reviewed=0/1 597`, `readyPackets=0/80`, `blockedPackets=80/80`; status hash
+`ecc8a41fdfb694a81cb89be4a18236d0a128976c25d3ca5f280afb82bfd813d6`.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** исполнимых gates/checks. Target clean на `main`,
+`origin/main` отстаёт на **505** локальных коммитов; push не выполнялся из-за
+действующего лимита GitHub Actions. Следующая операция, которая действительно
+может изменить счётчик, — owner acceptance по 12 экранам; после неё
+revalidation guard разрешит только human-reviewed G11 authoring.
