@@ -7819,3 +7819,29 @@ release. Следующий batch остаётся подготовкой до o
 Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
 **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
 на **496** локальных коммитов; push не выполнялся из-за CI Actions quota.
+
+## Execution update — F1 PREP_ONLY wave offsets 400–700 — 2 сентября 2026
+
+Четыре bounded batch (`offset=400`, `500`, `600`, `700`; по 100 записей)
+собраны одним phase slice и закоммичены в target `main` как `fdf034d`
+(`feat(g11): prepare fourth prep-only wave`), без push. Диапазоны не
+пересекаются с предыдущими `0..399`; суммарно подготовлено **800/1 597**
+metadata-only записей.
+
+Каждый queue использует quality-inventory content hash
+`85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168` и общий
+queue hash `e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`.
+Полные queue/research/hand-off IDs и state hashes перечислены в
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-wave-2026-09-02-offset-400-700.md`, а четыре JSON handoff лежат рядом с ним.
+
+Волна прошла полный target `pnpm check`, PREP_ONLY regression **3/3**,
+`architecture:evidence-schema` **668/668** с rewrites `0`,
+`pnpm boundary:check` и `pnpm toolchain:check`; после коммита target clean.
+Все четыре envelopes подтверждены как `metadataOnly`, `autoPromotion=false`,
+без serving/release writes и без `prompt/answer/solution/code/sourceWording/
+sourceText/body`. Это всё ещё подготовка: `G10S-246`, human authoring/review,
+`G11-013/015/018/019`, path-specific closure и production release не закрыты.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
+на **497** локальных коммитов; push не выполнялся из-за CI Actions quota.
