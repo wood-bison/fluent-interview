@@ -28,6 +28,25 @@ Execution completion на этом снимке — **69,85%**. Это улуч�
 `G10S-246 owner acceptance → G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
+Human wait не обязан останавливать безопасную подготовку. Пока G10S-246,
+remote CI или cold-repeat gate ожидает человека/время, разрешён режим
+`PREP_ONLY` для следующего batch:
+
+- разрешены read-only inventory/research, classification, original draft
+  answers, task specifications, source manifests и candidate/quarantine packs;
+- `autoPromotion=false`, automatic import/release и serving/database writes
+  запрещены; active release pointer и learner projection не меняются;
+- PREP_ONLY не ставит галочки следующего gate и не выдаёт candidate за
+  reviewed/released content;
+- после PASS предыдущего gate подготовленный pack повторно проходит current
+  schema/rights/dedupe/relevance review; stale pack не импортируется;
+- одновременно остаётся один writer для manifest, migration chain и release
+  ledger.
+
+Это не обход порядка P-001/P-002: следующий gate не получает implementation
+или PASS до predecessor gate, но его неразрушающие входы можно подготовить
+заранее и затем принять либо отклонить целиком.
+
 Чтобы сократить длительность без ослабления fail-closed gates, действует такой
 режим:
 
