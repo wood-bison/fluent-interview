@@ -7845,3 +7845,37 @@ sourceText/body`. Это всё ещё подготовка: `G10S-246`, human a
 Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
 **658 / 284 / 942 · 69,85%** по исполнимым gates/checks. `origin/main` отстаёт
 на **497** локальных коммитов; push не выполнялся из-за CI Actions quota.
+
+## Execution update — F1 PREP_ONLY completion wave — 2 сентября 2026
+
+Оставшаяся metadata-only подготовка завершена в target `main` commit `6eeb4b0`
+(`feat(g11): complete prep-only inventory wave`), без push. Восемь bounded
+очередей `offset=800, 900, 1000, 1100, 1200, 1300, 1400, 1500` добавили
+последние **797** записей (последний batch — 97), поэтому весь immutable
+Brain/Vault inventory имеет handoff: **16 артефактов, 1 597/1 597 записей**.
+
+Проверка coverage дала непрерывные диапазоны
+`0..99, 100..199, …, 1500..1596` без gap/overlap. Общие хэши inventory и
+queue: `85e28bf497972f2bb7cc2f5dc7ff4ac78b0e37a55b21c82e91c11c92c6bba168` и
+`e1c5bae785c2af8572498205888e89225ef41e9e25783772ac43b7c5ac940806`.
+Полная таблица queue/research/PREP_ONLY IDs и state hashes находится в
+`fluent-interview-platform/docs/verification/greenfield/G11/prep-only-wave-2026-09-02-offset-800-1500.md`; все JSON handoff лежат рядом.
+
+Completion wave прошла полный target `pnpm check`, PREP_ONLY regression **3/3**,
+coverage/body scan (`coverage=1597`, `forbidden=false`, non-promoting),
+`architecture:evidence-schema` **677/677** с rewrites `0`, boundary и
+toolchain; после коммита target clean. Каждый handoff содержит
+`metadataOnly=true`, `autoPromotion=false`, `servingWrites=false` и
+`releasePointerWrites=false`; тела prompt/answer/solution/code/source wording
+не переносятся.
+
+Это закрывает только разрешённую PREP_ONLY preparation часть F1, не
+`G11-013/015/018/019`: все записи по-прежнему требуют human classification,
+original answers, provenance, typed placement и reviewer decision. Ни один
+serving release, learner projection или progress record не изменён.
+
+Мастер-счётчик не меняется: **658 / 476 / 1 134 · 58,02%** формально и
+**658 / 284 / 942 · 69,85%** по исполнимым gates/checks. Критический путь
+остаётся `G10S-246 owner acceptance → G11 breadth → G12.5 → independent review
+→ G13`; `origin/main` отстаёт на **498** локальных коммитов, push не
+выполнялся из-за CI Actions quota.
