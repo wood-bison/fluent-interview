@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g12.2-bundle-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-bundle-hardening.md).
+[`plan-progress-2026-09-03-g12.3-row-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-row-hardening.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9278,3 +9278,47 @@ attestation/quota и RC correction, G12.3 dispositions, G11 breadth, G12.5 и
 independent review. G13 cleanup остаётся запрещённым без явной авторизации.
 
 Snapshot: [`plan-progress-2026-09-03-g12.2-bundle-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-bundle-hardening.md).
+
+## Execution update — G12.3 row-level bundle hardening — 3 сентября 2026
+
+После G12.2 target получил локальный commit `a2bb51e` (`fix(gates): close port
+ledger evidence rows`). Push не выполнялся; старые репозитории, сущности, Docker
+containers/volumes и данные не удалялись.
+
+G12.3 теперь fail-closed не только на уровне policy/manifest, но и для каждой
+строки `items`: row должен ссылаться на известное definition, evidence должен
+соответствовать allowlist и текущему SHA-256, а `ready` row обязан иметь ровно
+четыре уникальных kind (`interaction`, `visual`, `semantic`, `disposition`).
+Duplicate/missing kind, неверная shape, path или digest становятся row issue,
+попадают в общий report и исключают строку из `readyItemCount`,
+`blockedItemCount` и `evidenceBoundItemCount`. Поэтому повреждённая строка не
+может быть показана как готовая из-за неполной проверки только manifest.
+
+Это machine-integrity hardening в режиме `PREP_ONLY`; owner screen
+dispositions, state evidence, serving/release, learner state, Docker и
+production content не менялись. G12.3 по-прежнему `PASS_WITH_GAPS` из-за 12
+открытых screen dispositions.
+
+Проверки target:
+
+- `pnpm test:g12.3-port-ledger` — **7/7 PASS**, включая duplicate/missing
+  evidence regression;
+- полный target `pnpm check` достиг **543/543 broad tests PASS**, а lint,
+  typecheck, build и обычные content/runtime/security/architecture gates
+  прошли; исходный запуск остановился только на ожидаемом G10S-226
+  historical-index drift после пересборки readiness reports;
+- после штатного `node tools/dev/g10s-evidence-schema.mjs --write-index`:
+  `architecture:evidence-schema`, `architecture:evidence-inputs`,
+  `boundary:check`, `toolchain:check` и `git diff --check` — **PASS**;
+- target clean после commit `a2bb51e`, локальная ветка опережает `origin/main`
+  на **546** commits; push не выполнялся.
+
+Счётчики мастер-плана намеренно не изменены: это не создаёт контент и не
+закрывает G11 breadth, 12 owner dispositions G12.3, G12.5 human
+requalification, independent review или remote G12.2 attestation. Следующий
+порядок: G11.2–G11.6 bounded content batches → 12 dispositions и свежий
+G12.3 manifest → новый immutable RC и remote attestation после сброса quota →
+G12.5, independent review и production sign-off. G13 decommission остаётся
+запрещённым без новой явной авторизации владельца.
+
+Snapshot: [`plan-progress-2026-09-03-g12.3-row-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-row-hardening.md).
