@@ -5232,7 +5232,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-029` Lessons support worked example → faded steps → independent problem → self-explanation → interleaving → repeat.
 - [x] `G11-030` Retention measured at 7 and 30 days. Closed by target commit `5dafc7c`: progress exposes independent `pending/due/passed` 7-day and 30-day checkpoints, schedules distinct revision reasons, accepts only independent pass evidence after the server-owned due time, and keeps the separate 48-hour cold-repeat facet intact (`11/11` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-031` Unseen variant success and hint dependence recorded. Closed by target commit `7c4b1e8`: deterministic unseen-transfer issuance is bound to the current release/revision, server time is authoritative, assistance level is persisted, assisted success cannot promote mastery, and assistance dependence schedules follow-up evidence (`10/10` focused checks; full check/boundary/toolchain PASS).
-- [ ] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation.
+- [x] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation. Closed by target commit `c07c16e`: a versioned bilingual public process rubric binds all six dimensions to explicit learner-process, runtime-verdict or learning-assessment authorities without exposing private evaluator checks or allowing LLM pass (`11/11` focused checks; full check/boundary/toolchain PASS).
 - [ ] `G11-033` System-design rubric covers requirements, estimates, model, APIs, data, failure, trade-offs and operations.
 - [ ] `G11-034` Incident rubric covers detection, hypothesis, evidence, mitigation, recovery and prevention.
 - [ ] `G11-035` English defense rubric and recorded/mock workflow exist.
@@ -9907,3 +9907,23 @@ evidence. Serving/release/DB/Docker mutation, удаление и push не вы
 остаток: **668 / 274 / 942** и **668 / 124 / 792**. Следующая bounded очередь —
 versioned rubric completion (`G11-032…G11-034`) без изменения уже выпущенных
 rubric revisions задним числом.
+
+## Execution update — G11-032 timed-coding rubric closure — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил commit `c07c16e`
+(`feat(g11): bind timed coding rubric`). Versioned bilingual public rubric для
+released `node-event-loop-001` теперь содержит все шесть обязательных
+измерений: clarification, design, tests, edge cases, complexity и explanation.
+Каждое измерение имеет явного evidence owner: tests/edge cases принадлежат
+isolated runtime verdict, explanation — learning assessment, остальные
+process dimensions — human-observed learner process.
+
+Rubric связан с exact task family/revision/runtime profile и 45-minute budget,
+но не содержит private expected orders, suite/rubric digests или hidden checks.
+LLM не может выдать pass. Focused evidence и G11.5 suite прошли **11/11**;
+G11.5 readiness стала `3 ready / 5 blocked`. Полный `pnpm check`,
+`boundary:check`, `toolchain:check` и evidence index `736/736` прошли.
+
+Формальные counters: **669 / 465 / 1 134**. Исполнимый и неразрушающий
+остаток: **669 / 273 / 942** и **669 / 123 / 792**. Push разрешён владельцем
+в текущем turn; удалений и product/DB/Docker mutations не было.
