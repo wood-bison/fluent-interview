@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).
+[`plan-progress-2026-09-03-g12.5-readiness.md`](verification/greenfield/plan-progress-2026-09-03-g12.5-readiness.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8759,3 +8759,48 @@ reviewed path/overlay packs и их R07–R13 revalidation; G13 cleanup оста
 `fluent-interview-platform/docs/verification/greenfield/G11/R14/evidence-lifecycle-revalidation-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).
+
+## Execution update — G12.5 requalification readiness contract — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`c563a94` (`gate(g12.5): stage requalification readiness`). Push не
+выполнялся из-за лимита GitHub Actions; старые репозитории, сущности, Docker
+containers/volumes и данные не удалялись.
+
+G12.5 теперь имеет отдельный versioned PREP_ONLY policy и manifest для всех
+18 requalification checks (`G12-R01…G12-R18`). Guard
+`pnpm requalification:g12.5-readiness` проверяет exact order и owners,
+обязательные evidence kinds, repository-relative source paths и SHA-256,
+target commit ancestry, sorted blocked reasons и metadata-only boundary.
+`ready` без bound evidence, body-shaped поля, auto-promotion, release pointer,
+database/Docker/learner writes, push и deletion fail closed. Source evidence
+только читается и хешируется; никакие bodies или новые release IDs не
+создаются автоматически.
+
+Текущий результат честно `PASS_WITH_GAPS`, `valid: true`: перечислено `18/18`
+пунктов, готово `0/18`, заблокировано `18/18`, failed `0`, bound evidence
+`0`. Входной pack фиксирует `22` source-evidence snapshots. Основные причины
+остаются фактическими: новый exact RC не выпущен, path/overlay breadth и
+runtime evidence не закрыты, human visual/accessibility/learning sign-off не
+проведён, G12-R16 ждёт remote CI quota. Это подготовительный контракт, а не
+production promotion.
+
+Focused tests `4/4 PASS`; target `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` прошли перед commit; evidence index содержит `712/712`
+проверенных historical entries и `rewritesDetected=0`. Target clean после
+commit, divergence `origin/main...main = 0 533`. Umbrella plan counters не
+изменены: PREP_ONLY metadata не закрывает product/content пункты и не
+подменяет G11 final evidence или independent review.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g12.5-requalification-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g12.5-requalification-manifest-2026-09-03.json`,
+`fluent-interview-platform/docs/verification/greenfield/G12/g12.5-requalification-readiness-2026-09-03.{json,md}`.
+
+Следующая безопасная очередь — reviewed path/overlay packs и их R07–R13
+revalidation, затем новый exact RC и заполнение каждого G12-R01…G12-R18
+evidence. После этого допускается independent review и только затем
+release-scoped reconciliation. G13 остаётся явно запрещённым владельцем;
+старые репозитории, сущности, containers/volumes и данные сохраняются.
+
+Snapshot: [`plan-progress-2026-09-03-g12.5-readiness.md`](verification/greenfield/plan-progress-2026-09-03-g12.5-readiness.md).
