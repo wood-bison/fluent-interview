@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r09-overlays.md`](verification/greenfield/plan-progress-2026-09-03-g11-r09-overlays.md).
+[`plan-progress-2026-09-03-g11-r12-phase-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11-r12-phase-closure.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8649,3 +8649,43 @@ G13 cleanup остаётся отложенным и неразрушающим�
 `fluent-interview-platform/docs/verification/greenfield/G11/overlay-reuse-revalidation-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r09-overlays.md`](verification/greenfield/plan-progress-2026-09-03-g11-r09-overlays.md).
+
+## Execution update — G11-R12 path/release phase closure revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`038494e7935e7b05516ae551e40ac435df865012` (`gate(g11): add path release phase
+revalidation`). Push не выполнялся из-за лимита GitHub Actions; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+Добавлены policy и PREP_ONLY phase manifest для 11 независимых срезов: Node,
+Java, Go, .NET, Kotlin, Python, React, Next и overlays Algorithms, System
+Design, Behavioral. Guard требует для каждой `ready`-фазы собственные bundle,
+reconciliation report, browser journey и exact atomic commit, проверяет
+repository-relative пути и SHA-256, exact path/release binding, порядок и
+отдельную причину для blocked phase. Body-shaped metadata, auto-promotion,
+release/database/Docker/progress writes и push запрещены.
+
+Текущий результат честно `PASS_WITH_GAPS`, `valid: true`: expected `11`, ready
+`0`, blocked `11`, failed `0`, полных artifact sets `0`. Node/Java/Go имеют
+curriculum release, но ждут R07/R08 и phase-specific evidence; остальные
+языки и overlays ждут собственные reviewed bundles/placements. Пустая строка
+или общий C098 артефакт не закрывает фазу.
+
+Focused tests `4/4 PASS`; target `pnpm content:gates`, `pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check` и post-commit
+`pnpm architecture:evidence-schema` завершились PASS; evidence index содержит
+`705/705` записей, `rewritesDetected=0`, divergence `origin/main...main = 0
+530`. Чекбокс `G11-R12` не отмечается до появления хотя бы одного полного
+phase-specific artifact set и повторной проверки со статусом `PASS`.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/path-release-phase-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/path-release-phase-manifest-2026-09-03.json`,
+`fluent-interview-platform/docs/verification/greenfield/G11/path-release-phase-revalidation-2026-09-03.{json,md}`.
+
+Следующая очередь — собрать reviewed phase pack для первого language slice,
+повторить R07/R08/R09 и R12 на одном atomic batch, затем перейти к R13/R14 и
+G12.5. Деструктивная G13 cleanup остаётся отложенной до новой явной
+авторизации.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r12-phase-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11-r12-phase-closure.md).
