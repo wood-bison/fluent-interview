@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r07-runtime-joins.md`](verification/greenfield/plan-progress-2026-09-03-g11-r07-runtime-joins.md).
+[`plan-progress-2026-09-03-g11-r08-language-paths.md`](verification/greenfield/plan-progress-2026-09-03-g11-r08-language-paths.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8578,3 +8578,36 @@ packs, затем повторить G11-R07 до `PASS`; далее G11-R08 lan
 G11-R09 overlays, R12–R14 и G12.5. `PASS_WITH_GAPS` не является promotion.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r07-runtime-joins.md`](verification/greenfield/plan-progress-2026-09-03-g11-r07-runtime-joins.md).
+
+## Execution update — G11-R08 language-path revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit `8e2a149`
+(`gate(g11): add language path revalidation`), без push и без удаления. Добавлен
+fail-closed metadata-only guard `G11-R08`: он сверяет ожидаемый набор путей,
+policy, curriculum release, catalog placements и path-relevance matrix. Generic
+placements проверяются отдельно от native placements; пустой будущий путь не
+считается закрытым и остаётся `blocked`.
+
+Текущий результат: ожидается `8` tracks, оценены `3` (`node`, `java`, `go`),
+`5` остаются blocked (`dotnet`, `kotlin`, `python`, `react`, `next`), failed
+tracks `0`. В evaluated set найдено `10` placements: `4` native и `6` generic.
+Все семь structural checks (`expectedTrackSet`, `policyCoverage`,
+`curriculumCoverage`, `forbiddenSet`, `relevanceMatrix`,
+`deterministicOrdering`, `metadataBoundary`) проходят; общий статус честно
+`PASS_WITH_GAPS`, поэтому checkbox `G11-R08` не отмечен. Guard не создаёт
+вопросы/ответы, runtime или release, не импортирует в БД, не меняет progress,
+Docker или serving pointer.
+
+Focused tests `4/4 PASS`; полный target `pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check` и post-commit
+`pnpm architecture:evidence-schema` — `PASS`; target clean, divergence
+`origin/main...main = 0 528`. Evidence index содержит `701/701` historical
+entries и `rewritesDetected=0`.
+
+Артефакты:
+`fluent-interview-platform/docs/verification/greenfield/G11/language-path-revalidation-2026-09-03.{json,md}`.
+Следующая очередь — authoring/runtime packs для пяти отсутствующих tracks и
+повтор R08 до `PASS`, затем R09 overlays, R12–R14, G12.5 и independent review.
+Старые репозитории, сущности, контейнеры, volumes и данные не удалялись.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r08-language-paths.md`](verification/greenfield/plan-progress-2026-09-03-g11-r08-language-paths.md).
