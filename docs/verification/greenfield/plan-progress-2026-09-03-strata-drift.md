@@ -68,6 +68,16 @@ failures=[source HEAD differs from frozen manifest, source file bytes/SHA drifte
 размеры, SHA-256 и disposition metadata. Старые репозитории, архивы, Docker
 resources, volumes и caches не удалялись.
 
+## Runtime prerequisite
+
+Перед повтором reconciliation штатно запущен target stack командой
+`pnpm run dev -- --detached --json`. `pnpm status` подтвердил **6/6** ожидаемых
+сервисов: API, PostgreSQL, runtime-control, task-evaluator и web — `running /
+healthy`; `api-data-init` завершился `Exited (0)`. Миграционный ledger — **18/18**.
+Это подтверждает, что текущий FAIL не вызван Docker или базой данных: он
+воспроизводится при здоровом стеке и относится только к frozen Strata identity.
+Stack оставлен запущенным для следующей проверки; durable volumes сохранены.
+
 ## Следующее действие
 
 Сначала owner/архитектор выбирает: (a) сохранить `ec3b680…` как immutable

@@ -9773,3 +9773,9 @@ Manifest и ledger автоматически не обновлялись: сн�
 reconciliation и G10S-211 revalidation. Старые репозитории, сущности, Docker
 resources, volumes и caches не удалялись; push не выполнялся. Полный отчёт:
 [`plan-progress-2026-09-03-strata-drift.md`](verification/greenfield/plan-progress-2026-09-03-strata-drift.md).
+
+Target stack во время этой проверки был здоров: `pnpm run dev -- --detached
+--json` и `pnpm status` дали 6/6 ожидаемых сервисов healthy/running (init
+`Exited (0)`, migrations `18/18`). Поэтому source-reconciliation FAIL не
+является инфраструктурным сбоем; stack оставлен запущенным, durable volumes
+сохранены.
