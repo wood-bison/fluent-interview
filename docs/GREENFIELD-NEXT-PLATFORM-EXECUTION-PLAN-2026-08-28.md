@@ -5231,7 +5231,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 
 - [ ] `G11-029` Lessons support worked example → faded steps → independent problem → self-explanation → interleaving → repeat.
 - [ ] `G11-030` Retention measured at 7 and 30 days.
-- [ ] `G11-031` Unseen variant success and hint dependence recorded.
+- [x] `G11-031` Unseen variant success and hint dependence recorded. Closed by target commit `7c4b1e8`: deterministic unseen-transfer issuance is bound to the current release/revision, server time is authoritative, assistance level is persisted, assisted success cannot promote mastery, and assistance dependence schedules follow-up evidence (`10/10` focused checks; full check/boundary/toolchain PASS).
 - [ ] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation.
 - [ ] `G11-033` System-design rubric covers requirements, estimates, model, APIs, data, failure, trade-offs and operations.
 - [ ] `G11-034` Incident rubric covers detection, hypothesis, evidence, mitigation, recovery and prevention.
@@ -9860,3 +9860,25 @@ GitHub Actions; удалений, serving/release/DB/Docker/learner mutations н
 **666 / 126 / 792**. Следующая честная очередь — G11 authoring-to-serving
 content closure; G12-024 remote CI остаётся quota-bound, G13 cleanup запрещён
 до отдельной авторизации.
+
+## Execution update — G11-031 transfer evidence closure — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit `7c4b1e8`
+(`feat(g11): prove transfer and assistance evidence`). Новый deterministic
+evidence runner доказывает выдачу нового контекста/варианта, opaque server IDs
+без утечки prompt/answer, exact binding к current release/revision и отказ от
+client-supplied clock. Attempt evidence фиксирует assistance level; assisted
+pass не может повысить mastery и создаёт `assistance_dependence` follow-up.
+
+Focused evidence прошёл **10/10** checks, learning-quality suite — **9/9**,
+readiness остаётся fail-closed: `1 ready / 7 blocked`, поэтому закрыт только
+`G11-031`, а не весь G11.5. Полный `pnpm check`, `boundary:check`,
+`toolchain:check` и evidence index `734/734` прошли. Исторические артефакты не
+перезаписывались; serving/release/DB/Docker/learner mutations, удаление и push
+не выполнялись.
+
+Формальные counters после этого пункта: **667 / 467 / 1 134**. Исполнимый и
+неразрушающий остаток: **667 / 275 / 942** и **667 / 125 / 792**. Следующая
+очередь — versioned retention checkpoints и недостающие rubric dimensions;
+G11-R01 остаётся заблокирован настоящей authoring→release→serving цепочкой и
+не объявляется закрытым на основании synthetic rehearsal.
