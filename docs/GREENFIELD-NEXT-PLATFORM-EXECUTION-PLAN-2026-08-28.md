@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-current-main-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11-current-main-revalidation.md).
+[`plan-progress-2026-09-03-g11-coverage-map-sync.md`](verification/greenfield/plan-progress-2026-09-03-g11-coverage-map-sync.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9434,3 +9434,32 @@ original content/provenance/typed placement/reviewer decision → G11.2–G11.6 
 остаётся запрещённым без новой явной авторизации владельца.
 
 Snapshot: [`plan-progress-2026-09-03-g11-current-main-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11-current-main-revalidation.md).
+
+## Execution update — G11 coverage-map gate label sync — 3 сентября 2026
+
+После PREP_ONLY revalidation hardening target получил docs-коммит `b6aee69`
+(`docs(g11): align coverage map revalidation gate`). В
+`prep-only-coverage-map-2026-09-02.md` устранён последний найденный stale-label:
+`G10S-246 owner acceptance before any PREP_ONLY promotion` заменён на
+`G10S-246 current-main revalidation before any PREP_ONLY promotion`, как уже
+требовали manifest, review-plan и review-status. В карту добавлено явное
+пояснение, что owner decision-set относится к reviewed snapshot и не открывает
+authoring после последующих non-metadata commits. Evidence-index обновлён по
+фактическому digest; content bodies, serving/release state, Docker и старые
+репозитории не менялись, push не выполнялся.
+
+Проверки target после синхронизации: полный `pnpm check` — **rc=0**;
+`boundary:check`, `toolchain:check`, `evidence:validate` (13/13),
+`architecture:evidence-schema` (726/726), PREP_ONLY focused (9/9), readiness
+write policy (1/1) и `git diff --check` — **PASS**. `G10S-246` closure остаётся
+честно `FAIL` по `git:post-snapshot-non-metadata`, пока не выполнена свежая
+current-main revalidation; promotion не разрешён.
+
+Счётчики не меняются: **664 / 470 / 1 134** формальных, **664 / 278 / 942**
+исполняемых и **664 / 128 / 792** неразрушающих пунктов (execution **70,49%**,
+non-destructive **83,84%**). Следующий порядок прежний: G10S-246 revalidation
+→ bounded G11-P001 human authoring/review → G11.2–G11.6 → G12.3 dispositions
+→ immutable RC/remote attestation → G12.5 и independent sign-off. G13 cleanup
+запрещён без новой явной авторизации.
+
+Snapshot: [`plan-progress-2026-09-03-g11-coverage-map-sync.md`](verification/greenfield/plan-progress-2026-09-03-g11-coverage-map-sync.md).
