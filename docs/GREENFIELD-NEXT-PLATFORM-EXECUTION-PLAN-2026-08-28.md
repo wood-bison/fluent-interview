@@ -9542,3 +9542,18 @@ G10S-246 closure и counters не меняются: reviewed head `008703c…` �
 текущего `main`, поэтому promotion остаётся заблокирован. Следующий gate —
 новая current-main revalidation с owner review, затем bounded G11-P001 и
 G11.2–G11.6; G13 cleanup без отдельной авторизации запрещён.
+
+## Execution update — полный scroll‑sweep — 3 сентября 2026
+
+После повторного штатного запуска `pnpm run dev` выполнен read-only sweep всех
+same-origin ссылок, собранных с основных learner-экранов. **162/162** маршрута
+имеют `.fel-main`/`main`; на **89** длинных маршрутах `scrollTop` достигает
+`maxScroll` с допуском округления ≤1 px, на 73 коротких overflow не требуется;
+реальных scroll failures и пустых страниц — **0**. Это подтверждает, что
+`body { overflow:hidden }` не блокирует чтение: scroll ownership корректно
+закреплён за `.fel-main`.
+
+Отчёт: [`plan-progress-2026-09-03-scroll-sweep.md`](verification/greenfield/plan-progress-2026-09-03-scroll-sweep.md).
+Код, learner state, owner inputs и release pointers не менялись; старые
+репозитории, контейнеры, volumes и caches не удалялись. G10S-246 и counters
+остаются без изменений до current-main revalidation с owner review.
