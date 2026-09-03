@@ -30,7 +30,7 @@ coverage map корректен. Это устраняет риск, что че
 - `pnpm architecture:evidence-schema` — **726/726 historical entries PASS**;
 - финальная pair-scan пяти Markdown/JSON — **все checks PASS**;
 - target `main` чистый на `6bd7478`, ветка локально опережает `origin/main` на
-  555 commits; push не выполнялся.
+  556 commits; push не выполнялся.
 
 `pnpm architecture:gate-246-closure` остаётся ожидаемо **FAIL** с
 `git:post-snapshot-non-metadata`: owner decision-set (12 adapted decisions)
