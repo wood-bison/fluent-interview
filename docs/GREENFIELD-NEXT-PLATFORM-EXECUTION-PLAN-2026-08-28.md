@@ -36,13 +36,14 @@ review → G13 controlled cleanup`.
 До полного неразрушающего результата остаётся 127 проверяемых пунктов; G13
 возобновляется только по новой явной авторизации владельца.
 
-### Owner-сессия G10S-246 завершена
+### Owner-сессия G10S-246 — reviewed snapshot (current-main revalidation required)
 
-`G10S-246` закрыт для reviewed authoring: machine evidence покрывает 12
-экранов / 71 состояние, а owner decision-set содержит 12 явных `adapted`
-dispositions. Это не означает, что production content или финальная
-requalification готовы; serving/release promotion остаются закрытыми до G11 и
-G12.5.
+Историческая owner-сессия закрыла reviewed snapshot для 12 экранов / 71
+состояния и записала 12 явных `adapted` dispositions. Это не означает, что
+текущий `main` автоматически принят: после последующих target-коммитов
+`G10S-246` обязан пройти exact current-main revalidation. До этого production
+content, serving/release promotion и финальная requalification остаются
+закрытыми.
 
 Пакет и revalidation пересобраны после refresh текущего target SHA
 `008703c769a37434b10ca198059109140d6fcc91`; owner closure выполнен отдельным
@@ -116,9 +117,10 @@ cold-repeat gate ожидает время, разрешён режим
 
 Ускоренная последовательность оставшейся продуктовой разработки:
 
-1. **F0 — Acceptance sync:** закрыт 3 сентября 2026. 12 owner dispositions
-   G10S-246 и status authority синхронизированы на reviewed target SHA;
-   serving/release promotion по-прежнему ожидают G11/G12.5.
+1. **F0 — Acceptance sync:** исторический reviewed snapshot закрыт 3 сентября
+   2026, но после следующих target-коммитов требуется новый exact current-main
+   revalidation. 12 owner dispositions нельзя переносить на другой SHA без
+   повторной проверки; serving/release promotion по-прежнему ожидают G11/G12.5.
 2. **F1 — Corpus/shared foundation:** G11-013/015/018/019 и G11-R01…R06;
    обрабатывать authoring queue bounded batches, без direct catalog edits.
 3. **F2 — Node/Nest canary:** закончить Node/Nest questions, activities,
@@ -9731,3 +9733,27 @@ G12.5 или production release: все 80 пакетов остаются
 792** неразрушающих. Следующий порядок не меняется: current-main revalidation
 → human `G11-P001` → evidence commit → G11.2–G11.6. Старые репозитории,
 сущности, Docker resources, volumes и caches не удалялись.
+
+## Execution update — source intake recheck без дрейфа — 3 сентября 2026
+
+Повторная metadata-only инвентаризация Brain/Vault подтвердила полный и
+воспроизводимый intake: **1 597/1 597** records, **1 594** stable IDs и RU/EN
+prompts, **1 591** accepted mapping и **6** unmapped/quarantine. Quality hash
+`85e28bf…`, queue hash `e1c5bae…`, research-pack
+`research-authoring-b955a7c16bdc20fc` и PREP_ONLY batch hash `0352e395…`
+совпадают с canonical G11 manifest/index; потерянных файлов или source drift
+нет. Facet gaps не исчезли (mechanism 0, sources 0, answer/solution 56,
+task 227), поэтому автоматической публикации или переименования в `DONE` не
+произошло.
+
+Первый вызов batch-validator был намеренно отклонён из-за исторического
+`autoPromotion=true`; повтор с policy `metadataOnly=true,
+autoPromotion=false` прошёл. Это подтверждает fail-closed границу, а не даёт
+разрешение обходить owner review. Полный разбор и воспроизводимые команды:
+[`plan-progress-2026-09-03-source-audit.md`](verification/greenfield/plan-progress-2026-09-03-source-audit.md).
+
+Этот шаг не меняет counters и не закрывает G10S-246, human G11 authoring,
+G11.2–G11.6, G12 или independent sign-off. Старые репозитории, сущности,
+Docker resources, volumes и caches не удалялись; push не выполнялся из-за
+лимита CI Actions. Следующий порядок остаётся прежним: exact current-main
+revalidation → human `G11-P001` → evidence commit → bounded G11 revalidation.
