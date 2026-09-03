@@ -9571,3 +9571,30 @@ same-origin ссылок, собранных с основных learner-экр�
 Код, learner state, owner inputs и release pointers не менялись; старые
 репозитории, контейнеры, volumes и caches не удалялись. G10S-246 и counters
 остаются без изменений до current-main revalidation с owner review.
+
+## Execution update — G10S-221 повторная one-root проверка — 3 сентября 2026
+
+Повторный изолированный rehearsal target `main` снова подтвердил штатный
+one-root контракт: `pnpm run dev -- --detached --json` достиг `ready` на
+`fluent-g10s-221-mtljt725` (port `47490`), ровно **6/6** allowlisted services,
+**18/18** migrations и ledger `count=18/maxId=18`; learner/API contract дал
+**6/6 HTTP 200**. Самостоятельного Strata service не было. Scoped cleanup
+завершился exit `0` с **0 containers / 0 networks**, сохранив
+`postgres-data` и `platform-events`; отчёт metadata-only.
+
+Перед фиксацией evidence полный target `pnpm check` прошёл `rc=0`; после
+добавления нового report `pnpm architecture:evidence-schema -- --write-index`
+вернул `PASS` и расширил immutable historical index до `728` записей без
+перезаписи старых артефактов. Target evidence:
+`fluent-interview-platform/docs/verification/greenfield/G10S/G10S-221-one-root-startup-2026-09-03.{json,md}`.
+
+Это повтор уже закрытого G10S-221, поэтому counters и product checkboxes не
+изменены: **664 / 470 / 1 134** формальных, **664 / 278 / 942** исполнимых и
+**664 / 128 / 792** неразрушающих пунктов. Execution **70,49%**,
+non-destructive **83,84%**. G10S-246 current-main revalidation, G11 breadth,
+G12.3 dispositions, G12.2 remote attestation, G12.5 human requalification и
+independent sign-off остаются обязательными; G13 cleanup запрещён без новой
+явной owner authorization. Старые repositories, сущности, Docker resources,
+volumes и caches не удалялись; push не выполнялся из-за Actions quota.
+
+Snapshot: [`plan-progress-2026-09-03-g10s-221-repeat.md`](verification/greenfield/plan-progress-2026-09-03-g10s-221-repeat.md).
