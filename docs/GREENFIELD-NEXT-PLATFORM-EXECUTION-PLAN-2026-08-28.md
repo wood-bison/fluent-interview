@@ -5251,7 +5251,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G11-R11` C098 remains green как canary после каждого mass-import batch; regression блокирует следующий batch. Evidence: target commits `8db1a86` (implementation) и `52af2e2` (live evidence); `c098-canary-revalidation-2026-09-03.{json,md}`; live `http://127.0.0.1:47360`; 5/5 routes HTTP 200, exact question/activity/revision/runtime/lesson, Run `passed` (5 outputs, prediction match, 8 trace events, cleanup), Submit accepted (5/5 hidden checks, replay/conflict/cleanup), 4 evidence kinds, all 15 machine checks PASS; human spoken boundary `AWAITING_HUMAN`; target `pnpm check`, `boundary:check`, `toolchain:check` и post-commit evidence schema — PASS. Metadata-only; serving/release/database/Docker/push mutations `0`.
 - [ ] `G11-R12` Каждая path/release фаза закрывается отдельным bundle, reconciliation report, browser journey и atomic commit.
 - [ ] `G11-R13` G11 final evidence ссылается на G10S PASS SHA, authoring release IDs, serving release IDs и current adapter version.
-- [ ] `G11-R14` Старые G11 evidence artifacts помечены superseded либо still-valid с доказанным independent scope; молчаливое наследование запрещено.
+- [x] `G11-R14` Старые G11 evidence artifacts помечены superseded либо still-valid с доказанным independent scope; молчаливое наследование запрещено. Evidence: target commit `dbfcbd4`; `G11/R14/evidence-lifecycle-revalidation-2026-09-03.{json,md}`; `92/92` classified, `32` still-valid, `60` superseded, `0` unclassified, `0` overlap; `READINESS_WRITE=0 node tools/content-compiler/g11-evidence-lifecycle-revalidation.mjs` PASS; `architecture:evidence-schema`, `architecture:evidence-inputs`, `boundary:check`, `toolchain:check`, `git diff --check` PASS. Metadata-only: no source-body rewrite, database/Docker/release-pointer mutation, deletion or push.
 
 ### Gate G11
 
@@ -9645,3 +9645,19 @@ sign-off остаются обязательными. G13 cleanup/удалени
 авторизации владельца запрещено.
 
 Snapshot: [`plan-progress-2026-09-03-g11-readiness-refresh.md`](verification/greenfield/plan-progress-2026-09-03-g11-readiness-refresh.md).
+
+## Execution update — G11-R14 lifecycle closure — 3 сентября 2026
+
+После refresh-коммита target `dbfcbd4` повторно выполнен R14 без изменения
+исторических тел evidence. Lifecycle scanner подтвердил `PASS`: все `92/92`
+верхнеуровневых G11-артефакта классифицированы; `32` имеют explicit
+independent scope как `still-valid`, `60` имеют successor как `superseded`,
+`0` unclassified и `0` overlapping rules. Проверены также schema/index
+integrity (`728/728`), evidence inputs, boundaries, toolchain и whitespace.
+
+Это закрывает ровно один machine-only пункт `G11-R14`; содержательные
+вопросы, задачи, runtime conformance, human requalification и независимый
+sign-off не считаются закрытыми этим scanner. Никаких удалений старых
+репозиториев, сущностей, Docker-ресурсов, volumes/caches или push не было.
+
+Снимок прогресса после этой отметки: [`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).

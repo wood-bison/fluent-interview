@@ -1,62 +1,81 @@
-# Greenfield plan progress — 2026-09-03 — G11-R14 evidence lifecycle
+# Progress snapshot — G11-R14 lifecycle closure — 3 сентября 2026
 
-Снимок выполнен после target commit `c129ca4da51bd18300f0d89e9f4de45510b1bd14`
-(`gate(g11): classify historical evidence lifecycle`) в
-`/Users/sergeyzhechko/developer/fluent-interview-platform`. Commit локальный;
-push не выполнялся из-за ограничения GitHub Actions. Удаление старых
-репозиториев, сущностей, контейнеров, volumes и данных не выполнялось.
+## Что закрыто
 
-## Результат
+Закрыт ровно один machine-only пункт мастер-плана: `G11-R14`.
 
-R14 добавляет явный lifecycle rule-set для каждого top-level артефакта G11.
-Текущие `2026-09-03` revalidation файлы имеют `still-valid` и независимый
-scope; исторические файлы имеют `superseded`, successor и причину. Scanner
-проверяет exact inventory, отсутствие rule overlap/unclassified файлов,
-immutable target ancestry и metadata boundary. Ни один файл не переписывается
-или удаляется.
-
-| Метрика | Значение |
-| --- | ---: |
-| Discovered | 81 |
-| Classified | 81 |
-| Still-valid | 21 |
-| Superseded | 60 |
-| Unclassified | 0 |
-| Rule overlap | 0 |
-
-Итог — `PASS`, `valid: true`, state hash
-`c7ebd51715561999e267424fbfd3542365fc969ea864722c6c8fd16f1616a87d`.
-Target anchor `e9d5b6342c5e982867bc0bcd8c62865ca2c6db33` — существующий ancestor.
+- Target repository: `fluent-interview-platform`
+- Target branch: `main`
+- Evidence commit: `dbfcbd4` (`docs(g11): refresh lifecycle evidence on current main`)
+- Evidence: `docs/verification/greenfield/G11/R14/evidence-lifecycle-revalidation-2026-09-03.{json,md}`
+- Result: `PASS`, `valid=true`
+- Inventory: `92/92` G11 evidence artifacts classified
+- Lifecycle: `32` `still-valid` with explicit independent scope; `60` `superseded` with successor; `0` unclassified; `0` overlapping rules
+- G10S historical index: `728/728` entries verified, no historical body rewrite
 
 ## Проверки
 
-- `node --test tools/content-compiler/test/g11-evidence-lifecycle-revalidation.test.mjs` — **4/4 PASS**;
-- `pnpm content:gates` — **PASS**;
-- `pnpm check` — **PASS**;
-- `pnpm boundary:check` — **PASS**;
-- `pnpm toolchain:check` — **PASS**;
-- `pnpm architecture:evidence-schema` после commit — **PASS**, target clean;
-- evidence index — `710/710` entries verified, `rewritesDetected=0`;
-- `origin/main...main = 0 532` (push не выполнялся).
+Перед target-коммитом выполнен полный связанный gate:
 
-## Граница и следующий шаг
+```text
+pnpm check
+pnpm boundary:check
+pnpm toolchain:check
+git diff --check
+```
 
-R14 не закрывает качество контента, runtime conformance, G11 final evidence,
-G12.5 или independent human review. `superseded` артефакты сохраняются для
-аудита, но не являются текущим источником release status. Следом нужны
-reviewed path/overlay packs и повтор R07–R13; G13 cleanup остаётся запрещённым
-без новой явной авторизации.
+Все команды завершились с `rc=0`. После коммита дополнительно прошли:
 
-Формальные счётчики master-plan пока не менялись: R14 закрывает governance
-index, а не product content.
+```text
+pnpm architecture:evidence-schema
+pnpm architecture:evidence-inputs
+pnpm boundary:check
+pnpm toolchain:check
+git diff --check
+READINESS_WRITE=0 node tools/content-compiler/g11-evidence-lifecycle-revalidation.mjs
+```
 
-| Срез | Checked | Remaining | Total | Completion |
-| --- | ---: | ---: | ---: | ---: |
-| Формальный master-plan | 664 | 470 | 1 134 | 58,55% |
-| Исполнимые gates/checks | 664 | 278 | 942 | 70,49% |
-| Неразрушающее закрытие продукта | 664 | 128 | 792 | 83,84% |
-| Product closure | 664 | 73 | 737 | 90,09% |
-| Requalification + independent review | 0 | 55 | 55 | 0% |
-| G13 decommission (отложен владельцем) | 0 | 150 | 150 | 0% |
+Target `main` чистый. R14 — metadata-only контроль: он не переписывает
+question/answer bodies, не импортирует release, не меняет БД или Docker,
+не удаляет старые репозитории/сущности/volumes/caches и не выполняет push.
 
-Дата: 3 сентября 2026
+## Счётчики мастер-плана
+
+Источник истины — `pnpm plan:progress:json` после отметки `G11-R14`:
+
+- Формальные пункты: **665 checked / 469 remaining / 1 134 total**
+- Исполнимые пункты: **665 / 277 / 942**
+- Неразрушающее закрытие: **665 / 127 / 792**
+- Product closure: **665 / 72 / 737**
+- Standing policy: **0 / 192** (это постоянные инварианты, не backlog)
+- Human requalification + independent review: **0 / 55**
+- Decommission: **0 / 150** (удаление не выполняется по указанию владельца)
+
+`G11-R14` не увеличивает content coverage и не делает production claim.
+Счётчики отражают только одну подтверждённую строку; оставшиеся пункты
+нельзя отмечать по намерению или по `PASS_WITH_GAPS`.
+
+## Следующая очередь
+
+1. Получить свежий immutable G10S-246 packet на текущем target `main` и
+   пройти owner revalidation; старый `008703c…` packet не переносится молча.
+2. Выполнить bounded authoring/review batch `G11-P001` с оригинальными
+   объяснениями и reviewer evidence.
+3. Закрывать G11.2–G11.6 пакетами: corpus classification, exact
+   TaskFamily/TaskRevision/runtime joins, language relevance, overlays,
+   path-specific packs и learning-quality checks.
+4. На одном atomic batch повторить R07–R13 и только затем формировать G11
+   final evidence.
+5. Закрыть 12 owner dispositions G12.3, затем remote-CI/attestation G12.2,
+   G12.5 human requalification и независимый clean-room review.
+6. G13 archive/removal остаётся отдельной явно авторизованной волной; до неё
+   старые репозитории, сущности и Docker-ресурсы сохраняются.
+
+## Ограничения и честный статус
+
+Функциональные machine gates зелёные, но production curriculum не завершён:
+текущие readiness reports остаются `PASS_WITH_GAPS`, Node/Java/Go targets не
+достигли breadth threshold, 12 owner dispositions открыты, remote Actions
+attestation недоступна из-за quota, а human spoken/requalification и
+independent visual/security review не проведены. Следующий commit должен
+содержать новую проверяемую evidence-единицу, а не просто обновлять счётчик.
