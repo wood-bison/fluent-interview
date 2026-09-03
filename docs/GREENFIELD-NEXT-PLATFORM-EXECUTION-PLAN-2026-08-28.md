@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g12.2-remote-ci.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-remote-ci.md).
+[`plan-progress-2026-09-03-g12.3-fail-closed.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-fail-closed.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9184,3 +9184,36 @@ classification/authoring и G12.5 requalification. G13 cleanup остаётся
 `fluent-interview-platform/docs/verification/greenfield/G12/remote-ci-readiness-2026-09-03.json`.
 
 Snapshot: [`plan-progress-2026-09-03-g12.2-remote-ci.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-remote-ci.md).
+
+## Execution update — G12.3 fail-closed hardening — 3 сентября 2026
+
+После G12.2 target получил локальные commits `200e47d` (`fix(g12.3): fail
+closed on open dispositions`) и `e3dc5df` (`docs(g12.2): refresh readiness
+evidence`). Push не выполнялся; старые репозитории, сущности, Docker
+containers/volumes и данные не удалялись.
+
+Это исправляет fail-open путь в G12.3: `ready` manifest row больше не может
+пройти только с одним произвольным evidence, пока machine registry сообщает об
+открытых screen dispositions. Guard теперь требует ровно четыре обязательных
+kind (`interaction`, `visual`, `semantic`, `disposition`), уникальность kind,
+разрешённые source paths/SHA-256 и явное fail-closed состояние при незакрытом
+registry. Production, serving, release, database и learner state не менялись.
+
+Focused `pnpm test:g12.3-port-ledger` — **6/6 PASS**; штатный guard остаётся
+`PASS_WITH_GAPS`, `valid: true`: `1/1` blocked, `71/71` state evidence, `12`
+open dispositions. Полный target `pnpm check` завершил code gates; после
+`g10s-evidence-schema --write-index` финальные evidence-schema, inputs,
+boundary, toolchain и `git diff --check` — **PASS**. Target clean, ветка
+опережает `origin/main` на `543` commits; push не выполнялся.
+
+Master-plan counters и product checkboxes намеренно не изменены: эта защита не
+заменяет 12 owner dispositions, G11 breadth, G12.5 или independent review.
+Следующий порядок — получить disposition evidence по всем 12 экранам,
+пересобрать G12.3 manifest на свежем target SHA и только затем рассматривать
+visual sign-off. G13 cleanup остаётся запрещённым владельцем.
+
+Artifacts: `fluent-interview-platform/tools/dev/g12.3-port-ledger-readiness.mjs`,
+`fluent-interview-platform/tools/dev/test/g12.3-port-ledger-readiness.test.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-readiness-2026-09-03.json`.
+
+Snapshot: [`plan-progress-2026-09-03-g12.3-fail-closed.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-fail-closed.md).
