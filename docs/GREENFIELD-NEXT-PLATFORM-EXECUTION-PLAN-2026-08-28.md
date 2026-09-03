@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11.2-corpus.md`](verification/greenfield/plan-progress-2026-09-03-g11.2-corpus.md).
+[`plan-progress-2026-09-03-g11.0-coverage.md`](verification/greenfield/plan-progress-2026-09-03-g11.0-coverage.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9030,3 +9030,49 @@ cleanup остаётся запрещённым владельцем; ничег
 `fluent-interview-platform/docs/verification/greenfield/G11/corpus-reconciliation-readiness-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g11.2-corpus.md`](verification/greenfield/plan-progress-2026-09-03-g11.2-corpus.md).
+
+## Execution update — G11.0 production coverage readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`4ce4f1d` (`gate(g11.0): stage coverage readiness`). Push не выполнялся из-за
+лимита GitHub Actions; старые репозитории, сущности, Docker containers/volumes
+и данные не удалялись.
+
+Открытый `G11-005` теперь имеет versioned PREP_ONLY policy и manifest. Guard
+`pnpm coverage:g11.0-readiness` независимо проверяет threshold `0.90`, точный
+production path set Node/Java/Go, hard-gates `released`, `localeComplete`,
+`provenanceComplete`, `noQuarantine`, `placementComplete`, source paths/SHA-256,
+target ancestry, owner/evidence bindings, sorted blocked reasons и
+metadata-only boundary. Duplicate-card filler, auto-promotion, release/DB/
+Docker/learner writes, push и deletion fail closed.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: обязательство `1/1`
+перечислено, готово `0/1`, заблокировано `1/1`, failed `0`; production score
+`0.00` у Node (`6/6/0/7/1` против `32/224/96/70/6`), Java
+(`2/2/0/2/1` против `32/224/96/70/6`) и Go (`2/2/0/2/1` против
+`28/196/84/70/6`); eligible paths `0/3`. Hard-gates текущих released cards
+проходят, но контентные denominators и supporting prompts отсутствуют. Это
+подготовительный контракт, не генератор filler и не production promotion.
+
+Focused tests `5/5 PASS`; полный target `pnpm check` прошёл все lint, typecheck,
+project/content/runtime/architecture/security/performance и G11.0–G11.2
+проверки. После штатной синхронизации G10S-226 evidence index содержит
+`723/723` проверенных исторических записей, `rewritesDetected=0`; evidence
+schema/inputs, boundary, toolchain и `git diff --check` — PASS. Target clean
+после commit; локальная ветка опережает `origin/main` на `539` commits.
+
+Master-plan чекбоксы и counters намеренно не изменены: PREP_ONLY readiness не
+подменяет authoring/review/release evidence, G11 breadth, G12.5 или independent
+review. Следующий безопасный порядок — закрыть G11.2 classification и
+authoring queue, затем выпустить reviewed supporting prompts/activities по
+production paths и повторить coverage guard с новым evidence. G13 cleanup
+остаётся запрещённым владельцем; ничего не удаляется.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11.0-coverage-readiness-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11.0-coverage-readiness-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g11.0-coverage-readiness.mjs`,
+`fluent-interview-platform/tools/dev/test/g11.0-coverage-readiness.test.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G11/coverage-readiness-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g11.0-coverage.md`](verification/greenfield/plan-progress-2026-09-03-g11.0-coverage.md).
