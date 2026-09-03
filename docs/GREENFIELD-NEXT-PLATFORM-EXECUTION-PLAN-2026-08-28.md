@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-worksheet-index.md`](verification/greenfield/plan-progress-2026-09-03-g11-worksheet-index.md).
+[`plan-progress-2026-09-03-frozen-strata-reconciliation.md`](verification/greenfield/plan-progress-2026-09-03-frozen-strata-reconciliation.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9784,3 +9784,26 @@ Target stack во время этой проверки был здоров: `pnp
 `Exited (0)`, migrations `18/18`). Поэтому source-reconciliation FAIL не
 является инфраструктурным сбоем; stack оставлен запущенным, durable volumes
 сохранены.
+
+## Execution update — immutable Strata ref reconciliation — 3 сентября 2026
+
+Target implementation `9ba2789` устранил ложную зависимость G10S-210 от
+текущего checkout внешнего Strata: CLI теперь умеет читать approved snapshot
+непосредственно из `strata-archive-2026-09-01-g10s-217`. Evidence commit
+`56988d3` подтвердил `41/41` manifest files, `13 + 28` покрытых dispositions,
+zero drift/missing/uncovered, target migrations `18/18` и PostgreSQL
+`12/12 + 16/16 + 12` checks. Evidence index проверил `733/733` артефакта без
+перезаписи исторических файлов; full check/boundary/toolchain/evidence-inputs
+зелёные.
+
+Текущий чистый Strata `main` (`0921dd0…`) остаётся отдельным наблюдаемым фактом,
+но больше не подменяет immutable retirement snapshot. Manifest автоматически
+не переписывался. Это corrective hardening уже закрытого G10S-210, поэтому
+counters остаются **665 / 469 / 1 134** формальных, **665 / 277 / 942**
+исполнимых и **665 / 127 / 792** неразрушающих пунктов.
+
+Следующая граница остаётся человеческой: новый current-main G10S-246 owner
+acceptance. До него все `G11-P001…P080` остаются PREP_ONLY; serving/release
+promotion запрещена. Старые репозитории, Docker resources, volumes, caches и
+сущности не удалялись; push не выполнялся. Подробности:
+[`plan-progress-2026-09-03-frozen-strata-reconciliation.md`](verification/greenfield/plan-progress-2026-09-03-frozen-strata-reconciliation.md).
