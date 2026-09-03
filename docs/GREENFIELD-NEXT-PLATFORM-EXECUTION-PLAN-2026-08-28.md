@@ -5,8 +5,8 @@
 После каждого локального коммита запускай `pnpm plan:progress`. Команда только
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
-чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g12.5-readiness.md`](verification/greenfield/plan-progress-2026-09-03-g12.5-readiness.md).
+ чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
+[`plan-progress-2026-09-03-g11.5-learning-quality.md`](verification/greenfield/plan-progress-2026-09-03-g11.5-learning-quality.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8804,3 +8804,48 @@ release-scoped reconciliation. G13 остаётся явно запрещённ�
 старые репозитории, сущности, containers/volumes и данные сохраняются.
 
 Snapshot: [`plan-progress-2026-09-03-g12.5-readiness.md`](verification/greenfield/plan-progress-2026-09-03-g12.5-readiness.md).
+
+## Execution update — G11.5 learning-quality readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`d4467e9d437c56617f168314bdd6bf75ffe1831e` (`gate(g11.5): stage learning
+quality readiness`). Push не выполнялся из-за лимита GitHub Actions; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+G11.5 теперь имеет versioned PREP_ONLY policy и manifest для восьми quality
+items `G11-029…G11-036`: scaffolded learning, retention checkpoints,
+timed-coding, system-design и incident-response rubrics, а также English
+defense. Guard `pnpm learning-quality:g11.5-readiness` проверяет exact item
+order, owners, blocked reasons, source paths/SHA-256, target ancestry и
+metadata-only boundary. Body-shaped fields, auto-promotion, release/DB/
+Docker/learner writes, push и deletion fail closed. Machine signals только
+описывают текущий corpus и не создают content или evidence за человека.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: ожидается и перечислено
+`8/8`, готово `0/8`, заблокировано `8/8`, failed `0`, bound evidence `0`.
+Source evidence snapshots `20`. Машинные сигналы показывают `6` question
+cards, `7` assessed activities и `0` runnable revisions; scaffold stages,
+retention checkpoints, unseen-variant evidence, timed-coding rubric,
+system-design estimates и incident evidence ещё не закрыты. Human English
+defense и внешний mock evidence также отсутствуют. Это подготовительный
+контракт, не production promotion.
+
+Focused tests `5/5 PASS`; target `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` — PASS; post-check G10S-226 evidence schema — PASS,
+исторический evidence index содержит `714/714` проверенных записей,
+`rewritesDetected=0`. Target clean после commit, divergence
+`origin/main...main = 0 534`.
+
+Чекбоксы master-plan не изменены: PREP_ONLY metadata не закрывает G11
+breadth, G12.5, human learning evidence или independent review. Следующая
+безопасная очередь — reviewed path/overlay packs и их R07–R13 revalidation,
+затем новый exact RC с bound evidence для G12.5. G13 cleanup остаётся
+запрещённым владельцем; ничего не удаляется.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11.5-learning-quality-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11.5-learning-quality-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g11.5-learning-quality-readiness.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G11/learning-quality-readiness-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g11.5-learning-quality.md`](verification/greenfield/plan-progress-2026-09-03-g11.5-learning-quality.md).
