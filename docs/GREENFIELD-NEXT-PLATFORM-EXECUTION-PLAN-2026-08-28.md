@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11.0-coverage.md`](verification/greenfield/plan-progress-2026-09-03-g11.0-coverage.md).
+[`plan-progress-2026-09-03-g12.3-port-ledger.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-port-ledger.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9076,3 +9076,55 @@ production paths и повторить coverage guard с новым evidence. G1
 `fluent-interview-platform/docs/verification/greenfield/G11/coverage-readiness-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g11.0-coverage.md`](verification/greenfield/plan-progress-2026-09-03-g11.0-coverage.md).
+
+## Execution update — G12.3 port-ledger readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`4cef0992183efc3862a33f91d0e83b776eb0aeb7` (`gate(g12.3): stage port-ledger
+readiness`). Push не выполнялся из-за лимита GitHub Actions; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+G12.3 теперь имеет versioned PREP_ONLY policy и manifest для `G12-025`,
+который связывает port ledger, state-evidence registry, geometry audit и
+visual contract. Guard `pnpm port-ledger:g12.3-readiness` проверяет exact
+policy/manifest shape, source paths и SHA-256, target ancestry, evidence-kind
+bindings, sorted blocked reasons и metadata-only boundary. Никакие screenshots,
+screen dispositions, release pointers, catalog/DB/Docker/learner writes,
+push или deletion не выполняются автоматически.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: перечислено `1/1`, готово
+`0/1`, заблокировано `1/1`, failed `0`, bound evidence `0`. Текущее evidence
+покрывает все `71/71` critical states на `12/12` экранах и имеет `0` открытых
+state entries, но все `12` screen dispositions остаются `partial|open`, всего
+`12` unresolved disposition items. Поэтому G12-025 не продвигается в `ready`
+и не подменяет owner-approved `ported|adapted|dropped(reason)` решения.
+
+Focused checks: `pnpm test:g12.3-port-ledger` — **5/5 PASS**;
+`pnpm port-ledger:g12.3-readiness` — **PASS_WITH_GAPS**; дополнительно
+`pnpm test:g11.0-coverage` — **6/6 PASS** после fail-closed проверки
+повреждённой ready-строки. Полный target `pnpm check` прошёл все обычные
+lint/typecheck/test/build/content/runtime/architecture/security/performance
+checks; ожидаемый G10S-226 historical-index drift штатно устранён через
+`node tools/dev/g10s-evidence-schema.mjs --write-index`, после чего
+`architecture:evidence-schema`, `architecture:evidence-inputs`,
+`boundary:check`, `toolchain:check` и `git diff --check` — **PASS**.
+Evidence index содержит `725/725` проверенных записей, `rewritesDetected=0`;
+target clean после commit, ветка опережает `origin/main` на `540` commits.
+
+Master-plan чекбоксы и counters намеренно не изменены: PREP_ONLY readiness не
+закрывает owner dispositions, G11 breadth, G12.5 или independent review.
+Следующая безопасная очередь — получить 12 owner dispositions и связать их с
+существующими 71 state evidence, затем повторить G12.3 и только после этого
+рассматривать финальный visual sign-off. Параллельно можно готовить G11.2
+classification/authoring evidence, но нельзя импортировать или промотировать
+непроверенные записи. G13 cleanup остаётся запрещённым владельцем; ничего не
+удаляется.
+
+Артефакты target:
+`fluent-interview-platform/content/design/g12.3-port-ledger-readiness-policy.v1.json`,
+`fluent-interview-platform/content/design/g12.3-port-ledger-readiness-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g12.3-port-ledger-readiness.mjs`,
+`fluent-interview-platform/tools/dev/test/g12.3-port-ledger-readiness.test.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-readiness-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g12.3-port-ledger.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-port-ledger.md).
