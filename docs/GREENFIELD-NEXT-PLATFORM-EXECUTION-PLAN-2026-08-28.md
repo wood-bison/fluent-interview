@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g10s-246-closure.md`](verification/greenfield/plan-progress-2026-09-03-g10s-246-closure.md).
+[`plan-progress-2026-09-03-g11-015-shared-content.md`](verification/greenfield/plan-progress-2026-09-03-g11-015-shared-content.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,23 +17,23 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 660 | 474 | 1 134 |
-| Исполнимые gates/checks | 660 | 282 | 942 |
-| Неразрушающее закрытие продукта | 660 | 132 | 792 |
-| ↳ текущий product closure | 660 | 77 | 737 |
+| Формальный master-plan | 661 | 473 | 1 134 |
+| Исполнимые gates/checks | 661 | 281 | 942 |
+| Неразрушающее закрытие продукта | 661 | 131 | 792 |
+| ↳ текущий product closure | 661 | 76 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **70,06%**. Это улучшенная метрика
+Execution completion на этом снимке — **70,17%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
 `G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 660 / 132 / 792, или 83,33%**. Поэтому число `474`
+**non-destructive closure: 661 / 131 / 792, или 83,46%**. Поэтому число `473`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
-До полного неразрушающего результата остаётся 132 проверяемых пункта; G13
+До полного неразрушающего результата остаётся 131 проверяемый пункт; G13
 возобновляется только по новой явной авторизации владельца.
 
 ### Owner-сессия G10S-246 завершена
@@ -5177,7 +5177,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 
 - [ ] `G11-013` Все Brain/Vault records классифицированы по canonical ID, capability, role, locale, provenance и disposition.
 - [x] `G11-014` Unmapped/unreviewed/quarantined counts публикуются, не исчезают.
-- [ ] `G11-015` Generic content помещается в shared modules и получает path-specific prerequisites.
+- [x] `G11-015` Generic content помещается в shared modules и получает path-specific prerequisites. Evidence: target commit `bba677a`; `shared-content-closure-2026-09-03.{json,md}`; `3/3` shared modules, `6/6` generic placements, `0` unresolved items; full `pnpm check`, `boundary:check` and `toolchain:check` PASS.
 - [x] `G11-016` Language-native content проходит forbidden-set tests. Текущий release evidence: `10/10` placements passed (native allowlist, forbidden semantic/runtime/task-family sets и explicit generic reuse).
 - [x] `G11-017` Missing-role ledger генерируется по stable IDs.
 - [ ] `G11-018` Research/authoring packs закрывают gaps официальными sources и original explanations.
@@ -8404,3 +8404,35 @@ scenario-body, import, release pointer или learner progress запись не
 двух runtime joins и не является promotion. Следующая очередь — human
 acceptance/revalidation G10S-246, затем авторское наполнение G11; G13
 decommission и удаление старых репозиториев/контейнеров остаются запрещены.
+
+## Execution update — F1 G11-015 shared content closure — 3 сентября 2026
+
+После предыдущего открытого placement gap target `fluent-interview-platform`
+получил локальный commit `bba677a` (`fix(g11): close shared content placement
+gaps`), без push и без удаления. В curriculum release добавлен явный общий
+модуль `runtime-foundations` в Node, Java и Go; generic
+`memory-ownership` теперь размещён в нём во всех трёх tracks и получает
+path-specific prerequisite. Language-native `js-closures` placement не
+затронут.
+
+Новый metadata-only artifact
+`fluent-interview-platform/docs/verification/greenfield/G11/shared-content-closure-2026-09-03.{json,md}`
+фиксирует `3/3` shared modules, `6/6` generic placements и `0` unresolved
+items. Он не содержит prompt/answer bodies, не меняет serving/release pointer,
+не выполняет database/import writes и явно указывает `push=false`.
+
+В ходе полного target ladder был найден и исправлен stale evidence coordinate:
+обновлены versioned G10S-227 input policy и release-manifest SHA после
+изменения каталога; затем evidence index пересобран штатным генератором без
+rewrites исторических записей. `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` завершились PASS.
+
+Мастер-счётчики после отметки `G11-015`: **661 / 473 / 1 134 · 58,29%**
+формально; **661 / 281 / 942 · 70,17%** исполнимых checks; non-destructive
+**661 / 131 / 792 · 83,46%**; product closure **661 / 76 / 737 · 89,69%**.
+Открытыми остаются corpus classification (`G11-013`), research/reviewer
+decisions (`G11-018/019`), breadth portfolio and path packs, G12.5
+requalification, independent review и отложенный владельцем G13. Старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+Snapshot: [`plan-progress-2026-09-03-g11-015-shared-content.md`](verification/greenfield/plan-progress-2026-09-03-g11-015-shared-content.md).
