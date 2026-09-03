@@ -5140,6 +5140,51 @@ human owner sign-off и широкий G11 curriculum gate остаются от
 > Production serving/release остаются закрытыми до G11 breadth, package-mode
 > coverage и G12.5 requalification.
 
+## G11 fast-track execution mode — 3 сентября 2026
+
+Этот раздел задаёт активный способ исполнения оставшегося G11 и заменяет
+micro-gate подход для каждого отдельного checkbox. Он не ослабляет domain,
+security, rights, runtime или release invariants.
+
+- Рабочий denominator — `66` product-closure items, а не формальные `463`:
+  `192` standing-policy rows не являются задачами реализации, `150` G13
+  decommission rows запрещены до отдельной owner authorization, `55`
+  requalification/review выполняются только после готового продукта.
+- Delivery unit — одна функциональная волна из `10–30` связанных пунктов либо
+  один законченный learner journey, а не отдельный evidence commit на каждый
+  checkbox.
+- Во время реализации не создаются новые policy runner, readiness manifest,
+  synthetic evidence или mutation test только ради перемещения checkbox.
+  Такой guard добавляется лишь для новой authority/security/runtime boundary
+  или реально найденной регрессии.
+- Внутри волны используются сборка затронутого пакета, запуск приложения и
+  browser walkthrough изменённых маршрутов, состояний, локалей и тем. Повторный
+  полный test ladder после каждого внутреннего шага запрещён как waste.
+- Один `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` выполняется
+  один раз в конце всей волны непосредственно перед её единым commit, поскольку
+  это обязательный repository guard из target `AGENTS.md`.
+- Browser acceptance фиксирует доступность маршрутов, навигацию, scroll,
+  overflow, labels, empty/error/loading states и основной learner flow. Оно не
+  подменяет hidden runtime verdict, rights review или human interview evidence.
+- G12.5 и independent review не запускаются повторно до закрытия product wave;
+  промежуточные gaps отражаются в одном коротком progress update без отдельной
+  системы тестов.
+- Commit и push выполняются один раз на завершённую волну. Automatic GitHub
+  Actions on push временно отключён; ручной `workflow_dispatch` сохранён.
+
+### Ускоренная последовательность
+
+1. **Learning flow:** `G11-029` и один полный
+   worked → guided → independent → explain → transfer → repeat journey.
+2. **Corpus + portfolio:** `G11-013/018/019`, `G11-021…026`, затем
+   `G11-005`; один reviewed authoring/release batch вместо отдельных чекбоксов.
+3. **Production paths:** `G11.4` закрывается path waves; shared content и
+   activities переиспользуются через reviewed placements/revisions.
+4. **Revalidation + G11 gate:** `G11-R01…R13`, `G11-037…046` проверяются одним
+   consolidated release/browser run после наполнения, а не до него.
+5. **Final review:** G12.5 и independent review запускаются один раз после
+   product closure. `G11-035/036` остаются owner/human boundary.
+
 ### G11.0. Coverage policy
 
 - [x] `G11-001` Для technical core capability использовать role SLA: diagnostic, mechanism-basic, mechanism-advanced, predict/trace, edge, debug, trade-off, apply/design, evidence, defense. Машинный audit `coverage-policy-audit.v1` подтверждает полный technical-core set без дублей.
