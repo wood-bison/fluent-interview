@@ -5233,8 +5233,8 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G11-030` Retention measured at 7 and 30 days. Closed by target commit `5dafc7c`: progress exposes independent `pending/due/passed` 7-day and 30-day checkpoints, schedules distinct revision reasons, accepts only independent pass evidence after the server-owned due time, and keeps the separate 48-hour cold-repeat facet intact (`11/11` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-031` Unseen variant success and hint dependence recorded. Closed by target commit `7c4b1e8`: deterministic unseen-transfer issuance is bound to the current release/revision, server time is authoritative, assistance level is persisted, assisted success cannot promote mastery, and assistance dependence schedules follow-up evidence (`10/10` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation. Closed by target commit `c07c16e`: a versioned bilingual public process rubric binds all six dimensions to explicit learner-process, runtime-verdict or learning-assessment authorities without exposing private evaluator checks or allowing LLM pass (`11/11` focused checks; full check/boundary/toolchain PASS).
-- [ ] `G11-033` System-design rubric covers requirements, estimates, model, APIs, data, failure, trade-offs and operations.
-- [ ] `G11-034` Incident rubric covers detection, hypothesis, evidence, mitigation, recovery and prevention.
+- [x] `G11-033` System-design rubric covers requirements, estimates, model, APIs, data, failure, trade-offs and operations. Evidence: target commit `0fb8b21`, additive project release `2026.09.03-projects.4`, rubric `system-design-tradeoff-defense-rubric.v2`, `project-interview-rubric-evidence-2026-09-03.json` (`PASS`, exact 8/8 dimensions), full local gates PASS.
+- [x] `G11-034` Incident rubric covers detection, hypothesis, evidence, mitigation, recovery and prevention. Evidence: target commit `0fb8b21`, rubric `system-design-failure-drill-rubric.v2`, `project-interview-rubric-evidence-2026-09-03.json` (`PASS`, exact 6/6 dimensions, stale v1 rejected), full local gates PASS.
 - [ ] `G11-035` English defense rubric and recorded/mock workflow exist.
 - [ ] `G11-036` Product does not claim interview readiness until human/external mock evidence exists.
 
@@ -9927,3 +9927,30 @@ G11.5 readiness стала `3 ready / 5 blocked`. Полный `pnpm check`,
 Формальные counters: **669 / 465 / 1 134**. Исполнимый и неразрушающий
 остаток: **669 / 273 / 942** и **669 / 123 / 792**. Push разрешён владельцем
 в текущем turn; удалений и product/DB/Docker mutations не было.
+
+## Execution update — G11-033/034 project interview rubric closure — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил commit `0fb8b21`
+(`feat(g11): release complete project interview rubrics`). Исторический project
+release `.3` и v1 rubrics сохранены без переписывания; текущие consumers
+переведены на additive release `2026.09.03-projects.4` и rubric catalog v2.
+
+System-design defense теперь требует exact 8/8 измерений: requirements,
+estimates, model, APIs, data, failure, trade-offs и operations. Incident drill
+требует exact 6/6: detection, hypothesis, evidence, mitigation, recovery и
+prevention. Детерминированный evaluator принимает полный пакет, отклоняет
+неполный system-design ответ и stale v1 revision; evidence остаётся
+metadata-only и не сохраняет response bodies.
+
+Focused project tests прошли **5/5**, API — **67/67**, G11.5 — **12/12**;
+G11.5 readiness теперь `5 ready / 3 blocked`. Полный `pnpm check`,
+`boundary:check`, `toolchain:check` и evidence index `737/737` прошли.
+Автоматический CI на `push` временно отключён отдельным target commit
+`dd052a5`; `workflow_dispatch` и PR CI сохранены. Удалений и
+product/DB/Docker/learner mutations не было.
+
+Формальные counters: **671 / 463 / 1 134**. Исполнимый и неразрушающий
+остаток: **671 / 271 / 942** и **671 / 121 / 792**. Следующая bounded очередь —
+`G11-029` worked-example → guided task → independent task → unseen transfer;
+`G11-035/036` требуют реального spoken/external human evidence и не могут быть
+закрыты синтетически.
