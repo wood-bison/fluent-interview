@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g12.3-fail-closed.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-fail-closed.md).
+[`plan-progress-2026-09-03-readiness-evidence-hardening.md`](verification/greenfield/plan-progress-2026-09-03-readiness-evidence-hardening.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9217,3 +9217,39 @@ Artifacts: `fluent-interview-platform/tools/dev/g12.3-port-ledger-readiness.mjs`
 `fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-readiness-2026-09-03.json`.
 
 Snapshot: [`plan-progress-2026-09-03-g12.3-fail-closed.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-fail-closed.md).
+
+## Execution update — readiness evidence hardening — 3 сентября 2026
+
+После G12.3 target получил локальный commit `b377f20` (`fix(gates): require
+complete readiness evidence bundles`). Push не выполнялся из-за лимита GitHub
+Actions; старые репозитории, сущности, Docker containers/volumes и данные не
+удалялись.
+
+В readiness guards G11.0, G11.2, G11.3, G11.4, G11.5, G11.6 и G12.5 устранён
+fail-open путь: строка, объявленная `ready`, теперь обязана содержать ровно
+полный набор policy-required evidence kinds, каждый kind ровно один раз.
+Пропущенный, лишний или дублированный kind, неверный allowlisted path либо
+устаревший SHA-256 переводит строку в issue и исключает её из ready summary.
+Старые коды диагностики пустого evidence сохранены. Это machine-integrity
+hardening; оно не создаёт контент и не закрывает human/owner gates.
+
+Проверки target:
+
+- семь focused readiness suites — **42/42 PASS**;
+- полный `pnpm check` — **543/543 broad tests PASS**, lint/typecheck/build и
+  все обычные content/runtime/security/architecture gates завершены;
+- после штатного обновления historical index —
+  `architecture:evidence-schema`, `architecture:evidence-inputs`,
+  `boundary:check`, `toolchain:check` и `git diff --check` — **PASS**;
+- target clean после commit, локальная ветка опережает `origin/main` на
+  **544** commits, push не выполнялся.
+
+Счётчики мастер-плана намеренно не изменены. Production closure по-прежнему
+требует G11 breadth, 12 owner dispositions G12.3, G12.2 remote attestation,
+G12.5 human requalification и independent review. Машинные readiness reports
+остаются `PASS_WITH_GAPS`; hardening только гарантирует, что частичный или
+устаревший bundle не будет ложно принят за `ready`. G13 cleanup (старые
+репозитории, сущности, Docker containers/volumes, caches и данные) остаётся
+запрещённым без новой явной авторизации владельца.
+
+Snapshot: [`plan-progress-2026-09-03-readiness-evidence-hardening.md`](verification/greenfield/plan-progress-2026-09-03-readiness-evidence-hardening.md).
