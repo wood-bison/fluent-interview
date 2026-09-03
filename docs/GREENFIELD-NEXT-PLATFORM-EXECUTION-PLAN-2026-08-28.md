@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g12.3-row-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-row-hardening.md).
+[`plan-progress-2026-09-03-readiness-row-contracts.md`](verification/greenfield/plan-progress-2026-09-03-readiness-row-contracts.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9322,3 +9322,44 @@ G12.5, independent review и production sign-off. G13 decommission остаёт�
 запрещённым без новой явной авторизации владельца.
 
 Snapshot: [`plan-progress-2026-09-03-g12.3-row-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-row-hardening.md).
+
+## Execution update — readiness row contracts — 3 сентября 2026
+
+После G12.3 row-level hardening target получил локальный commit `5bbd2f9`
+(`fix(gates): harden readiness evidence rows`). Push не выполнялся; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+В G11.0, G11.2, G11.3, G11.4, G11.5, G11.6 и G12.5 build-time row теперь
+проверяет тот же контракт, что и manifest validator: известное definition,
+точную shape `{ kind, path, sha256 }`, допустимый kind, отсутствие duplicate и
+наличие всех kinds для `ready`, allowlisted repository path и SHA-256 текущего
+source file. Row issue попадает в общий report и исключает повреждённую строку
+из `readyItemCount`, `blockedItemCount` и `evidenceBoundItemCount`.
+
+Это устраняет общий fail-open класс, при котором manifest уже содержал
+ошибочный kind/path, но row-summary мог выглядеть готовым. Изменение остаётся
+metadata-only/PREP_ONLY: контент, release pointer, learner state, serving,
+Docker и production data не менялись.
+
+Проверки target:
+
+- focused suites затронутых gates — **47/47 PASS** (`g11.0` 8, `g11.2` 7,
+  `g11.3` 6, `g11.4` 7, `g11.5` 7, `g11.6` 6, `g12.5` 6);
+- ранее зафиксированные G12.2/G12.3 regressions остаются зелёными (`6/6` и
+  `7/7`);
+- полный `pnpm check` достиг **543/543 broad tests PASS**, lint/typecheck/
+  build и обычные content/runtime/security/architecture gates прошли; затем
+  штатно устранён ожидаемый G10S-226 historical-index drift через
+  `g10s-evidence-schema --write-index`;
+- `architecture:evidence-schema`, `architecture:evidence-inputs`,
+  `boundary:check`, `toolchain:check` и `git diff --check` — **PASS**;
+- target clean после commit `5bbd2f9`, локальная ветка опережает `origin/main`
+  на **547** commits; push не выполнялся.
+
+Счётчики master-plan и product checkboxes намеренно не изменены. Следующий
+порядок остаётся: G11.2–G11.6 content breadth → 12 owner dispositions и
+свежий G12.3 manifest → новый immutable RC/remote attestation после сброса
+quota → G12.5 human requalification → independent review/sign-off. G13
+decommission остаётся запрещённым без новой явной авторизации владельца.
+
+Snapshot: [`plan-progress-2026-09-03-readiness-row-contracts.md`](verification/greenfield/plan-progress-2026-09-03-readiness-row-contracts.md).
