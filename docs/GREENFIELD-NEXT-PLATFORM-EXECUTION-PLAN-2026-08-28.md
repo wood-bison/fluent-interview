@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-coverage-map-sync.md`](verification/greenfield/plan-progress-2026-09-03-g11-coverage-map-sync.md).
+[`plan-progress-2026-09-03-g11-prep-only-docs-final.md`](verification/greenfield/plan-progress-2026-09-03-g11-prep-only-docs-final.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9463,3 +9463,32 @@ non-destructive **83,84%**). Следующий порядок прежний: G
 запрещён без новой явной авторизации.
 
 Snapshot: [`plan-progress-2026-09-03-g11-coverage-map-sync.md`](verification/greenfield/plan-progress-2026-09-03-g11-coverage-map-sync.md).
+
+## Execution update — PREP_ONLY documentation closure — 3 сентября 2026
+
+Эта bounded-волна завершена локальными target commits `5ee94af`, `75a47a4`,
+`b6aee69`, `afccefd` и `6bd7478`. Последний из них добавил явный `nextGate` в
+manifest Markdown; coverage map, manifest, review-plan, review-status и R14
+теперь согласованы по state/source hashes, gate labels и status semantics.
+Evidence-index пересобран по фактическим digest/size; исторические тела не
+переписывались, старые репозитории/сущности/Docker/caches не удалялись, push не
+выполнялся из-за лимита GitHub Actions.
+
+Проверки target после финальной правки: полный `pnpm check` — **rc=0**;
+`boundary:check`, `toolchain:check`, `git diff --check`, PREP_ONLY focused
+9/9, readiness write policy 1/1, `evidence:validate` 13/13 и
+`architecture:evidence-schema` 726/726 — **PASS**. Pair-scan пяти
+Markdown/JSON подтверждает отсутствие stale owner-acceptance label и полное
+совпадение state hashes. G10S-246 closure остаётся **FAIL** только по
+`git:post-snapshot-non-metadata`, так как reviewed head `008703c…` старше
+текущего `main`; promotion и serving по-прежнему запрещены.
+
+Счётчики master-plan не изменились: **664 / 470 / 1 134** формальных,
+**664 / 278 / 942** исполнимых и **664 / 128 / 792** неразрушающих пунктов
+(execution **70,49%**, non-destructive **83,84%**). 1 597 PREP_ONLY записей в
+80 пакетах ждут current-main revalidation; следующий порядок —
+G10S-246 revalidation → G11-P001 human authoring/review → G11.2–G11.6 →
+G12.3/G12.2 → G12.5 и independent sign-off. G13 cleanup всё ещё требует
+отдельной owner authorization.
+
+Snapshot: [`plan-progress-2026-09-03-g11-prep-only-docs-final.md`](verification/greenfield/plan-progress-2026-09-03-g11-prep-only-docs-final.md).
