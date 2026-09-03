@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-01-g10s-008.md`](verification/greenfield/plan-progress-2026-09-01-g10s-008.md).
+[`plan-progress-2026-09-03-g11-028.md`](verification/greenfield/plan-progress-2026-09-03-g11-028.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,20 +17,20 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 658 | 476 | 1 134 |
-| Исполнимые gates/checks | 658 | 284 | 942 |
-| Неразрушающее закрытие продукта | 658 | 134 | 792 |
-| ↳ текущий product closure | 658 | 79 | 737 |
+| Формальный master-plan | 659 | 475 | 1 134 |
+| Исполнимые gates/checks | 659 | 283 | 942 |
+| Неразрушающее закрытие продукта | 659 | 133 | 792 |
+| ↳ текущий product closure | 659 | 78 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **69,85%**. Это улучшенная метрика
+Execution completion на этом снимке — **69,96%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
 `G10S-246 owner acceptance → G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 658 / 134 / 792, или 83,08%**. Поэтому число `476`
+**non-destructive closure: 659 / 133 / 792, или 83,21%**. Поэтому число `475`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
 До полного неразрушающего результата остаётся 134 проверяемых пункта; G13
@@ -5185,7 +5185,10 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-025` System Design: 32 defense cases + 12 infra labs + 6 projects = 50.
 - [ ] `G11-026` Critical capability имеет ≥2 independent scenarios; остальные core — ≥1 assessed Activity.
 - [x] `G11-027` Seeded wrong solutions проверяют tests, а не только happy path. Для единственного released runtime `node-26-commonjs` отдельный wrong-solution vector вернул `failed/public_event_loop_order_mismatch`, baseline mismatch, cleanup и отсутствие mastery/unlock; остальные runtimes закрываются вместе с их release.
-- [ ] `G11-028` Package-mode drills проходят по всем released runtimes.
+- [x] `G11-028` Package-mode drills проходят по всем released runtimes. Для
+  текущего единственного released профиля `node-26-commonjs` подтверждены
+  `run/submit/replay/cleanup`; evidence и граница multi-language зафиксированы
+  в target artifact, остальные профили добавляются только после release.
 
 ### G11.4. Path-specific closure packs
 
@@ -8330,3 +8333,34 @@ requalification/independent review **55**, G13 decommission **150**. Target
 `main` теперь опережает `origin/main` на **512** локальных коммитов; push
 отложен из-за CI Actions quota. Удаление репозиториев, контейнеров, volumes,
 старых сущностей и данных не выполнялось.
+
+## Execution update — F1 G11-028 package-mode conformance — 3 сентября 2026
+
+В target `fluent-interview-platform/main` создан локальный commit `54dacb1`
+(`feat(g11): record node package-mode conformance`), без push и без удаления.
+Перед commit последовательно прошли `git diff --check`, полный `pnpm check`
+и `pnpm evidence:validate`; evidence-schema index был штатно пересобран после
+добавления двух новых metadata-only файлов. Итоговый gate сообщает `687`
+исторических evidence entries, `verified=687`, `rewritesDetected=0`.
+
+Реально выполненные команды через публичную Next boundary:
+
+```text
+pnpm runtime:journey
+pnpm runtime:submit-matrix
+```
+
+Они дали `PASS` для `node-26-commonjs`: run завершился с пятью ожидаемыми
+строками и восемью trace events; submit matrix включает malformed/forged,
+drift/oversized, replay, conflict и четыре конкурентных same-key запроса;
+получены один verdict и один evidence, worker очищен, mastery/unlock не
+изменились. Артефакты:
+`fluent-interview-platform/docs/verification/greenfield/G11/package-mode-conformance-2026-09-03.{json,md}`.
+
+Это закрывает **только `G11-028` для уже released Node profile**. Portfolio
+остаётся `OPEN`: `6` cards, `7` assessed activities, `1` TaskFamily,
+`0` runnable revisions, а G11-021…026 требуют настоящего authoring и
+independent scenario content. Java/Go/.NET/Kotlin/Python/Next не объявляются
+закрытыми: их package-mode evidence появится отдельными release slices.
+Следующий безопасный executable slice — F1 corpus/shared authoring queue;
+никакие PREP_ONLY metadata не превращаются в learner release автоматически.
