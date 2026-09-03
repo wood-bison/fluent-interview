@@ -9598,3 +9598,23 @@ independent sign-off остаются обязательными; G13 cleanup з
 volumes и caches не удалялись; push не выполнялся из-за Actions quota.
 
 Snapshot: [`plan-progress-2026-09-03-g10s-221-repeat.md`](verification/greenfield/plan-progress-2026-09-03-g10s-221-repeat.md).
+
+## Execution update — G10S-246 current-main owner boundary — 3 сентября 2026
+
+После сегодняшнего target commit `2f0b7ba` повторная проверка
+`pnpm architecture:gate-246` остаётся `AWAITING_OWNER`: reviewed packet
+закреплён на `008703c…`, а текущий `main` — `2f0b7ba…`. Machine checks
+packet/registry/owner-boundary/metadata-only проходят; `71/71` state-evidence
+готовы, structural failures `0`, но открыты **12 dispositions** и
+`promotion=BLOCKED_BY_OWNER`. Автоматическое переписывание owner packet,
+decision-set или promotion запрещено.
+
+Это не новый продуктовый дефект и не основание ставить галочку G11: 1 597
+PREP_ONLY записей остаются заблокированы до revalidation текущего snapshot.
+Следующий порядок: G10S-246 current-main revalidation → bounded G11-P001 →
+G11.2–G11.6 → G12.3/G12.2 → G12.5 и independent sign-off. G13 cleanup и
+удаление старых ресурсов требуют отдельной owner authorization.
+
+Счётчики остаются **664 / 470 / 1 134** формальных, **664 / 278 / 942**
+исполняемых и **664 / 128 / 792** неразрушающих пунктов. Полный snapshot:
+[`plan-progress-2026-09-03-g10s-246-current-head.md`](verification/greenfield/plan-progress-2026-09-03-g10s-246-current-head.md).
