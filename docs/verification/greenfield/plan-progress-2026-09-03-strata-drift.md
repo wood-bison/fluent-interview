@@ -30,6 +30,11 @@ Commit `0921dd0` помечает Strata как migrated reference и не до�
 нарушают exact source identity, на которой основаны G10S-210/G10S-217 и
 transfer ledger.
 
+Текущий Strata commit отдельно проверен без изменений: `npm run check` —
+**PASS** (`typecheck`, Biome/Oxlint, **32/32** tests, language/link checks и
+fixture verification). Это подтверждает техническую целостность docs-only
+изменения, но не отменяет необходимость выбрать новый immutable snapshot.
+
 ## Почему manifest не обновлён автоматически
 
 `source-manifest.json`, archive tag `strata-archive-2026-09-01-g10s-217` и

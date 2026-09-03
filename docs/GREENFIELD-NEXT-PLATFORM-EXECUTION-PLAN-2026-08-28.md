@@ -9768,6 +9768,11 @@ revalidation → human `G11-P001` → evidence commit → bounded G11 revalidati
 1…18 и PostgreSQL invariants (12/12, 16/16, roles 12) PASS. Поэтому единственная
 причина FAIL — exact source identity drift, а не runtime или schema defect.
 
+Текущий Strata `main` дополнительно прошёл собственный `npm run check`
+(typecheck, lint, **32/32** tests, language/link/fixture gates). Это подтверждает
+техническую целостность docs-only commit, но не заменяет выбор владельца нового
+immutable source snapshot.
+
 Manifest и ledger автоматически не обновлялись: сначала нужен выбор владельца
 между сохранением frozen HEAD и новым source snapshot, затем archive/clone,
 reconciliation и G10S-211 revalidation. Старые репозитории, сущности, Docker
