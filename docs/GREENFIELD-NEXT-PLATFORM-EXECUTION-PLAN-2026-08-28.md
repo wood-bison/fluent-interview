@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-readiness-row-contracts.md`](verification/greenfield/plan-progress-2026-09-03-readiness-row-contracts.md).
+[`plan-progress-2026-09-03-readiness-write-policy.md`](verification/greenfield/plan-progress-2026-09-03-readiness-write-policy.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9363,3 +9363,29 @@ quota → G12.5 human requalification → independent review/sign-off. G13
 decommission остаётся запрещённым без новой явной авторизации владельца.
 
 Snapshot: [`plan-progress-2026-09-03-readiness-row-contracts.md`](verification/greenfield/plan-progress-2026-09-03-readiness-row-contracts.md).
+
+## Execution update — readiness verification write policy — 3 сентября 2026
+
+После row-level readiness hardening target получил два локальных commits:
+`a6df0d7` (`fix(check): keep readiness verification read-only`) и `c70baf5`
+(`chore(evidence): sync historical index after readiness fix`). Push не
+выполнялся; старые репозитории, сущности, Docker containers/volumes, caches и
+данные не удалялись.
+
+Исправлен скрытый побочный эффект `pnpm test`: readiness-генераторы больше не
+перезаписывают tracked reports в обычном проверочном прогоне. `READINESS_WRITE=0`
+передаётся тестовому pipeline, а новый regression-тест запускает все десять
+readiness-команд и проверяет SHA-256 отчётов до/после. Явный write-path
+сохраняется только для намеренной пересборки evidence; после такой пересборки
+G10S-226 index синхронизирован отдельным commit.
+
+Проверки: полный target `pnpm check` — **rc=0**; read-only regression —
+**1/1 PASS**; G10S-228 — **4/4** и **3/3 PASS**; G11 mass-import boundary —
+**PASS**; evidence schema — **726/726**, evidence inputs — **8/8**; boundary,
+toolchain и `git diff --check` — **PASS**. Это только hardening воспроизводимости,
+поэтому счётчики master-plan и содержательные gaps намеренно не изменены:
+G11 breadth/1 597 unresolved, 12 G12.3 dispositions, G12.2 remote attestation,
+G12.5 human requalification, independent review и отложенный G13 остаются в
+плане.
+
+Snapshot: [`plan-progress-2026-09-03-readiness-write-policy.md`](verification/greenfield/plan-progress-2026-09-03-readiness-write-policy.md).
