@@ -5230,7 +5230,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 ### G11.5. Learning quality and interview benchmark
 
 - [ ] `G11-029` Lessons support worked example → faded steps → independent problem → self-explanation → interleaving → repeat.
-- [ ] `G11-030` Retention measured at 7 and 30 days.
+- [x] `G11-030` Retention measured at 7 and 30 days. Closed by target commit `5dafc7c`: progress exposes independent `pending/due/passed` 7-day and 30-day checkpoints, schedules distinct revision reasons, accepts only independent pass evidence after the server-owned due time, and keeps the separate 48-hour cold-repeat facet intact (`11/11` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-031` Unseen variant success and hint dependence recorded. Closed by target commit `7c4b1e8`: deterministic unseen-transfer issuance is bound to the current release/revision, server time is authoritative, assistance level is persisted, assisted success cannot promote mastery, and assistance dependence schedules follow-up evidence (`10/10` focused checks; full check/boundary/toolchain PASS).
 - [ ] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation.
 - [ ] `G11-033` System-design rubric covers requirements, estimates, model, APIs, data, failure, trade-offs and operations.
@@ -9882,3 +9882,28 @@ readiness остаётся fail-closed: `1 ready / 7 blocked`, поэтому з
 очередь — versioned retention checkpoints и недостающие rubric dimensions;
 G11-R01 остаётся заблокирован настоящей authoring→release→serving цепочкой и
 не объявляется закрытым на основании synthetic rehearsal.
+
+## Execution update — G11-030 retention checkpoint closure — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit `5dafc7c`
+(`feat(g11): add explicit retention checkpoints`). Progress contract теперь
+явно хранит два независимых checkpoint: день 7 и день 30 со статусами
+`pending/due/passed`, due/completion timestamps и evidence ID. Revision plan
+создаёт разные причины `retention_7_day` и `retention_30_day`; существующий
+48-hour `cold_repeat` не переименован и не использован как подмена retention.
+
+API принимает checkpoint только после независимого assessment baseline и
+server-owned due time. Client timestamp, произвольный день, assisted/non-pass
+outcome и досрочная ledger запись fail closed. Focused evidence прошёл
+**11/11**, API suite — **67/67**, G11.5 suite — **10/10**; readiness остаётся
+частичной: `2 ready / 6 blocked`. Полный `pnpm check`, `boundary:check`,
+`toolchain:check` и evidence index `735/735` прошли.
+
+Контракт расписания проверен детерминированно; реальные ответы человека через
+7 и 30 дней не синтезировались и появятся только как append-only learner
+evidence. Serving/release/DB/Docker mutation, удаление и push не выполнялись.
+
+Формальные counters: **668 / 466 / 1 134**. Исполнимый и неразрушающий
+остаток: **668 / 274 / 942** и **668 / 124 / 792**. Следующая bounded очередь —
+versioned rubric completion (`G11-032…G11-034`) без изменения уже выпущенных
+rubric revisions задним числом.
