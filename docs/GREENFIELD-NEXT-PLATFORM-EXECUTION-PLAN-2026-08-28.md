@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11.4-path-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11.4-path-closure.md).
+[`plan-progress-2026-09-03-g11.3-practice-portfolio.md`](verification/greenfield/plan-progress-2026-09-03-g11.3-practice-portfolio.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8892,3 +8892,47 @@ bound evidence для G12.5. G13 cleanup остаётся запрещённым
 `fluent-interview-platform/docs/verification/greenfield/G11/path-closure-readiness-2026-09-03.json`.
 
 Snapshot: [`plan-progress-2026-09-03-g11.4-path-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11.4-path-closure.md).
+
+## Execution update — G11.3 practice portfolio readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`07876eb` (`gate(g11.3): stage practice portfolio readiness`). Push не
+выполнялся из-за лимита GitHub Actions; старые репозитории, сущности, Docker
+containers/volumes и данные не удалялись.
+
+G11.3 теперь имеет versioned PREP_ONLY policy и manifest для восьми пунктов
+практического портфеля `G11-021…G11-028`: TaskFamily/revision joins, shared
+compatibility, backend/Next/system-design breadth, independent scenarios,
+negative evaluation и package-mode. Guard
+`pnpm practice-portfolio:g11.3-readiness` проверяет exact item order, owner и
+evidence-kind/path bindings, SHA-256 источников и ready evidence, target
+ancestry, sorted reasons и metadata-only boundary. Stale evidence, body-shaped
+metadata, auto-promotion, release/DB/Docker/learner writes, push и deletion
+fail closed.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: ожидается и перечислено
+`8/8`, готово `2/8` (`G11-027` wrong-solution и `G11-028` package-mode для
+`node-26-commonjs`), заблокировано `6/8` (`G11-021…026`), failed `0`, bound
+evidence `2`. Seed всё ещё содержит `6` cards, `7` assessed activities,
+`1` TaskFamily и `0` runnable revisions; это не production promotion и не
+замена content breadth.
+
+Focused tests `5/5 PASS`; target `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` — PASS; G10S-226 evidence schema — PASS, historical
+index после синхронизации содержит `717/717` проверенных записей,
+`rewritesDetected=0`. Product checkboxes и counters намеренно не менялись:
+PREP_ONLY readiness не закрывает отсутствующие задачи, revisions, scenarios,
+path breadth, G12.5 или independent review.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11.3-practice-portfolio-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11.3-practice-portfolio-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g11.3-practice-portfolio-readiness.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G11/practice-portfolio-readiness-2026-09-03.{json,md}`.
+
+Следующая безопасная очередь — авторски закрыть G11-021…026 (family/revision,
+shared compatibility, facet breadth и independent scenarios), затем повторить
+этот guard и R07–R13 на одном atomic batch. G11.5/G11.4 и G12.5 остаются
+открытыми; G13 cleanup по-прежнему запрещён владельцем.
+
+Snapshot: [`plan-progress-2026-09-03-g11.3-practice-portfolio.md`](verification/greenfield/plan-progress-2026-09-03-g11.3-practice-portfolio.md).
