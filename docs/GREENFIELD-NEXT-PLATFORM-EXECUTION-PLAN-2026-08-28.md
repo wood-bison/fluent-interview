@@ -5638,7 +5638,10 @@ violations), но `0` из `3` production paths eligible и `11` role requiremen
 
 ### G12.3. Reconciliation and rollback
 
-- [ ] `G12-025` Port Ledger entries all `ported|adapted|dropped(reason)`; planned/unresolved = 0.
+- [x] `G12-025` Port Ledger entries all `ported|adapted|dropped(reason)`;
+  `12/12` owner-approved `adapted`, `71/71` critical states evidence-ready,
+  planned/unresolved = `0`. Target commit `2fa751c`; evidence:
+  `fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-readiness-2026-09-03.{json,md}`.
 - [x] `G12-026` Route reconciliation unresolved = 0.
 - [x] `G12-027` Data/content/task/project/progress reconciliation has
   `unexplainedDeltaCount = 0` across released authorities and projections;
@@ -9830,3 +9833,30 @@ G10S-246 acceptance, поэтому counters остаются **665 / 469 / 1 13
 **665 / 277 / 942** и **665 / 127 / 792**. Push и удаление не выполнялись.
 Подробности:
 [`plan-progress-2026-09-03-g11-lane-separation.md`](verification/greenfield/plan-progress-2026-09-03-g11-lane-separation.md).
+
+## Execution update — G12-025 owner disposition reconciliation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit `2fa751c`
+(`gate(g12.3): reconcile accepted screen dispositions`). Явное owner statement
+«Принимаю все 12 экранов текущей версии», ранее записанное в versioned
+G10S-246 decision set и успешно revalidated, теперь применено к D0 Port Ledger.
+Все 12 экранов имеют `disposition=adapted` с индивидуальной причиной; dropped,
+partial и open экранов нет.
+
+Повторная машинная проверка дала **12/12 screens, 71/71 critical states,
+71/71 interaction+visual+semantic evidence, openStates=0,
+openDispositions=0, unresolvedItems=0**. D0 design truth boundary,
+port-ledger audit и G12.3 readiness имеют `PASS`; readiness manifest связывает
+четыре независимых evidence kind с актуальными SHA-256. Исторический
+G10S-246 packet остаётся immutable и допускает только исходный snapshot либо
+строго проверенный reconciled successor.
+
+Полный `pnpm check`, `boundary:check`, `toolchain:check`, evidence index
+`733/733` и focused G12/G10S tests прошли. Push не выполнялся из-за лимита
+GitHub Actions; удалений, serving/release/DB/Docker/learner mutations не было.
+
+Формальные counters после этого пункта: **666 / 468 / 1 134**. Исполнимый и
+неразрушающий остаток уменьшается на один: **666 / 276 / 942** и
+**666 / 126 / 792**. Следующая честная очередь — G11 authoring-to-serving
+content closure; G12-024 remote CI остаётся quota-bound, G13 cleanup запрещён
+до отдельной авторизации.
