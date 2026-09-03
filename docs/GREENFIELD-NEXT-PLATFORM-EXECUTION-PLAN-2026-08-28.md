@@ -9661,3 +9661,25 @@ sign-off не считаются закрытыми этим scanner. Никак
 репозиториев, сущностей, Docker-ресурсов, volumes/caches или push не было.
 
 Снимок прогресса после этой отметки: [`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).
+
+## Execution update — G11/G12 readiness rebind — 3 сентября 2026
+
+После target-коммита `9b423cf` все десять текущих G11/G12 readiness envelopes
+пересобраны на фактический `main`, а G10S historical index снова проверяет
+`728/728` записей без переписывания исторических тел. Full `pnpm check`,
+`boundary:check`, `toolchain:check`, schema/input checks и read-only повтор всех
+readiness-команд прошли. Это metadata-only синхронизация evidence; она не
+меняет content bodies, serving, БД, Docker, learner state или release pointers.
+
+Статусы остаются честными: R14 — `PASS` (`92/92` классифицированы), R07/R08/R09,
+R12/R13, G11.0/G11.2/G11.3/G11.5, G12.2/G12.3/G12.5 — `PASS_WITH_GAPS` с
+зафиксированными блокерами (content breadth, path placements, 12 dispositions,
+remote Actions quota и human requalification). Счётчики после синхронизации:
+**665 / 469 / 1 134** формальных, **665 / 277 / 942** исполнимых и
+**665 / 127 / 792** неразрушающих; execution **70,59%**, product closure
+**72 / 737** открытых. Подробности: [`plan-progress-2026-09-03-readiness-rebind.md`](verification/greenfield/plan-progress-2026-09-03-readiness-rebind.md).
+
+Следующий порядок не меняется: current-main G10S-246 revalidation → bounded
+G11-P001 human authoring/review → G11.2–G11.6 → новый RC/G12.5 → independent
+review. G13 cleanup и удаление старых ресурсов без отдельной owner authorization
+запрещены; push не выполнялся.
