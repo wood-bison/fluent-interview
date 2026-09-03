@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g12.3-port-ledger.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-port-ledger.md).
+[`plan-progress-2026-09-03-g12.2-remote-ci.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-remote-ci.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9128,3 +9128,59 @@ classification/authoring evidence, но нельзя импортировать 
 `fluent-interview-platform/docs/verification/greenfield/G12/port-ledger-readiness-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g12.3-port-ledger.md`](verification/greenfield/plan-progress-2026-09-03-g12.3-port-ledger.md).
+
+## Execution update — G12.2 remote-CI readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`aca0a4b` (`gate(g12.2): stage remote-ci readiness`). Push не выполнялся из-за
+лимита GitHub Actions; старые репозитории, сущности, Docker containers/volumes
+и данные не удалялись.
+
+G12.2 теперь имеет versioned PREP_ONLY policy и manifest для открытого
+`G12-024`. Guard `pnpm remote-ci:g12.2-readiness` проверяет exact policy и
+manifest shape, target ancestry, source allowlist/SHA-256, deterministic blocked
+reasons и metadata-only boundary. Local clean-archive evidence проверяется, но
+не превращается в remote attestation; никакие release/catalog/DB/Docker/
+learner writes, push или deletion не выполняются.
+
+В ходе работы найден и исправлен реальный integrity-дефект старого exact-RC
+audit: он читал `rc-manifest.json` из текущего checkout, а не из immutable
+revision тега, поэтому мог сопоставить старый tag с current-main manifest.
+Теперь workflow и manifest читаются через `git show <immutable-tag>:<path>`, а
+unit tests отдельно проверяют `headSha` и отказ при подмене manifest.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: перечислено `1/1`, готово
+`0/1`, заблокировано `1/1`, failed `0`, bound evidence `1`. Local archive
+проходит; remote Actions run не выполнялся из-за quota. Immutable tag
+`rc-2026.08.29.1` разрешается в
+`476aa01b852ffbb9ca91da11e7eb0922dd7f6f95`, но исторический `rc-manifest.json`
+содержит другой короткий head. Поэтому открыты ровно три причины:
+`actions-quota-bound`, `immutable-rc-manifest-mismatch`,
+`remote-attestation-missing`. Историю тега переписывать нельзя — после
+восстановления quota нужно создать новый согласованный immutable RC.
+
+Focused checks: `pnpm test:g12.2-remote-ci` — **5/5 PASS**;
+`pnpm test:ci-policy` — **6/6 PASS** (включая exact-RC regression); полный
+`pnpm test` — **PASS**. После штатного `node tools/dev/g10s-evidence-schema.mjs
+--write-index` финальные `architecture:evidence-schema`,
+`architecture:evidence-inputs`, `boundary:check`, `toolchain:check` и
+`git diff --check` — **PASS**. Evidence index содержит `726/726` проверенных
+исторических записей, `rewritesDetected=0`; target clean после commit, ветка
+опережает `origin/main` на `541` commit. Push не выполнялся.
+
+Master-plan чекбоксы и counters намеренно не изменены: PREP_ONLY readiness не
+закрывает remote attestation, immutable-RC correction, G11 breadth, G12.5 или
+independent review. Следующий безопасный порядок — после сброса quota выпустить
+новый immutable RC, получить durable run/job identity и повторить guard до
+`1/1 ready`; затем вернуться к 12 owner dispositions G12.3, G11.2
+classification/authoring и G12.5 requalification. G13 cleanup остаётся
+запрещённым владельцем; ничего не удаляется.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g12.2-remote-ci-readiness-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g12.2-remote-ci-readiness-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g12.2-remote-ci-readiness.mjs`,
+`fluent-interview-platform/tools/dev/test/g12.2-remote-ci-readiness.test.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G12/remote-ci-readiness-2026-09-03.json`.
+
+Snapshot: [`plan-progress-2026-09-03-g12.2-remote-ci.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-remote-ci.md).
