@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11.5-learning-quality.md`](verification/greenfield/plan-progress-2026-09-03-g11.5-learning-quality.md).
+[`plan-progress-2026-09-03-g11.4-path-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11.4-path-closure.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8849,3 +8849,46 @@ breadth, G12.5, human learning evidence или independent review. Следую�
 `fluent-interview-platform/docs/verification/greenfield/G11/learning-quality-readiness-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g11.5-learning-quality.md`](verification/greenfield/plan-progress-2026-09-03-g11.5-learning-quality.md).
+
+## Execution update — G11.4 path-specific closure readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`f2dbab46ca54cfa6647915afcd1b907d6baedd65` (`gate(g11.4): stage path closure
+readiness`). Push не выполнялся из-за лимита GitHub Actions; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+G11.4 теперь имеет versioned PREP_ONLY policy и manifest для всех 24
+path-specific slices: Node/Nest/JS, Java/Spring/JVM, Go, .NET, Kotlin, Python,
+React/Next, Algorithms, System Design и Behavioral. Для каждого slice
+зафиксированы path/lane, требуемые lesson/activity denominators, runtime
+profiles, acceptance и обязательные evidence kinds. Guard
+`pnpm path-closure:g11.4-readiness` проверяет exact item order, owner/path
+bindings, source paths/SHA-256, target ancestry, sorted blocked reasons и
+metadata-only boundary. Ready без bound evidence, body-shaped metadata,
+auto-promotion, release/DB/Docker/learner writes, push и deletion fail closed.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: ожидается и перечислено
+`24/24`, готово `0/24`, заблокировано `24/24`, failed `0`, bound evidence `0`.
+Current release содержит только `6` cards и `10` placements; path manifest
+показывает все 11 фаз заблокированными, browser/runtime evidence для новых
+lanes отсутствует. Это контракт полноты и маршрутизации, не генератор
+контента и не production promotion.
+
+Focused tests `5/5 PASS`; target `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` — PASS; G10S-226 evidence schema — PASS, historical
+index содержит `715/715` проверенных записей, `rewritesDetected=0`. Target
+clean после commit, divergence `origin/main...main = 0 535`.
+
+Чекбоксы master-plan не изменены: PREP_ONLY metadata не закрывает G11.4
+product/content пункты и не подменяет G11 final evidence, G12.5 или
+independent review. Следующая очередь — на основании этого pack собирать
+reviewed path/overlay content и повторять R07–R13 на одном atomic batch; затем
+bound evidence для G12.5. G13 cleanup остаётся запрещённым владельцем.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11.4-path-closure-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11.4-path-closure-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g11.4-path-closure-readiness.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G11/path-closure-readiness-2026-09-03.json`.
+
+Snapshot: [`plan-progress-2026-09-03-g11.4-path-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11.4-path-closure.md).
