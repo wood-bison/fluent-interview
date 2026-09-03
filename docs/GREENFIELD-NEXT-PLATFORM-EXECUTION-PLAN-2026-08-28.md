@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-authoring-worksheet.md`](verification/greenfield/plan-progress-2026-09-03-g11-authoring-worksheet.md).
+[`plan-progress-2026-09-03-g11-worksheet-index.md`](verification/greenfield/plan-progress-2026-09-03-g11-worksheet-index.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9704,3 +9704,24 @@ post-commit worksheet/evidence smoke checks — **PASS**; target `main` чист
 G10S-246 revalidation и human mapping/authoring/review `G11-P001`; старые
 репозитории, сущности, Docker resources, volumes и caches не удаляются, push не
 выполняется.
+
+## Execution update — полный G11 PREP_ONLY worksheet index — 3 сентября 2026
+
+Target `main` получил metadata-only companion-index для всей bounded очереди
+G11: **80/80** пакетов `G11-P001…G11-P080` и **1 597/1 597** record refs.
+Каждая запись связана со стабильным packet/worksheet/source hash и десятью
+обязательными будущими полями authoring/review. Исходные prompt/answer/solution/
+code bodies не копируются, serving/release/learner state не меняются.
+
+Target commit: `8dba70e0e0002a7b43d2bf6690cc0254ab6526ec`; полный `pnpm check`,
+`boundary:check`, `toolchain:check`, `git diff --check` и focused worksheet,
+evidence-schema/evidence-inputs checks — **PASS**. Target `main` чистый, push не
+выполнялся из-за CI quota.
+
+Индекс не закрывает G10S-246 revalidation, human authoring/review, G11.2–G11.6,
+G12.5 или production release: все 80 пакетов остаются
+`BLOCKED_BY_G10S-246_REVALIDATION`, promotion запрещена. Счётчики остаются
+**665 / 469 / 1 134** формальных, **665 / 277 / 942** исполнимых и **665 / 127 /
+792** неразрушающих. Следующий порядок не меняется: current-main revalidation
+→ human `G11-P001` → evidence commit → G11.2–G11.6. Старые репозитории,
+сущности, Docker resources, volumes и caches не удалялись.
