@@ -17,7 +17,7 @@
 ## Что проверено на текущем приложении
 
 Target: `/Users/sergeyzhechko/developer/fluent-interview-platform`, `main`,
-`a6c1c75e266880f35cd8dc99f963b76473d8fa35`.
+`b46b23296709610245fa28a42a741cccaae9f66c`.
 
 Live-проход через Browser по 12 обязательным маршрутам подтвердил:
 
@@ -35,7 +35,7 @@ Live-проход через Browser по 12 обязательным маршр
 ## Реальный блокер
 
 `G10S-246` owner packet остаётся `AWAITING_OWNER`, но закреплён на target HEAD
-`6e5314914baad976f0fb03b610a4a00269f8111b`. Текущий `main` на 44 коммита
+`6e5314914baad976f0fb03b610a4a00269f8111b`. Текущий `main` на 45 коммитов
 впереди. Revalidation намеренно требует exact HEAD и поэтому не позволит
 подписать устаревший snapshot.
 
