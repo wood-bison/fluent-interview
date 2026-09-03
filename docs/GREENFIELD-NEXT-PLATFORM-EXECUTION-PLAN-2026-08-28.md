@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r11-c098-canary.md`](verification/greenfield/plan-progress-2026-09-03-g11-r11-c098-canary.md).
+[`plan-progress-2026-09-03-g11-r07-runtime-joins.md`](verification/greenfield/plan-progress-2026-09-03-g11-r07-runtime-joins.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8536,3 +8536,45 @@ requalification. Остальные G11-R12…R14, human review и G13 cleanup �
 отдельными gates и не закрываются этой канарейкой.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r11-c098-canary.md`](verification/greenfield/plan-progress-2026-09-03-g11-r11-c098-canary.md).
+
+## Execution update — G11-R07 activity/runtime join revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальные коммиты без push и
+без удаления: `2246c48` (`gate(g11): revalidate activity runtime joins`)
+добавляет fail-closed revalidation guard, а `ba73857`
+(`evidence(g11): record activity runtime revalidation`) фиксирует текущий
+receipt, Markdown-объяснение и пересобранный evidence index.
+
+Новый gate не считает activity runnable по одному имени или по preview-ссылке.
+Он пересобирает projection, обогащает отсутствующие координаты только из
+текущего task-join projection и требует exact
+`TaskFamily/TaskRevision/runtimeProfile` плюс released scenario. Broken,
+partial и preview joins исключаются из coverage и остаются видимыми как
+blocked candidates; conceptual activities честно остаются без runnable task.
+
+Текущий результат: `7` assessed activities, `4` runnable candidates, `2`
+exact runnable activities (`event-loop` predict/run), `2` blocked candidates
+(`nexttick` starvation и Nest interceptor), `3` conceptual activities, `1`
+released runtime profile и `1` released scenario. Все пять structural checks
+(`projectionValid`, `everyExposedRunnableHasExactJoin`,
+`brokenCandidatesExcludedFromCoverage`, `previewLinksExcludedFromCoverage`,
+`deterministicOrdering`) — `PASS`; общий статус честно остаётся
+`PASS_WITH_GAPS`, поэтому checkbox `G11-R07` не отмечен и полный conformance
+не выдан за готовый.
+
+Артефакты:
+`fluent-interview-platform/docs/verification/greenfield/G11/activity-runtime-revalidation-2026-09-03.{json,md}`.
+Focused tests `4/4 PASS`; target `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` и post-commit `pnpm architecture:evidence-schema` —
+`PASS`, target `main` clean. Gate metadata-only: serving/release/database/
+Docker/progress/push mutations `0`. Старые репозитории, сущности, контейнеры,
+volumes и данные не удалялись.
+
+Счётчики master-plan не меняются: **664 / 470 / 1 134 · 58,55%** формально,
+**664 / 278 / 942 · 70,49%** исполнимых checks, non-destructive
+**664 / 128 / 792 · 83,84%**, product closure **664 / 73 / 737 · 90,09%**.
+Следующая очередь — закрыть реальные missing joins через F1 authoring/runtime
+packs, затем повторить G11-R07 до `PASS`; далее G11-R08 language relevance,
+G11-R09 overlays, R12–R14 и G12.5. `PASS_WITH_GAPS` не является promotion.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r07-runtime-joins.md`](verification/greenfield/plan-progress-2026-09-03-g11-r07-runtime-joins.md).
