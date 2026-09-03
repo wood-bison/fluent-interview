@@ -9543,6 +9543,20 @@ G10S-246 closure и counters не меняются: reviewed head `008703c…` �
 новая current-main revalidation с owner review, затем bounded G11-P001 и
 G11.2–G11.6; G13 cleanup без отдельной авторизации запрещён.
 
+## Execution update — G10S‑222 scoped cleanup rehearsal — 3 сентября 2026
+
+Независимый cleanup‑gate target прошёл `PASS` в уникальном disposable Compose
+project: два штатных запуска `pnpm dev` и два `pnpm down --json`, после каждого
+down — **0 контейнеров и 0 сетей**, без `-v/--volumes`. Три durable volumes
+(`otel-data`, `platform-events`, `postgres-data`) сохранили identity, а
+migration ledger остался **18/18** после restart; optional observability profile
+запустился успешно. Evidence hash:
+`83abade5748065d8f4991bf36a718a0127775a0aad4a532834f110a985a53944`.
+
+Полный bounded report: [`plan-progress-2026-09-03-g10s-222-scoped-cleanup.md`](verification/greenfield/plan-progress-2026-09-03-g10s-222-scoped-cleanup.md).
+Пользовательский stack, старые репозитории, данные и кэши не изменялись; это
+не открывает G13 и не меняет G10S‑246 owner/revalidation boundary.
+
 ## Execution update — полный scroll‑sweep — 3 сентября 2026
 
 После повторного штатного запуска `pnpm run dev` выполнен read-only sweep всех
