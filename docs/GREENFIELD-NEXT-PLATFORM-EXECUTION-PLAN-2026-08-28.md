@@ -9520,3 +9520,25 @@ G10S-246 revalidation → bounded G11-P001 human authoring/review → G11.2–G1
 sign-off. G13 cleanup остаётся отложенным до отдельной owner authorization.
 
 Snapshot: [`plan-progress-2026-09-03-g10s-cli-defaults.md`](verification/greenfield/plan-progress-2026-09-03-g10s-cli-defaults.md).
+
+## Execution update — live route и accessibility audit — 3 сентября 2026
+
+После CLI hardening локально поднят umbrella stack через штатный `pnpm dev` и
+проведена read-only проверка актуального target `abad458…`: **114/114**
+same-origin ссылок из основных экранов открыли непустой `main`, legacy aliases
+редиректят на канонические `/questions` и `/lab/*`, карточка `/questions/Q1062`
+загрузилась после ожидания API. Проверены поиск/сброс и pagination Question
+Brain, 6 challenge-задач Event Loop, code/prediction/runtime/evidence controls,
+вертикальный scroll (`scrollTop 0 → 480`), RU/EN, light/dark и dock Штурмана.
+
+Независимый machine accessibility gate на disposable stack дал
+`PASS_WITH_LIMITATIONS`: **23/23** curated routes, **723/723** именованных
+контрола, 0 positive tabindex и 27/27 token-contrast checks. Human VoiceOver и
+post-hydration visual review остаются явно незакрытыми. Временный stack штатно
+остановлен; tracked evidence, owner inputs, старые репозитории/сущности,
+containers и caches не изменялись. Полный результат: [`plan-progress-2026-09-03-live-route-accessibility-audit.md`](verification/greenfield/plan-progress-2026-09-03-live-route-accessibility-audit.md).
+
+G10S-246 closure и counters не меняются: reviewed head `008703c…` старше
+текущего `main`, поэтому promotion остаётся заблокирован. Следующий gate —
+новая current-main revalidation с owner review, затем bounded G11-P001 и
+G11.2–G11.6; G13 cleanup без отдельной авторизации запрещён.
