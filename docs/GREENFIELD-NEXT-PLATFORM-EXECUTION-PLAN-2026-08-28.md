@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r10-rights-leak.md`](verification/greenfield/plan-progress-2026-09-03-g11-r10-rights-leak.md).
+[`plan-progress-2026-09-03-g11-r11-c098-canary.md`](verification/greenfield/plan-progress-2026-09-03-g11-r11-c098-canary.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,23 +17,23 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 663 | 471 | 1 134 |
-| Исполнимые gates/checks | 663 | 279 | 942 |
-| Неразрушающее закрытие продукта | 663 | 129 | 792 |
-| ↳ текущий product closure | 663 | 74 | 737 |
+| Формальный master-plan | 664 | 470 | 1 134 |
+| Исполнимые gates/checks | 664 | 278 | 942 |
+| Неразрушающее закрытие продукта | 664 | 128 | 792 |
+| ↳ текущий product closure | 664 | 73 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **70,38%**. Это улучшенная метрика
+Execution completion на этом снимке — **70,49%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
 `G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 663 / 129 / 792, или 83,71%**. Поэтому число `471`
+**non-destructive closure: 664 / 128 / 792, или 83,84%**. Поэтому число `470`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
-До полного неразрушающего результата остаётся 129 проверяемых пунктов; G13
+До полного неразрушающего результата остаётся 128 проверяемых пунктов; G13
 возобновляется только по новой явной авторизации владельца.
 
 ### Owner-сессия G10S-246 завершена
@@ -5248,7 +5248,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-R08` Node/Java/Go/.NET/Kotlin/Python/React/Next paths повторно проходят forbidden-set и relevance matrix после import.
 - [ ] `G11-R09` Algorithms/System Design/Behavioral overlays используют shared placements осознанно и не дублируют canonical Questions.
 - [x] `G11-R10` Rights leak scan проходит для каждого release bundle и learner projection; forbidden findings = 0. Evidence: target commit `0e5f970`; `rights-leak-revalidation-2026-09-03.json`; release и learner projection byte-identical (`32,945` bytes, SHA-256 `0d7683c3…`), `0` forbidden fields, `0` high-confidence secret findings, `0` unsafe source URLs; focused test `2/2` и target `pnpm check`, `boundary:check`, `toolchain:check` — PASS. Gate metadata-only, serving/release/database/Docker/push mutations `0`.
-- [ ] `G11-R11` C098 remains green как canary после каждого mass-import batch; regression блокирует следующий batch.
+- [x] `G11-R11` C098 remains green как canary после каждого mass-import batch; regression блокирует следующий batch. Evidence: target commits `8db1a86` (implementation) и `52af2e2` (live evidence); `c098-canary-revalidation-2026-09-03.{json,md}`; live `http://127.0.0.1:47360`; 5/5 routes HTTP 200, exact question/activity/revision/runtime/lesson, Run `passed` (5 outputs, prediction match, 8 trace events, cleanup), Submit accepted (5/5 hidden checks, replay/conflict/cleanup), 4 evidence kinds, all 15 machine checks PASS; human spoken boundary `AWAITING_HUMAN`; target `pnpm check`, `boundary:check`, `toolchain:check` и post-commit evidence schema — PASS. Metadata-only; serving/release/database/Docker/push mutations `0`.
 - [ ] `G11-R12` Каждая path/release фаза закрывается отдельным bundle, reconciliation report, browser journey и atomic commit.
 - [ ] `G11-R13` G11 final evidence ссылается на G10S PASS SHA, authoring release IDs, serving release IDs и current adapter version.
 - [ ] `G11-R14` Старые G11 evidence artifacts помечены superseded либо still-valid с доказанным independent scope; молчаливое наследование запрещено.
@@ -8506,3 +8506,33 @@ packs, independent review и G12.5 остаются открытыми. Стар
 non-destructive **663 / 129 / 792 · 83,71%**; product closure **663 / 74 /
 737 · 89,96%**. Snapshot:
 [`plan-progress-2026-09-03-g11-r10-rights-leak.md`](verification/greenfield/plan-progress-2026-09-03-g11-r10-rights-leak.md).
+
+## Execution update — G11-R11 C098 canary revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил два локальных коммита без push
+и без удаления: `8db1a86` (`gate(g11): add C098 canary revalidation`) добавляет
+детерминированный machine-only gate, а `52af2e2`
+(`evidence(g11): record C098 canary revalidation`) фиксирует live receipt и
+пересобранный evidence index.
+
+Canary запущен штатно против `http://127.0.0.1:47360` и прошёл на immutable
+target SHA `8db1a8667a7a42eb01e2d1774e148856213e9710`. Проверены 5/5 маршрутов
+HTTP 200, exact question/activity/family/revision/runtime/lesson binding,
+`Run=passed` (5 outputs, prediction match, 8 trace events, worker cleanup),
+`Submit=accepted` (5/5 hidden checks, replay stable, conflict rejected,
+cleanup), 4 evidence kinds и стабильность progress. Все 15 машинных checks
+имеют `PASS`; human spoken explanation остаётся `AWAITING_HUMAN` и не
+подделывается gate. Receipt metadata-only: bodies не выводятся, serving/release
+authority, database, Docker и push не изменяются.
+
+Полный target `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` и
+post-commit `pnpm architecture:evidence-schema` завершились PASS; target
+clean. Push сознательно не выполнялся из-за ограничения GitHub Actions.
+
+После отметки `G11-R11` `pnpm plan:progress:json` должен быть единственным
+источником счётчиков; следующий критический шаг — `G11-R07` (полная activity
+family/revision/runtime conformance), затем language breadth и G12.5
+requalification. Остальные G11-R12…R14, human review и G13 cleanup остаются
+отдельными gates и не закрываются этой канарейкой.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r11-c098-canary.md`](verification/greenfield/plan-progress-2026-09-03-g11-r11-c098-canary.md).
