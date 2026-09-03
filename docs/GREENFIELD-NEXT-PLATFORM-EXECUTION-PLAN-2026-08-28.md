@@ -9757,3 +9757,19 @@ G11.2–G11.6, G12 или independent sign-off. Старые репозитор�
 Docker resources, volumes и caches не удалялись; push не выполнялся из-за
 лимита CI Actions. Следующий порядок остаётся прежним: exact current-main
 revalidation → human `G11-P001` → evidence commit → bounded G11 revalidation.
+
+## Execution update — Strata source drift обнаружен — 3 сентября 2026
+
+Повторный `architecture:source-target-reconciliation` зафиксировал, что
+внешний чистый Strata `main` теперь `0921dd0…`, тогда как immutable
+`source-manifest`/G10S-217 snapshot закреплён на `ec3b680…`. Изменены только
+два reference-документа (`docs/migration.md`, `docs/plan.md`); missing files
+нет, transfer validator PASS (13 mappings/28 dispositions), target migrations
+1…18 и PostgreSQL invariants (12/12, 16/16, roles 12) PASS. Поэтому единственная
+причина FAIL — exact source identity drift, а не runtime или schema defect.
+
+Manifest и ledger автоматически не обновлялись: сначала нужен выбор владельца
+между сохранением frozen HEAD и новым source snapshot, затем archive/clone,
+reconciliation и G10S-211 revalidation. Старые репозитории, сущности, Docker
+resources, volumes и caches не удалялись; push не выполнялся. Полный отчёт:
+[`plan-progress-2026-09-03-strata-drift.md`](verification/greenfield/plan-progress-2026-09-03-strata-drift.md).
