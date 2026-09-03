@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r12-phase-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11-r12-phase-closure.md).
+[`plan-progress-2026-09-03-g11-r13-final-evidence.md`](verification/greenfield/plan-progress-2026-09-03-g11-r13-final-evidence.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8689,3 +8689,37 @@ G12.5. Деструктивная G13 cleanup остаётся отложенн�
 авторизации.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r12-phase-closure.md`](verification/greenfield/plan-progress-2026-09-03-g11-r12-phase-closure.md).
+
+## Execution update — G11-R13 final evidence binding revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`e9d5b6342c5e982867bc0bcd8c62865ca2c6db33` (`gate(g11): bind final evidence
+anchors`). Push не выполнялся из-за лимита GitHub Actions; старые репозитории,
+сущности, Docker containers/volumes и данные не удалялись.
+
+R13 добавляет fail-closed metadata-only binding будущего G11 final evidence к
+четырём immutable anchors: G10S-226 PASS evidence и exact ancestor commit,
+authoring release IDs, serving release IDs и adapter `G10S.7 /
+fluent-content-compiler / 2026.08.31.1`. Проверяется SHA-256 evidence-файла,
+статус/gate/target commit, наличие Git object и ancestry текущего target HEAD;
+финальный G11 evidence не создаётся автоматически.
+
+Результат: `PASS_WITH_GAPS`, `valid: true`, все `4/4` anchors связаны,
+`finalEvidencePublished=false`. Manifest остаётся `PREP_ONLY` и blocked с
+причинами `g11-final-evidence-not-published`, `g11-r01-r14-not-pass`,
+`g12.5-not-pass`; никакой release promotion не заявлен. Focused tests `5/5
+PASS`; target `pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` и
+post-commit `pnpm architecture:evidence-schema` — PASS; evidence index
+`707/707`, `rewritesDetected=0`, divergence `origin/main...main = 0 531`.
+
+Чекбокс `G11-R13` не отмечен до создания финального evidence после R01–R12 и
+G12.5. Следующая очередь — R14 superseded/still-valid index, затем реальный
+reviewed path content и G12.5 requalification. G13 cleanup остаётся отложенным
+до новой явной авторизации.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11-final-evidence-binding-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11-final-evidence-binding-manifest-2026-09-03.json`,
+`fluent-interview-platform/docs/verification/greenfield/G11/final-evidence-binding-revalidation-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r13-final-evidence.md`](verification/greenfield/plan-progress-2026-09-03-g11-r13-final-evidence.md).
