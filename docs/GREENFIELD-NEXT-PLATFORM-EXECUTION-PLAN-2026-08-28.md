@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-prep-only-docs-final.md`](verification/greenfield/plan-progress-2026-09-03-g11-prep-only-docs-final.md).
+[`plan-progress-2026-09-03-g10s-cli-defaults.md`](verification/greenfield/plan-progress-2026-09-03-g10s-cli-defaults.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9492,3 +9492,31 @@ G12.3/G12.2 → G12.5 и independent sign-off. G13 cleanup всё ещё тре�
 отдельной owner authorization.
 
 Snapshot: [`plan-progress-2026-09-03-g11-prep-only-docs-final.md`](verification/greenfield/plan-progress-2026-09-03-g11-prep-only-docs-final.md).
+
+## Execution update — G10S-246 revalidation CLI hardening — 3 сентября 2026
+
+Target получил локальный implementation commit `abad458`
+(`fix(g10s): make revalidation CLI use canonical defaults`). Теперь
+`pnpm architecture:gate-246-revalidation` можно запускать без аргументов: он
+использует canonical packet, decision-set, registry и evidence-index, выводит
+JSON и по умолчанию ничего не записывает. Полный явный набор путей поддержан,
+частичный override отклоняется с Usage. Fail-closed проверка drift сохранена.
+
+Фазовая проверка перед commit прошла: `pnpm check` — **rc=0**,
+`boundary:check`, `toolchain:check`, `git diff --check` — **PASS**, focused
+revalidation tests — **5/5 PASS**. После commit default revalidation честно
+возвращает **FAIL**, потому что reviewed packet head `008703c…` старше текущего
+`main` `abad458…`; owner gate остаётся `AWAITING_OWNER`, promotion запрещён.
+Это tooling hardening, а не новая owner acceptance, не content import и не
+production release. Целевой `main` чистый и опережает origin на **557** коммитов;
+push не выполнялся, старые репозитории/сущности/Docker/caches не удалялись.
+
+Master-plan counters не меняются: **664 / 470 / 1 134** формальных,
+**664 / 278 / 942** исполнимых и **664 / 128 / 792** неразрушающих пунктов
+(execution **70,49%**, non-destructive **83,84%**). 1 597 PREP_ONLY записей в
+80 пакетах ждут current-main revalidation. Следующий порядок прежний: свежая
+G10S-246 revalidation → bounded G11-P001 human authoring/review → G11.2–G11.6
+→ G12.3/G12.2 → immutable RC/remote attestation → G12.5 и independent
+sign-off. G13 cleanup остаётся отложенным до отдельной owner authorization.
+
+Snapshot: [`plan-progress-2026-09-03-g10s-cli-defaults.md`](verification/greenfield/plan-progress-2026-09-03-g10s-cli-defaults.md).
