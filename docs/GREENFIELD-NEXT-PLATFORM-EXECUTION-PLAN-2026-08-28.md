@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-021-runtime-projection.md`](verification/greenfield/plan-progress-2026-09-03-g11-021-runtime-projection.md).
+[`plan-progress-2026-09-03-g10s-246-closure.md`](verification/greenfield/plan-progress-2026-09-03-g10s-246-closure.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,39 +17,38 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 659 | 475 | 1 134 |
-| Исполнимые gates/checks | 659 | 283 | 942 |
-| Неразрушающее закрытие продукта | 659 | 133 | 792 |
-| ↳ текущий product closure | 659 | 78 | 737 |
+| Формальный master-plan | 660 | 474 | 1 134 |
+| Исполнимые gates/checks | 660 | 282 | 942 |
+| Неразрушающее закрытие продукта | 660 | 132 | 792 |
+| ↳ текущий product closure | 660 | 77 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **69,96%**. Это улучшенная метрика
+Execution completion на этом снимке — **70,06%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
-`G10S-246 owner acceptance → G11 breadth → G12.5 requalification → independent
+`G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 659 / 133 / 792, или 83,21%**. Поэтому число `475`
+**non-destructive closure: 660 / 132 / 792, или 83,33%**. Поэтому число `474`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
-До полного неразрушающего результата остаётся 134 проверяемых пункта; G13
+До полного неразрушающего результата остаётся 132 проверяемых пункта; G13
 возобновляется только по новой явной авторизации владельца.
 
-### Минимальная owner-сессия перед продолжением
+### Owner-сессия G10S-246 завершена
 
-`G10S-246` — не просьба владельцу проверить сотни тестов. Machine evidence уже
-покрывает 12 экранов / 71 состояние. Владелец просматривает 12 обязательных
-маршрутов одной сессией и отвечает одним сообщением: либо принимает все
-экраны, либо перечисляет только исключения. Координатор разворачивает это
-сообщение в 12 явных dispositions, но не придумывает решение за владельца.
+`G10S-246` закрыт для reviewed authoring: machine evidence покрывает 12
+экранов / 71 состояние, а owner decision-set содержит 12 явных `adapted`
+dispositions. Это не означает, что production content или финальная
+requalification готовы; serving/release promotion остаются закрытыми до G11 и
+G12.5.
 
-Перед такой сессией snapshot обязан совпадать с текущим `main`. Пакет от
-2 сентября закреплён на `6e53149`, тогда как текущий target `a6c1c75` уже на
-44 коммита впереди. Поэтому старый пакет нельзя подписывать или revalidate:
-сначала требуется один consolidated refresh interaction/visual/semantic
-evidence для текущего HEAD, затем owner review. Это исправление процесса, а не
-новая фаза редизайна.
+Пакет и revalidation пересобраны после refresh текущего target SHA
+`008703c769a37434b10ca198059109140d6fcc91`; owner closure выполнен отдельным
+локальным commit `aa23f8a5185f5bb2042466ec7b5a1173f67a1814`. Closure-аудитор
+проверяет exact packet/decision-set/revalidation hashes, текущую ветку `main`,
+ancestry и allowlist metadata-only изменений. Push не выполнялся.
 
 Минимальный набор, который видит владелец:
 
@@ -59,13 +58,14 @@ evidence для текущего HEAD, затем owner review. Это испр�
 3. `/projects`, `/studio`, `/control-center`, `/settings` — проекты, authoring,
    локальный stack и настройки.
 
-После просмотра достаточно фразы «принимаю все 12 экранов текущего snapshot»
-или списка исключений вида «`atlas` adapted: …». Acceptance закрывает только
+Источники доказательств: `G10S-246-owner-acceptance-packet-2026-09-03`,
+`G10S-246-owner-decision-set-2026-09-03`, `G10S-246-revalidation-2026-09-03`
+и CLI `pnpm architecture:gate-246-closure`. Acceptance закрывает только
 визуально-функциональную границу G10S-246; полноту 1 597 PREP_ONLY записей и
 финальную requalification она не подменяет.
 
-Human wait не обязан останавливать безопасную подготовку. Пока G10S-246,
-remote CI или cold-repeat gate ожидает человека/время, разрешён режим
+Human wait не обязан останавливать безопасную подготовку. Пока remote CI или
+cold-repeat gate ожидает время, разрешён режим
 `PREP_ONLY` для следующего batch:
 
 - разрешены read-only inventory/research, classification, original draft
@@ -116,8 +116,9 @@ remote CI или cold-repeat gate ожидает человека/время, р
 
 Ускоренная последовательность оставшейся продуктовой разработки:
 
-1. **F0 — Acceptance sync:** закрыть 12 owner dispositions G10S-246 одним
-   packet review и синхронизировать status authority.
+1. **F0 — Acceptance sync:** закрыт 3 сентября 2026. 12 owner dispositions
+   G10S-246 и status authority синхронизированы на reviewed target SHA;
+   serving/release promotion по-прежнему ожидают G11/G12.5.
 2. **F1 — Corpus/shared foundation:** G11-013/015/018/019 и G11-R01…R06;
    обрабатывать authoring queue bounded batches, без direct catalog edits.
 3. **F2 — Node/Nest canary:** закончить Node/Nest questions, activities,
@@ -5106,7 +5107,11 @@ human owner sign-off и широкий G11 curriculum gate остаются от
 - [x] `G10S-243` Implementing agent не ставит product `DONE`; gate получает `AWAITING_INDEPENDENT_REVIEW` и exact handoff package. Evidence: target implementation `fd4e85e`, evidence `d7969aa`; report `24/24 PASS`, `1 OPEN` (owner sign-off), metadata-only, push `0`.
 - [x] `G10S-244` Handoff содержит repo path, branch, HEAD, commits, start command, DB migration range, bundle/release IDs, C098 route и evidence index. Evidence: target implementation `b0c7555`, evidence `c2dfb81`; report `24/24 PASS`, `1 OPEN`, immutable package/prior-report/index bindings, metadata-only, push `0`.
 - [x] `G10S-245` Независимый Codex review из раздела 3 завершён; все P0/P1/P2 исправлены отдельными commits и повторно проверены. Evidence: target implementation/hardening `8ac2d4f`, `9ff974f`, `b54e229`, evidence/docs `3d6c830`, `262d599`, `b02ee63`; report `34/34 PASS`, symbolic refs, `clean=false` и 40-hex aliases fail-closed, metadata-only, push `0`.
-- [ ] `G10S-246` Только после G10S-245 gate получает `PASS`, G11 breadth migration разблокируется.
+- [x] `G10S-246` Owner acceptance закрыт для reviewed authoring после G10S-245:
+  packet, 12 dispositions и revalidation exact-match проверены closure-аудитором.
+  Evidence: target reviewed SHA `008703c`, closure commit `aa23f8a`,
+  `pnpm architecture:gate-246-closure` PASS. G11 authoring разблокирован;
+  serving/release promotion остаются закрытыми до content breadth и G12.5.
 
 ---
 
@@ -5123,12 +5128,15 @@ human owner sign-off и широкий G11 curriculum gate остаются от
 > strict, but their non-zero gap ledger is intentional: the seed release is not
 > yet production-eligible.
 
-> **Обязательная зависимость после расширения плана:** G11 breadth work не
-> продолжается, пока G10S-246 не имеет `PASS`. Уже созданные G11 policy tools и
-> ledgers сохраняются, но content/release evidence, зависящие от старого Studio
-> или `question-catalog.v1` authority, получают `REVERIFY_AFTER_G10S`. Corpus
+> **Обязательная зависимость после расширения плана:** G10S-246 теперь имеет
+> `PASS` для reviewed authoring, поэтому bounded G11 authoring queue может
+> продолжаться. Уже созданные G11 policy tools и ledgers сохраняются, но
+> content/release evidence, зависящие от старого Studio или
+> `question-catalog.v1` authority, получают `REVERIFY_AFTER_G10S`. Corpus
 > пополняется только через Strata authoring → reviewed bundle → serving import;
 > прямое редактирование release JSON больше не является допустимым workflow.
+> Production serving/release остаются закрытыми до G11 breadth, package-mode
+> coverage и G12.5 requalification.
 
 ### G11.0. Coverage policy
 
