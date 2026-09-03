@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-015-shared-content.md`](verification/greenfield/plan-progress-2026-09-03-g11-015-shared-content.md).
+[`plan-progress-2026-09-03-g11-r06-shared-reuse.md`](verification/greenfield/plan-progress-2026-09-03-g11-r06-shared-reuse.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,20 +17,20 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 661 | 473 | 1 134 |
-| Исполнимые gates/checks | 661 | 281 | 942 |
-| Неразрушающее закрытие продукта | 661 | 131 | 792 |
-| ↳ текущий product closure | 661 | 76 | 737 |
+| Формальный master-plan | 662 | 472 | 1 134 |
+| Исполнимые gates/checks | 662 | 280 | 942 |
+| Неразрушающее закрытие продукта | 662 | 130 | 792 |
+| ↳ текущий product closure | 662 | 75 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **70,17%**. Это улучшенная метрика
+Execution completion на этом снимке — **70,28%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
 `G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 661 / 131 / 792, или 83,46%**. Поэтому число `473`
+**non-destructive closure: 662 / 130 / 792, или 83,59%**. Поэтому число `472`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
 До полного неразрушающего результата остаётся 131 проверяемый пункт; G13
@@ -5243,7 +5243,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-R03` Missing-role ledger пересобран на новых stable IDs и revision hashes.
 - [ ] `G11-R04` Coverage score пересобран после исключения quarantine, duplicate aliases, supporting prompts и non-released translations.
 - [ ] `G11-R05` Все G11 authoring packs создают Strata commands/review queue; direct write в serving catalog fail closed.
-- [ ] `G11-R06` Generic/shared placement reuse не превращает language-native content в чужой path.
+- [x] `G11-R06` Generic/shared placement reuse не превращает language-native content в чужой path. Evidence: target commit `1c0947c`; `shared-reuse-revalidation-2026-09-03.{json,md}`; `3/3` shared modules, `6/6` generic placements, `4/4` native placements, `0` native failures; target `pnpm check`, `boundary:check` and `toolchain:check` PASS.
 - [ ] `G11-R07` Каждый runnable Activity ссылается на exact TaskFamily/TaskRevision/runtime release; broken и preview links не считаются coverage.
 - [ ] `G11-R08` Node/Java/Go/.NET/Kotlin/Python/React/Next paths повторно проходят forbidden-set и relevance matrix после import.
 - [ ] `G11-R09` Algorithms/System Design/Behavioral overlays используют shared placements осознанно и не дублируют canonical Questions.
@@ -8436,3 +8436,38 @@ requalification, independent review и отложенный владельцем
 репозитории, сущности, Docker containers/volumes и данные не удалялись.
 
 Snapshot: [`plan-progress-2026-09-03-g11-015-shared-content.md`](verification/greenfield/plan-progress-2026-09-03-g11-015-shared-content.md).
+
+## Execution update — G11-R06 shared reuse revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit `1c0947c`
+(`test(g11): revalidate shared placement reuse`), без push и без удаления.
+Добавлена metadata-only проверка `G11-R06`, которая пересобирает
+`shared-content-audit.v1` и `path-relevance-ledger.v1` из текущих release
+каталогов. Проверка не доверяет ручному summary и не копирует prompt/answer
+bodies.
+
+Результат: `3/3` shared modules и `6/6` generic placements проходят explicit
+shared-key, prerequisite и reuse policy; `4/4` track-scoped/native placements
+проходят forbidden-set и runtime/task prefix rules; native failures — `0`.
+Ключи `http.idempotency.retry-contract` и
+`runtime.memory.reachability-ownership` явно переиспользуются в `3` tracks.
+Foreign-language promotion невозможен: generic остаётся `scope=generic`, а
+native placement проверяется отдельным `scope=track` правилом.
+
+Новый gate подключён в `content:gates` после базового `content:coverage` и
+закрыт focused deterministic test. Evidence:
+`fluent-interview-platform/docs/verification/greenfield/G11/shared-reuse-revalidation-2026-09-03.{json,md}`.
+Индекс evidence пересобран штатным генератором: `694/694` historical entries,
+`rewritesDetected=0`; `pnpm check`, `pnpm boundary:check` и
+`pnpm toolchain:check` завершились PASS. После коммита
+`pnpm architecture:evidence-schema` подтвердил clean target SHA `1c0947c`.
+
+Мастер-счётчики после отметки `G11-R06`: **662 / 472 / 1 134 · 58,38%**
+формально; **662 / 280 / 942 · 70,28%** исполнимых checks;
+non-destructive **662 / 130 / 792 · 83,59%**; product closure
+**662 / 75 / 737 · 89,82%**. Открытыми остаются corpus classification,
+research/reviewer decisions, breadth/path packs, G11-R07…R14, G12.5,
+independent review и отложенный владельцем G13. Старые репозитории, сущности,
+Docker containers/volumes и данные не удалялись.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r06-shared-reuse.md`](verification/greenfield/plan-progress-2026-09-03-g11-r06-shared-reuse.md).
