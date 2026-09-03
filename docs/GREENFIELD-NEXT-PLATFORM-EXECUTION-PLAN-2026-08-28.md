@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-readiness-write-policy.md`](verification/greenfield/plan-progress-2026-09-03-readiness-write-policy.md).
+[`plan-progress-2026-09-03-g11-current-main-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11-current-main-revalidation.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9393,3 +9393,44 @@ G12.5 human requalification, independent review и отложенный G13 ос
 плане.
 
 Snapshot: [`plan-progress-2026-09-03-readiness-write-policy.md`](verification/greenfield/plan-progress-2026-09-03-readiness-write-policy.md).
+
+## Execution update — G11 PREP_ONLY current-main revalidation boundary — 3 сентября 2026
+
+После readiness write-policy target получил два локальных коммита:
+`5ee94af` (`fix(g11): make prep-only gate require current-main revalidation`)
+и `75a47a4` (`docs(evidence): sync R14 lifecycle report`). Push не выполнялся
+из-за лимита GitHub Actions; старые репозитории, сущности, Docker
+containers/volumes, caches и данные не удалялись.
+
+PREP_ONLY теперь не маскирует записанное owner decision под готовность текущей
+ветки. Manifest и review plan требуют `G10S-246 current-main revalidation` до
+любого promotion; review-status сообщает
+`REVALIDATION_REQUIRED`, `ownerAcceptanceRecorded=true`,
+`ownerDecisionSet=RECORDED_PENDING_REVALIDATION` и
+`promotionAllowed=false`. Все 1 597 записей в 80 bounded-пакетах получают
+`BLOCKED_BY_G10S-246_REVALIDATION` до новой проверки текущего `main`. Это
+metadata-only hardening: тела вопросов/ответов, serving, release pointers и
+learner state не менялись.
+
+R14/evidence-index синхронизированы с тем же состоянием: 92/92 артефакта
+классифицированы, 32 `still-valid`, 60 `superseded`, 0 unclassified и 0
+overlap; исторические evidence тела не переписывались и не удалялись.
+
+Проверки target: полный `pnpm check` — **rc=0**; `boundary:check`,
+`toolchain:check`, `git diff --check`, 9/9 PREP_ONLY focused tests,
+read-only readiness policy 1/1, evidence validation 13/13 и evidence schema
+726/726 — **PASS**. `architecture:gate-246-closure` честно остаётся **FAIL**
+только по `git:post-snapshot-non-metadata`, поскольку reviewed head
+`008703c…` старше текущего `main`; это и есть следующий обязательный gate, а
+не причина объявлять product production-ready.
+
+Счётчики плана намеренно не изменены: **664 / 470 / 1 134** формальных,
+**664 / 278 / 942** исполнимых и **664 / 128 / 792** неразрушающих пунктов;
+execution — **70,49%**, non-destructive closure — **83,84%**. Следующий
+порядок: свежая G10S-246 revalidation → один bounded packet G11-P001 с
+original content/provenance/typed placement/reviewer decision → G11.2–G11.6 →
+12 G12.3 dispositions → immutable RC и remote attestation после сброса quota
+→ G12.5 human requalification → independent review/sign-off. G13 cleanup
+остаётся запрещённым без новой явной авторизации владельца.
+
+Snapshot: [`plan-progress-2026-09-03-g11-current-main-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11-current-main-revalidation.md).
