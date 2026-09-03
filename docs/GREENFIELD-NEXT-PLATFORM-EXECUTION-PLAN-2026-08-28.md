@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-readiness-evidence-hardening.md`](verification/greenfield/plan-progress-2026-09-03-readiness-evidence-hardening.md).
+[`plan-progress-2026-09-03-g12.2-bundle-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-bundle-hardening.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9253,3 +9253,28 @@ G12.5 human requalification и independent review. Машинные readiness re
 запрещённым без новой явной авторизации владельца.
 
 Snapshot: [`plan-progress-2026-09-03-readiness-evidence-hardening.md`](verification/greenfield/plan-progress-2026-09-03-readiness-evidence-hardening.md).
+
+## Execution update — G12.2 bundle hardening — 3 сентября 2026
+
+После readiness-evidence hardening target получил локальный commit `af08cf5`
+(`fix(gates): close remote evidence bundle gaps`). Push не выполнялся; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+G12.2 теперь проверяет полноту evidence и в manifest validator, и в build-row:
+`ready` требует ровно один `local-ci-equivalent` и один
+`remote-attestation`; duplicate/missing kind, shape/path/digest drift и
+remote-not-attested issue привязываются к item. Локальный архив по-прежнему не
+выдаётся за GitHub Actions attestation, а metadata-only boundary не меняется.
+
+Проверки: focused `g12.2` — **6/6 PASS**; полный target `pnpm check` —
+**543/543 broad tests PASS** и зелёные lint/typecheck/build/content/runtime/
+security/architecture gates; после обновления G10S-226 index
+`architecture:evidence-schema`, `architecture:evidence-inputs`,
+`boundary:check`, `toolchain:check` и `git diff --check` — **PASS**. Target
+clean, локально **545** commits ahead of `origin/main`; push не выполнялся.
+
+Счётчики и product checkboxes намеренно не изменены: остаются G12.2 remote
+attestation/quota и RC correction, G12.3 dispositions, G11 breadth, G12.5 и
+independent review. G13 cleanup остаётся запрещённым без явной авторизации.
+
+Snapshot: [`plan-progress-2026-09-03-g12.2-bundle-hardening.md`](verification/greenfield/plan-progress-2026-09-03-g12.2-bundle-hardening.md).
