@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11.3-practice-portfolio.md`](verification/greenfield/plan-progress-2026-09-03-g11.3-practice-portfolio.md).
+[`plan-progress-2026-09-03-g11.6-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11.6-revalidation.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8936,3 +8936,49 @@ shared compatibility, facet breadth и independent scenarios), затем пов
 открытыми; G13 cleanup по-прежнему запрещён владельцем.
 
 Snapshot: [`plan-progress-2026-09-03-g11.3-practice-portfolio.md`](verification/greenfield/plan-progress-2026-09-03-g11.3-practice-portfolio.md).
+
+## Execution update — G11.6 revalidation readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`68c6591` (`gate(g11.6): stage revalidation readiness`). Push не выполнялся
+из-за лимита GitHub Actions; старые репозитории, сущности, Docker
+containers/volumes и данные не удалялись.
+
+G11.6 теперь имеет versioned PREP_ONLY policy и manifest для всех четырнадцати
+координат обязательной revalidation `G11-R01…G11-R14`. Guard
+`pnpm revalidation:g11.6-readiness` проверяет точный порядок и owners,
+допустимые evidence kind/path, наличие источников и SHA-256 digest для каждой
+готовой строки, ancestry target commit, sorted blocked reasons и
+metadata-only boundary. Неверный kind/path, stale digest, пропавший source,
+answer-shaped metadata, auto-promotion, release/DB/Docker/learner writes,
+push и deletion fail closed.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: перечислено `14/14`
+координат, готово `3/14` (`G11-R06` shared reuse, `G11-R10` rights leak,
+`G11-R11` C098 canary), заблокировано `11/14`, failed `0`, bound evidence `3`.
+Статусы исходных audit-артефактов не повышают строку автоматически: готовность
+меняется только после независимого evidence, записанного в manifest.
+
+Focused tests `5/5 PASS`; target полный `pnpm check` прошёл все lint,
+typecheck, project/content/runtime/architecture/security/performance и
+revalidation проверки; после штатной синхронизации historical evidence index
+`architecture:evidence-schema` и `architecture:evidence-inputs` — PASS.
+Boundary и toolchain — PASS; evidence index содержит `719/719` проверенных
+записей, `rewritesDetected=0`. Target clean после commit. Master-plan
+чекбоксы и counters намеренно не изменены: PREP_ONLY readiness не закрывает
+G11 breadth, G12.5, human independent review или production release.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11.6-revalidation-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11.6-revalidation-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g11.6-revalidation-readiness.mjs`,
+`fluent-interview-platform/tools/dev/test/g11.6-revalidation-readiness.test.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G11/revalidation-readiness-2026-09-03.{json,md}`.
+
+Следующая безопасная очередь — закрывать `R01–R05` (inventory, disposition,
+role ledger, coverage, authoring boundary), затем `R07–R09` (runtime joins,
+language relevance, overlays), затем `R12–R14` (path-release phases, final
+binding, evidence lifecycle). Каждая строка требует собственного evidence и
+atomic commit; G13 cleanup остаётся запрещённым владельцем.
+
+Snapshot: [`plan-progress-2026-09-03-g11.6-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11.6-revalidation.md).
