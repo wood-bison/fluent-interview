@@ -9718,6 +9718,12 @@ Target commit: `8dba70e0e0002a7b43d2bf6690cc0254ab6526ec`; полный `pnpm ch
 evidence-schema/evidence-inputs checks — **PASS**. Target `main` чистый, push не
 выполнялся из-за CI quota.
 
+При попытке продолжить G10S‑246 строгий revalidation guard вернул `FAIL`:
+reviewed packet закреплён на `008703c769a37434b10ca198059109140d6fcc91`, а
+текущий target — `8dba70e0e0002a7b43d2bf6690cc0254ab6526ec`. Старый owner decision
+не переиспользуется; до нового exact snapshot/revalidation `G11` остаётся
+PREP_ONLY и serving/release promotion запрещены.
+
 Индекс не закрывает G10S-246 revalidation, human authoring/review, G11.2–G11.6,
 G12.5 или production release: все 80 пакетов остаются
 `BLOCKED_BY_G10S-246_REVALIDATION`, promotion запрещена. Счётчики остаются

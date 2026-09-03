@@ -27,6 +27,14 @@ state и не меняет active release pointer.
 production evidence. Перед human authoring/review требуется current-main
 revalidation G10S-246 и остановка при любом source-hash drift.
 
+Точная причина текущего стопа зафиксирована машинным прогоном
+`pnpm architecture:gate-246-revalidation`: owner packet reviewed
+`008703c769a37434b10ca198059109140d6fcc91`, текущий target `main`
+`8dba70e0e0002a7b43d2bf6690cc0254ab6526ec`; результат `FAIL` с причиной
+`current HEAD does not match the reviewed packet snapshot`. Это не дефект
+индекса и не разрешение автоматически обновить packet: нужен новый exact
+current-main evidence snapshot и явное owner revalidation.
+
 Удаление старых репозиториев, сущностей, Docker resources, volumes и caches не
 выполнялось и этим коммитом не разрешается.
 
