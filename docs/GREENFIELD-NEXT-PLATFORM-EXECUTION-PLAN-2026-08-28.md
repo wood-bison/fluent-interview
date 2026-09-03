@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11.6-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11.6-revalidation.md).
+[`plan-progress-2026-09-03-g11.2-corpus.md`](verification/greenfield/plan-progress-2026-09-03-g11.2-corpus.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8982,3 +8982,51 @@ binding, evidence lifecycle). Каждая строка требует собс�
 atomic commit; G13 cleanup остаётся запрещённым владельцем.
 
 Snapshot: [`plan-progress-2026-09-03-g11.6-revalidation.md`](verification/greenfield/plan-progress-2026-09-03-g11.6-revalidation.md).
+
+## Execution update — G11.2 corpus reconciliation readiness — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`78264acf31f4c6c9469826c9612865e24666a169` (`gate(g11.2): stage corpus
+reconciliation readiness`). Push не выполнялся из-за лимита GitHub Actions;
+старые репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+G11.2 теперь имеет versioned PREP_ONLY policy и manifest для трёх открытых
+обязательств сверки corpus: `G11-013` (canonical classification и disposition),
+`G11-018` (research/authoring coverage и typed placement) и `G11-019`
+(expert sample review). Guard `pnpm corpus:g11.2-readiness` проверяет exact
+item order, owners, разрешённые evidence kind/path, существование источников
+и SHA-256 для готовых evidence, target ancestry, sorted blocked reasons и
+metadata-only boundary. Body-shaped metadata, auto-promotion, release/DB/
+Docker/learner writes, push и deletion fail closed.
+
+Результат честно `PASS_WITH_GAPS`, `valid: true`: перечислено `3/3`, готово
+`0/3`, заблокировано `3/3`, failed `0`, bound evidence `0`; source snapshots
+`9` уникальных путей. Машинные сигналы показывают текущую границу: `1 597`
+records в classification ledger, из них `0` classified и `1 597` unresolved;
+research pack имеет `0` review-ready; expert sample audit содержит `27`
+кластеров и `27` открытых review decisions; production coverage score пока не
+проходит. Guard фиксирует пробелы, но не создаёт и не выпускает контент.
+
+Focused tests `5/5 PASS`. Полный target `pnpm check` прошёл lint, typecheck,
+все project/content/runtime/architecture/security/performance тесты и новые
+G11.2 checks; штатная синхронизация G10S-226 evidence index дала `721/721`
+проверенных исторических записей, `rewritesDetected=0`. Дополнительно
+`architecture:evidence-schema`, `architecture:evidence-inputs`,
+`boundary:check`, `toolchain:check` и `git diff --check` — PASS. Target clean
+после commit; локальная ветка опережает `origin/main` на `538` commits.
+
+Чекбоксы master-plan и counters намеренно не изменены: PREP_ONLY readiness не
+закрывает content breadth, authoring, review, G11 final evidence, G12.5 или
+independent review. Следующая безопасная очередь — подготовить оригинальные
+classification/authoring/review evidence для трёх строк, затем повторить guard
+и привязать каждую строку к свежему evidence отдельным atomic commit. G13
+cleanup остаётся запрещённым владельцем; ничего не удаляется.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11.2-corpus-reconciliation-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11.2-corpus-reconciliation-manifest-2026-09-03.json`,
+`fluent-interview-platform/tools/dev/g11.2-corpus-reconciliation-readiness.mjs`,
+`fluent-interview-platform/tools/dev/test/g11.2-corpus-reconciliation-readiness.test.mjs`,
+`fluent-interview-platform/docs/verification/greenfield/G11/corpus-reconciliation-readiness-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g11.2-corpus.md`](verification/greenfield/plan-progress-2026-09-03-g11.2-corpus.md).
