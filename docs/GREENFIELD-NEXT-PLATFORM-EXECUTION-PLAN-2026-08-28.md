@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).
+[`plan-progress-2026-09-03-g11-authoring-worksheet.md`](verification/greenfield/plan-progress-2026-09-03-g11-authoring-worksheet.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9683,3 +9683,24 @@ remote Actions quota и human requalification). Счётчики после си
 G11-P001 human authoring/review → G11.2–G11.6 → новый RC/G12.5 → independent
 review. G13 cleanup и удаление старых ресурсов без отдельной owner authorization
 запрещены; push не выполнялся.
+
+## Execution update — bounded G11-P001 authoring worksheet — 3 сентября 2026
+
+Target `main` получил отдельный metadata-only worksheet для первого bounded
+пакета `G11-P001` (6 записей без назначенного path/domain). Артефакт фиксирует
+детерминированную последовательность authoring/review и десять обязательных
+evidence-полей на запись, но не содержит текстов вопросов/ответов, решений,
+кода или исходных формулировок. `G10S-246` остаётся fail-closed
+`REVALIDATION_REQUIRED`, все записи `NOT_STARTED`, promotion запрещена.
+
+Target commit: `735a0ca88c355eae8788e8d183d308f51638ea57`; полный pre-commit
+`pnpm check`, `boundary:check`, `toolchain:check`, `git diff --check` и
+post-commit worksheet/evidence smoke checks — **PASS**; target `main` чистый.
+Подробности: [`plan-progress-2026-09-03-g11-authoring-worksheet.md`](verification/greenfield/plan-progress-2026-09-03-g11-authoring-worksheet.md).
+
+Это подготовительный шаг и он не уменьшает counters: **665 / 469 / 1 134**
+формальных, **665 / 277 / 942** исполнимых и **665 / 127 / 792**
+неразрушающих пунктов. Следующий реальный progress требует current-main
+G10S-246 revalidation и human mapping/authoring/review `G11-P001`; старые
+репозитории, сущности, Docker resources, volumes и caches не удаляются, push не
+выполняется.
