@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r13-final-evidence.md`](verification/greenfield/plan-progress-2026-09-03-g11-r13-final-evidence.md).
+[`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8723,3 +8723,39 @@ reviewed path content и G12.5 requalification. G13 cleanup остаётся о�
 `fluent-interview-platform/docs/verification/greenfield/G11/final-evidence-binding-revalidation-2026-09-03.{json,md}`.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r13-final-evidence.md`](verification/greenfield/plan-progress-2026-09-03-g11-r13-final-evidence.md).
+
+## Execution update — G11-R14 evidence lifecycle revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`c129ca4da51bd18300f0d89e9f4de45510b1bd14` (`gate(g11): classify historical
+evidence lifecycle`). Push не выполнялся из-за лимита GitHub Actions; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+R14 добавляет versioned lifecycle policy/manifest и fail-closed scanner для
+каждого top-level файла в `docs/verification/greenfield/G11`. Каждая запись
+попадает ровно под одно правило: текущие `2026-09-03` revalidation artifacts
+помечены `still-valid` с independent scope, исторические JSON/Markdown/command/
+checksum artifacts — `superseded` с явным successor и причиной. Файлы не
+переписываются и не удаляются; новый top-level файл остановит gate до явного
+добавления правила.
+
+Результат `PASS`, `valid: true`: обнаружено и классифицировано `81/81` файлов,
+`still-valid=21`, `superseded=60`, unclassified `0`, rule overlap `0`. Target
+anchor `e9d5b6342c5e982867bc0bcd8c62865ca2c6db33` существует и является
+ancestor current HEAD. Focused tests `4/4 PASS`; target `pnpm content:gates`,
+`pnpm check`, `pnpm boundary:check`, `pnpm toolchain:check` и post-commit
+`pnpm architecture:evidence-schema` — PASS; evidence index `710/710`,
+`rewritesDetected=0`, divergence `origin/main...main = 0 532`.
+
+Чекбокс `G11-R14` пока не отмечается автоматически в master-plan: lifecycle
+classification закрыта машинным evidence, но G11 final evidence, content
+breadth, G12.5 и independent review ещё не завершены. Следующая очередь —
+reviewed path/overlay packs и их R07–R13 revalidation; G13 cleanup остаётся
+отложенным до новой явной авторизации.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/g11-evidence-lifecycle-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/g11-evidence-lifecycle-manifest-2026-09-03.json`,
+`fluent-interview-platform/docs/verification/greenfield/G11/R14/evidence-lifecycle-revalidation-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r14-lifecycle.md`](verification/greenfield/plan-progress-2026-09-03-g11-r14-lifecycle.md).
