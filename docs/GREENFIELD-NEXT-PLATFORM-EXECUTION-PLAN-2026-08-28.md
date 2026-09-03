@@ -5274,7 +5274,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 
 ### G11.5. Learning quality and interview benchmark
 
-- [ ] `G11-029` Lessons support worked example → faded steps → independent problem → self-explanation → interleaving → repeat.
+- [x] `G11-029` Lessons support worked example → faded steps → independent problem → self-explanation → interleaving → repeat. Evidence: target commit `a89df89a473958dfea108e8f2c4a18b15ec9e3a7`, `docs/verification/greenfield/G11/lesson-scaffold-journey-2026-09-03.json`; live RU/EN browser walkthrough completed `6/6`, including formal explanation and server-owned unseen transfer with `5/5` hidden runtime checks.
 - [x] `G11-030` Retention measured at 7 and 30 days. Closed by target commit `5dafc7c`: progress exposes independent `pending/due/passed` 7-day and 30-day checkpoints, schedules distinct revision reasons, accepts only independent pass evidence after the server-owned due time, and keeps the separate 48-hour cold-repeat facet intact (`11/11` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-031` Unseen variant success and hint dependence recorded. Closed by target commit `7c4b1e8`: deterministic unseen-transfer issuance is bound to the current release/revision, server time is authoritative, assistance level is persisted, assisted success cannot promote mastery, and assistance dependence schedules follow-up evidence (`10/10` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation. Closed by target commit `c07c16e`: a versioned bilingual public process rubric binds all six dimensions to explicit learner-process, runtime-verdict or learning-assessment authorities without exposing private evaluator checks or allowing LLM pass (`11/11` focused checks; full check/boundary/toolchain PASS).
@@ -9999,3 +9999,38 @@ product/DB/Docker/learner mutations не было.
 `G11-029` worked-example → guided task → independent task → unseen transfer;
 `G11-035/036` требуют реального spoken/external human evidence и не могут быть
 закрыты синтетически.
+
+## Execution update — G11-029 six-stage lesson journey — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил commit `a89df89`
+(`feat(g11): compose the six-stage lesson journey`). Released Node Event Loop
+lesson теперь является одной последовательной учебной сессией: worked example,
+faded guidance, independent problem, formal self-explanation, interleaving и
+repeat/transfer. Этапы восстанавливаются из server-owned progress events, а
+выдача варианта сама по себе не считается pass.
+
+Formal self-explanation проходит через существующий deterministic assessment
+rubric. Unseen transfer получает server-owned variant/context/issuance,
+открывает отдельный nested scheduling scenario, требует prediction, public run
+и hidden submit. Только принятый evaluator artifact создаёт
+`unseen_transfer_passed`; прямой URL без полного server binding fail closed.
+
+Live browser walkthrough подтвердил RU/EN, `1440×1000`, compact `390×844` и
+полную desktop-матрицу урока для MBP 13, MBP 16 и Studio Display в light/dark:
+page-level horizontal overflow отсутствует, элементы управления не обрезаны,
+в консоли финального маршрута `0` errors, progress после transfer — `6/6`.
+Фактический runtime verdict: prediction match, public pass, `5/5` hidden checks,
+persisted evaluator receipt и привязанный learner progress.
+
+G11.5 readiness теперь `6 ready / 2 blocked`; открыты только `G11-035/036`,
+которым требуются реальные spoken/external-human evidence. Полный `pnpm check`,
+`boundary:check`, `toolchain:check`, design/accessibility policy и evidence index
+`738/738` прошли. Общий uncompressed JS budget версионирован с `1.20` до
+`1.22 MB`: фактический размер `1,207,978` bytes, а отдельные initial/editor/task
+лимиты остались зелёными. Удалений, release pointer, DB schema и Docker
+mutations не было; push-CI остаётся отключённым, ручной/PR CI сохранён.
+
+Формальные counters: **672 / 462 / 1 134**. Исполнимый и неразрушающий остаток:
+**672 / 270 / 942** и **672 / 120 / 792**. Product-closure очередь:
+**65 пунктов**. Следующий bounded пакет — `G11-035` spoken English defense;
+`G11-036` закрывается только после отдельной external-human mock session.
