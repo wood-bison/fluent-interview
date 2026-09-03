@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-frozen-strata-reconciliation.md`](verification/greenfield/plan-progress-2026-09-03-frozen-strata-reconciliation.md).
+[`plan-progress-2026-09-03-g11-lane-separation.md`](verification/greenfield/plan-progress-2026-09-03-g11-lane-separation.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -9807,3 +9807,26 @@ acceptance. До него все `G11-P001…P080` остаются PREP_ONLY; s
 promotion запрещена. Старые репозитории, Docker resources, volumes, caches и
 сущности не удалялись; push не выполнялся. Подробности:
 [`plan-progress-2026-09-03-frozen-strata-reconciliation.md`](verification/greenfield/plan-progress-2026-09-03-frozen-strata-reconciliation.md).
+
+## Execution update — G11 authoring/disposition lane separation — 3 сентября 2026
+
+Target implementation `5d11527` исправил дефект PREP_ONLY orchestration:
+служебные `README`, audit и raw-backlog документы больше не получают workflow
+написания question/answer. **1 594** настоящие question/concept/behavioral/
+best-practice records теперь образуют **80 content-authoring packets**, а три
+source documents изолированы в одном `source-disposition` пакете с четырьмя
+правильными проверками. Первый `G11-P001` содержит только `NT-701`, `NT-702` и
+`NT-710`; служебный пакет стал `G11-P081`. Полное покрытие осталось
+`1 597/1 597`, source bodies не копировались.
+
+Evidence commit `0b29557` пересобрал R14 lifecycle: `95/95` файлов
+классифицированы, unclassified/overlap = `0`. Focused tests `9/9`, content,
+evidence-input/schema, full check, boundary, toolchain и diff gates — PASS.
+Живой stack остаётся healthy с миграциями `18/18`; все 12 acceptance routes
+вернули HTTP 200.
+
+Это исправление не подменяет human mapping/authoring/review и current-main
+G10S-246 acceptance, поэтому counters остаются **665 / 469 / 1 134**,
+**665 / 277 / 942** и **665 / 127 / 792**. Push и удаление не выполнялись.
+Подробности:
+[`plan-progress-2026-09-03-g11-lane-separation.md`](verification/greenfield/plan-progress-2026-09-03-g11-lane-separation.md).
