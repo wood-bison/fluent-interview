@@ -9618,3 +9618,30 @@ G11.2–G11.6 → G12.3/G12.2 → G12.5 и independent sign-off. G13 cleanup и
 Счётчики остаются **664 / 470 / 1 134** формальных, **664 / 278 / 942**
 исполняемых и **664 / 128 / 792** неразрушающих пунктов. Полный snapshot:
 [`plan-progress-2026-09-03-g10s-246-current-head.md`](verification/greenfield/plan-progress-2026-09-03-g10s-246-current-head.md).
+
+## Execution update — G11/G12 readiness evidence refresh — 3 сентября 2026
+
+На target `main` выполнена bounded metadata-only пересборка девяти G11/G12
+readiness envelopes после one-root/evidence волны. `currentHead` и зависимые
+source digests теперь отражают target commit `5859206`; G10S historical index
+пересобран по фактическим size/digest и снова проверяет `728/728` записей без
+перезаписи исторических тел. Все отчёты остаются честно
+`PASS_WITH_GAPS`: guards зелёные, но blocked/ready counters не превращены в
+production completion.
+
+Target проверки: полный `pnpm check` — **rc=0**;
+`architecture:evidence-schema`, `architecture:evidence-inputs`,
+`boundary:check`, `toolchain:check`, `git diff --check` — **PASS**. Target
+`main` чистый. Изменения не затрагивают question/answer bodies, serving или
+release pointers, БД, Docker, старые репозитории/сущности/volumes/caches; push
+не выполнялся из-за лимита GitHub Actions.
+
+Счётчики master-plan не меняются: **664 / 470 / 1 134** формальных,
+**664 / 278 / 942** исполнимых и **664 / 128 / 792** неразрушающих пунктов
+(execution **70,49%**, non-destructive **83,84%**). Следующий рабочий gate —
+новый immutable G10S-246 packet на текущем `main` и owner revalidation, после
+чего bounded G11-P001 и G11.2–G11.6; G12.3/G12.2, G12.5 и independent
+sign-off остаются обязательными. G13 cleanup/удаление без отдельной
+авторизации владельца запрещено.
+
+Snapshot: [`plan-progress-2026-09-03-g11-readiness-refresh.md`](verification/greenfield/plan-progress-2026-09-03-g11-readiness-refresh.md).
