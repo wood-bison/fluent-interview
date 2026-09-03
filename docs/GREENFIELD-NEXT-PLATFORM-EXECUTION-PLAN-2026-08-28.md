@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r06-shared-reuse.md`](verification/greenfield/plan-progress-2026-09-03-g11-r06-shared-reuse.md).
+[`plan-progress-2026-09-03-g11-r10-rights-leak.md`](verification/greenfield/plan-progress-2026-09-03-g11-r10-rights-leak.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,23 +17,23 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 662 | 472 | 1 134 |
-| Исполнимые gates/checks | 662 | 280 | 942 |
-| Неразрушающее закрытие продукта | 662 | 130 | 792 |
-| ↳ текущий product closure | 662 | 75 | 737 |
+| Формальный master-plan | 663 | 471 | 1 134 |
+| Исполнимые gates/checks | 663 | 279 | 942 |
+| Неразрушающее закрытие продукта | 663 | 129 | 792 |
+| ↳ текущий product closure | 663 | 74 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **70,28%**. Это улучшенная метрика
+Execution completion на этом снимке — **70,38%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
 `G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 662 / 130 / 792, или 83,59%**. Поэтому число `472`
+**non-destructive closure: 663 / 129 / 792, или 83,71%**. Поэтому число `471`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
-До полного неразрушающего результата остаётся 131 проверяемый пункт; G13
+До полного неразрушающего результата остаётся 129 проверяемых пунктов; G13
 возобновляется только по новой явной авторизации владельца.
 
 ### Owner-сессия G10S-246 завершена
@@ -5247,7 +5247,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [ ] `G11-R07` Каждый runnable Activity ссылается на exact TaskFamily/TaskRevision/runtime release; broken и preview links не считаются coverage.
 - [ ] `G11-R08` Node/Java/Go/.NET/Kotlin/Python/React/Next paths повторно проходят forbidden-set и relevance matrix после import.
 - [ ] `G11-R09` Algorithms/System Design/Behavioral overlays используют shared placements осознанно и не дублируют canonical Questions.
-- [ ] `G11-R10` Rights leak scan проходит для каждого release bundle и learner projection; forbidden findings = 0.
+- [x] `G11-R10` Rights leak scan проходит для каждого release bundle и learner projection; forbidden findings = 0. Evidence: target commit `0e5f970`; `rights-leak-revalidation-2026-09-03.json`; release и learner projection byte-identical (`32,945` bytes, SHA-256 `0d7683c3…`), `0` forbidden fields, `0` high-confidence secret findings, `0` unsafe source URLs; focused test `2/2` и target `pnpm check`, `boundary:check`, `toolchain:check` — PASS. Gate metadata-only, serving/release/database/Docker/push mutations `0`.
 - [ ] `G11-R11` C098 remains green как canary после каждого mass-import batch; regression блокирует следующий batch.
 - [ ] `G11-R12` Каждая path/release фаза закрывается отдельным bundle, reconciliation report, browser journey и atomic commit.
 - [ ] `G11-R13` G11 final evidence ссылается на G10S PASS SHA, authoring release IDs, serving release IDs и current adapter version.
@@ -8471,3 +8471,38 @@ independent review и отложенный владельцем G13. Стары�
 Docker containers/volumes и данные не удалялись.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r06-shared-reuse.md`](verification/greenfield/plan-progress-2026-09-03-g11-r06-shared-reuse.md).
+
+## Execution update — G11-R10 public rights-leak revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit `0e5f970`
+(`gate(g11): revalidate public rights boundary`), без push и без удаления.
+Добавлен deterministic metadata-only gate `G11-R10`: он строит public release
+bundle из текущего authoring catalog, повторно декодирует его как learner
+projection и проверяет обе поверхности по одному и тому же allowlist/rights
+contract. Перестановка входных карточек и вложенных коллекций обязана давать
+те же байты и SHA-256; это защищает release от скрытого порядка или случайного
+секретного поля.
+
+Результат текущего release: `6` records, `12` translations, `10` placements,
+`40` roles, `6` supporting prompts, `7` activities и `3` graph edges. Bundle и
+learner projection идентичны: `32,945` bytes, SHA-256
+`0d7683c3…`; forbidden fields `0`, high-confidence secret patterns `0`,
+unsafe/invalid source URLs `0`. Все восемь checks (`policy`, `releaseBundle`,
+`learnerProjection`, `forbiddenFields`, `secretPatterns`, `sourceUrls`,
+`deterministic`, `metadataBoundary`) — `PASS`; focused regression `2/2`.
+Команда подключена в `content:gates`, а full target `pnpm check`,
+`pnpm boundary:check`, `pnpm toolchain:check` и post-commit
+`pnpm architecture:evidence-schema` — PASS; target clean.
+
+Граница честно сохранена: gate не импортирует в serving, не активирует release,
+не пишет БД/Docker/progress, не проверяет семантическую оригинальность и не
+заменяет human rights/reviewer decision. Поэтому G11 breadth, language/runtime
+packs, independent review и G12.5 остаются открытыми. Старые репозитории,
+сущности, Docker containers/volumes и данные не удалялись; push не выполнялся
+из-за действующего ограничения CI.
+
+После отметки `G11-R10` `pnpm plan:progress:json` сообщает: **663 / 471 /
+1 134 · 58,47%** формально; **663 / 279 / 942 · 70,38%** исполнимых checks;
+non-destructive **663 / 129 / 792 · 83,71%**; product closure **663 / 74 /
+737 · 89,96%**. Snapshot:
+[`plan-progress-2026-09-03-g11-r10-rights-leak.md`](verification/greenfield/plan-progress-2026-09-03-g11-r10-rights-leak.md).
