@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-r08-language-paths.md`](verification/greenfield/plan-progress-2026-09-03-g11-r08-language-paths.md).
+[`plan-progress-2026-09-03-g11-r09-overlays.md`](verification/greenfield/plan-progress-2026-09-03-g11-r09-overlays.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8611,3 +8611,41 @@ entries и `rewritesDetected=0`.
 Старые репозитории, сущности, контейнеры, volumes и данные не удалялись.
 
 Snapshot: [`plan-progress-2026-09-03-g11-r08-language-paths.md`](verification/greenfield/plan-progress-2026-09-03-g11-r08-language-paths.md).
+
+## Execution update — G11-R09 overlay reuse revalidation — 3 сентября 2026
+
+Target `fluent-interview-platform/main` получил локальный commit
+`158945bf1579c1a6fdcb422c67d9b7cea7473798` (`gate(g11): add overlay reuse
+revalidation`). Push не выполнялся из-за лимита GitHub Actions; старые
+репозитории, сущности, Docker containers/volumes и данные не удалялись.
+
+Gate добавляет fail-closed metadata-only проверку для overlays Algorithms,
+System Design и Behavioral. Политика и PREP_ONLY manifest фиксируют разрешённые
+scopes (`generic`, `track`), обязательный explicit `sharedKey` для generic
+reuse, ожидаемые capability/activity targets и запрет auto-promotion. Guard
+проверяет только Question IDs, canonical semantic keys, track/scope,
+released-catalog join и детерминированный порядок; тексты вопросов, ответы,
+runtime, import/release, БД, Docker и learner progress не создаются и не
+изменяются.
+
+Текущий результат честно остаётся `PASS_WITH_GAPS` (`valid: true`): ожидаются
+3 overlays, оценено `0`, blocked `3`, failed `0`. Source queues: Algorithms
+`52`, Behavioral `103`, System Design `568`; текущий release содержит `0`
+overlay placements, поэтому ни один overlay не объявлен готовым. Все четыре
+focused tests и полный target `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check` прошли; post-commit `pnpm architecture:evidence-schema`
+прошёл, evidence index содержит `703/703` проверенных исторических записей,
+`rewritesDetected=0`, divergence `origin/main...main = 0 529`.
+
+Чекбокс `G11-R09` не отмечается: сначала нужны reviewed overlay packs и
+реальные shared/native placements, затем повторная R09 проверка до `PASS`.
+Следующая очередь: закрыть оставшиеся G11-R12…R14/release reconciliation,
+заполнить G12.5 requalification и только потом запускать independent review.
+G13 cleanup остаётся отложенным и неразрушающимся до новой явной авторизации.
+
+Артефакты target:
+`fluent-interview-platform/content/curriculum/overlay-reuse-policy.v1.json`,
+`fluent-interview-platform/content/curriculum/overlay-placement-manifest-2026-09-03.json`,
+`fluent-interview-platform/docs/verification/greenfield/G11/overlay-reuse-revalidation-2026-09-03.{json,md}`.
+
+Snapshot: [`plan-progress-2026-09-03-g11-r09-overlays.md`](verification/greenfield/plan-progress-2026-09-03-g11-r09-overlays.md).
