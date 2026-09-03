@@ -1,11 +1,12 @@
 # Greenfield plan progress — 2026-09-03 — readiness write policy
 
-Снимок выполнен после трёх локальных commits target-проекта
+Снимок выполнен после четырёх локальных commits target-проекта
 `/Users/sergeyzhechko/developer/fluent-interview-platform`:
 
 - `a6df0d7 fix(check): keep readiness verification read-only`;
-- `c70baf5 chore(evidence): sync historical index after readiness fix`.
+- `c70baf5 chore(evidence): sync historical index after readiness fix`;
 - `b1a5fc4 test(readiness): guard full working tree writes`.
+- `289f1e3 test(readiness): report per-command write violations`.
 
 Push не выполнялся из-за ограничения GitHub Actions. Старые репозитории,
 сущности, containers/volumes, caches и данные не удалялись.
@@ -30,6 +31,8 @@ evidence; следующий `pnpm check` тогда видел устаревш
   `git status --porcelain=v1 -z`, поэтому переписывание любого tracked-файла,
   удаление tracked-файла или создание побочного working-tree артефакта будет
   обнаружено;
+- после каждой из десяти команд тест сравнивает porcelain-status с исходным и
+  сообщает имя конкретной команды, если она оставила изменения;
 - явная пересборка evidence по-прежнему возможна отдельной командой
   `g10s-evidence-schema --write-index`, а index после неё синхронизирован
   отдельным commit `c70baf5`.
@@ -49,8 +52,9 @@ evidence; следующий `pnpm check` тогда видел устаревш
 - `pnpm architecture:evidence-inputs` — **8/8 PASS**;
 - `pnpm boundary:check`, `pnpm toolchain:check`, `pnpm git diff --check` —
   **PASS**;
-- target clean после commits `a6df0d7`, `c70baf5` и `b1a5fc4`;
-  полный `pnpm check` на чистом `b1a5fc4` завершился `rc=0`, а G10S-226
+- target clean после commits `a6df0d7`, `c70baf5`, `b1a5fc4` и `289f1e3`;
+  полный `pnpm check` на чистом `b1a5fc4` завершился `rc=0`, а post-commit
+  read-only suite на `289f1e3` — **1/1 PASS**; G10S-226
   подтвердил `target.clean=true`.
 
 ## Что это не закрывает

@@ -9366,10 +9366,11 @@ Snapshot: [`plan-progress-2026-09-03-readiness-row-contracts.md`](verification/g
 
 ## Execution update — readiness verification write policy — 3 сентября 2026
 
-После row-level readiness hardening target получил три локальных commits:
+После row-level readiness hardening target получил четыре локальных commits:
 `a6df0d7` (`fix(check): keep readiness verification read-only`) и `c70baf5`
 (`chore(evidence): sync historical index after readiness fix`), затем
-`b1a5fc4` (`test(readiness): guard full working tree writes`). Push не
+`b1a5fc4` (`test(readiness): guard full working tree writes`) и `289f1e3`
+(`test(readiness): report per-command write violations`). Push не
 выполнялся; старые репозитории, сущности, Docker containers/volumes, caches и
 данные не удалялись.
 
@@ -9377,15 +9378,15 @@ Snapshot: [`plan-progress-2026-09-03-readiness-row-contracts.md`](verification/g
 перезаписывают tracked reports в обычном проверочном прогоне. `READINESS_WRITE=0`
 передаётся тестовому pipeline, а regression-тест запускает все десять
 readiness-команд и проверяет SHA-256 отчётов и всего tracked working tree до/после,
-а также неизменность `git status --porcelain`. Явный write-path
+а также неизменность `git status --porcelain` после каждой команды. Явный write-path
 сохраняется только для намеренной пересборки evidence; после такой пересборки
 G10S-226 index синхронизирован отдельным commit.
 
 Проверки: полный target `pnpm check` — **rc=0**; read-only regression —
 **1/1 PASS**; G10S-228 — **4/4** и **3/3 PASS**; G11 mass-import boundary —
 **PASS**; evidence schema — **726/726**, evidence inputs — **8/8**; boundary,
-toolchain и `git diff --check` — **PASS**; чистый target `b1a5fc4` подтвердил
-`target.clean=true`. Это только hardening воспроизводимости,
+toolchain и `git diff --check` — **PASS**; чистые target `b1a5fc4` и
+`289f1e3` подтвердили `target.clean=true`. Это только hardening воспроизводимости,
 поэтому счётчики master-plan и содержательные gaps намеренно не изменены:
 G11 breadth/1 597 unresolved, 12 G12.3 dispositions, G12.2 remote attestation,
 G12.5 human requalification, independent review и отложенный G13 остаются в
