@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
 чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-028.md`](verification/greenfield/plan-progress-2026-09-03-g11-028.md).
+[`plan-progress-2026-09-03-g11-021-runtime-projection.md`](verification/greenfield/plan-progress-2026-09-03-g11-021-runtime-projection.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -8364,3 +8364,35 @@ independent scenario content. Java/Go/.NET/Kotlin/Python/Next не объявл�
 закрытыми: их package-mode evidence появится отдельными release slices.
 Следующий безопасный executable slice — F1 corpus/shared authoring queue;
 никакие PREP_ONLY metadata не превращаются в learner release автоматически.
+
+## Execution update — F1 G11-021 activity runtime projection — 3 сентября 2026
+
+В target `fluent-interview-platform/main` создан локальный commit `69d2cac`
+(`feat(g11): project released activity runtime joins`), без push и без
+удаления. V1-карточки не мутировались: добавлена отдельная
+`g11-activity-runtime-projection.v1` metadata-only проекция, которая связывает
+`(questionRef, activityId)` с exact `TaskFamily/Revision/runtimeProfile` только
+после сверки каталога, released runtime evidence и released scenario catalog.
+
+Проверены два существующих Node activity (`predict`, `run`) с join
+`node-event-loop-001@1` / `node-26-commonjs`; пять остальных activity остаются
+открытыми. Projection имеет `PASS_WITH_GAPS`, structural issues `0`, а
+`content:portfolio` теперь видит **1** runnable revision вместо прежних `0`.
+Очередь независимых сценариев уменьшилась с **14** до **12** слотов, потому что
+две явные scenario bindings уже зафиксированы. Ни одна новая задача,
+scenario-body, import, release pointer или learner progress запись не создана.
+
+Проверено последовательно: `node --test` для projection/portfolio/queue —
+**14/14 PASS**; `pnpm content:activity-runtime-projection`,
+`pnpm content:portfolio`, `pnpm content:scenario-queue`; полный target
+`pnpm check` — **PASS**; evidence index — **690/690** historical entries,
+`rewritesDetected=0`. Machine/human summary:
+`fluent-interview-platform/docs/verification/greenfield/G11/activity-runtime-projection-2026-09-03.{json,md}`.
+
+Мастер-счётчики не меняются, поскольку G11-021…026 по-прежнему не достигли
+своих breadth targets: **659 / 475 / 1 134 · 58,11%** формально,
+**659 / 283 / 942 · 69,96%** исполнимых gates/checks, non-destructive
+**659 / 133 / 792 · 83,21%**. Текущая projection закрывает только точность
+двух runtime joins и не является promotion. Следующая очередь — human
+acceptance/revalidation G10S-246, затем авторское наполнение G11; G13
+decommission и удаление старых репозиториев/контейнеров остаются запрещены.
