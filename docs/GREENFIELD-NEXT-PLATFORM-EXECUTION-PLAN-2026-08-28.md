@@ -10038,8 +10038,10 @@ mutations не было; push-CI остаётся отключённым, руч
 
 ## Execution update — G11-035 spoken defense workflow — 4 сентября 2026
 
-Target `fluent-interview-platform/main` получил и опубликовал commit `554182e`
-(`feat(g11): add spoken defense workflow`). Экран `/review` теперь содержит
+Target `fluent-interview-platform/main` получил и опубликовал feature commit
+`554182e` (`feat(g11): add spoken defense workflow`). Следом metadata-only
+rebind commit `1c33935` привязал readiness reports и evidence index к текущему
+HEAD без изменения learner/content данных. Экран `/review` теперь содержит
 один явный English defense loop для released Node Event Loop: четыре rubric
 измерения (`decision`, `tradeoff`, `failure`, `verification`), обязательный
 feedback, выбор источника (`self`, `peer`, `coach`), две последовательные
@@ -10068,4 +10070,5 @@ promotion, content breadth, G11.4 path closure и G12.5 requalification не
 Формальные counters после фазы: **673 / 461 / 1 134**. Исполнимый и
 неразрушающий остаток: **673 / 269 / 942** и **673 / 119 / 792**.
 Product-closure очередь: **64 пункта**. Target remote `origin/main` совпадает
-с `554182e3d37a71f63fcb827f27307a09cb21dcd8`; удалений не выполнялось.
+с `1c33935aa164c70cc16e74a29a0fb7efa7694acc` (feature `554182e` + rebind
+`1c33935`); удалений не выполнялось.
