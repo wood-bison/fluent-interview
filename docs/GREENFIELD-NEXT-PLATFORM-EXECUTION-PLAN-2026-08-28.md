@@ -6,7 +6,7 @@
 читает этот план и печатает `checked / remaining / total`, процент выполнения и
 разбивку по разделам; она не ставит галочки автоматически и не превращает
  чекбоксы в заявление о production readiness. Последний зафиксированный снимок:
-[`plan-progress-2026-09-03-g11-lane-separation.md`](verification/greenfield/plan-progress-2026-09-03-g11-lane-separation.md).
+[`plan-progress-2026-09-04-g11-035-spoken-defense.md`](verification/greenfield/plan-progress-2026-09-04-g11-035-spoken-defense.md).
 
 ### Ускоренный режим исполнения — 2 сентября 2026
 
@@ -17,23 +17,23 @@
 
 | Срез | Закрыто | Осталось | Всего |
 | --- | ---: | ---: | ---: |
-| Формальный master-plan | 665 | 469 | 1 134 |
-| Исполнимые gates/checks | 665 | 277 | 942 |
-| Неразрушающее закрытие продукта | 665 | 127 | 792 |
-| ↳ текущий product closure | 665 | 72 | 737 |
+| Формальный master-plan | 673 | 461 | 1 134 |
+| Исполнимые gates/checks | 673 | 269 | 942 |
+| Неразрушающее закрытие продукта | 673 | 119 | 792 |
+| ↳ текущий product closure | 673 | 64 | 737 |
 | ↳ requalification + independent review | 0 | 55 | 55 |
 | G13 decommission (отложен владельцем) | 0 | 150 | 150 |
 
-Execution completion на этом снимке — **70,59%**. Это улучшенная метрика
+Execution completion на этом снимке — **71,44%**. Это улучшенная метрика
 очереди, а не заявление о production readiness. Critical path остаётся:
 `G11 breadth → G12.5 requalification → independent
 review → G13 controlled cleanup`.
 
 При действующем запрете владельца на удаление главный рабочий показатель —
-**non-destructive closure: 665 / 127 / 792, или 83,96%**. Поэтому число `469`
+**non-destructive closure: 673 / 119 / 792, или 84,97%**. Поэтому число `461`
 нельзя сообщать как объём оставшейся разработки: в нём находятся 192
 постоянных правила и 150 отдельно отложенных cleanup/decommission пунктов.
-До полного неразрушающего результата остаётся 127 проверяемых пунктов; G13
+До полного неразрушающего результата остаётся 119 проверяемых пунктов; G13
 возобновляется только по новой явной авторизации владельца.
 
 ### Owner-сессия G10S-246 — reviewed snapshot (current-main revalidation required)
@@ -5146,7 +5146,7 @@ human owner sign-off и широкий G11 curriculum gate остаются от
 micro-gate подход для каждого отдельного checkbox. Он не ослабляет domain,
 security, rights, runtime или release invariants.
 
-- Рабочий denominator — `66` product-closure items, а не формальные `463`:
+- Рабочий denominator — `65` product-closure items, а не формальные `461`:
   `192` standing-policy rows не являются задачами реализации, `150` G13
   decommission rows запрещены до отдельной owner authorization, `55`
   requalification/review выполняются только после готового продукта.
@@ -5183,7 +5183,8 @@ security, rights, runtime или release invariants.
 4. **Revalidation + G11 gate:** `G11-R01…R13`, `G11-037…046` проверяются одним
    consolidated release/browser run после наполнения, а не до него.
 5. **Final review:** G12.5 и independent review запускаются один раз после
-   product closure. `G11-035/036` остаются owner/human boundary.
+   product closure. `G11-036` остаётся owner/human boundary; `G11-035`
+   закрыт локальным spoken workflow без автоматического заявления о readiness.
 
 ### G11.0. Coverage policy
 
@@ -5280,7 +5281,7 @@ paths; denominators и stable IDs обязаны объяснять переис
 - [x] `G11-032` Timed coding rubric covers clarification, design, tests, edge cases, complexity and explanation. Closed by target commit `c07c16e`: a versioned bilingual public process rubric binds all six dimensions to explicit learner-process, runtime-verdict or learning-assessment authorities without exposing private evaluator checks or allowing LLM pass (`11/11` focused checks; full check/boundary/toolchain PASS).
 - [x] `G11-033` System-design rubric covers requirements, estimates, model, APIs, data, failure, trade-offs and operations. Evidence: target commit `0fb8b21`, additive project release `2026.09.03-projects.4`, rubric `system-design-tradeoff-defense-rubric.v2`, `project-interview-rubric-evidence-2026-09-03.json` (`PASS`, exact 8/8 dimensions), full local gates PASS.
 - [x] `G11-034` Incident rubric covers detection, hypothesis, evidence, mitigation, recovery and prevention. Evidence: target commit `0fb8b21`, rubric `system-design-failure-drill-rubric.v2`, `project-interview-rubric-evidence-2026-09-03.json` (`PASS`, exact 6/6 dimensions, stale v1 rejected), full local gates PASS.
-- [ ] `G11-035` English defense rubric and recorded/mock workflow exist.
+- [x] `G11-035` English defense rubric and recorded/mock workflow exist. Closed by target commit `554182e3d37a71f63fcb827f27307a09cb21dcd8`: `/review` now offers a two-attempt English defense workflow with four explicit rubric dimensions, required feedback, reviewer kind, distinct recording/mock reference and repeat; only metadata/evidence IDs enter the append-only ledger. Browser verification passed at `1280×900` and `900×800`, console errors `0`; evidence: `spoken-defense-workflow-2026-09-04.json` and `spoken-defense-human-boundary-2026-09-04.json`.
 - [ ] `G11-036` Product does not claim interview readiness until human/external mock evidence exists.
 
 ### G11.6. Обязательная revalidation после G10S
@@ -10034,3 +10035,37 @@ mutations не было; push-CI остаётся отключённым, руч
 **672 / 270 / 942** и **672 / 120 / 792**. Product-closure очередь:
 **65 пунктов**. Следующий bounded пакет — `G11-035` spoken English defense;
 `G11-036` закрывается только после отдельной external-human mock session.
+
+## Execution update — G11-035 spoken defense workflow — 4 сентября 2026
+
+Target `fluent-interview-platform/main` получил и опубликовал commit `554182e`
+(`feat(g11): add spoken defense workflow`). Экран `/review` теперь содержит
+один явный English defense loop для released Node Event Loop: четыре rubric
+измерения (`decision`, `tradeoff`, `failure`, `verification`), обязательный
+feedback, выбор источника (`self`, `peer`, `coach`), две последовательные
+попытки и новая recording/mock reference для повтора. Assessment service
+проверяет только полноту и выдаёт server-owned evidence; сырые ответы,
+ссылки записи и аудио в ledger не сохраняются. После второй попытки UI явно
+сообщает, что workflow завершён, но не объявляет готовность к интервью.
+
+Browser walkthrough на `/review` подтвердил первую и повторную запись через
+реальный API, восстановление server-owned events, отсутствие console errors,
+отсутствие overflow на desktop `1280×900` и compact `900×800`; live scroll
+остаётся единственным `.app-scroll-region`. `pnpm check`, `pnpm boundary:check`,
+`pnpm toolchain:check`, focused G11.5 `12/12`, design/accessibility gates и
+evidence index `740/740` — PASS. Static impeccable detector вернул `[]`;
+URL detector не запускался из-за отсутствия локального `puppeteer` и не влияет
+на кодовые gates.
+
+Evidence: `fluent-interview-platform/docs/verification/greenfield/G11/
+spoken-defense-workflow-2026-09-04.json` и
+`spoken-defense-human-boundary-2026-09-04.json`. G11.5 readiness теперь
+**7 ready / 1 blocked**: закрыт только `G11-035`; `G11-036` остаётся
+owner-controlled и требует реальной external-human mock session. Serving/release
+promotion, content breadth, G11.4 path closure и G12.5 requalification не
+подменяются этим локальным workflow.
+
+Формальные counters после фазы: **673 / 461 / 1 134**. Исполнимый и
+неразрушающий остаток: **673 / 269 / 942** и **673 / 119 / 792**.
+Product-closure очередь: **64 пункта**. Target remote `origin/main` совпадает
+с `554182e3d37a71f63fcb827f27307a09cb21dcd8`; удалений не выполнялось.
